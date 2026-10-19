@@ -592,9 +592,10 @@ def retry_failed(run_dir: Path, panel: list[dict], watchlist: list[str],
 def cmd_retry(args) -> None:
     """Run the retry pass against the latest run and rewrite its metadata."""
     base = RUNS / PANEL_ID
-    runs = sorted(d for d in base.iterdir()
-                  if d.is_dir() and (d / "run-meta.json").exists()
-                  and d.name != "dry-run") if base.exists() else []
+    runs = sorted((d for d in base.iterdir()
+                   if d.is_dir() and (d / "run-meta.json").exists()
+                   and d.name != "dry-run"),
+                  key=lambda d: d.stat().st_mtime) if base.exists() else []
     if not runs:
         sys.exit("no run to retry")
     run_dir = runs[-1]
@@ -798,9 +799,10 @@ def _access_varies(r: dict) -> bool:
 
 def _load_run(run_id: str | None = None) -> tuple[Path, list[dict]]:
     base = RUNS / PANEL_ID
-    runs = sorted(d for d in base.iterdir()
-                  if d.is_dir() and (d / "records.jsonl").exists()
-                  and d.name != "dry-run") if base.exists() else []
+    runs = sorted((d for d in base.iterdir()
+                   if d.is_dir() and (d / "records.jsonl").exists()
+                   and d.name != "dry-run"),
+                  key=lambda d: d.stat().st_mtime) if base.exists() else []
     if not runs:
         sys.exit(f"no runs for {PANEL_ID}")
     run_dir = (base / run_id) if run_id else runs[-1]
@@ -912,9 +914,10 @@ def cmd_reparse(args) -> None:
 
 def cmd_derive(args) -> None:
     base = RUNS / PANEL_ID
-    runs = sorted(d for d in base.iterdir()
-                  if d.is_dir() and (d / "records.jsonl").exists()
-                  and d.name != "dry-run") if base.exists() else []
+    runs = sorted((d for d in base.iterdir()
+                   if d.is_dir() and (d / "records.jsonl").exists()
+                   and d.name != "dry-run"),
+                  key=lambda d: d.stat().st_mtime) if base.exists() else []
     if not runs:
         sys.exit("no runs to derive from")
     run_dir = runs[-1]
