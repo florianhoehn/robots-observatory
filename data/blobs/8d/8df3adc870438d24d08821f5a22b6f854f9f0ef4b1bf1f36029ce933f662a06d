@@ -1,0 +1,438 @@
+
+
+
+<!DOCTYPE html>
+<html id="html" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/global/icons/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/global/icons/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-72x72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-76x76-precomposed.png" sizes="76x76">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-114x114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-120x120-precomposed.png" sizes="120x120">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-144x144-precomposed.png" sizes="144x144">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-152x152-precomposed.png" sizes="152x152">
+    <link rel="apple-touch-icon-precomposed" href="/global/icons/apple-touch-icon-180x180-precomposed.png" sizes="180x180">
+    <link rel="icon" href="/global/icons/touch-icon-192x192.png" sizes="192x192">
+    
+
+
+
+    <script>
+        function getCookie(cName) {
+            let name = cName + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (const element of ca) {
+                let c = element.trim();
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length);
+                }
+            }
+            return "";
+        }
+
+        const regionCookieName = "STYXKEY-region";
+        const regionCookie = getCookie(regionCookieName) || "nam";
+
+        const registerCookieName = "register-account-session";
+        if (document.referrer === '' || document.referrer.indexOf(window.location.host) === -1) {
+            document.cookie = registerCookieName + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+        const registerSession = getCookie(registerCookieName);
+        let loggedinStatus = 'guest';
+        const profileId = '';
+        const role = '';
+
+        if (registerSession) {
+            loggedinStatus = 'new-profile';
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        let userProfile = {
+            id: profileId,
+            role: role
+        };
+        window.dataLayer.push({
+            site: {
+                region: regionCookie,
+                currency: 'USD',
+                pillar: 'NONE',
+                page_type: ''
+            },
+            user: {
+                status: loggedinStatus,
+                profile: userProfile
+            }
+        });
+    </script>
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://analytics.sagepub.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5R9QN8');</script><script charset="UTF-8" data-domain-script="01903b90-3e97-7898-87a2-6ece9db5ebc6" src="https://cdn-ukwest.onetrust.com/scripttemplates/otSDKStub.js" type="text/javascript"></script><script type="text/javascript">
+function OptanonWrapper() {
+    const event = new Event('onetrustloaded');
+    document.dispatchEvent(event);
+    window.OneTrustLoaded = true;
+ }
+</script><script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_lRjLLAqY28nfIBUvd29OG31zhVGnTB70hKWzE6uAtDS', {
+        api_host: 'https://eu.i.posthog.com',
+        defaults: '2026-01-30',
+        person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+    })
+</script><script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+
+  "@id": "https://www.sagepub.com/#organization",
+
+  "name": "Sage Publishing",
+  "alternateName": [
+    "SAGE Publications",
+    "SAGE",
+    "sagepub",
+    "SAGE Publications Inc",
+    "SAGE Publications Ltd"
+  ],
+
+  "url": "https://www.sagepub.com",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.sagepub.com/images/default-source/corporate-comms/sage-logo.png",
+    "width": 243,
+    "height": 123
+  },
+
+  "description": "Sage Publishing is an independent academic publisher founded in 1965, publishing more than 1,000 peer-reviewed journals and over 800 books per year across the social sciences, humanities, science, technology, and medicine.",
+
+  "foundingDate": "1965",
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "New York City, New York, USA"
+  },
+
+  "founder": {
+    "@type": "Person",
+    "name": "Sara Miller McCune",
+    "sameAs": "https://en.wikipedia.org/wiki/Sara_Miller_McCune"
+  },
+
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2455 Teller Road",
+    "addressLocality": "Thousand Oaks",
+    "addressRegion": "CA",
+    "postalCode": "91320",
+    "addressCountry": "US"
+  },
+
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "url": "https://www.sagepub.com/contact-and-support/contact-us",
+      "areaServed": "Worldwide"
+    },
+   {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "url": "https://www.sagepub.com/contact-and-support/contact-us/librarian-reps",
+      "areaServed": "Worldwide"
+    }
+  ],
+
+  "areaServed": "Worldwide",
+
+  "sameAs": [
+    "https://en.wikipedia.org/wiki/Sage_Publishing",
+    "https://www.wikidata.org/wiki/Q251266",
+    "https://ror.org/05534qc24",
+    "https://isni.org/isni/0000000405025717",
+    "https://sherpa.ac.uk/romeo/pub/65/",
+    "https://www.linkedin.com/company/sage-publishing",
+    "https://www.facebook.com/SagePublications/",
+    "https://www.youtube.com/@SagePublications"
+  ],
+
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "name": "Wikidata QID",
+      "propertyID": "https://www.wikidata.org/wiki/Property:P6366",
+      "value": "Q251266"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "ROR ID",
+      "propertyID": "https://ror.org",
+      "value": "05534qc24"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "ISNI",
+      "propertyID": "https://isni.org",
+      "value": "0000000405025717"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "Ringgold ID",
+      "propertyID": "https://www.ringgold.com",
+      "value": "10287"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "RoMEO Publisher ID",
+      "propertyID": "https://v2.sherpa.ac.uk/romeo/",
+      "value": "65"
+    }
+  ],
+
+  "hasOfferCatalog": [
+    {
+      "@type": "OfferCatalog",
+      "name": "Journals",
+      "description": "Over 1,000 peer-reviewed academic journals across social sciences, humanities, science, technology, and medicine.",
+      "url": "https://www.sagepub.com/journals"
+    },
+    {
+      "@type": "OfferCatalog",
+      "name": "Books",
+      "description": "Academic books, textbooks, and reference works across key disciplines.",
+      "url": "https://www.sagepub.com/explore-our-content/books"
+    }
+  ],
+
+  "subOrganization": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.corwin.com/#organization",
+      "name": "Corwin",
+      "url": "https://www.corwin.com",
+      "description": "Professional learning and resources for K-12 educators.",
+      "sameAs": "https://en.wikipedia.org/wiki/Corwin_Press"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.cqpress.com/#organization",
+      "name": "CQ Press",
+      "url": "https://www.cqpress.com",
+      "description": "Publisher of political science, government, and public policy resources.",
+      "sameAs": "https://en.wikipedia.org/wiki/CQ_Press"
+    },
+    {
+      "@type": "Organization",
+      "name": "Learning Matters",
+      "url": "https://uk.sagepub.com/en-gb/eur/learning-matters",
+      "description": "Publisher of resources for teacher education and professional development."
+    },
+    {
+      "@type": "Organization",
+      "name": "Adam Matthew Digital",
+      "url": "https://www.amdigital.co.uk",
+      "description": "Provider of primary source digital collections for academic libraries.",
+      "sameAs": "https://en.wikipedia.org/wiki/Adam_Matthew_Digital"
+    }
+  ],
+
+  "knowsAbout": [
+    "Social Sciences",
+    "Humanities",
+    "Academic Publishing",
+    "Open Access Publishing",
+    "Peer Review",
+    "Institutional Library Licensing",
+    "COUNTER Usage Reporting",
+    "Qualitative Research Methods",
+    "Political Science",
+    "Education",
+    "Psychology",
+    "Sociology",
+    "Public Health",
+    "Business and Management"
+  ],
+
+  "publishingPrinciples": "https://www.sagepub.com/journals/publication-ethics-policies"
+}
+</script><title>404 - Page Not Found</title><meta property="og:title" content="404 - Page Not Found"><meta property="og:description" content="404 - Page Not Found"><meta name="description" content="404 - Page Not Found"><link rel="canonical" href="https://www.sagepub.com/404" /><meta name="robots" content="noindex" />
+    
+    
+        <link rel="stylesheet" href="/global/styles/main.min.css?v=TrIWIJaZhA_fnAB6I00cE0WhmShNyrBCk618nkSE1ys" type="text/css">
+    
+    
+    
+
+<meta property="application-name" content="sfSageApp" data-service-path="api/default" />
+
+    <script src="https://js.monitor.azure.com/scripts/b/ai.3.3.9.min.js" integrity="sha384-n1wI34E/d8F9BP0CWEuELGGM1aEU8LiE5rXUaZUnyZdCT6t4LtC3c7M6dbdNr0hO" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var appInsights = new Microsoft.ApplicationInsights.ApplicationInsights({
+            config: {
+                connectionString: "InstrumentationKey=df7b65f5-80a8-4d15-b19e-e9606927fd15;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=c0e84ab3-5f05-4b42-a4d1-09ac5db5bf76"
+            }
+        });
+        appInsights.addTelemetryInitializer(function (envelope) {
+            envelope.tags = envelope.tags || {};
+            envelope.tags["ai.cloud.role"] = "Renderer";
+        });
+        appInsights.loadAppInsights();
+        appInsights.trackPageView();
+    </script>
+
+</head>
+
+<body><noscript><iframe src="https://analytics.sagepub.com/ns.html?id=GTM-5R9QN8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script id="1166879666" src="/sfrenderer/scripts/DarkModeToggle/default.min.js?assembly_name=CoreWeb.Sitefinity.Widgets&amp;package_name=Global&amp;version=1047683915" type="text/javascript"></script>
+    <div id="header" class="sticky-top">
+
+
+<header>
+    <button type="button" class="btn btn-sm btn-skip visually-hidden-focusable" id="skipToMain">Skip to main content</button>
+    <div class="header_upper">
+        <div class="container">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 32 32"
+                         fill="none">
+                        <path fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M2.66663 2.66667H29.3333V5.33334H2.66663V2.66667ZM2.66663 14.6667H24V17.3333H2.66663V14.6667ZM18.6666 26.6667H2.66663V29.3333H18.6666V26.6667Z"
+                              fill="white"></path>
+                    </svg>
+                </span>
+            </button>
+            <div class="logo">
+
+            <a href="/home" class="d-inline-block" >
+            <span>
+                <img  width=105 height=35 loading="lazy" class="img-fluid" src="/images/default-source/logos/sage-publishing.svg?sfvrsn=a930a4bd_0" alt="Sage Publishing" >
+            </span>
+            </a>
+</div>
+            <div class="header_content">
+                <div></div>
+                <div class="header_buttons"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header_lower">
+        <nav class="headernav navbar navbar-expand-xl" aria-label="Main">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-mobile-heading bg-primary d-xl-none">
+                    <div class="container d-flex justify-content-between align-items-center">
+                        <div class="h-m">Menu</div>
+                        <button class="btn close"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <svg width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M12.0001 13.4143L20.293 21.7072L21.7072 20.293L13.4143 12.0001L21.7072 3.70718L20.293 2.29297L12.0001 10.5859L3.70718 2.29297L2.29297 3.70718L10.5859 12.0001L2.29297 20.293L3.70718 21.7072L12.0001 13.4143Z"
+                                      fill="#D9EEFF"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div></div>
+                    <div class="header_search d-none d-xl-block"></div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header></div>
+    <main id="main">
+<section>
+<div >
+    <div class="banner banner-error">
+        <div class="container" style="background-image: url('/images/default-source/default-album/404.png?sfvrsn=c3b20f02_0');">
+            <div class="z-1">
+                <h1>Oops...</h1><h2>Error 404 - Page not found</h2><div>This page doesn’t exist or has been removed. Here are some options to help you get back on track:</div>
+                <ul>
+                        <li><a href="/home">Return to Sage Homepage</a></li>
+                        <li><a href="javascript:history.back();">Return to previous page</a></li>
+                        <li><a href="/landing/browse-our-customer-support-hub">Browse our customer support hub</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div></section></main>
+    <div id="footer">
+
+<footer class="d-print-none">
+    <div class="container">
+        <div class="footer_upper">
+            <div></div>
+            <div></div>
+        </div>
+        <div class="footer_main">
+
+
+    
+
+
+<div id="dark-mode-toggle-wrapper" class="gbl-dark-mode-toggle d-flex align-items-center">
+    <span>Dark mode</span>
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="dark-mode-toggle" aria-checked="false">
+        <label class="form-check-label" for="dark-mode-toggle">
+            <span data-sf-role="sf-dark-mode-off-indicator"><span class="visually-hidden">Dark Mode</span>OFF</span>
+            <span data-sf-role="sf-dark-mode-on-indicator" class="d-none"><span class="visually-hidden">Dark Mode</span>ON</span>
+        </label>
+    </div>
+</div></div>
+        <div class="footer_lower">
+
+<div  class="d-flex align-items-center text-start">
+            <a href="#" data-target="body" class="btn btn-primary btn-sm btn-top" data-smooth-scroll >
+                Back to top
+            </a>
+</div>
+
+
+
+
+
+    
+
+</div>
+    </div>
+</footer></div>
+    <script src="/global/js/coreweb-design.js?v=F1VkuBHGZum0hjDMldQqEbuvz37ZKZLMTS5NqOK1KsY"></script>
+    <script src="/global/js/main.min.js?v=x4XFEhZWO4X2t1VsVyCivjS8ZBE8toTjlUab7172j9Q"></script>
+
+    
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<div id="sage-fetch-loader" class="loader-lg">
+    <div class="loader-inner"></div>
+</div>
+<div aria-live="assertive" aria-atomic="true" class="visually-hidden" id="global-bs-modal-announcer"></div>
+<div aria-live="assertive" aria-atomic="true" class="visually-hidden" id="global-sr-announcer"></div>
+<script id="PersonalizationTracker" type="application/json">{"IsPagePersonalizationTarget":false,"IsUrlPersonalizationTarget":false,"PageId":"b8dfc457-c02b-4fc4-8614-957a33b1e0e6"}</script><script src="/WebResource.axd?d=NjxTqR2bqTw1rewxxlkHPj11z54WYQDTslIsMCe95Z_VLnRfBanMVhetl4clzaW3GIxskyG9nR51oP7TRR1zixdUnCnwb4-efXQQ6pw1lV3xXfowJrG0wiBo7hKO3sefQnR5E6jZgqK398iS0FdmP-rYRzutU4RcRVOHFFb50UptVAlWpzoDJ_9FdutxMrHMfq-vIn4_0BZEkKS82dCDH-ucLILDd1zO59sBjeswa0o1&amp;t=639226418820000000" type="text/javascript"></script><script id="sf-insight-settings" type="application/json">{"apiServerUrl":"https://api.insight.sitefinity.com","apiKey":"5110a03a-a919-9c5f-581d-22586f83b5fd","applicationName":"Website","trackingCookieDomain":".sagepub.com","keepDecTrackingCookieOnTrackingConsentRejection":false,"slidingExpirationForTrackingCookie":false,"maxAgeForTrackingCookieInDays":365,"trackYouTubeVideos":true,"crossDomainTrackingEntries":["checkout-usd.sagepub.com","www.sagepub.com"],"strategy":"Persist|False","docsHrefTestExpressions":[".*\\/docs\\/.+\\.{1}.+((\\?|\\\u0026)sfvrsn=.+){1}$",".+((\\?|\\\u0026)sf_dm_key=.+){1}$"],"sessionLengthInMinutes":30,"trackVimeoVideos":true,"useSecureCookies":true}</script><script id="sf-insight-metadata" type="application/json">{"contentMetadata":"{\"Id\":\"b8dfc457-c02b-4fc4-8614-957a33b1e0e6\",\"ContentType\":\"Page\",\"SfClrType\":\"Telerik.Sitefinity.Pages.Model.PageNode\",\"Title\":\"404 - Page Not Found\",\"CanonicalTitle\":\"404 - Page Not Found\",\"CanonicalUrl\":\"https://www.sagepub.com/404\",\"DefaultLanguage\":\"en\",\"CreatedOn\":\"2024-06-13T19:34:13Z\",\"ModifiedOn\":\"2026-10-12T15:20:16.93Z\",\"SiteId\":\"21692f7c-500c-43a3-b8b8-efa4efeaf6ff\",\"SiteName\":\"Default\",\"PageHierarchies\":[{\"Id\":\"9a5cb7dd-5456-4e4a-8f4e-6e7eb39f5387\",\"Title\":\"NONE\",\"Parent\":{\"Id\":\"1ddf5ecc-37f8-47c2-8fb4-02cd0fff6205\",\"Title\":\"Sage Business Area\"}}],\"PageId\":\"b8dfc457-c02b-4fc4-8614-957a33b1e0e6\"}","videosMetadata":"[]"}</script><script src="/WebResource.axd?d=HtQyXelCu6mzSPcVcvK_Bl3WywIB65351hXFDBfmOR8kk90ePBZJW73D0vEBjH2zPW1qnl8_gIawSb27H8b9HOM5q5X60nn8pmG_eeWNHPqWjpO7UYiLuq3ywEb1DmK47QUrnqeW-HA36UgWp3Q2Oyyq5mJilMHGzy6K1PFxxvQBQ6nF9UVJqqw4_UFvBiHTInztiGzk7YH8W-z2K1NA6iOVp463BvonWfvSAOG2Iik1&amp;t=639226418100000000" type="text/javascript"></script><script async="async" crossorigin="" src="https://cdn.insight.sitefinity.com/sdk/sitefinity-insight-client.min.3.1.44.js" type="text/javascript"></script><script id="-1985333227" src="/sfrenderer/scripts/LinkToAnchor/link-to-anchor.min.js?assembly_name=CoreWeb.Sitefinity.Widgets&amp;package_name=Global&amp;version=1047683915" type="text/javascript"></script></body>
+</html>

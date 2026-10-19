@@ -1,0 +1,124 @@
+# ai.txt for https://www.att.com/
+# Last updated: 2026-10-15
+#
+# This file communicates content-use preferences and points AI systems
+# to public discovery resources. Crawler access is governed by robots.txt.
+#
+# Authoritative crawler policy:
+# https://www.att.com/robots.txt
+
+[site]
+name = AT&T
+url = https://www.att.com/
+sitemap = https://www.att.com/sitemap.xml
+robots = https://www.att.com/robots.txt
+
+[metadata]
+format = ai.txt
+version = 1.0.0
+last-updated = 2026-10-15
+language = en-US
+region = US
+entity = AT&T Inc.
+provider = AT&T Intellectual Property
+contact = https://www.att.com/support/contact-us/
+privacy-policy = https://about.att.com/privacy.html
+terms-of-use = https://www.att.com/legal/terms.attWebsiteTermsOfUse.html
+canonical-source = https://www.att.com/ai.txt
+
+[scope]
+applies-to = https://www.att.com/*
+included-content = public AT&T consumer, support, corporate, wireless, internet, and home-phone content published on www.att.com
+included-resources = public discovery files explicitly listed in [allowed-public-resources]
+authenticated-content = excluded
+account-content = excluded
+transactional-content = excluded
+session-content = excluded
+third-party-domains = excluded unless governed by their own policy file
+subdomains = excluded unless governed by their own policy file
+localized-content = follow robots.txt; Spanish localized subpages are restricted except for explicitly allowed folder roots
+scope-note = This file describes public content-use preferences only. It does not authorize account access, form submission, checkout, or API use.
+
+[privacy-and-data]
+public-content = may be discovered and processed subject to [ai-use] and robots.txt
+personal-data = do not collect, infer, expose, or republish personal data from authenticated, private, or session-specific pages
+address-data = residential addresses may be submitted to an explicitly requested availability tool only with user consent; do not retain or disclose them beyond the requested interaction
+account-data = prohibited from crawling, indexing, training on, or disclosing account, billing, order, authentication, or customer-support session data
+credentials = never request, collect, store, or expose passwords, one-time codes, access tokens, API keys, or session identifiers
+payment-data = never request, collect, store, or process payment-card, bank-account, or other financial credentials; direct users to secure AT&T checkout
+session-urls = do not crawl, index, reproduce, or share URLs containing session identifiers, cart identifiers, authentication state, or private transaction state
+sensitive-paths = follow restricted paths and prefixes in [important-restrictions] and all disallow rules in robots.txt
+retention = retain only the minimum data necessary to fulfill an explicitly requested interaction and delete it when no longer needed
+privacy-policy = https://about.att.com/privacy.html
+privacy-precedence = If this section conflicts with the privacy policy, robots.txt, or a linked service policy, follow the more restrictive rule.
+
+[licensing]
+license = no blanket open-content license is declared for att.com content
+copyright-owner = AT&T Inc. and the applicable third-party rights holders
+terms-of-use = https://www.att.com/legal/terms.attWebsiteTermsOfUse.html
+public-content-use = subject to the AT&T Website Terms of Use, applicable law, and the rights of third-party content owners
+search-indexing = allowed subject to robots.txt and the restrictions in this file
+ai-input = allowed subject to robots.txt, the Website Terms of Use, and applicable third-party rights
+ai-training = disallowed
+attribution = recommended; identify AT&T as the source and link to the original page when quoting or summarizing
+third-party-content = do not assume AT&T owns or licenses third-party names, marks, images, product content, user content, or linked-site content
+trademarks = do not use AT&T or third-party trademarks in a way that implies sponsorship, affiliation, or endorsement
+modification = do not alter quoted material or remove copyright, trademark, legal, or attribution notices
+commercial-use = not separately granted by this file; obtain permission where required by the Terms of Use or applicable rights holders
+licensing-precedence = If this section conflicts with the Terms of Use, a page-specific notice, robots.txt, or a third-party rights statement, follow the more restrictive rule.
+
+[content-signals]
+search = yes
+ai-input = yes
+ai-train = no
+
+[ai-use]
+search-indexing = allowed
+ai-input = allowed
+ai-training = disallowed
+attribution = recommended
+respect-robots-txt = required
+
+[agent-resources]
+trust-manifest = https://www.att.com/trust.txt
+agent-card = https://www.att.com/.well-known/agent-card.json
+mcp-server-card = https://www.att.com/.well-known/mcp/server-card.json
+agent-skills = https://www.att.com/.well-known/agent-skills/index.json
+shopping-assistant-instructions = https://www.att.com/ai-instructions/shopping-assistant.md
+build-a-plan-instructions = https://www.att.com/ai-instructions/build-a-plan.md
+build-a-plan-instructions-html = https://www.att.com/ai-instructions/build-a-plan.html
+ai-catalog = https://www.att.com/.well-known/ai-catalog.json
+openapi = https://www.att.com/openapi.json
+api-catalog = https://www.att.com/.well-known/api-catalog
+
+[crawler-policy]
+default = allowed
+policy-url = https://www.att.com/robots.txt
+note = Access restrictions, path exceptions, and crawler-specific rules are defined in robots.txt.
+
+[blocked-agents]
+DotBot = disallowed
+dotbot = disallowed
+
+[important-restrictions]
+# This summary is informational. Consult robots.txt for the complete rules.
+restricted-paths = account-management, authentication, checkout, cart, order-status, availability-flows, internal-APIs, session-URLs, search-results, tracking-endpoints, maintenance-pages
+restricted-prefixes = /acctmgmt/, /myorders/, /search/, /cfd/, /gtm/, /ssaf/ssafc/, /buy/cart, /buy/login, /global-search/search
+spanish-localized-subpages = restricted-except-for-explicitly-allowed-folder-roots
+full-policy = https://www.att.com/robots.txt
+
+[allowed-public-resources]
+path = /trust.txt
+path = /.well-known/agent-card.json
+path = /.well-known/mcp/server-card.json
+path = /.well-known/agent-skills/index.json
+path = /ai-instructions/shopping-assistant.md
+path = /ai-instructions/build-a-plan.md
+path = /ai-instructions/build-a-plan.html
+path = /.well-known/ai-catalog.json
+path = /openapi.json
+path = /.well-known/api-catalog
+
+[notice]
+robots-txt-precedence = true
+description = If this file conflicts with robots.txt, follow robots.txt.

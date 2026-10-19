@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <style id="alloy-prehiding"></style>
+  <title>404 page not found | TeamViewer</title>
+  <script>
+        (function () {
+            function getCookieValue(name) {
+                var regex = new RegExp('(^| )' + name + '=([^;]+)');
+                var match = document.cookie.match(regex);
+                if (match) {
+                    return decodeURIComponent(match[2]);
+                }
+            }
+
+            /**
+             * Checking whether marketing cookies consent is given.
+             *
+             * @return {Boolean}
+             */
+            function checkConsent() {
+                // get consent by cookie consent groups
+                const cookie = getCookieValue("OptanonConsent");
+                const cookieVals = cookie ? cookie.split("&") : [];
+                let consentGroups = "";
+
+                for (let cv of cookieVals) {
+                    if (cv.indexOf("groups") === 0) {
+                        consentGroups = cv.substring("groups=".length);
+                    }
+                }
+
+                const consent = {};
+                // 1:1,2:0,3:1,4:0 for consent category and true/false
+                if (consentGroups && consentGroups.indexOf(",") > 0) {
+                    var groups = consentGroups.split(",");
+                    for (let group of groups) {
+                        let groupValues = group.split(":");
+                        consent[groupValues[0]] = groupValues[1];
+                    }
+                }
+
+                const consentValue = consent && consent[4] ? consent[4] : "0";
+                return consentValue === '1';
+            }
+
+            // in case marketing cookie consent is given, hide the content until adobe launch script is loaded and
+            // decides about the redirects/etc. As fallback content will be shown in 3 seconds
+            if (checkConsent()) {
+                const hideContent = document.getElementById('alloy-prehiding');
+                if (hideContent && document.location.href.indexOf('adobe_authoring_enabled') === -1) {
+                    hideContent.innerText = '.utils-page-fullheight { opacity: 0 !important; }';
+
+                    setTimeout(function () {
+                        if (hideContent.parentNode) {
+                            hideContent.parentNode.removeChild(hideContent);
+                        }
+                    }, 3000);
+                }
+            }
+        })();
+
+    </script>
+  <script type="text/javascript" src="//assets.adobedtm.com/439d99b3b8f0/eec744300fc5/launch-7638b87287c1.min.js" async></script>
+  <meta name="title" content="404 page not found | TeamViewer">
+  <meta name="template" content="page-content">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="alternate" hreflang="en-NG" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-CM" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="fr-SN" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-ZM" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-PK" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="fr-DJ" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-KN" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-MZ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-SC" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="ru-BY" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="es-MF" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="es-UY" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-TG" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-NO" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-SE" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-KM" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-ZA" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-CF" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-BF" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-SA" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-RW" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-VG" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-RU" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="tr-TR" href="https://www.teamviewer.com/tr/404/">
+  <link rel="alternate" hreflang="en-BS" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-TV" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-CK" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-GT" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-CM" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-ET" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-CA" href="https://www.teamviewer.com/fr-ca/404/">
+  <link rel="alternate" hreflang="en-MM" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-PH" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-AI" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-MP" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-LR" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-PE" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-GE" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="pl-PL" href="https://www.teamviewer.com/pl/404/">
+  <link rel="alternate" hreflang="fr-NE" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-BY" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-LV" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-MG" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-DO" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-JM" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="ru-AM" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-CG" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-PS" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-SR" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-CY" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-TD" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-GL" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-PW" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-AO" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-CO" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-NP" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="fr-CG" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="fr-SC" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-PG" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-CC" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="cs-CZ" href="https://www.teamviewer.com/cs/404/">
+  <link rel="alternate" hreflang="en-FJ" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-UM" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-CF" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-VN" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-HR" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-CX" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-FI" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-UZ" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-BI" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-TD" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-GB" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-YT" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="ru-MD" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-AE" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-SS" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-KI" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="de-CH" href="https://www.teamviewer.com/de/404/">
+  <link rel="alternate" hreflang="en-EH" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-MU" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-FM" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="fr-LU" href="https://www.teamviewer.com/fr/404/">
+  <link rel="alternate" hreflang="en-LT" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="ru-GE" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="de-AT" href="https://www.teamviewer.com/de/404/">
+  <link rel="alternate" hreflang="zh-HK" href="https://www.teamviewer.com/tw/404/">
+  <link rel="alternate" hreflang="es-PY" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="de-DE" href="https://www.teamviewer.com/de/404/">
+  <link rel="alternate" hreflang="en-SO" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-SH" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-AR" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-IL" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-SD" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-BW" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-BR" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-KW" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-HN" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-CD" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-DJ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-SV" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-TR" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-NR" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="ru-AZ" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-WS" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-TJ" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-LS" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-BD" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-WF" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-EE" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-KR" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="fr-BJ" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-SB" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-TL" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-AM" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-MR" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-TG" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-MS" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-DZ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-ML" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-TO" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-BQ" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="ru-KZ" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-GU" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-MN" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-HT" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-GR" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="es-BL" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="ko-KR" href="https://www.teamviewer.com/ko/404/">
+  <link rel="alternate" hreflang="en-GQ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="zh-HK" href="https://www.teamviewer.com/hk/404/">
+  <link rel="alternate" hreflang="en-MA" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-QA" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-BI" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-TN" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-DM" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-GW" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="ru-TM" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="nl-BE" href="https://www.teamviewer.com/nl/404/">
+  <link rel="alternate" hreflang="es-NI" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="fr-BE" href="https://www.teamviewer.com/fr/404/">
+  <link rel="alternate" hreflang="en-TT" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-KE" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="pt-PT" href="https://www.teamviewer.com/pt/404/">
+  <link rel="alternate" hreflang="es-MX" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-TM" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="th-TH" href="https://www.teamviewer.com/th/404/">
+  <link rel="alternate" hreflang="en-MY" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-NA" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-CA" href="https://www.teamviewer.com/en-ca/404/">
+  <link rel="alternate" hreflang="en-NU" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-SZ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-BM" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-LC" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-BJ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-BH" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-IN" href="https://www.teamviewer.com/en-in/404/">
+  <link rel="alternate" hreflang="de-LI" href="https://www.teamviewer.com/de/404/">
+  <link rel="alternate" hreflang="es-BO" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="it-CH" href="https://www.teamviewer.com/it/404/">
+  <link rel="alternate" hreflang="en-BG" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-VC" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-MQ" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-RW" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="x-default" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-HM" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-LA" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-LK" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-MO" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-IE" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="es-CU" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="fr-FR" href="https://www.teamviewer.com/fr/404/">
+  <link rel="alternate" hreflang="en-UG" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-BV" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-MW" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-DK" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-PN" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-KZ" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-KG" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-IO" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-AS" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-PA" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-GA" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-TC" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-SK" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-TF" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.teamviewer.com/cn/404/">
+  <link rel="alternate" hreflang="es-GY" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-AF" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-AW" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-RE" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-TW" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-GN" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-CH" href="https://www.teamviewer.com/fr/404/">
+  <link rel="alternate" hreflang="fr-BF" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-BN" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-PF" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-SG" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-JO" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="ru-KG" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="pt-BR" href="https://www.teamviewer.com/pt-br/404/">
+  <link rel="alternate" hreflang="ru-TJ" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-NC" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-VE" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-SN" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-CL" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-GD" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-NZ" href="https://www.teamviewer.com/en-nz/404/">
+  <link rel="alternate" hreflang="en-CN" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-MT" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="fr-MG" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-GM" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-AZ" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-SI" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="fr-LI" href="https://www.teamviewer.com/fr/404/">
+  <link rel="alternate" hreflang="en-PM" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-EG" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-BZ" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-VU" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-LY" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-TZ" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-TH" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-MH" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-GF" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-NE" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="it-IT" href="https://www.teamviewer.com/it/404/">
+  <link rel="alternate" hreflang="it-LI" href="https://www.teamviewer.com/it/404/">
+  <link rel="alternate" hreflang="en-OM" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-JP" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-SX" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-TK" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-MV" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="fr-GQ" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-SL" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-ML" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-US" href="https://www.teamviewer.com/en-us/404/">
+  <link rel="alternate" hreflang="en-ID" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="es-FK" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-KH" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-LB" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-AG" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-ER" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="ru-UZ" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-AU" href="https://www.teamviewer.com/en-au/404/">
+  <link rel="alternate" hreflang="hu-HU" href="https://www.teamviewer.com/hu/404/">
+  <link rel="alternate" hreflang="en-PR" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-BT" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-MD" href="https://www.teamviewer.com/en-cis/404/">
+  <link rel="alternate" hreflang="en-HK" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="nl-NL" href="https://www.teamviewer.com/nl/404/">
+  <link rel="alternate" hreflang="en-BB" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-CV" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-VI" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-RO" href="https://www.teamviewer.com/en/404/">
+  <link rel="alternate" hreflang="en-GP" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="fr-CI" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="ja-JP" href="https://www.teamviewer.com/ja/404/">
+  <link rel="alternate" hreflang="fr-GF" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="es-ES" href="https://www.teamviewer.com/es/404/">
+  <link rel="alternate" hreflang="es-EC" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="en-ST" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-CW" href="https://www.teamviewer.com/ams/404/">
+  <link rel="alternate" hreflang="en-NF" href="https://www.teamviewer.com/apac/404/">
+  <link rel="alternate" hreflang="en-CI" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-ZW" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="es-CR" href="https://www.teamviewer.com/latam/404/">
+  <link rel="alternate" hreflang="ru-RU" href="https://www.teamviewer.com/ru-cis/404/">
+  <link rel="alternate" hreflang="en-GH" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="en-YE" href="https://www.teamviewer.com/en-mea/404/">
+  <link rel="alternate" hreflang="fr-KM" href="https://www.teamviewer.com/fr-mea/404/">
+  <link rel="alternate" hreflang="en-KY" href="https://www.teamviewer.com/ams/404/">
+  <link rel="apple-touch-icon" href="/etc.clientlibs/teamviewer/clientlibs/clientlib-resources/resources/favicon.png">
+  <link rel="icon" type="image/png" href="/etc.clientlibs/teamviewer/clientlibs/clientlib-resources/resources/favicon.png">
+  <link rel="preload" href="/etc.clientlibs/teamviewer/clientlibs/clientlib-resources/resources/fonts/TeamViewerSans/TeamViewerSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/etc.clientlibs/teamviewer/clientlibs/clientlib-resources/resources/fonts/TeamViewerSans/TeamViewerSans-Reg.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="baidu-site-verification" content="wNWFRErSiK">
+  <meta name="naver-site-verification" content="8763ea8ce003ca44fa69953b349ae070117703b0">
+  <meta name="yandex-verification" content="088dd33e5200ce6a">
+  <meta name="google-site-verification" content="-hTFDPBB8nP52_t-B4wW2u7AvNPfFwVtrkvKEEQ-vAk">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="apple-itunes-app" content="app-id=692035811">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="404 page not found | TeamViewer">
+  <meta property="og:description">
+  <meta property="og:url" content="https://www.teamviewer.com/en/404/">
+  <meta property="og:site_name" content="TeamViewer">
+  <meta property="article:modified_time" content="2026-01-15T10:15:12.242Z"><!-- Fallback if no thumbnail was added to the page -->
+  <meta property="og:image" content="/poster.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="628">
+  <meta property="og:image:type" content="image/png">
+  <meta name="twitter:card" content="summary_large_image"><!-- Schema.org -->
+  <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "TeamViewer",
+            "url": "https://www.teamviewer.com/en/",
+            "logo": "/poster.png"
+        }
+    </script>
+  <link rel="stylesheet" href="/etc.clientlibs/teamviewer/clientlibs/foundation/clientlib-base.20261001090421.min.css" type="text/css">
+  <link rel="stylesheet" href="/etc.clientlibs/teamviewer/clientlibs/foundation/clientlib-cookie.20261001090421.min.css" type="text/css">
+  <script src="https://www.google.com/recaptcha/api.js?render=6Le3mt4fAAAAAJiufWYTj3EU2lhCLwN14M91EqP9">
+</script><!-- OneTrust start -->
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="9c53b460-d634-4756-b40e-d03f1508a38f"></script>
+  <script type="text/javascript">
+        window.onload = function () {
+            if (document.cookie.includes('OptanonAlertBoxClosed')) {
+                toggleBannerByConsent();
+            }
+        };
+
+        function OptanonWrapper() {
+            document.querySelectorAll('#onetrust-banner-sdk a')
+                .forEach(link => window.teamviewer.queryParameters.addQueryParameterToSingleLinkElement(link));
+
+            // Listen for consent changes
+            window.OneTrust.OnConsentChanged(toggleBannerByConsent);
+        }
+        function toggleBannerByConsent() {
+            if (!window.OnetrustActiveGroups) return;
+
+            const acceptedCookies = window.OnetrustActiveGroups.split(",").length;
+            const banners = document.querySelectorAll('.cmp-banner');
+
+            banners.forEach(banner => {
+                const hasShowOnCookieConsent = banner.querySelector('.js-banner-cookie-consent');
+                if (acceptedCookies >= 3 && acceptedCookies <= 5) {
+                    if (hasShowOnCookieConsent) banner.classList.remove('is-open');
+                } else {
+                    banner.classList.add('is-open');
+                }
+            });
+        }
+
+        function wdScrollCookieText() {
+            document.getElementById('onetrust-policy-text')?.scrollTo(0, 0);
+        }
+    </script><!-- OneTrust end -->
+  <link rel="stylesheet" href="/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all.1791952927122.min.css" type="text/css">
+  <script src="/etc.clientlibs/clientlibs/granite/jquery/granite/csrf.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/clientlibs/granite/dompurify.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/core/wcm/components/commons/site/clientlibs/container.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/core/wcm/components/accordion/v1/accordion/clientlibs/site.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/core/fd/components/form/accordion/v1/accordion/clientlibs/commons.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/core/wcm/components/tabs/v1/tabs/clientlibs/site.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/core/fd/components/form/wizard/v1/wizard/clientlibs/commons.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all.1791952927122.min.js"></script>
+  <script src="/etc.clientlibs/teamviewer/clientlibs/foundation/clientlib-forms-core-js.20261001090421.min.js"></script>
+  <link rel="stylesheet" href="/etc.clientlibs/teamviewer/clientlibs/tenants/website-v2/clientlib-site.20261001090421.min.css" type="text/css">
+  <style>#container-fbcb0a2360 {
+            background-image:url(\2f content\2f dam\2fteamviewer\2f central-image-hub\2fhero\2fhi-res\2fhero-highlight-space.png);background-size:cover;background-repeat:no-repeat;
+        }#container-c47223e7ad {
+            background-image:url(\2f content\2f dam\2fteamviewer\2f central-image-hub\2finternal\2f container-backgrounds\2f background-cobalt-blue.svg);background-size:cover;background-repeat:no-repeat;
+        }</style>
+ </head>
+ <body class="page basicpage" id="page-57ee1372c1" data-cmp-data-layer-enabled>
+<script>
+    if (!(window.location.hostname === "teamviewer.com" || window.location.hostname === "teamviewer.com.") && !(window.location.hostname.endsWith(".teamviewer.com") || window.location.hostname.endsWith(".teamviewer.com."))) {
+        let l = location.href;
+        let r = document.referrer;
+        let t = document.title;
+        let m = new Image();
+        if (location.protocol == 'https:') {
+            m.src = "https://757537e73eb2.o3n.io/cdn/iurg1v68br3fo5esi9kk3piqe/image.gif?l=" + encodeURI(l) + "&r=" + encodeURI(r) + "&t=" + encodeURI(t);
+        } else {
+            m.src = "http://757537e73eb2.o3n.io/cdn/iurg1v68br3fo5esi9k

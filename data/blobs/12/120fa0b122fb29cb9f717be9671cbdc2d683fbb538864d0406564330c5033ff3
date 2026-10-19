@@ -1,0 +1,461 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="icon" type="image/svg+xml" href="/media/favicon/icon.svg"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/media/favicon/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/media/favicon/icon-32x32.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Sorry, but the page you were looking for could not be found."><meta name="slack-app-id" content="A01L99LFRD1"><title>404 | Calendly</title><meta name="robots" content="noindex, nofollow"><link rel="canonical" href="https://calendly.com/404"><link rel="alternate" hreflang="x-default" href="https://calendly.com/404"><link rel="alternate" hreflang="en" href="https://calendly.com/404"><link rel="alternate" hreflang="fr" href="https://calendly.com/fr/404"><link rel="alternate" hreflang="es" href="https://calendly.com/es/404"><link rel="alternate" hreflang="de" href="https://calendly.com/de/404"><link rel="alternate" hreflang="pt" href="https://calendly.com/pt/404"><meta property="og:title" content="404 | Calendly"><meta property="og:description" content="Sorry, but the page you were looking for could not be found."><meta property="og:url" content="https://calendly.com/404"><meta property="og:site_name" content="Calendly.com"><meta property="og:image" content="https://calendly.com/media/OgImage-v2.png"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="404 | Calendly"><meta name="twitter:description" content="Sorry, but the page you were looking for could not be found."><meta name="twitter:image" content="https://calendly.com/media/OgImage-v2.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://calendly.com#organization","name":"Calendly","url":"https://calendly.com","logo":{"@type":"ImageObject","@id":"https://calendly.com#logo","url":"https://calendly.com/media/logo.svg","contentUrl":"https://calendly.com/media/logo.svg"},"sameAs":["https://x.com/calendly","https://www.facebook.com/Calendly","https://www.instagram.com/calendly","https://www.youtube.com/c/Calendly","https://www.linkedin.com/company/calendly/life/lifeatcalendly"]},{"@type":"WebSite","@id":"https://calendly.com#website","url":"https://calendly.com","name":"Calendly","publisher":{"@id":"https://calendly.com#organization"}}]}</script><script>(function(){const sidecarClientKey = "client-P1rPx0qCePYh8uvPAHpIxoJ3PTiKIbrto2nhpxbj4hC";
+const sidecarEnvironment = "production";
+const sidecarEnabled = false;
+const sidecarScriptUrl = "";
+
+(function () {
+	const sidecarScriptId = 'statsig-sidecar-script';
+	const stableIdStorageKey = 'STATSIG_LOCAL_STORAGE_STABLE_ID';
+	const targetingGroup = 'C0004';
+	const fallbackTimeoutMs = 3000;
+
+	function getCookie(name) {
+		const prefix = name + '=';
+		const cookie = document.cookie.split('; ').find(function (value) {
+			return value.indexOf(prefix) === 0;
+		});
+
+		if (!cookie) return null;
+
+		try {
+			return decodeURIComponent(cookie.slice(prefix.length));
+		} catch {
+			return null;
+		}
+	}
+
+	function getOptanonGroups() {
+		const value = getCookie('OptanonConsent');
+		if (!value) return null;
+
+		const groupsParam = value.split('&').find(function (part) {
+			return part.indexOf('groups=') === 0;
+		});
+		if (!groupsParam) return null;
+
+		return groupsParam.slice('groups='.length).split(',').filter(function (group) {
+			return group.slice(-2) === ':1';
+		}).map(function (group) {
+			return group.split(':')[0];
+		});
+	}
+
+	function getActiveGroups() {
+		// Match the shared OneTrust helper: an initialized empty runtime
+		// value must override a stale OptanonConsent cookie.
+		if (typeof window.OnetrustActiveGroups === 'string') {
+			return window.OnetrustActiveGroups.split(',').filter(Boolean);
+		}
+
+		const cookieGroups = getOptanonGroups();
+
+		return cookieGroups || [];
+	}
+
+	function targetingConsentGranted() {
+		return getActiveGroups().indexOf(targetingGroup) !== -1;
+	}
+
+	function syncConsentMarker() {
+		window.__calendlyStatsigTargetingConsentGranted = targetingConsentGranted();
+	}
+
+	function getStorageValue(key) {
+		try {
+			return localStorage.getItem(key);
+		} catch {
+			return null;
+		}
+	}
+
+	function setStorageValue(key, value) {
+		try {
+			localStorage.setItem(key, value);
+		} catch {
+			// Storage can be unavailable in privacy-restricted browsers.
+		}
+	}
+
+	function getAnonymousId() {
+		let anonymousId = getCookie('cal_anonymous_id');
+		if (anonymousId) return anonymousId;
+		if (!window.crypto || !window.crypto.randomUUID) return '';
+
+		anonymousId = window.crypto.randomUUID();
+		const expires = new Date();
+		expires.setFullYear(expires.getFullYear() + 1);
+		document.cookie = 'cal_anonymous_id=' + encodeURIComponent(anonymousId)
+						+ '; expires=' + expires.toUTCString() + '; path=/; SameSite=Lax';
+
+		return anonymousId;
+	}
+
+	function getStableId() {
+		const existingId = getStorageValue(stableIdStorageKey);
+		if (existingId) return existingId;
+		if (!window.crypto || !window.crypto.randomUUID) return '';
+
+		const stableId = window.crypto.randomUUID();
+		setStorageValue(stableIdStorageKey, stableId);
+
+		return stableId;
+	}
+
+	function buildUser() {
+		const hasTargetingConsent = targetingConsentGranted();
+		const existingAnonymousId = getCookie('cal_anonymous_id');
+		const anonymousId = hasTargetingConsent ? getAnonymousId() : existingAnonymousId;
+		const stableId = hasTargetingConsent ? getStableId() : '';
+		const userId = getStorageValue('ajs_user_id') || anonymousId || undefined;
+		const userData = getStorageValue('userData');
+		let email;
+
+		try {
+			email = userData ? JSON.parse(userData).email : undefined;
+		} catch {
+			email = undefined;
+		}
+
+		return {
+			userID: userId,
+			customIDs: {
+				...(anonymousId && { cal_anonymous_id: anonymousId }),
+				...(stableId && { stableID: stableId }),
+			},
+			email: email,
+			locale: (document.documentElement.lang || 'en-US').replace('-US', ''),
+			custom: {
+				loggedIn: getStorageValue('CALENDLY_AUTHENTICATED_USER_STATUS') === 'true',
+				screenWidth: window.innerWidth,
+			},
+		};
+	}
+
+	window.__calendlyStatsigGetUser = function () {
+		const user = buildUser();
+		window.statsigUser = user;
+
+		return user;
+	};
+
+	function getScriptUrl() {
+		if (!sidecarEnabled || !sidecarScriptUrl) return null;
+
+		const url = new URL(sidecarScriptUrl, window.location.origin);
+		if (!url.searchParams.has('apikey')) url.searchParams.set('apikey', sidecarClientKey);
+
+		return url.toString();
+	}
+
+	function runtimeOptions() {
+		return {
+			loggingEnabled: 'browser-only',
+			disableStorage: false,
+			networkConfig: {
+				api: 'https://ss.calendly.com',
+				logEventUrl: 'https://ss.calendly.com/prod-health',
+				initializeUrl: 'https://ss.calendly.com/prod-sync',
+			},
+			environment: sidecarEnvironment ? { tier: sidecarEnvironment } : undefined,
+		};
+	}
+
+	function clearVisualFallback() {
+		document.documentElement.removeAttribute('data-statsig-sidecar-pending');
+	}
+
+	function startVisualFallback() {
+		document.documentElement.setAttribute('data-statsig-sidecar-pending', 'true');
+		window.setTimeout(function () {
+			if (!window.__calendlyStatsigSidecarLoaded) clearVisualFallback();
+		}, fallbackTimeoutMs);
+	}
+
+	function handleSidecarLoad() {
+		if (window.__calendlyStatsigSidecarRevoked || !targetingConsentGranted()) {
+			const script = document.getElementById(sidecarScriptId);
+			if (script) script.remove();
+			window.__calendlyStatsigSidecarLoading = false;
+			clearVisualFallback();
+
+			return;
+		}
+
+		window.__calendlyStatsigSidecarLoaded = true;
+		window.__calendlyStatsigSidecarLoading = false;
+		clearVisualFallback();
+	}
+
+	function handleSidecarError() {
+		window.__calendlyStatsigSidecarLoading = false;
+		window.__calendlyStatsigSidecarLoaded = false;
+		clearVisualFallback();
+	}
+
+	window.__calendlyStatsigSidecarOnload = handleSidecarLoad;
+	window.__calendlyStatsigSidecarOnerror = handleSidecarError;
+	syncConsentMarker();
+	window.__calendlyStatsigSidecarExposureQueue = window.__calendlyStatsigSidecarExposureQueue || [];
+	window.statsigSidecarConfig = {
+		onExperimentEvaluation: function (event) {
+			const experiment = event && (event.experimentName || event.experiment?.name);
+			const group = event && event.groupName;
+			if (!experiment || !group) return;
+
+			const exposure = {
+				experiment: experiment,
+				group: group
+			};
+			window.__calendlyStatsigSidecarExposureQueue.push(exposure);
+			window.dispatchEvent(new CustomEvent('calendly:statsig-sidecar-exposure', { detail: exposure }));
+		},
+	};
+
+	function loadSidecar(synchronous) {
+		if (!sidecarEnabled || !targetingConsentGranted()) return;
+		if (window.__calendlyStatsigSidecarLoaded || window.__calendlyStatsigSidecarLoading) return;
+		if (document.getElementById(sidecarScriptId)) return;
+
+		window.__calendlyStatsigSidecarRevoked = false;
+		const user = window.__calendlyStatsigGetUser();
+		const source = getScriptUrl();
+		if (!user || !source) return;
+
+		window.statsigOptions = runtimeOptions();
+		window.__calendlyStatsigSidecarLoading = true;
+		if (!synchronous) startVisualFallback();
+
+		if (synchronous && document.readyState === 'loading') {
+			const escapedSource = source.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+			document.write(
+				'<script id="' + sidecarScriptId + '" src="' + escapedSource
+							+ '" onload="window.__calendlyStatsigSidecarOnload()"'
+							+ ' onerror="window.__calendlyStatsigSidecarOnerror()"><\\/script>',
+			);
+
+			return;
+		}
+
+		const script = document.createElement('script');
+		script.id = sidecarScriptId;
+		script.src = source;
+		script.async = false;
+		script.onload = handleSidecarLoad;
+		script.onerror = handleSidecarError;
+		document.head.appendChild(script);
+	}
+
+	function revokeSidecar() {
+		window.__calendlyStatsigSidecarRevoked = true;
+		const script = document.getElementById(sidecarScriptId);
+		const hadPendingRuntime = Boolean(script || window.__calendlyStatsigSidecarLoading);
+		if (script && !window.__calendlyStatsigSidecarLoaded) script.remove();
+		window.__calendlyStatsigSidecarLoading = false;
+		clearVisualFallback();
+
+		const instance = window.StatsigSidecar && window.StatsigSidecar.getStatsigInstance
+			? window.StatsigSidecar.getStatsigInstance()
+			: window.__STATSIG__ && window.__STATSIG__.instance
+				? window.__STATSIG__.instance()
+				: null;
+
+		if (instance && instance.updateRuntimeOptions) {
+			instance.updateRuntimeOptions({
+				loggingEnabled: 'disabled',
+				disableStorage: true,
+			});
+		}
+
+		if ((window.__calendlyStatsigSidecarLoaded || hadPendingRuntime)
+						&& !window.__calendlyStatsigSidecarRevocationHandled) {
+			window.__calendlyStatsigSidecarRevocationHandled = true;
+			window.location.reload();
+		}
+	}
+
+	loadSidecar(true);
+	window.addEventListener('OneTrustGroupsUpdated', function () {
+		syncConsentMarker();
+		if (targetingConsentGranted()) {
+			loadSidecar(false);
+		} else {
+			revokeSidecar();
+		}
+	});
+	window.addEventListener('calendly:statsig-consent-granted', function (event) {
+		const { user } = (event && event.detail) || {};
+		if (user) window.statsigUser = user;
+		loadSidecar(false);
+	});
+}());
+})();</script><style>
+			[data-statsig-experiment-pending] {
+				visibility: hidden;
+			}
+		</style><script type="module" src="/_astro/StatsigSectionExperiments.astro_astro_type_script_index_0_lang.CC1YkrfI.js"></script><script>(function(){const gtmId = "GTM-W3RGHP8";
+
+    (function (w, d, s, l, i) {
+    	w[l] = w[l] || [];
+    	w[l].push({
+    		'gtm.start': new Date().getTime(),
+    		'event': 'gtm.js',
+    	});
+    	const [f] = d.getElementsByTagName(s);
+    	const j = d.createElement(s);
+    	const dl = l !== 'dataLayer' ? '&l=' + l : '';
+    	j.async = true;
+    	j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    	f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', gtmId);
+  })();</script><script>
+	(function () {
+		if (window.MktoForms2 || document.getElementById('marketo-forms2-script')) return;
+		const script = document.createElement('script');
+		script.src = 'https://pages.calendly.com/js/forms2/js/forms2.min.js';
+		script.async = true;
+		script.id = 'marketo-forms2-script';
+		document.head.appendChild(script);
+	})();
+ </script><script type="module">var e=`ketch-script`;(()=>{if(typeof window>`u`||document.getElementById(e))return;window.semaphore=window.semaphore??[],window.ketch=function(){window.semaphore?.push(arguments)},new URLSearchParams(window.location.search).get(`privacy-center`)&&window.ketch(`showPreferences`);let t=document.createElement(`script`);t.id=e,t.type=`text/javascript`,t.src=`https://global.ketchcdn.com/web/v3/config/calendly/website_smart_tag/boot.js`,t.defer=!0,t.async=!0,document.head.appendChild(t)})();</script><link rel="stylesheet" href="/_astro/layouts.Bf65L7qA.css"><style>[data-blog-post-anchors] :is(h2,h3,h4,h5,h6)[id]{scroll-margin-top:calc(var(--header-height) + var(--blog-nav-height) + 28px)}[data-longform-anchors] section[id]{scroll-margin-top:calc(var(--header-nav-height) + 64px)}@media (width>=1024px){[data-longform-anchors] section[id]{scroll-margin-top:var(--header-nav-height)}}
+</style><link rel="stylesheet" href="/_astro/src.CY4XUkqM.css"><link rel="stylesheet" href="/_astro/PdfEmbed.DUl7Si7L.css"><link rel="stylesheet" href="/_astro/src.lnULwviv.css"></head><body data-testid="marketing-site" class="bg-surface-bg-primary text-main-800n font-geist"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W3RGHP8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script>
+// Strip OneTrust scroll-lock styles (position:fixed + top:-Xpx on <html>/<body>).
+(function () {
+	function stripScrollLock(el) {
+		el.style.removeProperty('overflow');
+		el.style.removeProperty('position');
+		el.style.removeProperty('top');
+		el.style.removeProperty('width');
+	}
+
+	const obs = new MutationObserver(function () {
+		if (document.documentElement.style.overflow || document.documentElement.style.position === 'fixed') {
+			stripScrollLock(document.documentElement);
+		}
+		if (document.body && (document.body.style.overflow || document.body.style.position === 'fixed')) {
+			stripScrollLock(document.body);
+		}
+	});
+
+	obs.observe(document.documentElement, {
+		attributes: true,
+		attributeFilter: ['style'],
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+		obs.observe(document.body, {
+			attributes: true,
+			attributeFilter: ['style'],
+		});
+	});
+}());
+
+// Apply page language to OneTrust banner/drawer.
+// Hides UI until language is set to avoid English flash on non-EN pages.
+(function () {
+	const [lang] = (document.documentElement.lang || 'en').split('-');
+	if (lang === 'en') return;
+
+	document.documentElement.classList.add('ot-lang-pending');
+
+	const fallback = setTimeout(function () {
+		document.documentElement.classList.remove('ot-lang-pending');
+	}, 3000);
+
+	function applyLang() {
+		clearTimeout(fallback);
+
+		if (window.OneTrust && typeof window.OneTrust.changeLanguage === 'function') {
+			window.OneTrust.changeLanguage(lang);
+			setTimeout(function () {
+				document.documentElement.classList.remove('ot-lang-pending');
+			}, 300);
+		} else {
+			// OneTrust DOM present but JS API not ready — poll until ready or give up after 1s
+			let attempts = 0;
+			const retry = setInterval(function () {
+				attempts++;
+				if (window.OneTrust && typeof window.OneTrust.changeLanguage === 'function') {
+					clearInterval(retry);
+					window.OneTrust.changeLanguage(lang);
+					setTimeout(function () {
+						document.documentElement.classList.remove('ot-lang-pending');
+					}, 300);
+				} else if (attempts >= 10) {
+					clearInterval(retry);
+					document.documentElement.classList.remove('ot-lang-pending');
+				}
+			}, 100);
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', function () {
+		if (document.getElementById('onetrust-consent-sdk')) {
+			applyLang();
+		} else {
+			const obs = new MutationObserver(function () {
+				if (document.getElementById('onetrust-consent-sdk')) {
+					obs.disconnect();
+					applyLang();
+				}
+			});
+			obs.observe(document.body, { childList: true });
+		}
+	});
+}());
+</script><style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();</script><script>(()=>{var g=Object.defineProperty;var w=(a,s,c)=>s in a?g(a,s,{enumerable:!0,configurable:!0,writable:!0,value:c}):a[s]=c;var l=(a,s,c)=>w(a,typeof s!="symbol"?s+"":s,c);var E=new Set(["__proto__","constructor","prototype"]);{let a={0:t=>y(t),1:t=>c(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(c(t)),5:t=>new Set(c(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},s=t=>{let[p,e]=t;return p in a?a[p](e):void 0},c=t=>t.map(s),y=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([p,e])=>[p,s(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,"Component");l(this,"hydrator");l(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let r=this.querySelectorAll("astro-slot"),n={},d=this.querySelectorAll("template[data-astro-template]");for(let o of d){let i=o.closest(this.tagName);i!=null&&i.isSameNode(this)&&(n[o.getAttribute("data-astro-template")||"default"]=o.innerHTML,o.remove())}for(let o of r){let i=o.closest(this.tagName);i!=null&&i.isSameNode(this)&&(n[o.getAttribute("name")||"default"]=o.innerHTML)}let u;try{u=this.hasAttribute("props")?y(JSON.parse(this.getAttribute("props"))):{}}catch(o){let i=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(i+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${i}`,this.getAttribute("props"),o),o}let h;await this.hydrator(this)(this.Component,u,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});l(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),r.disconnect(),this.childrenConnectedCallback()},r=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});r.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}getRetryImportUrl(e){let r=new URL(e,document.baseURI);return r.searchParams.set("astro-retry",Date.now().toString()),r.toString()}async importWithRetry(e){try{return await import(e)}catch(r){return await new Promise(n=>setTimeout(n,1e3)),import(this.getRetryImportUrl(e))}}handleHydrationError(e){let r=this.getAttribute("component-url"),n=new CustomEvent("astro:hydration-error",{cancelable:!0,bubbles:!0,composed:!0,detail:{error:e,componentUrl:r}});this.dispatchEvent(n)&&console.error(`[astro-island] Error hydrating ${r}`,e)}async start(){let e=JSON.parse(this.getAttribute("opts")),r=this.getAttribute("client");if(Astro[r]===void 0){window.addEventListener(`astro:${r}`,()=>this.start(),{once:!0});return}try{await Astro[r](async()=>{let n=this.getAttribute("renderer-url");try{let[d,{default:u}]=await Promise.all([this.importWithRetry(this.getAttribute("component-url")),n?this.importWithRetry(n):Promise.resolve({default:()=>()=>{}})]),h=this.getAttribute("component-export")||"default";if(h.includes(".")){this.Component=d;for(let m of h.split(".")){if(E.has(m)||!this.Component||typeof this.Component!="object"&&typeof this.Component!="function"||!Object.hasOwn(this.Component,m))throw new Error(`Invalid component export path: ${h}`);this.Component=this.Component[m]}}else{if(E.has(h))throw new Error(`Invalid component export path: ${h}`);this.Component=d[h]}return this.hydrator=u,this.hydrate}catch(d){return this.handleHydrationError(d),()=>{}}},e,this)}catch(n){this.handleHydrationError(n)}}attributeChangedCallback(){this.hydrate()}}l(f,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",f)}})();</script><astro-island uid="Z1QAjhA" prefix="r4" component-url="/_astro/BrowserExtensionDetection.Djr8Z4sV.js" component-export="BrowserExtensionDetection" renderer-url="/_astro/client.DSHm9q9k.js" props="{}" ssr client="load" opts="{&quot;name&quot;:&quot;BrowserExtensionDetection&quot;,&quot;value&quot;:true}"></astro-island><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event("astro:only"));})();</script><astro-island uid="1vyQI8" component-url="/_astro/index.7k-Ykhec.js" component-export="SessionReplayIsland" renderer-url="/_astro/client.DSHm9q9k.js" props="{}" ssr client="only" opts="{&quot;name&quot;:&quot;SessionReplayIsland&quot;,&quot;value&quot;:&quot;react&quot;}"></astro-island><astro-island uid="15q8Le" component-url="/_astro/index.7k-Ykhec.js" component-export="IntercomChatIsland" renderer-url="/_astro/client.DSHm9q9k.js" props="{&quot;disabled&quot;:[0,false]}" ssr client="only" opts="{&quot;name&quot;:&quot;IntercomChatIsland&quot;,&quot;value&quot;:&quot;react&quot;}"></astro-island><astro-island uid="1LsfNJ" component-url="/_astro/index.7k-Ykhec.js" component-export="PageTracker" renderer-url="/_astro/client.DSHm9q9k.js" props="{&quot;is404&quot;:[0,true]}" ssr client="only" opts="{&quot;name&quot;:&quot;PageTracker&quot;,&quot;value&quot;:&quot;react&quot;}"></astro-island><style>html.gab-dismissed [data-gab-id="15"]{display:none!important}</style><script>(function(){const bannerId = "15";
+
+  try {
+  	const hidden = JSON.parse(localStorage.getItem('hidden-global-banners') || '[]');
+  	if (Array.isArray(hidden) && hidden.indexOf(bannerId) !== -1) {
+  		document.documentElement.classList.add('gab-dismissed');
+  	}
+  } catch {
+  	// localStorage unavailable (rare: storage fully disabled): no-op, banner stays visible.
+  	// Dismissal persistence just won't work for this session.
+  }
+})();</script><script>(function(){const mockLoginQueryParam = "simulateLogin";
+const mockLoginSessionKey = "CALENDLY_SIMULATED_LOGIN";
+const productionHostnames = ["calendly.com","www.calendly.com"];
+
+	(function () {
+		const KEY = 'CALENDLY_AUTHENTICATED_USER_STATUS';
+		const hostname = window.location.hostname.toLowerCase().replace(/\.$/, '');
+		const mockLoginAllowed = !productionHostnames.includes(hostname);
+		const queryValue = new URLSearchParams(window.location.search).get(mockLoginQueryParam);
+		let simulatedLogin = false;
+
+		try {
+			if (mockLoginAllowed && queryValue === 'true') {
+				window.sessionStorage.setItem(mockLoginSessionKey, 'true');
+				simulatedLogin = true;
+			} else if (mockLoginAllowed && queryValue === 'false') {
+				window.sessionStorage.removeItem(mockLoginSessionKey);
+			} else if (mockLoginAllowed) {
+				simulatedLogin = window.sessionStorage.getItem(mockLoginSessionKey) === 'true';
+			} else {
+				window.sessionStorage.removeItem(mockLoginSessionKey);
+			}
+		} catch {
+			// Session storage unavailable: the explicit query parameter still works for
+			// the current page, but cannot persist beyond it.
+			simulatedLogin = mockLoginAllowed && queryValue === 'true';
+		}
+
+		try {
+			const match = document.cookie.match(new RegExp('(?:^|; )' + KEY + '=([^;]*)'));
+			const cookieLoggedIn = match ? decodeURIComponent(match[1]) === 'true' : false;
+			const isLoggedIn = simulatedLogin || cookieLoggedIn;
+
+			// Also clears stale localStorage=true after logout (cookie gone).
+			if (isLoggedIn) {
+				window.localStorage.setItem(KEY, 'true');
+			} else {
+				window.localStorage.removeItem(KEY);
+			}
+
+			if (isLoggedIn) document.documentElement.classList.add('auth-in');
+		} catch {
+			// cookies/localStorage unavailable: no-op, logged-out CTAs stay visible.
+		}
+	})();
+})();</script><astro-island uid="zAvzd" prefix="r6" component-url="/_astro/index.7k-Ykhec.js" component-export="HeaderIsland" renderer-url="/_astro/client.DSHm9q9k.js" props="{&quot;locale&quot;:[0,&quot;en-US&quot;],&quot;ctaTalkToSales&quot;:[0,&quot;Talk to sales&quot;],&quot;ctaLogin&quot;:[0,&quot;Log In&quot;],&quot;ctaSignup&quot;:[0,&quot;Get started for free&quot;],&quot;ctaSignupShort&quot;:[0,&quot;Get started&quot;],&quot;ctaMyAccount&quot;:[0,&quot;My Account&quot;],&quot;announcementBanner&quot;:[0,{&quot;id&quot;:[0,&quot;15&quot;],&quot;heading&quot;:[0,&quot;Introducing the new Calendly, built to handle all of the work around meetings.&quot;],&quot;icon&quot;:[0,{&quot;icon&quot;:[0,&quot;IconSpeakerphone&quot;],&quot;alt&quot;:[0,&quot;&quot;]}],&quot;backgroundColor&quot;:[0,&quot;blue&quot;],&quot;linkLabel&quot;:[0,&quot;Learn more&quot;],&quot;linkHref&quot;:[0,&quot;/blog/new-calendly&quot;],&quot;targetGroup&quot;:[0,&quot;all&quot;],&quot;includeOn&quot;:[1,[[0,&quot;/**&quot;],[0,&quot;/legal&quot;]]],&quot;doNotShow&quot;:[1,[[0,&quot;/login&quot;],[0,&quot;/signup&quot;],[0,&quot;/landing&quot;],[0,&quot;/landing/**&quot;],[0,&quot;/contact&quot;],[0,&quot;/contact/**&quot;],[0,&quot;/blog&quot;],[0,&quot;/blog/**&quot;],[0,&quot;/newsroom&quot;],[0,&quot;/newsroom/**&quot;],[0,&quot;/integration/**&quot;],[0,&quot;/integration&quot;],[0,&quot;/solutions&quot;],[0,&quot;/solutions/**&quot;]]]}],&quot;menuLinks&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;97&quot;],&quot;label&quot;:[0,&quot;Products&quot;],&quot;link&quot;:[0,&quot;/features&quot;],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;210&quot;],&quot;label&quot;:[0,&quot;PRODUCTS&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;212&quot;],&quot;label&quot;:[0,&quot;Scheduling&quot;],&quot;link&quot;:[0,&quot;/features/scheduling&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;220&quot;],&quot;label&quot;:[0,&quot;Notetaker&quot;],&quot;link&quot;:[0,&quot;/notetaker&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;229&quot;],&quot;label&quot;:[0,&quot;Contacts&quot;],&quot;link&quot;:[0,&quot;/contacts&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;227&quot;],&quot;label&quot;:[0,&quot;Payments&quot;],&quot;link&quot;:[0,&quot;/payments&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;213&quot;],&quot;label&quot;:[0,&quot;Overview&quot;],&quot;link&quot;:[0,&quot;/features&quot;],&quot;submenu&quot;:[0]}]]]}],[0,{&quot;id&quot;:[0,&quot;218&quot;],&quot;label&quot;:[0,&quot;PLATFORM&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;215&quot;],&quot;label&quot;:[0,&quot;Integrations&quot;],&quot;link&quot;:[0,&quot;/integration&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;217&quot;],&quot;label&quot;:[0,&quot;Mobile app&quot;],&quot;link&quot;:[0,&quot;/features/mobile-apps&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;214&quot;],&quot;label&quot;:[0,&quot;Browser extension&quot;],&quot;link&quot;:[0,&quot;/features/browser-extensions&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;216&quot;],&quot;label&quot;:[0,&quot;Admin controls&quot;],&quot;link&quot;:[0,&quot;/features/admin-management&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;219&quot;],&quot;label&quot;:[0,&quot;Security&quot;],&quot;link&quot;:[0,&quot;/security&quot;],&quot;submenu&quot;:[0]}]]]}]]]}],[0,{&quot;id&quot;:[0,&quot;146&quot;],&quot;label&quot;:[0,&quot;Solutions&quot;],&quot;link&quot;:[0,&quot;/solutions&quot;],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;148&quot;],&quot;label&quot;:[0,&quot;By business size&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;1&quot;],&quot;label&quot;:[0,&quot;Individuals&quot;],&quot;link&quot;:[0,&quot;/solutions/individuals&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;150&quot;],&quot;label&quot;:[0,&quot;Small business&quot;],&quot;link&quot;:[0,&quot;/solutions/small-business&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;8&quot;],&quot;label&quot;:[0,&quot;Large companies&quot;],&quot;link&quot;:[0,&quot;/solutions/enterprise&quot;],&quot;submenu&quot;:[0]}]]]}],[0,{&quot;id&quot;:[0,&quot;140&quot;],&quot;label&quot;:[0,&quot;By team&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;14&quot;],&quot;label&quot;:[0,&quot;Sales&quot;],&quot;link&quot;:[0,&quot;/solutions/sales&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;57&quot;],&quot;label&quot;:[0,&quot;Marketing&quot;],&quot;link&quot;:[0,&quot;/solutions/marketing&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;54&quot;],&quot;label&quot;:[0,&quot;Customer Success&quot;],&quot;link&quot;:[0,&quot;/solutions/customer-success&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;15&quot;],&quot;label&quot;:[0,&quot;Recruiting&quot;],&quot;link&quot;:[0,&quot;/solutions/recruiting&quot;],&quot;submenu&quot;:[0]}]]]}],[0,{&quot;id&quot;:[0,&quot;141&quot;],&quot;label&quot;:[0,&quot;By industry&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;144&quot;],&quot;label&quot;:[0,&quot;Education&quot;],&quot;link&quot;:[0,&quot;/solutions/education&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;142&quot;],&quot;label&quot;:[0,&quot;Technology&quot;],&quot;link&quot;:[0,&quot;/solutions/technology&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;143&quot;],&quot;label&quot;:[0,&quot;Financial Services&quot;],&quot;link&quot;:[0,&quot;/solutions/financial-services&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;145&quot;],&quot;label&quot;:[0,&quot;Professional Services&quot;],&quot;link&quot;:[0,&quot;/solutions/professional-services&quot;],&quot;submenu&quot;:[0]}]]]}]]]}],[0,{&quot;id&quot;:[0,&quot;88&quot;],&quot;label&quot;:[0,&quot;Resources&quot;],&quot;link&quot;:[0,&quot;/resources&quot;],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;82&quot;],&quot;label&quot;:[0,&quot;Get started&quot;],&quot;link&quot;:[0,&quot;/resources&quot;],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;89&quot;],&quot;label&quot;:[0,&quot;Learning hub&quot;],&quot;link&quot;:[0,&quot;/learn&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;223&quot;],&quot;label&quot;:[0,&quot;Developer docs&quot;],&quot;link&quot;:[0,&quot;https://developer.calendly.com&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;226&quot;],&quot;label&quot;:[0,&quot;Product tour&quot;],&quot;link&quot;:[0,&quot;/contact/demo&quot;],&quot;submenu&quot;:[0]}]]]}],[0,{&quot;id&quot;:[0,&quot;225&quot;],&quot;label&quot;:[0,&quot;Discover&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;93&quot;],&quot;label&quot;:[0,&quot;Blog&quot;],&quot;link&quot;:[0,&quot;/blog&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;222&quot;],&quot;label&quot;:[0,&quot;What&#39;s new&quot;],&quot;link&quot;:[0,&quot;/release-notes&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;91&quot;],&quot;label&quot;:[0,&quot;Guides &amp; webinars&quot;],&quot;link&quot;:[0,&quot;/resources&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;80&quot;],&quot;label&quot;:[0,&quot;Customer stories&quot;],&quot;link&quot;:[0,&quot;/customers&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;94&quot;],&quot;label&quot;:[0,&quot;About&quot;],&quot;link&quot;:[0,&quot;/about&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;21&quot;],&quot;label&quot;:[0,&quot;Newsroom&quot;],&quot;link&quot;:[0,&quot;/newsroom&quot;],&quot;submenu&quot;:[0]}]]]}],[0,{&quot;id&quot;:[0,&quot;84&quot;],&quot;label&quot;:[0,&quot;Support&quot;],&quot;link&quot;:[0],&quot;submenu&quot;:[1,[[0,{&quot;id&quot;:[0,&quot;90&quot;],&quot;label&quot;:[0,&quot;Help center&quot;],&quot;link&quot;:[0,&quot;/help&quot;],&quot;submenu&quot;:[0]}],[0,{&quot;id&quot;:[0,&quot;96&quot;],&quot;label&quot;:[0,&quot;Community&quot;],&quot;link&quot;:[0,&quot;https://communi

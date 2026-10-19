@@ -1,0 +1,183 @@
+# OTTO
+Last-Updated: 2026-09-29
+
+> OTTO (otto.de) ist einer der größten Online-Marktplätze in Deutschland für die Sortimente Mode, Wohnen & Einrichten, Technik, Sport, Baby & Kind, Garten & Baumarkt und Beauty. 
+> Über 19.000 Marken im Angebot – von Eigenhandel (Verkäufer "OTTO") bis zu tausenden Drittanbietern auf dem OTTO-Marktplatz. 
+> Zielgruppe: Privatkund:innen (B2C) in Deutschland, die Wert auf flexible Zahlungsmöglichkeiten (Kauf auf Rechnung, Ratenzahlung, 100-Tage-Zahlpause), kostenlose Rücksendung und ein breites Markensortiment mit Qualität legen. 
+> Teil der Otto Group, Hamburg.
+
+## URL-Struktur
+- Produktdetailseite: `/p/{produktname-slug}-{produkt-id}/`
+- Spezifische Varianten: `/p/{produktname-slug}-{produkt-id}/?variationId={variation-id}`
+- Kategorie-/Sortimentsseite: `/{hauptkategorie}/{unterkategorie}/`, z. B. `/damen/mode/kleider/`
+- Gefilterte Kategorieansicht: Filterparameter werden an die Kategorie-URL angehängt, z. B. `?farbe=schwarz`, `?marke=_adidas`, `?standardgroesse=140x200-cm`
+- Marken-Landingpages: `/{kategorie}/?marke={marken-slug}` bzw. eigene Markenwelten unter `/marken/{marke}/`
+- Inspiration/Content: `/inspiration/{thema}/`
+- Service & Hilfe FAQ: `/service/{thema}/`
+- Magazin & Kaufberatung im Bereich Technik & Haushalt: `/updated/{thema}/` 
+
+## Sortiment – Hauptkategorien
+
+### Damen-Mode
+Tags: Damenbekleidung, Kleider, Jacken, Hosen, Jeans, Schuhe, Taschen, Schmuck, Wäsche, Bademode, Sportmode
+
+- [Damen-Mode](https://www.otto.de/damen/): Bekleidung, Wäsche, Bademode, Schuhe, Taschen und Accessoires für Damen
+- [Damenbekleidung](https://www.otto.de/damen/mode/): Kleider, Hosen, Jacken, Blusen, Pullover, Mäntel, uvm.
+- [Damenschuhe](https://www.otto.de/damen/schuhe/): Sneaker, Stiefel, Sandalen, Pumps, Boots, uvm.
+- [Damen Taschen](https://www.otto.de/damen/taschen/): Handtaschen, Rucksäcke, Umhängetaschen
+- [Damen Accessoires](https://www.otto.de/damen/accessoires/): Schmuck, Uhren, Gürtel, Mützen, Schals
+
+### Herren-Mode
+Tags: Herrenbekleidung, Hemden, Jeans, Anzüge, Sportmode, Schuhe, Herrenaccessoires
+
+- [Herren-Mode](https://www.otto.de/herren/): Bekleidung, Wäsche, Bademode, Schuhe, Taschen und Accessoires für Herren
+- [Herrenbekleidung](https://www.otto.de/herren/mode/): Hemden, Hosen, Shorts, Jacken, Anzüge, Sportmode
+- [Herrenschuhe](https://www.otto.de/herren/schuhe/): Sneaker, Boots, Hausschuhe
+- [Herren Taschen](https://www.otto.de/herren/taschen/): Rucksäcke, Umhängetaschen
+- [Herren Accessoires](https://www.otto.de/herren/accessoires/): Uhren, Schmuck, Caps, Gürtel
+
+### Baby & Kind
+Tags: Babykleidung, Jungenmode, Mädchenmode, Spielzeug, Kindermöbel, Babyausstattung
+
+- [Baby & Kind](https://www.otto.de/babys/baby-kind/): Ausstattung, Kleidung, Spielzeug und Möbel für Babys und Kinder
+- [Babykleidung](https://www.otto.de/babys/): Erstausstattung und Bekleidung für Babys
+- [Jungenmode](https://www.otto.de/jungen/): Bekleidung und Sportmode für Jungen
+- [Mädchenmode](https://www.otto.de/maedchen/): Bekleidung und Sportmode für Mädchen
+- [Spielzeug](https://www.otto.de/spielzeug/): Kuscheltiere, Puppen, Outdoor-Spielzeug (inkl. ehemaliges myToys-Sortiment)
+- [Kindermöbel](https://www.otto.de/moebel/kindermoebel/): Kinderzimmermöbel, Hochbetten, Etagenbetten
+
+### Sport
+Tags: Fitnessgeräte, Fahrräder, E-Bikes, Sportmode, Sportschuhe, Sportausrüstung
+
+- [Sport](https://www.otto.de/sport/): Fitnessgeräte, Sportausrüstung, Sport-Accessoires
+- [Fahrräder & E-Bikes](https://www.otto.de/fahrraeder/): Fahrräder, E-Bikes, Fahrradzubehör und -bekleidung
+- [Fitnessgeräte](https://www.otto.de/sport/fitnessgeraete/): Laufbänder, Crosstrainer, Heimtrainer
+- [Sportmode](https://www.otto.de/damen/mode/sportmode/): Trainingsanzüge, Sport-BHs, Jogginghosen
+
+### Beauty & Drogerie
+Tags: Parfum, Körperpflege, Kosmetik, Drogerieartikel, Gesundheit
+
+- [Beauty & Drogerie](https://www.otto.de/koerperpflege/drogerie/): Parfum, Kosmetik, Körperpflege, Drogeriebedarf
+- [Parfums](https://www.otto.de/koerperpflege/parfum/): Damen-, Herren- und Unisexdüfte
+- [Gesundheitsprodukte](https://www.otto.de/gesundheit/): Wärmegeräte, Wellness, Gesundheitsartikel
+
+### Multimedia (Technik)
+Tags: Smartphones, Tablets, Notebooks, Fernseher, Gaming, Kopfhörer, Kameras
+
+- [Multimedia](https://www.otto.de/technik/multimedia/): Smartphones, Computer, TV, Audio, Gaming, Foto
+- [Apple](https://www.otto.de/technik/apple/): iPhone, iPad und weitere Apple-Produkte
+- [Gaming](https://www.otto.de/technik/gaming/): PlayStation, Xbox, Nintendo Switch, Gaming-Zubehör
+- [Audio](https://www.otto.de/technik/audio/): Kopfhörer, Lautsprecher, Soundbars
+- [Kameras](https://www.otto.de/technik/kamera/): Digitalkameras und Fotozubehör
+- [Multimedia-Zubehör](https://www.otto.de/technik/zubehoer/): Hüllen, Tastaturen, Ladezubehör
+
+### Haushalt
+Tags: Kühlschränke, Waschmaschinen, Küchengeräte, Staubsauger, Kaffeemaschinen, Haushaltsgroßgeräte
+
+- [Haushalt](https://www.otto.de/haushalt/?ansicht=einstieg): Haushaltsgroßgeräte, Küchengeräte, Reinigung
+- [Kühlschränke](https://www.otto.de/haushalt/kuehlschraenke/): Kühl-Gefrierkombinationen, Side-by-Side, Einbaukühlschränke
+- [Waschmaschinen & Trockner](https://www.otto.de/haushalt/waschmaschinen/?ansicht=einstieg): Waschmaschinen, Waschtrockner, Wärmepumpentrockner
+- [Küchengeräte](https://www.otto.de/haushalt/kuechengeraete/): Küchenmaschinen, Mixer, Toaster, Wasserkocher, Heißluftfritteusen
+- [Kaffeemaschinen](https://www.otto.de/haushalt/kaffeemaschinen/): Kaffeevollautomaten und Filterkaffeemaschinen
+- [Staubsauger](https://www.otto.de/haushalt/staubsauger/): Akku-Staubsauger, Saugroboter
+
+### Küche
+Tags: Küchenmöbel, Küchenzeilen, Geschirr, Kochgeschirr, Kochfelder, Backöfen
+
+- [Küche](https://www.otto.de/moebel/?ansicht=einstieg&thema=kueche): Küchenmöbel, Küchenzeilen, Kochgeschirr, Geschirr
+- [Küchenzeilen](https://www.otto.de/moebel/kuechenmoebel/kuechenzeilen/): Küchenzeilen mit und ohne Elektrogeräte
+- [Geschirr](https://www.otto.de/haushalt/geschirr/): Geschirr-Sets, Teller, Tassen
+- [Kochfelder & Backöfen](https://www.otto.de/haushalt/kochfelder/): Induktionskochfelder, Backöfen, Herde
+
+### Heimtextilien
+Tags: Bettwäsche, Matratzen, Gardinen, Teppiche, Handtücher, Kissen
+
+- [Heimtextilien](https://www.otto.de/heimtextilien/?ansicht=einstieg): Bettwäsche, Matratzen, Gardinen, Teppiche, Handtücher
+- [Matratzen](https://www.otto.de/heimtextilien/matratzen/): Kaltschaum-, Federkern- und Boxspring-Matratzen 
+- [Gardinen & Rollos](https://www.otto.de/heimtextilien/gardinen/?ansicht=einstieg): Gardinen, Plissees, Rollos, Jalousien
+- [Bettwäsche](https://www.otto.de/heimtextilien/bettwaesche/): Biber-, Mako-Satin- und Kinderbettwäsche
+- [Teppiche](https://www.otto.de/heimtextilien/teppiche/): Runde Teppiche, Outdoor- und Orientteppiche
+
+### Möbel
+Tags: Sofas, Betten, Schränke, Tische, Wohnzimmermöbel, Schlafzimmermöbel
+
+- [Möbel](https://www.otto.de/moebel/?ansicht=einstieg): Sofas, Betten, Schränke, Tische, Kommoden
+- [Sofas](https://www.otto.de/moebel/sofas/): Ecksofas, Schlafsofas, Big Sofas, Wohnlandschaften
+- [Betten](https://www.otto.de/moebel/betten/): Boxspringbetten, Polsterbetten, Hochbetten
+- [Schränke](https://www.otto.de/moebel/schraenke/): Kleiderschränke, Schuhschränke, Vitrinen
+- [Tische](https://www.otto.de/moebel/tische/): Esstische, Couchtische, Schreib- und Beistelltische
+- [Lampen](https://www.otto.de/lampen/): Deckenlampen, Stehlampen und Tischleuchten
+- [Dekoration](https://www.otto.de/dekoration/): Wanddeko, Kerzen, Vasen, Aufbewahrung
+
+### Baumarkt
+Tags: Werkzeug, Sanitär, Heizung, Gartenmöbel, Grills, Bodenbeläge
+
+- [Baumarkt](https://www.otto.de/baumarkt/): Sanitär, Heizung, Werkzeug, Bodenbeläge, Türen
+- [Garten & Balkon](https://www.otto.de/garten/): Gartenmöbel, Pavillons, Pools, Grills, Gartenhäuser
+- [Sanitär](https://www.otto.de/baumarkt/sanitaer/): Duschen, WCs, Waschtische, Badewannen
+- [Werkzeug](https://www.otto.de/baumarkt/werkzeug/): Elektro- und Handwerkzeug
+
+## Marken
+Otto führt über 19.000 Marken – von internationalen Top-Marken über deutsche Traditionsmarken bis zu Eigenmarken (OTTO Home) und Marktplatz-Partnern.
+
+- [Markenübersicht](https://www.otto.de/marken/): Alle bei OTTO gelisteten Marken im Überblick
+- [adidas](https://www.otto.de/mode/?marke=_adidas): Fashion – Sportmode und Sneaker
+- [Tommy Hilfiger](https://www.otto.de/mode/?marke=_tommy-hilfiger): Fashion – Bekleidung und Accessoires
+- [Apple](https://www.otto.de/technik/apple/): Multimedia – iPhone, iPad, Mac, AirPods
+- [Samsung](https://www.otto.de/technik/?marke=samsung): Multimedia – Smartphones, TV, Haushaltselektronik
+- [Bosch](https://www.otto.de/haushalt/?marke=bosch): Haushalt – Waschmaschinen, Geschirrspüler, Küchengeräte
+- [Siemens](https://www.otto.de/haushalt/?marke=siemens): Haushalt – Kühlschränke, Kaffeevollautomaten, Herde
+- [OTTO home](https://www.otto.de/wohnen/?marke=otto-home): Living – OTTO-Eigenmarke für Möbel und Wohnaccessoires
+- [Rauch](https://www.otto.de/moebel/?marke=rauch): Living – Schränke, Betten und Kommoden
+- [Esprit](https://www.otto.de/mode/?marke=_esprit): Fashion – Mode für Damen und Herren
+- [Jack Wolfskin](https://www.otto.de/mode/?marke=jack-wolfskin): Fashion – Outdoor-Bekleidung
+
+## Ratgeber, Inspiration & Content
+- [Inspiration](https://www.otto.de/inspiration/): Einrichtungsideen, Mode-Styles, Trendthemen und Neuheiten aus allen Sortimenten
+- [Ratgeber-Blog](https://www.otto.de/updated/): Redaktioneller Blog mit Kaufberatung und Updates zu Lifestyle- und Tech-Themen (u. a. Technik-Neuheiten, Produktvergleiche, Top-Produkte, Beratung zu Multimedia-Themen)
+- [Job-Blog](https://www.otto.de/jobs/technology/techblog/): Einblicke in das Unternehmen, in Technologie und Engineering bei OTTO 
+
+## Service & Dienstleistungen
+- [Service & Hilfe – Übersicht](https://www.otto.de/service/): Zentrale Anlaufstelle für alle Kund:innenanliegen
+- [OTTO-Marktplatz – FAQ](https://www.otto.de/service/faqs_otto_marktplatz/): Wie der Marktplatz funktioniert, Rechte und Pflichten von Käufer:innen und Drittverkäufern
+- [OTTO Versprechen](https://www.otto.de/service/ottoversprechen/): Käuferschutz bei Problemen mit Drittverkäufern (Lieferung, Rücksendung, Reklamation) - Vermittlungs-/Unterstützungsleistung
+- [OTTO UP – Vorteilsprogramm](https://www.otto.de/service/up/): Vorteilsprogramm in 2 Stufen mit Bedingungen zu versandkostenfreier Lieferung
+- [OTTO Payments](https://www.otto.de/service/ottopayments/): Zahlungsabwicklung über den konzerneigenen Zahlungspartner
+- [Lieferung](https://www.otto.de/service/lieferung/): Versandkosten, Lieferarten und Lieferzeiten bei OTTO und Marktplatz-Verkäufern
+- [Bezahlung](https://www.otto.de/service/payment/): Rechnung, Ratenzahlung, Lastschrift, Kreditkarte, PayPal
+- [Installation & Aufbau](https://www.otto.de/service/installation/): Aufbauservice für Möbel, Installationsservice für Elektrogeräte
+- [Mitnahme & Entsorgung](https://www.otto.de/service/mitnahme/): Altgeräte-/Altmöbel-Mitnahme bei Neukauf (Matratzen, Polstermöbel, Fahrräder u. a.)
+- [Rücksendung](https://www.otto.de/service/ruecksendung/): Kostenlose Rücksendung, 30-tägige Rücksendefrist (Marktplatz), gesetzliches Widerrufsrecht unberührt
+- [Gewährleistung, Garantie, Reparatur](https://www.otto.de/service/guarantee/): Gesetzliche Gewährleistung, Langzeitgarantie, Reparaturservice
+- [OTTO-App](https://www.otto.de/service/ordercellphonehandyservices/): App für iOS und Android mit exklusiven Angeboten
+- [Kontakt](https://www.otto.de/service/contact/): KI-Assistent, Kontaktformular, kostenloser Rückruf, Telefon & Chat
+- [Gutscheine](https://www.otto.de/shoppages/gutschein/): Geschenkgutscheine für otto.de
+
+## Häufige Fragen
+- [Was ist der OTTO-Marktplatz und wer ist Vertragspartner?](https://www.otto.de/service/faqs_otto_marktplatz/): Erklärung des Marktplatzmodells – Vertrag besteht zwischen Käufer:in und jeweiligem Verkäufer, OTTO ist bei Drittanbieter-Artikeln keine Vertragspartei
+- [Wie funktioniert der Kauf auf Rechnung / Ratenzahlung / 100-Tage-Zahlpause?](https://www.otto.de/shoppages/service/payment): Zahlungsarten im Überblick, bonitätsabhängig
+- [Was mache ich, wenn ein Drittverkäufer nicht reagiert?](https://www.otto.de/service/ottoversprechen/): Ablauf des OTTO Versprechens bei Lieferproblemen, Rücksendungen oder Reklamationen
+- [Wie lange dauert die Lieferung?](https://www.otto.de/shoppages/service/lieferung): Lieferzeiten und -kosten variieren je nach Verkäufer
+- [Wie funktioniert OTTO UP und was bringt es?](https://www.otto.de/service/up/): Kostenloses Treueprogramm (Basic mit kostenlosem Versand ab 59,95€ Bestellwert) und kostenpflichtiges Upgrade (Plus, 9,90 €/12 Monate) mit Bonus-Punkten, Level-System und Versandkostenbefreiung – gilt nur für Artikel des Verkäufers OTTO
+- [Kann ich Möbel liefern und aufbauen lassen?](https://www.otto.de/service/installation/): Aufbauservice für Möbel und Installationsservice für Technik
+- [Was passiert mit meinem alten Gerät/Möbelstück?](https://www.otto.de/service/mitnahme/): Mitnahme- und Entsorgungsservice bei Neukauf
+- [Wie kann ich zurücksenden oder widerrufen?](https://www.otto.de/service/ruecksendung/): Widerrufsrecht und Rücksendeprozess
+
+## Strukturierte Daten & KI-Crawler
+Auf otto.de stehen maschinenlesbare Daten u. a. als JSON-LD bereit (u. a. Product, Offer/AggregateOffer inkl. Produktdetails, Verkäuferinformation, Versandoptionen, Services, Organization). Diese llms.txt ergänzt die Navigation für LLM- und KI-Crawler um kuratierte Einstiegspunkte zu Sortiment, Marktplatz-Besonderheiten und Services.
+
+## Nachhaltigkeit
+- [OTTO Versprechen & Nachhaltigkeit](https://www.otto.de/nachhaltigkeit/paludi/): Nachhaltige Verpackungslösungen (u. a. Paludi-Kartons mit Moorpflanzenfasern, plastikfreie Versandlösungen wie Wildplastic)
+- Gekennzeichnete Mode/Textilien und Möbel mit unabhängigen Zertifizierungen (z. B. FSC® für Holzprodukte) als Orientierungshilfe im Sortiment
+- [Kleiderspende im Paket](https://www.platzschaffenmitherz.de/): Möglichkeit, gebrauchte Textilien direkt im Retourenpaket für wohltätige Zwecke zu spenden
+
+## Optional
+- [Über uns](https://www.otto.de/service/about/): Unternehmensinformationen, nachhaltige Marken, soziales Engagement
+- [Presse](https://www.otto.de/unternehmen/de/presse/): Presseinformationen zu OTTO
+- [Jobs](https://www.otto.de/jobs/de/): Karriere bei OTTO, insb. Tech- und Engineering-Teams
+- [OTTO Market (Verkaufen bei OTTO)](https://www.otto.market): Informationen für Unternehmen, die als Drittverkäufer auf dem OTTO-Marktplatz anbieten möchten
+- [Allgemeine Geschäftsbedingungen](https://www.otto.de/service/agb/)
+- [Datenschutzinformationen](https://www.otto.de/service/datenschutz/)
+- [Impressum](https://www.otto.de/service/impressum/)
+- [Information zur Barrierefreiheit](https://www.otto.de/shoppages/information_zur_barrierefreiheit)
+- [Produktsicherheitsrückrufe](https://www.otto.de/shoppages/produktsicherheitsrueckrufe)

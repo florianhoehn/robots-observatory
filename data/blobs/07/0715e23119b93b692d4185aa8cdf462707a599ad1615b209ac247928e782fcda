@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" type="text/css" href="/modules/isoorg-template/css/wood.full.min.css"/>
+  <script type="text/javascript" src="/modules/isoorg-template/javascript/wood.full.min.js"></script>
+  <link rel="shortcut icon" href="/modules/isoorg-template/img/iso/favicon/red/favicon.ico">
+  <title>404 - Page not found</title>
+  <script type="module">
+    let isRender = false;
+    let searchURL = '/search.html';
+    const renderURI = '/cms/render/default';
+    let pathname = window.location.pathname;
+    if (pathname.startsWith(renderURI)) {
+        isRender = true;
+    }
+    if (pathname.replace(renderURI, '').startsWith('/fr')) {
+        searchURL = '/fr' + searchURL;
+    }
+    else if (pathname.replace(renderURI, '').startsWith('/ru')) {
+        searchURL = '/ru' + searchURL;
+    }
+    if (isRender) {
+        searchURL = renderURI + searchURL;
+    }
+    $(document).on('submit', 'form.isosearch', function(e) {
+        e.preventDefault();
+        var val = $(this).find('input[type="search"]').val();
+        // Get rid of "."
+        val = val.replace(/^\.$/, "");
+        // Get rid of ".."
+        val = val.replace(/^\.\.$/, "");
+        // Get rid of every "%"
+        val = val.replace(/%/g, "");
+        val = val.trim();
+        if (val !== '') {
+            location.replace(searchURL + '?q=' + val);
+        }
+    });
+</script>
+</head>
+<body role="main" id="content" aria-label="Content" class="acer error-page" onLoad="if (history.length > 1) { document.getElementById('backLink').style.display=''; }" tabindex="-1">
+  <header role="banner" aria-label="Header" class="header-bootstrap sticky-top" id="page-top">
+  <div class="navbar nav-iso navbar-expand-md navbar-light bg-white text-dark shadow" data-spy="affix" data-offset-top="200">
+    <div class="container">
+      <a class="logo logo-square isologo logo-sm" href="/" title="ISO"></a>
+      <!-- TOP LEVEL1 NAVIGATION -->
+      <nav role="navigation" aria-label="Main Navigation" class="collapse navbar-collapse" id="mainNav">
+        <ul role="menubar" class="navbar-nav me-auto mb-lg-0">
+          <li class="nav-item hasChildren dropdown firstInLevel">
+            <a href="/standards.html" class="nav-link" role="button" aria-expanded="false">Standards</a>
+          </li>
+          <li class="nav-item hasChildren dropdown firstInLevel">
+            <a href="/about-us.html" class="nav-link" role="button" aria-expanded="false">About us</a>
+          </li>
+          <li class="nav-item hasChildren dropdown firstInLevel">
+            <a href="/news.html" class="nav-link" role="button" aria-expanded="false">News</a>
+          </li>
+          <li class="nav-item hasChildren dropdown firstInLevel">
+            <a href="/developing-standards.html" class="nav-link" role="button" aria-expanded="false">Taking part</a>
+          </li>
+          <li class="nav-item hasChildren dropdown firstInLevel">
+            <a href="/store.html" class="nav-link" role="button" aria-expanded="false">Store</a>
+          </li>
+        </ul>
+      </nav>
+      <form class="navbar-form d-flex isosearch ms-sm-2" role="search" id="siteSearch">
+        <div class="input-group">
+          <input type="search" class="form-control search-input">
+          <button class="btn btn-primary search-submit" type="submit">
+            <i class="bi-search"></i><span class="visually-hidden">Search</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</header>
+<main role="main" id="content" class="acer" aria-label="Content" tabindex="-1">
+    <section class="bg-info section-sm">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="error-code mt-1" style="opacity: 0.25;"><i class="bi-signpost-split"></i>&thinsp;404</div>
+              <h1 class="mt-1 h2">The page you are looking for cannot be found</h1></div>
+        </div>
+      </div>
+    </section>
+    <section class="text-center">
+      <div class="container">
+        <div class="row">
+  <div class="col-md-12">
+    <h3>Not to worry... here are 3 options</h3><br/>
+  </div>
+</div>
+<div class="row grid">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="h5 mb-3" id="backLink">Return where you came from</div>
+        <a class="btn btn-outline-primary" href="javascript:history.back()">Back</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="h5 mb-3">Go to the homepage</div>
+        <a class="btn btn-primary" href="/">Homepage</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="h5 mb-3">Search on ISO.org</div>
+        <form class="d-flex isosearch" role="search">
+          <div class="input-group">
+            <input type="search" class="form-control search-input">
+            <button class="btn btn-primary search-submit" type="submit">
+              <i class="bi-search"></i><span class="visually-hidden">Search</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+    </section>
+  </main>
+</body>
+</html>

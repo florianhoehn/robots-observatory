@@ -78,7 +78,17 @@ READ_CAP_BYTES = 512 * 1024
 # enough to identify what it was.
 ARCHIVE_CAP_PRESENT = 256 * 1024
 ARCHIVE_CAP_OTHER = 32 * 1024
-TIMEOUT = httpx.Timeout(connect=10.0, read=15.0, write=10.0, pool=10.0)
+# A static policy file that has not answered in six seconds is not going to.
+# These were 10/15 and, doubled by the retry and multiplied by twelve paths,
+# cost a worker ten minutes per dead host -- which is what actually limited
+# throughput, not the worker count.
+TIMEOUT = httpx.Timeout(connect=5.0, read=6.0, write=5.0, pool=5.0)
+
+# Hard ceiling on one host's whole probe. Past it the remaining paths are
+# recorded as skipped rather than silently absent: a host that cannot answer
+# in two minutes has told us what we needed to know, and the tail of slow
+# hosts should not set the pace for the other sixteen thousand.
+HOST_BUDGET_S = 120.0
 
 # Injectable so the conduct limits below are verifiable against a local test
 # server. Production runs never set it.
@@ -397,6 +407,7 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         "robots": [], "wellknown": {}, "errors": [],
     }
 
+    t_start = time.monotonic()
     bodies: dict[str, str | None] = {}
     first = True
     for ident, headers in IDENTITIES.items():
@@ -458,6 +469,11 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         return rec
 
     for key, path in WELLKNOWN.items():
+        if time.monotonic() - t_start > HOST_BUDGET_S:
+            rec["wellknown"][key] = {"status": None, "file_state": "skipped",
+                                     "skipped": "host_time_budget"}
+            rec.setdefault("budget_exceeded", True)
+            continue
         time.sleep(HOST_GAP_S)
         got = fetch(f"{SCHEME}://{host}{path}", IDENTITIES["honest_bot"])
         body = got.pop("_body")
@@ -752,7 +768,7 @@ def cmd_run(args) -> None:
         if not panel:
             sys.exit("nothing left to do; run derive")
 
-    print(f"run {run_id} | {len(panel)} hosts | {len(panel) * 5} requests | "
+    print(f"run {run_id} | {len(panel)} hosts | {len(panel) * (len(IDENTITIES) + len(WELLKNOWN)):,} requests | "
           f"vantage {vantage}", file=sys.stderr)
     started, t0 = utc_now(), time.monotonic()
     ok = 0
@@ -1084,6 +1100,9 @@ def cmd_derive(args) -> None:
                            if e.get("sha256")}) > 1),
         "soft_404": share(lambda r: pol(r, "file_state") == "soft_404"),
         "dns_failure": share(lambda r: pol(r, "file_state") == "dns_failure"),
+        # Hosts too slow to finish their probe inside the budget. Their
+        # remaining paths are unmeasured, not absent.
+        "budget_exceeded": share(lambda r: bool(r.get("budget_exceeded"))),
         # Hosts answering every unknown well-known path with one body. Counted
         # so the correction is visible rather than silently applied.
         "catch_all_responses": share(lambda r: bool(catch_all_shas(r))),
