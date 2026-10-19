@@ -327,9 +327,24 @@ def load_panel() -> list[dict]:
 # fetching
 # --------------------------------------------------------------------------
 
-def fetch(url: str, headers: dict) -> dict:
-    """One polite GET. A fresh client per request means a fresh cookie jar;
-    connection reuse would buy nothing against a 1.5s inter-request gap.
+def new_client(headers: dict) -> "httpx.Client":
+    return httpx.Client(follow_redirects=True, max_redirects=MAX_REDIRECTS,
+                        timeout=TIMEOUT, headers=headers)
+
+
+def fetch(url: str, headers: dict, client=None) -> dict:
+    """One polite GET, reusing the caller's client where given.
+
+    A client per REQUEST was the original design, reasoning that a fresh
+    cookie jar beat connection reuse against a 1.5s gap. That was wrong at
+    scale: twelve paths per host meant twelve DNS lookups and twelve TLS
+    handshakes, and at thirty workers that is up to 360 concurrent
+    getaddrinfo calls against a local stub resolver. The resolver did not
+    fail -- it stopped answering promptly, and no host ever finished its
+    twelve paths. One client per host per identity makes that two lookups
+    instead of twelve, and reusing a connection is gentler on the host too.
+
+    Cookies are cleared after each request, so nothing carries between them.
 
     Retries once on a transport error and never on an HTTP status -- a 403 is
     data, not a failure.
@@ -339,14 +354,14 @@ def fetch(url: str, headers: dict) -> dict:
                  "final_path": None, "path_mismatch": False,
                  "headers": {}, "error": None, "dns_error": False}
     body: str | None = None
+    owned = client is None
+    if owned:
+        client = new_client(headers)
 
-    for attempt in (1, 2):
-        t0 = time.monotonic()
-        try:
-            with httpx.Client(
-                follow_redirects=True, max_redirects=MAX_REDIRECTS,
-                timeout=TIMEOUT, headers=headers,
-            ) as client:
+    try:
+        for attempt in (1, 2):
+            t0 = time.monotonic()
+            try:
                 with client.stream("GET", url) as resp:
                     chunks, total, truncated = [], 0, False
                     for chunk in resp.iter_bytes():
@@ -358,35 +373,39 @@ def fetch(url: str, headers: dict) -> dict:
                         chunks.append(chunk)
                     raw = b"".join(chunks)
 
-                out["status"] = resp.status_code
-                out["ms"] = int((time.monotonic() - t0) * 1000)
-                out["bytes"] = len(raw)
-                out["sha256"] = hashlib.sha256(raw).hexdigest()
-                out["truncated"] = truncated
-                out["redirects"] = len(resp.history)
-                out["final_host"] = resp.url.host
-                out["final_path"] = resp.url.path
-                # Landing at a different path means this is not the file we
-                # asked for -- a consent wall or a homepage, not a 404.
-                out["path_mismatch"] = (
-                    resp.url.path.rstrip("/") != httpx.URL(url).path.rstrip("/"))
-                # Every header is kept: an allowlist decides in advance which
-                # questions are answerable later, and that decision cannot be
-                # revisited without crawling again. Cookie VALUES are the one
-                # redaction -- they carry nothing but an anonymous session id
-                # and do not belong in a public archive.
-                out["headers"] = {
-                    k.lower(): ("<present>" if k.lower() == "set-cookie" else v)
-                    for k, v in resp.headers.items()
-                }
-                body = raw.decode("utf-8", errors="replace")
-            break
-        except httpx.HTTPError as exc:
-            out["error"] = f"{type(exc).__name__}: {exc}"[:200]
-            out["dns_error"] = robots_parse.is_dns_error(out["error"])
-            if out["dns_error"] or attempt == 2:
-                break  # retrying a name that does not resolve is pointless
-            time.sleep(1.0)
+                    out["status"] = resp.status_code
+                    out["ms"] = int((time.monotonic() - t0) * 1000)
+                    out["bytes"] = len(raw)
+                    out["sha256"] = hashlib.sha256(raw).hexdigest()
+                    out["truncated"] = truncated
+                    out["redirects"] = len(resp.history)
+                    out["final_host"] = resp.url.host
+                    out["final_path"] = resp.url.path
+                    # Landing at a different path means this is not the file we
+                    # asked for -- a consent wall or a homepage, not a 404.
+                    out["path_mismatch"] = (
+                        resp.url.path.rstrip("/") != httpx.URL(url).path.rstrip("/"))
+                    # Every header is kept: an allowlist decides in advance
+                    # which questions are answerable later, and that cannot be
+                    # revisited without crawling again. Cookie VALUES are the
+                    # one redaction -- an anonymous session id does not belong
+                    # in a public archive.
+                    out["headers"] = {
+                        k.lower(): ("<present>" if k.lower() == "set-cookie" else v)
+                        for k, v in resp.headers.items()
+                    }
+                    body = raw.decode("utf-8", errors="replace")
+                client.cookies.clear()
+                break
+            except httpx.HTTPError as exc:
+                out["error"] = f"{type(exc).__name__}: {exc}"[:200]
+                out["dns_error"] = robots_parse.is_dns_error(out["error"])
+                if out["dns_error"] or attempt == 2:
+                    break  # retrying a name that does not resolve is pointless
+                time.sleep(1.0)
+    finally:
+        if owned:
+            client.close()
 
     out["_body"] = body
     return out
@@ -408,13 +427,14 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
     }
 
     t_start = time.monotonic()
+    clients = {i: new_client(h) for i, h in IDENTITIES.items()}
     bodies: dict[str, str | None] = {}
     first = True
     for ident, headers in IDENTITIES.items():
         if not first:
             time.sleep(HOST_GAP_S)
         first = False
-        got = fetch(f"{SCHEME}://{host}/robots.txt", headers)
+        got = fetch(f"{SCHEME}://{host}/robots.txt", headers, clients[ident])
         body = got.pop("_body")
         bodies[ident] = body
         state = robots_parse.classify(got["status"], body,
@@ -466,6 +486,8 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         why = "named_our_token" if named_us else "wildcard_disallow_all"
         rec["wellknown"] = {k: {"status": None, "file_state": "skipped",
                                 "skipped": why} for k in WELLKNOWN}
+        for c in clients.values():
+            c.close()
         return rec
 
     for key, path in WELLKNOWN.items():
@@ -475,7 +497,8 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
             rec.setdefault("budget_exceeded", True)
             continue
         time.sleep(HOST_GAP_S)
-        got = fetch(f"{SCHEME}://{host}{path}", IDENTITIES["honest_bot"])
+        got = fetch(f"{SCHEME}://{host}{path}", IDENTITIES["honest_bot"],
+                    clients["honest_bot"])
         body = got.pop("_body")
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
@@ -489,6 +512,8 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         if got["error"]:
             rec["errors"].append(f"{key}: {got['error']}")
 
+    for c in clients.values():
+        c.close()
     return rec
 
 
