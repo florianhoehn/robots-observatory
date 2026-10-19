@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-PARSER_VERSION = 1
+PARSER_VERSION = 2
 
 # Directives we treat as standard group members (RFC 9309 plus crawl-delay).
 _GROUP_STANDARD = {"allow", "disallow", "crawl-delay"}
@@ -31,6 +31,18 @@ _NOTABLE = {"license", "content-usage", "content-signal", "noai", "noimageai"}
 # hosts answer /robots.txt with their homepage; parsed naively that invents a
 # policy for hundreds of hosts and shifts every finding in the dataset.
 _HTML_MARKERS = ("<!doctype html", "<html", "<head", "<body", "<script", "<title")
+
+# A 200 carrying one of these is a bot challenge, not a missing file. Calling
+# LinkedIn's reCAPTCHA page a soft 404 would hide the finding: the host blocks
+# unknown clients from reading the file robots.txt exists to be read from.
+_CHALLENGE_MARKERS = (
+    "recaptcha", "challengepage", "attention required", "just a moment",
+    "cf-browser-verification", "cf_chl", "datadome", "perimeterx",
+    "px-captcha", "hcaptcha", "verifying you are human",
+)
+# "enable javascript and cookies" was tried here and removed: it is Cloudflare's
+# wording but also appears on cookie-consent walls, which are a separate state
+# (redirected_away). Cloudflare challenges are caught by the markers above.
 
 
 @dataclass
@@ -88,10 +100,33 @@ def looks_like_html(body: str) -> bool:
     return any(m in head for m in _HTML_MARKERS)
 
 
-def classify(status: int | None, body: str | None, transport_error: bool) -> str:
-    """Bucket the response. These five states are genuinely different claims and
-    averaging them produces a confident wrong number -- a 404 means "no file at
-    all", which is not the same as "has a file that ignores AI"."""
+def looks_like_challenge(body: str) -> bool:
+    """True if the body is a CAPTCHA or bot-verification interstitial."""
+    head = body[:4096].lower()
+    return any(m in head for m in _CHALLENGE_MARKERS)
+
+
+def classify(status: int | None, body: str | None, transport_error: bool,
+             path_mismatch: bool = False) -> str:
+    """Bucket the response.
+
+    These states are genuinely different claims and averaging them produces a
+    confident wrong number: a 404 means "no file at all", which is not the same
+    as "has a file that ignores AI", which is not the same as "would not let us
+    read the file". Every one of the following was found in the first ten hosts
+    of a dry run:
+
+      present         a real policy file
+      absent_404      no such file
+      blocked_403     refused outright
+      undefined_5xx   server error; undefined, NOT permitted
+      soft_404        200 carrying a web page instead of the file
+      challenged      200 carrying a CAPTCHA or bot-verification page
+      redirected_away 200, but at a different path than we asked for --
+                      typically a cookie-consent wall, which a UK or EU
+                      vantage meets far more often than a US one
+      error           transport failure
+    """
     if transport_error or status is None:
         return "error"
     if status in (404, 410):
@@ -103,6 +138,10 @@ def classify(status: int | None, body: str | None, transport_error: bool) -> str
     if status == 200:
         if body is None:
             return "error"
+        if looks_like_challenge(body):
+            return "challenged"
+        if path_mismatch:
+            return "redirected_away"
         if looks_like_html(body):
             return "soft_404"
         return "present"

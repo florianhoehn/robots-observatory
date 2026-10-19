@@ -55,7 +55,7 @@ PANEL_ID = "panel-01"
 # --- CONDUCT.md, so they live here in one place and are recorded per run.
 CONCURRENT_HOSTS = 6
 HOST_GAP_S = 1.5
-MAX_REDIRECTS = 3
+MAX_REDIRECTS = 5
 READ_CAP_BYTES = 512 * 1024
 TIMEOUT = httpx.Timeout(connect=10.0, read=15.0, write=10.0, pool=10.0)
 
@@ -162,6 +162,7 @@ def fetch(url: str, headers: dict) -> dict:
     """
     out: dict = {"status": None, "ms": None, "bytes": None, "sha256": None,
                  "truncated": False, "redirects": 0, "final_host": None,
+                 "final_path": None, "path_mismatch": False,
                  "headers": {}, "error": None}
     body: str | None = None
 
@@ -190,6 +191,11 @@ def fetch(url: str, headers: dict) -> dict:
                 out["truncated"] = truncated
                 out["redirects"] = len(resp.history)
                 out["final_host"] = resp.url.host
+                out["final_path"] = resp.url.path
+                # Landing at a different path means this is not the file we
+                # asked for -- a consent wall or a homepage, not a 404.
+                out["path_mismatch"] = (
+                    resp.url.path.rstrip("/") != httpx.URL(url).path.rstrip("/"))
                 out["headers"] = {
                     k: resp.headers[k] for k in HEADER_ALLOWLIST if k in resp.headers
                 }
@@ -231,9 +237,10 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         got = fetch(f"{SCHEME}://{host}/robots.txt", headers)
         body = got.pop("_body")
         bodies[ident] = body
-        state = robots_parse.classify(got["status"], body, got["error"] is not None)
-        entry = {"identity": ident, **got, "file_state": state,
-                 "soft_404": state == "soft_404"}
+        state = robots_parse.classify(got["status"], body,
+                                      got["error"] is not None,
+                                      got["path_mismatch"])
+        entry = {"identity": ident, **got, "file_state": state}
         if got["error"]:
             rec["errors"].append(f"robots/{ident}: {got['error']}")
         rec["robots"].append(entry)
@@ -260,19 +267,32 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
     # further. Its declared policy still counts as a finding -- that policy is
     # public and is the thing being measured. Full removal from the published
     # dataset is the separate optout.yaml / email route, per CONDUCT.md.
-    rec["opted_out_via_robots"] = bool(rec["policy"].get("would_disallow_us"))
-    if rec["opted_out_via_robots"]:
-        rec["wellknown"] = {k: {"status": None, "skipped": "robots_optout"}
-                            for k in WELLKNOWN}
+    named_us = US_TOKEN.lower() in {
+        t.lower() for t in (rec["policy"].get("ai_tokens_named") or [])
+    } or US_TOKEN.lower() in {
+        t.lower() for t in (rec["policy"].get("all_agent_tokens_seen") or [])
+    }
+    blocks_us = bool(rec["policy"].get("would_disallow_us"))
+    rec["opted_out_via_robots"] = blocks_us and named_us
+    rec["wildcard_blocks_us"] = blocks_us and not named_us
+    if blocks_us:
+        why = "named_our_token" if named_us else "wildcard_disallow_all"
+        rec["wellknown"] = {k: {"status": None, "file_state": "skipped",
+                                "skipped": why} for k in WELLKNOWN}
         return rec
 
     for key, path in WELLKNOWN.items():
         time.sleep(HOST_GAP_S)
         got = fetch(f"{SCHEME}://{host}{path}", IDENTITIES["honest_bot"])
-        got.pop("_body")
+        body = got.pop("_body")
+        state = robots_parse.classify(got["status"], body,
+                                      got["error"] is not None,
+                                      got["path_mismatch"])
         rec["wellknown"][key] = {
-            k: got[k] for k in ("status", "bytes", "sha256", "error") if got[k] is not None
-        } or {"status": None}
+            "status": got["status"], "file_state": state,
+            "bytes": got["bytes"], "sha256": got["sha256"],
+            "redirects": got["redirects"], "final_path": got["final_path"],
+        }
         if got["error"]:
             rec["errors"].append(f"{key}: {got['error']}")
 
@@ -552,7 +572,8 @@ def cmd_derive(args) -> None:
             tokens.items(), key=lambda kv: -kv[1]["named"]
         )[:20]),
         "wellknown": {
-            k: share(lambda r, k=k: r.get("wellknown", {}).get(k, {}).get("status") == 200)
+            k: share(lambda r, k=k:
+                     r.get("wellknown", {}).get(k, {}).get("file_state") == "present")
             for k in WELLKNOWN
         },
         "rsl_license_refs": share(lambda r: bool(pol(r, "rsl_license_refs"))),
@@ -563,6 +584,9 @@ def cmd_derive(args) -> None:
         "opted_out_via_robots": share(
             lambda r: bool(r.get("opted_out_via_robots"))
         ),
+        "wildcard_blocks_us": share(lambda r: bool(r.get("wildcard_blocks_us"))),
+        "challenged": share(lambda r: pol(r, "file_state") == "challenged"),
+        "redirected_away": share(lambda r: pol(r, "file_state") == "redirected_away"),
         "by_sector": sectors,
     }
 
@@ -589,9 +613,9 @@ def cmd_derive(args) -> None:
                 "|".join(pol(r, "ai_tokens_root_disallowed", []) or []),
                 pol(r, "wildcard_root_disallowed"), pol(r, "would_disallow_us"),
                 "|".join(pol(r, "rsl_license_refs", []) or []),
-                wk.get("llms_txt", {}).get("status"),
-                wk.get("ai_txt", {}).get("status"),
-                wk.get("tdmrep", {}).get("status"),
+                wk.get("llms_txt", {}).get("file_state"),
+                wk.get("ai_txt", {}).get("file_state"),
+                wk.get("tdmrep", {}).get("file_state"),
                 r.get("robots_varies_by_identity"),
             ])
 

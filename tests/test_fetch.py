@@ -118,6 +118,8 @@ check("status", r["status"], 200)
 check("bytes", r["bytes"], len(ROBOTS))
 check("sha256 recorded", bool(r["sha256"]), True)
 check("final_host", r["final_host"], "127.0.0.1")
+check("final_path recorded", r["final_path"], "/robots.txt")
+check("no path mismatch on a straight fetch", r["path_mismatch"], False)
 check("body returned", r["_body"], ROBOTS.decode())
 check("no error", r["error"], None)
 
@@ -144,6 +146,10 @@ check("truncation flagged", big["truncated"], True)
 hop = obs.fetch(f"{url}/hop1", ident)
 check("redirect chain followed", hop["status"], 200)
 check("redirect count recorded", hop["redirects"], 2)
+check("redirect to a different path is flagged", hop["path_mismatch"], True)
+check("and classified as redirected_away, not present",
+      obs.robots_parse.classify(hop["status"], hop["_body"], False,
+                                hop["path_mismatch"]), "redirected_away")
 loop = obs.fetch(f"{url}/loop", ident)
 check("redirect limit stops a loop (recorded as an error, not a hang)",
       loop["status"] is None and "Redirect" in (loop["error"] or ""), True)
@@ -230,12 +236,14 @@ rec2 = obs.probe_host(
 srv2.shutdown()
 
 check("opted-out host flagged", rec2["opted_out_via_robots"], True)
+check("and not misreported as a blanket wildcard block",
+      rec2["wildcard_blocks_us"], False)
 check("only robots.txt was requested, twice", len(hits), 2)
 check("no well-known path was touched",
       [h[1] for h in hits], ["/robots.txt", "/robots.txt"])
 check("well-known entries marked skipped, not 404",
       {k: v.get("skipped") for k, v in rec2["wellknown"].items()},
-      {k: "robots_optout" for k in obs.WELLKNOWN})
+      {k: "named_our_token" for k in obs.WELLKNOWN})
 check("its declared policy is still recorded as a finding",
       rec2["policy"]["file_state"], "present")
 

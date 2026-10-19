@@ -71,7 +71,34 @@ check("soft 404 detected", rp.looks_like_html(html), True)
 check("soft 404 classified", rp.classify(200, html, False), "soft_404")
 check("real robots not flagged as html", rp.looks_like_html(fixture("plain.txt")), False)
 
-# --- trap: the five file states are distinct ------------------------------
+# --- trap: a challenge is not a soft 404 -----------------------------------
+# linkedin.com serves a reCAPTCHA page, 200, at its apex /robots.txt. Labelling
+# that "soft_404" would hide the finding: the host refuses to let an unknown
+# client read the file robots.txt exists to be read from.
+chal = fixture("challenge_recaptcha.html")
+check("real challenge page detected", rp.looks_like_challenge(chal), True)
+check("challenge classified, not soft_404", rp.classify(200, chal, False), "challenged")
+check("a plain robots file is not a challenge",
+      rp.looks_like_challenge(fixture("plain.txt")), False)
+check("a generic HTML page is not a challenge",
+      rp.looks_like_challenge(html), False)
+check("generic HTML is still soft_404", rp.classify(200, html, False), "soft_404")
+
+# --- trap: redirected away is not "present" --------------------------------
+# youtube.com/llms.txt terminates at consent.youtube.com/ml with a 200. The
+# status says nothing; the path says everything. A UK or EU vantage meets these
+# consent walls far more often than a US one.
+consent = fixture("consent_wall.html")
+check("redirected away from the requested path",
+      rp.classify(200, consent, False, path_mismatch=True), "redirected_away")
+check("same path, real content, stays present",
+      rp.classify(200, fixture("plain.txt"), False, path_mismatch=False), "present")
+check("a challenge still reads as a challenge even when redirected",
+      rp.classify(200, chal, False, path_mismatch=True), "challenged")
+check("path mismatch does not override a 404",
+      rp.classify(404, "", False, path_mismatch=True), "absent_404")
+
+# --- trap: the file states are distinct ------------------------------
 check("state 200", rp.classify(200, fixture("plain.txt"), False), "present")
 check("state 404", rp.classify(404, "", False), "absent_404")
 check("state 403", rp.classify(403, "", False), "blocked_403")
