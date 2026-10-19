@@ -12,7 +12,8 @@ to be read by machines. See CONDUCT.md.
 
 No model in the measurement path: fetch, parse, count, all deterministic.
 
-    uv run observatory.py screen   panel/tranco-<id>-top1000.csv
+    uv run observatory.py screen   panel/tranco-<id>-top1000.csv   # offline
+    uv run observatory.py freeze                                   # offline
     uv run observatory.py run      [--limit N] [--host H] [--dry-run]
     uv run observatory.py derive
 
@@ -28,7 +29,6 @@ import hashlib
 import json
 import os
 import random
-import re
 import subprocess
 import sys
 import threading
@@ -284,54 +284,123 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
 # --------------------------------------------------------------------------
 
 def cmd_screen(args) -> None:
-    """Liveness pass over a raw Tranco list.
+    """Turn a raw Tranco list into a worksheet for the hand pass.
 
-    One request per apex, recording status and content-type. This is the cheap
-    mechanical signal that kills most API and dead hosts before the hand pass;
-    it does not decide anything on its own.
+    Entirely offline. An earlier draft fetched each homepage for a liveness
+    signal, which would have made CONDUCT.md's "never requests a page" false for
+    the sake of a column a human does not need -- nobody has to fetch
+    doubleclick.net to know it is not a website. Hosts that turn out to be dead
+    simply record an error in run 1, which is better data than silently
+    dropping them beforehand.
+
+    Rows are grouped by the label before the first dot and then by rank, so
+    every google.* or amazon.* sits together with the highest-ranked first:
+    keep that one, exclude the rest as you pass. That is the ccTLD collapse,
+    done by eye, with no public-suffix dependency.
     """
     src = Path(args.listfile)
     rows = [r for r in csv.reader(src.open(encoding="utf-8")) if r]
-    hosts = [(int(r[0]), r[1]) for r in rows if len(r) >= 2 and r[0].isdigit()]
+    hosts = [(int(r[0]), r[1].strip().lower())
+             for r in rows if len(r) >= 2 and r[0].isdigit()]
     if args.limit:
         hosts = hosts[: args.limit]
-    print(f"{len(hosts)} hosts from {src.name}", file=sys.stderr)
 
-    lock = threading.Lock()
-    out: list[dict] = []
+    groups: dict[str, int] = {}
+    for _, host in hosts:
+        label = host.split(".")[0]
+        groups[label] = groups.get(label, 0) + 1
 
-    def one(item):
-        rank, host = item
-        got = fetch(f"{SCHEME}://{host}/", IDENTITIES["honest_bot"])
-        body = got.pop("_body") or ""
-        title = ""
-        m = re.search(r"<title[^>]*>(.*?)</title>", body[:20000],
-                      re.I | re.S)
-        if m:
-            title = re.sub(r"\s+", " ", m.group(1)).strip()[:80]
-        row = {
-            "rank": rank, "host": host, "status": got["status"],
-            "content_type": got["headers"].get("content-type", ""),
-            "final_host": got["final_host"] or "", "title": title,
-            "error": got["error"] or "",
-        }
-        with lock:
-            out.append(row)
-            if len(out) % 50 == 0:
-                print(f"  {len(out)}/{len(hosts)}", file=sys.stderr)
+    out = [
+        {"rank": rank, "host": host,
+         "group": host.split(".")[0],
+         "group_n": groups[host.split(".")[0]],
+         "decision": "", "sector": "", "adult": "", "reason": ""}
+        for rank, host in hosts
+    ]
+    out.sort(key=lambda r: (r["group"], r["rank"]))
 
-    with ThreadPoolExecutor(CONCURRENT_HOSTS) as pool:
-        list(pool.map(one, hosts))
-
-    out.sort(key=lambda r: r["host"])
     dest = PANEL_DIR / "screen.csv"
     with dest.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=list(out[0]))
         w.writeheader()
         w.writerows(out)
-    print(f"wrote {dest} -- sorted by host, ready for the hand pass", file=sys.stderr)
-    print("  ccTLD duplicates sit together when sorted; keep the highest rank",
+
+    dupes = sum(1 for r in out if r["group_n"] > 1)
+    print(f"{len(out)} hosts -> {dest}", file=sys.stderr)
+    print(f"  {dupes} rows sit in a multi-host group (the ccTLD collapse "
+          f"candidates); {len(out) - dupes} are singletons", file=sys.stderr)
+    print("  fill `decision` with keep or exclude, plus sector for keeps "
+          "and reason for excludes", file=sys.stderr)
+    print("  sectors: news commerce government reference developer other",
           file=sys.stderr)
+    print("\n  No network requests were made. This project never fetches a page.",
+          file=sys.stderr)
+
+
+def cmd_freeze(args) -> None:
+    """Split a completed worksheet into the frozen panel and the exclusion record.
+
+    Both halves are published: the panel is what every future run is measured
+    against, and excluded.csv is the other half of the record, so a reader can
+    disagree with any single row rather than audit a rule engine.
+    """
+    src = PANEL_DIR / "screen.csv"
+    rows = list(csv.DictReader(src.open(encoding="utf-8")))
+    SECTORS = {"news", "commerce", "government", "reference", "developer", "other"}
+
+    keep, drop, bad = [], [], []
+    for r in rows:
+        d = (r["decision"] or "").strip().lower()
+        if d == "keep":
+            sec = (r["sector"] or "").strip().lower()
+            if sec not in SECTORS:
+                bad.append(f"{r['host']}: sector {sec!r} not in {sorted(SECTORS)}")
+            keep.append(r)
+        elif d == "exclude":
+            if not (r["reason"] or "").strip():
+                bad.append(f"{r['host']}: excluded with no reason")
+            drop.append(r)
+        else:
+            bad.append(f"{r['host']}: decision {d!r} is neither keep nor exclude")
+
+    if bad:
+        for b in bad[:25]:
+            print(f"  {b}", file=sys.stderr)
+        if len(bad) > 25:
+            print(f"  ... and {len(bad) - 25} more", file=sys.stderr)
+        sys.exit(f"{len(bad)} row(s) incomplete -- every row must be decided")
+
+    panel = PANEL_DIR / f"{PANEL_ID}.csv"
+    if panel.exists() and not args.force:
+        sys.exit(f"{panel} already exists. The panel is append-only history -- "
+                 f"a refresh mints panel-02 rather than editing this. Use "
+                 f"--force only if run 1 has not happened.")
+
+    with panel.open("w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["host", "rank_at_freeze", "sector", "adult"])
+        for r in sorted(keep, key=lambda r: int(r["rank"])):
+            w.writerow([r["host"], r["rank"], r["sector"].strip().lower(),
+                        "true" if (r["adult"] or "").strip().lower() in
+                        ("1", "true", "yes", "y") else "false"])
+
+    with (PANEL_DIR / "excluded.csv").open("w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["host", "rank", "reason"])
+        for r in sorted(drop, key=lambda r: int(r["rank"])):
+            w.writerow([r["host"], r["rank"], r["reason"].strip()])
+
+    # Conservation: every input row lands in exactly one output file.
+    assert len(keep) + len(drop) == len(rows), "rows lost between the two outputs"
+    sectors: dict[str, int] = {}
+    for r in keep:
+        k = r["sector"].strip().lower()
+        sectors[k] = sectors.get(k, 0) + 1
+    print(f"{len(rows)} screened -> {len(keep)} in {PANEL_ID}, "
+          f"{len(drop)} excluded", file=sys.stderr)
+    print(f"  sectors: {dict(sorted(sectors.items()))}", file=sys.stderr)
+    print(f"  panel sha256: "
+          f"{hashlib.sha256(panel.read_bytes()).hexdigest()[:16]}...", file=sys.stderr)
 
 
 def cmd_run(args) -> None:
@@ -535,10 +604,15 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    s = sub.add_parser("screen", help="liveness pass over a raw Tranco list")
+    s = sub.add_parser("screen", help="raw Tranco list -> worksheet (offline)")
     s.add_argument("listfile")
     s.add_argument("--limit", type=int)
     s.set_defaults(func=cmd_screen)
+
+    z = sub.add_parser("freeze", help="completed worksheet -> frozen panel")
+    z.add_argument("--force", action="store_true",
+                   help="overwrite an existing panel; only before run 1")
+    z.set_defaults(func=cmd_freeze)
 
     r = sub.add_parser("run", help="probe the frozen panel")
     r.add_argument("--limit", type=int)

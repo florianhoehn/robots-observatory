@@ -3,7 +3,7 @@
 How does the web *declare* its policy toward AI agents — and does that
 declaration change depending on who asks?
 
-A frozen panel of ~660 real websites, drawn from the Tranco top 1000 and
+A frozen panel of ~440 real websites, drawn from the Tranco top 1000 and
 screened down to hosts that are actually websites. Every week we read each
 host's policy surface — `robots.txt` plus three well-known paths — under two
 requester identities, and publish the result.
@@ -15,8 +15,10 @@ read. It never fetches a page, so it measures what sites *say*, not what they
 
 ## Status
 
-Pre-run. The collector and its tests are written; the panel is not yet frozen
-and no run has happened.
+Pre-run. The collector and its tests are written. The screening worksheet is
+drafted but **not yet reviewed**, so the panel is not frozen and no run has
+happened. Of the top 1000, 440 rows are currently marked as content websites
+and 560 as infrastructure, duplicates or non-sites.
 
 ## Usage
 
@@ -27,8 +29,9 @@ pinned dependency lives in the script header.
 uv run tests/test_robots.py          # parser: the correctness traps
 uv run tests/test_fetch.py           # fetcher + conduct limits, local server only
 
-uv run observatory.py screen panel/tranco-<id>-top1000.csv   # liveness pass
-# ... then the hand pass, producing panel/panel-01.csv
+uv run observatory.py screen panel/tranco-467YX-top1000.csv  # offline worksheet
+# ... review every row in panel/screen.csv, then:
+uv run observatory.py freeze                                 # offline
 uv run observatory.py run --dry-run --limit 10                # eyeball it
 uv run observatory.py run                                     # ~14 minutes
 uv run observatory.py derive
@@ -45,6 +48,7 @@ any real run.
 | `robots_parse.py` | directive-preserving parser, `PARSER_VERSION` |
 | `agents.txt` | AI user-agent watchlist (every token seen is recorded regardless) |
 | `optout.yaml` | hosts excluded from every run |
+| `panel/screen.csv` | the worksheet: one decision per Tranco row, with a reason |
 | `panel/panel-01.csv` | the frozen cohort — append-only, never edited in place |
 | `panel/excluded.csv` | what was screened out and why — the other half of the record |
 | `data/robots/<host>.txt` | current robots.txt per host; `git log -p` is the change history |
