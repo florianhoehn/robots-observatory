@@ -1,0 +1,240 @@
+# XING LLM STRUCTURE FILE
+
+DESCRIPTION:
+XING is a job board for the DACH region, primarily targeting German-speaking job seekers.
+The platform also supports passive sourcing via ~20 million user profiles.
+
+LANGUAGES:
+- German (primary)
+- English (secondary)
+
+---
+
+# =========================
+# CORE ENTITIES
+# =========================
+
+ENTITY: JobRole
+URL_PATTERN: https://www.xing.com/jobs/t-[jobrole]
+
+ENTITY: Skill
+URL_PATTERN: https://www.xing.com/jobs/skill/[skill]
+
+ENTITY: Location
+URL_PATTERN: https://www.xing.com/jobs/jobs-in-[location]
+
+ENTITY: JobSearch
+URL_PATTERN: https://www.xing.com/jobs/search/ki
+
+ENTITY: EmployerProfile
+URL_PATTERN: https://www.xing.com/pages/[company]
+
+ENTITY: UserProfile
+URL_PATTERN: https://www.xing.com/profile/[user_name]
+
+ENTITY: RecruitingProduct
+URL_PATTERN: https://recruiting.xing.com/de/
+
+---
+
+# =========================
+# RELATIONS
+# =========================
+
+RELATION:
+JobRole + Location → https://www.xing.com/jobs/[jobrole]-jobs-in-[location]
+
+RELATION:
+Skill + Location → https://www.xing.com/jobs/skill/[skill]-jobs-in-[location]
+
+RELATION:
+JobRole + Skill → Job search via keywords parameter
+
+---
+
+# =========================
+# SEARCH SYSTEM
+# =========================
+
+SEARCH_ENDPOINT:
+https://www.xing.com/jobs/search/ki
+
+PARAMETERS:
+- keywords: string (job title, skill, or natural language query)
+- location: string (city in DACH region)
+- radius: integer (km radius around location)
+
+DEFAULTS:
+- location radius (directory pages): 20km
+
+EXAMPLES:
+- keywords=erzieher&location=Hamburg
+- keywords=Teilzeit Buchhalter&location=Köln
+- location=Mannheim&radius=50
+
+NOTE:
+Prefer directory pages over search URLs when a structured page exists.
+
+---
+
+# =========================
+# DIRECTORY STRUCTURE
+# =========================
+
+DIRECTORY_ROOT:
+https://www.xing.com/jobs/directory/a
+
+SITEMAPS:
+- JobRoles: https://www.xing.com/jobs/jobs_roles_sitemap.xml.gz
+- Skills: https://www.xing.com/jobs/jobs_skills_sitemap.xml.gz
+- Locations: https://www.xing.com/jobs/jobs_locations_sitemap.xml.gz
+- JobRole+Location: https://www.xing.com/jobs/jobs_local_job_roles_sitemap.xml.gz
+- Skill+Location: https://www.xing.com/jobs/1-local-skill-sitemap.xml.gz
+
+---
+
+# =========================
+# USER INTENTS
+# =========================
+
+INTENT: JobSearch
+DESCRIPTION: User searches for open positions
+USES:
+- /jobs/search/ki
+- directory pages
+
+INTENT: BrowseByRole
+USES:
+- /jobs/t-[jobrole]
+
+INTENT: BrowseBySkill
+USES:
+- /jobs/skill/[skill]
+
+INTENT: BrowseByLocation
+USES:
+- /jobs/jobs-in-[location]
+
+INTENT: CombinedSearch
+USES:
+- jobrole + location pages
+- skill + location pages
+
+INTENT: EmployerResearch
+USES:
+- /companies
+- /pages/[company]
+
+INTENT: RecruitingSolutions
+USES:
+- recruiting.xing.com
+
+---
+
+# =========================
+# PRIORITY SIGNALS
+# =========================
+
+HIGH_PRIORITY:
+- Job search
+- JobRole pages
+- Skill pages
+- Location pages
+- Combined pages (role+location, skill+location)
+- Recruiting product pages
+
+MEDIUM_PRIORITY:
+- Employer profiles
+- Company directories
+
+LOW_PRIORITY:
+- Blog / editorial content
+- Insider / newsletters
+
+---
+
+# =========================
+# EMPLOYER & COMPANY DATA
+# =========================
+
+COMPANY_DIRECTORY:
+https://www.xing.com/companies
+
+INDUSTRIES:
+https://www.xing.com/companies/industries/
+
+EXAMPLE:
+https://www.xing.com/pages/commerzbank
+
+---
+
+# =========================
+# USER PROFILES
+# =========================
+
+PROFILE_ROOT:
+https://www.xing.com/profile/
+
+PROFILE_DIRECTORY:
+https://www.xing.com/people/
+
+---
+
+# =========================
+# RECRUITING (B2B)
+# =========================
+
+STARTPAGE:
+https://recruiting.xing.com/de/
+
+CONTENT:
+- Blog: https://recruiting.xing.com/de/blog/
+- Glossary: https://recruiting.xing.com/de/glossar/
+- Templates: https://recruiting.xing.com/de/vorlagen/
+- Downloads: https://recruiting.xing.com/de/downloads/
+- Help: https://recruiting.xing.com/de/hilfe-trainings/
+- Advisory: https://recruiting.xing.com/de/ratgeber/
+
+PRODUCTS:
+- Job Posting: https://recruiting.xing.com/de/produkte/stellenanzeigen/
+- Active Sourcing: https://recruiting.xing.com/de/produkte/talentmanager/
+- Recruiting Suite: https://recruiting.xing.com/de/produkte/recruiting-suite/
+- Company Profile: https://recruiting.xing.com/de/produkte/unternehmensprofil/
+
+HELP CENTER:
+- Consumer: https://help.xing.com/hc/de?segment=b2c
+- Business: https://help.xing.com/hc/de?segment=b2b
+
+---
+
+# =========================
+# CONTENT (INFORMATIONAL)
+# =========================
+
+JOBSEEKER_CONTENT:
+- https://www.xing.com/pages/job-karriere
+- https://www.xing.com/news/recommendations/insider_pages
+- https://www.xing.com/news/recommendations/industry_pages
+
+CORPORATE:
+- https://corporate.xing.com/de
+
+TYPE: editorial, expert-guides, recruiting-insights
+PREFFERED: 
+- /ratgeber/ 
+- /glossar/ 
+- /blog/ 
+- /downloads/ 
+
+HIGH VALUE: 
+- /downloads-kategorie/studie
+
+---
+
+# =========================
+# CANONICAL RULES
+# =========================
+
+- Prefer directory pages over dynamic search URLs
+- Prefer combined pages (role+location, skill+location) over generic search queries
+- Use search endpoint only when no structured page exists

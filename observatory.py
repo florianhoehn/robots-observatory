@@ -397,7 +397,13 @@ def fetch(url: str, headers: dict, client=None) -> dict:
                     body = raw.decode("utf-8", errors="replace")
                 client.cookies.clear()
                 break
-            except httpx.HTTPError as exc:
+            except Exception as exc:
+                # Deliberately broad. httpx.HTTPError is not the only thing a
+                # hostile or malformed host can raise: quickconnect.to redirects
+                # to a host with an empty DNS label and the IDNA codec raises
+                # UnicodeEncodeError, which is not an HTTPError and so escaped
+                # this handler entirely. A single such host stopped a
+                # 16,000-host run for an hour.
                 out["error"] = f"{type(exc).__name__}: {exc}"[:200]
                 out["dns_error"] = robots_parse.is_dns_error(out["error"])
                 if out["dns_error"] or attempt == 2:
@@ -804,13 +810,24 @@ def cmd_run(args) -> None:
     # redo, so there is no resume machinery.
     with records_path.open(mode, encoding="utf-8") as fh:
         with ThreadPoolExecutor(CONCURRENT_HOSTS) as pool:
-            futures = [
+            futures = {
                 pool.submit(probe_host, r, watchlist, run_id, vantage,
-                            not args.dry_run)
+                            not args.dry_run): r["host"].strip().lower()
                 for r in panel
-            ]
+            }
             for i, fut in enumerate(as_completed(futures), 1):
-                rec = fut.result()
+                try:
+                    rec = fut.result()
+                except Exception as exc:
+                    # Record the failure and carry on. Letting this propagate
+                    # kills the loop, and `with ThreadPoolExecutor` then waits
+                    # for every queued task before surfacing it -- the run
+                    # appears to hang with threads busy and nothing written.
+                    rec = {"run_id": run_id, "panel_id": PANEL_ID,
+                           "schema": SCHEMA, "host": futures[fut],
+                           "vantage": vantage, "robots": [], "wellknown": {},
+                           "policy": {"file_state": "error"},
+                           "errors": [f"probe raised {type(exc).__name__}: {exc}"[:200]]}
                 with lock:
                     fh.write(json.dumps(rec, sort_keys=True) + "\n")
                     fh.flush()
