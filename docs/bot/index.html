@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RobotsObservatory — what this bot is</title>
-<meta name="description" content="RobotsObservatory reads robots.txt and three well-known policy files, five requests per host per week. How to stop it, and what it stores.">
+<meta name="description" content="RobotsObservatory reads robots.txt and three well-known policy files, five requests per host per run. How to stop it, and what it stores.">
 <style>
   :root {
     --bg: #edf0f0; --surface: #fafbfb; --ink: #141d1c; --ink-2: #4e5c5a;
@@ -86,13 +86,13 @@ Disallow: /</code></pre>
 <code>robots.txt</code> rules under
 <a href="https://www.rfc-editor.org/rfc/rfc9309.html">RFC&nbsp;9309</a>, which is
 the only way any crawler can learn it has been told to stop — and then request
-nothing else from your host, this week or ever.</p>
+nothing else from your host, this run or any future one.</p>
 <p>No custom directive to learn, nothing to email, and nothing for us to
 approve.</p>
 </div>
 
 <h2>What it requested</h2>
-<p>Per host, per weekly run, exactly five requests:</p>
+<p>Per host, per run, exactly five requests:</p>
 <table>
   <thead><tr><th>Path</th><th>Count</th><th>Why</th></tr></thead>
   <tbody>
@@ -123,18 +123,25 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
 
 <h2>What it stores</h2>
 <ul>
-  <li>Status codes, response times, content hashes, and a fixed allowlist of
+  <li>Status codes, response times, content hashes, and <strong>all</strong>
       response headers.</li>
-  <li>The full text of your <code>robots.txt</code> — that file is the subject
-      of the study.</li>
-  <li><code>Set-Cookie</code> is recorded as present or absent, never by value.</li>
-  <li>Page bodies are never retained, because pages are never requested.</li>
+  <li>The body of each of the four files above — including whatever is
+      returned instead of one: a 404, an error page, a cookie-consent wall, a
+      CAPTCHA. Those are evidence about how the web treats automated readers,
+      and they are this study's subject just as much as a policy file is.</li>
+  <li><code>Set-Cookie</code> values are the one redaction. They carry nothing
+      but an anonymous session id and do not belong in a public archive.</li>
+  <li><strong>No page body exists to retain</strong>, because no page is ever
+      requested.</li>
 </ul>
+<p>The aim is that a future question can be answered from the stored responses
+rather than by requesting anything from you a second time. Keeping less would
+mean coming back.</p>
 
 <h2>Removal from the published dataset</h2>
 <p>Blocking us in <code>robots.txt</code> stops the crawling. If you also want a
-host's rows removed from the <em>published dataset</em> — which names roughly 660
-sites and will stay online indefinitely —
+host's rows removed from the <em>published dataset</em> — which names
+thousands of sites and will stay online indefinitely —
 <a href="https://github.com/florianhoehn/robots-observatory/issues/new">open an
 issue</a> and it will be removed. You will not be asked to justify it.</p>
 
