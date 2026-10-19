@@ -77,6 +77,18 @@ Separate from the above. The published dataset names roughly 660 hosts and will
 remain online indefinitely. To have a host's rows removed from the
 **publication** — not just excluded from future runs — [open an issue](https://github.com/florianhoehn/robots-observatory/issues/new).
 
+## The vantage is part of the method
+
+Runs come from a residential UK connection. Two consequences are recorded in
+every run's metadata rather than left for a reader to discover:
+
+- The local network filters advertising and tracking domains, so 17 hosts are
+  excluded from the panel with published reasons. See
+  `panel/VANTAGE-EXCLUSIONS.md`.
+- A UK or EU vantage meets cookie-consent interstitials that a US one often
+  does not. These are recorded as `redirected_away` rather than counted as a
+  file that exists.
+
 ## No model in the measurement path
 
 Fetch, parse and count are deterministic. The product of this project is the

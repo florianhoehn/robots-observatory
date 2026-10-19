@@ -15,22 +15,21 @@ read. It never fetches a page, so it measures what sites *say*, not what they
 
 ## Status
 
-Panel frozen. **No publishable run yet.** The first attempt ran from a
-residential machine whose network does DNS-level ad blocking: twelve
-ad-technology vendors in the panel were unresolvable while ordinary websites
-resolved fine. Recorded as-is that reads as a finding about those hosts rather
-than about the measuring machine, and it deletes a whole category from the
-panel. The run is discarded and `observatory.py run` now refuses to start on a
-filtering resolver. `panel-01` holds **480 hosts** screened from Tranco
-list 467YX: 520 of the top 1000 were excluded as CDN and asset delivery, ad and
-analytics serving endpoints, cloud and API endpoints, DNS and certificate
-infrastructure, duplicates, parked domains and hosts with no public site.
+Panel frozen at **463 hosts**, collecting from a residential UK vantage.
 
-Sector split: commerce 253, news 75, developer 62, reference 43, government 25,
-other 22. The panel is more than half commerce, because the head of a
-popularity list is dominated by platforms and retailers — any finding broken
-down by sector should say so rather than let a commerce-heavy panel stand in
-for the web.
+17 hosts were excluded because this vantage cannot resolve them — 14 of them
+advertising and tracking vendors blocked by DNS filtering on the local network.
+That is a property of the measuring machine, not of those hosts, and it is **the
+largest known limitation of the dataset**: ad technology is exactly the category
+most likely to have an opinion about automated access, and it is the category
+this vantage cannot see. Reasons are published per host in
+[`panel/VANTAGE-EXCLUSIONS.md`](panel/VANTAGE-EXCLUSIONS.md) and in
+`panel/excluded.csv`.
+
+They are excluded rather than probed because a host the resolver refuses to look
+up records as unreachable, which reads as a finding about the host. `run`
+resolves every panel host before probing anything and refuses to start if any
+fail, so this cannot quietly grow.
 
 ## Usage
 

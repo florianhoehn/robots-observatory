@@ -150,6 +150,28 @@ def resolver_check() -> dict:
     }
 
 
+def resolve_panel(panel: list[dict]) -> dict[str, str]:
+    """Resolve every panel host. Returns host -> error for the failures.
+
+    The run calls this before probing anything. A host the resolver will not
+    look up records as unreachable, and that reads as a finding about the host
+    rather than about the measuring machine -- so the run stops rather than
+    collect it.
+    """
+    import socket
+    from concurrent.futures import ThreadPoolExecutor
+
+    def one(host: str):
+        try:
+            socket.getaddrinfo(host, 443, proto=socket.IPPROTO_TCP)
+            return host, None
+        except OSError as exc:
+            return host, f"{exc.errno}:{exc.strerror}"
+
+    with ThreadPoolExecutor(16) as pool:
+        return {h: e for h, e in pool.map(one, [r["host"] for r in panel]) if e}
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -483,18 +505,23 @@ def cmd_run(args) -> None:
     resolver = resolver_check()
     if not resolver["controls_resolved"]:
         sys.exit("resolver cannot reach ordinary websites -- check the network")
-    if resolver["filtering_detected"] and not args.allow_filtered_resolver:
-        blocked = [h for h, ok in resolver["canaries"].items() if not ok]
+
+    # The gate is the panel, not the canaries. A filtering resolver only
+    # corrupts the data if it filters something the panel actually contains;
+    # the canary result is recorded either way so a reader can see what this
+    # vantage does.
+    unresolvable = resolve_panel(panel)
+    if unresolvable and not args.allow_unresolvable:
+        lines = "\n".join(f"    {h:<26}{e}" for h, e in sorted(unresolvable.items()))
         sys.exit(
-            "FILTERING RESOLVER DETECTED\n"
-            f"  these resolved: {', '.join(RESOLVER_CONTROLS)}\n"
-            f"  these did not:  {', '.join(blocked)}\n\n"
-            "  This vantage has network-level ad or tracker blocking. Hosts it\n"
-            "  refuses to resolve would be recorded as unreachable, which reads\n"
-            "  as a finding about those hosts rather than about this machine --\n"
-            "  and it removes a whole category from the panel.\n\n"
-            "  Run from an unfiltered vantage, or pass --allow-filtered-resolver\n"
-            "  to proceed with the run marked degraded."
+            f"{len(unresolvable)} PANEL HOST(S) DO NOT RESOLVE from this vantage\n\n"
+            f"{lines}\n\n"
+            "  Probing these would record them as unreachable, which reads as a\n"
+            "  finding about those hosts rather than about this machine.\n\n"
+            "  Either exclude them from the panel with a documented reason (see\n"
+            "  panel/VANTAGE-EXCLUSIONS.md) and re-freeze, run from a vantage\n"
+            "  that resolves them, or pass --allow-unresolvable to collect them\n"
+            "  anyway with the run marked degraded."
         )
 
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -534,8 +561,8 @@ def cmd_run(args) -> None:
     reasons = []
     if err_rate > 0.05:
         reasons.append(f"error_rate_{err_rate:.3f}")
-    if resolver["filtering_detected"]:
-        reasons.append("filtering_resolver")
+    if unresolvable:
+        reasons.append(f"unresolvable_panel_hosts_{len(unresolvable)}")
     meta = {
         "run_id": run_id, "started": started,
         "duration_s": round(time.monotonic() - t0, 1),
@@ -546,6 +573,7 @@ def cmd_run(args) -> None:
         "degraded_reasons": reasons,
         "error_rate": round(err_rate, 4),
         "resolver_check": resolver,
+        "unresolvable_panel_hosts": sorted(unresolvable),
         "panel_sha256": hashlib.sha256(
             (PANEL_DIR / f"{PANEL_ID}.csv").read_bytes()
         ).hexdigest(),
@@ -579,6 +607,25 @@ def git_sha() -> str:
         ).stdout.strip() or "unknown"
     except Exception:
         return "unknown"
+
+
+def cmd_resolve(args) -> None:
+    """Resolve every panel host and report the failures. Touches no host."""
+    panel = load_panel()
+    res = resolver_check()
+    bad = resolve_panel(panel)
+    print(f"panel: {len(panel)} hosts, {len(bad)} unresolvable", file=sys.stderr)
+    for h, e in sorted(bad.items()):
+        print(f"  {h:<26}{e}", file=sys.stderr)
+    blocked = [h for h, ok in res["canaries"].items() if not ok]
+    if blocked:
+        print(f"\nthis vantage does not resolve {len(blocked)} of "
+              f"{len(RESOLVER_CANARIES)} ad/tracker canaries: "
+              f"{', '.join(blocked)}", file=sys.stderr)
+        print("  recorded in every run's metadata as a property of the vantage",
+              file=sys.stderr)
+    if bad:
+        sys.exit(1)
 
 
 def cmd_derive(args) -> None:
@@ -709,11 +756,14 @@ def main() -> None:
     r.add_argument("--limit", type=int)
     r.add_argument("--host")
     r.add_argument("--run-id")
-    r.add_argument("--allow-filtered-resolver", action="store_true",
-                   help="proceed despite a filtering resolver; marks the run degraded")
+    r.add_argument("--allow-unresolvable", action="store_true",
+                   help="probe panel hosts that do not resolve; marks the run degraded")
     r.add_argument("--dry-run", action="store_true",
                    help="write to data/runs/dry-run and leave robots texts alone")
     r.set_defaults(func=cmd_run)
+
+    v = sub.add_parser("resolve", help="check every panel host resolves (offline of the hosts)")
+    v.set_defaults(func=cmd_resolve)
 
     d = sub.add_parser("derive", help="compute findings from the latest run")
     d.set_defaults(func=cmd_derive)
