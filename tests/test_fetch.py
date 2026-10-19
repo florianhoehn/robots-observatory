@@ -127,9 +127,15 @@ check("no error", r["error"], None)
 check("age stored", r["headers"].get("age"), "0")
 check("x-cache stored", r["headers"].get("x-cache"), "MISS")
 check("set-cookie reduced to presence", r["headers"].get("set-cookie"), "<present>")
-check("cookie value not stored",
+check("cookie VALUE still redacted despite archiving everything",
       any("secret-value" in str(v) for v in r["headers"].values()), False)
-check("unlisted header dropped", "x-should-not-be-stored" in r["headers"], False)
+check("and recorded as present", r["headers"].get("set-cookie"), "<present>")
+# Every header is archived now: an allowlist decides in advance which future
+# questions are answerable, and that cannot be revisited without crawling again.
+check("arbitrary headers are archived, not dropped",
+      r["headers"].get("x-should-not-be-stored"), "leak")
+check("header names are normalised to lowercase",
+      all(k == k.lower() for k in r["headers"]), True)
 
 # --- 404 and soft 404 -----------------------------------------------------
 check("404 status", obs.fetch(f"{url}/nope", ident)["status"], 404)
