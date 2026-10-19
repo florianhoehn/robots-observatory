@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RobotsObservatory — what this bot is</title>
+<meta name="description" content="RobotsObservatory reads robots.txt and three well-known policy files, five requests per host per week. How to stop it, and what it stores.">
+<style>
+  :root {
+    --bg: #edf0f0; --surface: #fafbfb; --ink: #141d1c; --ink-2: #4e5c5a;
+    --ink-3: #7b8886; --line: #cbd4d3; --accent: #0e5f63;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1413; --surface: #161e1d; --ink: #e2eae8; --ink-2: #9fafad;
+      --ink-3: #74827f; --line: #2c3836; --accent: #58b6ba;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.6 Georgia, "Times New Roman", serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  main { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 {
+    font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(1.6rem, 5vw, 2.1rem); line-height: 1.15; margin: 0 0 .5rem;
+    letter-spacing: -.02em;
+  }
+  h2 {
+    font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.05rem; margin: 2.25rem 0 .5rem; letter-spacing: -.01em;
+  }
+  .lede { font-size: 1.1rem; color: var(--ink-2); margin: 0 0 1.5rem; }
+  p { margin: 0 0 .9rem; }
+  code, pre { font-family: var(--mono); font-size: .85em; }
+  code { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; padding: .1em .35em; }
+  pre {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 5px;
+    padding: .9rem 1rem; overflow-x: auto; margin: 0 0 1rem; line-height: 1.5;
+  }
+  pre code { background: none; border: 0; padding: 0; font-size: 1em; }
+  .stop { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.25rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--line); }
+  th {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 600;
+  }
+  td.n { font-family: var(--mono); text-align: right; width: 4rem; }
+  td code { font-size: .8rem; }
+  a { color: var(--accent); }
+  ul { padding-left: 1.2rem; margin: 0 0 .9rem; }
+  li { margin-bottom: .35rem; }
+  footer {
+    margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
+    font-size: .9rem; color: var(--ink-3);
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>RobotsObservatory</h1>
+<p class="lede">You probably found this URL in an access log. Here is exactly what
+this bot did, and how to stop it.</p>
+
+<p>RobotsObservatory is a research crawler that measures how the web
+<em>declares</em> its policy toward AI agents. It reads <code>robots.txt</code>
+and three well-known policy files from a fixed list of about 660 sites, once a
+week, and publishes the aggregate result as an open dataset.</p>
+
+<p><strong>It does not read your pages.</strong> It requests only files that
+exist to be read by machines. It never touches anything behind a login, never
+submits a form, never solves a CAPTCHA, and never works around a paywall.</p>
+
+<h2>How to stop it</h2>
+<div class="stop">
+<p>Put this in your <code>robots.txt</code>:</p>
+<pre><code>User-agent: RobotsObservatory
+Disallow: /</code></pre>
+<p>We read <code>robots.txt</code> once — that file is exempt from
+<code>robots.txt</code> rules under
+<a href="https://www.rfc-editor.org/rfc/rfc9309.html">RFC&nbsp;9309</a>, which is
+the only way any crawler can learn it has been told to stop — and then request
+nothing else from your host, this week or ever.</p>
+<p>No custom directive to learn, nothing to email, and nothing for us to
+approve.</p>
+</div>
+
+<h2>What it requested</h2>
+<p>Per host, per weekly run, exactly five requests:</p>
+<table>
+  <thead><tr><th>Path</th><th>Count</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td><code>/robots.txt</code></td><td class="n">2</td><td>once per requester identity, to see whether declared policy varies by who asks</td></tr>
+    <tr><td><code>/llms.txt</code></td><td class="n">1</td><td>machine-readable usage terms</td></tr>
+    <tr><td><code>/ai.txt</code></td><td class="n">1</td><td>training opt-out convention</td></tr>
+    <tr><td><code>/.well-known/tdmrep.json</code></td><td class="n">1</td><td>TDM Reservation Protocol</td></tr>
+  </tbody>
+</table>
+<p><strong>Five requests per host per week. 260 per year.</strong> Spread over
+about nine seconds, with 1.5 seconds between requests to any one host, six hosts
+in flight at a time. That is less traffic than one person loading one page.</p>
+
+<h2>The two user-agents</h2>
+<p>One declares itself. The other is a browser-shaped control, used to detect
+sites that serve different policy to bots than to browsers — it still carries
+full contact details, so <strong>no request this project makes is
+anonymous</strong>:</p>
+<pre><code>RobotsObservatory/1.0 (+https://florianhoehn.github.io/robots-observatory/bot/)
+
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
+  Chrome/141.0.0.0 Safari/537.36
+  + From: and X-Observatory-Contact: headers pointing here</code></pre>
+<p>We never impersonate another operator. No <code>GPTBot</code>, no
+<code>ClaudeBot</code>, no <code>CCBot</code>, no third party's token, ever.</p>
+
+<h2>What it stores</h2>
+<ul>
+  <li>Status codes, response times, content hashes, and a fixed allowlist of
+      response headers.</li>
+  <li>The full text of your <code>robots.txt</code> — that file is the subject
+      of the study.</li>
+  <li><code>Set-Cookie</code> is recorded as present or absent, never by value.</li>
+  <li>Page bodies are never retained, because pages are never requested.</li>
+</ul>
+
+<h2>Removal from the published dataset</h2>
+<p>Blocking us in <code>robots.txt</code> stops the crawling. If you also want a
+host's rows removed from the <em>published dataset</em> — which names roughly 660
+sites and will stay online indefinitely —
+<a href="https://github.com/florianhoehn/robots-observatory/issues/new">open an
+issue</a> and it will be removed. You will not be asked to justify it.</p>
+
+<h2>Who and why</h2>
+<p>A personal research project. Every argument about AI agents and the web runs
+on anecdote, because there is no public baseline for what sites actually declare.
+This builds one, in the open, under
+<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+<p>The collector is two readable Python files. The claim that it only ever
+requests the four paths above is checkable from the source, not just asserted —
+<a href="https://github.com/florianhoehn/robots-observatory/blob/main/observatory.py">read
+it</a>.</p>
+
+<footer>
+<a href="https://github.com/florianhoehn/robots-observatory">Source and data</a> ·
+<a href="https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md">Conduct charter</a> ·
+<a href="../">Findings</a>
+</footer>
+
+</main>
+</body>
+</html>
