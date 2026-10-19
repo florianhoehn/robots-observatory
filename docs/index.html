@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robots Observatory</title>
+<meta name="description" content="How the web declares its policy toward AI agents. A weekly panel of ~660 sites. Pre-run.">
+<style>
+  :root { --bg:#edf0f0; --surface:#fafbfb; --ink:#141d1c; --ink-2:#4e5c5a;
+          --ink-3:#7b8886; --line:#cbd4d3; --accent:#0e5f63;
+          --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0e1413; --surface:#161e1d; --ink:#e2eae8; --ink-2:#9fafad;
+            --ink-3:#74827f; --line:#2c3836; --accent:#58b6ba; } }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.6 Georgia,"Times New Roman",serif}
+  main{max-width:40rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+  h1{font-family:system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+     font-size:clamp(1.7rem,5.5vw,2.3rem);line-height:1.1;margin:0 0 .6rem;
+     letter-spacing:-.02em}
+  .lede{font-size:1.12rem;color:var(--ink-2);margin:0 0 1.75rem}
+  .status{font-family:var(--mono);font-size:.7rem;letter-spacing:.11em;
+          text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+  p{margin:0 0 .9rem}
+  code{font-family:var(--mono);font-size:.85em;background:var(--surface);
+       border:1px solid var(--line);border-radius:3px;padding:.1em .35em}
+  a{color:var(--accent)}
+  ul{padding-left:1.2rem} li{margin-bottom:.4rem}
+  footer{margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--line);
+         font-size:.9rem;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<main>
+<p class="status">Pre-run &middot; no data yet</p>
+<h1>Robots Observatory</h1>
+<p class="lede">How does the web <em>declare</em> its policy toward AI agents
+&mdash; and does that declaration change depending on who asks?</p>
+
+<p>A frozen panel of roughly 660 real websites, screened from the Tranco top
+1000. Every week each host's policy surface is read &mdash;
+<code>robots.txt</code> plus <code>llms.txt</code>, <code>ai.txt</code> and
+<code>/.well-known/tdmrep.json</code> &mdash; under two requester identities,
+and the result is published as an open dataset.</p>
+
+<p><strong>Policy only.</strong> This project reads the files the web publishes
+for machines to read. It never fetches a page, so it measures what sites
+<em>say</em>, not what they <em>enforce</em>. Those are different datasets and
+this is the first one.</p>
+
+<p>Every argument about AI agents and the web currently runs on anecdote,
+because there is no public baseline for what sites actually declare. This builds
+one, in the open, under
+<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+<p>The collector and its tests are written. The panel is not yet frozen and no
+run has happened, so there are no findings on this page yet.</p>
+
+<ul>
+  <li><a href="bot/">What this bot is, and how to stop it</a></li>
+  <li><a href="https://github.com/florianhoehn/robots-observatory">Source and data</a></li>
+  <li><a href="https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md">Conduct charter</a></li>
+</ul>
+
+<footer>No model sits in the measurement path: fetch, parse and count are
+deterministic.</footer>
+</main>
+</body>
+</html>
