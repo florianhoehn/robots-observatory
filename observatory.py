@@ -58,6 +58,13 @@ PANEL_ID = "panel-01"
 # --- CONDUCT.md, so they live here in one place and are recorded per run.
 CONCURRENT_HOSTS = 10
 ERROR_BUDGET = 0.05
+# Share of a panel that may be unresolvable at run start before the run is
+# refused. The guard exists to catch SYSTEMATIC loss -- a filtering resolver
+# removing a whole category -- which showed up at 2.9% of a 480-host panel. A
+# handful of transient DNS failures is normal on a 16,000-host panel and is
+# honestly recorded as dns_failure, so aborting over 0.2% turns a 26-host
+# footnote into a zero-host night.
+UNRESOLVABLE_BUDGET = 0.01
 HOST_GAP_S = 1.5
 MAX_REDIRECTS = 5
 READ_CAP_BYTES = 512 * 1024
@@ -685,18 +692,27 @@ def cmd_run(args) -> None:
     # the canary result is recorded either way so a reader can see what this
     # vantage does.
     unresolvable = resolve_panel(panel)
-    if unresolvable and not args.allow_unresolvable:
-        lines = "\n".join(f"    {h:<26}{e}" for h, e in sorted(unresolvable.items()))
+    unres_share = len(unresolvable) / len(panel) if panel else 0.0
+    if unresolvable and unres_share > UNRESOLVABLE_BUDGET and not args.allow_unresolvable:
+        lines = "\n".join(f"    {h:<30}{e}"
+                           for h, e in sorted(unresolvable.items())[:30])
+        more = (f"\n    ... and {len(unresolvable) - 30} more"
+                if len(unresolvable) > 30 else "")
         sys.exit(
-            f"{len(unresolvable)} PANEL HOST(S) DO NOT RESOLVE from this vantage\n\n"
-            f"{lines}\n\n"
-            "  Probing these would record them as unreachable, which reads as a\n"
+            f"{len(unresolvable)} of {len(panel)} PANEL HOSTS DO NOT RESOLVE "
+            f"({unres_share:.1%}, budget {UNRESOLVABLE_BUDGET:.0%})\n\n"
+            f"{lines}{more}\n\n"
+            "  A share this large is systematic, not transient: something is\n"
+            "  removing a category of host rather than a few failing by chance.\n"
+            "  Probing them would record them as unreachable, which reads as a\n"
             "  finding about those hosts rather than about this machine.\n\n"
-            "  Either exclude them from the panel with a documented reason (see\n"
-            "  panel/VANTAGE-EXCLUSIONS.md) and re-freeze, run from a vantage\n"
-            "  that resolves them, or pass --allow-unresolvable to collect them\n"
-            "  anyway with the run marked degraded."
+            "  Exclude them with a documented reason and re-freeze, run from a\n"
+            "  vantage that resolves them, or pass --allow-unresolvable."
         )
+    if unresolvable:
+        print(f"note: {len(unresolvable)} host(s) ({unres_share:.2%}) do not "
+              f"resolve right now; within the {UNRESOLVABLE_BUDGET:.0%} budget, "
+              f"so they are probed and recorded as dns_failure", file=sys.stderr)
 
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     vantage = os.environ.get("OBSERVATORY_VANTAGE", "local")
@@ -764,7 +780,7 @@ def cmd_run(args) -> None:
     reasons = []
     if err_rate > ERROR_BUDGET:
         reasons.append(f"error_rate_{err_rate:.3f}")
-    if unresolvable:
+    if unres_share > UNRESOLVABLE_BUDGET:
         reasons.append(f"unresolvable_panel_hosts_{len(unresolvable)}")
     meta = {
         "run_id": run_id, "started": started,
