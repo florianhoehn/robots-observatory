@@ -189,8 +189,8 @@ t0 = time.monotonic()
 rec = obs.probe_host(row, ["GPTBot", "CCBot"], "test", "test", write_text=False)
 elapsed = time.monotonic() - t0
 
-check("eleven requests per host", len(hits), 11)
-check("per-host gap honoured (>= 10 x 1.5s)", elapsed >= 10 * obs.HOST_GAP_S, True)
+check("twelve requests per host", len(hits), 12)
+check("per-host gap honoured (>= 11 x 1.5s)", elapsed >= 11 * obs.HOST_GAP_S, True)
 gaps = [round(hits[i + 1][0] - hits[i][0], 2) for i in range(len(hits) - 1)]
 check("every inter-request gap >= 1.5s", all(g >= obs.HOST_GAP_S - 0.05 for g in gaps), True)
 print(f"      gaps: {gaps}")
@@ -262,7 +262,7 @@ with lock:
 rec3 = obs.probe_host(
     {"host": base, "rank_at_freeze": "1", "sector": "other", "adult": "false"},
     [], "test", "test", write_text=False)
-check("permissive host still gets all eleven requests", len(hits), 11)
+check("permissive host still gets all twelve requests", len(hits), 12)
 check("permissive host not flagged", rec3["opted_out_via_robots"], False)
 
 # --- conduct: concurrency ceiling -----------------------------------------

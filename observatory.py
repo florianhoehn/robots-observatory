@@ -141,6 +141,12 @@ WELLKNOWN = {
     # probeable by a crawler at all. Domain-level MCP discovery goes through
     # this catalog instead.
     "ai_catalog": "/.well-known/ai-catalog.json",
+    # The pre-1.0 A2A path, probed alongside the current one so that a zero is
+    # interpretable. "Nobody publishes an agent card" and "nobody publishes one
+    # at the path the spec now names" are different claims, and only the pair
+    # can tell them apart. It also measures something nobody tracks: how long a
+    # renamed well-known path survives in the wild.
+    "agent_card_legacy": "/.well-known/agent.json",
 }
 
 # Stored response headers. An allowlist, so we never accidentally archive
