@@ -752,12 +752,15 @@ def cmd_derive(args) -> None:
     sectors: dict[str, dict] = {}
     for r in recs:
         s = r.get("sector") or "unlabelled"
-        e = sectors.setdefault(s, {"hosts": 0, "names_ai": 0, "wildcard_block": 0})
+        e = sectors.setdefault(s, {"hosts": 0, "names_ai": 0,
+                                   "wildcard_block": 0, "llms_txt": 0})
         e["hosts"] += 1
         if pol(r, "ai_tokens_named"):
             e["names_ai"] += 1
         if pol(r, "wildcard_root_disallowed"):
             e["wildcard_block"] += 1
+        if r.get("wellknown", {}).get("llms_txt", {}).get("file_state") == "present":
+            e["llms_txt"] += 1
 
     findings = {
         "run_id": recs[0]["run_id"], "panel_id": PANEL_ID, "hosts": n,
