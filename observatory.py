@@ -44,11 +44,14 @@ import robots_parse
 ROOT = Path(__file__).parent
 PANEL_DIR = ROOT / "panel"
 DATA = ROOT / "data"
-ROBOTS_DIR = DATA / "robots"
-RUNS = DATA / "runs"
+BLOBS = DATA / "blobs"
+RUNS = DATA / "runs"  # <panel>/<run_id>/ below this
 SITE_DATA = ROOT / "docs" / "data"
 
 SCHEMA = 1
+# Set per invocation from --panel. panel-01 is the hand-screened top-1000
+# cohort that carries trend claims; panel-02 is the unscreened 20k breadth
+# survey. Records always name the panel they came from.
 PANEL_ID = "panel-01"
 
 # --- conduct limits. Changing any of these changes the ethical argument in
@@ -58,6 +61,10 @@ ERROR_BUDGET = 0.05
 HOST_GAP_S = 1.5
 MAX_REDIRECTS = 5
 READ_CAP_BYTES = 512 * 1024
+# A real policy file is archived whole; a challenge or error page only needs
+# enough to identify what it was.
+ARCHIVE_CAP_PRESENT = 256 * 1024
+ARCHIVE_CAP_OTHER = 32 * 1024
 TIMEOUT = httpx.Timeout(connect=10.0, read=15.0, write=10.0, pool=10.0)
 
 # Injectable so the conduct limits below are verifiable against a local test
@@ -173,6 +180,44 @@ def resolve_panel(panel: list[dict]) -> dict[str, str]:
         return {h: e for h, e in pool.map(one, [r["host"] for r in panel]) if e}
 
 
+def blob_path(sha: str) -> Path:
+    return BLOBS / sha[:2] / sha
+
+
+def store_blob(sha: str | None, text: str | None, present: bool = True) -> bool:
+    """Archive a response body once, addressed by its hash.
+
+    The goal is that any future question can be answered from stored responses
+    rather than by crawling again: a new parser, a new classifier, a question
+    nobody thought to ask tonight. So EVERY body is kept, not only the ones
+    that parsed -- otherwise "which vendors serve the challenge pages?" is
+    permanently unanswerable.
+
+    Content addressing makes that nearly free. Challenge pages and 404s are
+    near-identical across thousands of hosts and collapse to a handful of
+    blobs, and a policy file that never changes costs nothing on later runs.
+
+    The one thing no archive can recover is a request never made. Adding a
+    path to WELLKNOWN only ever applies going forward.
+    """
+    if not sha or text is None:
+        return False
+    cap = ARCHIVE_CAP_PRESENT if present else ARCHIVE_CAP_OTHER
+    if len(text) > cap:
+        text = text[:cap]
+    p = blob_path(sha)
+    if p.exists():
+        return False
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text, encoding="utf-8")
+    return True
+
+
+def read_blob(sha: str) -> str | None:
+    p = blob_path(sha)
+    return p.read_text(encoding="utf-8") if p.exists() else None
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -208,7 +253,7 @@ def load_optout() -> tuple[set[str], str]:
 def load_panel() -> list[dict]:
     path = PANEL_DIR / f"{PANEL_ID}.csv"
     if not path.exists():
-        sys.exit(f"no panel at {path} -- run the screen step and freeze it first")
+        sys.exit(f"no panel at {path}")
     with path.open(newline="", encoding="utf-8") as fh:
         return list(csv.DictReader(fh))
 
@@ -260,11 +305,15 @@ def fetch(url: str, headers: dict) -> dict:
                 # asked for -- a consent wall or a homepage, not a 404.
                 out["path_mismatch"] = (
                     resp.url.path.rstrip("/") != httpx.URL(url).path.rstrip("/"))
+                # Every header is kept: an allowlist decides in advance which
+                # questions are answerable later, and that decision cannot be
+                # revisited without crawling again. Cookie VALUES are the one
+                # redaction -- they carry nothing but an anonymous session id
+                # and do not belong in a public archive.
                 out["headers"] = {
-                    k: resp.headers[k] for k in HEADER_ALLOWLIST if k in resp.headers
+                    k.lower(): ("<present>" if k.lower() == "set-cookie" else v)
+                    for k, v in resp.headers.items()
                 }
-                if "set-cookie" in resp.headers:
-                    out["headers"]["set-cookie"] = "<present>"
                 body = raw.decode("utf-8", errors="replace")
             break
         except httpx.HTTPError as exc:
@@ -305,6 +354,7 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
                                       got["path_mismatch"], got["dns_error"])
+        store_blob(got["sha256"], body, present=(state == "present"))
         entry = {"identity": ident, **got, "file_state": state}
         if got["error"]:
             rec["errors"].append(f"robots/{ident}: {got['error']}")
@@ -331,10 +381,6 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         rec["policy"].update(
             robots_parse.summarise(bodies["honest_bot"], watchlist, US_TOKEN)
         )
-        if write_text:
-            (ROBOTS_DIR / f"{host}.txt").write_text(
-                bodies["honest_bot"], encoding="utf-8"
-            )
 
     # Opt-out, honoured through the standard mechanism rather than a convention
     # of our own: a host that names our token and disallows it gets read once
@@ -363,6 +409,7 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
                                       got["path_mismatch"], got["dns_error"])
+        store_blob(got["sha256"], body, present=(state == "present"))
         rec["wellknown"][key] = {
             "status": got["status"], "file_state": state,
             "bytes": got["bytes"], "sha256": got["sha256"],
@@ -544,9 +591,10 @@ def retry_failed(run_dir: Path, panel: list[dict], watchlist: list[str],
 
 def cmd_retry(args) -> None:
     """Run the retry pass against the latest run and rewrite its metadata."""
-    runs = sorted(d for d in RUNS.iterdir()
+    base = RUNS / PANEL_ID
+    runs = sorted(d for d in base.iterdir()
                   if d.is_dir() and (d / "run-meta.json").exists()
-                  and d.name != "dry-run")
+                  and d.name != "dry-run") if base.exists() else []
     if not runs:
         sys.exit("no run to retry")
     run_dir = runs[-1]
@@ -609,9 +657,35 @@ def cmd_run(args) -> None:
 
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     vantage = os.environ.get("OBSERVATORY_VANTAGE", "local")
-    run_dir = RUNS / ("dry-run" if args.dry_run else run_id)
+    run_dir = RUNS / PANEL_ID / ("dry-run" if args.dry_run else run_id)
+    meta_path = run_dir / "run-meta.json"
+    if meta_path.exists() and not (args.resume or args.force or args.dry_run):
+        prior = json.loads(meta_path.read_text())
+        sys.exit(
+            f"run {run_id} already exists ({prior.get('status')}, "
+            f"{prior.get('hosts_ok')}/{prior.get('hosts_attempted')} clean).\n"
+            "  Runs are append-only history. Use --resume to continue an "
+            "interrupted one,\n  --run-id to name this one differently, or "
+            "--force to overwrite deliberately."
+        )
     run_dir.mkdir(parents=True, exist_ok=True)
     records_path = run_dir / "records.jsonl"
+
+    done_hosts: set[str] = set()
+    mode = "w"
+    if args.resume and records_path.exists():
+        for ln in records_path.read_text(encoding="utf-8").splitlines():
+            if ln.strip():
+                try:
+                    done_hosts.add(json.loads(ln)["host"])
+                except (ValueError, KeyError):
+                    pass  # a torn final line from a killed run
+        panel = [r for r in panel if r["host"].strip().lower() not in done_hosts]
+        mode = "a"
+        print(f"resuming: {len(done_hosts)} host(s) already recorded, "
+              f"{len(panel)} to go", file=sys.stderr)
+        if not panel:
+            sys.exit("nothing left to do; run derive")
 
     print(f"run {run_id} | {len(panel)} hosts | {len(panel) * 5} requests | "
           f"vantage {vantage}", file=sys.stderr)
@@ -622,7 +696,7 @@ def cmd_run(args) -> None:
     # Append as each host completes: less code than accumulating, and a run that
     # dies halfway leaves usable partial data. A failed run is 14 minutes to
     # redo, so there is no resume machinery.
-    with records_path.open("w", encoding="utf-8") as fh:
+    with records_path.open(mode, encoding="utf-8") as fh:
         with ThreadPoolExecutor(CONCURRENT_HOSTS) as pool:
             futures = [
                 pool.submit(probe_host, r, watchlist, run_id, vantage,
@@ -639,7 +713,10 @@ def cmd_run(args) -> None:
                     if i % 25 == 0 or i == len(futures):
                         print(f"  {i}/{len(futures)}  ok={ok}", file=sys.stderr)
 
-    attempted = len(panel)
+    all_recs = [json.loads(ln) for ln in
+                records_path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    attempted = len(all_recs)
+    ok = sum(1 for r in all_recs if not r["errors"])
     err_rate = 0.0 if not attempted else (attempted - ok) / attempted
     reasons = []
     if err_rate > ERROR_BUDGET:
@@ -719,10 +796,125 @@ def _access_varies(r: dict) -> bool:
     return robots_parse.access_varies(r.get("robots", []), len(IDENTITIES))
 
 
-def cmd_derive(args) -> None:
-    runs = sorted(d for d in RUNS.iterdir()
+def _load_run(run_id: str | None = None) -> tuple[Path, list[dict]]:
+    base = RUNS / PANEL_ID
+    runs = sorted(d for d in base.iterdir()
                   if d.is_dir() and (d / "records.jsonl").exists()
-                  and d.name != "dry-run")
+                  and d.name != "dry-run") if base.exists() else []
+    if not runs:
+        sys.exit(f"no runs for {PANEL_ID}")
+    run_dir = (base / run_id) if run_id else runs[-1]
+    if not (run_dir / "records.jsonl").exists():
+        sys.exit(f"no such run: {run_dir}")
+    recs = [json.loads(ln) for ln in
+            (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines() if ln]
+    return run_dir, recs
+
+
+def _file_sha(rec: dict, which: str) -> str | None:
+    if which == "robots":
+        for e in rec.get("robots", []):
+            if e.get("identity") == "honest_bot" and e.get("file_state") == "present":
+                return e.get("sha256")
+        return None
+    w = rec.get("wellknown", {}).get(which, {})
+    return w.get("sha256") if w.get("file_state") == "present" else None
+
+
+def cmd_cat(args) -> None:
+    """Print a stored file for one host."""
+    _, recs = _load_run(args.run)
+    rec = next((r for r in recs if r["host"] == args.host), None)
+    if not rec:
+        sys.exit(f"{args.host} not in this run")
+    sha = _file_sha(rec, args.file)
+    if not sha:
+        sys.exit(f"{args.host}: no stored {args.file} "
+                 f"(state: {rec.get('policy', {}).get('file_state')})")
+    body = read_blob(sha)
+    if body is None:
+        sys.exit(f"blob {sha[:12]} missing")
+    print(body, end="")
+
+
+def cmd_diff(args) -> None:
+    """Diff one host's stored file between two runs."""
+    import difflib
+    _, a = _load_run(args.from_run)
+    _, b = _load_run(args.to_run)
+    ra = next((r for r in a if r["host"] == args.host), None)
+    rb = next((r for r in b if r["host"] == args.host), None)
+    if not ra or not rb:
+        sys.exit(f"{args.host} missing from one of the runs")
+    sa, sb = _file_sha(ra, args.file), _file_sha(rb, args.file)
+    if sa == sb:
+        print(f"{args.host} {args.file}: unchanged ({(sa or 'absent')[:12]})",
+              file=sys.stderr)
+        return
+    ta = (read_blob(sa) or "") if sa else ""
+    tb = (read_blob(sb) or "") if sb else ""
+    sys.stdout.writelines(difflib.unified_diff(
+        ta.splitlines(keepends=True), tb.splitlines(keepends=True),
+        fromfile=f"{args.host} {ra['run_id']}", tofile=f"{args.host} {rb['run_id']}"))
+
+
+def cmd_corpus(args) -> None:
+    """List stored files of one kind, for bulk analysis of the corpus."""
+    run_dir, recs = _load_run(args.run)
+    rows = [(r["host"], _file_sha(r, args.file)) for r in recs]
+    rows = [(h, s) for h, s in rows if s]
+    print(f"{len(rows)} stored {args.file} files in {run_dir.name}", file=sys.stderr)
+    for h, sha in sorted(rows):
+        print(f"{h}\t{blob_path(sha)}")
+
+
+def cmd_reparse(args) -> None:
+    """Re-derive every record's parsed policy from the archived bodies.
+
+    This is what the archive is for. A parser fix, or a question nobody asked
+    at collection time, is applied backwards across the whole history instead
+    of invalidating it -- so week 40 stays comparable with week 1.
+    """
+    base = RUNS / PANEL_ID
+    runs = sorted(d for d in base.iterdir()
+                  if d.is_dir() and (d / "records.jsonl").exists()) if base.exists() else []
+    if not runs:
+        sys.exit(f"no runs for {PANEL_ID}")
+    watchlist = load_watchlist()
+    for run_dir in runs:
+        path = run_dir / "records.jsonl"
+        recs = [json.loads(ln) for ln in
+                path.read_text(encoding="utf-8").splitlines() if ln]
+        changed = missing = 0
+        for r in recs:
+            sha = _file_sha(r, "robots")
+            if not sha:
+                continue
+            body = read_blob(sha)
+            if body is None:
+                missing += 1
+                continue
+            fresh = robots_parse.summarise(body, watchlist, US_TOKEN)
+            fresh["file_state"] = r["policy"]["file_state"]
+            if fresh != r["policy"]:
+                changed += 1
+            r["policy"] = fresh
+            r["parser_version"] = robots_parse.PARSER_VERSION
+        if not args.dry_run:
+            with path.open("w", encoding="utf-8") as fh:
+                for r in recs:
+                    fh.write(json.dumps(r, sort_keys=True) + "\n")
+        print(f"  {run_dir.name}: {changed} record(s) changed"
+              + (f", {missing} body missing" if missing else "")
+              + (" (dry run)" if args.dry_run else ""), file=sys.stderr)
+    print(f"reparsed at parser_version={robots_parse.PARSER_VERSION}", file=sys.stderr)
+
+
+def cmd_derive(args) -> None:
+    base = RUNS / PANEL_ID
+    runs = sorted(d for d in base.iterdir()
+                  if d.is_dir() and (d / "records.jsonl").exists()
+                  and d.name != "dry-run") if base.exists() else []
     if not runs:
         sys.exit("no runs to derive from")
     run_dir = runs[-1]
@@ -807,11 +999,11 @@ def cmd_derive(args) -> None:
     }
 
     SITE_DATA.mkdir(parents=True, exist_ok=True)
-    (SITE_DATA / "findings.json").write_text(
+    (SITE_DATA / ("findings.json" if PANEL_ID == "panel-01" else f"findings-{PANEL_ID}.json")).write_text(
         json.dumps(findings, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
 
-    flat = DATA / "hosts.csv"
+    flat = DATA / ("hosts.csv" if PANEL_ID == "panel-01" else f"hosts-{PANEL_ID}.csv")
     cols = ["run_id", "host", "rank_at_freeze", "sector", "adult", "file_state",
             "names_ai", "ai_tokens_named", "ai_tokens_root_disallowed",
             "wildcard_root_disallowed", "would_disallow_us", "rsl",
@@ -836,7 +1028,7 @@ def cmd_derive(args) -> None:
             ])
 
     print(json.dumps(findings, indent=2, sort_keys=True))
-    print(f"\nwrote {SITE_DATA / 'findings.json'} and {flat}", file=sys.stderr)
+    print(f"\nwrote findings for {PANEL_ID} and {flat}", file=sys.stderr)
 
 
 def main() -> None:
@@ -855,9 +1047,14 @@ def main() -> None:
     z.set_defaults(func=cmd_freeze)
 
     r = sub.add_parser("run", help="probe the frozen panel")
+    r.add_argument("--panel", default="panel-01")
     r.add_argument("--limit", type=int)
     r.add_argument("--host")
     r.add_argument("--run-id")
+    r.add_argument("--resume", action="store_true",
+                   help="continue an interrupted run, skipping recorded hosts")
+    r.add_argument("--force", action="store_true",
+                   help="overwrite a finished run of the same id")
     r.add_argument("--allow-unresolvable", action="store_true",
                    help="probe panel hosts that do not resolve; marks the run degraded")
     r.add_argument("--dry-run", action="store_true",
@@ -865,17 +1062,51 @@ def main() -> None:
     r.set_defaults(func=cmd_run)
 
     v = sub.add_parser("resolve", help="check every panel host resolves (offline of the hosts)")
+    v.add_argument("--panel", default="panel-01")
     v.set_defaults(func=cmd_resolve)
 
+    rp = sub.add_parser("reparse", help="re-derive policy from archived bodies")
+    rp.add_argument("--panel", default="panel-01")
+    rp.add_argument("--dry-run", action="store_true")
+    rp.set_defaults(func=cmd_reparse)
+
+    c = sub.add_parser("cat", help="print a stored file for one host")
+    c.add_argument("--panel", default="panel-01")
+    c.add_argument("host")
+    c.add_argument("--file", default="robots",
+                   choices=["robots", "llms_txt", "ai_txt", "tdmrep"])
+    c.add_argument("--run")
+    c.set_defaults(func=cmd_cat)
+
+    df = sub.add_parser("diff", help="diff one host's file between two runs")
+    df.add_argument("--panel", default="panel-01")
+    df.add_argument("host")
+    df.add_argument("from_run")
+    df.add_argument("to_run")
+    df.add_argument("--file", default="robots",
+                    choices=["robots", "llms_txt", "ai_txt", "tdmrep"])
+    df.set_defaults(func=cmd_diff)
+
+    cp = sub.add_parser("corpus", help="list stored files of one kind")
+    cp.add_argument("--panel", default="panel-01")
+    cp.add_argument("--file", default="llms_txt",
+                    choices=["robots", "llms_txt", "ai_txt", "tdmrep"])
+    cp.add_argument("--run")
+    cp.set_defaults(func=cmd_corpus)
+
     t = sub.add_parser("retry", help="re-probe failed hosts in the latest run")
+    t.add_argument("--panel", default="panel-01")
     t.add_argument("--pause", type=float, default=30.0)
     t.set_defaults(func=cmd_retry)
 
     d = sub.add_parser("derive", help="compute findings from the latest run")
+    d.add_argument("--panel", default="panel-01")
     d.set_defaults(func=cmd_derive)
 
     args = ap.parse_args()
-    for p in (ROBOTS_DIR, RUNS, SITE_DATA):
+    if getattr(args, "panel", None):
+        globals()["PANEL_ID"] = args.panel
+    for p in (BLOBS, RUNS, SITE_DATA):
         p.mkdir(parents=True, exist_ok=True)
     random.seed(0)
     args.func(args)

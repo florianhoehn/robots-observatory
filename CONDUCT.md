@@ -11,9 +11,20 @@ Per host, per weekly run, exactly five requests:
 | `/ai.txt` | 1 | training opt-out convention |
 | `/.well-known/tdmrep.json` | 1 | TDM Reservation Protocol |
 
-**Five requests per host per week. 260 per year.** Spread over about nine
-seconds, six hosts at a time, with 1.5 seconds between requests to any one
-host. That is less traffic than a single human visitor loading a single page.
+**Five requests per host, per run.** Spread over about nine seconds, six hosts
+at a time, with 1.5 seconds between requests to any one host. That is less
+traffic than a single human visitor loading a single page.
+
+Two panels, deliberately different in kind:
+
+- **panel-01** — 463 hand-screened websites from the Tranco top 1000, probed
+  weekly. 260 requests per host per year.
+- **panel-02** — 16,314 hosts from the Tranco top 20,000, unscreened, probed
+  occasionally rather than on a schedule. Breadth, not a time series.
+
+A host whose probe fails is retried once after a pause, so a transient timeout
+is not recorded as a policy fact. A failing host may therefore see up to ten
+requests in a run.
 
 ## The central claim
 
@@ -33,9 +44,19 @@ document must be rewritten before that code ships. It is deliberately absent.
 
 ## What we store
 
-Status codes, timings, a header allowlist, content hashes, and the full text of
-`robots.txt` (which is the subject of the study). Page bodies are never
-retained. `Set-Cookie` is recorded as present or absent, never by value.
+Every response is archived: status, timings, **all** response headers, content
+hashes, and the body of every file requested — including the error pages,
+consent walls and CAPTCHA interstitials, which are evidence about how the web
+treats automated readers.
+
+The aim is that a new question can be answered from stored responses instead of
+by crawling again. An allowlist would decide in advance which questions are
+answerable, and that decision cannot be revisited without making the requests a
+second time.
+
+`Set-Cookie` values are the single redaction: they carry nothing but an
+anonymous session id and do not belong in a public archive. No page is ever
+requested, so no page body exists to retain.
 
 ## Identification
 
@@ -82,9 +103,13 @@ remain online indefinitely. To have a host's rows removed from the
 Runs come from a residential UK connection. Two consequences are recorded in
 every run's metadata rather than left for a reader to discover:
 
-- The local network filters advertising and tracking domains, so 17 hosts are
-  excluded from the panel with published reasons. See
-  `panel/VANTAGE-EXCLUSIONS.md`.
+- The local network filters advertising and tracking domains. 17 hosts are
+  excluded from panel-01 and 418 from panel-02 for this reason, each named in
+  `panel/VANTAGE-EXCLUSIONS.md` and `panel/panel-02-vantage-blocked.csv`.
+  A further 3,190 panel-02 candidates were dropped because their apex has no A
+  record at all, which is true from any vantage and is not a limitation of this
+  one — the two were initially conflated, overstating the blind spot
+  eightfold.
 - A UK or EU vantage meets cookie-consent interstitials that a US one often
   does not. These are recorded as `redirected_away` rather than counted as a
   file that exists.

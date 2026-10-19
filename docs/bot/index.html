@@ -69,8 +69,9 @@ this bot did, and how to stop it.</p>
 
 <p>RobotsObservatory is a research crawler that measures how the web
 <em>declares</em> its policy toward AI agents. It reads <code>robots.txt</code>
-and three well-known policy files from a fixed list of about 660 sites, once a
-week, and publishes the aggregate result as an open dataset.</p>
+and three well-known policy files from fixed lists of sites and publishes the
+aggregate result as an open dataset: 463 sites weekly, and occasionally a wider
+survey of about 16,000.</p>
 
 <p><strong>It does not read your pages.</strong> It requests only files that
 exist to be read by machines. It never touches anything behind a login, never
@@ -101,9 +102,11 @@ approve.</p>
     <tr><td><code>/.well-known/tdmrep.json</code></td><td class="n">1</td><td>TDM Reservation Protocol</td></tr>
   </tbody>
 </table>
-<p><strong>Five requests per host per week. 260 per year.</strong> Spread over
-about nine seconds, with 1.5 seconds between requests to any one host, six hosts
-in flight at a time. That is less traffic than one person loading one page.</p>
+<p><strong>Five requests per host, per run.</strong> Spread over about nine
+seconds, with 1.5 seconds between requests to any one host, six hosts in flight
+at a time. That is less traffic than one person loading one page. A host whose
+probe fails is retried once after a pause, so a transient timeout is not
+recorded as a policy fact.</p>
 
 <h2>The two user-agents</h2>
 <p>One declares itself. The other is a browser-shaped control, used to detect
