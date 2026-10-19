@@ -126,6 +126,21 @@ WELLKNOWN = {
     # llms.txt has not declined to document itself for machines; it has never
     # documented itself for anyone.
     "humans_txt": "/humans.txt",
+    # A2A Agent Card. The canonical path per the A2A spec -- note the hyphen:
+    # v1.0 renamed it from the pre-1.0 /.well-known/agent.json, so a probe of
+    # the old path would measure a convention that moved rather than one that
+    # exists. Checked against a2a-protocol.org, not from memory.
+    "agent_card": "/.well-known/agent-card.json",
+    # AI Catalog: the domain-level discovery mechanism that both A2A and MCP
+    # point at for "what AI artifacts does this domain publish". A working
+    # draft under the Linux Foundation, pending an adoption vote.
+    #
+    # NOT /.well-known/mcp.json, which does not exist. MCP Server Cards
+    # (SEP-2127, Final) live at <streamable-http-url>/server-card -- relative
+    # to an MCP endpoint, so not discoverable from a domain apex and not
+    # probeable by a crawler at all. Domain-level MCP discovery goes through
+    # this catalog instead.
+    "ai_catalog": "/.well-known/ai-catalog.json",
 }
 
 # Stored response headers. An allowlist, so we never accidentally archive

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RobotsObservatory — what this bot is</title>
-<meta name="description" content="RobotsObservatory reads robots.txt and seven well-known policy files, nine requests per host per run. How to stop it, and what it stores.">
+<meta name="description" content="RobotsObservatory reads robots.txt and nine well-known policy files, eleven requests per host per run. How to stop it, and what it stores.">
 <style>
   :root {
     --bg: #edf0f0; --surface: #fafbfb; --ink: #141d1c; --ink-2: #4e5c5a;
@@ -92,7 +92,7 @@ approve.</p>
 </div>
 
 <h2>What it requested</h2>
-<p>Per host, per run, exactly nine requests. The last four are not about AI
+<p>Per host, per run, exactly eleven requests. The last four are not about AI
 &mdash; they are controls, so the AI-specific numbers can be read against
 something:</p>
 <table>
@@ -106,9 +106,11 @@ something:</p>
     <tr><td><code>/ads.txt</code></td><td class="n">1</td><td>IAB authorised sellers &mdash; a benchmark for machine-readable adoption</td></tr>
     <tr><td><code>/.well-known/gpc.json</code></td><td class="n">1</td><td>Global Privacy Control</td></tr>
     <tr><td><code>/humans.txt</code></td><td class="n">1</td><td>the human counterpart to robots.txt &mdash; a control</td></tr>
+    <tr><td><code>/.well-known/agent-card.json</code></td><td class="n">1</td><td>A2A Agent Card &mdash; a site describing itself to agents</td></tr>
+    <tr><td><code>/.well-known/ai-catalog.json</code></td><td class="n">1</td><td>AI Catalog &mdash; domain-level discovery for MCP and A2A</td></tr>
   </tbody>
 </table>
-<p><strong>Nine requests per host, per run.</strong> Spread over about thirteen
+<p><strong>Eleven requests per host, per run.</strong> Spread over about sixteen
 seconds, with 1.5 seconds between requests to any one host, ten hosts in flight at a
 time — a figure that governs how many different sites are read in parallel,
 never how fast any one of them is asked. That is less traffic than one person loading one page. A host whose
