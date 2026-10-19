@@ -3,7 +3,7 @@
 How does the web *declare* its policy toward AI agents — and does that
 declaration change depending on who asks?
 
-A frozen panel of ~440 real websites, drawn from the Tranco top 1000 and
+A frozen panel of 480 real websites, drawn from the Tranco top 1000 and
 screened down to hosts that are actually websites. Every week we read each
 host's policy surface — `robots.txt` plus three well-known paths — under two
 requester identities, and publish the result.
@@ -15,10 +15,16 @@ read. It never fetches a page, so it measures what sites *say*, not what they
 
 ## Status
 
-Pre-run. The collector and its tests are written. The screening worksheet is
-drafted but **not yet reviewed**, so the panel is not frozen and no run has
-happened. Of the top 1000, 440 rows are currently marked as content websites
-and 560 as infrastructure, duplicates or non-sites.
+Panel frozen, no run yet. `panel-01` holds **480 hosts** screened from Tranco
+list 467YX: 520 of the top 1000 were excluded as CDN and asset delivery, ad and
+analytics serving endpoints, cloud and API endpoints, DNS and certificate
+infrastructure, duplicates, parked domains and hosts with no public site.
+
+Sector split: commerce 253, news 75, developer 62, reference 43, government 25,
+other 22. The panel is more than half commerce, because the head of a
+popularity list is dominated by platforms and retailers — any finding broken
+down by sector should say so rather than let a commerce-heavy panel stand in
+for the web.
 
 ## Usage
 
