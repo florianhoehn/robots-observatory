@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src='https://www.googletagmanager.com/gtag/js?id=G-K2RBPS2V4Z'></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+
+        var errorCode = 429,
+            errorMsg = 'Too Many Requests',
+            errorDsc = 'The client has sent too many requests within a specified period.';
+
+        gtag('js', new Date());
+        gtag('config', 'G-K2RBPS2V4Z', {'send_page_view': false});
+        gtag('event', 'server_error', {
+                'error_message': errorCode + ' | ' + errorMsg,
+                'error_url': document.location.href,
+                'error_line': ''
+              });
+
+        var origin = document.location.hostname.split(".").slice(-2).join('.');
+
+        async function getNewCaptcha(){
+            const image = document.getElementById( "captcha_image" );
+            image.src = `https://captcha.${origin}/api/v1/image?width=500&height=100&${new Date().getTime()}`;
+        };
+
+        function setCookie(cookieName, cookieValue) {
+            let date = new Date();
+            date.setTime(date.getTime() + 20 * 60 * 1000);
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/; secure";
+        }
+
+        function sendCaptcha(){
+            const form = document.getElementById( "captcha_form" );
+            const XHR = new XMLHttpRequest();
+
+            const FD = new FormData( form );
+            XHR.open( "POST", `https://captcha.${origin}/api/v1/phrase/validate` );
+            XHR.withCredentials = true;
+            XHR.onreadystatechange = function() {
+                if (XHR.readyState === 4) {
+                    const captcha_input = document.getElementById("captcha_input");
+                    if (XHR.status == 200) {
+                        if ( captcha_input.classList.contains('error-input') ) captcha_input.classList.remove('error-input');
+                        captcha_input.classList.add('valid-input');
+                        const response = JSON.parse(this.response);
+                        setCookie('captcha_expiry', response.expires);
+                        setCookie('captcha_token', response.token);
+                        location.reload();
+                    } else {
+                        console.log(XHR.responseText);
+                        getNewCaptcha();
+                        captcha_input.classList.add('error-input');
+                    }
+                }
+            }
+
+            XHR.send( FD );
+        };
+
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>429 Error | ESET</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+            font: 100% "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 300;
+            color: #424D56;
+            padding: 0;
+            margin: 0;
+            width: 100%
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 32px;
+            padding-top: 0.5em;
+            padding-bottom: 0;
+            margin-bottom: 0.5em;
+            color: #0096A1;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin: 0 0 1em 0;
+            font-size: 1.5rem;
+        }
+        div {
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #008193;
+        }
+
+        .refresh_button {
+            height: 50px;
+            width: 50px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            &:hover {
+                svg {
+                transform: scale(1.1);
+                }
+            }
+            svg {
+                outline: none;
+                transition: transform 0.15s linear;
+            }
+        }
+
+        #image_home {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        input[type=button] {
+            background:linear-gradient(to bottom, #599bb3 5%, #0096a1 100%);
+            background-color:#599bb3;
+            border-radius:6px;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-size:18px;
+            font-weight:bold;
+            padding:8px 12px;
+            text-decoration:none;
+        }
+        input[type=button]:hover {
+            background:linear-gradient(to bottom, #0096a1 5%, #599bb3 100%);
+            background-color:#0096a1;
+        }
+        input[type=button]:active {
+            position:relative;
+            top:1px;
+        }
+
+        input[type=text]{
+            border:2px solid #aaa;
+            border-radius:4px;
+            margin:8px 0;
+            outline:none;
+            padding:8px 11px;
+            box-sizing:border-box;
+            transition:.3s;
+            font-size: 16px;
+        }
+        
+        input[type=text]:focus{
+            border-color:dodgerBlue;
+            box-shadow:0 0 8px 0 dodgerBlue;
+        }
+
+        input[type=text].error-input {
+            border: 2px solid #FF0000;
+            box-shadow:0 0 8px 0 #FF0000;
+        }
+
+        input[type=text].valid-input {
+            border: 2px solid #1eff00;
+        }
+
+        .econtent-wrapper {
+            max-width: 768px;
+            margin: 0 auto;
+        }
+
+        .ewrapper {
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 5em;
+        }
+
+        @media screen and (max-width:768px) {
+            .ewrapper {
+                padding: 0 3em;
+            }
+        }
+
+        @media all and (max-width: 624px) {
+            h1 {
+                font-size: 26px;
+            }
+        }
+        .srv-info-dbg {
+            font-size: 10px;
+            font-family: tahoma, sans-serif;
+            color: #676767;
+        }
+        #cable-up {transform: translateX(31px);margin-bottom: 45px;}
+        #cable-down {margin: 45px 0;}
+        #cable-up .a,#cable-up .e{fill:#949ca1;}#cable-up .a{opacity:0.4;}#cable-up .b{fill:#ff4f21;}#cable-up .c{fill:#c60651;}#cable-up .d{fill:#424d56;}
+        #eset-logo .a{fill:#0096a1;}#eset-logo .b{fill:#fff;}
+        #cable-down .a,#cable-down .b,#cable-down .d,#cable-down .e,#cable-down .f{fill:#949ca1;}#cable-down .a{opacity:0.2;}#cable-down .b{opacity:0.4;}#cable-down .c{fill:#fff;}#cable-down .d{opacity:0.3;}#cable-down .e,#cable-down .g{opacity:0.7;}#cable-down .g{fill:none;stroke:#949ca1;stroke-miterlimit:10;}#cable-down .h{fill:#ff4f21;}#cable-down .i{fill:#c60651;}#cable-down .j{fill:#424d56;}
+    </style>
+</head>
+<body>
+<div class="ewrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" width="76.768" height="304.18" viewBox="0 0 76.768 304.18" id="cable-up"><defs></defs><path class="a" d="M-3327.915,649.8h-4.63V810.367A13.851,13.851,0,0,1-3346.38,824.2a13.852,13.852,0,0,1-13.836-13.836V756.742a18.487,18.487,0,0,0-18.467-18.466,18.487,18.487,0,0,0-18.466,18.466V934.481h9.26V756.742a9.216,9.216,0,0,1,9.205-9.206,9.217,9.217,0,0,1,9.206,9.206v53.625a23.123,23.123,0,0,0,23.1,23.1,23.123,23.123,0,0,0,23.1-23.1V649.8Z" transform="translate(3400.052 -649.795)"/><g transform="translate(0 284.686)"><g transform="translate(7.272 0)"><g transform="translate(0.205 15.079)"><rect class="b" width="2.194" height="0.463" transform="matrix(0.064, -0.998, 0.998, 0.064, 0, 2.19)"/></g><path class="c" d="M-3384.484,1273.338a11.714,11.714,0,0,1-1.669,2.521,5.543,5.543,0,0,0-1.561,3.918l1.156.044a4.389,4.389,0,0,1,1.3-3.226,12.9,12.9,0,0,0,1.815-2.747c1.252-2.565.436-7.078-.061-9.213h-1.193C-3384.247,1266.51-3383.349,1271.015-3384.484,1273.338Z" transform="translate(3387.714 -1264.633)"/></g><g transform="translate(8.321 0)"><g transform="translate(3.668 15.131)"><rect class="b" width="2.672" height="0.463" transform="translate(0 2.642) rotate(-81.466)"/></g><path class="d" d="M-3381.708,1279.847l1.141.2c1.008-5.857-1.8-12.394-3.531-15.41h-1.35C-3383.932,1267.182-3380.7,1274.014-3381.708,1279.847Z" transform="translate(3385.448 -1264.633)"/></g><g transform="translate(4.66 0)"><g transform="translate(0.347 15.871)"><rect class="b" width="0.463" height="2.19"/></g><path class="d" d="M-3392.218,1277.748a5.325,5.325,0,0,0-1.137,2.886l1.156.054a4.277,4.277,0,0,1,.945-2.3,6.25,6.25,0,0,0,1.321-3.828v-9.93h-1.157v9.93A5.137,5.137,0,0,1-3392.218,1277.748Z" transform="translate(3393.355 -1264.633)"/></g><g transform="translate(5.238 0)"><g transform="translate(5.078 17.116)"><rect class="b" width="0.463" height="2.342" transform="matrix(0.994, -0.108, 0.108, 0.994, 0, 0.05)"/></g><path class="c" d="M-3390.265,1272.006a24.828,24.828,0,0,1,2.919,9.919l1.153-.1a26.042,26.042,0,0,0-3.08-10.418,15.747,15.747,0,0,1-1.672-6.777h-1.162A16.814,16.814,0,0,0-3390.265,1272.006Z" transform="translate(3392.106 -1264.633)"/></g><g transform="translate(0.929 0)"><g transform="translate(0 10.296)"><rect class="b" width="2.377" height="0.463" transform="matrix(0.68, -0.733, 0.733, 0.68, 0, 1.743)"/></g><g transform="translate(1.301)"><path class="d" d="M-3398.6,1274.724l.813.824c2.74-2.7,2.9-8.516,2.839-10.914h-1.162C-3396.059,1266.861-3396.192,1272.345-3398.6,1274.724Z" transform="translate(3398.602 -1264.633)"/></g></g><g transform="translate(8.61 0)"><g transform="translate(1.093 8.382)"><rect class="b" width="0.463" height="3.431" transform="translate(0 0.154) rotate(-19.411)"/></g><path class="e" d="M-3384,1273.406l1.08-.416c-1.209-3.137-.63-7.006-.368-8.357h-1.181A17.315,17.315,0,0,0-3384,1273.406Z" transform="translate(3384.825 -1264.633)"/></g><g transform="translate(2.338 0)"><g transform="translate(0 12.314)"><rect class="b" width="3.209" height="0.463" transform="translate(0 2.649) rotate(-55.659)"/></g><g transform="translate(1.475)"><path class="e" d="M-3394.243,1277.486c1.635-2.28,2.929-10.6,3.255-12.853h-1.169c-.486,3.339-1.725,10.363-3.026,12.179Z" transform="translate(3395.183 -1264.633)"/></g></g><g transform="translate(0 0)"><g transform="translate(0 6.876)"><rect class="b" width="2.804" height="0.463" transform="translate(0 2.24) rotate(-53.018)"/></g><g transform="translate(1.392)"><path class="c" d="M-3400.413,1271.336l.886.745a14.048,14.048,0,0,0,2.744-7.448h-1.167A12.894,12.894,0,0,1-3400.413,1271.336Z" transform="translate(3400.413 -1264.633)"/></g></g></g></svg>
+</div>
+<div class="ewrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="47.411" viewBox="0 0 120 47.411" id="eset-logo"><defs></defs><g transform="translate(-23.811 -20.29)"><path class="a" d="M197.436,22.164a.3.3,0,0,0-.03-.137.249.249,0,0,0-.109-.1.458.458,0,0,0-.162-.047,1.648,1.648,0,0,0-.206-.012h-.191v.678h.142a1.316,1.316,0,0,0,.258-.021.384.384,0,0,0,.174-.071.3.3,0,0,0,.094-.117.415.415,0,0,0,.03-.171m1.032,1.7h-.761l-.73-.89h-.239v.89h-.6V21.448h.919a3.415,3.415,0,0,1,.412.02.9.9,0,0,1,.3.1.66.66,0,0,1,.17.983.96.96,0,0,1-.388.266ZM199,22.712a1.848,1.848,0,0,0-.553-1.342,1.865,1.865,0,0,0-2.67,0,1.9,1.9,0,0,0,0,2.685,1.863,1.863,0,0,0,2.67,0A1.853,1.853,0,0,0,199,22.712m.533,0A2.431,2.431,0,1,1,198.818,21a2.33,2.33,0,0,1,.711,1.709" transform="translate(-58.188 0)"/><path class="a" d="M40.362,24.038A15.953,15.953,0,0,0,26.669,31.47c-2.341,4.055-2.858,10.661-2.858,15.038s.516,10.983,2.858,15.037a15.956,15.956,0,0,0,13.694,7.432h86.9a15.959,15.959,0,0,0,13.694-7.432c2.339-4.054,2.858-10.66,2.858-15.039s-.519-10.98-2.858-15.035a15.956,15.956,0,0,0-13.694-7.432Z" transform="translate(0 -1.276)"/><path class="b" d="M100.228,46.074h7.314v-.227c0-3.342-1.341-3.593-3.754-3.593-2.931,0-3.478.949-3.561,3.82m-51.35-3.6c2.4,0,3.687.236,3.687,3.525v.159H45.389c.08-2.811.652-3.684,3.489-3.684m-10.139,6.2c0,7.875,1.971,10.705,10.261,10.705,3.082,0,5.637-.243,7.423-1.234,1.731-1,2.761-2.72,2.795-5.785H52.684c-.069,2.245-1.591,2.474-3.684,2.474-3.021,0-3.61-1.229-3.61-4.985v-.16H59.218V48.675c0-8.594-2.325-10.746-10.218-10.746-8.451,0-10.261,2.628-10.261,10.746m24.885-3.933c0,4.2,1.451,6.163,10.261,6.163a8.178,8.178,0,0,1,2.8.278c.689.3,1.008.9,1.008,1.994,0,1.828-.671,2.025-3.81,2.025-1.747,0-3.525-.039-3.6-2.393H63.623c.051,4.641,2.251,6.159,6.318,6.483,1.231.1,2.569.087,3.942.087,5.607,0,10.261-.936,10.261-7.015,0-5.792-3.023-6.205-10.263-6.369-3.6-.08-3.807-.834-3.807-2.024,0-1.413.157-1.865,3.81-1.865,1.339,0,2.674.12,2.977,1.785h6.268v-.854c0-5.04-5.281-5.109-9.245-5.109-5.95,0-10.261.133-10.261,6.813m54.6-6.813H134.6v4.787h-4.859v16.43h-6.653V42.716h-4.864Zm-24.5,10.6c0-8.09,1.785-10.68,10.193-10.68,7.857,0,10.153,2.123,10.153,10.68v.946H100.235V49.7c0,3.768.595,5.054,3.674,5.054,2.071,0,3.652-.229,3.75-2.474h6.4c-.051,3-1.068,4.676-2.761,5.656-1.767.981-4.308,1.227-7.39,1.227-8.247,0-10.193-2.794-10.193-10.638M33.866,63.092c-3.335-3.582-4.064-9.2-4.064-14.545S30.531,37.58,33.866,34a14.375,14.375,0,0,1,9.642-3.973H88.319V67.065H43.508a14.366,14.366,0,0,1-9.642-3.973" transform="translate(-2.04 -3.315)"/></g></svg>
+</div>
+<div class="econtent-wrapper">
+    <div class="ewrapper">
+        <h1>
+            Help us in the fight against internet bots
+        </h1>
+        <p>Complete the CAPTCHA challenge below to continue exploring our website for the next 20 minutes.</p>
+        <div id="captcha_home">
+            <div id="image_home">
+                <img src="" alt=”Captcha” id="captcha_image" height=”100” width=”500”>
+                <button class="refresh_button" onclick="getNewCaptcha()">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" viewBox="0 0 24 24" width="36px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                </button>
+            </div>
+        </div>
+        <form id="captcha_form" onSubmit="return sendCaptcha()">
+            <input id="captcha_input" type="text" name="phrase" minlength="6" maxlength="6">
+            <input id="captcha_button" type="button" onclick="sendCaptcha()" value="Continue">
+        </form>
+        <p class="srv-info-dbg">__RQID__</p>
+        <p>
+            <h2>Did you know that traffic from bad bots accounts for 25% of internet traffic?</h2>
+            <p>We’ve decided to fight this phenomenon in order to help decrease electricity consumption and provide more environmentally friendly software solutions.</p>
+        </p>
+    </div>
+</div>
+<div class="ewrapper form">
+    <!-- Form -->
+</div>
+<div class="ewrapper">
+    <svg xmlns="http://www.w3.org/2000/svg" width="137.539" height="350.544" viewBox="0 0 137.539 350.544" id="cable-down"><defs><style></style></defs><rect class="a" width="137.539" height="137.539" rx="15" transform="translate(0 213.005)"/><rect class="b" width="71.769" height="71.769" rx="5" transform="translate(32.885 245.891)"/><path class="c" d="M-3392.5,1926.293H-3446a.926.926,0,0,0-.926.926v34.04a.926.926,0,0,0,.926.926h6.258a.926.926,0,0,1,.926.926v3.789a.925.925,0,0,0,.926.926h5.154a.926.926,0,0,1,.926.926v5.828a.926.926,0,0,0,.926.926h23.272a.926.926,0,0,0,.926-.926v-5.828a.926.926,0,0,1,.926-.926h5.154a.926.926,0,0,0,.926-.926v-3.789a.926.926,0,0,1,.926-.926h6.258a.926.926,0,0,0,.926-.926v-34.04A.926.926,0,0,0-3392.5,1926.293Z" transform="translate(3488.018 -1669.021)"/><g transform="translate(37.096 197.233)"><path class="c" d="M-3397.276,1839.145h-9.557a1.66,1.66,0,0,1-1.675-1.454,1.613,1.613,0,0,1,1.605-1.771h6.369a1.949,1.949,0,0,0,1.894-2.407,1.949,1.949,0,0,0-1.894-1.49h-8.316a1.659,1.659,0,0,1-1.674-1.454,1.613,1.613,0,0,1,1.6-1.771h6.662a1.949,1.949,0,0,0,1.895-2.407l-.011-.046a1.948,1.948,0,0,0-1.894-1.49h-8.6a1.66,1.66,0,0,1-1.674-1.455,1.613,1.613,0,0,1,1.605-1.771h6.943a1.949,1.949,0,0,0,1.894-2.407,1.949,1.949,0,0,0-1.894-1.49h-8.89a1.659,1.659,0,0,1-1.674-1.454,1.613,1.613,0,0,1,1.605-1.771h7.235a1.948,1.948,0,0,0,1.894-2.407,1.948,1.948,0,0,0-1.894-1.49h-9.182a1.659,1.659,0,0,1-1.674-1.454,1.613,1.613,0,0,1,1.6-1.771h10l-2.6-10.754H-3440.2l-2.6,10.754h10.072a1.613,1.613,0,0,1,1.605,1.771,1.66,1.66,0,0,1-1.674,1.454h-9.25a1.95,1.95,0,0,0-1.895,1.49,1.949,1.949,0,0,0,1.895,2.407h7.234a1.659,1.659,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.6,1.771h-9.027a1.949,1.949,0,0,0-1.895,1.49,1.949,1.949,0,0,0,1.895,2.407h6.941a1.659,1.659,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.6,1.772h-8.734a1.949,1.949,0,0,0-1.894,1.49l-.011.046a1.949,1.949,0,0,0,1.894,2.407h6.661a1.66,1.66,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.605,1.771h-8.453a1.949,1.949,0,0,0-1.894,1.49,1.949,1.949,0,0,0,1.894,2.407h6.368a1.659,1.659,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.6,1.771h-9.695l-5.068,20.948v31.753a4.032,4.032,0,0,0,4.032,4.031h17.405v6.76a.926.926,0,0,0,.926.926h18.619a.926.926,0,0,0,.926-.926v-6.76h17.406a4.031,4.031,0,0,0,4.032-4.031v-31.753Z" transform="translate(3455.554 -1796.626)"/><g transform="translate(0 0)"><path class="d" d="M-3399.02,2010.979h-10.236v6.76a.926.926,0,0,0,.926.926h18.619a.926.926,0,0,0,.926-.926v-6.76Z" transform="translate(3430.693 -1911.728)"/><path class="e" d="M-3360.544,1839.145h-9.557a1.659,1.659,0,0,1-1.674-1.454,1.612,1.612,0,0,1,1.605-1.771h6.369a1.949,1.949,0,0,0,1.894-2.407,1.948,1.948,0,0,0-1.894-1.49h-8.316a1.66,1.66,0,0,1-1.674-1.454,1.613,1.613,0,0,1,1.605-1.771h6.661a1.95,1.95,0,0,0,1.895-2.407l-.011-.046a1.949,1.949,0,0,0-1.895-1.49h-8.6a1.66,1.66,0,0,1-1.675-1.455,1.613,1.613,0,0,1,1.605-1.771h6.943a1.949,1.949,0,0,0,1.894-2.407,1.949,1.949,0,0,0-1.894-1.49h-8.889a1.66,1.66,0,0,1-1.675-1.454,1.613,1.613,0,0,1,1.605-1.771h7.236a1.949,1.949,0,0,0,1.894-2.407,1.949,1.949,0,0,0-1.894-1.49h-9.182a1.659,1.659,0,0,1-1.674-1.454,1.613,1.613,0,0,1,1.6-1.771h10l-2.6-10.754h-16.317v99.251h27.641a4.031,4.031,0,0,0,4.032-4.031v-31.753Z" transform="translate(3418.823 -1796.626)"/><path class="f" d="M-3440.2,1796.626l-2.6,10.754h10.072a1.613,1.613,0,0,1,1.605,1.771,1.66,1.66,0,0,1-1.674,1.454h-9.25a1.95,1.95,0,0,0-1.895,1.49,1.949,1.949,0,0,0,1.895,2.407h7.234a1.659,1.659,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.6,1.771h-9.027a1.949,1.949,0,0,0-1.895,1.49,1.949,1.949,0,0,0,1.895,2.407h6.941a1.659,1.659,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.6,1.772h-8.734a1.949,1.949,0,0,0-1.894,1.49l-.011.046a1.949,1.949,0,0,0,1.894,2.407h6.661a1.66,1.66,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.605,1.771h-8.453a1.949,1.949,0,0,0-1.894,1.49,1.949,1.949,0,0,0,1.894,2.407h6.368a1.659,1.659,0,0,1,1.674,1.454,1.613,1.613,0,0,1-1.6,1.771h-9.695l-5.068,20.948v31.753a4.032,4.032,0,0,0,4.032,4.031h27.641v-99.251Z" transform="translate(3455.554 -1796.626)"/></g></g><rect class="c" width="34.077" height="15.416" rx="4.354" transform="translate(51.731 248.438)"/><path class="c" d="M-3410.568,1957.837a20.194,20.194,0,0,1,20.193,20.194h-40.388A20.194,20.194,0,0,1-3410.568,1957.837Z" transform="translate(3479.338 -1685.959)"/><path class="b" d="M-3397.149,1412.764V1590.5h9.26V1412.764Z" transform="translate(3461.289 -1393.269)"/><path class="g" d="M-3381.11,1414.107" transform="translate(3452.676 -1393.99)"/><g transform="translate(63.102 0)"><g transform="translate(1.209 2.195)"><g transform="translate(4.124 0)"><rect class="h" width="2.194" height="0.463" transform="matrix(0.064, -0.998, 0.998, 0.064, 0, 2.19)"/></g><path class="i" d="M-3395.075,1386.446a11.7,11.7,0,0,1,1.669-2.521,5.544,5.544,0,0,0,1.561-3.918l-1.156-.043a4.39,4.39,0,0,1-1.3,3.226,12.889,12.889,0,0,0-1.814,2.747c-1.253,2.565-.437,7.078.062,9.214h1.192C-3395.312,1393.275-3396.21,1388.77-3395.075,1386.446Z" transform="translate(3396.778 -1377.852)"/></g><g transform="translate(0 1.653)"><g transform="translate(0.57 0)"><rect class="h" width="2.672" height="0.463" transform="translate(0 2.642) rotate(-81.466)"/></g><g transform="translate(0 2.431)"><path class="j" d="M-3398.036,1379.677l-1.141-.2c-1.008,5.858,1.8,12.395,3.53,15.411h1.35C-3395.812,1392.342-3399.041,1385.511-3398.036,1379.677Z" transform="translate(3399.39 -1379.481)"/></g></g><g transform="translate(5.333 1.434)"><g transform="translate(2.611)"><rect class="h" width="0.463" height="2.19"/></g><g transform="translate(0 2.006)"><path class="j" d="M-3385.588,1381.029a5.323,5.323,0,0,0,1.137-2.886l-1.156-.053a4.277,4.277,0,0,1-.944,2.3,6.249,6.249,0,0,0-1.321,3.828v9.93h1.157v-9.93A5.138,5.138,0,0,1-3385.588,1381.029Z" transform="translate(3387.871 -1378.09)"/></g></g><g transform="translate(2.263 0)"><g transform="translate(0.123)"><rect class="h" width="0.463" height="2.342" transform="matrix(0.994, -0.108, 0.108, 0.994, 0, 0.05)"/></g><g transform="translate(0 2.202)"><path class="i" d="M-3390.43,1385.336a24.821,24.821,0,0,1-2.919-9.919l-1.154.1a26.055,26.055,0,0,0,3.08,10.418,15.758,15.758,0,0,1,1.671,6.778h1.162A16.818,16.818,0,0,0-3390.43,1385.336Z" transform="translate(3394.503 -1375.417)"/></g></g><g transform="translate(7.523 7.14)"><g transform="translate(3.006 0)"><rect class="h" width="2.377" height="0.463" transform="matrix(0.68, -0.733, 0.733, 0.68, 0, 1.743)"/></g><g transform="translate(0 1.439)"><path class="j" d="M-3379.481,1390.015l-.813-.824c-2.741,2.7-2.9,8.516-2.839,10.915h1.161C-3382.024,1397.878-3381.892,1392.393-3379.481,1390.015Z" transform="translate(3383.142 -1389.191)"/></g></g><g transform="translate(2.135 7.723)"><g transform="translate(0 0)"><rect class="h" width="0.463" height="3.431" transform="translate(0 0.154) rotate(-19.411)"/></g><g transform="translate(0.768 2.999)"><path class="f" d="M-3392.041,1393.817l-1.08.416c1.209,3.136.63,7.006.367,8.357h1.182A17.317,17.317,0,0,0-3392.041,1393.817Z" transform="translate(3393.121 -1393.817)"/></g></g><g transform="translate(5.405 4.27)"><g transform="translate(3.478 0)"><rect class="h" width="3.209" height="0.463" transform="translate(0 2.649) rotate(-55.659)"/></g><g transform="translate(0 2.372)"><path class="f" d="M-3384.46,1385.005c-1.636,2.28-2.929,10.6-3.256,12.853h1.169c.487-3.339,1.725-10.364,3.027-12.179Z" transform="translate(3387.716 -1385.005)"/></g></g><g transform="translate(8.393 10.1)"><g transform="translate(2.965 0)"><rect class="h" width="2.804" height="0.463" transform="translate(0 2.24) rotate(-53.018)"/></g><g transform="translate(0 1.946)"><path class="i" d="M-3377.634,1397.423l-.886-.745a14.047,14.047,0,0,0-2.744,7.448h1.167A12.9,12.9,0,0,1-3377.634,1397.423Z" transform="translate(3381.264 -1396.678)"/></g></g></g></svg>
+</div>
+<script defer>
+    const input = document.getElementById("captcha_input")
+    input.addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            sendCaptcha();
+        }
+    });
+
+    document.getElementById("captcha_image").src=`https://captcha.${origin}/api/v1/image/init?width=500&height=100`;
+</script>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preload" as="style" href="https://d39xvdj9d5ntm1.cloudfront.net/common/css/ring.min-f9b2e6d97e413f146175c61ae518c108.css">
+<link rel="stylesheet" type="text/css" href="https://d39xvdj9d5ntm1.cloudfront.net/common/css/ring.min-f9b2e6d97e413f146175c61ae518c108.css" />
+
+
+
+
+
+
+
+  
+
+  
+
+
+                        <template class="consent-zva append-to-head">
+                            
+                                
+
+
+    <script type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+        function loadZVA (){
+            if(window.isClimatePledgePopupShown) {
+                return;
+            }
+
+            const zvaScript = document.createElement('script');
+            zvaScript.src = 'https://us01ccistatic.zoom.us/us01cci/web-sdk/chat-client.js';
+            zvaScript.dataset.apikey = "otatWMTeSnC9RvVhMN2HpA";
+            zvaScript.dataset.env = "us01";
+            zvaScript.setAttribute('type', 'text/javascript');
+            window.document.body.appendChild(zvaScript);
+            
+            window.addEventListener('support_handoff', () => {
+                window.zoomCampaignSdk.close();
+                window.zoomCampaignSdk.hide();
+                window.isLaunched(true);
+                window.init();
+            });
+        }
+        if (document.readyState !== 'loading') {
+            loadZVA();
+        } else {
+            document.addEventListener('DOMContentLoaded', loadZVA);
+        }
+        </script>
+
+
+                            
+                        </template>
+                    
+                        <template class="consent-acec append-to-head">
+                            
+                                
+
+<script type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+  // Queue calls until ACEC is ready to prevent race condition with ZVA
+  window.acecQueue = window.acecQueue || [];
+  
+  window.isLaunched = window.isLaunched || function(launched) {
+    window.acecQueue.push(['isLaunched', launched]);
+  };
+  
+  window.init = window.init || function() {
+    window.acecQueue.push(['init']);
+  };
+</script>
+
+
+  <script type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+    window.RC3Enabled = true;
+    const AsyncChatOrigin = 'https://chatbot.rc3.ring.com';
+    const AsyncChatcampaign = 'ACEC_US';
+    const AsyncChatLocale = "en-US";
+
+    class RingChatBot {
+      loadScript() {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = "https://chatbot.rc3.ring.com/js/1.0.11.js";
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+
+      /**
+       * Determines if the chat bubble should be displayed on the current page.
+       * Returns false if the current path starts with any of the hidden paths, 
+       * true otherwise.
+       *
+       * @returns {boolean}
+       */
+      get shouldShowChatBubble() {
+        const HIDDEN_PATHS = ['/mobile/'];
+
+        return !HIDDEN_PATHS.some(path => location.pathname.startsWith(path));
+      }
+
+      constructor(chatOrigin, campaign, agentConfig, surveyEnabled, isLiveChatEnabled, locale) {
+        this.campaign = campaign;
+        this.locale = locale;
+        this.status = 'loading';
+        this.agentConfig = agentConfig;
+        this.isLiveChatEnabled = isLiveChatEnabled;
+        this.isACECv2SurveyEnabled = surveyEnabled;
+        this.updateWidget = null;
+        this.onMinimizeHandlers = new Set();
+        window.acec = this;
+
+        this.props = {
+          chatOrigin,
+          show: false,
+          active: false,
+          toggleActive: this.toggleActive.bind(this),
+          statusHandler: this.handleStatus.bind(this),
+          startHandler: this.handleStart.bind(this),
+        };
+
+        const rootId = 'rcb-chat-widget'
+        this.rootEl = document.createElement('div');
+        this.rootEl.id = rootId;
+        this.rootEl.classList.add('acec-container');
+
+        if (!this.shouldShowChatBubble) {
+          this.rootEl.classList.add('no-chat-bubble');
+        }
+
+        document.body.appendChild(this.rootEl);
+        this.loadScript().then(() => {
+          this.updateWidget = chat.bootstrapChatWidget(rootId, this.props);
+        })
+      }
+
+      onMinimize(handler) {
+        this.onMinimizeHandlers.add(handler);
+        return () => this.onMinimizeHandlers.delete(handler);
+      }
+
+      toggleActive() {
+        if (this.props.active) {
+          this.minimize();
+        } else {
+          this.expand();
+        }
+      }
+
+      handleStatus(status) {
+        this.status = status;
+      }
+
+      updateProps(partialProps) {
+        this.props = { ...this.props, ...partialProps };
+        if (this.updateWidget) this.updateWidget(this.props);
+      }
+
+      getMarketFromCampaign(campaign) {
+        const campaignToMarket = {
+          'ACEC_US': 'en-US',
+          'ACEC_ANZ': 'en-AU',
+          'ACEC_UK': 'en-GB',
+          'ACEC_DE': 'de-DE',
+          'ACEC_FR': 'fr-FR',
+          'ACEC_IT': 'it-IT',
+          'ACEC_ES': 'es-ES',
+          'ACEC_NL': 'nl-NL',
+          'ACEC_JP': 'ja-JP',
+          'ACEC_LATAM': 'es-LATAM'
+        };
+
+        /*
+         * Some surfaces share a campaign but need a distinct market so Sherpa can
+         * serve region-specific details. ring.com/ca/en shares the ACEC_US campaign
+         * with the US but must report the "en-CA" market (see RINGECOMM-986).
+         */
+        const localeToMarketOverride = {
+          'en-CA': 'en-CA'
+        };
+        if (this.locale && localeToMarketOverride[this.locale]) {
+          return localeToMarketOverride[this.locale];
+        }
+
+        return campaignToMarket[campaign] || 'en-US';
+      }
+
+      async handleStart() {
+        const chatConfig = {
+          campaign: this.campaign,
+          market: this.getMarketFromCampaign(this.campaign),
+          enableLiveChat: this.isLiveChatEnabled,
+          enableSurvey: this.isACECv2SurveyEnabled
+        };
+
+        // Build agents string from config
+        const enabledAgents = this.agentConfig.filter(agent => agent.enabled).map(agent => agent.name);
+        
+        if (enabledAgents.length > 0) {
+          chatConfig.enableAgents = enabledAgents.join(',');
+        }
+        
+        await chat.startPublicChat(chatConfig);
+      };
+
+      /**
+       * Synchronous function that auto-starts a chat if one is not already
+       * started. This function is invoked when ZVA hands off.
+       */
+      autoStartChat = () => {
+        if (!['loading', 'starting', 'started'].includes(this.status)) {
+          this.handleStart();
+        }
+      };
+
+      // Expands the chat window
+      expand() {
+        this.updateProps({ active: true });
+      }
+
+      // Minimizes the chat window
+      minimize() {
+        this.updateProps({ active: false });
+        this.onMinimizeHandlers.forEach(handler => handler());
+      }
+
+      // Remove the chat bubble from page
+      hide() {
+        this.rootEl.classList.remove('acec-container--visible');
+        this.updateProps({ show: false });
+      }
+
+      // Show the chat bubble on page
+      show() {
+        this.rootEl.classList.add('acec-container--visible');
+        this.updateProps({ show: true });
+      }
+    }
+    // Pass agent definitions to constructor
+    const rcb = new RingChatBot(AsyncChatOrigin, AsyncChatcampaign, [{"name":"ROUTER","enabled":true}], false, false, AsyncChatLocale);
+    
+    // called by ZVA sometime when the page first loads and later when initially launched
+    window.isLaunched = function(launched) {
+      if (launched) rcb.show();
+      else rcb.hide();
+    }
+
+    // called by ZVA when Ring Chat Bot is initially launched
+    window.init = function() {
+      rcb.autoStartChat();
+    };
+    
+    // Process any queued calls from ZVA
+    if (window.acecQueue) {
+      window.acecQueue.forEach(([method, ...args]) => {
+        if (method === 'isLaunched') window.isLaunched(...args);
+        if (method === 'init') window.init();
+      });
+      window.acecQueue = [];
+    }
+
+    if (false){
+      window.isLaunched(true);
+      window.init();
+    }
+  </script>
+
+                            
+                        </template>
+                    
+                        <template class="consent-optimizely append-to-head">
+                            
+                                
+
+<!-- Begin Optimizely Snippet -->
+<script nonce="xmWzgEisB4IDkjjw5t7rAQ==" src="https://d3au6ba0rjxhmn.cloudfront.net/optimizely/18436933757.js"></script>
+<link rel="dns-prefetch" href="//d3au6ba0rjxhmn.cloudfront.net"> 
+<link rel="preconnect" href="//d3au6ba0rjxhmn.cloudfront.net">
+<!-- End Optimizely Snippet -->
+
+<!-- Add Optimizely Snippet Listener -->
+<script type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+    var isOpzPresent = true;
+
+    window.optimizely = window.optimizely || [];
+    window.optimizely.push({
+        type: 'addListener',
+        filter: {
+            type: 'lifecycle',
+            name: 'campaignDecided'
+        },
+        handler: function(event) {
+            try {
+                var campaign = event.data.campaign.experiments[0];
+                var variationId = event.data.decision.variationId;
+                var selectedVariation = event.data.campaign.experiments[0].variations.filter(function(variation) {
+                    return variation.id === variationId;
+                })[0];
+                
+                var campaignName = `optimizely_${campaign.name}`.replace(/[\:\-]/g, '').replace(/ /g, '_').toLowerCase();
+                var opzCampaignEvent = {
+                    [campaignName]: selectedVariation.name,
+                    'optimizely_campaign_id': campaign.id,
+                    'optimizely_campaign_name': campaign.name,
+                    'optimizely_variation_id': selectedVariation.id,
+                    'optimizely_variation_name': selectedVariation.name
+                };
+
+                //wait for heap
+                var interval = setInterval(function() {
+                    if(window.heap) {
+                        window.heap.track('optimizely_campaign_decided', opzCampaignEvent);
+                        clearInterval(interval);
+                    }
+                }, 200);
+            } catch(error) {}
+        }
+    });
+</script>
+
+                            
+                        </template>
+                    
+                        <template class="consent-heap append-to-head">
+                            
+                                
+
+
+
+                            
+                        </template>
+                    
+                        <template class="consent-kenshoo append-to-head">
+                            
+                                <!-- Kenshoo Tag -->
+
+
+    <script nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+        window.kenshooToken = "919838d0-ecdb-4d24-ab4c-434934b0ad7a";
+        window.kenshooConfig = {
+            server: "3609",
+            token: "919838d0-ecdb-4d24-ab4c-434934b0ad7a"
+        };
+        !(function (a, b, c, d, e, f, g) {
+            a.ktag ||
+            ((e = function () {
+                e.sendEvent ? e.sendEvent(arguments) : e.ktq.push(arguments);
+            }),
+            (e.ktq = []),
+            (a.ktag = e),
+            (f = b.getElementsByTagName(d)[0]),
+            (g = b.createElement(d)),
+            (g.async = !0),
+            (g.src = c),
+            f.parentNode.appendChild(g));
+        })(
+            window,
+            document,
+            "//resources.xg4ken.com/js/v2/ktag.js?tid=KT-N3529-3EB",
+            "script"
+        );
+        ktag("setup", "KT-N3529-3EB", "");
+    </script>
+    <script
+        type="text/javascript"
+        nonce="xmWzgEisB4IDkjjw5t7rAQ=="
+        src="https://services.xg4ken.com/js/kenshoo.js?cid=919838d0-ecdb-4d24-ab4c-434934b0ad7a"
+    ></script>
+    <noscript>
+    <img
+        src="https://events.xg4ken.com/pixel/v2?tid=KT-N3529-3EB&noscript=1"
+        width="1"
+        height="1"
+        style="display: none"
+    />
+    </noscript>
+
+<!-- End Kenshoo Tag -->
+
+                            
+                        </template>
+                    
+                        <template class="consent-amazonDisplay append-to-head">
+                            
+                                
+<!-- Start of Amazon Display widget -->
+<script nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+    !(function (w, d, s, t, a) {
+        if (w.amzn) return;
+        w.amzn = a = function () {
+            w.amzn.q.push([arguments, new Date().getTime()]);
+        };
+        a.q = [];
+        a.version = "0.0";
+        s = d.createElement("script");
+        s.src = "https://c.amazon-adsystem.com/aat/amzn.js";
+        s.id = "amzn-pixel";
+        s.async = true;
+        t = d.getElementsByTagName("script")[0];
+        t.parentNode.insertBefore(s, t);
+    })(window, document);
+    amzn("setRegion", "NA");
+    amzn("addTag", "68579884-2cab-4909-ac0f-4f575a66d2ce");
+
+    function getPageViewData() {
+      const { pathname } = window.location;
+
+      if(/^\/search$/gi.test(pathname)) {
+          return "Search"
+      }
+
+      return window.document.title.replace(' | Ring', '')
+    }
+
+    amzn("trackEvent", `PageView - ${getPageViewData()}`, {
+      path: window.location.pathname
+    });
+</script>
+<noscript>
+  <img
+    src="https://s.amazon-adsystem.com/iu3?pid=68579884-2cab-4909-ac0f-4f575a66d2ce&event=PageView"
+    width="1"
+    height="1"
+    border="0"
+  />
+</noscript>
+<!-- End of Amazon Display widget -->
+
+                            
+                        </template>
+                    
+                        <template class="consent-sizmek append-to-head">
+                            
+                                <!-- Begin Sizmek script -->
+
+<script type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+    (function (e, s, t) {
+        t = t || {}, t.id = e, versaTagObj = {
+            $: [], onready: function (e) {
+            this.$.push(e)
+        }
+    };
+    var n = s.getElementsByTagName("script")[0], r = s.createElement("script");
+    r.options = t, r.async = !0, r.src = "https://secure-ds.serving-sys.com/SemiCachedScripts/ebOneTag.js?id=" + e, r.options = t, n.parentNode.insertBefore(r, n)
+})("1073749043", document, {dataLayer: "pageData"});</script>
+<noscript>
+    <iframe sandbox
+            src="https://bs.serving-sys.com/Serving?cn=ot&amp;onetagid=1073749043&amp;ns=1&amp;gdpr=${GDPR}&amp;gdpr_consent=${GDPR_CONSENT_68}&amp;activityValues=$$Session=[Session]$$&amp;dynamicRetargetingValues=$$$$&amp;acp=$$$$"
+            style="display:none;width:0px;height:0px"></iframe>
+</noscript>
+<!-- End Sizmek script -->
+
+                            
+                        </template>
+                    
+
+
+
+
+
+    
+        
+         
+        
+        
+        
+        <script id="consent-script" type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==" src="https://d39xvdj9d5ntm1.cloudfront.net/common/js/consent-manager-5af615cce26ec1a0794d3cbc42c60032.js?locale=en-US&local=true&loggedIn=0&region=us"></script>
+    
+
+  
+<script nonce="xmWzgEisB4IDkjjw5t7rAQ==">
+    window.marketplaceConfigs = {
+        domain: 'https://shop.ring.com',
+        ipCountry: 'GB',
+        currencySymbol: '$',
+        shouldEnableLocalCart: 'false',
+        basePath: '',
+    }
+</script>
+  
+    <script async type="text/javascript" nonce="xmWzgEisB4IDkjjw5t7rAQ==" src="https://d39xvdj9d5ntm1.cloudfront.net/common/js/ring.min-86ae58b95de63405a6729a89d13238f8.js"></script>
+  
+  <title>Error</title>
+</head>
+
+<body>
+  <div class="template-error">
+    <div class="grid-wrapper">
+      <img src="https://d39xvdj9d5ntm1.cloudfront.net/common/oops-f042536d8cbb1e2e3b30af551def44ee.png" srcset="https://d39xvdj9d5ntm1.cloudfront.net/common/oops2x-e8d7f58cf57114d42e1df4ed2465ba8c.png 2x" alt="Oops!" />
+      <h2>Sorry, that page could not be found.</h2>
+      <p>It may have been removed or moved someplace else. (404 Error)</p>
+      <a href="/doorbell-cameras"><button class="btn--outlined btn--darker">Shop Doorbell Cameras</button></a>
+      <a href="/security-cameras"><button class="btn--outlined btn--darker">Shop Security Cameras</button></a>
+    </div>
+  </div>
+</body>
+</html>

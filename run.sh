@@ -46,13 +46,21 @@ while [ "$attempt" -le "$MAX_ATTEMPTS" ]; do
   # 0 = complete. A degraded run also stops here: its remedy is the retry
   # pass below, not another full sweep.
   if [ "$run_rc" -eq 0 ]; then break; fi
-  if grep -q "degraded" <<<"$(uv run observatory.py resolve --panel "$PANEL" 2>&1)"; then :; fi
 
-  # If every host is already recorded there is nothing left to resume.
-  if uv run observatory.py run --panel "$PANEL" --resume "$@" 2>&1 | grep -q "nothing left to do"; then
-    log "all hosts recorded"
-    run_rc=0
-    break
+  # Nothing left to resume? Compare records against the panel. This used to
+  # invoke the run itself inside a `grep -q`, which does not test a condition
+  # -- it starts another full collection. Six retries meant six concurrent
+  # runs appending to one file: 452 hosts recorded twice and double the
+  # requests promised in CONDUCT.md.
+  latest=$(ls -dt data/runs/"$PANEL"/*/ 2>/dev/null | head -1)
+  if [ -n "$latest" ] && [ -s "${latest}records.jsonl" ]; then
+    done_n=$(awk 'END{print NR}' "${latest}records.jsonl")
+    panel_n=$(( $(awk 'END{print NR}' "panel/$PANEL.csv") - 1 ))
+    if [ "$done_n" -ge "$panel_n" ]; then
+      log "all $panel_n hosts recorded"
+      run_rc=0
+      break
+    fi
   fi
 
   attempt=$((attempt + 1))

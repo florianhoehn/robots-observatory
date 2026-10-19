@@ -783,6 +783,19 @@ def cmd_run(args) -> None:
     run_dir.mkdir(parents=True, exist_ok=True)
     records_path = run_dir / "records.jsonl"
 
+    # Two runs writing one records file produce duplicate hosts and double the
+    # requests this project promises. An advisory lock makes that impossible
+    # rather than merely unlikely; it releases automatically if the process
+    # dies, so a killed run does not need cleaning up by hand.
+    import fcntl
+    lock_path = run_dir / ".lock"
+    lock_fh = lock_path.open("w")
+    try:
+        fcntl.flock(lock_fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        sys.exit(f"another run is already writing {records_path}\n"
+                 "  (lock held on .lock in that directory)")
+
     done_hosts: set[str] = set()
     mode = "w"
     if args.resume and records_path.exists():
