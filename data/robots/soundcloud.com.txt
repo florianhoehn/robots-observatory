@@ -1,0 +1,65 @@
+# =============================================================================
+# robots.txt for soundcloud.com
+# Updated: 2026-05-05
+# =============================================================================
+
+# AI Crawlers: editorial only, no UGC training
+User-Agent: anthropic-ai
+User-Agent: ClaudeBot
+User-Agent: Claude-Web
+User-Agent: GPTBot
+User-Agent: ChatGPT-User
+User-Agent: OAI-SearchBot
+User-Agent: CCBot
+User-Agent: PerplexityBot
+User-Agent: Google-Extended
+User-Agent: Applebot-Extended
+User-Agent: Bytespider
+User-Agent: Amazonbot
+User-Agent: Meta-ExternalAgent
+User-Agent: cohere-ai
+
+# Homepage
+Allow: /$
+
+# Platform: Legal & Policy
+Allow: /terms-of-use
+Allow: /community-guidelines
+Allow: /transparency-reports
+Allow: /accessibility-statement
+Allow: /imprint
+
+# Platform: Discovery & Editorial
+Allow: /discover
+Allow: /stories
+Allow: /topic
+
+# Platform: Product & Marketing
+Allow: /pro
+Allow: /download
+Allow: /jobs
+Allow: /go
+Allow: /getstarted
+
+# Platform: Corporate
+Allow: /company
+
+# Platform: Technical
+Allow: /sitemap
+Allow: /sitemapIndex
+
+# Block everything else (catches all UGC at root paths)
+Disallow: /
+
+# Search engines and all other crawlers: index UGC, block low-value paths
+User-Agent: *
+Disallow: /search
+Disallow: /you/
+Disallow: /stream
+Disallow: /upload
+Disallow: /settings
+Disallow: /messages
+Disallow: /*?
+
+Sitemap: https://soundcloud.com/sitemap.xml
+Sitemap: https://soundcloud.com/sitemapIndex.xml

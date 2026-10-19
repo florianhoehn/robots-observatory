@@ -15,7 +15,13 @@ read. It never fetches a page, so it measures what sites *say*, not what they
 
 ## Status
 
-Panel frozen, no run yet. `panel-01` holds **480 hosts** screened from Tranco
+Panel frozen. **No publishable run yet.** The first attempt ran from a
+residential machine whose network does DNS-level ad blocking: twelve
+ad-technology vendors in the panel were unresolvable while ordinary websites
+resolved fine. Recorded as-is that reads as a finding about those hosts rather
+than about the measuring machine, and it deletes a whole category from the
+panel. The run is discarded and `observatory.py run` now refuses to start on a
+filtering resolver. `panel-01` holds **480 hosts** screened from Tranco
 list 467YX: 520 of the top 1000 were excluded as CDN and asset delivery, ad and
 analytics serving endpoints, cloud and API endpoints, DNS and certificate
 infrastructure, duplicates, parked domains and hosts with no public site.

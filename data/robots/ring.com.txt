@@ -1,0 +1,65 @@
+# Ring.com Robots.txt
+# Optimized for SEO and AI Engine Optimization (AEO)
+
+# --- AI Crawlers ---
+# Explicitly allowed. These bots don't spider query param variations,
+# so filter/utm blocks are unnecessary. Only private paths are restricted.
+# Ring Help support search is also excluded below.
+
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: Google-Extended
+User-agent: ClaudeBot
+User-agent: Anthropic-ai
+User-agent: PerplexityBot
+User-agent: Applebot-Extended
+User-agent: Cohere-ai
+Allow: /
+Disallow: /account
+Disallow: /admin
+Disallow: /checkout
+Disallow: /cart
+Disallow: /users
+Disallow: /user-id/
+Disallow: /signin
+Disallow: /share
+# Disable crawler access to Ring Help support search. Individual support article
+# pages remain crawlable.
+Disallow: /support/articles$
+Disallow: /support/articles?*
+Disallow: /*/support/articles$
+Disallow: /*/support/articles?*
+Disallow: /support/_next/data/*/articles.json$
+Disallow: /support/_next/data/*/articles.json?*
+Disallow: /*/support/_next/data/*/articles.json$
+Disallow: /*/support/_next/data/*/articles.json?*
+
+# --- Standard crawlers ---
+# Everything is allowed unless explicitly blocked below.
+# Filter and UTM params are blocked to prevent duplicate content indexing.
+
+User-agent: *
+Disallow: /account
+Disallow: /admin
+Disallow: /checkout
+Disallow: /cart
+Disallow: /share
+Disallow: /search
+Disallow: /*?filters=*
+Disallow: /user-id/
+Disallow: /users
+Disallow: /?utm*
+Disallow: /419/es
+Disallow: /signin/callback
+# Disable crawler access to Ring Help support search. Individual support article
+# pages remain crawlable.
+Disallow: /support/articles$
+Disallow: /support/articles?*
+Disallow: /*/support/articles$
+Disallow: /*/support/articles?*
+Disallow: /support/_next/data/*/articles.json$
+Disallow: /support/_next/data/*/articles.json?*
+Disallow: /*/support/_next/data/*/articles.json$
+Disallow: /*/support/_next/data/*/articles.json?*
+
+Sitemap: https://ring.com/sitemap.xml

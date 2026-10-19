@@ -109,6 +109,47 @@ HEADER_ALLOWLIST = (
 )
 
 
+# Canaries for the resolver check below. The controls are ordinary websites;
+# the filtered set is the archetypal ad and tracking domains that network-level
+# blockers remove. None of the filtered set is in the panel -- they are here
+# purely to detect a resolver that will not look such hosts up.
+RESOLVER_CONTROLS = ("google.com", "bbc.com", "wikipedia.org")
+RESOLVER_CANARIES = ("doubleclick.net", "google-analytics.com",
+                     "criteo.com", "taboola.com", "scorecardresearch.com")
+
+
+def resolver_check() -> dict:
+    """Detect a filtering resolver before probing anything.
+
+    A vantage with DNS-level ad blocking silently deletes an entire category of
+    host from the dataset, and the records look like the hosts are unreachable
+    rather than like the measuring machine refused to ask. Run 1 from a
+    residential machine hit exactly this: twelve ad-technology vendors in the
+    panel were unresolvable while ordinary websites resolved fine.
+    """
+    import socket
+
+    def resolves(h: str) -> bool:
+        try:
+            socket.getaddrinfo(h, 443, proto=socket.IPPROTO_TCP)
+            return True
+        except OSError:
+            return False
+
+    controls = {h: resolves(h) for h in RESOLVER_CONTROLS}
+    canaries = {h: resolves(h) for h in RESOLVER_CANARIES}
+    controls_ok = all(controls.values())
+    blocked = [h for h, ok in canaries.items() if not ok]
+    return {
+        "controls": controls, "canaries": canaries,
+        "controls_resolved": controls_ok,
+        "canaries_blocked": len(blocked),
+        # Controls fine but canaries blocked is the signature of a filtering
+        # resolver; controls failing is just no network.
+        "filtering_detected": controls_ok and len(blocked) >= 2,
+    }
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -163,7 +204,7 @@ def fetch(url: str, headers: dict) -> dict:
     out: dict = {"status": None, "ms": None, "bytes": None, "sha256": None,
                  "truncated": False, "redirects": 0, "final_host": None,
                  "final_path": None, "path_mismatch": False,
-                 "headers": {}, "error": None}
+                 "headers": {}, "error": None, "dns_error": False}
     body: str | None = None
 
     for attempt in (1, 2):
@@ -205,8 +246,9 @@ def fetch(url: str, headers: dict) -> dict:
             break
         except httpx.HTTPError as exc:
             out["error"] = f"{type(exc).__name__}: {exc}"[:200]
-            if attempt == 2:
-                break
+            out["dns_error"] = robots_parse.is_dns_error(out["error"])
+            if out["dns_error"] or attempt == 2:
+                break  # retrying a name that does not resolve is pointless
             time.sleep(1.0)
 
     out["_body"] = body
@@ -239,7 +281,7 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         bodies[ident] = body
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
-                                      got["path_mismatch"])
+                                      got["path_mismatch"], got["dns_error"])
         entry = {"identity": ident, **got, "file_state": state}
         if got["error"]:
             rec["errors"].append(f"robots/{ident}: {got['error']}")
@@ -287,7 +329,7 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         body = got.pop("_body")
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
-                                      got["path_mismatch"])
+                                      got["path_mismatch"], got["dns_error"])
         rec["wellknown"][key] = {
             "status": got["status"], "file_state": state,
             "bytes": got["bytes"], "sha256": got["sha256"],
@@ -438,6 +480,23 @@ def cmd_run(args) -> None:
     if args.limit:
         panel = panel[: args.limit]
 
+    resolver = resolver_check()
+    if not resolver["controls_resolved"]:
+        sys.exit("resolver cannot reach ordinary websites -- check the network")
+    if resolver["filtering_detected"] and not args.allow_filtered_resolver:
+        blocked = [h for h, ok in resolver["canaries"].items() if not ok]
+        sys.exit(
+            "FILTERING RESOLVER DETECTED\n"
+            f"  these resolved: {', '.join(RESOLVER_CONTROLS)}\n"
+            f"  these did not:  {', '.join(blocked)}\n\n"
+            "  This vantage has network-level ad or tracker blocking. Hosts it\n"
+            "  refuses to resolve would be recorded as unreachable, which reads\n"
+            "  as a finding about those hosts rather than about this machine --\n"
+            "  and it removes a whole category from the panel.\n\n"
+            "  Run from an unfiltered vantage, or pass --allow-filtered-resolver\n"
+            "  to proceed with the run marked degraded."
+        )
+
     run_id = args.run_id or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     vantage = os.environ.get("OBSERVATORY_VANTAGE", "local")
     run_dir = RUNS / ("dry-run" if args.dry_run else run_id)
@@ -472,14 +531,21 @@ def cmd_run(args) -> None:
 
     attempted = len(panel)
     err_rate = 0.0 if not attempted else (attempted - ok) / attempted
+    reasons = []
+    if err_rate > 0.05:
+        reasons.append(f"error_rate_{err_rate:.3f}")
+    if resolver["filtering_detected"]:
+        reasons.append("filtering_resolver")
     meta = {
         "run_id": run_id, "started": started,
         "duration_s": round(time.monotonic() - t0, 1),
         "panel_id": PANEL_ID, "hosts_attempted": attempted, "hosts_ok": ok,
         # A degraded run is marked and not derived from, rather than quietly
         # published as a bad week in the time series.
-        "status": "degraded" if err_rate > 0.05 else "complete",
+        "status": "degraded" if reasons else "complete",
+        "degraded_reasons": reasons,
         "error_rate": round(err_rate, 4),
+        "resolver_check": resolver,
         "panel_sha256": hashlib.sha256(
             (PANEL_DIR / f"{PANEL_ID}.csv").read_bytes()
         ).hexdigest(),
@@ -502,7 +568,7 @@ def cmd_run(args) -> None:
     print(f"\n{meta['status']}: {ok}/{attempted} clean, "
           f"{meta['duration_s']}s -> {records_path}", file=sys.stderr)
     if meta["status"] == "degraded":
-        sys.exit("error rate above 5% -- investigate before deriving")
+        sys.exit(f"degraded ({', '.join(reasons)}) -- investigate before deriving")
 
 
 def git_sha() -> str:
@@ -581,6 +647,7 @@ def cmd_derive(args) -> None:
             lambda r: bool(r.get("robots_varies_by_identity"))
         ),
         "soft_404": share(lambda r: pol(r, "file_state") == "soft_404"),
+        "dns_failure": share(lambda r: pol(r, "file_state") == "dns_failure"),
         "opted_out_via_robots": share(
             lambda r: bool(r.get("opted_out_via_robots"))
         ),
@@ -642,6 +709,8 @@ def main() -> None:
     r.add_argument("--limit", type=int)
     r.add_argument("--host")
     r.add_argument("--run-id")
+    r.add_argument("--allow-filtered-resolver", action="store_true",
+                   help="proceed despite a filtering resolver; marks the run degraded")
     r.add_argument("--dry-run", action="store_true",
                    help="write to data/runs/dry-run and leave robots texts alone")
     r.set_defaults(func=cmd_run)

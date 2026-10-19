@@ -1,0 +1,202 @@
+# ---------------------------------------------------------------------------
+# Major search engines (Baidu / Bing / DuckDuckGo / Yahoo Slurp / Google)
+# ---------------------------------------------------------------------------
+User-agent: Baiduspider
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Slurp
+User-agent: Googlebot
+
+# Selective Allow overrides (carve-outs).
+Allow: /
+Allow: */bapi/fe/
+Allow: */sitemap_output/
+Allow: */funding-history/perpetual/
+Allow: */funding-history/quarterly/
+
+# Query-parameter blocks (?hl= honored reliably only by Google)
+Disallow: */price*?hl=
+Disallow: */how-to-buy*?hl=
+Disallow: */price-prediction*?hl=
+Disallow: */altcoins*?hl=
+
+# Legacy / undefined URL fragments
+Disallow: *undefine*
+Disallow: *UNDEFINE*
+Disallow: */collected/undefined
+
+# Activity / campaign landing (kept out of index)
+Disallow: */activity/challenge-competition/
+Disallow: */activity/collect-and-win/
+Disallow: */activity/referral-entry/
+
+# Tracking / noise query params
+Disallow: *fbclid=
+Disallow: /*?sqb=
+
+# Internal / non-indexable content surfaces
+Disallow: */advertiserDetail
+Disallow: */funding-history
+Disallow: */trading-rules
+Disallow: */comments
+Disallow: */feed/search
+Disallow: */feed/sitemap/
+Disallow: */version.web
+Disallow: */loan/data/
+Disallow: */markets/spot-FIAT/
+Disallow: */markets/spot-USDT/
+Disallow: */OTC-Trading/
+Disallow: */backtest/
+Disallow: */buy-sell-crypto/referral/
+Disallow: */buy-sell-crypto/buy-sell/result/buy/
+Disallow: */buy-sell-crypto/buy-sell/result/sell/
+Disallow: */chart-webview/
+Disallow: */chat/
+Disallow: */convert-modal-ui/
+Disallow: */customindicator/
+Disallow: */delivery/
+Disallow: */crypto/recurring/
+Disallow: */survey/
+Disallow: */academy/courses/certificate/
+
+# Compliance / privacy / account surfaces
+Disallow: */complaint-form/
+Disallow: */compliance-confirm/
+Disallow: */kyc-ui/
+Disallow: */my/
+Disallow: */deposit/result/order-v3/
+Disallow: */fiat/deposit/result/order
+
+# Internal / API / non-HTML endpoints
+Disallow: */bapi/
+Disallow: */api/
+Disallow: */fapi/
+Disallow: */fvideo/
+Disallow: */mp-cms/app/
+Disallow: */mp-cms/disclaimer/
+Disallow: */sitemap_.xml
+
+# Square (social) non-canonical surfaces
+Disallow: */en-AU/square
+Disallow: */en-GB/square
+Disallow: */square/creator-center/
+Disallow: */square/notification
+Disallow: */square/bookmark
+Disallow: */square/settings
+
+# ---------------------------------------------------------------------------
+# Yandex
+# ---------------------------------------------------------------------------
+User-agent: Yandex
+Host: www.binance.com
+
+# Selective Allow overrides (carve-outs).
+Allow: /
+Allow: */bapi/fe/
+Allow: */sitemap_output/
+Allow: */funding-history/perpetual/
+Allow: */funding-history/quarterly/
+
+# Query-parameter blocks
+Disallow: /*ref=
+Disallow: /*symbol=
+Disallow: /*version=
+Disallow: /*theme=
+Disallow: /*contract=
+Disallow: /*code=
+Disallow: /*tab=
+Disallow: /*poolId=
+Disallow: /*type=
+Disallow: /*layout=
+Disallow: /*navId=
+Disallow: /*channel=
+Disallow: /*utm_source=
+Disallow: /*source=
+Disallow: /*utm=
+Disallow: /*fbclid=
+Disallow: /*sqb=
+
+# Path-level blocks (mirrored from the major-engine group for compliance/privacy parity)
+Disallow: *undefine*
+Disallow: *UNDEFINE*
+Disallow: */collected/undefined
+Disallow: */complaint-form/
+Disallow: */compliance-confirm/
+Disallow: */kyc-ui/
+Disallow: */my/
+Disallow: */deposit/result/order-v3/
+Disallow: */fiat/deposit/result/order
+Disallow: */survey/
+Disallow: */academy/courses/certificate/
+Disallow: */bapi/
+Disallow: */api/
+Disallow: */fapi/
+Disallow: */fvideo/
+Disallow: */mp-cms/app/
+Disallow: */mp-cms/disclaimer/
+Disallow: */feed/search
+Disallow: */feed/sitemap/
+Disallow: */sitemap_.xml
+
+# Yandex-specific dynamic parameter deduplication (compact multi-param form).
+Clean-param: layout&callback&fiat&from&type&asset&packetId&shareCode
+Clean-param: r&return_to&productid
+Clean-param: _escaped_fragment_
+
+# ---------------------------------------------------------------------------
+# Default: all other crawlers (incl. AI crawlers, scrapers, etc.)
+# ---------------------------------------------------------------------------
+User-agent: *
+
+# Selective Allow overrides (carve-outs).
+Allow: /
+Allow: */bapi/fe/
+Allow: */sitemap_output/
+Allow: */funding-history/perpetual/
+Allow: */funding-history/quarterly/
+
+# Marketing/activity landing pages - explicitly allowed (documents intent)
+Allow: */activity/challenge-competition/
+Allow: */activity/collect-and-win/
+Allow: */activity/referral-entry/
+
+# Sensitive / internal paths - denied even to unlisted crawlers
+Disallow: *undefine*
+Disallow: *UNDEFINE*
+Disallow: */collected/undefined
+Disallow: */complaint-form/
+Disallow: */compliance-confirm/
+Disallow: */kyc-ui/
+Disallow: */my/
+Disallow: */deposit/result/order-v3/
+Disallow: */fiat/deposit/result/order
+Disallow: */survey/
+Disallow: */academy/courses/certificate/
+Disallow: */bapi/
+Disallow: */api/
+Disallow: */fapi/
+Disallow: */fvideo/
+Disallow: */mp-cms/app/
+Disallow: */mp-cms/disclaimer/
+Disallow: */feed/search
+Disallow: */feed/sitemap/
+Disallow: */sitemap_.xml
+
+# ---------------------------------------------------------------------------
+# Sitemaps (global - honored by all crawlers)
+# ---------------------------------------------------------------------------
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Trade_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Blog_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Nft_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_SupportAndAnnouncement_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Futures_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Earn_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Loan_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Market_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Default_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Fiat_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Crypto_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Square_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Academy_New_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Muses_index.xml
+Sitemap: https://www.binance.com/sitemap_output/domain=www.binance.com/sitemap_Growth_index.xml

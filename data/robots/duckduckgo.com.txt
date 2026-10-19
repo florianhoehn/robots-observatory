@@ -1,0 +1,28 @@
+User-agent: *
+Disallow: /lite
+Disallow: /html
+
+# Block query strings on other pages; allow them at the root (covers SERP's
+# ?q= and any other root-level params).
+# Google/Bing apply the least-restrictive rule on a tie, so Allow wins for root.
+Disallow: /*?
+Allow: /?*
+
+# Embeddable search box (search.html, incl. ?duck=yes) — keep crawlable so its
+# noindex meta tag is fetched and honored, dropping it from search indexes
+Allow: /search.html
+
+# chrome new tab page
+Disallow: /chrome_newtab
+
+# Email Protection
+Disallow: /email/
+Allow: /email/$
+Allow: /email/privacy-guarantees
+Allow: /email/privacy-terms
+
+User-agent: ia_archiver
+Disallow: /
+
+Sitemap: https://duckduckgo.com/sitemap.xml
+Sitemap: https://duckduckgo.com/duckduckgo-help-pages/sitemap.xml

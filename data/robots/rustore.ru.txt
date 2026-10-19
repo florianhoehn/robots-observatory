@@ -1,0 +1,47 @@
+User-agent: *
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.svg
+Allow: /*.webp
+Allow: /prostore/rss
+
+# Технические разделы, страницы и API
+Disallow: /api/
+Disallow: /catalog/auth*
+Disallow: /catalog/app/ru.vk.store
+Disallow: /catalog/search
+Disallow: /challenge.html
+Disallow: *?errorCode=
+Disallow: *?errorText=
+Disallow: /developer/api/*
+Disallow: /external/help*
+Disallow: /external/simple-selection/buttons/config
+Disallow: /external/simple-selection/api/product-metrics
+Disallow: /help/en/
+Disallow: /help/zh/
+Disallow: /instruction?
+Disallow: /offers/ad_info*
+Disallow: /offers/qr
+Disallow: */permissions
+Disallow: */preload
+Disallow: *product-metrics
+Disallow: */rating
+Disallow: /set_cookie/*
+Disallow: /tracking/
+Disallow: */versions
+
+# Очистка параметров для Яндекса (БЕЗ Disallow для этих же параметров) позволит склеивать дубли, не блокируя доступ к контенту
+# Очистка рекламных и системных меток (MyTracker, UTM)
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&utm_referrer&utm_ya_campaign
+Clean-param: mt_link_id&mt_network&mt_adset&mt_creative&mt_gaid&mt_sub1&mt_sub2&mt_sub3&mt_sub4&mt_sub5&mt_click_id
+
+# Очистка параметров приложений и партнерки
+Clean-param: preset.app_name&pid&rcvr&advertising_id&c&clickid
+
+# Очистка внутренних технических параметров
+Clean-param: rsm&view_id&filterBy&type&redirect&eventNum&m-message-key-id&sign&regid&logid
+Clean-param: appmetrica_tracking_id&ym_tracking_id&af_ua&af_dp&af_adset_id&af_cost_value&ysclid&yrclid&errorCode&errorText
+
+Sitemap: https://www.rustore.ru/sitemap.xml

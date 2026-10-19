@@ -98,6 +98,27 @@ check("a challenge still reads as a challenge even when redirected",
 check("path mismatch does not override a 404",
       rp.classify(404, "", False, path_mismatch=True), "absent_404")
 
+# --- trap: a resolver failure is not a finding -----------------------------
+# Run 1 from a residential machine could not resolve twelve ad-technology
+# vendors in the panel while ordinary websites resolved fine. Recorded as
+# "error" that reads as "those hosts are unreachable"; it actually means the
+# measuring machine refused to look them up.
+for msg in ("ConnectError: [Errno -5] No address associated with hostname",
+            "ConnectError: [Errno -2] Name or service not known",
+            "ConnectError: [Errno -3] Temporary failure in name resolution"):
+    check(f"dns error detected: {msg[14:40]}", rp.is_dns_error(msg), True)
+for msg in ("ReadTimeout: The read operation timed out",
+            "ConnectError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed",
+            "ConnectError: [Errno 111] Connection refused"):
+    check(f"not a dns error: {msg[:24]}", rp.is_dns_error(msg), False)
+check("no error is not a dns error", rp.is_dns_error(None), False)
+check("dns failure classified apart from other transport errors",
+      rp.classify(None, None, True, dns_error=True), "dns_failure")
+check("an ordinary transport error stays error",
+      rp.classify(None, None, True, dns_error=False), "error")
+check("dns_failure wins over everything else",
+      rp.classify(200, fixture("plain.txt"), True, True, True), "dns_failure")
+
 # --- trap: the file states are distinct ------------------------------
 check("state 200", rp.classify(200, fixture("plain.txt"), False), "present")
 check("state 404", rp.classify(404, "", False), "absent_404")

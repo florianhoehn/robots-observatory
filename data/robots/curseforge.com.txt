@@ -1,0 +1,43 @@
+User-Agent: *
+Allow: /
+Disallow: /linkout
+
+Disallow: /*/*/*/download/
+Disallow: /*/*/*/install/
+Disallow: /api/*
+Disallow: /private-messages/*
+Disallow: /login
+Disallow: /register
+Disallow: /signup/*
+
+# ---------------------------------------------------------------------------
+# 1 · UNIVERSAL SEARCH-LISTING RULES
+#     (cover /minecraft/search, /sims4/search, /wow/search, …)
+# ---------------------------------------------------------------------------
+
+# 1A · ALLOW benign, high-value parameters
+Allow: /*/search?*page=
+Allow: /*/search?*pageSize=
+Allow: /*/search?*sortBy=
+Allow: /*/search?*categories=           # single category only
+Allow: /*/search?*gameVersionTypeId=    # single loader only
+Allow: /*/search?*version=              # single game version only
+
+# 1B · DISALLOW URL patterns that cause index bloat
+#      (Longest-match rule ensures these override the generic ALLOWs)
+Disallow: /*/search?*gameVersionTypeId=*%2C*       # multi-loader (encoded comma)
+Disallow: /*/search?*gameVersionTypeId=*,*         # multi-loader (raw comma)
+Disallow: /*/search?*categories=*%2C*              # multi-category (encoded comma)
+Disallow: /*/search?*categories=*,*                # multi-category (raw comma)
+Disallow: /*/search?*gameVersionTypeId=*categories= # loader+category (order 1)
+Disallow: /*/search?*categories=*gameVersionTypeId= # loader+category (order 2)
+Disallow: /*/search?*version=*%2C*                 # multi-version (encoded comma)
+Disallow: /*/search?*version=*,*                   # multi-version (raw comma)
+Disallow: /*/search?*excludedCategories=           # excluded category filter
+
+# 1C · NEW override disallows (categories + version mixes, both orders)
+Disallow: /*/search?*categories=*version=
+Disallow: /*/search?*version=*categories=
+
+# 1D · Placeholder for future high-cardinality filters
+# Disallow: /*/search?*exampleParam=

@@ -17,7 +17,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-PARSER_VERSION = 2
+PARSER_VERSION = 3
 
 # Directives we treat as standard group members (RFC 9309 plus crawl-delay).
 _GROUP_STANDARD = {"allow", "disallow", "crawl-delay"}
@@ -106,8 +106,29 @@ def looks_like_challenge(body: str) -> bool:
     return any(m in head for m in _CHALLENGE_MARKERS)
 
 
+DNS_ERROR_MARKERS = (
+    "no address associated with hostname",
+    "name or service not known",
+    "temporary failure in name resolution",
+)
+
+
+def is_dns_error(err: str | None) -> bool:
+    """True if a transport error was a name-resolution failure.
+
+    Kept separate from every other failure because a resolver that will not
+    look a host up says nothing whatsoever about that host's policy -- and a
+    filtering resolver removes an entire category of host from the dataset
+    while looking like the hosts themselves are unreachable.
+    """
+    if not err:
+        return False
+    low = err.lower()
+    return any(m in low for m in DNS_ERROR_MARKERS)
+
+
 def classify(status: int | None, body: str | None, transport_error: bool,
-             path_mismatch: bool = False) -> str:
+             path_mismatch: bool = False, dns_error: bool = False) -> str:
     """Bucket the response.
 
     These states are genuinely different claims and averaging them produces a
@@ -125,8 +146,13 @@ def classify(status: int | None, body: str | None, transport_error: bool,
       redirected_away 200, but at a different path than we asked for --
                       typically a cookie-consent wall, which a UK or EU
                       vantage meets far more often than a US one
-      error           transport failure
+      dns_failure     the resolver would not look the host up -- says
+                      nothing about the host, and on a filtering resolver
+                      silently deletes a whole category from the dataset
+      error           any other transport failure
     """
+    if dns_error:
+        return "dns_failure"
     if transport_error or status is None:
         return "error"
     if status in (404, 410):

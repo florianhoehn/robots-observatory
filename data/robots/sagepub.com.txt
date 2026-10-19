@@ -1,0 +1,248 @@
+#       _____                    _____       _       _____       _           _       
+#      / ____|                  |  __ \     | |     |  __ \     | |         | |      
+#     | (___   __ _  __ _  ___  | |__) |   _| |__   | |__) |___ | |__   ___ | |_ ___ 
+#      \___ \ / _` |/ _` |/ _ \ |  ___/ | | | '_ \  |  _  // _ \| '_ \ / _ \| __/ __|
+#      ____) | (_| | (_| |  __/ | |   | |_| | |_) | | | \ \ (_) | |_) | (_) | |_\__ \
+#     |_____/ \__,_|\__, |\___| |_|    \__,_|_.__/  |_|  \_\___/|_.__/ \___/ \__|___/
+#                    __/ |                                                           
+#                   |___/                                                            
+#
+#
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: http://example.com/site/robots.txt
+#
+# For more information about the robots.txt standard, see:
+# http://www.robotstxt.org/robotstxt.html
+#
+#
+#############################################
+## GENERAL ALLOW RULES 
+#############################################
+#
+
+User-agent: *
+# CSS, JS, Images
+Allow: /misc/*.css$
+Allow: /misc/*.css?
+Allow: /misc/*.js$
+Allow: /misc/*.js?
+Allow: /misc/*.gif
+Allow: /misc/*.jpg
+Allow: /misc/*.jpeg
+Allow: /misc/*.png
+Allow: /modules/*.css$
+Allow: /modules/*.css?
+Allow: /modules/*.js$
+Allow: /modules/*.js?
+Allow: /modules/*.gif
+Allow: /modules/*.jpg
+Allow: /modules/*.jpeg
+Allow: /modules/*.png
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profiles/*.png
+Allow: /themes/*.css$
+Allow: /themes/*.css?
+Allow: /themes/*.js$
+Allow: /themes/*.js?
+Allow: /themes/*.gif
+Allow: /themes/*.jpg
+Allow: /themes/*.jpeg
+Allow: /themes/*.png
+
+#############################################
+## GENERAL DISALLOW RULES 
+#############################################
+
+## Directories
+User-agent: *
+Disallow: /sitefinity/
+Disallow: /Sitefinity/
+Disallow: /misc/
+Disallow: /modules/
+Disallow: /profiles/
+Disallow: /scripts/
+Disallow: /themes/
+
+## Files (legacy)
+Disallow: /CHANGELOG.txt
+Disallow: /cron.php
+Disallow: /INSTALL.mysql.txt
+Disallow: /INSTALL.pgsql.txt
+Disallow: /INSTALL.sqlite.txt
+Disallow: /install.php
+Disallow: /INSTALL.txt
+Disallow: /LICENSE.txt
+Disallow: /MAINTAINERS.txt
+Disallow: /update.php
+Disallow: /UPGRADE.txt
+Disallow: /xmlrpc.php
+
+## Paths (clean URLs)
+Disallow: /admin/
+Disallow: /comment/reply/
+Disallow: /filter/tips/
+Disallow: /node/add/
+Disallow: /search/
+Disallow: /user/register/
+Disallow: /user/password/
+Disallow: /user/login/
+Disallow: /user/logout/
+
+## Paths (no clean URLs)
+Disallow: /?q=admin/
+Disallow: /?q=comment/reply/
+Disallow: /?q=filter/tips/
+Disallow: /?q=node/add/
+Disallow: /?q=search/
+Disallow: /?q=user/password/
+Disallow: /?q=user/register/
+Disallow: /?q=user/login/
+Disallow: /?q=user/logout/
+
+
+#############################################
+# GENERAL CRAWLER DISALLOW RULES
+# We don't know about their intentions, so block 'em
+#############################################
+User-agent: Robozilla
+Disallow: / 
+User-agent: Gigabot
+Disallow: /
+User-agent: Nutch
+Disallow: /
+User-agent: naverbot
+Disallow: /
+User-agent: yeti
+Disallow: /
+User-agent: Sogou web spider
+Disallow: /
+User-agent: YisouSpider
+Disallow: /
+
+#############################################
+## SPECIFIC CRAWLER RULES
+#############################################
+
+# Apple
+User-agent: Applebot
+Disallow:
+
+# Ask
+User-agent: Teoma
+Disallow: 
+
+# Baidu
+User-agent: baiduspider
+Disallow: 
+Crawl-delay: 10
+
+# Google
+User-agent: Googlebot
+Disallow: 
+User-agent: Googlebot-Image
+Disallow: 
+User-agent: Googlebot-Mobile
+Disallow: 
+User-agent: Googlebot-News
+Disallow:
+User-agent: Googlebot-Video
+Disallow:
+User-agent: Storebot-Google
+Disallow: 
+User-agent: Mediapartners-Google
+Disallow:
+User-agent: AdsBot-Google
+Disallow:
+
+# Microsoft
+User-agent: bingbot
+Disallow: 
+Crawl-delay: 10
+User-agent: msnbot
+Disallow: 
+Crawl-delay: 10
+User-agent: msnbot-media
+Disallow: 
+Crawl-delay: 10
+User-agent: adidxbot
+Disallow: 
+Crawl-delay: 10
+
+# Yahoo
+User-agent: Slurp
+Disallow:
+Crawl-delay: 10
+User-agent: yahoo-mmcrawler
+Disallow: 
+Crawl-delay: 10
+User-agent: yandex
+Disallow: 
+Crawl-delay: 10
+
+# Wayback 
+User-agent: ia_archiver
+Disallow: 
+Crawl-delay: 10
+ 
+#############################################
+## KNOWN AI CRAWLER RULES
+#############################################
+## ALLOWED
+User-agent: Applebot-Extended
+Disallow: 
+User-agent: Google-Extended
+Disallow: 
+User-agent: GPTBot
+Disallow: 
+User-Agent: ChatGPT-User
+Disallow: 
+
+## DISALLOWED
+# General 
+User-Agent: Omgilibot
+Disallow: /
+User-Agent: Omgili
+Disallow: /
+User-Agent: Diffbot
+Disallow: /
+User-Agent: ImagesiftBot
+Disallow: /
+User-Agent: cohere-ai
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+# TikTok
+User-agent: Bytespider
+Disallow: /
+# Common Crawl
+User-agent: CCBot
+Disallow: /
+# Claude Anthropic
+User-Agent: anthropic-ai
+Disallow: 
+User-agent: ClaudeBot
+Disallow: 
+# Meta Facebook
+User-agent: meta-externalagent
+Disallow: /
+
+#############################################
+## SITEMAP 
+#############################################
+
+Sitemap: https://www.sagepub.com/sitemap/sitemap-index.xml
