@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official announcement regarding the discontinuation of BlastAPI services.">
+    <title>BlastAPI - Service Deprecation Notice</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://blastapi.io/">
+    <meta property="og:title" content="BlastAPI - Service Deprecation Notice">
+    <meta property="og:description" content="Official announcement regarding the discontinuation of BlastAPI services.">
+    <meta property="og:image" content="meta-image.jpeg">
+
+    <!-- Twitter -->
+    <meta property="twitter:domain" content="blastapi.io">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://blastapi.io/">
+    <meta name="twitter:title" content="BlastAPI - Service Deprecation Notice">
+    <meta name="twitter:description"
+        content="Official announcement regarding the discontinuation of BlastAPI services.">
+    <meta name="twitter:image" content="meta-image.jpeg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(-45deg, #f6f7f9, #ffffff, #eeedf4, #ffffff);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .announcement-box {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 50px 45px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 20px 60px rgba(87, 75, 144, 0.12);
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        h1 {
+            color: #574b90;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #626262;
+            font-size: 19px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #574b90 0%, #433971 100%);
+            border-radius: 12px;
+            padding: 24px 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 24px rgba(87, 75, 144, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(87, 75, 144, 0.35);
+        }
+
+        .cta-box p {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .cta-box a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .cta-box a:hover {
+            color: #ffffff;
+        }
+
+        .info-box {
+            background: #f6f7f9;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            color: #313131;
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .content {
+            color: #626262;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .content:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            color: #574b90;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        a:hover {
+            color: #433971;
+            border-bottom: 2px solid #433971;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fdb91320 0%, #fdd46e20 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .divider {
+            margin: 30px 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(87, 75, 144, 0.2), transparent);
+        }
+
+        .notice {
+            font-size: 14px;
+            color: #626262;
+            font-style: italic;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(87, 75, 144, 0.15);
+        }
+
+        @media (max-width: 640px) {
+            .announcement-box {
+                padding: 40px 28px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+
+            .cta-box p {
+                font-size: 18px;
+            }
+
+            .info-box p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="announcement-box">
+            <div class="logo">
+                <img src="blast-api-logo.svg" alt="Blast API Logo">
+            </div>
+
+            <h1>📢 Blast has been deprecated</h1>
+
+            <p class="subtitle">
+                Blast products are no longer available, but your journey continues with Alchemy!
+            </p>
+
+            <a href="https://alchemy.com" target="_blank" rel="noopener noreferrer" class="cta-box"
+                style="display: block; text-decoration: none;">
+                <p>
+                    ✨ Get started with Alchemy
+                </p>
+            </a>
+
+            <div class="info-box">
+                <p>
+                    <strong>Already on Alchemy?</strong> Migrate your traffic from Blast API to Alchemy to continue your
+                    development without interruption.
+                </p>
+            </div>
+
+            <hr class="divider">
+
+            <p class="content" style="text-align: left;">
+                📰 <a href="https://www.alchemy.com/blog/alchemy-acquires-bware-labs" target="_blank"
+                    rel="noopener noreferrer">Read the full blog post</a> about the Alchemy
+                acquisition and what it means for you.
+            </p>
+
+            <div class="info-box">
+                <p>
+                    <strong>💰 Have remaining funds?</strong><br>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqfJSQ819SZdggI28sqF6KfNvHZwZldIldxzv_8QyyAHboug/viewform"
+                        target="_blank" rel="noopener noreferrer">Fill out this form</a> to receive Alchemy
+                    Credits with <span class="highlight">15% bonus</span> or request a refund.
+                </p>
+                <p class="notice">
+                    *Alchemy credits require a Pay as you go plan.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

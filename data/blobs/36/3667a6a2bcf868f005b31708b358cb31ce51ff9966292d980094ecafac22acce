@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name='robots' content='noindex, follow' />
+<style>
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: auto;
+            }
+
+            .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            }
+    </style>		<script src="https://consent.trustarc.com/autoblockasset/core.min.js?domain=cm-capgemini.com"></script>
+		<script src="https://consent.trustarc.com/autoblockoptout?domain=cm-capgemini.com"></script>
+
+		<script>
+		(function(){
+			'use strict';
+
+			var NOTICE_SEL  = 'script[src*="consent.truste.com/notice"],script[src*="consent.trustarc.com/notice"]';
+			var CONSENT_RE  = /(notice_preferences|notice_gdpr_prefs|cmapi_cookie_privacy|consentUUID|truste\.consent)=/i;
+
+			function hasConsent(){ return CONSENT_RE.test(document.cookie); }
+			function removeNoticeScripts(){ document.querySelectorAll(NOTICE_SEL).forEach(function(n){ try{ n.remove(); }catch(e){} }); }
+			function appendScriptNode(node) {
+				var parent = document.head || document.body || document.documentElement;
+				parent.appendChild(node);
+			}
+			function styledPresent(){
+				var el = document.getElementById('truste-consent-track');
+				if (!el) return false;
+				var cs = window.getComputedStyle(el);
+				var hasButtons = !!document.getElementById('truste-consent-buttons') || !!document.getElementById('truste-consent-button');
+				return (cs.position === 'fixed' || cs.position === 'sticky') && hasButtons;
+			}
+			function hideBannerNow(){
+				var b = document.getElementById('truste-consent-track');
+				if (b && b.parentNode) { try { b.parentNode.removeChild(b); } catch(e){} }
+				removeNoticeScripts();
+			}
+			function loadNotice(url, cb){
+				var s = document.createElement('script');
+				s.async = true; s.crossOrigin = ''; s.src = url;
+				s.onload  = function(){ setTimeout(function(){ cb && cb(null); }, 700); };
+				s.onerror = function(){ cb && cb(new Error('load failed')); };
+				appendScriptNode(s);
+			}
+
+			var query   = "domain=cm-capgemini.com&c=teconsent&js=bb&noticeType=bb&language=en&cookieLink=https%3A%2F%2Fwww.capgemini.com%2Fcookie-policy&privacypolicylink=https%3A%2F%2Fwww.capgemini.com%2Fprivacy-notice";
+			var hosts   = ["consent.trustarc.com","consent.truste.com"];
+			var domains = ["cm-capgemini.com","mx-capgemini.com","us-capgemini.com"];
+
+			(function(){
+				function hasReal() {
+					return !!(window.truste && window.truste.eu && typeof window.truste.eu.clickListener === 'function' && !window.truste.eu.clickListener.__shim);
+				}
+				function loadTA(cb){
+					var src = '//' + 'consent.trustarc.com' + '/notice?' + query;
+					document.querySelectorAll('script[src*="consent.trustarc.com/notice"],script[src*="consent.truste.com/notice"]').forEach(function(n){ try{ n.remove(); }catch(e){} });
+					var s = document.createElement('script');
+					s.async = true; s.crossOrigin = ''; s.src = src;
+					s.onload = function(){ setTimeout(function(){ cb && cb(); }, 300); };
+					appendScriptNode(s);
+				}
+
+				function openPrefs(){
+					if (hasReal()) { try { window.truste.eu.clickListener(); } catch(e){} return; }
+					loadTA(function(){ if (hasReal()) { try { window.truste.eu.clickListener(); } catch(e){} } });
+				}
+				if (!window.truste) window.truste = {};
+				if (!window.truste.eu) window.truste.eu = {};
+				if (!hasReal()){
+					var shim = function(){ openPrefs(); };
+					shim.__shim = true;
+					window.truste.eu.clickListener = shim;
+					window.taOpenCookiePreferences = openPrefs;
+				}
+			})();
+
+			// Inject if banner not there yet and no consent yet
+			if (!hasConsent()){
+				removeNoticeScripts();
+
+				(function tryNext(i, j){
+					if (i >= hosts.length) return;
+					if (j >= domains.length) return tryNext(i+1, 0);
+
+					var u = '//' + hosts[i] + '/notice?' + query.replace(/(^|&)domain=[^&]*/,'$1domain=' + encodeURIComponent(domains[j]));
+					removeNoticeScripts();
+					loadNotice(u, function(){
+						if (styledPresent() || hasConsent()) return;
+						tryNext(i, j+1);
+					});
+				})(0,0);
+			} else {
+				hideBannerNow();
+			}
+
+			// Hide the banner after consent is given (ASAP)
+			document.addEventListener('click', function(ev){
+				var id = (ev.target && ev.target.id) || '';
+				if (/^(truste\-consent\-button|truste\-consent\-required|truste\-accept|truste\-reject|truste\-show\-consent)$/i.test(id)) {
+					var t0 = Date.now();
+					var iv = setInterval(function(){
+						if (hasConsent()){ clearInterval(iv); hideBannerNow(); }
+						else if (Date.now() - t0 > 5000){ clearInterval(iv); }
+					}, 100);
+				}
+			}, true);
+
+			// Defensive repair while banner should be visible
+			var repaired = false;
+			var mo = new MutationObserver(function(){
+				if (hasConsent()){
+					try { mo.disconnect(); } catch(e){}
+					hideBannerNow();
+					return;
+				}
+				if (!repaired && !styledPresent()){
+					repaired = true;
+					removeNoticeScripts();
+					var first = '//' + hosts[0] + '/notice?' + query.replace(/(^|&)domain=[^&]*/,'$1domain=' + encodeURIComponent(domains[0]));
+					loadNotice(first);
+				}
+			});
+			try { mo.observe(document.documentElement, {childList:true, subtree:true}); } catch(e){}
+			setTimeout(function(){ if (hasConsent()){ try{mo.disconnect();}catch(e){} hideBannerNow(); } }, 1200);
+
+			// Preference Manager (PM) URL tweaks ONLY (no CSS inside iframe)
+			var FORCE_TEST_PM    = false;
+			var APPEND_MODE_DARK = true;
+			var PM_SITE_TEST     = 'test.cm-capgemini.com';
+
+			function isDarkModeOn(){
+				if (!APPEND_MODE_DARK) return false;
+				if (document.documentElement.getAttribute('data-theme') === 'dark') return true;
+				try {
+					var p = new URLSearchParams(location.search);
+					return (p.get('mode') || '').toLowerCase() === 'dark';
+				} catch(e){ return false; }
+			}
+			function patchPMIframe(node){
+				if (!node || node.tagName !== 'IFRAME') return;
+				if (!/truste_popframe/i.test(node.className)) return;
+				if (node.dataset.taPatched === '1') return;
+				try {
+					var u = new URL(node.src, location.href), qs = u.searchParams, changed = false;
+					if (FORCE_TEST_PM && qs.get('site') !== PM_SITE_TEST){ qs.set('site', PM_SITE_TEST); changed = true; }
+					if (isDarkModeOn() && qs.get('mode') !== 'dark'){ qs.set('mode','dark'); changed = true; }
+					if (changed){ node.dataset.taPatched = '1'; node.src = u.toString(); } else { node.dataset.taPatched = '1'; }
+				} catch(e){}
+			}
+			function scanPM(root){ (root||document).querySelectorAll('iframe.truste_popframe').forEach(patchPMIframe); }
+
+			var pmMO = new MutationObserver(function(muts){
+				for (var i=0;i<muts.length;i++){
+					var m = muts[i];
+					for (var j=0;j<m.addedNodes.length;j++){
+						var n = m.addedNodes[j];
+						if (n && n.nodeType === 1){
+							if (n.tagName === 'IFRAME') patchPMIframe(n);
+							scanPM(n);
+						}
+					}
+				}
+			});
+			try { pmMO.observe(document.documentElement, {childList:true, subtree:true}); } catch(e){}
+			setTimeout(function(){ scanPM(document); }, 600);
+		})();
+		</script>
+		
+	<!-- This site is optimized with the Yoast SEO Premium plugin v27.7 (Yoast SEO v27.8) - https://yoast.com/product/yoast-seo-premium-wordpress/ -->
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:title" content="Page not found - Capgemini" />
+	<meta property="og:site_name" content="Capgemini" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/www.capgemini.com\/#website","url":"https:\/\/www.capgemini.com\/","name":"Capgemini","description":"Capgemini","publisher":{"@id":"https:\/\/www.capgemini.com\/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https:\/\/www.capgemini.com\/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https:\/\/www.capgemini.com\/#organization","name":"Capgemini","url":"https:\/\/www.capgemini.com\/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https:\/\/www.capgemini.com\/#\/schema\/logo\/image\/","url":"https:\/\/www.capgemini.com\/wp-content\/uploads\/2026\/04\/Capgemini_Primary-logo_Capgemini-Blue_RGB-696.png","contentUrl":"https:\/\/www.capgemini.com\/wp-content\/uploads\/2026\/04\/Capgemini_Primary-logo_Capgemini-Blue_RGB-696.png","width":696,"height":696,"caption":"Capgemini"},"image":{"@id":"https:\/\/www.capgemini.com\/#\/schema\/logo\/image\/"},"sameAs":["https:\/\/www.facebook.com\/Capgemini\/","https:\/\/www.linkedin.com\/company\/capgemini","https:\/\/www.instagram.com\/capgemini\/","https:\/\/www.youtube.com\/user\/capgeminimedia","https:\/\/www.glassdoor.com\/Overview\/Working-at-Capgemini-EI_IE3803.11,20.htm"],"description":"Businesses everywhere are transforming. AI and cutting-edge technologies have created a groundswell of opportunities, new sources of long-term value and resilience. Capgemini is at the heart of this new technology revolution, partnering with clients in every sector to deliver real, sustainable transformation at scale. Collaborating across multiple business and tech ecosystems, our team of 420,000 experts in more than 50 countries unleashes human energy through technology and AI for an inclusive and sustainable future. Fostering agility, leveraging creativity, and maximizing competitiveness, Capgemini is the partner of choice for the businesses and organizations of tomorrow, helping our clients unlock the value of technology that will define their success in the decades to come.","legalName":"Capgemini","foundingDate":"1967-10-01","numberOfEmployees":{"@type":"QuantitativeValue","minValue":"5001","maxValue":"10000"},"actionableFeedbackPolicy":"https:\/\/www.capgemini.com\/contact-us\/","correctionsPolicy":"https:\/\/www.capgemini.com\/contact-us\/","ethicsPolicy":"https:\/\/www.capgemini.com\/about-us\/who-we-are\/values-and-ethics\/","diversityPolicy":"https:\/\/www.capgemini.com\/about-us\/csr\/diversity-and-inclusion\/","diversityStaffingReport":"https:\/\/www.capgemini.com\/about-us\/csr\/diversity-and-inclusion\/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<title>Page not found - Capgemini</title>
+<link rel='dns-prefetch' href='//cdn.parsely.com' />
+<link rel='dns-prefetch' href='//static.elfsight.com' />
+<link rel="alternate" type="application/rss+xml" title="Capgemini &raquo; Feed" href="https://www.capgemini.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Capgemini &raquo; Comments Feed" href="https://www.capgemini.com/comments/feed/" />
+        
+        <!-- All other sites including .com  -->
+        <!-- Triggers on PARDOT having "consulting" in its URL -->
+        <script type="text/javascript">
+            piAId = '96412';
+            piCId = '5239';
+            piHostname = 'pi.pardot.com';
+            
+            (function() {
+                function async_load() {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+                    var c = document.getElementsByTagName('script')[0];
+                    c.parentNode.insertBefore(s, c);
+                }
+                if(window.attachEvent) {
+                    window.attachEvent('onload', async_load);
+                } else {
+                    window.addEventListener('load', async_load, false);
+                }
+            })();
+            </script>
+
+        <!-- All other sites including .com  -->
+        <!-- Triggers on all PARDOT except consulting -->
+        <script type="text/javascript">
+            piAId = '96412';
+            piCId = '1366';
+            piHostname = 'pi.pardot.com';
+        
+            (function() {
+                function async_load() {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+                    var c = document.getElementsByTagName('script')[0];
+                    c.parentNode.insertBefore(s, c);
+                }
+                if(window.attachEvent) {
+                    window.attachEvent('onload', async_load);
+                } else {
+                    window.addEventListener('load', async_load, false);
+                }
+            })();
+                </script>
+    <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.capgemini.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.capgemini.com%2Fpage-not-found%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.capgemini.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.capgemini.com%2Fpage-not-found%2F&#038;format=xml" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<link rel='stylesheet' id='formidable-css' href='https://www.capgemini.com/wp-admin/admin-ajax.php?action=frmpro_css&#038;cg_ver=1791804825&#038;ver=10121133' media='all' />
+<style id="wp-block-group-inline-css">
+.wp-block-group{box-sizing:border-box}:where(.wp-block-group.wp-block-group-is-layout-constrained){position:relative}
+/*# sourceURL=https://www.capgemini.com/wp-includes/blocks/group/style.min.css */
+</style>
+<style id="cg-blocks-learn-more-style-inline-css">
+section.learnMoreBlock{padding-bottom:3rem;padding-top:3rem}section.learnMoreBlock.is-style-primary2-theme{background:var(--zodiak-surface-marine-heavy)}section.learnMoreBlock.is-style-primary2-theme p{color:var(--zodiak-text-always-white)}section.learnMoreBlock.is-style-primary2-theme a.box-title h3,section.learnMoreBlock.is-style-primary2-theme a.box-title h4{background:linear-gradient(to right,var(--zodiak-capgemini-blue-500) 0,var(--zodiak-capgemini-blue-500) 100%) no-repeat 0 100%/0 100%;transition:all .2s ease-in-out}section.learnMoreBlock .col-md-4{margin-bottom:3.5rem}section.learnMoreBlock .col-md-4:nth-child(3n+1):nth-last-child(-n+3),section.learnMoreBlock .col-md-4:nth-last-child(-n+3){margin-bottom:0}section.learnMoreBlock .content-title .learnmore-heading,section.learnMoreBlock .content-title h3{font-family:Ubuntu,sans-serif;font-size:1.5rem;font-weight:300;letter-spacing:.3px;line-height:1.25;margin-bottom:1rem}@media(min-width:992px){section.learnMoreBlock .content-title .learnmore-heading,section.learnMoreBlock .content-title h3{font-family:Ubuntu,sans-serif;font-size:2rem;font-weight:300;letter-spacing:0;line-height:1.25;margin-bottom:2rem}}section.learnMoreBlock .content-title .learnmore-heading,section.learnMoreBlock .content-title h3{color:var(--zodiak-text-primary)}section.learnMoreBlock .content-title .blockDesc{font-family:Ubuntu,sans-serif;font-size:1rem;font-weight:300;letter-spacing:.24px;line-height:1.625;margin-bottom:1rem}@media(min-width:992px){section.learnMoreBlock .content-title .blockDesc{margin-bottom:1.5rem}}section.learnMoreBlock .box{height:auto;position:relative}section.learnMoreBlock a.box-title h3,section.learnMoreBlock a.box-title h4{background:none;width:fit-content}@media(min-width:992px){section.learnMoreBlock a.box-title h3,section.learnMoreBlock a.box-title h4{background:linear-gradient(to right,var(--zodiak-border-secondary) 0,var(--zodiak-border-secondary) 100%) no-repeat 0 100%/0 100%;transition:all .2s ease-in-out}section.learnMoreBlock a.box-title h3:focus,section.learnMoreBlock a.box-title h3:hover,section.learnMoreBlock a.box-title h4:focus,section.learnMoreBlock a.box-title h4:hover,section.learnMoreBlock a.box-title:focus h3,section.learnMoreBlock a.box-title:focus h4,section.learnMoreBlock a.box-title:hover h3,section.learnMoreBlock a.box-title:hover h4{background-size:100% 100%;color:var(--zodiak-text-primary)}}section.learnMoreBlock a.box-title span{background:none}@media(min-width:992px){section.learnMoreBlock a.box-title span{background:linear-gradient(to right,var(--zodiak-border-secondary) 0,var(--zodiak-border-secondary) 100%) no-repeat 0 100%/0 100%;transition:all .2s ease-in-out}section.learnMoreBlock a.box-title span:focus,section.learnMoreBlock a.box-title span:hover{background-size:100% 100%;color:var(--zodiak-text-primary)}}section.learnMoreBlock a.box-title:focus-visible{outline:none}section.learnMoreBlock a.box-title:focus-visible h3,section.learnMoreBlock a.box-title:focus-visible h4{background-size:100% 100%;border-radius:2px;color:var(--zodiak-text-primary);outline:2px auto}section.learnMoreBlock a.box-title:after{display:none!important}section.learnMoreBlock a:focus-visible .box-img-wrapper{outline:2px auto}section.learnMoreBlock .box-wrapper h3,section.learnMoreBlock .box-wrapper h4{font-family:Ubuntu,sans-serif;font-size:1.25rem;font-weight:400;letter-spacing:.1px;line-height:1.4}@media(min-width:992px){section.learnMoreBlock .box-wrapper h3,section.learnMoreBlock .box-wrapper h4{font-family:Ubuntu,sans-serif;font-size:1.5rem;font-weight:400;letter-spacing:.2px;line-height:1.25}}section.learnMoreBlock .box-wrapper h3,section.learnMoreBlock .box-wrapper h4{color:var(--zodiak-text-primary);margin-bottom:1rem;margin-top:1rem;word-break:break-word}section.learnMoreBlock .box-wrapper h3 a,section.learnMoreBlock .box-wrapper h4 a{background:linear-gradient(to right,var(--zodiak-border-secondary) 0,var(--zodiak-border-secondary) 100%) no-repeat 0 100%/0 100%;color:var(--zodiak-text-primary);transition:all .2s ease-in-out}section.learnMoreBlock .box-wrapper h3 a:hover,section.learnMoreBlock .box-wrapper h4 a:hover{background-size:100% 100%;color:var(--zodiak-text-primary)}section.learnMoreBlock .box-inner p{font-family:Ubuntu,sans-serif;font-size:1rem;font-weight:300;letter-spacing:.24px;line-height:1.625;margin-bottom:1rem}@media(min-width:992px){section.learnMoreBlock .box-inner p{font-family:Ubuntu,sans-serif;font-size:1rem;font-weight:300;letter-spacing:.24px;line-height:1.625;margin-bottom:1.5rem}}section.learnMoreBlock .box-img-wrapper{aspect-ratio:4/3;display:block;height:auto;object-fit:contain;position:relative;width:100%;z-index:1}section.learnMoreBlock .box-img-wrapper:after{background:linear-gradient(0deg,var(--zodiak-overlay-photo-style) 0,var(--zodiak-overlay-photo-style) 100%);content:"";height:100%;left:0;pointer-events:none;position:absolute;top:0;width:100%}section.learnMoreBlock .content-more .more2{align-items:center;border:1px solid var(--zodiak-action-secondary-default-on-lite);color:var(--zodiak-action-secondary-default-on-lite);display:inline-flex;font-size:1rem;font-stretch:normal;justify-content:flex-start;letter-spacing:.208px;line-height:21px;margin-top:2rem!important;overflow:hidden;position:relative}section.learnMoreBlock .content-more .more2:before{border-radius:48px;content:"";display:block;height:calc(100% + 2px);left:-1px;position:absolute;top:-1px;width:calc(100% + 2px);z-index:-1}section.learnMoreBlock .content-more .more2:after{content:"";font-family:zodiak-icons;height:1rem;width:1rem;-ms-flex-negative:0;color:var(--zodiak-text-link);display:inline-flex;font-size:1rem;line-height:1rem;margin-left:.25rem;opacity:1;-webkit-font-smoothing:antialiased}@media(min-width:992px){section.learnMoreBlock .content-more .more2:after{font-size:1.5rem;height:1.5rem;line-height:1.5rem;margin-left:.5rem;width:1.5rem}}section.learnMoreBlock .content-more .more2{border-radius:1.5rem;font-size:.875rem;font-style:normal;font-weight:300;height:38px;letter-spacing:.0105rem;line-height:1.125rem;padding:.5rem 1rem}@media(min-width:992px){section.learnMoreBlock .content-more .more2{border-radius:1.5rem;font-size:1rem;height:48px;letter-spacing:.208px;line-height:21px;padding:.5rem 1.5rem}}section.learnMoreBlock .content-more .more2:hover:not(:disabled){background:var(--zodiak-action-secondary-default-on-lite);border-color:var(--zodiak-action-secondary-default-on-lite);color:var(--zodiak-text-inverse);z-index:1}section.learnMoreBlock .content-more .more2:hover:not(:disabled):after{color:var(--zodiak-text-inverse)}section.learnMoreBlock .content-more .more2:focus-visible:not(:disabled){background:none;border:1px solid var(--zodiak-action-secondary-default-on-lite);color:var(--zodiak-action-secondary-default-on-lite);outline:1px solid var(--zodiak-action-focus-on-lite);outline-offset:2px;z-index:1}section.learnMoreBlock .content-more .more2:focus-visible:not(:disabled):before{background:none;border:none}section.learnMoreBlock .content-more .more2:focus-visible:not(:disabled):after{color:var(--zodiak-action-secondary-default-on-lite)}section.learnMoreBlock .content-more .more2:focus:not(:focus-visible):not(:disabled){background:none;border:1px solid var(--zodiak-action-secondary-default-on-lite);color:var(--zodiak-action-secondary-default-on-lite);outline:none;z-index:1}section.learnMoreBlock .content-more .more2:focus:not(:focus-visible):not(:disabled):before{background:none;border:none}section.learnMoreBlock .content-more .more2:focus:not(:focus-visible):not(:disabled):after{color:var(--zodiak-action-secondary-default-on-lite)}section.learnMoreBlock .content-more .more2:active:not(:disabled){background:var(--zodiak-text-link-pressed);border-color:var(--zodiak-text-link-pressed);box-shadow:none;color:var(--zodiak-text-inverse);outline:none}section.learnMoreBlock .content-more .more2:active:not(:disabled):after{color:var(--zodiak-text-inverse)}section.learnMoreBlock .content-more .more2{transition:all .2s ease-in-out}@media(max-width:767.98px){section.learnMoreBlock{padding-bottom:1.5rem;padding-top:1.5rem}section.learnMoreBlock a.box-title:after{display:none!important}section.learnMoreBlock .col-md-4:not(:last-child){margin-bottom:24px!important}}@media(max-width:991.98px){section.learnMoreBlock{padding-bottom:1.5rem;padding-top:1.5rem}section.learnMoreBlock .content-more{text-align:center}}section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock .box-img{height:100%!important;max-width:100%!important}section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock.is-style-blue-theme{background-position:0 0}section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock.is-style-primary2-theme{background:var(--zodiak-surface-marine-heavy)!important}section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock.is-style-primary2-theme p{color:var(--zodiak-text-always-white)}section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock.is-style-primary2-theme a.box-title h3,section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock.is-style-primary2-theme a.box-title h4{background:linear-gradient(to right,var(--zodiak-capgemini-blue-500) 0,var(--zodiak-capgemini-blue-500) 100%) no-repeat 0 100%/0 100%;transition:all .2s ease-in-out}section.block-editor-block-list__block.wp-block.is-selected section.learnMoreBlock a.box-title:after{display:none!important;position:unset}section.block-editor-block-list__block.wp-block.is-selected .learn-more-card-edit .card{position:relative}section.block-editor-block-list__block.wp-block.is-selected .learn-more-card-edit .toolbar{position:absolute;z-index:10}section.learnMoreBlock.is-style-primary2-theme .more2{align-items:center;border:1px solid var(--zodiak-text-always-white);color:var(--zodiak-text-always-white);display:inline-flex;font-size:1rem;font-stretch:normal;justify-content:flex-start;letter-spacing:.208px;line-height:21px;margin-top:2rem!important;overflow:hidden;position:absolute}section.learnMoreBlock.is-style-primary2-theme .more2:before{border-radius:48px;content:"";display:block;height:calc(100% + 2px);left:-1px;position:absolute;top:-1px;width:calc(100% + 2px);z-index:-1}section.learnMoreBlock.is-style-primary2-theme .more2:after{content:"";font-family:zodiak-icons;height:1rem;width:1rem;-ms-flex-negative:0;color:var(--zodiak-text-always-white);display:inline-flex;font-size:1rem;line-height:1rem;margin-left:.25rem;opacity:1;-webkit-font-smoothing:antialiased;background:none}@media(min-width:992px){section.learnMoreBlock.is-style-primary2-theme .more2:after{font-size:1.5rem;height:1.5rem;line-height:1.5rem;margin-left:.5rem;width:1.5rem}}section.learnMoreBlock.is-style-primary2-theme .more2{border-radius:1.5rem;font-size:.875rem;font-style:normal;font-weight:300;height:38px;letter-spacing:.0105rem;line-height:1.125rem;padding:.5rem 1rem}@media(min-width:992px){section.learnMoreBlock.is-style-primary2-theme .more2{border-radius:1.5rem;font-size:1rem;height:48px;letter-spacing:.208px;line-height:21px;padding:.5rem 1.5rem}}section.learnMoreBlock.is-style-primary2-theme .more2:hover:not(:disabled){background-color:var(--zodiak-action-primary-hover-on-heavy);border:none;color:var(--zodiak-text-always-black)}section.learnMoreBlock.is-style-primary2-theme .more2:hover:not(:disabled):after{color:var(--zodiak-text-always-black)}section.learnMoreBlock.is-style-primary2-theme .more2:focus-visible:not(:disabled){border:1px solid var(--zodiak-text-always-white);color:var(--zodiak-text-always-white);outline:1px solid var(--zodiak-text-always-white);outline-offset:2px;z-index:1}section.learnMoreBlock.is-style-primary2-theme .more2:focus-visible:not(:disabled):before{background:none;border:none}section.learnMoreBlock.is-style-primary2-theme .more2:focus-visible:not(:disabled):after{color:var(--zodiak-text-always-white)}section.learnMoreBlock.is-style-primary2-theme .more2:focus:not(:focus-visible):not(:disabled){background:none;border:1px solid var(--zodiak-text-always-white);color:var(--zodiak-text-always-white);outline:none;z-index:1}section.learnMoreBlock.is-style-primary2-theme .more2:focus:not(:focus-visible):not(:disabled):before{background:none;border:none}section.learnMoreBlock.is-style-primary2-theme .more2:focus:not(:focus-visible):not(:disabled):after{color:var(--zodiak-text-always-white)}section.learnMoreBlock.is-style-primary2-theme .more2:active:not(:disabled){background-color:var(--zodiak-neutral-200);color:var(--zodiak-neutral-950)}section.learnMoreBlock.is-style-primary2-theme .more2:active:not(:disabled):after{color:var(--zodiak-text-always-black)}section.learnMoreBlock.is-style-primary2-theme .more2{position:relative!important;transition:all .2s ease-in-out}section.learnMoreBlock.is-style-primary2-theme .more2:active:not(:disabled){background-color:var(--zodiak-neutral-200)!important;color:var(--zodiak-neutral-950)!important}section.learnMoreBlock.is-style-primary2-theme .more2:active:not(:disabled):after{color:var(--zodiak-text-always-black)!important}section.learnMoreBlock.is-style-primary2-theme .content-title .learnmore-heading,section.learnMoreBlock.is-style-primary2-theme .content-title h3{color:var(--zodiak-text-always-white);font-family:Ubuntu,sans-serif;font-size:1.25rem;font-weight:400;letter-spacing:.1px;line-height:1.4;margin-bottom:1rem}@media(min-width:992px){section.learnMoreBlock.is-style-primary2-theme .content-title .learnmore-heading,section.learnMoreBlock.is-style-primary2-theme .content-title h3{color:var(--zodiak-text-always-white);font-family:Ubuntu,sans-serif;font-size:1.5rem;font-weight:400;letter-spacing:.2px;line-height:1.25;margin-bottom:2rem}}section.learnMoreBlock.is-style-primary2-theme .content-title .blockDesc p{color:var(--zodiak-text-always-white)}section.learnMoreBlock.is-style-primary2-theme .box-wrapper h3,section.learnMoreBlock.is-style-primary2-theme .box-wrapper h4{font-family:Ubuntu,sans-serif;font-size:1rem;font-weight:400;letter-spacing:.2px;line-height:1.313}@media(min-width:992px){section.learnMoreBlock.is-style-primary2-theme .box-wrapper h3,section.learnMoreBlock.is-style-primary2-theme .box-wrapper h4{font-family:Ubuntu,sans-serif;font-size:1rem;font-weight:400;letter-spacing:.2px;line-height:1.313}}section.learnMoreBlock.is-style-primary2-theme .box-wrapper h3,section.learnMoreBlock.is-style-primary2-theme .box-wrapper h4{color:var(--zodiak-text-always-white);margin-bottom:1rem;margin-top:1rem;word-break:break-word}section.learnMoreBlock.is-style-primary2-theme .box-inner p{color:var(--zodiak-text-always-white);font-family:Ubuntu,sans-serif;font-size:1rem;font-weight:300;letter-spacing:.24px;line-height:1.625}.block-editor-block-list__layout.is-root-container section.learnMoreBlock.is-style-primary2-theme{background:var(--zodiak-surface-marine-heavy)!important}.block-editor-block-list__layout.is-root-container section.learnMoreBlock.is-style-primary2-theme p{color:var(--zodiak-text-always-white)}.block-editor-block-list__layout.is-root-container section.learnMoreBlock a.box-title h3,.block-editor-block-list__layout.is-root-container section.learnMoreBlock a.box-title h4{background:linear-gradient(to right,var(--zodiak-capgemini-blue-500) 0,var(--zodiak-capgemini-blue-500) 100%) no-repeat 0 100%/0 100%;transition:all .2s ease-in-out}
+
+/*# sourceURL=https://www.capgemini.com/wp-content/plugins/capgemini-blocks/build/cg-block-learn-more/style-index.css */
+</style>
+<style id="wp-block-post-content-inline-css">
+.wp-block-post-content{display:flow-root}
+/*# sourceURL=https://www.capgemini.com/wp-includes/blocks/post-content/style.min.css */
+</style>
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-

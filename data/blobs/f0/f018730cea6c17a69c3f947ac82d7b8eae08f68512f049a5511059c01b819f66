@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>404错误啦！</title>
+	<style type="text/css">
+		body {
+			background: #f5f6f8;
+			overflow: hidden;
+			font-size: 12px;
+		}
+
+		#frame {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			text-align: center
+		}
+
+		#mainPic {
+			position: relative;
+			width: 603px;
+			height: 220px;
+			margin: 100px auto;
+		}
+
+		#footer {
+			position: relative;
+			width: 350px;
+			margin: 0 auto;
+			display: none
+		}
+
+		#tips {
+			position: absolute;
+			left: 260px;
+			top: 80px;
+			font-size: 14px;
+			font-family: "Microsoft YaHei", sans-serif;
+			letter-spacing: 5px
+		}
+
+		#tips2 {
+			position: absolute;
+			font-size: 12px;
+			font-family: "Microsoft YaHei", sans-serif;
+			left: 290px;
+			top: 115px;
+		}
+
+		a.tips2a:link,
+		a.tips2a:visited,
+		a.tips2a:active {
+			text-decoration: none;
+			color: #858585
+		}
+
+		a.tips2a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="frame">
+		<div id="mainPic">
+			<div id="tips"></div>
+			<div id="tips2"><a class="tips2a" id="manualLink" href="/">如果您的页面没有自动跳转，请点击这里</a></div>
+		</div>
+		<div id="footer">
+			<p>&copy; 广东欢太科技有限公司 版权所有 <a href="http://www.miibeian.gov.cn/" target="_blank">粤ICP备14012291号</a></p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	; (function () {
+		var timer = 5;
+		var ref = document.referrer;
+		var needGoHome = !ref || /404\.html?/i.test(ref);
+
+		function isSafeReferrer(url) {
+			try {
+				var host = new URL(url, location.origin).hostname;
+				return /\.((oppo|heytap|oppomobile)\.com|nearme\.com\.cn|keke\.cn|wanyol\.com)$/i.test(host) || host === location.hostname;
+			} catch (e) {
+				return false;
+			}
+		}
+
+		var redirectUrl = needGoHome || !isSafeReferrer(ref) ? '/' : ref;
+		document.getElementById("manualLink").href = redirectUrl;
+
+		function setTips() {
+			document.getElementById("tips").innerHTML = needGoHome
+				? "页面没找到，" + timer + " 秒后带您回首页!"
+				: "页面没找到，" + timer + " 秒后返回上一页!";
+			timer--;
+			if (timer > 0) {
+				setTimeout(setTips, 1000);
+			} else {
+				location.href = redirectUrl;
+			}
+		}
+		setTips();
+	})();
+</script>
+
+</html>

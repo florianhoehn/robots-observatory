@@ -1,0 +1,79 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /log/
+Disallow: /includes/
+Disallow: /comtocom.php
+Disallow: /comments.php
+Disallow: /ad/
+Disallow: /about
+Disallow: /dbchanges.php
+Disallow: /clubs.php/*
+Disallow: /_Incapsula_Resource
+Disallow: /mymessages.php
+Disallow: /sns/*/*
+
+# Block crawlers used for AI/LLM training data collection
+User-agent: AI2Bot
+User-agent: Ai2Bot-Dolma
+User-agent: aiHitBot
+User-agent: anthropic-ai
+User-agent: Applebot-Extended
+User-agent: Brightbot 1.0
+User-agent: CCBot
+User-agent: ChatGLM-Spider
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: cohere-training-data-crawler
+User-agent: Cotoyogi
+User-agent: DeepSeekBot
+User-agent: Diffbot
+User-agent: FacebookBot
+User-agent: facebookexternalhit
+User-agent: Factset_spyderbot
+User-agent: FirecrawlAgent
+User-agent: FriendlyCrawler
+User-agent: Google-Extended
+User-agent: GPTBot
+User-agent: ICC-Crawler
+User-agent: img2dataset
+User-agent: ISSCyberRiskCrawler
+User-agent: Kangaroo Bot
+User-agent: laion-huggingface-processor
+User-agent: LAIONDownloader
+User-agent: Linguee Bot
+User-agent: Meta-ExternalAgent
+User-agent: meta-externalagent
+User-agent: meta-webindexer
+User-agent: omgili
+User-agent: omgilibot
+User-agent: PanguBot
+User-agent: SBIntuitionsBot
+User-agent: Scrapy
+User-agent: Sidetrade indexer bot
+User-agent: Spider
+User-agent: TerraCotta
+User-agent: TikTokSpider
+User-agent: Timpibot
+User-agent: VelenPublicWebCrawler
+User-agent: Webzio-Extended
+User-agent: webzio-extended
+User-agent: YandexAdditional
+User-agent: YandexAdditionalBot
+Disallow: /
+
+# Bytespider requires its own separate block as it ignores grouped directives
+# Reference: https://github.com/ai-robots-txt/ai.robots.txt/issues/108
+User-agent: Bytespider
+Disallow: /
+
+# Block pure scrapers with no search referral value (CU-86eymw5gh).
+# Both are known to ignore robots.txt, so the WAF also blocks them by
+# User-Agent; this declares the policy for the record. Separate blocks in
+# case they mishandle grouped directives like Bytespider does.
+User-agent: YisouSpider
+Disallow: /
+
+User-agent: SleepBot
+Disallow: /
+
+Sitemap: https://myanimelist.net/sitemap/index.xml

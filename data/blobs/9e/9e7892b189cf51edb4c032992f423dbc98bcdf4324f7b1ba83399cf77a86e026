@@ -1,0 +1,166 @@
+{
+  "specVersion": "0.91",
+  "entries": [
+    {
+      "identifier": "urn:air:railway.com:server:railway-mcp",
+      "displayName": "Railway Remote MCP Server",
+      "description": "Deploy and operate apps, databases, volumes, and cron jobs on Railway from any MCP client.",
+      "type": "application/mcp-server-card+json",
+      "url": "https://railway.com/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "deploy my app to Railway",
+        "add a Postgres database to my Railway project",
+        "show me the logs for my failing Railway deployment",
+        "set an environment variable on my Railway service"
+      ],
+      "tags": [
+        "mcp",
+        "deploy",
+        "infrastructure"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:api:public-graphql",
+      "displayName": "Railway Public API (GraphQL)",
+      "description": "Railway's public API — a single GraphQL endpoint with the schema available by introspection. Authentication and token types are described at https://railway.com/auth.md.",
+      "type": "application/graphql-response+json",
+      "url": "https://backboard.railway.com/graphql/v2",
+      "representativeQueries": [
+        "list my Railway projects via the API",
+        "trigger a Railway deployment from CI"
+      ],
+      "tags": [
+        "api",
+        "graphql"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:api:openapi",
+      "displayName": "Railway OpenAPI description",
+      "description": "OpenAPI 3.1 description of Railway's HTTP surface: the GraphQL entrypoint with its bearer/OAuth2 security and named scopes, plus the OAuth 2.0 / OIDC endpoints.",
+      "type": "application/openapi+json",
+      "url": "https://railway.com/openapi.json",
+      "representativeQueries": [
+        "what are Railway's API endpoints",
+        "how do I authenticate to the Railway API"
+      ],
+      "tags": [
+        "api",
+        "openapi"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:doc:api-reliability",
+      "displayName": "Railway API reliability",
+      "description": "How the Railway API behaves under failure: the error convention and code catalog, rate limits and headers, retry/idempotency guidance, and the versioning/deprecation policy.",
+      "type": "text/markdown",
+      "url": "https://railway.com/api-reliability.md",
+      "representativeQueries": [
+        "what are the Railway API rate limits",
+        "how does the Railway API report errors",
+        "is the Railway API safe to retry"
+      ],
+      "tags": [
+        "docs",
+        "api",
+        "reliability"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:doc:agents-briefing",
+      "displayName": "Railway for AI Agents",
+      "description": "Setup briefing for coding agents: CLI install, local MCP and agent skills, remote MCP, and the core deploy/database/volume workflows.",
+      "type": "text/markdown",
+      "url": "https://railway.com/agents.md",
+      "representativeQueries": [
+        "how do I set up Railway as a coding agent",
+        "install the Railway CLI for an AI agent"
+      ],
+      "tags": [
+        "docs",
+        "agents"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:doc:auth",
+      "displayName": "Authenticating to Railway",
+      "description": "The four ways an agent or automated client holds a Railway credential — CLI login, remote MCP over OAuth, API tokens, and Login with Railway — with discovery, claim, error, and revocation walkthroughs.",
+      "type": "text/markdown",
+      "url": "https://railway.com/auth.md",
+      "representativeQueries": [
+        "how does an agent authenticate to Railway",
+        "how do I get a Railway API token"
+      ],
+      "tags": [
+        "docs",
+        "auth"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:doc:llms-txt",
+      "displayName": "Railway llms.txt",
+      "description": "Navigation index of Railway's agent-readable pages: product, pricing, docs, templates, changelog, and machine-readable endpoints.",
+      "type": "text/plain",
+      "url": "https://railway.com/llms.txt",
+      "representativeQueries": [
+        "what is Railway",
+        "where are Railway's agent-readable docs"
+      ],
+      "tags": [
+        "docs",
+        "index"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    },
+    {
+      "identifier": "urn:air:railway.com:catalog:api-catalog",
+      "displayName": "Railway API catalog (RFC 9727)",
+      "description": "Linkset naming every Railway API, its documentation, its auth metadata, and its status page.",
+      "type": "application/linkset+json",
+      "url": "https://railway.com/.well-known/api-catalog",
+      "tags": [
+        "catalog",
+        "api"
+      ],
+      "trustManifest": {
+        "identity": {
+          "principalName": "railway.com"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+# If you want to learn about why our robots.txt looks like this, read this post: https://yoa.st/robots-txt
+
+# Global rules
+# -----------------
+User-agent: *
+Disallow: /wp-json/
+
+# We're experimenting with blocking search results to prevent search result spam
+Disallow: /?s=*
+Disallow: /search/*
+
+# Prevent crawling CF challenge URLs
+Disallow: /cdn-cgi/bm/cv/
+Disallow: /cdn-cgi/challenge-platform/
+
+# Sitemap
+# -----------------
+Sitemap: https://yoast.com/sitemap_index.xml
+Schemamap: https://yoast.com/wp-json/yoast/v1/schema-aggregator/get-xml
+
+# Ban bots that don't benefit us.
+# --------------------------------
+
+User-agent: Nuclei
+User-agent: WikiDo
+User-agent: Riddler
+User-agent: PetalBot
+User-agent: Zoominfobot
+User-agent: Go-http-client
+User-agent: Node/simplecrawler
+User-agent: CazoodleBot
+User-agent: dotbot/1.0
+User-agent: Gigabot
+User-agent: Barkrowler
+User-agent: BLEXBot
+User-agent: magpie-crawler
+Disallow: /

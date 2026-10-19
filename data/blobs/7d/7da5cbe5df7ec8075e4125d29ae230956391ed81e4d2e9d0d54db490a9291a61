@@ -1,0 +1,53 @@
+# Padlet
+
+> Padlet is a collaborative visual board. A padlet holds posts — text, images,
+> links, files, drawings, audio and video — arranged in layouts such as a wall,
+> grid, timeline, map or canvas, and many people can contribute to one at the
+> same time. Its largest audience is teachers and students; teams also use it to
+> collect, organize and present work.
+
+## When to use Padlet
+
+- Collecting contributions from many people into one shared place, where each
+  contribution can be any kind of media rather than plain text.
+- Giving a person a visual artifact they will keep working in afterwards — a
+  board is a live document, not a one-off render.
+- Classroom work: an assignment students post into, a discussion board, a
+  collection of student work to review or grade.
+- Not the right tool for structured records you will query later, for private
+  single-user note-taking, or for anything needing a schema.
+
+## Interfaces
+
+- [MCP server](https://mcp.padlet.com/): the primary interface for agents. Create
+  padlets, read and write posts, comment, manage collaborators and library
+  settings, all as a signed-in Padlet user over Streamable HTTP.
+- [OpenAPI description](https://padlet.com/openapi.json): the REST API
+  at https://api.padlet.dev/v1, authenticated with an `x-api-key` header. Narrower
+  than MCP — boards, posts, sections, comments, reactions, organizations — and the
+  key is issued from developer settings by a paying user.
+- [Agent skills](https://padlet.com/.well-known/agent-skills/index.json):
+  step-by-step instructions for common Padlet tasks, in skill-md form.
+
+## Getting a credential
+
+- [auth.md](https://padlet.com/auth.md): how to register an OAuth
+  client, get a user's authorization, and call the MCP server with the token.
+  Registration is open — no account and no approval queue — but every credential
+  is bound to a Padlet user who approves it in a browser.
+- [REST API keys](https://docs.padlet.dev/reference/introduction): issued by a
+  paying user from Padlet's developer settings, not by any endpoint.
+
+## Discovery
+
+- [Capability manifest](https://padlet.com/.well-known/ai-catalog.json):
+  every agent-facing document this origin serves, in one file.
+- [MCP server card](https://padlet.com/.well-known/mcp/server-card.json)
+- [API catalog](https://padlet.com/.well-known/api-catalog)
+
+## Optional
+
+- [Product documentation](https://padlet.helpdocs.io/): written for people using
+  Padlet in the browser.
+- [REST API reference](https://docs.padlet.dev/reference/introduction): the same
+  operations as the OpenAPI document, with prose and examples.

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free public BitTorrent tracker — Demonii</title>
+    <meta name="description" content="Demonii — free, open, public BitTorrent tracker powered by Aquatic. Live tracker statistics and announce URLs.">
+    <meta property="og:title" content="Free public BitTorrent tracker — Demonii">
+    <meta property="og:description" content="Free public BitTorrent tracker. Live IPv4/IPv6 statistics.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script>
+        // Apply theme before first paint to avoid flash
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <link href="/assets/css/app.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-gray-100 min-h-screen flex flex-col">
+<header class="sticky top-0 z-40 bg-blue-900 text-white shadow-lg">
+    <div class="relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-gradient-to-r from-blue-600 to-purple-600"></div>
+        <div class="fixed top-0 right-0 z-50 hidden lg:block">
+            <img src="/assets/img/mascot.png" alt="Demonii mascot" class="h-32 hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="container mx-auto px-4 py-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="flex-shrink-0 bg-white p-1 rounded-lg shadow-md">
+                        <img src="/assets/img/logo.png" alt="Demonii Tracker" class="h-10">
+                    </a>
+                    <div class="hidden md:block">
+                        <p class="text-blue-200 text-xs">Powered by Aquatic</p>
+                        <p class="text-blue-200 text-xs">Serving the BitTorrent community since 2013</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-2">
+                                        <a href="/"
+                       class="px-3 py-2 text-sm font-medium rounded-md transition-colors bg-blue-700 text-white">
+                        Home                    </a>
+                                        <a href="/stats.php"
+                       class="px-3 py-2 text-sm font-medium rounded-md transition-colors text-white hover:text-blue-200">
+                        Statistics                    </a>
+                                        <a href="/api.php?action=current" target="_blank" rel="noopener"
+                       class="px-3 py-2 text-sm font-medium text-white hover:text-blue-200 transition-colors">API</a>
+                    <button id="themeToggle" type="button" title="Toggle dark mode"
+                            class="ml-2 p-2 rounded-full text-blue-200 hover:text-white hover:bg-blue-800 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="container mx-auto px-4 py-8 flex-1 w-full">
+
+<!-- Hero / endpoints -->
+<section class="mb-12 text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 dark:text-blue-400 mb-3">Demonii Tracker</h1>
+    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        A free, open, public BitTorrent tracker running on
+        <a href="https://github.com/greatest-ape/aquatic" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline">Aquatic</a>.
+        Add the announce URL to your torrent client — no registration needed.
+    </p>
+    <div class="mt-4 flex items-center justify-center gap-3 text-sm flex-wrap">
+        <span id="statusPill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+            <i class="fas fa-circle-notch fa-spin text-xs"></i> Checking tracker…
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+            <i class="fas fa-globe text-xs"></i>
+            You're browsing via IPv4        </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 text-left max-w-4xl mx-auto">
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-900/10 rounded-2xl shadow-xl border border-blue-200 dark:border-blue-800 overflow-hidden hover:scale-[1.02] transition-transform">
+            <div class="bg-blue-600 text-white px-6 py-4">
+                <h3 class="text-xl font-bold flex items-center"><i class="fas fa-network-wired mr-2"></i>IPv4 Tracker</h3>
+                <p class="text-blue-100 text-sm mt-1">UDP announce — works on IPv4 and dual-stack</p>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-2 bg-white dark:bg-gray-800 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
+                    <code class="text-blue-600 dark:text-blue-400 font-mono break-all flex-1">udp://open.demonii.com:1337/announce</code>
+                    <button class="copy-btn text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" data-copy="udp://open.demonii.com:1337/announce" title="Copy">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+                <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                    <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+                    <span>Serving <span data-stat="ipv4.peers" class="font-semibold">45,984,424</span> peers right now</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-900/10 rounded-2xl shadow-xl border border-purple-200 dark:border-purple-800 overflow-hidden hover:scale-[1.02] transition-transform">
+            <div class="bg-purple-600 text-white px-6 py-4">
+                <h3 class="text-xl font-bold flex items-center"><i class="fas fa-network-wired mr-2"></i>IPv6 Tracker</h3>
+                <p class="text-purple-100 text-sm mt-1">UDP announce — IPv6-only networks</p>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-2 bg-white dark:bg-gray-800 p-4 rounded-lg border border-purple-200 dark:border-purple-800 mb-4">
+                    <code class="text-purple-600 dark:text-purple-400 font-mono break-all flex-1">udp://open6.demonii.com:1337/announce</code>
+                    <button class="copy-btn text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors" data-copy="udp://open6.demonii.com:1337/announce" title="Copy">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+                <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                    <i class="fas fa-info-circle mr-2 text-purple-500"></i>
+                    <span>Serving <span data-stat="ipv6.peers" class="font-semibold">3,688,946</span> peers right now</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Live overview -->
+<section class="mb-12">
+    <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <h2 class="text-2xl font-bold">Live statistics</h2>
+        <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-2">
+            <span id="liveDot" class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+            <span>Updated <span id="liveUpdated" class="font-mono">2026-10-19 19:10:57 UTC</span></span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-3xl font-bold text-blue-600 dark:text-blue-400" data-stat="total.peers">49,673,370</div>
+                    <div class="text-gray-600 dark:text-gray-300">Peers</div>
+                </div>
+                <div class="text-blue-400 text-3xl"><i class="fas fa-users"></i></div>
+            </div>
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">IPv4 + IPv6 combined</div>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-3xl font-bold text-purple-600 dark:text-purple-400" data-stat="total.torrents">14,559,299</div>
+                    <div class="text-gray-600 dark:text-gray-300">Torrents</div>
+                </div>
+                <div class="text-purple-400 text-3xl"><i class="fas fa-magnet"></i></div>
+            </div>
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">IPv4 + IPv6 combined</div>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-3xl font-bold text-amber-600 dark:text-amber-400" data-stat="total.requests_sec">459,245</div>
+                    <div class="text-gray-600 dark:text-gray-300">Requests / sec</div>
+                </div>
+                <div class="text-amber-400 text-3xl"><i class="fas fa-bolt"></i></div>
+            </div>
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">IPv4 + IPv6 combined</div>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="text-3xl font-bold text-green-600 dark:text-green-400" data-stat="total.rx_mbit">436.9</div>
+                    <div class="text-gray-600 dark:text-gray-300">Bandwidth RX (Mbit/s)</div>
+                </div>
+                <div class="text-green-400 text-3xl"><i class="fas fa-arrow-down"></i></div>
+            </div>
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">IPv4 + IPv6 combined</div>
+        </div>
+            </div>
+
+    <!-- Per-protocol tables -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+            <div class="bg-blue-600 text-white px-5 py-3 font-semibold flex justify-between items-center">
+                <span><i class="fas fa-network-wired mr-2"></i>IPv4</span>
+                <span class="text-blue-100 text-xs font-normal">aquatic_udp</span>
+            </div>
+            <table class="w-full text-sm">
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Torrents</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.torrents">13,021,957</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Peers</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.peers">45,984,424</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Requests / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.requests_sec">455,488</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Responses / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.responses_sec">453,707</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Connects / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.connect_sec">198,223</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Announces / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.announce_sec">254,813</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Scrapes / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.scrape_sec">659</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Errors / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.error_sec">9</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Bandwidth RX</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.rx_mbit">431.92 Mbit/s</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Bandwidth TX</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv4.tx_mbit">424.61 Mbit/s</td>
+                    </tr>
+                                    </tbody>
+            </table>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+            <div class="bg-purple-600 text-white px-5 py-3 font-semibold flex justify-between items-center">
+                <span><i class="fas fa-network-wired mr-2"></i>IPv6</span>
+                <span class="text-purple-100 text-xs font-normal">aquatic_udp</span>
+            </div>
+            <table class="w-full text-sm">
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Torrents</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.torrents">1,537,342</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Peers</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.peers">3,688,946</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Requests / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.requests_sec">3,757</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Responses / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.responses_sec">3,143</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Connects / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.connect_sec">932</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Announces / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.announce_sec">2,167</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Scrapes / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.scrape_sec">42</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Errors / sec</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.error_sec">1</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Bandwidth RX</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.rx_mbit">4.93 Mbit/s</td>
+                    </tr>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-5 py-2 text-gray-600 dark:text-gray-400">Bandwidth TX</td>
+                        <td class="px-5 py-2 text-right font-mono" data-stat="ipv6.tx_mbit">3.84 Mbit/s</td>
+                    </tr>
+                                    </tbody>
+            </table>
+        </div>
+            </div>
+</section>
+
+<!-- 24h trend -->
+<section class="mb-12">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">Last 24 hours</h2>
+        <a href="/stats.php" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">Full statistics &rarr;</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Peers</h3>
+            <div class="h-44"><canvas id="chPeers"></canvas></div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Announces / sec</h3>
+            <div class="h-44"><canvas id="chAnnounces"></canvas></div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+            <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Bandwidth (Mbit/s)</h3>
+            <div class="h-44"><canvas id="chBandwidth"></canvas></div>
+        </div>
+    </div>
+</section>
+
+<!-- How to use -->
+<section class="mb-8">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold mb-3">How to use this tracker</h2>
+        <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
+            <li>Copy <code class="font-mono text-blue-600 dark:text-blue-400">udp://open.demonii.com:1337/announce</code> into your torrent client's tracker list — or just create/share torrents that include it.</li>
+            <li>On IPv6-only networks use <code class="font-mono text-purple-600 dark:text-purple-400">udp://open6.demonii.com:1337/announce</code>.</li>
+            <li>That's it. Demonii is open to everyone and keeps no logs.</li>
+        </ol>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">FAQ</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Is it free?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Yes. Demonii is a free, open, public tracker. Anyone may announce to it — no accounts, no API keys, no registration.</p>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Do you keep logs?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">No. The tracker keeps nothing beyond what is needed to operate the swarm. Stats shown here are aggregate counters only.</p>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Which protocol?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">UDP tracker protocol (BEP 15) on port 1337. The hostname is dual-stack — IPv4 and IPv6 announce to the same address.</p>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Can I add it to my torrents?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Yes — just include the announce URL in the torrent or magnet tracker list, or add it in your client&#039;s settings.</p>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Is there a rate limit?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Be reasonable: respect the announce interval your client receives and don&#039;t scrape aggressively. Abusive sources get filtered.</p>
+        </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
+            <h3 class="font-semibold text-gray-800 dark:text-gray-200 mb-1">What does the status pill check?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Every ~90 seconds this server performs a real UDP announce handshake against the tracker and reports the round-trip result.</p>
+        </div>
+            </div>
+</section>
+
+</main>
+<footer class="bg-gray-800 dark:bg-gray-900 text-white py-8 mt-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <p class="font-semibold">Demonii Tracker</p>
+                <p class="text-gray-400 text-sm">Free public BitTorrent tracker — no logs, no accounts, no nonsense.</p>
+            </div>
+            <div class="flex space-x-6 text-sm">
+                <a href="/" class="text-gray-300 hover:text-white">Home</a>
+                <a href="/stats.php" class="text-gray-300 hover:text-white">Statistics</a>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
+            &copy; 2026 Demonii. Tracker engine: <a class="text-blue-300 hover:underline" href="https://github.com/greatest-ape/aquatic" target="_blank" rel="noopener">Aquatic</a>.
+        </div>
+    </div>
+</footer>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

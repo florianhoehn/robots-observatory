@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="initial-scale=1"><meta charset="utf-8"><meta name="language" content="de">
+    <title>Es ist ein Fehler aufgetreten</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" crossorigin href="../assets/main-v6fpef6F.css">
+    <script>
+       <!-- GTM -->
+       window.dataLayer = window.dataLayer || [];
+       function gtag(){dataLayer.push(arguments);} gtag( 'consent','default', { 'ad_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied', 'analytics_storage': 'denied', 'functionality_storage': 'denied', 'wait_for_update': 500 });
+       (function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push( {'gtm.start': new Date().getTime(), event: 'gtm.js'} ); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = false; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); }) (window, document, 'script', 'dataLayer', 'GTM-NG9JM5');
+       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-T4CS23SC'); let utmData = null;
+       <!-- End GTM -->
+    </script>
+    <!-- Sourcepoint -->
+    <script data-description="sourcepoint stub code">function _typeof(t){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(){for(var t,e,o=[],n=window,r=n;r;){try{if(r.frames.__tcfapiLocator){t=r;break}}catch(t){}if(r===n.top)break;r=n.parent}t||(function t(){var e=n.document,o=!!n.frames.__tcfapiLocator;if(!o)if(e.body){var r=e.createElement("iframe");r.style.cssText="display:none",r.name="__tcfapiLocator",e.body.appendChild(r)}else setTimeout(t,5);return!o}(),n.__tcfapi=function(){for(var t=arguments.length,n=new Array(t),r=0;r<t;r++)n[r]=arguments[r];if(!n.length)return o;"setGdprApplies"===n[0]?n.length>3&&2===parseInt(n[1],10)&&"boolean"==typeof n[3]&&(e=n[3],"function"==typeof n[2]&&n[2]("set",!0)):"ping"===n[0]?"function"==typeof n[2]&&n[2]({gdprApplies:e,cmpLoaded:!1,cmpStatus:"stub"}):o.push(n)},n.addEventListener("message",(function(t){var e="string"==typeof t.data,o={};if(e)try{o=JSON.parse(t.data)}catch(t){}else o=t.data;var n="object"===_typeof(o)?o.__tcfapiCall:null;n&&window.__tcfapi(n.command,n.version,(function(o,r){var a={__tcfapiReturn:{returnValue:o,success:r,callId:n.callId}};t&&t.source&&t.source.postMessage&&t.source.postMessage(e?JSON.stringify(a):a,"*")}),n.parameter)}),!1))}();</script>
+    <script data-description="sourcepoint configuration">
+        window._sp_ = {
+            config: { accountId: 375, baseEndpoint: 'https://cmpv2.fn.de', isSPA: true, gdpr: {targetingParams: { acps: 'false' }, }, }
+        };
+        __tcfapi('addEventListener', 2, function (tcdata, success) {
+            if (!success) return;
+            if (tcdata.eventStatus === 'tcloaded' || tcdata.eventStatus === 'useractioncomplete') {
+                if (tcdata.vendor.consents[755]) {
+                    /* GTM-Consent-Update */
+                    gtag('consent', 'update', { 'analytics_storage': 'granted', 'functionality_storage': 'granted' });
+                    //gtag('consent', 'update', { 'ad_storage': 'granted', 'ad_user_data': 'granted', 'ad_personalization': 'granted', 'analytics_storage': 'granted', 'functionality_storage': 'granted' });
+                }
+                __tcfapi('removeEventListener', 2, function () {
+                }, tcdata.listenerId);
+            }
+        });
+    </script>
+    <script>
+        const pageData = {
+                "100" : "Die Anfrage konnte nicht beantwortet werden",
+                "403" : "Dieser Zugriff ist nicht erlaubt",
+                "404" : "Die gewünschte Seite wurde leider nicht gefunden.",
+                "500" : "Der Dienst steht zur Zeit nicht zur Verfügung",
+                "501" : "Der Server unterstützt diese Art der Anfragen nicht.",
+                "502" : "Bad Gateway - Ungültige Server-Antwort.",
+                "503" : "Der Dienst steht kurzzeitig nicht zur Verfügung.",
+                "504" : "Gateway Timeout - Die Anfrage konnte nicht rechtzeitig beantwortet werden.",
+                "505" : "Der Server unterstützt diese Art der Anfragen nicht."
+        }
+        function extractSegmentByRegex(url, regex) {
+            try {
+                // Validate the URL format
+                const urlObject = new URL(url);
+
+                // Check for path traversal attempts
+                const pathname = urlObject.pathname;
+                if (pathname.includes("../") || pathname.includes("./")) {
+                    console.warn("Potential path traversal attempt detected.");
+                    return null;
+                }
+
+                const segments = pathname.split('/').filter(segment => segment !==
+                    '');
+
+                for (const segment of segments) {
+                    if (regex.test(segment)) {
+                        // Sanitize the output to prevent XSS
+                        const sanitizedSegment = segment.replace(/</g,
+                            "&lt;").replace(/>/g, "&gt;");
+                        console.debug("Extracted segment:", sanitizedSegment);
+                        return sanitizedSegment;
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.error("Invalid URL or regex:", error);
+                return null;
+            }
+        }
+        const errorUrl = document.location.href;
+        const errSegment = extractSegmentByRegex(errorUrl, /403|404|500|501(_)?|502(_)?|503(_)?|504|505/i);
+
+        function changeContent (echead, text){
+            document.querySelector("title").innerHTML = "Fehler " + echead;
+            document.querySelector("#errorStatus").innerHTML = echead;
+            document.querySelector("#errorText").innerHTML = text;
+            return;
+        }
+        function stripUnderscore(cd) {
+            return cd.substring(0,3);
+        }
+        function initPage() {
+            if (errSegment !== ''){
+                let text = stripUnderscore(errSegment)
+                changeContent(text, pageData[text]);
+            } else {
+                changeContent("", pageData["100"]);
+            }
+        }
+    </script>
+</head>
+<body style="margin:0px;>
+
+<div id="errorPages">
+    <div id="mailPowerHeader">
+        <div id="innerHeader">
+            <div id="mailPowerLogo" onclick="window.open('https://mail.freenet.de/');">
+                <img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='utf-8'?%3e%3c!--%20Generator:%20Adobe%20Illustrator%2026.3.1,%20SVG%20Export%20Plug-In%20.%20SVG%20Version:%206.00%20Build%200)%20--%3e%3csvg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20x='0px'%20y='0px'%20viewBox='0%200%20635.2%20122'%20style='enable-background:new%200%200%20635.2%20122;'%20xml:space='preserve'%3e%3cstyle%20type='text/css'%3e%20.st0{fill:%2384BC34;}%20.st1{fill:%23FFFFFF;}%20%3c/style%3e%3cg%20id='Kasten_00000045588940817225090170000014015454618541351608_'%3e%3c/g%3e%3cg%20id='Blade_00000056393830187627469590000001934641379702391954_'%3e%3cg%20id='Blade_00000115488034364365278570000014383065578570728376_'%3e%3cpath%20id='Würfel_00000095330303590107368250000006829467438266176953_'%20class='st0'%20d='M54.4,27.1c-4.5-1-9.2-2.8-24.9-11%20C8.6,5.4,4,4.6,1.3,9c-3.6,5.8-0.3,20.5,14.1,47.3c9.3,17.6,24,40.3,26.7,43.3c0.6,0.6,1.3,0.8,1.9,0.4c0.6-0.4,0.9-0.9,0.4-1.8%20c-2.2-4.1-9.8-19.9-13.3-28.1c-8.2-19.8-10.1-26.5-7.3-28c0.8-0.4,1.8-0.1,4.1,1.2c7.9,4.2,25.3,17.6,28.4,27%20c1.3,4.1,2,8.8,2.3,25.6c0.4,22.1,2,26.2,7.4,26.2c7.2,0,19.2-10,37.1-35c11.8-16.4,25.6-39.5,27-43.2c0.4-0.8,0-1.4-0.5-1.8%20c-0.6-0.4-1.3-0.3-1.8,0.5c-2.7,3.8-13.6,17.9-19.6,24.8C93.9,83.8,88.7,88.6,85.8,87.1c-0.8-0.4-1-1.4-1-3.8%20c0-8.6,3.7-29.3,10.9-36.3c3.1-3.1,7.3-6,22.8-14.6c20.5-11.4,23.4-14.7,20.7-19.2C135.6,7.4,120.4,2.7,88,0.8%20C66.9-0.5,38.4,0,34.3,0.7c-0.9,0.1-1.3,0.6-1.4,1.3c0,0.6,0.4,1.2,1.4,1.2c4.9,0.3,23.5,2,32.9,3.3c22.5,3.2,29.7,5.1,29.7,8.2%20c0,0.8-0.8,1.5-3.1,2.7C85.7,22,64.5,29.3,54.4,27.1'/%3e%3c/g%3e%3c/g%3e%3cg%20id='freenet'%3e%3cg%20id='Text_00000018233044646709815630000010139649164768858556_'%3e%3cpath%20id='net_00000118388088504095158600000004163244688393149569_'%20class='st1'%20d='M547.6,52.4h-3.2c-12.9,0-14.4,1.5-14.4,12.9%20v1.9h32.2v-1.9C562.2,53.7,560.5,52.4,547.6,52.4%20M576,79.5h-46.3c0,8,0.6,10.4,2.5,12.1c1.7,1.7,4,2.3,12.1,2.3h3.2%20c8,0,10.2-0.4,12.1-2.3c0.9-0.9,1.5-1.9,1.9-3.4h14.2c-2.3,13.5-9.3,18.6-25,18.6H541c-9.3,0-15-1.7-19.2-6.1%20c-4.2-4.2-5.9-9.7-5.9-19.2V64.7c0-9.5,1.7-15,5.9-19.2c4.4-4.4,10.1-6.1,19.2-6.1h9.9c9.3,0,15,1.7,19.2,5.9%20c4.4,4.2,5.9,9.5,5.9,19.3L576,79.5z%20M635,106.6h-13.7c-9.3,0-14.8-1.7-19.2-6.1c-4.4-4.2-5.9-9.7-5.9-19.2V52.9H588V39.8h8.3%20V23.3h14v16.5h19.2l-1.7,13.1h-17.5v28.6c0,10.1,2.5,12,14.4,12h10.4v13.1L635,106.6z%20M475.1,39.7c9.3,0,14.8,1.7,19.2,6.1%20c4.4,4.2,5.9,9.7,5.9,19.2v41.7h-14V67.4c0-7.8-0.6-10.2-2.5-12.1c-1.7-1.9-4-2.3-12.1-2.3h-16.1v53.7h-14v-67H475.1L475.1,39.7z'%20/%3e%3cpath%20id='free_00000134962383033659826450000006705828997229569450_'%20class='st1'%20d='M218.7,52.9h-19v53.7h-14V52.9h-8.3V39.8h8.3%20c0.2-9.9,1.7-14.6,5.9-18.8c4.4-4.4,10.1-6.1,19.2-6.1h13.7v13.1h-10.4c-12,0-14.2,1.3-14.4,11.6h20.9L218.7,52.9L218.7,52.9z'/%3e%3cpath%20class='st1'%20d='M425.8,64.9c0-10.1-1.7-15.2-5.9-19.3c-4.4-4.2-10.1-5.9-19.2-5.9h-9.9c-9.3,0-15,1.7-19.2,6.1%20c-4.4,4.4-5.9,9.9-5.9,19.2v16.9c0,9.5,1.7,14.8,5.9,19.2c4.4,4.4,10.1,6.1,19.2,6.1h9.9c15.6,0,22.6-5.1,25-18.6h-14.2%20c-0.4,1.7-0.9,2.7-1.9,3.4c-1.9,1.9-4.2,2.3-12.1,2.3h-3.2c-8.2,0-10.2-0.6-12.1-2.3c-1.9-1.9-2.5-4.4-2.5-12.1H426V64.9%20L425.8,64.9z%20M411.8,67h-32.2v-1.9c0-11.4,1.7-12.9,14.4-12.9h3.2c12.9,0,14.6,1.5,14.4,12.9L411.8,67L411.8,67z%20M350.5,64.9%20c0-10.1-1.7-15.2-5.9-19.3c-4.4-4.2-10.1-5.9-19.2-5.9h-9.9c-9.3,0-15,1.7-19.2,6.1c-4.4,4.4-5.9,9.9-5.9,19.2v16.9%20c0,9.5,1.7,14.8,5.9,19.2c4.4,4.4,10.1,6.1,19.2,6.1h9.9c15.6,0,22.6-5.1,25-18.6h-14.2c-0.4,1.7-0.9,2.7-1.9,3.4%20c-1.9,1.9-4.2,2.3-12.1,2.3H319c-8.2,0-10.4-0.6-12.1-2.3c-1.9-1.9-2.5-4.4-2.5-12.1h46.3C350.7,79.7,350.5,64.9,350.5,64.9z%20M336.5,67h-32.2v-1.9c0-11.4,1.7-12.9,14.4-12.9h3.2c12.9,0,14.6,1.5,14.4,12.9L336.5,67L336.5,67z%20M232.1,106.6v-67h24.7%20c18,0,24.9,6.4,25.2,22.2h-14.2c-0.2-3-0.9-5.1-2.5-6.8c-1.9-2.1-4.6-2.5-12.5-2.5H246v53.7h-13.8L232.1,106.6z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e" alt="freenet" width="190">
+            </div>
+            <div id="mailPowerSiegel">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAArCAMAAAA0X5qLAAAA4VBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8hMU3Hy9JYZHnV2N1mcYS5vseCi5ouPVfj5el0fo+rsbw8SmOQmKZKV26dpbHx8vTBA0IzAAAAOnRSTlMAEIAw0ODAQCCQYFCgsPBwxQoMnejKokL7zMMUxsjHzkGJMTeH7hUzAUaF6oQ16YKIwTvEOpyhycI0zQGc8gAAAppJREFUeF6N1FeT40QUQOFzb+cgaWADsMSwsOwSc2jZMxsD/P8fhGWpXGOPPMX3cJ9OdanVLbHGhBAi/4NGyOo0oLUIt7MWwAMupMJ5AviU5ti4IlASa4q1zhCd7Qt4GFJKSO9ZEZvB9IQqxgkefAG66tHMDZrAm6JgmKi1pvjgjRNuckFsjMKB4GPwNhA9p4KzmVOhJaBLHEhkogHg0cMHd1v79uKn7wFiJ5CvLSPWKov3PmkH9x6zp9bIwCIN2Pl837nTjtx/F0idcID2alUNfHivnfjga4gA2UZmxvv9uh+3Gz59F4jaV1UmBcgWuNNW3AecdkP0ACWJIsBnbdUvgNjqMkAqJWEFLtbjCyClw/ZcNRa+aGd8CT8KC4xahe/a5PKfy2m+2s3NZo4/h+y8BhYi4Kf29TiOV8scxzn+CKAm3xvonFFn4O6ufTU+f3O12c+nh/grAPUug/HSVwHe38VPx3F72Tb7eYjbN7C8jFCDDWGJ28txHJ+2Z9M8igdhEnUC/LBrX7TN2/FqP7dHj+G1RBZR4Odd/Ob59vX4cp67eLt9tmwwluScAchkhSf7DY7j2xfzbOPOdn51SPZ2EHDUIodDufx3nseHoq4aJqmodZazx/0rkDvnUwBKX3Pk/EX6DUwAKYGFOuD3tfYPECccYGyVWy5/UVGfmSXnB4jnPitM75JYZkXEZavnPlgvMZIrC6RzgWpOfgV/PmaSrYEkLMQlgeAE4NGTv6afzIOHfwNEENcbrjFMhsQJSc1gc+4jp3nNdPF6ih2KJ1IrR1I12kvwJK8CYCJdgNwGTOWE+i7iQ/CSC0BxJidyZ5ywKniiK8yMsxYYXGBVF8BYw550YiO5Cusi1NIN7BkbbOZWQZVF1iIc+Q/4Noe6zrqKfgAAAABJRU5ErkJggg==" alt="Sicher"/><img src="data:image/png;base64,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" alt="Email made in Germany" /><img src="data:image/png;base64,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" alt="Cloud Services"/>
+            </div>
+        </div>
+    </div>
+    <div id="mailPowerLoginBody">
+        <div id="mailPowerLoginBox" class="mailPowerRightBox">
+            <div class="inner">
+                <div id="mailPowerLoginBoxContent">
+
+                    <div class="content-error">
+                        <img src="../assets/space.png" alt="Lost in Space">
+                        <div class="floating-group">
+                            <span class="error-intro">Ooops</span>
+                            <div class="error-status" id="errorStatus"></div>
+                            <div id="errorText">
+                                Es ist ein Fehler aufgetreten
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="mailPowerLoginFooter">
+            <div id="innerFooter">
+                <div id="footerLinks">
+                    <a href="https://mail.freenet.de/impressum/" target="_blank">Impressum</a>
+                    <a href="https://mail.freenet.de/agb/" target="_blank">AGB</a>
+                    <a href="https://mail.freenet.de/datenschutz/" target="_blank">Datenschutz</a>
+                    <a href="https://kundenservice.freenet.de/vertragskuendigung" target="_blank">Vertragskündigung</a>
+                    <a href="https://kundenservice.freenet.de/" target="_blank">Kundenservice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>initPage();</script>
+</body>
+</html>

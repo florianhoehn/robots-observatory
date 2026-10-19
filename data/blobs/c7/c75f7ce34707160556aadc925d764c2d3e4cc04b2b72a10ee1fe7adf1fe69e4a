@@ -1,0 +1,450 @@
+
+      <!DOCTYPE html>
+      <html>
+        <head>
+          
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta name="description" content="Weather Underground provides local &amp; long-range weather forecasts, weather reports, maps &amp; tropical weather conditions for locations worldwide" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+      <link rel="shortcut icon" href="/wu-static/images/favicon.png" />
+      <title>Local Weather Forecast, News and Conditions | Weather Underground</title>
+    <link rel="stylesheet" type='text/css' href="/wu-static/css/global.f13503cb.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/colors.414c6a5b.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/images.887db259.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/buttons.d1782eb5.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/header.d7987900.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/search.2acca92d.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/mobile-nav.d5e6d258.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/action-bar.ea9e56be.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/coming-soon.dd61be87.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/footer.38fc4af2.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/feedback-button.e8b12e5a.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/glossary.2618b313.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/alert-dialog.a778304f.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/fav-register-modal.d238e9b5.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/weather-alerts-bar.0a4776c4.css" /><link rel="stylesheet" type='text/css' href="/wu-static/css/ad-slot.952b7b10.css" /><meta name="robots" content="noindex">
+      <script type="importmap">
+        {
+          "imports": {
+            "deeserverless": "/wu-static/node_modules/deeserverless/lib/browser.3405afa2.js",
+            "#controllers/": "/wu-static/controllers/",
+            "#views/": "/wu-static/views/",
+            "#models/": "/wu-static/models/",
+            "#collections/": "/wu-static/collections/",
+            "#errors/": "/wu-static/errors/",
+            "#utils/": "/wu-static/utils/"
+          }
+        }
+      </script>
+    
+      <script type = "text/javascript">
+        (function () {
+          const data = {"API_KEY":"f6d2efe5720d47ea92efe5720df7eaa8","API_URL":"https://api.weather.com","AUTH_URL":"https://upsx.wunderground.com","MAPBOX_API_KEY":"pk.eyJ1Ijoid2VhdGhlciIsImEiOiJjamxnc3NsbHExYXkyM3FwYWllN3FhYnZ3In0.mX6H3_kilkaK01_Q-Htz3A","STATION_MANAGEMENT_URL":"https://station-management.wunderground.com","GOOGLE_CLIENT_ID":"797231885346-rai9vgnvf4u38enai8bhginnnrh5uvch.apps.googleusercontent.com","SUBS_TIER":"none","IS_AUTHED":false,"IS_ALLOWED_PREVIEW":true,"IS_AD_FREE":false,"SUBSCRIPTION_PRODUCT":"","SPA_ENABLED":false,"IS_MOBILE":false,"VIEWER_COUNTRY":"GB","USER_LANGUAGE":"en-US","IS_PROD":true,"APP_VERSION":"0.0.61","UNITS_PREF":"h","HELIOS_ADS_ENABLED":true,"HELIOS_SCRIPT_URL":"https://s.w-x.co/helios/twc/1.80.8/helios.js","DPR_SDK_URL":"https://www.wunderground.com/api/v1/script/dprSdkScript.js","USE_ANALYTICS":true};
+          const readOnly = ["API_KEY","IS_PROD","AUTH_URL","API_URL","IS_MOBILE","MAPBOX_API_KEY","STATION_MANAGEMENT_URL","GOOGLE_CLIENT_ID","HELIOS_ADS_ENABLED","HELIOS_SCRIPT_URL","DPR_SDK_URL","USE_ANALYTICS","SPA_ENABLED","APP_VERSION"];
+          for (const k in data) {
+            if (readOnly.includes(k)) {
+              Object.defineProperty(globalThis, k, {
+                value: data[k],
+                writable: false,
+                configurable: false,
+                enumerable: true
+              });
+            } else {
+              globalThis[k] = data[k];
+            }
+          }
+        }());
+      </script>
+    
+      <script>document.documentElement.classList.add("is-anon");</script>
+    
+      <script>
+        (function () {
+          var c = document.documentElement.classList;
+          try { if (localStorage.getItem('wu:density') !== 'default') { c.add('density-compact'); } } catch (e) { c.add('density-compact'); }
+          try {
+            var stored = function () { try { return localStorage.getItem('wu:appearance'); } catch (e) { return null; } };
+            var a = stored();
+            if (a === 'dark') { c.add('appearance-dark'); }
+            else if (a !== 'light') {
+              var q = window.matchMedia('(prefers-color-scheme: dark)');
+              if (q.matches) { c.add('appearance-dark'); }
+              q.addEventListener('change', function (e) {
+                var s = stored();
+                if (s !== 'dark' && s !== 'light') { c.toggle('appearance-dark', e.matches); }
+              });
+            }
+          } catch (e) {}
+        })();
+      </script>
+    
+      <link rel="prefetch" href="/wu-static/images/loader.svg" as="image">
+      <link rel="prefetch" href="/wu-static/images/loader-dark.svg" as="image">
+    
+      <script type="text/javascript">
+        window.mParticle = {
+          config: {
+            isDevelopmentMode: false,
+            
+            identityCallback: function(result) {
+              if (result.getUser()) {
+                result.getUser().setUserAttribute('subscription_type', 'logged-out');
+              }
+            },
+            dataPlan: {
+              planId: 'wu_web',
+              planVersion: 1
+            }
+          },
+        };
+        (function(e){window.mParticle=window.mParticle||{};window.mParticle.EventType={Unknown:0,Navigation:1,Location:2,Search:3,Transaction:4,UserContent:5,UserPreference:6,Social:7,Other:8,Media:9};window.mParticle.eCommerce={Cart:{}};window.mParticle.Identity={};window.mParticle.Rokt={};window.mParticle.config=window.mParticle.config||{};window.mParticle.config.rq=[];window.mParticle.config.snippetVersion=2.4;window.mParticle.ready=function(e){window.mParticle.config.rq.push(e)};var t=["endSession","logError","logBaseEvent","logEvent","logForm","logLink","logPageView","setSessionAttribute","setAppName","setAppVersion","setOptOut","setPosition","startNewSession","startTrackingLocation","stopTrackingLocation"];var i=["setCurrencyCode","logCheckout"];var n=["identify","login","logout","modify"];var o=["attachLauncher","selectPlacements"];t.forEach(function(e){window.mParticle[e]=r(e)});i.forEach(function(e){window.mParticle.eCommerce[e]=r(e,"eCommerce")});n.forEach(function(e){window.mParticle.Identity[e]=r(e,"Identity")});o.forEach(function(e){window.mParticle.Rokt[e]=r(e,"Rokt")});function r(t,i){return function(){if(i){t=i+"."+t}var e=Array.prototype.slice.call(arguments);e.unshift(t);window.mParticle.config.rq.push(e)}}var c,a,s=window.mParticle.config,l=s.isDevelopmentMode?1:0,w="?env="+l,d=window.mParticle.config.dataPlan;if(d){c=d.planId;a=d.planVersion;if(c){if(a&&(a<1||a>1e3)){a=null}w+="&plan_id="+c+(a?"&plan_version="+a:"")}}var m=window.mParticle.config.versions;var f=[];if(m){Object.keys(m).forEach(function(e){f.push(e+"="+m[e])})}var p=document.createElement("script");p.type="text/javascript";p.async=true;p.src=("https:"==document.location.protocol?"https://jssdkcdns":"http://jssdkcdn")+".mparticle.com/js/v2/"+e+"/mparticle.js"+w+"&"+f.join("&");var P=document.getElementsByTagName("script")[0];P.parentNode.insertBefore(p,P)})("us2-0d339bc8e8b6744db2d1e106d4910b49");
+      </script>
+    
+        </head>
+        <body>
+          
+        
+      <feedback-link-view>
+        <div class="max-width">
+          <span class="feedback-default">Help shape the future of Weather Underground. <a href="https://discord.gg/SNp7Z29Ahx" target="_blank">Join our Discord!</a></span>
+          <span class="feedback-legacy-switch">You are currently viewing the new Weather Underground website. To go back to the old site, <button type="button" class="legacy-switch-link">click here</button>.</span>
+        </div>
+    </feedback-link-view>
+    
+        
+      <header>
+        <header-wc class="max-width">
+          <a href="/" class="logo">Home</a>
+          <nav>
+            <details name="nav-details">
+              <summary>Sensor Network</summary>
+              
+      <ol class="top">
+    
+        <li>
+          <a href="/pws/overview" class="">Weather Station Network</a>
+        </li>
+      
+        <li>
+          <a href="/pws/buying-guide" class="">PWS Buying Guide</a>
+        </li>
+      
+        <li>
+          <a href="/member/devices/new" class="">Connect a Weather Station</a>
+        </li>
+      
+        <li>
+          <a href="/sensors/purpleair" class="">Air Quality Sensors</a>
+        </li>
+      
+      </ol>
+    
+            </details>
+            <details name="nav-details">
+              <summary>Maps & Radar</summary>
+              
+      <ol class="top">
+    
+        <li>
+          <a href="/wundermap" class="">Wundermap</a>
+        </li>
+      
+        <li>
+          <a href="/wundermap?radar=past" class="">Interactive Radar</a>
+        </li>
+      
+        <li>
+          <a href="/wundermap?satellite=true" class="">Interactive Satellite</a>
+        </li>
+      
+        <li>
+          <a aria-disabled="true" class="disabled">Radar Maps</a>
+        </li>
+      
+        <li>
+          <a href="/maps" class="">Full Maps Catalog</a>
+        </li>
+      
+      </ol>
+    
+            </details>
+            <details name="nav-details">
+              <summary>Severe Weather</summary>
+              
+      <ol class="top">
+    
+        <li>
+          <a href="/hurricane" class="">Hurricane & Tropical Cyclones</a>
+        </li>
+      
+        <li>
+          <a href="/wundermap?zoom=4&lat=37.80307138624724&lon=-90.50826873347978&severe=tornado-severe-storms&severe=marine&severe=flood&severe=winter&severe=tropical&severe=other&severe-opacity=90" class="">U.S. Severe Weather Map</a>
+        </li>
+      
+        <li>
+          <a href="/maps/convective-outlook/today" class="">Convective Outlook</a>
+        </li>
+      
+        <li>
+          <a href="/wundermap?zoom=4&lat=37.80307138624724&lon=-90.50826873347978&active-fires=true&fire-perimeters=true" class="">Wildfires</a>
+        </li>
+      
+        <li>
+          <a href="/prepare" class="">Preparedness</a>
+        </li>
+      
+      </ol>
+    
+            </details>
+            <details name="nav-details">
+              <summary>News & Blogs</summary>
+              
+      <ol class="top">
+    
+        <li>
+          <a href="/cat6" class="">Category 6</a>
+        </li>
+      
+        <li>
+          <a aria-disabled="true" class="disabled">News Stories</a>
+        </li>
+      
+        <li>
+          <a href="/video" class="">Videos</a>
+        </li>
+      
+        <li>
+          <a href="/weather-infographics" class="">Weather Infographics</a>
+        </li>
+      
+        <li>
+          <a href="/weather-posters" class="">Weather Posters</a>
+        </li>
+      
+        <li>
+          <a aria-disabled="true" class="disabled">Blog Archive</a>
+        </li>
+      
+      </ol>
+    
+            </details>
+            <details name="nav-details">
+              <summary>Mobile Apps</summary>
+              
+      <ol class="top">
+        <li>
+          <a href="https://app.appsflyer.com/id486154808?pid=Web&c=AppPage" target="_blank">Weather Underground for iOS</a>
+        </li>
+        <li>
+          <a href="https://app.appsflyer.com/com.wunderground.android.weather?pid=Web&c=AppPage" target="_blank">Weather Underground for Android</a>
+        </li>
+        <li>
+          <a href="/download">All Mobile Apps</a>
+        </li>
+      </ol>
+    
+            </details>
+            <details name="nav-details">
+              <summary>More</summary>
+              <ol class="more-menu">
+                <li class="sub-nav">
+                  <span>Severe Weather</span>
+                  
+      <ol class="sub-nav-menu">
+    
+        <li>
+          <a href="/hurricane" class="">Hurricane & Tropical Cyclones</a>
+        </li>
+      
+        <li>
+          <a href="/wundermap?zoom=4&lat=37.80307138624724&lon=-90.50826873347978&severe=tornado-severe-storms&severe=marine&severe=flood&severe=winter&severe=tropical&severe=other&severe-opacity=90" class="">U.S. Severe Weather Map</a>
+        </li>
+      
+        <li>
+          <a href="/maps/convective-outlook/today" class="">Convective Outlook</a>
+        </li>
+      
+        <li>
+          <a href="/wundermap?zoom=4&lat=37.80307138624724&lon=-90.50826873347978&active-fires=true&fire-perimeters=true" class="">Wildfires</a>
+        </li>
+      
+        <li>
+          <a href="/prepare" class="">Preparedness</a>
+        </li>
+      
+      </ol>
+    
+                </li>
+                <li class="sub-nav">
+                  <span>News & Blogs</span>
+                  
+      <ol class="sub-nav-menu">
+    
+        <li>
+          <a href="/cat6" class="">Category 6</a>
+        </li>
+      
+        <li>
+          <a aria-disabled="true" class="disabled">News Stories</a>
+        </li>
+      
+        <li>
+          <a href="/video" class="">Videos</a>
+        </li>
+      
+        <li>
+          <a href="/weather-infographics" class="">Weather Infographics</a>
+        </li>
+      
+        <li>
+          <a href="/weather-posters" class="">Weather Posters</a>
+        </li>
+      
+        <li>
+          <a aria-disabled="true" class="disabled">Blog Archive</a>
+        </li>
+      
+      </ol>
+    
+                </li>
+                <li class="sub-nav">
+                  <span>Mobile Apps</span>
+                  
+      <ol class="sub-nav-menu">
+        <li>
+          <a href="https://app.appsflyer.com/id486154808?pid=Web&c=AppPage" target="_blank">Weather Underground for iOS</a>
+        </li>
+        <li>
+          <a href="https://app.appsflyer.com/com.wunderground.android.weather?pid=Web&c=AppPage" target="_blank">Weather Underground for Android</a>
+        </li>
+        <li>
+          <a href="/download">All Mobile Apps</a>
+        </li>
+      </ol>
+    
+                </li>
+                <li>
+                  <a href="/history">Historical Weather</a>
+                </li>
+              </ol>
+            </details>
+          </nav>
+          
+      <div class="profile-links profile-anon">
+        <a href="/login">Log In</a>
+        
+      <a href="/subscribe?tpcc=mktgWU-login-subs-nav_goAdFree">
+        <button class="blue">Go Ad Free</button>
+      </a>
+    
+      </div>
+    
+          
+    <search-wc class="undefined">
+      <input type="search" placeholder="Search Locations..." />
+      <button id="get-location" title="Get Current Location"></button>
+      <ul></ul>
+    </search-wc>
+    
+          
+      <header-menu-wc role="button" tabindex="0" aria-label="Menu" aria-expanded="false">
+        <div class="hamburger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </header-menu-wc>
+    
+        </header-wc>
+      </header>
+    
+        
+      <mobile-nav-wc>
+        <nav>
+          <ol class="top">
+      <a class="profile" href="/login">Log In</a>
+      
+      <a href="/subscribe?tpcc=mktgWU-login-subs-nav_goAdFree">
+        <button class="blue">Go Ad Free</button>
+      </a>
+    
+    
+      <li data-item="sensor-network">Sensor Network</li>
+      <li data-item="maps-and-radar">Maps & Radar</li>
+      <li data-item="severe-weather">Severe Weather</li>
+      <li data-item="news-and-blogs">News & Blogs</li>
+      <a href="/download">Mobile Apps</a>
+      <a href="/history">Historical Weather</a>
+      <li class="settings" data-item="settings">Settings</li>
+    </ol>
+          <ol class="sub" id="sub"></ol>
+        </nav>
+      </mobile-nav-wc>
+      <div class="mobile-nav-overlay"></div>
+    
+        <content-router-wc>
+          
+      <coming-soon-view>
+        <div class="max-width">
+          <div class="title">Prepare for impact. This is no ordinary weather report.</div>
+          <div class="info">
+            <strong>We’re rebuilding Weather Underground - faster, smarter, and better.</strong>
+            <span>Instead of launching everything behind closed doors, we thought it’d be way more fun to invite our community in early. Share your ideas, explore what’s new, and help shape what’s next.</span>
+            <span>As you can see, there’s still a lot to do. If you’re feeling adventurous, we’d love to have you along for the ride - and thank you in advance. If you’d prefer to wait until everything’s ready, that’s totally fine too. You can head back to the <a href="https://wunderground.com">current site</a> anytime, and drop by here whenever you're ready.</span>
+          </div>
+        </div>
+      </coming-soon-view>
+    
+        </content-router-wc>
+        
+      <footer-view>
+        <div class="inner">
+          <div class="sections">
+            <section class="company">
+              <a href="/download" title="Weather Underground Mobile Apps">Our Apps</a><a href="/about/our-company" title="About Weather Underground">About Us</a><a href="/about/contact-us" title="Contact Weather Underground">Contact</a><a href="https://www.weathercompany.com/careers" target="_blank" rel="noopener">Careers</a>
+            </section>
+            <section class="community">
+              <a href="/pws/overview" title="Personal Weather Station Network">PWS Network</a><a href="/wundermap" title="Experience WunderMap">WunderMap</a><a href="https://support.weather.com/s/email-us-form?brand=wu&language=en_US" class="feedback-support-link" title="Customer Feedback for Weather Underground" target="_blank" rel="noopener">Feedback & Support</a>
+            </section>
+            <section class="legal">
+              <a href="https://trust.weather.com" target="_blank" rel="noopener">Trust Center</a><a href="https://weather.com/privacy/terms-of-use" target="_blank" rel="noopener">Terms of Use</a><a href="https://weather.com/privacy/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a><a href="https://www.wunderground.com/data-rights" target="_self">Data Rights</a><a href="https://www.wunderground.com/privacy-settings" target="_self">Privacy Settings</a><a href="https://weather.com/privacy/privacy-policy#data-collection-technologies-and-consumer-choice" target="_blank" rel="noopener">Cookie Notice</a><a href="https://www.wunderground.com/data-vendors" target="_self">Data Vendors</a><a href="/accessibility-statement" class="accessibility-statement">Accessibility Statement</a>
+            </section>
+          </div>
+          <a href="https://www.levelaccess.com/a/the-weather-channel/?utm_source=theweatherchannelhomepage&utm_medium=iconlarge&utm_term=eachannelpage&utm_content=header&utm_campaign=theweatherchannel" target="_self" title="Accessibility" class="accessibility">Level Access</a>
+          <div class="logos">
+            <a href="https://www.weathercompany.com/" target="_blank" class="weather-company" title="The Weather Company">The Weather Company</a>
+            <a href="https://weather.com/" target="_blank" class="weather-channel" title="The Weather Channel">The Weather Channel</a>
+            <a href="/" class="weather-underground" title="Weather Underground">Weather Underground</a>
+            <a href="https://weather.com/storm-radar" target="_blank" class="storm-radar" title="Storm Radar">Storm Radar</a>
+          </div>
+          <div class="copyright">© The Weather Company, LLC 2026</div>
+        </div>
+      </footer-view>
+    
+        
+      <glossary-overlay-view data-level="1">
+        <dialog>
+          <div class="top">
+            <div class="header">
+              <div class="close" id="glossary-dialog-close"></div>
+              <div class="title" id="glossary-title">Glossary</div>
+            </div>
+            <nav>
+              <ol>
+                <li data-level="0">5th Grade</li>
+                <li data-level="1">High School</li>
+                <li data-level="2">Meterologist</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="explanation" data-level="0"></div>
+          <div class="explanation" data-level="1"></div>
+          <div class="explanation" data-level="2"></div>
+        </dialog>
+      </glossary-overlay-view>
+    
+        
+      <long-load-view>
+        <div class="loader" title="Loading"></div>
+      </long-load-view>
+    
+        <analytics-view data-name="Coming Soon"></analytics-view>
+        
+      <feedback-button>
+        <a class="feedback-button-link" href="https://support.weather.com/s/email-us-form?brand=wu&language=en_US" target="_blank" rel="noopener" title="Send us feedback">
+          <span class="feedback-button-icon" aria-hidden="true"></span>
+          <span class="feedback-button-label">Feedback</span>
+        </a>
+      </feedback-button>
+    
+      
+    <script type="module" src="/wu-static/views/base-view.a1fc527f.js"></script><script type="module" src="/wu-static/views/header/header.eb1c1923.js"></script><script type="module" src="/wu-static/views/feedback-link.15f22f71.js"></script><script type="module" src="/wu-static/views/feedback-button-view.b593a28a.js"></script><script type="module" src="/wu-static/views/action-bar.d46a27dd.js"></script><script type="module" src="/wu-static/views/mobile-nav.756f2073.js"></script><script type="module" src="/wu-static/views/content-router.dbbc98e6.js"></script><script type="module" src="/wu-static/views/error-view.df15dc59.js"></script><script type="module" src="/wu-static/views/footer.4ebfc5ba.js"></script><script type="module" src="/wu-static/views/glossary-overlay.52e51e87.js"></script><script type="module" src="/wu-static/views/analytics.da9c1a56.js"></script><script type="module" src="/wu-static/views/home/ad-slot-view.cbc8eb32.js"></script><script type="module" src="/wu-static/views/weather-alerts-bar-view.165bb47b.js"></script><script type="module" src="/wu-static/utils/helios-boot.d604484a.js"></script><script type="module" src="/wu-static/utils/auth-bootstrap.b0604d47.js"></script>
+      </body>
+      </html>
+    

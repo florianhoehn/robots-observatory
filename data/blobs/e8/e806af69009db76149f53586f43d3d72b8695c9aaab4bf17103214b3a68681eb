@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.jpg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- Page meta goes first -->
+		
+
+		<!-- Google tag (gtag.js) -->
+		<script>
+			if (typeof window != 'undefined') {
+				const CONFIG = {
+					wordscapes: 'G-KVRY5ZEGLB',
+					'word-tips': 'G-WX1MDTJWSH'
+				};
+
+				let site = 'word-tips';
+				if (location.pathname.startsWith('/wordscapes-answers')) {
+					site = 'wordscapes';
+				}
+
+				const target = CONFIG[site];
+				window.__GA4_TARGET = target;
+
+				let authUserId = null;
+				try {
+					authUserId = localStorage.getItem('auth_user_id');
+				} catch (_) {}
+
+				let accountType = 'anonymous';
+				let sourceCampaign = null;
+				try {
+					const LOCAL_USER_INFO_KEY = 'local_user_info';
+					const FEATURE_PREMIUM = 'premium';
+					const localAuthUserInfoJson = localStorage.getItem(LOCAL_USER_INFO_KEY);
+					if (localAuthUserInfoJson) {
+						const localAuthUserInfo = JSON.parse(localAuthUserInfoJson);
+						const now = Date.now();
+						accountType = localAuthUserInfo.promos?.some(
+							(p) => p.feature === FEATURE_PREMIUM && now < p.expires_at
+						)
+							? 'premium'
+							: 'free';
+						sourceCampaign = localAuthUserInfo.signupSource?.campaign ?? null;
+					}
+				} catch (_) {}
+
+				const script = document.createElement('script');
+				script.src = `https://www.googletagmanager.com/gtag/js?id=${target}`;
+				script.async = 1;
+				document.head.appendChild(script);
+
+				window.dataLayer = window.dataLayer || [];
+				function gtag() {
+					dataLayer.push(arguments);
+				}
+				gtag('js', new Date());
+				gtag('config', target, {
+					send_page_view: false,
+					user_id: authUserId,
+					user_properties: {
+						bucket: window.__CLIQ_BUCKET,
+						account_type: accountType,
+						source_campaign: sourceCampaign
+					}
+				});
+			}
+		</script>
+
+		<!-- Ad-shield -->
+		<script>
+			if (typeof window != 'undefined' && !window.location.pathname.startsWith('/wtapp/')) {
+				const script = document.createElement('script');
+				script.src = `https://word.tips/js/ad-shield.js`;
+				document.head.appendChild(script);
+			}
+		</script>
+
+		<!-- Clarity -->
+		<script type="text/javascript">
+			if (typeof window !== 'undefined') {
+				const CONFIG = {
+					wordscapes: 'mxzp72yxru',
+					'word-tips': 'njijxepgmc'
+				};
+
+				let site = 'word-tips';
+				if (location.pathname.startsWith('/wordscapes-answers')) {
+					site = 'wordscapes';
+				}
+
+				(function (c, l, a, r, i, t, y) {
+					c[a] =
+						c[a] ||
+						function () {
+							(c[a].q = c[a].q || []).push(arguments);
+						};
+					t = l.createElement(r);
+					t.async = 1;
+					t.src = 'https://www.clarity.ms/tag/' + i;
+					y = l.getElementsByTagName(r)[0];
+					y.parentNode.insertBefore(t, y);
+				})(window, document, 'clarity', 'script', CONFIG[site]);
+
+				if (window.__CLIQ_COOKIE_CONSENT == 'true') {
+					window.addEventListener(
+						'consent.onetrust',
+						() => {
+							const accepted = window.OnetrustActiveGroups.split(',').filter((a) => !!a).length > 1;
+							if (accepted) {
+								window.clarity('consent');
+							} else {
+								window.clarity('consent', false);
+							}
+						},
+						{
+							once: true
+						}
+					);
+				} else {
+					window.clarity('consent');
+				}
+			}
+		</script>
+	</head>
+
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <h1>404</h1> <p>Not Found</p> 
+			
+			<script>
+				{
+					__sveltekit_9a7f7f = {
+						base: new URL("..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_svelte/immutable/entry/start.0mBOYf7W.js"),
+						import("../_svelte/immutable/entry/app.VOwnqoDR.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 1],
+							data: [null,null],
+							form: null,
+							error: {message:"Not Found"},
+							status: 404
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

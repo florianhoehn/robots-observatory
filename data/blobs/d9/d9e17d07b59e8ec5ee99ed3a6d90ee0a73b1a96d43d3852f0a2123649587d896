@@ -1,0 +1,137 @@
+# Allow GPTBot full access
+User-agent: GPTBot
+Allow: /
+
+# OpenAI ads + search crawlers. OAI-AdsBot is what OpenAI Ads uses to validate
+# an ad's landing page: without its own group it falls under `User-agent: *`
+# below, where Disallow: */q/* and the other marketing-path rules make ad
+# landing pages uncrawlable and the ad is rejected. Given their own group so
+# the crawl-control rules for search engines cannot reject paid placements.
+# Only the authenticated / transactional areas stay closed.
+User-agent: OAI-AdsBot
+Allow: /
+Disallow: /cdn-cgi/
+Disallow: /controllers/
+Disallow: /dashboard/
+Disallow: /payments/
+Disallow: /users/payment
+Disallow: /User/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /cdn-cgi/
+Disallow: /controllers/
+Disallow: /dashboard/
+Disallow: /payments/
+Disallow: /users/payment
+Disallow: /User/
+
+User-agent: *
+Disallow: /cdn-cgi/mirage/*
+Disallow: /*download.php
+Disallow: /controllers/
+Disallow: /search_result_win.php*?*
+Disallow: /views/marketplace/*
+Disallow: /controllers/*
+Disallow: /lease-to-own/*
+Disallow: /rent-domain/*
+Disallow: /m/*
+Disallow: /users/payment*
+Disallow: /payments/*
+Disallow: /testimonials-feedback/*
+Disallow: /geo-business-names/*
+Disallow: /business-name-generator/word/*
+Disallow: /brand-alignment/*
+Disallow: /User/*
+Disallow: /Name-Ideas/name/*
+Disallow: /startups/*
+Disallow: /logo-design-contest/*
+Disallow: /app-name-ideas/*
+Disallow: /domainContest/*
+Disallow: /book-title-name-ideas/*
+Disallow: /movie-name-ideas/*
+Disallow: /manualpay.php/*
+Disallow: /var/*
+Disallow: /dashboard/*
+Disallow: /cb/*
+Disallow: *tip-logo-designer*
+Disallow: *.com/edit*
+Disallow: *.org/edit*
+Disallow: *.net/edit*
+Disallow: *.io/edit*
+Disallow: *.ai/edit*
+Disallow: *.co/edit*
+Disallow: *.app/edit*
+Disallow: *.xyz/edit*
+Disallow: *.vc/edit*
+Disallow: *.gg/edit*
+Disallow: *.ly/edit*
+Disallow: /domain_audios/*
+Disallow: /nodb/*
+Disallow: */domainid/*
+# /domain-appraisal/* is deliberately crawlable: the pages carry a noindex meta
+# (stronger than a Disallow, which can still leave URL-only entries in the index)
+# and social preview crawlers must be able to fetch them to read the OG tags.
+# Uncached appraisals still 400 without a captcha, so crawling costs no AI spend.
+Disallow: *qid=*
+Disallow: *source=direct*
+Disallow: */price-requests/*
+Disallow: */domain-auction/*
+Disallow: */domain-portfolio/*
+Disallow: */view/name/*
+Disallow: */sm/*
+Disallow: */special_collection/*
+Disallow: */price_range/*
+Disallow: */sort/*
+Disallow: */qw/*
+Disallow: */on_discount/*
+Disallow: */syllable_count/*
+Disallow: */emotions/*
+Disallow: */installment_allowed/*
+Disallow: */ex/*
+Disallow: */in/*
+Disallow: */type_of_name/Feminine*
+Disallow: */type_of_name/Alliteration*
+Disallow: */type_of_name/Colors*
+Disallow: */type_of_name/Made%20Up*
+Disallow: */type_of_name/Masculine*
+Disallow: */type_of_name/Animals*
+Disallow: */sapphire/all*
+Disallow: */branding-contest/*
+Disallow: */brand-name-ideas/*
+Disallow: */website-name-ideas/*
+Disallow: */product-name-ideas/*
+Disallow: */business-name-ideas/*
+Disallow: */-name-ideas/*
+Disallow: */other-name-ideas/*
+Disallow: */tagline-slogan-ideas/*
+Disallow: */our-work/*
+Disallow: */upm_classify/*
+Disallow: /make-an-offer/*
+Disallow: */lpd/*
+Disallow: */more-like/*
+Disallow: /whois/*
+Disallow: */categories/*
+Disallow: */seller-marketplace/*
+Disallow: */trademarks/*
+Disallow: /startup-inspiration*
+Disallow: */type_of_name/This%20%26%20That*
+Disallow: */primary_classification/*
+Disallow: */instant_transfer/*
+Disallow: */price_min/*
+Disallow: */price_max/*
+Disallow: /register/search/*
+Disallow: /page/
+Disallow: /ai-domains-for-sale/*/page/
+Disallow: /ai-domains-for-sale/page/
+Disallow: /audience-testing/basic
+Disallow: /*?p=*
+Disallow: /cctld/*/all/page/
+Disallow: /domain-auction/page/
+Disallow: /insights/*/page/
+Disallow: /insights/tag/
+Disallow: /rent-a-domain/*
+Disallow: /premium-domains-for-sale/*/page/
+Disallow: /premium-domains-for-sale/for/
+Disallow: */rm/*
+Sitemap: https://www.atom.com/sitemap-index.xml

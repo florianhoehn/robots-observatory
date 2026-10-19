@@ -1,0 +1,288 @@
+<!doctype html><html lang="en"><head>
+    <meta charset="utf-8">
+    <script type="text/javascript">(function () {
+  // Helper function for sending track events
+  const sendTrackEvent = (eventType) => {
+    // Check if TrackEvent bridge is available
+    if (
+      typeof window.TrackEvent === 'undefined' ||
+      typeof window.TrackEvent.postMessage !== 'function'
+    ) {
+      console.error('TrackEvent.postMessage is not available for: ' + eventType);
+      return; // Fail if bridge is not available
+    }
+
+    try {
+      window.TrackEvent.postMessage(eventType);
+    } catch (error) {
+      console.error('Failed to send event "' + eventType + '":', error);
+    }
+  };
+
+  // Send LoadingStart immediately
+  sendTrackEvent('LoadingStart');
+
+}());</script>
+    <script src="https://accounts.tatadigital.com/v2/tdl-sso-auth.js" async defer></script>
+    <script></script>
+    <meta charset="utf-8">
+    <meta name="title" content="" data-react-helmet="true">
+    <meta property="og:title" content="" data-react-helmet="true"/>
+    <meta name="description" content="" data-react-helmet="true">
+    <meta property="og:description" content="" data-react-helmet="true"/>
+    
+    <meta name="keywords" content="" data-react-helmet="true">
+    
+    <meta property="og:locale" content="en_GB" />
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="theme-color" content="#49a5a2" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="tdl-sso-client_id" content="CROMA-WEB-APP">
+    <link rel='shortcut icon' type='image/x-icon' sizes="16x16 32x32 64x64" href='/assets/favicon.ico'/>
+    <link rel="apple-touch-icon" href="/assets/croma-icon-192.png" />
+    <!-- Tell the browser it's a PWA -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#49a5a2">
+    <meta name="apple-mobile-web-app-title" content="Croma">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+
+    <link rel="apple-touch-icon" href="/assets/croma-icon-192.png">
+    <!-- <link rel="manifest" href="/manifest.json" /> -->
+    <!-- <script src="/assets/js/install.js" async defer></script> -->
+    <link rel="preconnect" href="https://media.croma.com" crossorigin>
+    <link rel="preconnect" href="https://media.tatacroma.com" crossorigin>
+    <link rel="preconnect" href="https://assets.adobedtm.com" crossorigin>
+    <link rel="preconnect" href="https://www.croma.com" crossorigin>
+    <link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
+    <link rel="preconnect" href="http://ysprod.croma.com" crossorigin>
+    <link rel="preconnect" href="https://accounts.croma.com" crossorigin>
+    <link rel="preconnect" href="https://assets.croma.com" crossorigin>
+    <link rel="preconnect" href="https://livevideo.croma.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://public.releases.juspay.in/" crossorigin>
+    <link rel="preconnect" href="https://cdn.appdynamics.com" crossorigin>
+    <link rel="preconnect" href="http://cdn.appdynamics.com" crossorigin>
+    <link rel="preconnect" href="https://bom-col.eum-appdynamics.com" crossorigin>
+    <link rel="preconnect" href="http://bom-col.eum-appdynamics.com" crossorigin>
+    <link rel="dns-prefetch" href="https://media.croma.com">
+    <link rel="dns-prefetch" href="https://media.tatacroma.com">
+    <link rel="dns-prefetch" href="https://assets.adobedtm.com">
+    <link rel="dns-prefetch" href="https://www.croma.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+    <link rel="dns-prefetch" href="http://ysprod.croma.com">
+    <link rel="dns-prefetch" href="https://api.tatadigital.com/">
+    <link rel="dns-prefetch" href="https://assets.croma.com">
+    <link rel="dns-prefetch" href="https://livevideo.croma.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://public.releases.juspay.in/" /> 
+    <link rel="dns-prefetch" href="https://cdn.appdynamics.com" />
+    <link rel="dns-prefetch" href="http://cdn.appdynamics.com" />
+    <link rel="dns-prefetch" href="https://bom-col.eum-appdynamics.com" />
+    <link rel="dns-prefetch" href="http://bom-col.eum-appdynamics.com" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" defer> </script>
+    <script src="//assets.adobedtm.com/a83cfb422665/6969f0a69b1e/launch-883ee2cb26fd.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBALhlQSaWB7dWn--IJ95ozhB3_3Zzlcdc&libraries=places&callback=initMap" defer></script>
+    <script>
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    for (var i = 0; i < registrations.length; i += 1) {
+    if (registrations[i].active && registrations[i].active.scriptURL.indexOf('speedsize-sw.js') !== -1) {
+    registrations[i].unregister(); }
+      }
+    });
+  </script>
+    <script>
+      window['_fs_debug'] = false;
+      window['_fs_host'] = 'fullstory.com';
+      window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
+      window['_fs_org'] = '11EGJ5';
+      window['_fs_namespace'] = 'FS';
+      (function(m,n,e,t,l,o,g,y){
+        if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+        g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
+        o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
+        y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+        g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
+        g.anonymize=function(){g.identify(!!0)};
+        g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+        g.log = function(a,b){g("log",[a,b])};
+        g.consent=function(a){g("consent",!arguments.length||a)};
+        g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
+        g.clearUserCookie=function(){};
+        g.setVars=function(n, p){g('setVars',[n,p]);};
+        g._w={};y='XMLHttpRequest';g._w[y]=m[y];y='fetch';g._w[y]=m[y];
+        if(m[y])m[y]=function(){return g._w[y].apply(this,arguments)};
+        g._v="1.3.0";
+      })(window,document,window['_fs_namespace'],'script','user');
+
+      window['_fs_identity'] = function () {
+        if (window.s && window.s.eVar6) {
+            return {
+                uid: window.s.eVar6,
+            }
+        } else {
+            return null;
+        }
+      };
+      (function () {
+        'use strict';
+        function fs(api) {
+            if (!window._fs_namespace) {
+                console.error('FullStory unavailable, window["_fs_namespace"] must be defined');
+                return undefined;
+            } else {
+                return api ? window[window._fs_namespace][api] : window[window._fs_namespace];
+            }
+        }
+        function waitUntil(predicateFn, callbackFn, timeout, timeoutFn) {
+          let totalTime = 0;
+          let delay = 64;
+          const resultFn = function () {
+              if (typeof predicateFn === 'function' && predicateFn()) {
+                  callbackFn();
+                  return;
+              }
+              delay = Math.min(delay * 2, 1024);
+              if (totalTime > timeout) {
+                  if (timeoutFn) {
+                      timeoutFn();
+                  }
+              }
+              totalTime += delay;
+              setTimeout(resultFn, delay);
+          };
+          resultFn();
+        }
+        const timeout = 2000;
+        function identify() {
+          if (typeof window._fs_identity === 'function') {
+              const userVars = window._fs_identity();
+              if (typeof userVars === 'object' && typeof userVars.uid === 'string') {
+                  fs('setUserVars')(userVars);
+                  fs('restart')();
+              } else {
+                  fs('log')('error', 'FS.setUserVars requires an object that contains uid');
+              }
+          } else {
+              fs('log')('error', 'window["_fs_identity"] function not found');
+          }
+        }
+        fs('shutdown')();
+        waitUntil(window._fs_identity, identify, timeout, fs('restart'));
+      }());
+      </script>
+    
+    <link rel="canonical" href="https://www.croma.com/ads.txt" data-react-helmet="true">
+    <link rel="alternate" href="https://www.croma.com/ads.txt" hreflang="en-in" data-react-helmet="true">
+    
+    
+    
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org/",
+    "@type": "WebSite",
+    "name": "Croma",
+    "url": "https://www.croma.com/",
+    "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.croma.com/searchB?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+    }
+    }
+    </script>
+    
+    
+    
+    
+    
+    
+    <title>Croma Electronics | Online Electronics Shopping | Buy Electronics Online</title>
+    <style>
+    div#root {
+        height: 100%;
+    }
+    .mainContainer{
+            min-height: 90vh;
+    }
+    .connect-to-expert{
+            margin: 0 auto;
+    display: block;
+    margin-top: 25px;
+    }
+    #framewrap {
+            display: none;
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: 2;
+    }
+    .cp-buying-guide .buying-guide-list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .cp-brand-category, .cp-brand-category .img-wrap {
+            border-radius: 0.8rem;
+    overflow: hidden;
+    }
+    .pop-up-container{
+            height: 100%;
+    }
+    .cp-brand-category {
+            box-shadow: 0 0 8px 4px hsla(0,0%,77.6%,.21);
+    position: relative;
+    }
+    .cp-brand-category .bc-link {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    z-index: 1;
+    }
+    .cp-brand-category .title-wrap {
+        padding: 2rem;
+        text-align: center;
+    }
+    .container-swv{
+        display: flex;
+        align-items: center;
+    }
+    .img-swv {
+        max-width: 100%
+    }
+    .image-swv {
+        flex-basis: 30%
+    }
+    .text-swv {
+        font-size: 20px;
+        padding-left: 20px;
+    }
+    .video-loader {
+        position: absolute;
+        margin: 125px calc(50% - 80px);
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #49a5a2;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% {-webkit-transform: rotate(0deg);}
+        100% {-webkit-transform: rotate(360deg);}
+    }
+    @keyframes spin {
+        0% {transform: rotate(0deg);}
+        100% {transform: rotate(360deg);}
+    }
+      </style><link href="/static/css/19.7113b688.chunk.css" rel="stylesheet"><link href="/static/css/main.fc4c78a3.chunk.css" rel="stylesheet"></head><body style="background: #000000;"><script>window.__INITIAL_DATA__= {"staticPageReducer":{"staticPageData":{"status":"success","data":{"errorMessage":"pageLabelOrId not found"},"serverDateTime":"Mon, 19 Oct 2026 19:43:31 GMT","headers":{"content-type":"application\u002Fjson; charset=utf-8","sanity-inflight-current":"0","sanity-inflight-limit":"500","cache-tag":"project-kh9xd3dg-croma-com-prod","sanity-query-class":"normal","sanity-query-hash":"iSuvkq8uhtQ 7IGzAwHVqtw","sanity-search-type":"sh","x-sanity-shard":"gcp-eu-w1-01-prod-1021","traceparent":"00-8de78f0b40262eca0bdbd735893e5f79-8f3840e5d3454331-01","sanity-gateway":"k8s-gcp-as-s1-prod-ing-01","apicdn-cache-control":"public,max-age=60,s-maxage=3600,stale-while-revalidate=60,stale-if-error=3600","x-sanity-age":"0","request-context":"appId=cid-v1:8a027b7f-7450-437d-9b4c-a47116067af5","cache-control":"public, max-age=60, s-maxage=60","expires":"Mon, 19 Oct 2026 19:44:31 GMT","date":"Mon, 19 Oct 2026 19:43:31 GMT","content-length":"851","connection":"close","server-timing":"cdn-cache; desc=MISS, edge; dur=13, origin; dur=181, api;dur=5, ak_p; desc=\"1792439011532_399782554_2111430011_19287_11900_10_5_-\";dur=1","x-content-type-options":"nosniff","x-frame-options":"SAMEORIGIN","strict-transport-security":"max-age=16070400; includeSubDomains","akamai-grn":"0.9a32d417.1792439011.7dd9dd7b","akamai-cache-status":"Miss from child, Miss from parent","set-cookie":["_abck=A011EE943B8129F74E96C85A83725AE4~-1~YAAQmjLUFy9FB0OhAQAArcmwVRBl+tqh6TcP2rnznY\u002FJes1gJPHbML2HeNXNiau3vr\u002F\u002FUXKfa7Fcw4HmiCKFJrnZlQVflyfRm\u002FYCq7WQdRcI7rBQ95owDeQLUHp4bNY8Mr6VxmuTBwho14buo\u002FRGsNVAuB\u002F2RdxctP3\u002F4T88AfYGKTZnc3X6RLWO0WPTMqoIbz9VMUMjOywFkOCsChlLINGbnTMHHu64VtOJgs0yddbhyxC3A60bBQD\u002FYcQaYRsI7qNHKhiV8p5qE6EmEIe0sQF2+DNIjk8ybbAXodL7nb6I+XIv0o0ve49+d22LKbkyzSObNLdQE8jowM9IeYaRNT8hV7CAq9ARQlaUO0VYBZo2YdYmw481w+uwQMWW3G6KVXP8IpMBa8\u002Fm3IDSLwNEvJr71gNRGr1y+N\u002FmYIsFANFuxLNJezE2egg042HUlIm\u002Fo5r3QQ==~-1~-1~-1~-1~-1; Domain=.croma.com; Path=\u002F; Expires=Tue, 19 Oct 2027 19:43:31 GMT; Max-Age=31536000; Secure","bm_sz=D74F5E8786AFD9141CBD1D03B0C63F9E~YAAQmjLUFzBFB0OhAQAArcmwVQG\u002FoEd6s+2T7h+x3b2L8S0GPbcH0hagRFK1Z+WxGXiw3jsSvYq1FUO6F1yV9+37kTj7Un0K3zEl9TaFGMT+kXeAxd8BZbq2h\u002FftTiv7OBJO0w0V6s+wfBYUaocjQupTnndD061RRi2tSu96sIEXCN0yIA6f51F37mqy8YBpEN6HXu8n7KsXR0srWB82ejp1PBspwscDsLaQYFbT2PWd3WxNXIaqW2wbu7s\u002FMkYgOyrHHeqIRvv+LPnknSdsqJjY623nvOdkG8Xq22FxpJ66CUNDNfvuLKs2VN\u002FFfus6fH1gbTlUxARxaUTdTPnmE8r6nwUMJjkyWx\u002FB5Ac=~4539190~4474417; Domain=.croma.com; Path=\u002F; Expires=Mon, 19 Oct 2026 23:43:31 GMT; Max-Age=14400"]}},"isFetching":false,"errorMessage":undefined,"ssrData":true},"headerReducer":{"headerData":{"_createdAt":"2026-03-31T16:51:21Z","_id":"PWAHomePageHeader","_rev":"HfhymUJDXQZSCW75nu7Qbe","_type":"homePageHeaderPage","_updatedAt":"2026-06-22T15:07:42Z","contentSlots":{"contentSlot":[{"_key":"4e2f027f5042","components":{"component":[{"_createdAt":"2026-03-31T16:51:07Z","_id":"PWAHeaderShopByCategoryComponent","_rev":"HgaihXXCLvBQsD0m2BlJZE","_system":{"base":{"id":"PWAHeaderShopByCategoryComponent","rev":"geDzh0E7wsDPAjVpuLwlkD"}},"_type":"categoryNavigationComponent","_updatedAt":"2026-08-21T12:52:45Z","bannerList":null,"container":"false","media":null,"mediaType":null,"mobileBannerList":null,"modifiedTime":"2020-09-16T02:46:13.314+05:30","name":"Products","navigationNode":{"children":[{"_key":"8683f82dc460","children":[{"_key":"ab9354f95a4c","children":[{"_key":"88dd30a6897d","children":[],"entries":[{"_key":"6a1d43ff7524","categoryId":"897","itemId":"L2_PWAHeaderQLEDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"QLED TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fqled-tvs\u002Fc\u002F897"},{"_key":"bbf191d597d5","categoryId":"1000","itemId":"L2_PWAHeaderOLEDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"OLED TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Foled-tvs\u002Fc\u002F1000"},{"_key":"8ea0d1dda22e","categoryId":"205","itemId":"L2_PWAHeaderQNEDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"QNED TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fqned-tvs\u002Fc\u002F205"},{"_key":"2ec8d0004aa7","categoryId":"999","itemId":"L2_PWAHeader4KUltraHDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"4K Ultra HD TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002F4k-ultra-hd-tvs\u002Fc\u002F999"},{"_key":"5a9f3305fd07","categoryId":"6","itemId":"L2_PWAHeader8KUltraHDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"8K Ultra HD TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002F8k-ultra-hd-tvs\u002Fc\u002F6"},{"_key":"4d3201e2d695","categoryId":"998","itemId":"L2_PWAHeaderSmartTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Smart TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fsmart-tvs\u002Fc\u002F998"},{"_key":"322c1992e070","categoryId":"739","itemId":"L2_PWAHeaderFullHDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Full HD TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Ffull-hd-tvs\u002Fc\u002F739"},{"_key":"35a92c23c6c6","categoryId":"297","itemId":"L2_PWAHeaderHDReadyTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"HD Ready TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fhd-ready-tvs\u002Fc\u002F297"},{"_key":"24021036215b","categoryId":"797","itemId":"L2_PWAHeaderAndroidSmarTVsNodes","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Android Smart TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fandroid-smart-tvs\u002Fc\u002F797"},{"_key":"2d8b69d58e00","categoryId":"34","itemId":"L2_PWAHeaderLargeScreensTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Large Screen TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Flarge-screen-tvs\u002Fc\u002F34"},{"_key":"5ae22aae4ca8","categoryId":"871","itemId":"L2_PWAHeaderMediumScreensTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Medium Screen TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fmedium-screen-tvs\u002Fc\u002F871"},{"_key":"4249437e7331","categoryId":"1041","itemId":"L2_PWAHeaderSmallScreensTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Small Screen TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fsmall-screen-tvs\u002Fc\u002F1041"},{"_key":"49913fc807b7","categoryId":"997","itemId":"L2_PWAHeaderCromaLEDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Croma LED TVs","url":"\u002Ftelevisions-accessories\u002Fc\u002F997?q=%3Arelevance%3Alower_categories%3A999%3Alower_categories%3A998%3Alower_categories%3A297%3Alower_categories%3A739%3Alower_categories%3A871%3ASG-ManufacturerDetails-Brand%3ACroma%3Adelivery_mode%3AHome+Delivery"}],"uid":"L2_PWAHeaderLEDTelevisionNode"},{"_key":"d26a5c28b0c6","children":[],"entries":[],"uid":"L2_PWAHeaderGamingTVsNode"}],"entries":[{"_key":"4e8eb7364699","categoryId":"392","itemId":"L1_PWAHeaderLEDTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"LED TVs","url":"\u002Ftelevisions-accessories\u002Fled-tvs\u002Fc\u002F392"}],"uid":"L1_PWAHeaderLEDTelevisionNode"},{"_key":"ad3925bd7cdd","children":[{"_key":"6df511fe1c43","children":[],"entries":[{"_key":"634f2944a161","categoryId":"615","itemId":"L2_PWAHeaderTVWallMountStandsTelevisionLink1","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"TV Wall Mount & Stands","url":"\u002Ftelevisions-accessories\u002Ftv-accessories\u002Ftv-wall-mount-stands\u002Fc\u002F615"},{"_key":"312cd88b2429","categoryId":"1015","itemId":"L2_PWAHeaderCablesAndConnectorsTelevisionLink1","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Cables & Connectors","url":"\u002Faccessories\u002Fcables-connectors\u002Fc\u002F1015"}],"uid":"L2_PWAHeaderTVAccessoriesNode1"},{"_key":"7d803c01bd5a","children":[],"entries":[],"uid":"L2_PWAHeaderOtherTVAccessoriesNode2"},{"_key":"f7f1a9840bc8","children":[],"entries":[{"_key":"966d0679b080","categoryId":"771","itemId":"L2_PWAHeaderRemotes&IRBlastersNode2Link","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Remotes & IR Blasters","url":"\u002Ftelevisions-accessories\u002Ftv-accessories\u002Fremotes-ir-blasters\u002Fc\u002F771"}],"uid":"L2_PWAHeaderRemotes&IRBlastersNode2"},{"_key":"1b5094a1221c","children":[],"entries":[],"uid":"L2_PWAHeaderTVRadiationProtectionChipsNode2"}],"entries":[{"_key":"d2dda95530cf","categoryId":"1020","itemId":"L1_PWAHeaderTVAccessoriesLink1","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"TV Accessories","url":"\u002Ftelevisions-accessories\u002Ftv-accessories\u002Fc\u002F1020"}],"uid":"L1_PWAHeaderTVAccessoriesNode1"},{"_key":"9488132d84f6","children":[{"_key":"9d2564687d2c","children":[],"entries":[],"uid":"L2_PWAHeaderMediaStreamingDevicesNode"}],"entries":[{"_key":"0baef5168b9b","categoryId":"346","itemId":"L1_PWAHeaderMediaStreamingDevicesLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Media Streaming Devices","url":"\u002Ftelevisions-accessories\u002Fmedia-streaming-devices\u002Fc\u002F346"}],"uid":"L1_PWAHeaderMediaStreamingDevicessNode"},{"_key":"deedf5e96683","children":[{"_key":"58a297170c13","children":[],"entries":[{"_key":"6f3beda8bb19","categoryId":"83","itemId":"L2_PWAHeaderShortThrowProjectorsDualNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Short Throw Projectors","url":"\u002Faudio-video\u002Fprojectors\u002Fshort-throw-projectors\u002Fc\u002F83"},{"_key":"8cf4c7f75a55","categoryId":"84","itemId":"L2_PWAHeaderUltraShortThrowProjectorsDualNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Ultra Short Throw Projectors","url":"\u002Faudio-video\u002Fprojectors\u002Fultra-short-throw-projectors\u002Fc\u002F84"},{"_key":"5c4b487f9a47","categoryId":"85","itemId":"L2_PWAHeaderHDProjectorsDualNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"HD Projectors","url":"\u002Faudio-video\u002Fprojectors\u002Fhd-projectors\u002Fc\u002F85"},{"_key":"78ab7e0c199f","categoryId":"86","itemId":"L2_PWAHeaderFullHDProjectorsDualNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Full HD Projectors","url":"\u002Faudio-video\u002Fprojectors\u002Ffull-hd-projectors\u002Fc\u002F86"},{"_key":"0b559645fb2d","categoryId":"87","itemId":"L2_PWAHeaderUltraHD4KProjectorsDualNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Ultra HD 4K Projectors","url":"\u002Faudio-video\u002Fprojectors\u002Fultra-hd-4k-projector\u002Fc\u002F87"}],"uid":"L2_PWAHeaderProjectorsNodeTV"}],"entries":[{"_key":"b27416d015b6","categoryId":"848","itemId":"L1_PWAHeaderProjectorsNodeTVLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Projectors","url":"\u002Faudio-video\u002Fprojectors\u002Fc\u002F848"}],"uid":"L1_PWAHeaderProjectorsNodeTV"}],"entries":[{"_key":"c74286ce2a5f","categoryId":"997","itemId":"PWAHeaderTelevisionLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Televisions & Accessories","url":"\u002Ftelevisions-accessories\u002Fc\u002F997"}],"uid":"L0_PWAHeaderTelevisionNode"},{"_key":"5f78e813b222","children":[{"_key":"c72d20424b3b","children":[{"_key":"d6740ea60261","children":[],"entries":[{"_key":"6bb8f7f41501","categoryId":"404","itemId":"L2_PWAHeaderFrontLoadWashingMachinesLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Front Load Washing Machines","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Ffront-load-washing-machines\u002Fc\u002F404"},{"_key":"d8e4b711888d","categoryId":"405","itemId":"L2_PWAHeaderTopLoadWashingMachinesLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Top Load Washing Machines","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Ftop-load-washing-machines\u002Fc\u002F405"},{"_key":"eb896d321274","categoryId":"406","itemId":"L2_PWAHeaderSemiAutomaticWashingMachinesLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Semi Automatic Washing Machines","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Fsemi-automatic-washing-machines\u002Fc\u002F406"},{"_key":"6b88177b4186","categoryId":"896","itemId":"L2_PWAHeaderFullyAutomaticWashingMachinesLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Fully Automatic Washing Machines","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Ffully-automatic-washing-machines\u002Fc\u002F896"},{"_key":"481a0835b819","categoryId":"367","itemId":"L2_PWAHeaderWasherDryerComboLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Washer Dryer Combo","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Fwasher-dryer-combo\u002Fc\u002F367"},{"_key":"07473705ef65","categoryId":"370","itemId":"L2_PWAHeaderClothesDryersLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Clothes Dryers","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Fclothes-dryers\u002Fc\u002F370"},{"_key":"6aedad2b8ace","categoryId":"775","itemId":"L2_PWAHeaderSmartWashingMachinesNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Smart Washing Machines","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Fsmart-washing-machines\u002Fc\u002F775"},{"_key":"71e03924d113","categoryId":"5","itemId":"L2_PWAHeaderCromaWashingMachinesLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Croma Washing Machines","url":"\u002Fhome-appliances\u002Fc\u002F5?q=%3Arelevance%3Acategory%3A405%3Acategory%3A896%3Acategory%3A406%3Abrand%3ACroma%3AZAStatusFlag%3Atrue%3AskuStockFlag%3Atrue%3AexcludeOOSFlag"}],"uid":"L2_PWAHeaderWashingMachinesAndDryersNode"}],"entries":[{"_key":"26a2e74d8785","categoryId":"48","itemId":"L1_PWAHeaderWashingMachinesAndDryersLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Washing Machines & Dryers","url":"\u002Fhome-appliances\u002Fwashing-machines-dryers\u002Fc\u002F48"}],"uid":"L1_PWAHeaderWashingMachinesAndDryersNode"},{"_key":"a8f3f5a3c990","children":[{"_key":"09c0a0f04c4e","children":[],"entries":[{"_key":"c6fdc107672c","categoryId":"778","itemId":"L2_PWAHeaderWasherDescalersNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Washer Descalers","url":"\u002Fhome-appliances\u002Fwashing-machine-accessories\u002Fwasher-descalers\u002Fc\u002F778"},{"_key":"c963d0afacc4","categoryId":"781","itemId":"L2_PWAHeaderWasherDryerCovers&StandsNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Washer\u002FDryer Covers & Stands","url":"\u002Fhome-appliances\u002Fwashing-machine-accessories\u002Fwasher-dryer-covers-stands\u002Fc\u002F781"}],"uid":"L2_PWAHeaderWashingMachineAccessoriesNode1"}],"entries":[{"_key":"d24db82f4f9e","categoryId":"412","itemId":"L1_PWAHeaderWashingMachineAccessoriesLink1","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Washing Machine Accessories","url":"\u002Fhome-appliances\u002Fwashing-machine-accessories\u002Fc\u002F412"}],"uid":"L1_PWAHeaderWashingMachineAccessoriesNode1"},{"_key":"c47b90faaf3b","children":[{"_key":"6c9432fee074","children":[],"entries":[{"_key":"c0112b9c485a","categoryId":"867","itemId":"L2_PWAHeaderInverterACLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Inverter ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Finverter-acs\u002Fc\u002F867"},{"_key":"07144e64c31c","categoryId":"355","itemId":"L2_PWAHeaderPortableACLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Portable ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Fportable-acs\u002Fc\u002F355"},{"_key":"0fe2cbfb0973","categoryId":"393","itemId":"L2_PWAHeaderSplitACLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Split ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Fsplit-acs\u002Fc\u002F393"},{"_key":"d1bdc8713071","categoryId":"394","itemId":"L2_PWAHeaderWindowACLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Window ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Fwindow-acs\u002Fc\u002F394"},{"_key":"1483641998f5","categoryId":"785","itemId":"L2_PWAHeaderSmartACsNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Smart ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Fsmart-acs\u002Fc\u002F785"},{"_key":"76c23511c8b7","categoryId":"793","itemId":"L2_PWAHeaderHotandColdACsNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Hot and Cold ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Fhot-and-cold-s\u002Fc\u002F793"},{"_key":"a540a2e5b712","categoryId":"794","itemId":"L2_PWAHeader3StarAcsNodeLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"3 Star ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002F3-star-acs\u002Fc\u002F794"},{"_key":"2685185beae3","categoryId":"185","itemId":"PWA_L24StarACs","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"4 Star ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002F4-star-acs\u002Fc\u002F185"},{"_key":"e4f467551b65","categoryId":"868","itemId":"L2_PWAHeader5StarACLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"5 Star ACs","url":"\u002Fhome-appliances\u002Fair-conditioners\u002F5-star-acs\u002Fc\u002F868"}],"uid":"L2_PWAHeaderAirConditionersNode"}],"entries":[{"_key":"2b4bfbd1abf1","categoryId":"46","itemId":"L1_PWAHeaderAirConditionersLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Air Conditioners","url":"\u002Fhome-appliances\u002Fair-conditioners\u002Fc\u002F46"}],"uid":"L1_PWAHeaderAirConditionersNode"},{"_key":"c69ab4bd791c","children":[{"_key":"be82e9a0458a","children":[],"entries":[],"uid":"L2_PWAHeaderACAccessoriesNode1"}],"entries":[{"_key":"baa07ff2906d","categoryId":"356","itemId":"L1_PWAHeaderACAccessoriesLink1","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Air Conditioner Accessories","url":"\u002Fhome-appliances\u002Fair-conditioner-accessories\u002Fc\u002F356"}],"uid":"L1_PWAHeaderACAccessoriesNode1"},{"_key":"009c4da6dbd3","children":[{"_key":"dd9f53da1544","children":[],"entries":[{"_key":"ac8e412762b7","categoryId":"741","itemId":"L2_PWAHeaderSingleDoorRefrigeratorLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Single Door Refrigerators","url":"\u002Fhome-appliances\u002Frefrigerators-freezers\u002Fsingle-door-refrigerators\u002Fc\u002F741"},{"_key":"d6ee055cc45f","categoryId":"397","itemId":"L2_PWAHeaderDoubleDoorRefrigeratorLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Double Door Refrigerators","url":"\u002Fhome-appliances\u002Frefrigerators-freezers\u002Fdouble-door-refrigerators\u002Fc\u002F397"},{"_key":"7eac729f7f55","categoryId":"903","itemId":"L2_PWAHeaderTripleDoorRefrigeratorLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Triple Door Refrigerators","url":"\u002Fhome-appliances\u002Frefrigerators-freezers\u002Ftriple-door-refrigerators\u002Fc\u002F903"},{"_key":"94811b4ac92d","categoryId":"398","itemId":"L2_PWAHeaderSideBySideRefrigeratorLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Side By Side Refrigerators","url":"\u002Fhome-appliances\u002Frefrigerators-freezers\u002Fside-by-side-refrigerators\u002Fc\u002F398"},{"_key":"8ce1c748f85e","categoryId":"1038","itemId":"L2_PWAHeaderFrenchDoorRefrigeratorLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"French Door Refrigerators","url":"\u002Fhome-appliances\u002Frefrigerators-freezers\u002Ffrench-door-refrigerators\u002Fc\u002F1038"},{"_key":"30cf98429626","categoryId":"395","itemId":"L2_PWAHeaderBottomFreezerRefrigeratorLink","itemSuperType":"AbstractCMSComponent","itemType":"CMSLinkComponent","linkName":"Bottom Freezer Refrigerators","url":"\u002Fhome-appliances\u002Frefrigerators-freezers\u002Fbottom-freezer-refrigerators\u002Fc\u002F395"},{"_key":"3e9db

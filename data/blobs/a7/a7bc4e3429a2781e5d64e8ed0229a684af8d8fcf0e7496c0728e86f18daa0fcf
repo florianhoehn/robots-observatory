@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8 ie7"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+    <head>
+        <script>
+            !function () {
+                "use strict";
+                var r = window.location, l = "https://pla.fwdcdn.com/api/event";
+
+                function c(t, e) {
+                    t && console.warn("Ignoring Event: " + t), e && e.callback && e.callback()
+                }
+
+                function t(t, options = {}) {
+                    const {u, ref, meta, props, callback} = options;
+                    if (/^localhost$|^127(\.[0-9]+){0,2}\.[0-9]+$|^\[::1?\]$/.test(r.hostname) || "file:" === r.protocol) return c("localhost", callback);
+                    if (window._phantom || window.__nightmare || window.navigator.webdriver || window.Cypress) return c(null, callback);
+                    try {
+                        if ("true" === window.localStorage.plausible_ignore) return c("localStorage flag", callback)
+                    } catch (t) {
+                    }
+                    const data = {
+                        n: t,
+                        u: u || r.href,
+                        d: window.location.hostname,
+                        r: (typeof ref !=='undefined')? ref : window.document.referrer || null,
+                        m: meta ? JSON.stringify(meta) : undefined,
+                        p: props ? JSON.stringify(props) : undefined
+                    };
+                    //console.log(data, l);
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", l, true);
+                    xhr.setRequestHeader("Content-Type", "text/plain");
+                    xhr.send(JSON.stringify(data));
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && callback) {
+                            callback();
+                        }
+                    };
+                }
+
+                var e = window.plausible && window.plausible.q || [];
+                window.plausible = t;
+                for (var n, i = 0; i < e.length; i++) t.apply(this, e[i]);
+
+                function p() {
+                    n !== r.pathname && (n = r.pathname, t("404"))
+                }
+
+                var c, w = window.history;
+                w.pushState && (c = w.pushState, w.pushState = function () {
+                    c.apply(this, arguments), p()
+                }, window.addEventListener("popstate", p)), "prerender" === r.visibilityState ? r.addEventListener("visibilitychange", function () {
+                    n || "visible" !== r.visibilityState || p()
+                }) : p()
+            }();
+        </script>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KQCXMKT');</script>
+        <!-- End Google Tag Manager -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Сторінку не знайдено</title>
+        <meta name="description" content="Сторінку не знайдено" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="/css/normalize.css">
+        <!--link rel="stylesheet" href="/css/home_main.css"-->
+        
+        <link rel="icon" href="/opera-screen-medium.png" type="image/png" />
+        <link rel="icon" href="/favicon-v3.png" type="image/png" />
+        <link rel="shortcut icon" href="/favicon-v3.ico" type="'image/x-icon"/>
+        <!-- For iPhone 4 Retina display: -->
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ukrnet-icon-144x144.png">
+        <!-- For iPad: -->
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ukrnet-icon-72x72.png">
+        <!-- For iPhone: -->
+        <link rel="apple-touch-icon-precomposed" href="/ukrnet-icon-57x57.png">
+
+        <link rel="canonical" href="https://www.ukr.net/404.html"/>
+        <link rel="alternate" hreflang="ru" href="https://www.ukr.net/ru/404.html"/>
+        <link rel="alternate" hreflang="uk" href="https://www.ukr.net/404.html"/>
+        <style>
+            /* TERMS */
+            html, body {height:100%;}
+            a {color:#005BAA;text-decoration:none;}
+            .header {height:88px;background: #ffffff; /* Old browsers */
+                /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlY2VjZWMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, #ffffff 0%,#ececec 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%); /* IE10+ */
+                background: linear-gradient(to bottom, #ffffff 0%,#ececec 100%); /* W3C */
+            }
+            .lt-ie9 .header {filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ececec',GradientType=0 ); /* IE6-8 */}
+
+            .terms .header .section {height:88px;max-width:960px;margin:0 20px;}
+            .terms .header .section a {float:left;margin:15px 15px 0 0;padding:0 15px 0 5px;display:block;}
+            .terms .header .section a img {width:199px;height:56px;}
+            .terms .header .rss-block {float:left;height:88px;}
+            .terms .header .rss-block .text {border-right:1px solid #D9D9D9;color:#000000;float:left;font:16px Arial;margin-top:22px;padding:0 15px 2px 0;text-align:right;width:250px;}
+            .terms .header .rss-block .mail {float:left;margin:5px 0 0 40px;}
+            .terms .header .rss-block .mail a {color:#005BAA;font:22px Arial;text-decoration:none;}
+
+            .terms .main {height:100%;vertical-align:top;}
+            .terms .terms-main {margin:40px 20px;max-width:960px;}
+            .terms .terms-main h2 {font:normal 21px/1 Arial;color:black;margin:0 0 20px 0;padding:0 0 0 10px;}
+            noindex:-o-prefocus, .terms .terms-main h2 {font-size:20pt;}
+            .terms .terms-main .article ul {list-style-type: decimal;margin:0 20px 5px 30px;padding:0;}
+            .terms .terms-main .article div {font:14px/22px Arial;color:#666;padding-left:10px;}
+            noindex:-o-prefocus, .terms .terms-main .article div {font-size:16pt;}
+            .terms .terms-main .article div img {max-width: 100%;}
+            .terms .terms-main .aside h2 {padding:0;}
+            .terms .terms-main .aside ul {list-style:none;margin:0;padding:0;}
+            .terms .terms-main .aside ul li {font:16px Arial;margin-bottom:18px;}
+            .terms .terms-main .aside ul li span {font:12px Arial;color:#666;}
+            .terms .footer {background-color:#f5f5f5;padding:25px 20px;}
+            .terms .footer .section {max-width:960px;font:12px/20px Arial;color:#9d9d9d;position:relative;text-align:left;}
+            noindex:-o-prefocus, .terms .footer .section {font-size:14pt;}
+            .terms .footer a {color:#000;text-decoration:underline;}
+            .terms .footer a:hover {text-decoration:none;}
+            .terms .footer .bigmir {position:absolute;top:5px;right:41px;height:29px;width:88px;}
+            .terms .footer #liveinternet {display:block;position:absolute;top:8px;right:10px;}
+            .error-page {
+                background-color: #f8f8f8;
+            }
+            .error-page .header, .error-page .footer {
+                background: transparent;
+            }
+            .error-page table {
+                margin: 0 auto;
+                background: #ffffff;
+            }
+            .error-page .terms-main{
+                margin: 35px;
+            }
+            .error-page .terms-main h2{
+                max-width: 350px;
+                padding: 0;
+                margin-bottom: 30px;
+                font-size: 32px;
+                font-weight: bold;
+            }
+            .error-page .terms-main p{
+                font-family: Arial;
+                font-size: 14px;
+                line-height: 1.29;
+                color: #3c4043;
+                margin-bottom: 20px;
+                max-width: 350px;
+            }
+            .error-page .terms-main .l-t-m {
+                margin-top: 36px;
+                padding: 16px 30px 14px;
+                border-radius: 5.3px;
+                border: solid 1px #8c949e;
+                background-color: #ffffff;
+                display: inline-block;
+                font-family: Arial;
+                font-size: 18px;
+                font-weight: bold;
+                text-align: center;
+                color: #22579e;
+                text-decoration: none;
+            }
+            .error-page .terms-main .l-t-m:hover {
+                text-decoration: underline;
+            }
+            .error-page .terms-main .article {
+                position: relative;
+            }
+            .error-page .terms-main .e-i {
+                margin-top: 20px;
+            }
+
+            @media (min-width: 768px) {
+                .error-page .terms-main{
+                    margin: 149px;
+                }
+            }
+            @media (min-width: 992px) {
+                .error-page .terms-main .e-i {
+                    margin-top: 0;
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+                .error-page table{
+                    width: 1010px;
+                }
+            }
+            /* END TERMS */
+        </style>
+    </head>
+<body class="terms error-page">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQCXMKT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="header">
+            <div class="section">
+                <a href="/ua/"><img src="/img/elements-logo-ua.svg" width="199" height="56" alt="новини" /></a>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="main">
+            <div class="terms-main">
+                <div class="article">
+                    <h2>На жаль, сторінку не знайдено :(</h2>
+                    <p>Можливо, її не існує або було видалено.</p>
+                    <p>Перевірте написання посилання, і якщо ви знову тут - значить, такої сторінки точно більше немає.</p>
+                    <a href="/" class="l-t-m">Перейти на головну</a>
+                    <div class="e-i">
+                        <img src="/img/news/illustration-notfound.svg" width="286" height="374"/>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="footer">
+            <div class="section">
+                <!--<span style="color:#22579e;">UKR.NET</span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;--><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <a href="/" itemprop="url"><span itemprop="title">Новини</span></a>
+                </span>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <a href="/news/terms.html">Про стрічку новин</a>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <a href="/terms/">Конфіденційність</a>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <a href="/contacts/">Підтримка користувачів</a>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <a href="/add_to_feed/">Підключення до стрічки новин</a>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <!--a href="/ua/add_to_adv/">Розміщення рекламних новин</a-->
+                <a href="/editorial-policy.html">Редакційна політика</a>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <!--&lt;!&ndash;noindex&ndash;&gt;<a rel="nofollow" href="https://adline.kiev.ua/" target="_blank">Реклама на порталі</a>&lt;!&ndash;/noindex&ndash;&gt;
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>-->
+                <a href="/about.html">Про нас</a>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,87 @@
+# OpenRouter
+
+> A unified API for every major LLM. One endpoint, hundreds of models, with
+> routing, fallbacks, and cost tracking across providers.
+
+## What OpenRouter is and when to use it
+
+OpenRouter is one OpenAI-compatible API in front of hundreds of models from
+many providers. Send `POST https://openrouter.ai/api/v1/chat/completions`
+with an OpenRouter API key and a `model` such as `openai/gpt-4o` or
+`anthropic/claude-sonnet-4`. Every chat model accepts that same request shape.
+Image, video, speech-to-text, and text-to-speech models use their own
+endpoints, described in each model's per-model guide below.
+
+Use OpenRouter when you need to:
+
+- Call many models or providers through one API key, one bill, and one SDK.
+- Switch models without changing code, or compare models on the same prompt.
+- Route around provider outages and rate limits with automatic fallbacks.
+- Use text, image, video, speech-to-text, and text-to-speech models from one place.
+
+Getting started:
+
+- API keys are self-serve: sign up at https://openrouter.ai and create a key at https://openrouter.ai/settings/keys. No sales contact is needed.
+- Free tier: models with the `:free` variant cost nothing, and the free models router at `openrouter/free` picks one for you. Free usage is rate limited per day; buying credits raises the limit. See https://openrouter.ai/docs/api-reference/limits.md.
+- Pricing is pay-as-you-go per token with no markup on the provider's price: https://openrouter.ai/pricing.
+- MCP server for agents: https://mcp.openrouter.ai/mcp (OAuth in the browser, hosted by OpenRouter). Setup guide: https://openrouter.ai/docs/guides/overview/mcp-server.md.
+- OpenAPI description of the whole API: https://openrouter.ai/openapi.json.
+
+## Docs
+
+- [Quickstart](https://openrouter.ai/docs/quickstart.md): Get an API key and send the first request.
+- [API reference](https://openrouter.ai/docs/api-reference/overview.md): Endpoints, parameters, and response shapes.
+- [Docs index](https://openrouter.ai/docs/llms.txt): Every documentation page as a markdown link with a one-line summary.
+- [Full docs](https://openrouter.ai/docs/llms-full.txt): The complete documentation in one file, for agents that want everything at once.
+- [Limits](https://openrouter.ai/docs/api-reference/limits.md): Credit limits, free-model request caps, and rate limits.
+- [Free variant](https://openrouter.ai/docs/guides/routing/model-variants/free.md): Access free models with the `:free` variant.
+- [Free models router](https://openrouter.ai/docs/guides/routing/routers/free-router.md): Route to whichever free model is available.
+- [FAQ](https://openrouter.ai/docs/faq.md): Common questions about billing, privacy, routing, and models.
+
+## Models
+
+- [Models](https://openrouter.ai/models): Compare every model on OpenRouter by pricing, context length, and benchmarks, all through one API.
+- [Model API](https://openrouter.ai/api/v1/models): Machine-readable list of every model, with pricing and supported parameters.
+- Per-model guide: `https://openrouter.ai/{author}/{model}/llms.txt` returns one machine-readable guide with sections for every confirmed OpenRouter API that serves a public model: text/chat, image, video, speech-to-text, and text-to-speech.
+
+## Site
+
+- [Rankings](https://openrouter.ai/rankings): LLM leaderboards by real-world usage, ranked by tokens processed through the OpenRouter API, with per-modality views.
+- [Pricing](https://openrouter.ai/pricing.md): How OpenRouter pricing works, with pay-as-you-go and enterprise plans, plus answers to common billing questions. Markdown twin of https://openrouter.ai/pricing with the plan table, fees, BYOK terms, and billing FAQ.
+- [Enterprise](https://openrouter.ai/enterprise.md): OpenRouter for companies: one API, contract, and invoice for every model, with SSO and SCIM, zero data retention and in-region routing, budgets and spend alerts, invoiced billing, and an SLA. Talk to sales at https://openrouter.ai/enterprise/form. Markdown twin of https://openrouter.ai/enterprise with the security controls, billing terms, and FAQ.
+- [Providers](https://openrouter.ai/providers): The network of model providers available on OpenRouter, with a page per provider.
+- [Compare](https://openrouter.ai/compare): Compare models by benchmarks, price, context length, latency, uptime, and throughput.
+- [Collections](https://openrouter.ai/collections): Curated collections of models, including free models and image generation models.
+- [Apps](https://openrouter.ai/apps): App and agent rankings, listing the apps built on OpenRouter and the top apps by category.
+- [State of AI](https://openrouter.ai/state-of-ai): An empirical study of real-world LLM usage across more than 100 trillion tokens on OpenRouter.
+- [Data](https://openrouter.ai/data): OpenRouter's empirical AI usage data for researchers, journalists, and academics.
+- [Support](https://openrouter.ai/support): Frequently asked questions about using OpenRouter, and how to reach support.
+- [For AI crawlers](https://openrouter.ai/for-ai): Text-only HTML index of the site with the top models per modality, every provider, and every collection, each with a description and canonical link.
+
+## EU in-region routing
+
+- [OpenRouter EU](https://openrouter.ai/business/eu): EU in-region routing on OpenRouter Business. Requests sent to https://eu.openrouter.ai are decrypted in the EU and routed only to shared provider endpoints located in Europe (the EU/EEA, the UK, and Switzerland); prompts and completions are processed there, while account data, billing records, authentication data, security logs, and other operational records may be stored and processed in the US. Requests served by a customer's BYOK key go to the customer's own cloud deployment: the customer provisions it in the region they need and sets the key's region per provider, and OpenRouter does not verify where it runs. Self-serve on Business: no contract, no monthly minimum. Lists the live EU model catalog, the data boundary, and data-region guardrail setup.
+- [EU Model API](https://eu.openrouter.ai/api/v1/models): Machine-readable list of models with endpoints in Europe (the EU/EEA, the UK, and Switzerland), with EU endpoint pricing. Batch (:batch) variants appear in this list but are not accepted on regional domains; the Batch API runs only on openrouter.ai.
+- [In-region routing docs](https://openrouter.ai/docs/guides/features/in-region-routing): Regional base URLs, fail-closed behavior, and the features regional domains reject.
+
+## Ori
+
+- [Ori](https://openrouter.ai/ori): OpenRouter's family of tools for putting agents to work with any model: Ori Harness, Ori Code, Ori Eval, Ori Intern, and Ori Desktop.
+- [Ori Harness](https://openrouter.ai/ori/harness): Run the agent CLI you already use — Claude Code, Codex, OpenCode, Hermes, and more — on OpenRouter, with OAuth sign-in and your org's guardrails.
+- [Ori Eval](https://openrouter.ai/ori/eval.md): Find the best model for your project — run your agent on your own prompts, on a harness and model that stay pinned, and rank the candidates.
+- [spawn-ori-eval skill](https://openrouter.ai/skills/spawn-ori-eval): For coding agents. Read it to run a model eval by handing it to Ori, so the eval is authored and graded on a pinned harness and model rather than one you improvised.
+- [install-ori-harness skill](https://openrouter.ai/skills/install-ori-harness): For coding agents. Read it to install Ori, sign in, run an existing agent CLI through Ori, choose an OpenRouter model, and verify the setup.
+- [Install Ori](https://openrouter.ai/labs/ori/install.sh): `curl -fsSL https://openrouter.ai/labs/ori/install.sh | bash`
+- [Ori Eval docs](https://openrouter.ai/docs/guides/ori/eval.md): Writing `*.eval.ts` files, LLM-as-judge grading, and model bakeoffs.
+- [Ori Harness docs](https://openrouter.ai/docs/guides/ori/harness.md): Installing Ori, signing in, and running each supported agent CLI on OpenRouter.
+
+## Skills
+
+- [Skills](https://github.com/OpenRouterTeam/skills): Every skill OpenRouter publishes. Each one is served as raw markdown from `https://openrouter.ai/skills/<name>` (also at `/.well-known/skills/<name>/SKILL.md`, for agents that look there first).
+- [Agent guide](https://openrouter.ai/agents.md): Using OpenRouter from a coding agent.
+
+## Benchmarks
+
+- [Benchmarks](https://openrouter.ai/benchmarks): Browse live independent benchmark results for OpenRouter models, providers, and search engines.
+- [GET /api/v1/benchmarks](https://openrouter.ai/api/v1/benchmarks): Fetch benchmark results programmatically with a valid OpenRouter API key.
+- [Benchmarks API reference](https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks): Read the API contract for listing benchmark results and supported filters.

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(-45deg,#000428,#004e92,#000000,#0f2027);
+background-size:400% 400%;
+animation:bgMove 15s ease infinite;
+overflow:hidden;
+color:#fff;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.container{
+text-align:center;
+z-index:2;
+padding:20px;
+}
+
+.error{
+font-size:clamp(120px,18vw,260px);
+font-weight:900;
+letter-spacing:12px;
+background:linear-gradient(90deg,#ff3cac,#784ba0,#2b86c5,#ff3cac);
+background-size:300%;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:gradientMove 6s linear infinite, glow 2s infinite alternate;
+}
+
+@keyframes gradientMove{
+0%{background-position:0%;}
+100%{background-position:300%;}
+}
+
+@keyframes glow{
+from{filter:drop-shadow(0 0 10px rgba(255,0,150,.5));}
+to{filter:drop-shadow(0 0 35px rgba(255,0,150,1));}
+}
+
+.title{
+font-size:clamp(22px,3vw,34px);
+margin-top:10px;
+animation:fadeIn 2s ease;
+}
+
+.desc{
+font-size:clamp(14px,2vw,18px);
+opacity:.7;
+margin-top:6px;
+animation:fadeIn 3s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* Floating animated circles */
+
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(5px);
+animation:float 20s infinite linear;
+}
+
+.circle:nth-child(1){
+width:200px;
+height:200px;
+top:10%;
+left:10%;
+animation-duration:25s;
+}
+
+.circle:nth-child(2){
+width:120px;
+height:120px;
+bottom:15%;
+right:10%;
+animation-duration:18s;
+}
+
+.circle:nth-child(3){
+width:160px;
+height:160px;
+bottom:5%;
+left:25%;
+animation-duration:22s;
+}
+
+.circle:nth-child(4){
+width:100px;
+height:100px;
+top:20%;
+right:25%;
+animation-duration:20s;
+}
+
+@keyframes float{
+0%{transform:translateY(0px) rotate(0deg);}
+50%{transform:translateY(-60px) rotate(180deg);}
+100%{transform:translateY(0px) rotate(360deg);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
+<div class="container">
+
+<div class="error">404</div>
+
+<div class="title">Page Not Found</div>
+
+<div class="desc">The page you requested does not exist.</div>
+
+</div>
+
+</body>
+</html>

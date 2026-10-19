@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head><link rel="preconnect" href="https://prod.nd-api.com" crossorigin="use-credentials" /><link rel="preconnect" href="https://cdn.nd-api.com" crossorigin="anonymous" /><link rel="preconnect" href="https://cms.cdn.nd-api.com" crossorigin="anonymous" />
+    <!-- Must load before the fallback script: sets the optional-chaining flag it reads.
+     Separate file because engines without the syntax cannot parse it, which is the test.
+     The ?v= query keeps the service worker from serving a cached copy after a release. -->
+    <script src="/scripts/optionalChainingProbe.js?v=4.6.0" type="2a560c8de83eb15436cdc33b-text/javascript"></script>
+
+    <!-- Must load before main bundle: detects unsupported browsers and renders fallback UI -->
+    <script src="/scripts/unsupportedBrowserFallback.js?v=4.6.0" type="2a560c8de83eb15436cdc33b-text/javascript"></script>
+
+    <!-- Load this script early to dynamically set the Apple touch icon and favicon before the browser processes the HTML.
+     This ensures the correct icons are applied, particularly for iOS devices. -->
+    <script src="/scripts/setSiteicons.js" type="2a560c8de83eb15436cdc33b-text/javascript"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
+    <style>
+      html:not(.light) #root {
+        background-color: #000000;
+        color-scheme: dark;
+      }
+    </style>
+    <meta name="app-version" content="4.6.0" />
+    <title></title>
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
+    
+    <!-- preconnect   -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+
+    
+    <!--
+      Non-blocking Roboto load: the preload kicks the request off without
+      blocking render; the onload handler swaps it to a real stylesheet
+      after download completes. The previous markup also included a
+      separate <link rel="stylesheet"> which IS render-blocking and was
+      negating the preload's purpose. Removed.
+    -->
+    <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="2a560c8de83eb15436cdc33b-|49"></script><link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,900&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+
+    <!-- Fallback for no JavaScript: noscript path still blocks, but no JS = no app. -->
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,900&display=swap">
+    </noscript>
+    <link
+      rel="apple-app-site-association file"
+      href="/.well-known/apple-app-site-association"
+    />
+    <link rel="assetlinks.json file" href="/.well-known/assetlinks.json" />
+    <script src="https://script.tapfiliate.com/tapfiliate.js" type="2a560c8de83eb15436cdc33b-text/javascript" async></script>
+    <script type="2a560c8de83eb15436cdc33b-text/javascript">
+      (function (t, a, p) {
+        t.TapfiliateObject = a;
+        t[a] =
+          t[a] ||
+          function () {
+            (t[a].q = t[a].q || []).push(arguments);
+          };
+      })(window, "tap");
+
+      tap("create", "47999-02aa4a", { integration: "javascript" });
+      tap("detect");
+      </script>
+
+    <!--
+      Startup error queue. TrackJS is dynamically imported (see `main.tsx`
+      / `initTrackJS`) so its ~80 KB stays out of the boot bundle. TrackJS
+      itself has no replay for pre-install errors, so without this queue
+      any crash during `initializeLocalization`, `ReactDOM.createRoot`, or
+      the initial React render tree would be lost. These listeners are
+      registered before the bundle starts parsing; once TrackJS installs,
+      `initTrackJS` flushes the queue via `TrackJS.track()` and these
+      listeners become redundant (TrackJS attaches its own).
+    -->
+    <script type="2a560c8de83eb15436cdc33b-text/javascript">
+      window.__startupErrorQueue = [];
+      window.addEventListener("error", function (event) {
+        window.__startupErrorQueue.push({
+          kind: "error",
+          error: event.error || event.message,
+          message: event.message,
+          filename: event.filename,
+          lineno: event.lineno,
+          colno: event.colno,
+        });
+      });
+      window.addEventListener("unhandledrejection", function (event) {
+        // Browser extensions (Redux DevTools, password managers, ad
+        // blockers, etc.) throw this from their own chrome.runtime
+        // messaging when a tab navigates away before they respond. It's
+        // not an app error, so suppress it instead of surfacing it as
+        // "Uncaught". Keep this substring in sync with
+        // `isBrowserExtensionMessagingNoise.ts`.
+        var reason = event.reason;
+        var message = reason && reason.message ? reason.message : String(reason);
+        if (message.indexOf("message channel closed before a response was received") !== -1) {
+          event.preventDefault();
+          return;
+        }
+        window.__startupErrorQueue.push({
+          kind: "unhandledrejection",
+          error: event.reason,
+        });
+      });
+    </script>
+
+    <script type="2a560c8de83eb15436cdc33b-text/javascript">
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(() => {});
+      }
+    </script>
+    <script type="2a560c8de83eb15436cdc33b-module" crossorigin src="/assets/index-CMBt7yeY.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/lodash-B4kOJTym.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-DpTu7yjc.js">
+    <link rel="modulepreload" crossorigin href="/assets/common-CP3nm3yM.js">
+    <link rel="stylesheet" crossorigin href="/assets/vendor-D2K7YoIP.css">
+    <link rel="stylesheet" crossorigin href="/assets/common-Dj33ALjD.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-BO_k4FZ2.css">
+    <script type="2a560c8de83eb15436cdc33b-module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();if(location.protocol!="file:"){window.__vite_is_modern_browser=true}</script>
+    <script type="2a560c8de83eb15436cdc33b-module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+  <link rel="manifest" href="/manifest.webmanifest"></head>
+  <body>
+    <!--
+      Inline app shell.
+      Without this, FCP cannot fire until the JS bundle finishes parsing
+      (Slow 4G + 4x CPU = ~8-9 s before any pixel paints). Putting visible
+      content directly in the HTML lets FCP fire on first byte of body
+      parse — typically ~3 s on the same throttled connection.
+
+      The shell intentionally:
+        * uses pure black (`#000`) — matches `.dark body { bg-black }` in
+          `src/index.css`, so the React handoff is invisible on the dark
+          (SpicyChat / SecretMate) theme.
+        * uses the same font stack as `src/index.css` global rule.
+        * carries visible TEXT — Lighthouse's FCP detector ignores
+          CSS-only spinners; the text is what registers paint.
+        * declares `aria-busy` so screen readers correctly announce the
+          loading state. React's own ScreenLoader takes over once mounted.
+    -->
+    <div id="root" role="main">
+      <div
+        id="boot-loader"
+        role="status"
+        aria-busy="true"
+        aria-label="Loading"
+        style="
+          position: fixed;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #000;
+          color: #fff;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+          font-size: 14px;
+          -webkit-font-smoothing: antialiased;
+        "
+      >
+        <div
+          aria-hidden="true"
+          style="
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: nd-boot-spin 0.8s linear infinite;
+            margin-bottom: 12px;
+          "
+        ></div>
+        <span style="opacity: 0.6; letter-spacing: 0.02em;">Loading…</span>
+        <style>
+          @keyframes nd-boot-spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        </style>
+      </div>
+    </div>
+    <script type="nomodule">
+      window.mainJSLoaded = true;
+    </script>
+
+    <script type="2a560c8de83eb15436cdc33b-text/javascript">
+      // Function to force reload the page bypassing the cache
+      function forceReload() {
+        if (window.location.href.indexOf("?") > -1) {
+          // If URL already has parameters, add a cache-busting parameter
+          window.location.href =
+            window.location.href + "&nocache=" + new Date().getTime();
+        } else {
+          // If no parameters in URL, add a cache-busting parameter
+          window.location.href =
+            window.location.href + "?nocache=" + new Date().getTime();
+        }
+      }
+      // Check if main JS failed to load after a reasonable timeout
+      setTimeout(function () {
+        if (window.__UNSUPPORTED_BROWSER__) {
+          return;
+        }
+        if (!window.mainJSLoaded) {
+          // Display custom error message
+          var messageContainer = document.createElement("div");
+          messageContainer.innerHTML =
+            "<p>Seems like your browser cached an old broken version of the site. Try <u><a href='#' onclick='forceReload();return false;'>Reloading</a></u>, clearing your cache or using a different browser.</p><br><button onclick='forceReload();return false;'>Reload Page</button>";
+          document.body.insertBefore(
+            messageContainer,
+            document.body.firstChild
+          );
+        }
+      }, 15000); // Adjust timeout as necessary
+    </script>
+    <script nomodule type="2a560c8de83eb15436cdc33b-text/javascript">!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+    <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy-BuyO5Uq_.js" type="2a560c8de83eb15436cdc33b-text/javascript"></script>
+    <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/index-legacy-BSfbgAc3.js" type="2a560c8de83eb15436cdc33b-text/javascript">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+  <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="2a560c8de83eb15436cdc33b-|49" defer></script></body>
+</html>

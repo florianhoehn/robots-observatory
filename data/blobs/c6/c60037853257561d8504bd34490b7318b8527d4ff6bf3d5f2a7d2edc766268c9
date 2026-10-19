@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Goods & Services Tax (GST) | Home</title>
+<base href="/">
+<link rel="icon" href="//www.gst.gov.in/favicon.ico">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="GST, Ministry of Finance, Government of India, Tax, Goods and Service Tax, Indirect Tax, India" />
+<meta name="description" content="Goods And Services Tax" />
+<link rel="stylesheet" href="//static.gst.gov.in/uiassets/css/fwk/fa-bootstrap1.1.css">
+<link rel="stylesheet" href="//static.gst.gov.in/uiassets/css/staticapp1.2.css" title="app-css"/>
+</head>
+<body ng-app="myApp">
+<div data-ng-controller="headerCtrl">
+<header class="main-header ng-cloak">
+<div class="skip">
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<ul class="skip list-inline">
+<li><a tabindex="-1" class="accessible" href="javascript:void(0)">Skip to Main Content</a></li>
+<li class="high-low"><i class="fa fa-adjust"></i></li>
+<li class="fresize f-up">A<sup>+</sup></li>
+<li class="fresize f-down">A<sup>-</sup></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row branding">
+<div class="col-xs-12">
+<a href="//www.gst.gov.in/" title="Goods and Services Tax Home" style="font-size:13px;">
+<img data-ng-src="//static.gst.gov.in/uiassets/images/Emblem_of_India-white.svg" class="logo" alt="Goods and Services Tax Home" onerror="this.data-ng-src='{{servers.GST_STATIC_R1_URL}}/uiassets/images/emblem.png'" style="vertical-align:middle; position:relative;margin-top:-10px;margin-left: 13px;width: 62px;height: 72px;">
+</a>
+<h1 class="site-title"><a href="//www.gst.gov.in/">Goods and Services Tax<br><span class="subtitle">Government of India, States and Union Territories</span></a></h1>
+<ul class="list-inline mlinks">
+<li ng-if="!udata || udata.role == undefined" style="font-size:11px">
+<a target="_self" href="//reg.gst.gov.in/registration" class="button"> Register</a>
+</li>
+<li ng-if="!udata || udata.role == undefined" style="font-size:11px">
+<a target="_self" href="{{servers.GST_REGISTRATION_R1_URL}}/registration/msr" class="button">Multi-State Registration</a>
+</li>
+<li ng-if="!udata || udata.role == undefined">
+<a target="_self" href="//services.gst.gov.in/services/login" class="button"> Login</a>
+</li>
+<li ng-if="udata && udata.role == 'login'">
+<div class="dropdown">
+<a class="dropdown-toggle lang-dpwn" data-toggle="dropdown" aria-expanded="false" title="{{udata.bname}}" data-tooltip="true">
+<i class="fa fa-user"></i>
+<span data-ng-bind="(udata.bname.length > 20)? udata.bname.substr(0,19) : udata.bname"></span>
+</a>
+<ul class="dropdown-menu profile-dpdwn">
+<li>
+<p class="lst-log">Last Logged In at</p>
+<p class="lst-log-dt">
+<span data-ng-bind="udata.Llogin"></span>
+IST</p>
+</li>
+<li>
+<a target="_self" href='//services.gst.gov.in/services/auth/myprofile'> <i class="fa fa-user"></i> My Profile</a>
+</li>
+<li>
+<a target="_self" href='//services.gst.gov.in/services/auth/changepassword'> <i class="fa fa-unlock-alt"></i> Change Password</a>
+</li>
+<li>
+<a target="_self" href="//reg.gst.gov.in/registration/auth/register/dsc"> <i class="fa fa-check-square-o"></i> Register / Update DSC</a>
+</li>
+<li>
+<a target="_self" href='//services.gst.gov.in/services/logout'><i class="fa fa-sign-out"></i> Logout</a>
+</li>
+</ul>
+</div>
+</li>
+<li ng-if="udata && udata.role == 'panLogin'">
+<a target="_self" href="//services.gst.gov.in/services/logout"><i class="fa fa-sign-out"></i> Logout</a>
+</li>
+</ul>
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="sr-only">Toggle navigation</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<ng-include src="'/pages/common/menu.html'"></ng-include>
+</div> <div class="content-wrapper">
+<!-- <div id="dimmer"></div> -->
+<div class="container-fluid lbanner">
+<!-- <img class="hidden-xs" src="//static.gst.gov.in/uiassets/images/landing/banner_image1.jpg" style="width:100%" alt="main Img" >-->
+<div class="col-xs-12 lbanner-img-r1"></div>
+<div class="land-alerts" data-ng-controller="landingCtrl">
+<i style="padding-left: 18px;margin-top: 7px;" class="fa fa-bell" aria-hidden="true"></i>
+<p class="marquee" data-ng-bind-html="alerts"></p>
+</div>
+</div>
+<div id="lbnrPopup" class="lbnr-popup" role="dialog" aria-modal="true" aria-label="GST Updates">
+<div class="lbnr-popup-dialog">
+<button type="button" id="lbnrPopupClose" class="lbnr-popup-close" aria-label="Close">&times;</button>
+<div class="col-xs-12 lbanner-img-r1 lbnr-slider-wrap">
+<img class="lbnr-slide" src="//static.gst.gov.in/uiassets/images/banner/Comprehensive_changes_GST_2026.png" alt="Comprehensive changes GST 2026">
+</div>
+</div>
+</div>
+<style>
+.l-wid {
+background-color: #F8FAFE;
+}
+.l-wid .pan .panl li{
+border-bottom: 1px solid #ebebeb;
+min-height: 45px;
+}
+.l-wid .pan .panl .panl-body {
+padding: 0px 20px 0 10px;
+}
+.l-wid .pan .panl.newse {
+background-color: #FFFFFF;
+padding: 10px 0px 10px 0px;
+border-bottom: 2px solid #333333;
+min-height: 205px;
+border-radius: 8px;
+border: 0.5px solid #A9CEF3;
+}
+.looptd{
+height:110px;
+border-bottom: none!important;
+opacity: 1;
+}
+.advbut{
+background: #EAEAEA 0% 0% no-repeat padding-box;
+border-radius: 12px;
+border:#2D2D2D;
+color: var(--primary-text);
+text-align: left;
+font: normal normal normal 12px/14px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;width: 60px;
+height: 20px;
+text-transform: uppercase;
+}
+.advbut1{
+width:auto;
+}
+.newPop{
+margin-left:15px;margin-top:20px;color: var(--primary-text);
+text-align: left;
+font: normal normal bold 16px/20px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+text-transform: capitalize;
+opacity: 1
+}
+.Popul{
+background: #FFFFFF 0% 0% no-repeat padding-box;
+border: 0.5px solid #A9CEF3;
+border-radius: 8px;
+opacity: 1;
+list-style: none;
+padding:0;
+overflow:hidden;
+}
+.Poppara{
+padding: 10px 0px 0px 10px
+}
+.ancPop{
+color: #2D2D2D;
+opacity: 1;
+}
+.helpgre{
+background: #FFFFFF 0% 0% no-repeat padding-box;
+border: 0.5px solid #A9CEF3;
+border-radius: 8px;
+opacity: 1;
+height:65px;
+font-family:tahoma;
+}
+.redressal{
+text-align: left;
+font: normal normal bold 10px/12px Helvetica;
+letter-spacing: 0px;
+color: #2C4E86;
+opacity: 1;
+}
+.getto {
+color: var(--primary-text);
+text-align: left;
+font: normal normal normal 12px/22px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+#getto1 {
+opactity: 1;
+color: var(--primary-text);
+text-align: left;
+font: normal normal bold 14px/22px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+#getto2{
+color: var(--secondary-bg);
+text-align: left;
+font: normal normal bold 14px/19px Helvetica;
+letter-spacing: 0px;
+color: #2C4E86;
+opacity: 1;
+}
+tr:nth-child(even) {
+background:#E3EEFF 0% 0% no-repeat padding-box !important;
+}
+@media screen and (min-width:780px) and (max-width:993px){
+.l-wid .pan .panl li{
+padding: 10px 10px 10px 5px;
+}
+.helpgre{background: #FFFFFF 0% 0% no-repeat padding-box;border: 0.5px solid #A9CEF3;border-radius: 8px;opacity: 1;height: 55px;font-family:tahoma;}
+.getto{color: var(--primary-text);text-align: left;font: normal normal normal 8px Helvetica;letter-spacing: 0px;color: #2D2D2D;opacity: 1;}
+#getto1 {
+opactity: 1;
+color: var(--primary-text);
+text-align: left;
+font: normal normal bold 10px/8px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+#getto2{
+color: var(--secondary-bg);
+text-align: left;
+font: normal normal bold 10px/8px Helvetica;
+letter-spacing: 0px;
+color: #2C4E86;
+opacity: 1;
+}
+}
+@media screen and (max-width:767px){
+.l-wid .pan .panl .panl-body {
+padding: 0px 0px 0 0px;
+}
+}
+@media screen and (max-width:780px){
+.l-wid .pan .panl li{
+padding: 10px 10px 10px 5px;
+}
+.l-wid .pan .panl li:last-child {
+border-bottom:none;
+}
+.helpgre{
+height: 55px;
+}
+.getto{
+color: var(--primary-text);
+text-align: left;
+font: normal normal normal 8px/10px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+#getto1 {
+opactity: 1;
+color: var(--primary-text);
+text-align: left;
+font: normal normal bold 10px/8px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+#getto2{
+color: var(--secondary-bg);
+text-align: left;
+font: normal normal bold 10px/8px Helvetica;
+letter-spacing: 0px;
+color: #2C4E86;
+opacity: 1;
+}
+}
+.impdates{
+background-color: #F8FAFE !important;
+margin-top: 0px;
+}
+.hsi{
+margin-top:3px;
+margin-right:86px;
+float:right;
+font: normal normal bold 13px/16px Helvetica;
+letter-spacing: 0px;
+color: #2C4E86;
+text-transform: uppercase;
+opacity: 1;
+}
+.dueDiv{
+margin-left:-55px;
+margin-top:-10px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueMonth{
+float: left;
+width:302px;
+height: 30px;
+border-top-left-radius:8px;
+text-align: left;
+font: normal normal bold 16px/19px Helvetica;
+letter-spacing: 0px;
+display: inline-block;
+padding: 20px 0px 30px 10px;
+color: #2D2D2D;
+opacity: 1;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+border: 0.5px solid #A9CEF3;
+}
+.dueQua{
+margin-left:80px;
+}
+.dueMonQua{
+width: 151px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+.dueName{
+font: normal normal normal 12px/15px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+.dueName2{
+font: normal normal bold 12px/15px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+margin-top:-5px;
+opacity:1;
+}
+.rfdname{
+font: normal normal bold 10px/12px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+margin-top:-5px;
+opacity:1;
+}
+.OtherDueUl{
+margin-left:-75px;
+}
+.OtherDueDa{
+float: left;
+display: inline-block;
+padding: 20px 0px 30px 10px;
+width:355px;
+height: 30px;
+text-align:center;
+border-top-right-radius:8px;
+color: var(--primary-text);
+font: normal normal bold 16px/19px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+border: 0.5px solid #A9CEF3;
+}
+.dueMainitem{
+float: left;
+height: 85px;
+display: inline-block;
+padding: 20px 0px 20px 5px;
+text-align: left;
+border: 0.5px solid #A9CEF3;
+}
+.othersdue{
+width: 177.5px;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+.othersdue1{
+font: normal normal normal 14px/15px Helvetica;
+letter-spacing: 0px;
+color: #2D2D2D;
+opacity: 1;
+}
+@media screen and (min-width:992px) and (max-width:1199px){
+.hsi{
+float:right;
+margin-right:71px;
+}
+.dueDiv{
+margin-left:-55px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{
+width: 110%;
+height: 70px;
+}
+.dueQua{
+margin-left:60px;
+}
+.dueMainitem{
+height: 80px;
+}
+.dueMonQua{
+width: 55%;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+.dueDiv .dueUl1 li:nth-child(even){
+margin-right:-39px;
+}
+.dueDiv .dueUl1 li:nth-child(5) {
+border-bottom-left-radius: 8px;
+}
+.dueDiv .dueUl2 li:nth-child(6) {
+border-bottom-right-radius: 8px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl{
+margin-left: -47px;
+}
+.OtherDueDa{
+width: 98%;
+height: 70px;
+}
+.othersdue{
+width: 49%;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+}
+@media screen and (min-width:768px) and (max-width:992px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left:-55px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{
+width:120%;
+height: 70px;
+}
+.dueQua{
+margin-left: 107px;
+}
+.dueMainitem{
+height: 75px;
+}
+.dueMonQua{
+width: 60%;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+.dueDiv .dueUl1 li:nth-child(5) {
+border-bottom-left-radius: 8px;
+}
+.dueDiv .dueUl2 li:nth-child(6) {
+border-bottom-right-radius: 8px;
+}
+.dueDiv .dueUl2 li:nth-child(even) {
+margin-right: -60px;
+}
+.dueDiv .dueUl1 li:nth-child(even){
+margin-right: -60px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl{
+margin-left: -13px;
+}
+.OtherDueDa{
+width:118%;
+height: 70px;
+}
+.othersdue{
+width: 59%;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+}
+@media screen and (min-width:700px) and (max-width:767px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left: -49px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{
+width: 110%;
+height: 30px;
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{
+width: 55%;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+.dueDiv .dueUl1 li:nth-child(even) {
+margin-right: -69px;
+}
+.dueDiv .dueUl2 li:nth-child(even){
+margin-right:-69px;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{
+width: 110%;
+height: 50px;
+border:none;
+background:#FFFFFF
+}
+.othersdue{
+width: 55%;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+}
+@media screen and (min-width:650px) and (max-width:700px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left: -49px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{width: 111%;height: 30px;border-top-right-radius: 8px;border-top-left-radius: 8px;}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{width: 55.5%;background: #FFFFFF 0% 0% no-repeat padding-box;}
+.dueDiv .dueUl1 li:nth-child(even) {
+margin-right: -69px;
+}
+.dueDiv .dueUl2 li:nth-child(even){
+margin-right:-67px;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{width: 111%;height: 50px;border:none;background:#FFFFFF}
+.othersdue{width: 55.5%;background: #E3EEFF 0% 0% no-repeat padding-box;}
+}
+@media screen and (min-width:600px) and (max-width:650px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left: -49px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{width: 112%;height: 30px;border-top-right-radius: 8px;border-top-left-radius: 8px;}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{width: 56%;background: #FFFFFF 0% 0% no-repeat padding-box;}
+.dueDiv .dueUl1 li:nth-child(even) {
+margin-right: -69px;
+}
+.dueDiv .dueUl2 li:nth-child(even){
+margin-right:-67px;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{width: 112%;height: 50px;border:none;background:#FFFFFF}
+.othersdue{width: 56%;background: #E3EEFF 0% 0% no-repeat padding-box;}
+}
+@media screen and (min-width:540px) and (max-width:600px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left: -49px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{width: 114%;height: 30px;border-top-right-radius: 8px;border-top-left-radius: 8px;}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{width: 57%;background: #FFFFFF 0% 0% no-repeat padding-box;}
+.dueDiv .dueUl1 li:nth-child(even) {margin-right: -74px;}
+.dueDiv .dueUl2 li:nth-child(even){margin-right: -76px;}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{width: 114%;height: 50px;border:none;background:#FFFFFF}
+.othersdue{width: 57%;background: #E3EEFF 0% 0% no-repeat padding-box;}
+}
+@media screen and (min-width:439px) and (max-width:540px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left: -53px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{
+width: 117%;
+height: 30px;
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{
+width: 58.5%;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+.dueDiv .dueUl1 li:nth-child(even) {
+margin-right: -87px;
+}
+.dueDiv .dueUl2 li:nth-child(even){
+margin-right:-87px;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{
+width: 117%;
+height: 50px;
+border:none;
+background:#FFFFFF
+}
+.othersdue{
+width: 58.5%;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+}
+@media screen and (min-width:375px) and (max-width:439px){
+.hsi{
+margin-right:0px;
+}
+.dueDiv{
+margin-left: -53px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{
+width: 121%;
+height: 30px;
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{
+width: 60.5%;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+.dueDiv .dueUl1 li:nth-child(even) {
+margin-right: -87px;
+}
+.dueDiv .dueUl2 li:nth-child(even){
+margin-right:-87px;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{
+width: 121%;
+height: 50px;
+border:none;
+background:#FFFFFF
+}
+.othersdue{
+width: 60.5%;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+}
+@media screen and (max-width:374px) {
+.hsi{
+margin-right:0px;
+font: normal normal bold 11px Helvetica;
+margin-top: 4px;
+}
+.dueDiv{
+margin-left: -50px;
+}
+.dueUl1{
+list-style:none;
+}
+.dueUl2{
+list-style:none;
+}
+.dueMonth{
+width: 127%;
+height: 50px;
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+}
+.dueQua{
+margin-left:66px;
+}
+.dueMainitem{
+height: 85px;
+}
+.dueMonQua{width: 63.5%;background: #FFFFFF 0% 0% no-repeat padding-box;}
+.dueDiv .dueUl1 li:nth-child(even){
+margin-right:-84px;
+}
+.dueDiv .dueUl1 li:nth-child(5){
+border-bottom-left-radius:8px;
+}
+.dueDiv .dueUl1 li:nth-child(6){
+border-bottom-right-radius:8px;
+}
+.dueDiv .dueUl2 li:nth-child(6){
+border-bottom-right-radius:0px;
+}
+.dueDiv .dueUl2 li:nth-child(even){
+margin-right:-84px;
+}
+.dueName{
+font: normal normal normal 10px/12px Helvetica;
+}
+.dueName2{
+font: normal normal bold 11px/12px Helvetica;
+margin-top:-5px;
+}
+.OtherDueUl {
+margin-left: 1px;
+}
+.OtherDueDa{
+width:127%;
+height: 50px;
+border:none;
+background:#FFFFFF;
+}
+.othersdue{
+width: 63.5%;
+background: #E3EEFF 0% 0% no-repeat padding-box;
+}
+}
+@media screen and (min-width:700px) and (max-width:767px){
+.dueQua{
+margin-left: 298px;
+}
+}
+@media screen and (min-width:651px) and (max-width:700px){
+.dueQua{
+margin-left: 258px;
+}
+}
+@media screen and (min-width:601px) and (max-width:650px){
+.dueQua{
+margin-left: 235px;
+}
+}
+@media screen and (min-width:551px) and (max-width:600px){
+.dueQua{
+margin-left: 206px;
+}
+}
+@media screen and (min-width:501px) and (max-width:550px){
+.dueQua{
+margin-left: 184px;
+}
+}
+@media screen and (min-width:450px) and (max-width:500px){
+.dueQua{
+margin-left: 163px;
+}
+}
+@media screen and (min-width:437px) and (max-width:450px){
+.dueQua{
+margin-left: 134px;
+}
+}
+@media screen and (min-width:425px) and (max-width:437px){
+.dueQua{
+margin-left: 127px;
+}
+}
+@media screen and (min-width:375px) and (max-width:424px){
+.dueQua{
+margin-left: 100px;
+}
+}
+.viewall1{
+color: var(--secondary-bg);
+text-align: right;
+font: normal normal bold 13px/17px Helvetica;
+letter-spacing: 0px;
+color: #2C4E86;
+text-transform: uppercase;
+opacity: 1;
+}
+@media screen and (max-width:374px) {
+.viewall1{
+font: normal normal bold 11px/15px Helvetica;
+}
+}
+.impdates .dates-list li .square-box.b5 {
+background: #18436b;
+width: 120px;
+}
+.impdates .dates-list li .square-box.b6 {
+background: #6474a0;
+width: 230px;
+}
+@media screen and (min-width: 390px) and (max-width: 1200px) {
+.impdates .dates-list li {
+width: 100% !important;
+}
+.impdates .dates-list li .square-box.b1 {
+width: 100%;
+}
+.impdates .dates-list li .square-box.b2 {
+width: 100%;
+}
+.impdates .dates-list li .square-box.b3 {
+width: 100%;
+}
+.impdates .dates-list li .square-box.b4 {
+width: 100%;
+}
+}
+@media screen and (min-width: 320px) and (max-width: 1200px) {
+.impdates .dates-list li .square-box.b5 {
+width: 100%;
+}
+.impdates .dates-list li .square-box.b6 {
+width: 100%;
+}
+}
+.impdates .dates-list li .square-box {
+display: inline-block;
+float: left;
+width: 174px;
+height: 32px;
+}
+.impdates .dates-list li .square-content {
+font-size: 12px;
+font-weight: 600;
+}
+.haeding {
+font-size: 12px;
+font-weight: bold;
+}
+.headimp{
+margin-bottom: 19px;
+}
+.impdates .dates-list li {
+width: 49%;
+display: inline-block;
+background: #ddd;
+font-size: 14px;
+padding: 0px;
+font-family: tahoma;
+margin-top: -6px;
+border: 1px solid #4f4d498c;
+}
+.impdates .dates-list li .square-box.b1 {
+background: #1d867a;
+}
+.imp{
+font-weight: 600;
+font-size: 11px;
+text-align: center;
+margin-top: 7px;
+}
+.fa-info-circle{
+background: #fcf8e3;
+color: #1f1e1ecc;
+padding-left: 0px;
+}
+.rfd {
+font-size: 8px;
+}
+.refd{
+height: 35px;
+}
+.rfdtene{
+margin-left: -5px;
+font-size: -4px;
+}
+.eightenMonths{
+font-size: 6px;
+font-weight: 600;
+}
+.refundrfd{
+font-size: 8px;
+}
+.headoth{
+font-size: 11px;
+font-weight: 600;
+margin-bottom: 11px;
+}
+.fa-info-circle:before {
+content: "";
+background: #fff;
+color: #423838;
+font-size: 12px;
+}
+@media screen and (max-width: 768px) and (min-width: 320px){
+.impdates .dates-list li .square-box {
+width: 141px;
+}
+}
+@media screen and (max-width: 1199px){
+.impdates .dates-list li .square-content {
+margin-top: 7px;
+font-size: 10px;
+}
+}
+@media screen and (max-width: 768px){
+.refd {
+margin-top: 0px;
+}
+ul.lst > li > p:last-child{
+font-size: 8px;
+height: 2px;
+}
+}
+ul.lst > li > p:last-child{
+font-size: 8px;
+height: 2px;
+}
+@media screen and (max-width: 768px) and (min-width: 360px){
+.impdates .dates-list li .square-box {
+width: 161px;
+}
+}
+@media screen and (max-width: 768px) and (min-width: 375px){
+.impdates .dates-list li .square-box {
+width: 168px;
+}
+}
+</style>
+<div class="content-wrapper">
+<div class="l-wid">
+<div class="container">
+<div class="row">
+<div class="col-md-7 col-sm-7 col-xs-12">
+<div class="col-md-5 col-sm-7 col-xs-8" style="margin-top:10px;"><h4 style="margin-top: 10px;color: var(--primary-text);text-align: left;font: normal normal bold 16px/20px Helvetica;letter-spacing: 0px;color: #2D2D2D;opacity: 1;margin-left: -10px;">News and Updates</h4></div>
+<div class="col-md-7 col-sm-5 col-xs-4" style="margin-top:10px;text-align: right">
+<h5><a style=" color: var(--secondary-bg);text-align: right;margin-right: -10px;font: normal normal bold 12px/14px Helvetica;letter-spacing: 0px;color: #2C4E86;text-transform: uppercase;opacity: 1;" data-ng-href="//services.gst.gov.in/services/advisory/advisoryandreleases">View all </a></h5></div>
+<div class="row pan">
+<div class="col-xs-12">
+<table class="col-xs-12 panl newse" style="border-collapse:separate;" data-ng-controller="newsCtrl" data-ng-init="getAllNews()">
+<tbody>
+<tr data-ng-if="news1.length > 0" data-ng-repeat="item in news1 | limitTo : 3">
+<td class="col-sm-12 looptd">
+<p style="text-align:justify;padding-top:10px">
+<a style="text-align: justify;font: normal normal bold 16px/19px Helvetica;letter-spacing: 0px;color: #2C4E86;opacity: 1;" data-popup="true" data-ng-if="item.IsExternal == 'Y'" target="_blank" data-ng-href="{{item.linkURl}}" title="{{item.title}}"
+data-ng-bind="item.title"></a>
+<a style="text-align: justify;font: normal normal bold 16px/19px Helvetica;letter-spacing: 0px;color: #2C4E86;opacity: 1;" data-ng-if="item.IsExternal != 'Y' && item.linkURl" data-ng-href="{{item.linkURl}}" title="{{item.title}}" data-ng-bind="item.title"></a>
+<a style="text-align: justify;font: normal normal bold 16px/19px Helvetica;letter-spacing: 0px;color: #2C4E86;opacity: 1;" data-ng-if="item.IsExternal != 'Y' && !item.linkURl" data-ng-href="//www.gst.gov.in/newsandupdates/read/{{item.id}}"
+title="{{item.title}}" data-ng-bind="item.title"></a>
+</p>
+<p style="text-align:justify;color: var(--primary-text);text-align: left;font: normal normal normal 12px/14px Helvetica;letter-spacing: 0px;color: #2D2D2D;opacity: 1;">
+<span data-ng-bind="item.date"></span>
+<span style="float:right;">
+<span style="margin-left:5px"><button class="advbut advbut1" data-ng-bind="item.module"></button></span>
+</span>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="col-md-5 col-sm-5 col-xs-12">
+<div class="row pan">
+<div class="col-xs-12">
+<h4 class="newPop">Popular help topics</h4>
+<div class="panl" style="border-bottom:none !important">
+<div class="panl-body">
+<div class="row">
+<div class="col-sm-12">
+<ul class="Popul">
+<li onmouseover="this.style.background='#A9CEF380'" onmouseout="this.style.background='#FFFFFF'">
+<p class="Poppara">
+<a target="_blank" class="ancPop" href="//www.gst.gov.in/help/enrollmentwithgst"> How do I register with GST? </a>
+<a target="_blank" href="//www.gst.gov.in/help/enrollmentwithgst"><i class="fa fa-angle-right" style="float:right;color:black;padding:5px 15px 5px 5px;font:normal normal bold 19px/14px FontAwesome !important"></i></a>
+</p>
+</li>
+<li onmouseover="this.style.background='#A9CEF380'" onmouseout="this.style.background='#FFFFFF'">
+<p class="Poppara">
+<a target="_blank" class="ancPop" href="{{servers.GST_CONTENT_R1_URL}}/help/refund">How do I apply for refund?
+</a>
+<a target="_blank" href="{{servers.GST_CONTENT_R1_URL}}/help/refund"><i class="fa fa-angle-right" style="float:right;color:black;padding:5px 15px 5px 5px;font:normal normal bold 19px/14px FontAwesome !important"></i></a>
+</p>
+</li>
+<li onmouseover="this.style.background='#A9CEF380'" onmouseout="this.style.background='#FFFFFF'">
+<p class="Poppara">
+<a target="_blank" class="ancPop" href="/help/returns">How do I file returns? </a>
+<a target="_blank" href="/help/returns"><i class="fa fa-angle-right" style="float:right;color:black;padding:5px 15px 5px 5px;font:normal normal bold 19px/14px FontAwesome !important"></i></a>
+</p>
+</li>
+<li onmouseover="this.style.background='#A9CEF380'" onmouseout="this.style.background='#FFFFFF'">
+<p class="Poppara">
+<a target="_blank" class="ancPop" href="//www.gst.gov.in/help/offlineutility">How can I use Returns Offline Tool? </a>
+<a target="_blank" href="//www.gst.gov.in/help/offlineutility"><i class="fa fa-angle-right" style="float:right;color:black;padding:5px 15px 5px 5px;font:normal normal bold 19px/14px FontAwesome !important"></i></a>
+</p>
+</li>
+<li onmouseover="this.style.background='#A9CEF380'" onmouseout="this.style.background='#FFFFFF'">
+<p class="Poppara">
+<a target="_blank" class="ancPop" href="{{servers.GST_CONTENT_R1_URL}}/help/appeal"> How do I file an appeal?</a>
+<a target="_blank" href="{{servers.GST_CONTENT_R1_URL}}/help/appeal"> <i class="fa fa-angle-right" style="float:right;color:black;padding:5px 15px 5px 5px;font:normal normal bold 19px/14px FontAwesome !important"></i></a>
+</p>
+</li>
+<li onmouseover="this.style.background='#A9CEF380'" onmouseout="this.style.background='#FFFFFF'">
+<p class="Poppara">
+<a target="_blank" target="_blank" class="ancPop" href="{{servers.GST_CONTENT_R1_URL}}/help/demandRecovery"> How do I file intimation about voluntary payment?</a>
+<a target="_blank" target="_blank" href="{{servers.GST_CONTENT_R1_URL}}/help/demandRecovery"><i class="fa fa-angle-right" style="float:right;color:black;padding:5px 15px 5px 5px;font:normal normal bold 19px/14px FontAwesome !important"></i></a>
+</p>
+</li>
+</ul>
+</div>
+<div class="col-sm-12" style="padding-top:10px;">
+<div class="helpgre">
+<div style="padding-top:5px;">
+<div class="col-xs-5" style="border-right: 2px solid #ddd; text-align: center;"><span class="getto">Help Desk Number:<br>
+<b id="getto1">1800-103-4786</b></span></div>
+<div class="col-xs-7" style=" text-align: center; "><span class="getto">Log/Track Your Issues here<br><a id="getto2" href="https://selfservice.gstsystem.in/" data-popup="true">Grievance Redressal</a></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="impdates">
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-sm-12 col-xs-12" data-ng-controller="landingCtrl" data-ng-init="getDates()">
+<div class="col-xs-12" style="margin-top:20px;margin-bottom : 2px;">
+<h4 class="headimp" style="color: var(--primary-text);text-align: left;margin-left: -10px;font: normal normal bold 17px/20px Helvetica;letter-spacing: 0px;color: #2D2D2D;opacity: 1;">Upcoming Due Dates
+<span>
+<a data-ng-href="#" class="hsi" ng-click="downloadUpcomingDueDatesInPDF()" href="#">Download PDF</a>
+</span>
+</h4>
+</div>
+<div class="row">
+<div class="col-xs-12 dueDiv">
+<div class="col-sm-6">
+<ul class="dueUl1">
+<li class="dueMonth">Monthly <span class="dueQua">Quarterly</span></li>
+</ul>
+<ul class="dueUl1">
+<li class="dueMonQua dueMainitem" data-ng-repeat="data in dataJson1 track by $index">
+<p class="dueName" data-ng-bind="data.f"></p>
+<p class="dueName2">
+<span data-ng-bind="data.d"></span>
+<span ng-show="$index == 0">
+<i class="fa fa-info-circle" data-toggle="tooltip" title="Turnover exceeding 5 Cr or opted to file monthly return."></i>
+</span>
+<span ng-show="$index == 1">
+<i class="fa fa-info-circle" data-toggle="tooltip" title="Opted for quarterly filing as per QRMP scheme."></i>
+</span>
+<span ng-show="$index == 2">
+<i class="fa fa-info-circle" data-toggle="tooltip" title="Turnover exceeding 5 Cr or opted to file monthly return."></i>
+</span>
+<span ng-show="$index == 3">
+<i class="fa fa-info-circle" data-toggle="tooltip" title="Opted for quarterly filing as per QRMP scheme."></i>
+</span>
+<span ng-show="$index == 4">
+<i class="fa fa-info-circle" data-toggle="tooltip" title=" Opted for quarterly filing as per QRMP scheme."></i>
+</span>
+</p>
+</li>
+</ul>
+</div>
+<div class="col-sm-6">
+<ul class="dueUl2 OtherDueUl">
+<li class="OtherDueDa">Other Due Dates</li>
+</ul>
+<ul class="dueUl2 OtherDueUl">
+<li class="dueMainitem othersdue" data-ng-repeat="product in dataJson2">
+<p class="dueName" data-ng-bind="product.f"></p>
+<p data-ng-if="product.f != 'RFD-10'" class="dueName2" data-ng-bind="product.d"></p>
+<p data-ng-if="product.f == 'RFD-10'" class="rfdname" data-ng-bind="product.d"></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4 col-sm-12 col-xs-12" data-ng-controller="newsCtrl" data-ng-init="getVideos()">
+<div class="col-md-5 col-sm-5 col-xs-8 mediao"><h4 style="text-align: left;font: normal normal bold 17px/20px Helvetica;letter-spacing: 0px;color: #2D2D2D;opacity: 1;">GST Media</h4></div>
+<div class="col-md-7 col-sm-7 col-xs-4 mediao1">
+<h5><a data-popup="true" class="viewall1" data-ng-href="https://www.youtube.com/channel/UCFYpOk92qurlO5t-Z_y-bOQ" href="https://www.youtube.com/channel/UCFYpOk92qurlO5t-Z_y-bOQ">View all</a>
+</h5></div>
+<di

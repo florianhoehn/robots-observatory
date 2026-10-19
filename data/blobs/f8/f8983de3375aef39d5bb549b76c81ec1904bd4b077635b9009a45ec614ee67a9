@@ -1,0 +1,163 @@
+# Content Signals (https://contentsignals.org/) — how automated systems may
+# use this content. "yes" grants the stated use, "no" reserves it; a signal
+# that is absent expresses no preference either way.
+#   search   = indexing and linking, including short excerpts
+#   ai-input = grounding a generated answer in page content (RAG)
+#   ai-train = training or fine-tuning a model
+# All three uses are granted. This site does not reserve text-and-data-mining
+# rights under Article 4(3) of EU Directive 2019/790.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+# AI assistants and answer engines — welcome to read, cite and ground
+# answers in this content. See the Content-Signal line in each group.
+
+User-agent: OAI-SearchBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: ChatGPT-User
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: GPTBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: ClaudeBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: Claude-User
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: Claude-SearchBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: PerplexityBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: Perplexity-User
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: Bingbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+# Training-control tokens — allowed, matching ai-train=yes. These govern
+# training and grounding use only; none of them affect search ranking.
+
+User-agent: Google-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: Applebot-Extended
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+User-agent: CCBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /*?preview=
+Disallow: /*&preview=
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /*/feed/
+
+# SEO, archive and plagiarism crawlers — blocked.
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: Heritrix
+Disallow: /
+
+User-agent: TurnitinBot
+Disallow: /
+
+User-agent: Turnitin
+Disallow: /
+
+Sitemap: https://www.cookieyes.com/sitemap.xml
+
+# Agent and LLM entry points
+# Site index for LLMs:  https://www.cookieyes.com/llms.txt
+# Full page-by-page index: https://www.cookieyes.com/llms-full.txt
+# Agent guide:          https://www.cookieyes.com/agent.md
+# Agent card (JSON):    https://www.cookieyes.com/.well-known/agent.json
+# Authentication:       https://www.cookieyes.com/auth.md
+# Security disclosure:  https://www.cookieyes.com/.well-known/security.txt
+# Markdown: replace a page URL's trailing slash with .md,
+#           so /pricing/ becomes /pricing.md. Or send Accept: text/markdown.

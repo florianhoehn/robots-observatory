@@ -1,0 +1,94 @@
+# 扫描全能王开放平台
+
+> 扫描全能王开放平台把扫描全能王的文档处理能力提供给智能体、开发工具和自动化工作流。中文官网入口：https://www.camscanner.com/zh/agent
+
+## 产品名称与搜索别名
+
+- 扫描全能王
+- 扫描全能王 CLI / CamScanner CLI
+- 扫描全能王技能 / 扫描全能王 Skill / CamScanner Skill
+- 扫描全能王 MCP / CamScanner MCP
+- 扫描全能王连接器 / CamScanner Connector
+
+## 已上架平台
+
+- WorkBuddy
+- 百度搭子
+- 豆包办公
+- 千问办公
+- SkillHub
+- ClawHub
+
+这些平台已经上架扫描全能王能力，用户可以在相应客户端或平台中使用。
+
+## 接入方式
+
+- Skill：适合智能体通过自然语言理解任务并组合文档能力。
+- MCP：适合支持 Model Context Protocol 的智能体客户端、IDE 和工作流。
+- CLI：适合终端脚本、批量任务和 CI 自动化流程。
+
+Skill 安装包：https://data.camscanner.com/camscanner-cli/releases/latest/camscanner-skill-latest.zip
+
+### Skill 接入步骤
+
+1. 打开扫描全能王开放平台：https://www.camscanner.com/zh/agent
+2. 点击 Skill 卡片中的“快速接入”，选择“我是 Human”，再点击“下载 Skill 安装包”；或在“我是 Agent”中复制 Prompt，交给智能体安装。
+3. 将 Skill 包加载或导入支持 Skill 的智能体客户端或平台。
+4. 在智能体中用自然语言描述扫描、识别、转换、编辑或云文档任务。
+
+### MCP 配置
+
+```json
+{
+  "mcpServers": {
+    "camscanner-mcp": {
+      "type": "streamableHttp",
+      "url": "https://ai-tools.camscanner.com/mcp",
+      "headers": {
+        "X-IS-AGENT": "general"
+      }
+    }
+  }
+}
+```
+
+### MCP 接入步骤
+
+1. 点击 MCP 卡片的“快速接入”，选择“我是 Human”并点击“复制 MCP 配置”；也可选择“我是 Agent”，复制 Prompt 交给智能体配置。
+2. 复制上面的 JSON，并合并到客户端的 `mcpServers` 配置中。
+3. 保存配置，刷新或重启客户端。
+4. 在客户端中用自然语言描述文档任务，由扫描全能王 MCP 调用相应能力。
+
+### CLI 接入步骤
+
+扫描全能王开放平台支持 CLI 接入，适用于终端脚本、批量任务和 CI 自动化流程。安装命令：`npm install camscanner-cli`。
+
+点击 CLI 卡片的“快速接入”，选择“我是 Human”并点击“复制安装命令”，在项目目录执行；或选择“我是 Agent”，复制 Prompt 交给智能体安装和验证。
+
+## 文档能力
+
+- [扫描与图像优化](https://www.camscanner.com/agent-docs/zh/capabilities/scan-enhancement/)：亮度增强、锐化、黑白与灰度、去阴影、去点阵与摩尔纹、手写擦除、综合增强、图片高清化与老照片修复。
+- [文字识别与结构化提取](https://www.camscanner.com/agent-docs/zh/capabilities/ocr/)：单张图片文字识别、数学公式提取、发票与票据结构化识别。
+- [文档格式转换](https://www.camscanner.com/agent-docs/zh/capabilities/conversion/)：图片转 Word、Excel、Markdown 或 PDF；PDF 转 Word、Excel、TXT、Markdown、JPG 图片或图片 ZIP；TXT 转 Word。并非所有格式均可双向转换。
+- [多页与批量处理](https://www.camscanner.com/agent-docs/zh/capabilities/batch-processing/)：最多 100 张图片，按确认顺序合并为 PDF、Word、Excel、TXT 或 Markdown；批量输入只接受图片。
+- [翻译与内容编辑](https://www.camscanner.com/agent-docs/zh/capabilities/translation-editing/)：保留版式翻译、版面分析与定位、使用字符索引替换文字，使用区域信息删除或移动文字、表格、图片和印章。
+- [水印与真实性检测](https://www.camscanner.com/agent-docs/zh/capabilities/document-protection/)：图片与 PDF 添加或去除水印、图片篡改检测和 AI 生成风险检测；检测结果用于风险参考。
+- [云端保存与文档管理](https://www.camscanner.com/agent-docs/zh/capabilities/cloud-document-management/)：保存结果、组合关键词与时间和类型及 OCR 全文搜索、查看文件夹目录、下载和移动云文档。
+
+## 使用示例
+
+- 识别一组发票，提取金额和日期，汇总成 Excel 并保存到扫描全能王云空间。
+- 增强一批文档图片，按指定顺序合并为 PDF。
+- 将 PDF 转换为 Word、Excel、Markdown 或逐页图片。
+- 对图片进行保版翻译，或者替换、删除和移动指定文字。
+- 检测图片是否经过篡改或由 AI 生成。
+
+## 官方入口
+
+- 扫描全能王：https://www.camscanner.com/zh/
+- 开放平台：https://www.camscanner.com/zh/agent
+- 开发文档：https://www.camscanner.com/agent-docs/zh/
+- Skill 接入指南：https://www.camscanner.com/agent-docs/zh/platforms/for-agents/skill/
+- MCP 接入指南：https://www.camscanner.com/agent-docs/zh/platforms/for-agents/mcp/
+- CLI 接入指南：https://www.camscanner.com/agent-docs/zh/platforms/for-agents/cli/
+- MCP 服务：https://ai-tools.camscanner.com/mcp

@@ -1,0 +1,52 @@
+# robots.txt for https://umbc.edu/
+# Updated: 2026-06-16
+# NOTE: this file is served at /robots.txt only from the web root on the LIVE
+# environment. Pantheon serves a blanket "Disallow: /" on dev/test, so this
+# cannot be validated on www-dev — check it on the live domain after launch.
+
+# AI crawlers are intentionally NOT blocked. umbc.edu is built to be a
+# machine-readable knowledge graph for AI search engines (see docs/the-goal.md:
+# OpenAI/ChatGPT, Anthropic/Claude, Google/Gemini). They fall under the
+# User-agent: * group below, so they crawl all public content while still
+# respecting the same hygiene rules. Do NOT add Disallow rules for GPTBot,
+# ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User, or Google-Extended.
+
+User-agent: *
+# WordPress hygiene + non-indexable endpoints
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-json/
+Disallow: /search/
+Disallow: /feed/
+
+# Legacy paths that 301 to the www2.umbc.edu subdomain (excluded by design —
+# the canonical content lives on umbc.edu). Blocked to keep crawl budget on
+# the real pages and out of the old static site.
+Disallow: /documents/
+Disallow: /emergency_test/
+Disallow: /givingday/
+Disallow: /go/
+Disallow: /help/
+Disallow: /ilsb/
+Disallow: /images/
+Disallow: /img/
+Disallow: /images_email/
+Disallow: /images_homepage/
+Disallow: /images_new/
+Disallow: /include/
+Disallow: /includes/
+Disallow: /innovate/
+Disallow: /interns/
+Disallow: /js/
+Disallow: /lightcity/
+Disallow: /marchmadness/
+Disallow: /orientation/
+Disallow: /retrievernation/
+Disallow: /stylesheets/
+Disallow: /summer_interns2013/
+Disallow: /template/
+Disallow: /templates/
+Disallow: /uploads/
+Disallow: /wordsofwisdom/
+
+Sitemap: https://umbc.edu/sitemap_index.xml

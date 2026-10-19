@@ -1,0 +1,215 @@
+<!doctype html><html lang="ru" data-theme-hint="light"><head><meta charset="utf-8"><link rel="preconnect" href="https://media.giga.chat" crossorigin><script>"use strict";(()=>{let e,t,r;var a=(e=()=>{},()=>{if(r)throw r[0];try{return e&&(t=e(e=0)),t}catch(e){throw r=[e],e}});a(),a(),a(),a(),a(),a();var o=null;a(),a(),a();var i=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,n=/^[0-9a-f]{8,}$/i,s=/^v\d+$/i,l=/loading chunk|dynamically imported module|module script failed|unable to preload/i,p=e=>{if("string"==typeof e)return e.slice(0,200);let t=e?.message;return"string"==typeof t?t.slice(0,200):""},d={deviceType:"UNKNOWN",os:"UNKNOWN",runtime:"UNKNOWN"};o={endpoint:"/api/giga-mw/api/v0/error-messages",appName:"gigachat-b2c-web-neo",appVersion:"0.13.0",release:!0,readDeviceId:()=>window.__appHealthDeviceId?.()??"",detectPlatform:()=>d},(({publicPath:e,sentry:t})=>{if(window.__appHealthBootOk)return;let r=new URL(e,location.href).href,a=null,d=!1,c="hidden"===document.visibilityState,h=(e,r)=>{((e,t={})=>{let r=o;if(r)try{let a=((e,t,r)=>{let a,{meta:o,http:l,route:p,source:d}=t;return{errorType:l?"HTTP":"CLIENT",eventType:e,source:d??"host",route:p??((a="u">typeof location?location.pathname:"/")?"/"===a?"/":a.split("/").map(e=>e&&!s.test(e)&&(i.test(e)||n.test(e)||/\d/.test(e))?":id":e).join("/")||"unknown":"unknown"),errorTime:new Date().toISOString(),platform:r.detectPlatform(),...l?{httpErrorData:{uri:l.uri,serviceName:l.serviceName,responseHttpStatus:l.status,responseHttpBody:l.body}}:{},...o?{clientErrorData:o}:{}}})(e,t,r);if(!r.release)return void console.info("[errorReporter]",a);fetch(r.endpoint,{method:"POST",keepalive:!0,headers:{"Content-Type":"application/json","X-Application-Name":r.appName,"X-Application-Version":r.appVersion,"X-Device-Id":(e=>{try{return e.readDeviceId()}catch{return""}})(r),"X-Request-Id":`${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`},body:JSON.stringify(a)}).catch(()=>{})}catch{}})(e,r?{meta:r}:{}),(({dsn:e,release:t,environment:r,event:a,meta:o})=>{if(e)try{let{protocol:i,host:n,username:s,pathname:l}=new URL(e),p=l.slice(1);if(!s||!p)return;let d=Array.from({length:8},()=>Math.floor(65535*Math.random()).toString(16).padStart(4,"0")).join(""),c=o?.phase,h={event_id:d,timestamp:Date.now()/1e3,platform:"javascript",level:"error",logger:"boot-watchdog",release:t,environment:r,tags:{app_health:a},fingerprint:["app-health",a,...c?[c]:[]],message:{formatted:c?`${a}: ${c}`:a},request:{url:location.href,headers:{"User-Agent":navigator.userAgent}},...o?{extra:o}:{}};fetch(`${i}//${n}/api/${p}/envelope/?sentry_key=${s}&sentry_version=7`,{method:"POST",keepalive:!0,body:[JSON.stringify({event_id:d,sent_at:new Date().toISOString()}),JSON.stringify({type:"event"}),JSON.stringify(h)].join(`
+`)}).catch(()=>{})}catch{}})({...t,event:e,meta:r})},m=({phase:e,message:t})=>{h("boot_failed",{phase:e,...t?{message:t}:{}})},u=e=>{!e||a||(a=e,d&&(g(),m(e)))},v=e=>{let t,a;return u(!(t=e.target)||"SCRIPT"!==t.tagName||t.hasAttribute("data-rspack")?null:(a=t.src,a.startsWith(r)&&/\.js([?#]|$)/.test(a))?{phase:"chunk_load_error",message:p(t.src)}:null)},f=()=>{c=c||"hidden"===document.visibilityState},g=()=>{clearTimeout(y),window.__appHealthBootOk=void 0,window.__appHealthBootFatal=void 0,window.removeEventListener("error",v,!0),document.removeEventListener("visibilitychange",f)};window.addEventListener("error",v,!0),document.addEventListener("visibilitychange",f);let y=setTimeout(()=>{if(c||a){g(),!c&&a&&m(a);return}d=!0,h("boot_slow")},2e4);window.__appHealthBootOk=g,window.__appHealthBootFatal=e=>{let t;return u((t=p(e),{phase:l.test(t)?"chunk_load_error":"boot_error",message:t}))}})({publicPath:"https://media.giga.chat/gigachat-neo/0.13.0/",sentry:{dsn:"https://858d0c7dbf9be716a0fa91ea4622fe4e@sentry-api.sberdevices.ru/321",release:"0.13.0+07cb7258",environment:"release"}})})()</script><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content"><title>ГигаЧат — русскоязычная нейросеть от Сбера</title><meta name="description" content="ГигаЧат — диалоговая AI-модель, которая отвечает на вопросы, сочиняет тексты, пишет код и рисует картинки. Говорит на русском и понимает английский"><link rel="canonical" href="https://giga.chat"><link rel="manifest" href="/manifest-light.json" id="app-manifest"><meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#242326" media="(prefers-color-scheme: dark)"><meta name="application-name" content="ГигаЧат"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ГигаЧат"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta property="og:type" content="website"><meta property="og:url" content="https://giga.chat"><meta property="og:title" content="ГигаЧат — русскоязычная нейросеть от Сбера"><meta property="og:description" content="ГигаЧат — диалоговая AI-модель, которая отвечает на вопросы, сочиняет тексты, пишет код и рисует картинки. Говорит на русском и понимает английский"><meta property="og:image" content="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/ae703648_1200x630.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://giga.chat"><meta property="twitter:title" content="ГигаЧат — русскоязычная нейросеть от Сбера"><meta property="twitter:description" content="ГигаЧат — диалоговая AI-модель, которая отвечает на вопросы, сочиняет тексты, пишет код и рисует картинки. Говорит на русском и понимает английский"><meta property="twitter:image" content="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/ae703648_1200x630.png"><link rel="preconnect" href="https://cdn-app.giga.chat/"><link rel="preload" href="https://cdn-app.giga.chat/shared-static/0.0.0/fonts/SBSansText/SBSansText-Regular.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://cdn-app.giga.chat/shared-static/0.0.0/fonts/SBSansText/SBSansText-Semibold.woff2" as="font" type="font/woff2" crossorigin><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="16x16" href="/icons/gigachat/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/icons/gigachat/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/icons/gigachat/favicon-96x96.png"><link rel="apple-touch-icon" sizes="57x57" href="/icons/gigachat/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/icons/gigachat/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/icons/gigachat/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/icons/gigachat/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/icons/gigachat/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/gigachat/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/icons/gigachat/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/icons/gigachat/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/icons/gigachat/apple-icon-180x180.png"><link rel="mask-icon" href="/icons/gigachat/safari-pinned-tab.svg" color="#000000"><script>!function(){try{var e=localStorage.getItem("chat-neo:theme");if(!("dark"===e||"light"!==e&&window.matchMedia("(prefers-color-scheme: dark)").matches))return;document.documentElement.dataset.themeHint="dark";var t=document.getElementById("app-manifest");t&&t.setAttribute("href","/manifest-dark.json")}catch(e){}}()</script><style>
+            html[data-theme-hint='dark']:not([data-theme-applied]) {
+                background-color: #242326;
+                color-scheme: dark;
+            }
+            html[data-theme-hint='light']:not([data-theme-applied]) {
+                background-color: #fff;
+                color-scheme: light;
+            }
+            /* Единственный лоадер приложения. Воспроизводит plasma-giga
+               <Spinner size={32} view="accent"/>; SVG / размеры / анимация —
+               копия исходника. AppReadyGate в pending-state не дублирует его
+               React-ом (return null), а готовый к рендеру контент — переключает
+               узел в hidden через `.app-initial-loader--hidden`. Узел не
+               удаляется: повторные pending-фазы (logout / migration) показывают
+               его снова через снятие класса. */
+            .app-initial-loader {
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #242326;
+                color: var(--text-accent, #24f2bf);
+            }
+            html[data-theme-hint='light'] .app-initial-loader {
+                background-color: #fff;
+                color: var(--text-accent, #1fcca0);
+            }
+            .app-initial-loader--hidden {
+                display: none;
+            }
+            .app-initial-loader__root {
+                display: flex;
+                box-sizing: border-box;
+            }
+            .app-initial-loader__wrapper {
+                display: flex;
+                width: 2rem;
+                height: 2rem;
+                animation: app-initial-loader-rotate 1s linear infinite;
+            }
+            .app-initial-loader__svg {
+                width: 32px;
+                height: 32px;
+            }
+            @keyframes app-initial-loader-rotate {
+                from {
+                    transform: rotate(0);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            /* Подпись «загрузка затянулась» (GIGAB2C-7466): без неё на медленной
+               сети не отличить долгую загрузку от зависания. Проявляется через
+               4 с чистым CSS, без таймера на JS: тянуть его пришлось бы из того
+               самого бандла, который ещё не доехал, а до его разбора главный
+               поток занят. Счёт идёт от показа лоадера и начинается заново, когда
+               гейт снимает `--hidden` (display: none обнуляет анимацию).
+               Висит абсолютом под спиннером, а не в потоке: иначе спиннер
+               съехал бы вверх от центра. По макету верх подписи на 34px ниже
+               центра (SpinnerS 36px + отступ 16px), стиль — Body S / Secondary. */
+            /* Свой алиас SB Sans Text ради `font-display: swap`: в SBSansText.css
+               его нет, и на холодной медленной сети подпись ждала бы шрифт
+               невидимой ещё до 3 с сверх своих 4. URL обязан посимвольно
+               совпадать с preload Regular выше — тогда второго запроса нет. */
+            @font-face {
+                font-family: 'App Initial Loader Text';
+                src: url('https://cdn-app.giga.chat/shared-static/0.0.0/fonts/SBSansText/SBSansText-Regular.woff2')
+                    format('woff2');
+                font-weight: 400;
+                font-display: swap;
+            }
+            .app-initial-loader__hint {
+                position: absolute;
+                top: calc(50% + 34px);
+                right: 16px;
+                left: 16px;
+                margin: 0;
+                text-align: center;
+                font-family: 'App Initial Loader Text', -apple-system, system-ui, sans-serif;
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: -0.02em;
+                color: var(--text-secondary, rgba(255, 255, 255, 0.56));
+                opacity: 0;
+                animation: app-initial-loader-hint-in 0.4s ease-out 4s forwards;
+            }
+            html[data-theme-hint='light'] .app-initial-loader__hint {
+                color: var(--text-secondary, rgba(8, 8, 8, 0.56));
+            }
+            @keyframes app-initial-loader-hint-in {
+                to {
+                    opacity: 1;
+                }
+            }
+            /* Конечное состояние провала старта. Живёт здесь, а не в React:
+               показывать его нужно ровно тогда, когда React не смонтировался
+               (чанк не доехал) — рисовать такой экран приложением невозможно.
+               По той же причине тут литералы, а не токены: токены приезжают в
+               plasma.css, то есть ровно в том чанке, которого и нет.
+               Значения — копия соседнего экрана краша `NoDepsError`
+               (src/shared/ui/GlobalBoundary/NoDepsError.tsx), чтобы два экрана
+               отказа выглядели одинаково; он так же всегда тёмный. Меняешь там —
+               поправь здесь.
+               Тексты подставляет сборка из словаря, см. rspack/html.ts.
+               Показывает `showBootError` (src/app/bootError.ts). */
+            /* Обязательно: `hidden` — это `display: none` из UA-стилей, и любое
+               авторское `display` его перебивает. Без этой строки экран
+               отрисован с первого кадра поверх всего приложения. */
+            .app-boot-error[hidden] {
+                display: none;
+            }
+            .app-boot-error {
+                position: fixed;
+                inset: 0;
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                text-align: center;
+                /* Как в NoDepsError, но с системным фолбэком: в SBSansText.css
+                   нет font-display, а грузится он с CDN — то есть ровно оттуда,
+                   куда в этом сценарии и не достучались. */
+                font-family: 'SB Sans Text', -apple-system, system-ui, sans-serif;
+                background-color: rgba(21, 24, 31, 1);
+                color: rgba(255, 255, 255, 0.96);
+            }
+            .app-boot-error__icon {
+                margin-bottom: 8px;
+            }
+            .app-boot-error__title {
+                margin: 0 0 4px;
+                font-size: 24px;
+                line-height: 30px;
+                font-weight: 600;
+            }
+            .app-boot-error__message {
+                max-width: 455px;
+                margin: 0 0 16px;
+                font-size: 18px;
+                line-height: 26px;
+            }
+            .app-boot-error__retry {
+                padding: 14px 20px;
+                font: inherit;
+                color: rgba(255, 255, 255, 0.96);
+                background-color: rgba(42, 114, 248, 1);
+                border: none;
+                border-radius: 12px;
+                cursor: pointer;
+            }
+        </style><link rel="preload" as="style" href="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/SBSansText.css" onload='this.onload=null,this.rel="stylesheet"'><link rel="preload" as="style" href="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/SBSansDisplay.css" onload='this.onload=null,this.rel="stylesheet"'><noscript>
+            <link rel="stylesheet" href="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/SBSansText.css"><link rel="stylesheet" href="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/SBSansDisplay.css">
+        </noscript><script>!function(t,e,n,a,s){t[a]=t[a]||[],t[a].push({"stm.start":new Date().getTime(),event:"stm_init"}),t.stmUrl="https://stmtag.ru/";var r=e.getElementsByTagName(n)[0],m=e.createElement(n);m.async=!0,m.src="https://stmtag.ru/stm/container/"+s+".js?v="+Math.random(),r.parentNode.insertBefore(m,r)}(window,document,"script","dataLayer","STM-HPDA721"),function(t,e,n,a,s,r){t.ym=t.ym||function(){(t.ym.a=t.ym.a||[]).push(arguments)},t.ym.l=+new Date,_=(s=e.createElement(n)).setAttribute("crossorigin",""),r=e.getElementsByTagName(n)[0],s.async=1,s.src=a,r.parentNode.insertBefore(s,r)}(window,document,"script","https://mc.yandex.ru/metrika/tag.js")</script><link rel="prefetch" type="image/png" as="image" crossorigin href="https://cdn-app.giga.chat/misc/0.0.0/assets/gigachat-web/noise_3.png"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/main.c0971d1a53950c8a.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/earlyPluginsManifest.338d0eaf055050a0.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/appHealth.e0fac2c02e2f2236.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/6139.df013d7e468be23f.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/prefetchPlugins.14a62765137995cf.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/boot.37e2aed15f09c6ed.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/3996.7b104747ce838439.js" crossorigin fetchpriority="high"><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/7748.d52042c85a9f3cc3.js" crossorigin fetchpriority="high"><link rel="preload" as="style" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/2625.a677f2c00ae10465.css" crossorigin><link rel="preload" as="style" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/plasma.5a0062db1aad540d.css" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/mfInstances.0e06bc850a5f5da9.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/696.804b4f44c6a86344.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/9472.572a1a113b612081.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/2284.29b52a81f90b5680.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/2625.ffe61dc747244cb0.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/plasma.b82b323900785f49.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/6261.75da8525f2b48b0a.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/6819.bad40d8f47614bc8.js" crossorigin><link rel="preload" as="script" href="https://media.giga.chat/gigachat-neo/0.13.0/assets/7977.98cfd3ed6b092099.js" crossorigin></head><body><script>window&&(window.global=window.global||window)</script>
+        
+        <script>var _tmr=window._tmr||(window._tmr=[]);_tmr.push({id:"3562539",type:"pageView",start:new Date().getTime(),pid:"USER_ID"}),function(e,t,r){if(!e.getElementById(r)){var a=e.createElement("script");a.type="text/javascript",a.async=!0,a.id=r,a.src="https://top-fwz1.mail.ru/js/code.js";var n=function(){var t=e.getElementsByTagName("script")[0];t.parentNode.insertBefore(a,t)};"[object Opera]"==t.opera?e.addEventListener("DOMContentLoaded",n,!1):n()}}(document,window,"tmr-code")</script>
+        <noscript><div>
+                <img src="https://top-fwz1.mail.ru/counter?id=3562539;js=na" style="position: absolute; left: -9999px" alt="Top.Mail.Ru"></div></noscript>
+        
+        
+        <script>!function(t,o,e){if("localhost"!==window.location.hostname){(t[e]=t[e]||[]).push(function(){try{t.top100Counter=new top100({project:7751365})}catch(t){}});var n=o.getElementsByTagName("script")[0],p=o.createElement("script"),c=function(){n.parentNode.insertBefore(p,n)};p.type="text/javascript",p.async=!0,p.src=("https:"==o.location.protocol?"https:":"http:")+"//st.top100.ru/top100/top100.js","[object Opera]"==t.opera?o.addEventListener("DOMContentLoaded",c,!1):c()}}(window,document,"_top100q")</script>
+        <noscript>
+            <img src="//counter.rambler.ru/top100.cnt?pid=7751365" alt="Топ-100">
+        </noscript>
+        
+        <div id="root"></div>
+        
+        <div class="app-initial-loader" aria-hidden="true" data-testid="authGateRoot">
+            <div class="app-initial-loader__root">
+                <div class="app-initial-loader__wrapper">
+                    <svg class="app-initial-loader__svg" viewBox="0 0 56 56" fill="none">
+                        <g clip-path="url(#app-initial-loader-clip)">
+                            <g transform="matrix(0.0257143 0.00171429 -0.00171429 0.0257143 28 28)">
+                                <foreignObject x="-1039.33" y="-1039.33" width="2078.66" height="2078.66">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" style="background: conic-gradient(
+                                                from 90deg,
+                                                currentColor 0deg,
+                                                rgba(255, 255, 255, 0.06) 32.4deg,
+                                                currentColor 360deg
+                                            );
+                                            width: 100%;
+                                            height: 100%;
+                                            opacity: 1;"></div>
+                                </foreignObject>
+                            </g>
+                        </g>
+                        <path d="M49.4426 30.5675C50.761 30.7253 51.9705 29.7833 51.9957 28.4557C52.0901 23.4893 50.6403 18.5935 47.8157 14.4597C44.5369 9.66142 39.6285 6.2158 34.0016 4.76252C28.3748 3.30925 22.4117 3.94704 17.2195 6.55751C12.0273 9.16797 7.95861 13.5738 5.76886 18.957C3.57912 24.3402 3.41705 30.335 5.31274 35.8287C7.20843 41.3223 11.0331 45.9415 16.0767 48.8287C21.1203 51.7159 27.0402 52.6749 32.7374 51.5278C37.6455 50.5395 42.1011 48.0459 45.5003 44.4238C46.4089 43.4556 46.2005 41.9367 45.1463 41.1294C44.092 40.3222 42.5927 40.5352 41.66 41.4803C38.987 44.189 35.5542 46.0556 31.7882 46.8139C27.2325 47.7312 22.4987 46.9643 18.4656 44.6556C14.4325 42.3469 11.3741 38.6531 9.85822 34.2602C8.34234 29.8672 8.47194 25.0734 10.223 20.7688C11.974 16.4641 15.2275 12.941 19.3794 10.8536C23.5313 8.76615 28.2997 8.25613 32.7992 9.41824C37.2987 10.5804 41.2237 13.3356 43.8455 17.1726C46.0129 20.3444 47.168 24.0773 47.1912 27.8827C47.1993 29.2105 48.1242 30.4096 49.4426 30.5675Z"/>
+                        <defs>
+                            <clipPath id="app-initial-loader-clip">
+                                <path d="M49.4426 30.5675C50.761 30.7253 51.9705 29.7833 51.9957 28.4557C52.0901 23.4893 50.6403 18.5935 47.8157 14.4597C44.5369 9.66142 39.6285 6.2158 34.0016 4.76252C28.3748 3.30925 22.4117 3.94704 17.2195 6.55751C12.0273 9.16797 7.95861 13.5738 5.76886 18.957C3.57912 24.3402 3.41705 30.335 5.31274 35.8287C7.20843 41.3223 11.0331 45.9415 16.0767 48.8287C21.1203 51.7159 27.0402 52.6749 32.7374 51.5278C37.6455 50.5395 42.1011 48.0459 45.5003 44.4238C46.4089 43.4556 46.2005 41.9367 45.1463 41.1294C44.092 40.3222 42.5927 40.5352 41.66 41.4803C38.987 44.189 35.5542 46.0556 31.7882 46.8139C27.2325 47.7312 22.4987 46.9643 18.4656 44.6556C14.4325 42.3469 11.3741 38.6531 9.85822 34.2602C8.34234 29.8672 8.47194 25.0734 10.223 20.7688C11.974 16.4641 15.2275 12.941 19.3794 10.8536C23.5313 8.76615 28.2997 8.25613 32.7992 9.41824C37.2987 10.5804 41.2237 13.3356 43.8455 17.1726C46.0129 20.3444 47.168 24.0773 47.1912 27.8827C47.1993 29.2105 48.1242 30.4096 49.4426 30.5675Z"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+            
+            <p class="app-initial-loader__hint">Требуется чуть больше времени</p>
+        </div>
+        
+        <div class="app-boot-error" id="app-boot-error" role="alert" hidden>
+            
+            <svg class="app-boot-error__icon" width="160" height="160" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M23.3333 80C23.3333 48.7039 48.7038 23.3333 79.9999 23.3333C111.296 23.3333 136.667 48.7039 136.667 80C136.667 111.296 111.296 136.667 79.9999 136.667C48.7038 136.667 23.3333 111.296 23.3333 80ZM79.9999 13.3333C43.1809 13.3333 13.3333 43.181 13.3333 80C13.3333 116.819 43.1809 146.667 79.9999 146.667C116.819 146.667 146.667 116.819 146.667 80C146.667 43.181 116.819 13.3333 79.9999 13.3333ZM79.9999 46.6667C83.6818 46.6667 86.6666 49.6514 86.6666 53.3333V80C86.6666 83.6819 83.6818 86.6667 79.9999 86.6667C76.318 86.6667 73.3333 83.6819 73.3333 80V53.3333C73.3333 49.6514 76.318 46.6667 79.9999 46.6667ZM86.6666 106.667C86.6666 110.349 83.6818 113.333 79.9999 113.333C76.318 113.333 73.3333 110.349 73.3333 106.667C73.3333 102.985 76.318 100 79.9999 100C83.6818 100 86.6666 102.985 86.6666 106.667Z" fill="#fff" fill-opacity="0.96" />
+            </svg>
+            <h1 class="app-boot-error__title"></h1>
+            <p class="app-boot-error__message"></p>
+            <button class="app-boot-error__retry" type="button"></button>
+        </div>
+        <script id="app-boot-error-texts" type="application/json">{"ru":{"title":"Не удалось загрузить ГигаЧат","message":"Проверьте подключение к интернету и попробуйте снова.","retry":"Повторить"},"en":{"title":"Couldn't load GigaChat","message":"Check your internet connection and try again.","retry":"Try again"}}</script><script crossorigin defer src="https://media.giga.chat/gigachat-neo/0.13.0/assets/6139.df013d7e468be23f.js"></script><script crossorigin defer src="https://media.giga.chat/gigachat-neo/0.13.0/assets/appHealth.e0fac2c02e2f2236.js"></script><script crossorigin defer src="https://media.giga.chat/gigachat-neo/0.13.0/assets/earlyPluginsManifest.338d0eaf055050a0.js"></script><script crossorigin defer src="https://media.giga.chat/gigachat-neo/0.13.0/assets/main.c0971d1a53950c8a.js"></script></body></html>

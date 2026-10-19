@@ -1,0 +1,55 @@
+# AI crawler posture: training is disallowed only where the operator publishes a
+# separate token for citation. Where a single token governs both training and
+# citation, it is allowed - blocking it would remove this site from that
+# assistant's answers without withholding anything that is not already public.
+
+User-agent: *
+Disallow: /content/dam/static/js/tagging/
+
+User-agent: googlebot
+Disallow: */internals/
+Disallow: /content/dam/static/js/tagging/
+
+# Answer-engine citation crawlers - allowed. These fetch live and cite the source.
+User-agent: OAI-SearchBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+Disallow: /content/dam/static/js/tagging/
+
+# User-initiated assistant fetches - allowed. A customer asked for this page.
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+User-agent: meta-externalfetcher
+Disallow: /content/dam/static/js/tagging/
+
+# Bundled tokens - allowed. Each of these is a single directive governing both
+# model training and citation; none of these operators publishes a separate
+# citation token. Disallowing here would remove this site from Gemini, Meta AI
+# and Alexa answers while withholding nothing that is not already public.
+# Google Search and AI Overviews are governed by googlebot above and are
+# unaffected either way.
+User-agent: Google-Extended
+User-agent: meta-externalagent
+User-agent: Amazonbot
+Disallow: /content/dam/static/js/tagging/
+
+# Training-only crawlers - disallowed. Each operator below serves citations
+# through a different token that is allowed above, so this costs no presence in
+# AI answers:
+#   GPTBot            - OAI-SearchBot cites
+#   ClaudeBot         - Claude-SearchBot cites
+#   Applebot-Extended - Applebot serves Siri and Spotlight
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: omgili
+Disallow: /
+
+
+Sitemap: https://www.ally.com/sitemap.xml

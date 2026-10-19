@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script>
+    (function () {
+        // La property e' l'hostname servito: su InMobi ogni ambiente ha la sua,
+        // con configurazione propria (vendor, temi, testi). Non fissare il
+        // valore: si userebbe la configurazione di un altro ambiente.
+        //
+        // Property registrate (verificate 2026-08-17): www.fantacalcio.it,
+        // www-ecs.fantacalcio.it, fc-web.staging.fantacalcio.it,
+        // www-ecs-stage.fantacalcio.it, testweb.fantacalcio.it, piu' quelle
+        // delle app leghe/euroleghe. Lo staging del sito e'
+        // fc-web.staging.fantacalcio.it: e' li' che si verifica il consenso.
+        //
+        // Un hostname non registrato riceve 204 No Content e la CMP non si
+        // carica: lo stub resta in cmpStatus 'stub' e chi aspetta il consenso
+        // aspetta a vuoto. Succede in locale (localhost non e' una property)
+        // ed e' atteso. Succede anche per fantacalcio.it senza www, ma li' e'
+        // innocuo: il bare domain risponde 301 verso www e non serve mai HTML.
+        var host = window.location.hostname;
+        var element = document.createElement('script');
+        var firstScript = document.getElementsByTagName('script')[0];
+        var url = 'https://cmp.inmobi.com'
+            .concat('/choice/', 'Z3sQVQNy9sAbB', '/', host, '/choice.js?tag_version=V3');
+        var uspTries = 0;
+        var uspTriesLimit = 3;
+
+        element.async = true;
+        element.type = 'text/javascript';
+        element.src = url;
+
+        firstScript.parentNode.insertBefore(element, firstScript);
+
+        function makeStub() {
+            var TCF_LOCATOR_NAME = '__tcfapiLocator';
+            var queue = [];
+            var win = window;
+            var cmpFrame;
+
+            function addFrame() {
+                var doc = win.document;
+                var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+                if (!otherCMP) {
+                    if (doc.body) {
+                        var iframe = doc.createElement('iframe');
+
+                        iframe.style.cssText = 'display:none';
+                        iframe.name = TCF_LOCATOR_NAME;
+                        doc.body.appendChild(iframe);
+                    } else {
+                        setTimeout(addFrame, 5);
+                    }
+                }
+                return !otherCMP;
+            }
+
+            function tcfAPIHandler() {
+                var gdprApplies;
+                var args = arguments;
+
+                if (!args.length) {
+                    return queue;
+
+                } else if (args[0] === 'setGdprApplies') {
+                    if (
+                        args.length > 3 &&
+                        args[2] === 2 &&
+                        typeof args[3] === 'boolean'
+                    ) {
+                        gdprApplies = args[3];
+                        if (typeof args[2] === 'function') {
+                            args[2]('set', true);
+                        }
+                    }
+                } else if (args[0] === 'ping') {
+                    var retr = {
+                        gdprApplies: gdprApplies,
+                        cmpLoaded: false,
+                        cmpStatus: 'stub'
+                    };
+
+                    if (typeof args[2] === 'function') {
+                        args[2](retr);
+                    }
+                } else {
+                    queue.push(args);
+                }
+            }
+
+            function postMessageEventHandler(event) {
+                var msgIsString = typeof event.data === 'string';
+                var json = {};
+
+                try {
+                    if (msgIsString) {
+                        json = JSON.parse(event.data);
+                    } else {
+                        json = event.data;
+                    }
+                } catch (ignore) { }
+
+                var payload = json.__tcfapiCall;
+
+                if (payload) {
+                    window.__tcfapi(
+                        payload.command,
+                        payload.version,
+                        function (retValue, success) {
+                            var returnMsg = {
+                                __tcfapiReturn: {
+                                    returnValue: retValue,
+                                    success: success,
+                                    callId: payload.callId
+                                }
+                            };
+                            if (msgIsString) {
+                                returnMsg = JSON.stringify(returnMsg);
+                            }
+                            event.source.postMessage(returnMsg, '*');
+                        },
+                        payload.parameter
+                    );
+                }
+            }
+
+            while (win) {
+                try {
+                    if (win.frames[TCF_LOCATOR_NAME]) {
+                        cmpFrame = win;
+                        break;
+                    }
+                } catch (ignore) { }
+
+                if (win === window.top) {
+                    break;
+                }
+                win = win.parent;
+            }
+            if (!cmpFrame) {
+                addFrame();
+                win.__tcfapi = tcfAPIHandler;
+                win.addEventListener('message', postMessageEventHandler, false);
+            }
+        }
+
+        makeStub();
+
+        var uspStubFunction = function () {
+            var arg = arguments;
+            if (typeof window.__uspapi !== uspStubFunction) {
+                setTimeout(function () {
+                    if (typeof window.__uspapi !== 'undefined') {
+                        window.__uspapi.apply(window.__uspapi, arg);
+                    }
+                }, 500);
+            }
+        };
+
+        var checkIfUspIsReady = function () {
+            uspTries++;
+            if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+                console.warn('USP is not accessible');
+            } else {
+                clearInterval(uspInterval);
+            }
+        };
+
+        if (typeof window.__uspapi === 'undefined') {
+            window.__uspapi = uspStubFunction;
+            var uspInterval = setInterval(checkIfUspIsReady, 6000);
+        }
+    })();
+</script>
+
+
+    <!-- PROD -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5ZQ9JW7');</script>
+
+
+
+
+
+<!-- ADS HEAD -->
+<title>404 pagina non trovata</title>
+
+<meta name="description" content="Il sito ufficiale per ogni appassionato di Fantacalcio.">
+<meta name="keywords" content="Serie A,fanta,Fantacalcio,Calcio" />
+<meta name="theme-color" content="#2e6be6">
+
+<meta name="apple-itunes-app" content="app-id=1515890322">
+<meta name="google-play-app" content="app-id=com.quadronica.fantacalcio" />
+
+<meta property="fb:app_id" content="276105532435709" />
+<meta property="og:site_name" content="Fantacalcio - Solo il meglio del calcio" />
+<meta property="og:title" content="404 pagina non trovata">
+<meta property="og:description" content="Il sito ufficiale per ogni appassionato di Fantacalcio.">
+<meta property="og:image" content="https://content.fantacalcio.it/web/img/socialfc.png">
+<meta property="og:url" content="https://www.fantacalcio.it/404">
+<meta property="og:locale" content="it_IT" />
+
+  <meta property="og:type" content="website" />  
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="https://www.fantacalcio.it/404" />
+<meta name="twitter:site" content="Fantacalcio.it" />
+<meta name="twitter:title" content="404 pagina non trovata" />
+<meta name="twitter:description" content="Il sito ufficiale per ogni appassionato di Fantacalcio." />
+<meta name="twitter:image" content="https://content.fantacalcio.it/web/img/socialfc.png" />
+<meta name="twitter:creator" content="@Fantacalcio" />
+
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="https://content.fantacalcio.it/web/icons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="https://content.fantacalcio.it/web/icons/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="https://content.fantacalcio.it/web/icons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="https://content.fantacalcio.it/web/icons/apple-touch-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="https://content.fantacalcio.it/web/icons/apple-touch-icon-180x180.png" />
+<link rel="icon" sizes="192x192" href="https://content.fantacalcio.it/web/icons/android-icon-192x192.png" />
+<link rel="shortcut icon" sizes="76x76" type="image/x-icon" href="https://www.fantacalcio.it/favicon.ico" />
+
+<link rel="canonical" href="https://www.fantacalcio.it/404" />
+
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+    var Globals = {
+        env: "Production",
+        isDev: false,
+        isProd: true,        
+        isStage: false,   
+        mark: 4178
+    }
+</script>
+<style>
+    [data-mark~="4178"] {
+        display:none!important;        
+    }
+</style>
+
+
+
+
+
+
+
+
+    <script src="/js/ui/smooth-resizer.min.js?v=w1QU_4AMlhzdbPl1nnuLFJ48Ds5cgLnTIgPkG-bT01Q"></script>
+    <script src="/js/main.min.js?v=tuu8uh6lDVIvcpgs3GY0UN91IHLMJiB42qUxmOjjv0g"></script>
+
+
+    <link rel="stylesheet" href="/css/layout.common.min.css?v=0wA5maly-1gz5ceetop0sXceENi733e2sHBRvSc_fHs" />
+    
+    
+    
+        <link rel="stylesheet" href="/css/pages/404.page.min.css?v=9P_nsyRchJRaUeXJ8mNolkBKGnlwgKVfN8eg-gQSkrU" />
+    
+
+</head>
+    <body >        
+    
+<!-- SKIN -->
+
+
+
+
+<div id="skin" style="display:none;">
+<ins class="nodeferred" data-revive-zoneid="5756" data-revive-id="6609ba8ff88606794e22ff360400bcea"></ins>
+</div>
+ 
+
+    
+<!-- Google Tag Manager (noscript) -->
+    
+    <!-- PROD -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5ZQ9JW7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+
+<!-- End Google Tag Manager (noscript) -->
+
+<aside id="top-bar">
+    <a href="https://sport.sky.it/" target="_blank" rel="nofollow noopener">
+        <img height="21" width="274" alt="SkySport strip" title="SkySport" 
+             src="https://content.fantacalcio.it/web/img/sky_strip_2022.png">
+    </a>
+</aside>        
+    <main>
+            <header id="main-header" class="light">
+    <button class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">
+        <img class="icon menu-icon open" src="https://content.fantacalcio.it/fantacalcio/images/icons/ico-menu.svg" height="14" width="28" alt="Burger menu" title="Apri menu" />
+        <img class="icon menu-icon close" src="https://content.fantacalcio.it/fantacalcio/images/icons/ico-close.svg" height="16" width="16" alt="Burger menu" title="Chiudi menu" />
+    </button>
+    <a class="brand mr-2" href="/">
+        <figure>
+            <img class="brand-img" src="https://content.fantacalcio.it/fantacalcio/images/logo-fantacalcio.svg" height="60" width="235" alt="Logo Fantacalcio" title="Fantacalcio.it" />
+        </figure>
+    </a>
+    <!-- TOP MENU -->
+    <nav class="menu top-nav dropdown-nav light">
+        <ul class="top-menu">
+            <li class="dropdown">
+                <button>App</button>
+                <ul data-header="App">
+                    <li><a href="/app-fantacalcio-serie-a-enilive" target="_self">Fantacalcio&#xAE; Serie A Enilive</a></li>
+                    <li><a href="/app-leghe-fantacalcio-serie-a-enilive" target="_self">Leghe Fantacalcio&#xAE; Serie A Enilive</a></li>
+                    <li><a href="/app-euroleghe-fantacalcio" target="_self">Euroleghe</a></li>
+                    <li><a href="/app-guida-asta-perfetta" target="_self">Guida per l’asta perfetta</a></li>
+                    <li><a href="/app-fantaasta" target="_self">FantaAsta Live</a></li>
+                    <li><a href="/app-fantaasta-buzz" target="_self">FantaAsta Buzz</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/regolamenti">Regolamenti</a>
+            </li>
+            <li>
+                <a href="/voti-fantacalcio-serie-a">Voti</a>
+            </li>
+            <li class="dropdown">
+                <button>Risorse</button>
+                <ul>
+                    <li><a href="/quotazioni-fantacalcio" target="_self">Quotazioni e FVM</a></li>
+                    <li><a href="/statistiche-serie-a" target="_self">Statistiche</a></li>
+                    <li><a href="/analisi-assist" target="_self">Analisi Assist</a></li>
+                    <li><a href="/griglia-portieri" target="_self">Griglia Portieri</a></li>
+                    <li><a href="/rigoristi-serie-a" target="_self">Rigoristi</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/gioca" target="_self">Gioca!</a>
+            </li>
+            <!--
+            <li class="ml-auto">
+               <span id="username" class="username"></span>
+            </li>
+            -->
+            <li class="divider"></li>
+            <li class="search-control"
+                itemscope itemtype="https://schema.org/WebSite">
+                <meta itemprop="url" content="https://www.fantacalcio.it" />
+                <form itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction" class="search-box" target="_self" action="/ricerca">
+                    <meta itemprop="target" content="https://www.fantacalcio.it/ricerca?q={q}" />
+                    <input itemprop="query-input" class="search-input"
+                           type="text" placeholder="Cerca..." name="q" required />
+                    <button type="submit" class="btn btn-fab submit-control">
+                        <img class="icon" width="20" height="20" src="https://content.fantacalcio.it/fantacalcio/images/icons/whites/ico-search.svg" alt="Icona cerca" />
+                    </button>
+                </form>
+            </li>
+            <li class="px-4 dropdown dropdown-end user-control">
+                <button class="btn btn-fab btn-primary">
+                    <img class="icon" width="20" height="20" src="https://content.fantacalcio.it/fantacalcio/images/icons/whites/ico-user.svg" alt="Icona utente" />
+                </button>
+                <ul>
+                    <li class="off-user-logged"><a href="/login?from=/404" target="_self">Login</a></li>
+                    <li class="off-user-logged"><a href="/registrazione" target="_self">Registrati</a></li>
+                    <li class="on-user-logged"><span data-user="email"></span></li>
+                    <li class="on-user-logged"><a href="/profilo" target="_self">Profilo</a></li>
+                    <li class="on-user-logged"><a href="/logout" target="_self">Logout</a></li>
+                    <li class="hidden"><a href="/elimina-profilo" title="Elimina il tuo account" target="_self">Elimina Profilo</a></li>
+                    <li class="hidden"><a href="/recupera-password" title="Recupera o reset password" target="_self">Recupera Password</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <!-- MAIN MENU -->
+    <nav class="secondary-nav dropdown-nav dark">
+        <ul class="secondary-menu">
+            <li class="megamenu">
+                <button>News</button>
+                <ul>
+                    <li class="dropdown">
+                        <a href="/news/calcio-italia" target="_self">Calcio Italiano</a>
+                        <ul data-header="Calcio Italiano">
+                            <li class="only-mobile"><a href="/news/calcio-italia" target="_self">Tutte le notizie</a></li>
+                            <li><a href="/news/calcio-italia/serie-a" target="_self">Serie A</a></li>
+                            <li><a href="/serie-a/cronache-e-tabellini" target="_self">Cronache e tabellini</a></li>
+                            <li><a href="/news/calcio-italia/coppa-italia" target="_self">Coppa Italia</a></li>
+                            <li><a href="/news/calcio-italia/calcio-femminile" target="_self">Calcio Femminile</a></li>
+                            <li><a href="/news/calcio-italia/altre-serie" target="_self">Altre Serie</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown">
+                        <a href="/news/calcio-estero" target="_self">Calcio Estero</a>
+                        <ul data-header="Calcio Estero">
+                            <li class="only-mobile"><a href="/news/calcio-estero" target="_self">Tutte le notizie</a></li>
+                            <li><a href="/news/calcio-estero/champions-league" target="_self">Champions League</a></li>
+                            <li><a href="/news/calcio-estero/europa-league" target="_self">Europa League</a></li>
+                            <li><a href="/news/calcio-estero/conference-league" target="_self">Conference League</a></li>
+                            <li><a href="/news/calcio-estero/nazionali" target="_self">Nazionali</a></li>
+                            <li><a href="/news/calcio-estero/europei" target="_self">Europei</a></li>
+                            <li><a href="/news/calcio-estero/mondiali" target="_self">Mondiali</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown">
+                        <a href="/rubriche" target="_self">Rubriche</a>
+                        <ul data-header="Rubriche">
+                            <li class="only-mobile"><a href="/rubriche" target="_self">Tutte le rubriche</a></li>
+                            <li><a href="/rubriche/editoriale" target="_self">Editoriale</a></li>
+                            <li><a href="/rubriche/fantatop-fantaflop" target="_self">FantaTop & FantaFlop</a></li>
+                            <li><a href="/rubriche/fantaex" target="_self">FantaEx: gli ex di Giornata</a></li>
+                            <li><a href="/rubriche/fantaracconti" target="_self">Fantaracconti</a></li>
+                            <li><a href="/rubriche/fantaffari" target="_self">Fantaffari</a></li>
+                            <li><a href="/rubriche/fantasfighe" target="_self">Fantasfighe</a></li>
+                            <li><a href="/rubriche/stat-corner" target="_self">Stat Corner</a></li>
+                            <li><a href="/rubriche/euro-stat" target="_self">Eurostat</a></li>
+                            <li><a href="/rubriche/fantacalcio-vip" target="_self">Fantacalcio VIP</a></li>
+                            <li><a href="/rubriche/fvm-weekly" target="_self">FVM Weekly</a></li>
+                            <li><a href="/approfondimenti" target="_self">Approfondimenti</a></li>
+                            <li><a href="/blogs" target="_self">Blog</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="/news/tv-fantacalcio" target="_self">Fantacalcio TV</a></li>
+                    <li><a href="/news" target="_self">Tutte le notizie</a></li>
+                    <li><a href="/ultime-notizie" target="_self">Ultime notizie</a></li>
+                    <li><a href="/news/redazionali" target="_self">Redazionali</a></li>
+                    <li><a href="/news/altri-sport" target="_self">Altri sport</a></li>
+                    <li><a href="/news/attualita" target="_self">Attualità</a></li>
+                    <li><a href="/news/gossip" target="_self">Gossip</a></li>
+                    <li><a href="/news/altro" target="_self">Altro</a></li>
+                    <li class="divider"></li>
+                    <li class="visual-tips">
+                        <a href="https://www.twitch.tv/fantacalcio" target="_blank">
+                            <img src="https://content.fantacalcio.it/web/img/menu-banners/fc-tv.webp" width="333" height="80"
+                                 loading="lazy" alt="banner Fantacalcio TV" title="Fantacalcio TV" />
+                        </a>
+                    </li>
+                    <li class="visual-tips">
+                        <a href="https://store.fantacalcio.it" target="_blank">
+                            <img src="https://content.fantacalcio.it/web/img/menu-banners/fc-store.webp" width="333" height="80"
+                                 loading="lazy" alt="banner Fantacalcio Store" title="Fantacalcio Store" />
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="megamenu">
+                <button>Fantacalcio</button>
+                <ul>
+                    <li class="dropdown">
+                        <a href="/consigli-fantacalcio" target="_self">Consigli Fantacalcio</a>
+                        <ul data-header="Consigli Fantacalcio">
+                            <li class="only-mobile"><a href="/consigli-fantacalcio" target="_self">Tutti i consigli</a></li>
+                            <li><a href="/consigli-fantacalcio/portieri" target="_self">Portieri</a></li>
+                            <li><a href="/consigli-fantacalcio/difensori" target="_self">Difensori</a></li>
+                            <li><a href="/consigli-fantacalcio/centrocampisti" target="_self">Centrocampisti</a></li>
+                            <li><a href="/consigli-fantacalcio/attaccanti" target="_self">Attaccanti</a></li>
+                            <li><a href="/consigli-fantacalcio/mantra" target="_self">Mantra</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown">
+                        <a href="/probabili-formazioni-serie-a" target="_self">Chi schierare</a>
+                        <ul data-header="Chi schierare">
+                            <li class="only-mobile"><a href="/probabili-formazioni-serie-a" target="_self">Probabili formazioni</a></li>
+                            <li><a href="/serie-a/ultime-dai-campi" target="_self">Ultime dai campi</a></li>
+                            <li><a href="/convocati-serie-a" target="_self">Convocati</a></li>
+                            <li><a href="/infortunati-serie-a" target="_self">Infortunati</a></li>
+                            <li><a href="/squalificati-e-diffidati-campionato-serie-a" target="_self">Squalificati e diffidati</a></li>
+                            <li><a href="/indisponibili-serie-a" target="_self">Indisponibili</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="dropdown">
+                        <button>Tutto Fantacalcio</button>
+                        <ul data-header="Tutto Fantacalcio">
+                            <li><a href="/voti-fantacalcio-serie-a" target="_self">Voti</a></li>
+                            <li><a href="/pagelle" target="_self">Pagelle</a></li>
+                            <li><a href="/quotazioni-fantacalcio" target="_self">Quotazioni</a></li>
+                            <li><a href="/statistiche-serie-a" target="_self">Statistiche</a></li>
+                            <li><a href="/comparatore " target="_self">Comparatore</a></li>
+                            <li><a href="/rigoristi-serie-a" target="_self">Rigoristi</a></li>
+                            <li><a href="/analisi-assist" target="_self">Analisi Assist</a></li>
+                            <li><a href="/griglia-portieri" target="_self">Griglia Portieri</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="/rubriche/fantatop-fantaflop" target="_self">FantaTop & FantaFlop</a></li>
+                    <li><a href="/rubriche/fantaex" target="_self">FantaEx: gli ex di Giornata</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/probabili-formazioni-serie-a" target="_self">Probabili Formazioni</a>
+            </li>
+            <li class="megamenu">
+                <button>Serie A</button>
+                <ul>
+                    <li class="dropdown">
+                        <a href="/serie-a" target="_self">Serie A</a>
+                        <ul data-header="Serie A">
+                            <li class="only-mobile"><a href="/serie-a" target="_self">Area Serie A</a></li>
+                            <li><a href="/serie-a/cronache-e-tabellini" target="_self">Cronache e Tabellini</a></li>
+                            <li><a href="/live-serie-a" target="_self">Live Serie A</a></li>
+                            <li><a href="/pagelle" target="_self">Pagelle</a></li>
+                            <li><a href="/news/calcio-italia/serie-a/ultima-giornata" target="_self">Ultima giornata</a></li>
+                            <li><a href="/serie-a/classifica" target="_self">Classifica</a></li>
+                            <li><a href="/serie-a/calendario" target="_self">Calendario</a></li>
+                            <li><a href="/serie-a/classifica-marcatori" target="_self">Marcatori</a></li>
+                            <li><a href="/serie-a/comunicati" target="_self">Comunicati</a></li>
+                            <li><a href="/serie-a/squadre" target="_self">Squadre</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="visual-tips visual-tips-hero">
+                        <a href="/serie-a" target="_self">
+                            <img src="https://content.fantacalcio.it/web/img/menu-banners/serie-a-enilive.webp" width="500" height="160"
+                                 loading="lazy" alt="banner Serie A Enilive" title="Serie A Enilive" />
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="megamenu">
+                <button>Calciomercato</button>
+                <ul>
+                    <li class="dropdown">
+                        <a href="/calciomercato" target="_self">Calciomercato</a>
+                        <ul data-header="Calciomercato">
+                            <li class="only-mobile"><a href="/calciomercato" target="_self">Notizie di calciomercato</a></li>
+                            <li><a href="/calciomercato-juventus" target="_self">Calciomercato Juventus</a></li>
+                            <li><a href="/calciomercato-milan" target="_self">Calciomercato Milan</a></li>
+                            <li><a href="/calciomercato-inter" target="_self">Calciomercato Inter</a></li>
+                            <li><a href="/calciomercato-napoli" target="_self">Calciomercato Napoli</a></li>
+                            <li><a href="/calciomercato-roma" target="_self">Calciomercato Roma</a></li>
+                            <li><a href="/calciomercato-lazio" target="_self">Calciomercato Lazio</a></li>
+                            <li><a href="/calciomercato-fiorentina" target="_self">Calciomercato Fiorentina</a></li>
+                            <li><a href="/calciomercato-ultime" target="_self">Ultime di calciomercato</a></li>
+                            <li><a href="/calciomercato/trasferimenti-ufficiali" target="_self">Riepilogo trasferimenti ufficiali</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="visual-tips visual-tips-large">
+                        <a href="/calciomercato" target="_self">
+                            <img src="https://content.fantacalcio.it/web/img/menu-banners/transfers-1.webp" width="318" height="160"
+                                 loading="lazy" alt="banner Fantacalcio TV" title="Fantacalcio TV" />
+                        </a>
+                    </li>
+                    <li class="visual-tips visual-tips-large">
+                        <a href="/news/calcio-italia/29_07_2025/asta-fantacalcio-le-probabili-formazioni-della-serie-a-enilive-2025-26-480206" target="_self">
+                            <img src="https://content.fantacalcio.it/web/img/menu-banners/transfers-2.webp" width="318" height="160"
+                                 loading="lazy" alt="banner Come gioca la serie a" title="Come gioca la serie a" />
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="megamenu">
+                <button>EuroLeghe</button>
+                <ul>
+                    <li class="dropdown">
+                        <a href="/mondo-euroleghe" target="_self">Mondo EuroLeghe</a>
+                        <ul data-header="Mondo EuroLeghe">
+                            <li class="only-mobile"><a href="/mondo-euroleghe" target="_self">Notizie</a></li>
+                            <li><a href="/calciatori-fantacalcio-euro-leghe" target="_self">Calciatori</a></li>
+                            <li><a href="/quotazioni-fantacalcio-euro-leghe" target="_self">Quotazioni e FVM</a></li>
+                            <li><a href="/statistiche-euro-leghe" target="_self">Statistiche</a></li>
+                            <li><a href="/probabili-formazioni-euro-leghe" target="_self">Probabili formazioni</a></li>
+                            <li><a href="/indisponibili-euro-leghe" target="_self">Indisponibili</a></li>
+                            <li><a href="/consigli-fantacalcio/euro-leghe" target="_self">Consigli</a></li>
+                            <li><a href="/voti-fantacalcio-euro-leghe" target="_self">Voti</a></li>
+                            <li><a href="/euro-leghe/calendario" target="_self">Calendario</a></li>
+                            <li><a href="/app-euroleghe-fantacalcio" target="_self">Scarica l'app</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="visual-tips visual-tips-hero">
+                        <a href="https://euroleghe.fantacalcio.it" target="_blank">
+                            <img src="https://content.fantacalcio.it/web/img/menu-banners/euro.webp" width="500" height="160"
+                                 loading="lazy" alt="banner EuroLeghe" title="EuroLeghe" />
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="megamenu">
+                <button>FantaChampions</button>
+                <ul>
+                    <li class="dropdown">
+                        <a href="/fantachampions" target="_self">FantaChampions</a>
+                        <ul data-header="Fantachampions">
+                            <li class="only-mobile"><a href="/fantachampions" target="_self">Notizie</a></li>
+                            <li><a href="/fantachampions/voti-e-tabellini" target="_self">Voti e tabellini</a></li>
+                            <li><a href="/fantachampions/probabili-formazioni" target="_self">Probabili Formazioni</a></li>
+                            <li><a href="/fantachampions/consigli" target="_self">Consigli</a></li>
+                            <li><a href="/news/calcio-estero/champions-league" target="_self">Champions League</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+            
+        <div id="main-container" class="container">
+            <div id="content" class="col">
+                    
+                    
+
+<header>
+    <h1 class="h1">404</h1>
+    <p>Ooops... Pagina non trovata!</p>
+</header>
+<figure class="mega-emoji my-4">😯</figure>
+<a class="btn btn-large btn-primary" href="/">TORNA ALLA HOME...</a>
+
+
+                    
+
+            </div>
+            <div id="sidebar" class="col">
+                    
+    <div class="sticky-top">
+        
+
+    <link rel="stylesheet" href="/css/pages/widgets/article-list-sidebar.widget.min.css?v=O_i2MRiAqgiTdhchVVRIncFicXAcmJPAFKtc8GMwywQ" />
+
+<aside class="article-list-widget card">
+        <ul class="circle-list">
+                <li><a class="article-link" href="/news/calcio-italia/serie-a/ultima-giornata/19_10_2026/

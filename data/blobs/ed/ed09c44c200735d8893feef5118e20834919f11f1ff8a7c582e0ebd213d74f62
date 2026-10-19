@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="en" class="_html-container_1xd3m_22"><head><meta charset="UTF-8"><script>
+  ;(function () {
+    var callbacks = []
+    var granted = false
+
+    function readCookie(n) {
+      return (
+        (
+          document.cookie.split(/;\s*/).find(function (c) {
+            return c.startsWith(n + "=")
+          }) || ""
+        ).slice(n.length + 1) || undefined
+      )
+    }
+
+    function readSubcookie(cv, sck) {
+      var raw = (
+        cv.split(/&/).find(function (sc) {
+          return sc.startsWith(sck + "=")
+        }) || ""
+      ).slice(sck.length + 1)
+      try {
+        return decodeURIComponent(raw) || undefined
+      } catch (e) {
+        return undefined
+      }
+    }
+
+    function hasFunctionalConsent() {
+      var consent = readCookie("OptanonConsent")
+      if (!consent) return false
+      var groups = readSubcookie(consent, "groups")
+      if (!groups) return false
+      return groups.split(",").some(function (g) {
+        return g === "funcs:1"
+      })
+    }
+
+    function flush() {
+      granted = true
+      while (callbacks.length) {
+        callbacks.shift()()
+      }
+    }
+
+    // As of now, we only load third-party scripts that meet the
+    // functional/performance criteria
+    if (hasFunctionalConsent()) {
+      flush()
+    }
+
+    window.__consentReady = function (cb) {
+      if (granted) {
+        cb()
+      } else {
+        callbacks.push(cb)
+      }
+    }
+
+    window.__consentGranted = function (attempts) {
+      if (granted) return
+      // This works around a race condition between the banner closing
+      // and the cookie being updated
+      if (hasFunctionalConsent()) {
+        flush()
+      } else if ((attempts || 0) < 10) {
+        setTimeout(function () {
+          window.__consentGranted((attempts || 0) + 1)
+        }, 100)
+      }
+    }
+  })()
+</script><script>
+  var afOnLoad = true
+  window.__consentReady(function () {
+    var n = document.documentElement
+    var s = { p: [], r: [] }
+    var u = {
+      p: s.p,
+      r: s.r,
+      push: function (e) {
+        s.p.push(e)
+      },
+      ready: function (e) {
+        s.r.push(e)
+      },
+    }
+    window.intellimize = u
+    if (afOnLoad) {
+      n.className += " anti-flicker"
+      setTimeout(function () {
+        n.className = n.className.replace(RegExp(" ?anti-flicker"), "")
+      }, 1000)
+    }
+
+    var style = document.createElement("style")
+    style.textContent =
+      ".anti-flicker, .anti-flicker * {visibility: hidden !important; opacity: 0 !important;}"
+    document.head.appendChild(style)
+
+    var script = document.createElement("script")
+    script.src = "https://cdn.intellimize.co/snippet/117419923.js"
+    script.async = true
+    script.onerror = function () {
+      n.className = n.className.replace(RegExp(" ?anti-flicker"), "")
+    }
+    document.head.appendChild(script)
+  })
+  afOnLoad = false
+</script><style>@font-face{font-family:TTHovesPro-c66fd427fd6ba346;src:url("/_astro/fonts/21a6f51d491f2196.woff2") format("woff2");font-display:swap;font-weight:400 700;font-style:normal;}@font-face{font-family:"TTHovesPro-c66fd427fd6ba346 fallback: Arial";src:local("Arial");font-display:swap;font-weight:400 700;font-style:normal;size-adjust:99.3717%;ascent-override:86.5437%;descent-override:20.1264%;line-gap-override:0%;}:root{--font-tt-hoves-pro:TTHovesPro-c66fd427fd6ba346,"TTHovesPro-c66fd427fd6ba346 fallback: Arial",sans-serif;}</style><link rel="preload" href="/_astro/fonts/21a6f51d491f2196.woff2" as="font" type="font/woff2" crossorigin><style>@font-face{font-family:"Roboto Mono-d878d9db37b67e87";src:url("/_astro/fonts/21652acead50a0f5.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:400;font-style:normal;}@font-face{font-family:"Roboto Mono-d878d9db37b67e87 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:normal;ascent-override:104.7852%;descent-override:27.0996%;}:root{--font-roboto-mono:"Roboto Mono-d878d9db37b67e87","Roboto Mono-d878d9db37b67e87 fallback: Courier New",monospace;}</style><title>Page not found | Fastly</title><meta name="description" content="404 Page not found"><meta name="viewport" content="width=device-width"><link href="https://www.fastly.com/pageNotFound" hreflang="en" rel="alternate"><link href="https://www.fastly.com/jp/pageNotFound" hreflang="ja" rel="alternate"><link href="https://www.fastly.com/es/pageNotFound" hreflang="es-es" rel="alternate"><link href="https://www.fastly.com/es-latam/pageNotFound" hreflang="es" rel="alternate"><link href="https://www.fastly.com/de/pageNotFound" hreflang="de" rel="alternate"><link href="https://www.fastly.com/fr/pageNotFound" hreflang="fr" rel="alternate"><link href="https://www.fastly.com/it/pageNotFound" hreflang="it" rel="alternate"><link href="https://www.fastly.com/pageNotFound" hreflang="x-default" rel="alternate"><link href="https://www.fastly.com/pageNotFound" rel="canonical"><link href="/blog_rss.xml" rel="alternate" title="RSS" type="application/rss+xml"><meta content="Page not found | Fastly" property="og:title"><meta content="404 Page not found" property="og:description"><meta content="website" property="og:type"><meta content="https://www.fastly.com/pageNotFound" property="og:url"><meta content="Fastly" property="og:site_name"><meta content="en_US" property="og:locale"><meta content="//www.fastly.com/cimages/ocb1q9kflo7k/1UfTfeN01lL2r1S0c4CTrF/84a56e8b3b9e7e7f68bbeea1b99163b2/Fastly_-_Main_Meta_Image.png?auto=avif&amp;canvas=1200:630&amp;width=1200&amp;height=630" property="og:image"><meta content="1200" property="og:image:width"><meta content="630" property="og:image:height"><meta content="Page not found | Fastly" property="og:image:alt"><meta content="summary_large_image" name="twitter:card"><meta content="@fastly" name="twitter:site"><meta content="@fastly" name="twitter:creator"><meta content="Page not found | Fastly" name="twitter:title"><meta content="404 Page not found" name="twitter:description"><meta content="//www.fastly.com/cimages/ocb1q9kflo7k/1UfTfeN01lL2r1S0c4CTrF/84a56e8b3b9e7e7f68bbeea1b99163b2/Fastly_-_Main_Meta_Image.png?auto=avif&amp;canvas=1200:600&amp;width=1200&amp;height=600" name="twitter:image"><meta content="Page not found | Fastly" name="twitter:image:alt"><link href="/favicons/favicon.ico" rel="icon" sizes="any"><link href="/favicons/favicon.svg" rel="icon" type="image/svg+xml"><link href="/favicons/favicon.png" rel="icon" type="image/png"><link href="/favicons/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57"><link href="/favicons/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114"><link href="/favicons/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72"><link href="/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144"><link href="/favicons/apple-touch-icon-60x60.png" rel="apple-touch-icon-precomposed" sizes="60x60"><link href="/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon-precomposed" sizes="120x120"><link href="/favicons/apple-touch-icon-76x76.png" rel="apple-touch-icon-precomposed" sizes="76x76"><link href="/favicons/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="152x152"><link href="/favicons/favicon-196x196.png" rel="icon" sizes="196x196" type="image/png"><link href="/favicons/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"><link href="/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"><link href="/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"><link href="/favicons/favicon-128x128.png" rel="icon" sizes="128x128" type="image/png"><meta content=" " name="application-name"><meta content="#FFFFFF" name="msapplication-TileColor"><meta content="/favicons/mstile-144x144.png" name="msapplication-TileImage"><meta content="/favicons/mstile-70x70.png" name="msapplication-square70x70logo"><meta content="/favicons/mstile-150x150.png" name="msapplication-square150x150logo"><meta content="/favicons/mstile-256x256.png" name="msapplication-wide256x256logo"><script type="text/javascript">
+  window.__consentReady(function () {
+    ;(function (apiKey) {
+      ;(function (p, e, n, d, o) {
+        var v, w, x, y, z
+        o = p[d] = p[d] || {}
+        o._q = o._q || []
+        v = ["initialize", "identify", "updateOptions", "pageLoad", "track"]
+        for (w = 0, x = v.length; w < x; ++w)
+          (function (m) {
+            o[m] =
+              o[m] ||
+              function () {
+                o._q[m === v[0] ? "unshift" : "push"]([m].concat([].slice.call(arguments, 0)))
+              }
+          })(v[w])
+        y = e.createElement(n)
+        y.async = !0
+        y.src = "https://cdn.pendo.io/agent/static/" + apiKey + "/pendo.js"
+        z = e.getElementsByTagName(n)[0]
+        z.parentNode.insertBefore(y, z)
+      })(window, document, "script", "pendo")
+    })("08eb7aa5-3521-4ef5-597f-4d6073b28ef8")
+
+    var retries = 0
+    var maxRetries = 20
+
+    var initializePendo = function () {
+      if (window.pendo) {
+        var experimentMeta = document.head.querySelector('meta[name="experiment"]')
+        var flagKey = experimentMeta ? experimentMeta.getAttribute("content") : null
+        var activeFlags =
+          flagKey && experimentMeta.dataset.variant === "experiment" ? [flagKey] : []
+
+        return window.pendo.initialize({
+          visitor: {
+            id: null,
+            activeDotComFeatureFlags: activeFlags,
+          },
+          account: {
+            id: null,
+          },
+        })
+      } else if (retries < maxRetries) {
+        retries++
+        setTimeout(initializePendo, 500)
+      }
+    }
+
+    initializePendo()
+  })
+</script><script>
+  window.__consentReady(function () {
+    LUX = (function () {
+      function n() {
+        return Date.now ? Date.now() : +new Date()
+      }
+      var r,
+        e = n(),
+        t = window.performance || {},
+        a = t.timing || {
+          navigationStart: (null === (r = window.LUX) || void 0 === r ? void 0 : r.ns) || e,
+        }
+      function o() {
+        return t.now ? ((r = t.now()), Math.floor(r)) : n() - a.navigationStart
+        var r
+      }
+      ;(((LUX = window.LUX || {}).ac = []),
+        (LUX.addData = function (n, r) {
+          return LUX.cmd(["addData", n, r])
+        }),
+        (LUX.cmd = function (n) {
+          return LUX.ac.push(n)
+        }),
+        (LUX.getDebug = function () {
+          return [[e, 0, []]]
+        }),
+        (LUX.init = function () {
+          return LUX.cmd(["init"])
+        }),
+        (LUX.mark = function () {
+          for (var n = [], r = 0; r < arguments.length; r++) n[r] = arguments[r]
+          if (t.mark) return t.mark.apply(t, n)
+          var e = n[0],
+            a = n[1] || {}
+          void 0 === a.startTime && (a.startTime = o())
+          LUX.cmd(["mark", e, a])
+        }),
+        (LUX.markLoadTime = function () {
+          return LUX.cmd(["markLoadTime", o()])
+        }),
+        (LUX.measure = function () {
+          for (var n = [], r = 0; r < arguments.length; r++) n[r] = arguments[r]
+          if (t.measure) return t.measure.apply(t, n)
+          var e,
+            a = n[0],
+            i = n[1],
+            u = n[2]
+          e = "object" == typeof i ? n[1] : { start: i, end: u }
+          e.duration || e.end || (e.end = o())
+          LUX.cmd(["measure", a, e])
+        }),
+        (LUX.send = function () {
+          return LUX.cmd(["send"])
+        }),
+        (LUX.ns = e))
+      var i = LUX
+      if (
+        ((window.LUX_ae = []),
+        window.addEventListener("error", function (n) {
+          window.LUX_ae.push(n)
+        }),
+        (window.LUX_al = []),
+        "function" == typeof PerformanceObserver && "function" == typeof PerformanceLongTaskTiming)
+      ) {
+        var u = new PerformanceObserver(function (n) {
+          for (var r = n.getEntries(), e = 0; e < r.length; e++) window.LUX_al.push(r[e])
+        })
+        try {
+          u.observe({ type: "longtask" })
+        } catch (n) {}
+      }
+      return i
+    })()
+
+    var s = document.createElement("script")
+    s.src = "https://cdn.speedcurve.com/js/lux.js?id=4272646268"
+    s.async = true
+    s.crossOrigin = "anonymous"
+    document.head.appendChild(s)
+  })
+</script><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Fastly",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "San Francisco, CA",
+    "postalCode": "94107",
+    "streetAddress": "475 Brannan St #300"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+1-844-432-7859",
+    "contactType": "customer service"
+  },
+  "url": "https://www.fastly.com",
+  "logo": "https://www.fastly.com/img/og-image-lg.png?canvas=1200:630&width=1200&height=630&fit=bounds&bg-color=FFFFFF",
+  "sameAs": [
+    "https://www.facebook.com/FastlyEdgeCloud",
+    "https://x.com/fastly",
+    "https://x.com/fastlyjapan",
+    "https://en.wikipedia.org/wiki/Fastly",
+    "https://www.youtube.com/user/FastlyCDN",
+    "https://www.linkedin.com/company/fastly",
+    "https://vimeo.com/fastly"
+  ]
+}</script><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Corporation",
+  "name": "Fastly",
+  "url": "https://www.fastly.com",
+  "description": "Fastly's edge cloud platform helps the world's most popular digital businesses keep pace with their customer expectations by delivering fast, secure, and scalable online experiences."
+}</script><!-- Before GTM code --><script>
+  window.dataLayer = window.dataLayer || []
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+</script><!-- Google Tag Manager --><script>
+  ;(function (w, d, s, l, i) {
+    w[l] = w[l] || []
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" })
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : ""
+    j.async = true
+    j.src = "/metrics/gtm/?id=" + i + dl
+    f.parentNode.insertBefore(j, f)
+  })(window, document, "script", "dataLayer", "GTM-W9FKFHD")
+</script><!-- End Google Tag Manager --><style>._link-list_1fqs1_4{gap:var(--LAYOUT--size--sm);flex-direction:column;flex-grow:1;display:flex}._header_1fqs1_11{align-items:center;gap:var(--LAYOUT--size--4xs);display:flex}._header-icon_1fqs1_17{width:1rem;height:1rem;color:var(--COLOR--text-body);flex-shrink:0}._header-title_1fqs1_24{font-size:var(--TYPOGRAPHY--font-size--sm);font-weight:var(--TYPOGRAPHY--font-weight--regular);line-height:var(--TYPOGRAPHY--line-height--lg);text-transform:uppercase;color:var(--COLOR--text-body);text-box-trim:trim-end}._list_1fqs1_33{gap:var(--LAYOUT--size--sm);flex-direction:column;margin:0;padding:0;list-style:none;display:flex}._link-card_1fqs1_42{gap:var(--LAYOUT--size--3xs);color:var(--COLOR--text);flex-direction:column;justify-self:flex-start;text-decoration:none;display:flex;position:relative;&:has([data-card-cta]):hover{cursor:pointer}& [data-card-cta]{pointer-events:none}@media (hover:hover){&:hover [data-card-cta] svg[data-icon=arrow-right]{clip-path:inset(0 0 0 30%)}}}._link-title_1fqs1_53{align-items:center;gap:var(--LAYOUT--size--4xs);font-size:var(--TYPOGRAPHY--font-size--md);font-weight:var(--TYPOGRAPHY--font-weight--demi-bold);line-height:var(--TYPOGRAPHY--line-height--lg);text-box-trim:trim-end;text-decoration:none;display:inline-flex;&:hover{text-decoration:underline;[data-section-theme=light] &{color:var(--COLOR--link)}}&:before{content:"";z-index:var(--LAYOUT--z-index--base);position:absolute;inset:0}&:focus-visible{outline:2px solid var(--COLOR--link);outline-offset:2px;border-radius:var(--LAYOUT--radius--xs)}}._link-icon_1fqs1_66{flex-shrink:0;width:1rem;height:1rem}._link-description_1fqs1_72{font-size:var(--TYPOGRAPHY--font-size--md);font-weight:var(--TYPOGRAPHY--font-weight--regular);line-height:var(--TYPOGRAPHY--line-height--lg);color:var(--COLOR--text-body)}
+</style><link rel="stylesheet" href="/_astro/Layout.BYMFlp45.css"><style>._hero_1s4zv_1{background-repeat:no-repeat;&._waveform-right_1s4zv_4{background-image:url(/_astro/wave-form-text-hero-right-m.BAyw-I5X.svg);background-position:right -50px bottom 0;background-size:auto;@media (width>=768px){background-image:url(/_astro/wave-form-text-hero-right.CN33fZts.svg);background-position:100% 100%;background-size:100%}}&._waveform-left_1s4zv_16{background-image:url(/_astro/wave-form-text-hero-left.BkWytN74.svg);background-position:-580px -200px;background-size:auto;@media (width>=768px){background-position:-520px -200px}@media (width>=1024px){background-position:-500px -240px}@media (width>=1440px){background-position:-420px -240px}}}
+._section-header_1gopn_3{gap:var(--LAYOUT--size--3xs);flex-direction:column;grid-column:1/-1;width:100%;display:flex;&._center_1gopn_10{text-align:center;align-items:center}}._content_1gopn_16{gap:var(--LAYOUT--size--sm);flex-direction:column;display:flex;._center_1gopn_10 &{align-items:center;width:100%}}._title_1gopn_27{text-wrap:balance;overflow-wrap:break-word;&:lang(de){hyphens:auto}._center_1gopn_10 &{width:100%;max-width:var(--LAYOUT--content-max-width)}}._description_1gopn_43{max-width:var(--LAYOUT--content-max-width)}._ctas_1gopn_47{gap:var(--LAYOUT--size--2xs);flex-wrap:wrap;display:flex;._center_1gopn_10 &{justify-content:center}@media (width<=543px){._center_1gopn_10 &{width:100%}}}._image_1gopn_63{width:100%;max-width:150px;max-height:87px}._primary-cta-logo-button_1gopn_69{& span{align-items:center;gap:var(--LAYOUT--size--2xs);display:inline-flex}}._full-width_1gopn_77{--LAYOUT--content-max-width:100%}._primary-cta-logo_1gopn_69{width:auto;height:1.25em;transition:filter var(--MOTION--animation-duration);._primary-cta-logo-button_1gopn_69:hover &{filter:brightness(0)invert()}}._eyebrow_1arx4_3{font-family:var(--TYPOGRAPHY--type--font-family--base);font-style:var(--TYPOGRAPHY--font-style--normal);font-size:var(--TYPOGRAPHY--font-size--sm);font-weight:var(--TYPOGRAPHY--font-weight--regular);line-height:var(--TYPOGRAPHY--line-height--sm);text-transform:uppercase;&:lang(ja){word-break:auto-phrase;text-autospace:normal;text-spacing-trim:normal}align-items:center;gap:var(--LAYOUT--size--3xs);display:inline-flex;& span{text-box-trim:trim-end;text-box-edge:cap alphabetic}}
+</style><script type="module" src="/_astro/page.DRCRY5ut.js"></script></head><body data-page-theme="light" class="_container_1xd3m_1" style="--theme-accent:var(--COLOR--blue--60)"><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W9FKFHD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) --><div class="_container_1xd3m_1"><div class="_header-container_vv28g_1" data-global-header><script type="module">(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`87c2119a82aff9fcb6e3dafa570d06d8c9c5e9b4`};var t=new e.Error().stack;t&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[t]=`5ec32b5c-290b-4853-81dc-368ed732e7a7`,e._sentryDebugIdIdentifier=`sentry-dbid-5ec32b5c-290b-4853-81dc-368ed732e7a7`)}catch{}})();var e=/^\/(en-US|jp|es-latam|es|de|fr|it)(?=\/|$)/;function t(t){let n=t.match(e);return n?n[1]:`en-US`}function n(t){return t.replace(e,``)||`/`}var r=class extends HTMLElement{trigger=null;listbox=null;options=[];activeIndex=-1;connectedCallback(){this.trigger=this.querySelector(`button`),this.listbox=this.querySelector(`[role="listbox"]`),this.options=Array.from(this.querySelectorAll(`[role="option"]`)),this.trigger&&this.listbox&&(this.trigger.addEventListener(`click`,this.handleTriggerClick),this.trigger.addEventListener(`keydown`,this.handleTriggerKeyDown),this.listbox.addEventListener(`mousedown`,e=>e.preventDefault()),this.options.forEach((e,t)=>{e.addEventListener(`click`,()=>this.selectOption(t)),e.addEventListener(`mouseenter`,()=>this.setActiveOption(t)),e.addEventListener(`mouseleave`,()=>this.clearActiveOption())}),document.addEventListener(`click`,this.handleOutsideClick))}disconnectedCallback(){document.removeEventListener(`click`,this.handleOutsideClick)}handleTriggerClick=()=>{this.hasAttribute(`data-open`)?this.close():this.open()};handleTriggerKeyDown=e=>{switch(e.key){case`ArrowDown`:case`Enter`:case` `:e.preventDefault(),this.hasAttribute(`data-open`)?e.key===`ArrowDown`?this.moveActive(1):this.activeIndex>=0&&this.selectOption(this.activeIndex):this.open();break;case`ArrowUp`:e.preventDefault(),this.hasAttribute(`data-open`)&&this.moveActive(-1);break;case`Escape`:this.hasAttribute(`data-open`)&&(e.preventDefault(),this.close());break;case`Tab`:this.hasAttribute(`data-open`)&&this.close({restoreFocus:!1})}};handleOutsideClick=e=>{this.hasAttribute(`data-open`)&&!this.contains(e.target)&&this.close({restoreFocus:!1})};open(){this.setAttribute(`data-open`,``),this.trigger?.setAttribute(`aria-expanded`,`true`);let e=this.options.findIndex(e=>e.getAttribute(`aria-selected`)===`true`);this.setActiveOption(e>=0?e:0)}close({restoreFocus:e=!0}={}){this.removeAttribute(`data-open`),this.trigger?.setAttribute(`aria-expanded`,`false`),this.clearActiveOption(),e&&this.trigger?.focus()}setActiveOption(e){this.clearActiveOption(),e>=0&&e<this.options.length&&(this.activeIndex=e,this.options[e].setAttribute(`data-active`,``),this.trigger?.setAttribute(`aria-activedescendant`,this.options[e].id))}clearActiveOption(){this.options.forEach(e=>e.removeAttribute(`data-active`)),this.activeIndex=-1,this.trigger?.removeAttribute(`aria-activedescendant`)}moveActive(e){let t=this.activeIndex+e;t<0&&(t=this.options.length-1),t>=this.options.length&&(t=0),this.setActiveOption(t)}selectOption(e){let t=this.options[e];if(!t)return;let n=t.dataset.id;if(n){if(n===this.getCurrentLocale()){this.close();return}this.navigateToLocale(n)}}getCurrentLocale(){return t(window.location.pathname)}navigateToLocale(e){let t=n(window.location.pathname);e===`en-US`?window.location.href=t:window.location.href=`/${e}${t}`}};customElements.define(`language-selector`,r);</script><script type="module" src="/_astro/SearchCombobox.astro_astro_type_script_index_0_lang.zumD4mW2.js"></script><script type="module">(function(){try{var e=typeof window<`u`?window:typeof global<`u`?global:typeof globalThis<`u`?globalThis:typeof self<`u`?self:{};e.SENTRY_RELEASE={id:`87c2119a82aff9fcb6e3dafa570d06d8c9c5e9b4`};var t=new e.Error().stack;t&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[t]=`bd40186e-3f7e-46a6-baba-3d3ea6f918f6`,e._sentryDebugIdIdentifier=`sentry-dbid-bd40186e-3f7e-46a6-baba-3d3ea6f918f6`)}catch{}})();var e=[`en-US`,`es`,`de`,`fr`,`it`,`ja`,`es-MX`],t=[`en-US`,`jp`,`es`,`es-latam`,`de`,`fr`,`it`];(t=>e.includes(t))(typeof process<`u`?{}.BUILD_LOCALE:``);var n=e=>t.find(t=>e.startsWith(`/${t}/`)),r=(e,t)=>{let r=/^[a-zA-Z][a-zA-Z\d+\-.]*?:/,i=[`mailto:`,`tel:`,`#`,`/cassets`],a=e=>r.test(e);if(!(e=>!a(e)&&i.every(t=>!e.startsWith(t))&&e.length>0)(e))return e;let o=n(e);if(o===t&&t!==`en-US`)return e;let s=o?e.replace(`/${o}`,``):e;return t===`en-US`?s:`/${t}${s}`},i=class extends HTMLElement{debounceTimer=null;abortController=null;combobox=null;input=null;clearBtn=null;connectedCallback(){this.combobox=this.querySelector(`search-combobox`),this.input=this.querySelector(`input[role="combobox"]`),this.clearBtn=this.querySelector(`[data-search-clear]`),this.combobox&&this.input&&(this.input.addEventListener(`input`,this.handleInput),this.clearBtn?.addEventListener(`click`,this.handleClear),this.clearBtn?.addEventListener(`mousedown`,this.preventFocusLoss))}disconnectedCallback(){this.input?.removeEventListener(`input`,this.handleInput),this.clearBtn?.removeEventListener(`click`,this.handleClear),this.clearBtn?.removeEventListener(`mousedown`,this.preventFocusLoss),this.debounceTimer&&clearTimeout(this.debounceTimer),this.abortController?.abort()}get endpoint(){return this.dataset.endpoint||`https://api.fastly.com/public-search/marketing`}get minChars(){return Number(this.dataset.minChars)||3}get localePath(){return this.dataset.localePath||`en-US`}preventFocusLoss=e=>{e.preventDefault()};handleInput=()=>{let e=this.input?.value??``;if(this.clearBtn&&(this.clearBtn.disabled=!e),this.debounceTimer&&clearTimeout(this.debounceTimer),this.abortController?.abort(),e.length<this.minChars){this.combobox?.setOptions([]),this.combobox?.setLoading(!1),this.combobox?.closeDropdown({dontFocus:!0});return}this.combobox?.setLoading(!0),this.debounceTimer=setTimeout(()=>{this.fetchResults(e)},300)};handleClear=()=>{this.clear(),this.input?.focus()};async fetchResults(e){let t=new AbortController;this.abortController=t;try{let n=`${this.endpoint}?query=${encodeURIComponent(e)}&limit=25`,i=await fetch(n,{signal:t.signal});if(!i.ok)throw Error(`Search request failed with status ${i.status}`);let a=((await i.json()).records||[]).map(e=>({id:e.id||e.url,label:e.title,url:r(e.url,this.localePath)}));this.combobox?.setOptions(a,e)}catch(e){if(e instanceof DOMException&&e.name===`AbortError`)return;this.combobox?.setOptions([])}finally{this.abortController===t&&(this.abortController=null,this.combobox?.setLoading(!1))}}clear(){this.input&&(this.debounceTimer&&clearTimeout(this.debounceTimer),this.abortController?.abort(),this.input.value=``,this.clearBtn&&(this.clearBtn.disabled=!0),this.combobox?.setOptions([]),this.combobox?.setLoading(!1),this.combobox?.closeDropdown({dontFocus:!0}))}};customElements.define(`site-search`,i);</script><global-navigation class="_wrapper_4s5x6_5" data-search-index="false" data-section-theme="light"><nav class="_nav-container_4s5x6_28" aria-label="Main navigation"><div class="_nav-content_4s5x6_42"><div class="_nav-top-row_4s5x6_55"><language-selector class="_wrapper_1bbad_4" data-anchor="left"><button type="button" class="_trigger_1bbad_9" aria-haspopup="listbox" aria-expanded="false" aria-label="Language: English"><svg width="1em" height="1em" class="_icon_1bbad_44" data-icon="language"><symbol id="ai:local:language" viewBox="0 0 24 24"><g fill="currentColor"><path d="M20.5 12a8.5 8.5 0 1 0-17 0 8.5 8.5 0 0 0 17 0m1 0a9.5 9.5 0 0 1-9.5 9.5 9.5 9.5 0 1 1 9.5-9.5"/><path d="M21 11.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1 0-1z"/><path d="M12 2.5a.5.5 0 0 1 .388.185 16.04 16.04 0 0 1 3.573 9.29v.05a16.04 16.04 0 0 1-3.573 9.29.5.5 0 0 1-.776 0 16.04 16.04 0 0 1-3.572-9.29v-.05a16.04 16.04 0 0 1 3.572-9.29A.5.5 0 0 1 12 2.5m0 1.314A15.04 15.04 0 0 0 9.039 12a15.04 15.04 0 0 0 2.96 8.185A15.03 15.03 0 0 0 14.96 12 15.03 15.03 0 0 0 12 3.814"/></g></symbol><use href="#ai:local:language"></use></svg><span data-label>English</span></button><div role="listbox" aria-label="Language" class="_listbox_1bbad_53"><div role="option" id="lang-option-en-US" class="_option_1bbad_78" aria-selected="true" data-id="en-US">English</div><div role="option" id="lang-option-jp" class="_option_1bbad_78" aria-selected="false" data-id="jp">日本語</div><div role="option" id="lang-option-es" class="_option_1bbad_78" aria-selected="false" data-id="es">Español</div><div role="option" id="lang-option-es-latam" class="_option_1bbad_78" aria-selected="false" data-id="es-latam">Español (Latinoamérica)</div><div role="option" id="lang-option-de" class="_option_1bbad_78" aria-selected="false" data-id="de">Deutsch</div><div role="option" id="lang-option-fr" class="_option_1bbad_78" aria-selected="false" data-id="fr">Français</div><div role="option" id="lang-option-it" class="_option_1bbad_78" aria-selected="false" data-id="it">Italiano</div></div></language-selector><a href="/login" class="_top-row-link_4s5x6_70">Login</a><a href="https://support.fastly.com" class="_top-row-link_4s5x6_70">Customer Support</a><div class="_search-panel_4s5x6_141" data-search-panel><site-search class="_wrapper_1jl1b_3" data-endpoint="https://api.fastly.com/public-search/marketing" data-min-chars="3" data-locale-path="en-US"><search-combobox class="_wrapper_h30cm_4" data-id="desktop-nav-search" data-variant="search"><div><label class="_label_h30cm_10 _visually-hidden_k4f6n_41" id="combobox-label-desktop-nav-search" for="combobox-input-desktop-nav-search">Search</label><div class="_input-wrapper_h30cm_17"><input type="text" class="_input_h30cm_17" id="combobox-input-desktop-nav-search" aria-labelledby="combobox-label-desktop-nav-search" aria-haspopup="listbox" aria-expanded="false" aria-controls="combobox-listbox-desktop-nav-search" aria-autocomplete="list" role="combobox" placeholder="Search Fastly.com" autocomplete="off"><svg class="_spinner_h30cm_61" viewBox="25 25 50 50" aria-hidden="true"><circle cx="50" cy="50" fill="none" r="20"></circle></svg></div><div class="_listbox_h30cm_259" id="combobox-listbox-desktop-nav-search" role="listbox" aria-labelledby="combobox-label-desktop-nav-search" aria-hidden="true" tabindex="-1"><div class="_no-results_h30cm_317" role="status" aria-live="polite" data-no-results aria-hidden="true">Sorry, no results found.</div></div></div></search-combobox><button type="button" class="_search-close_4s5x6_154" data-search-close aria-label="Close search"><svg width="1em" height="1em" data-icon="close"><symbol id="ai:local:close" viewBox="0 0 24 24"><g fill="currentColor"><path d="m17.483 7.578-9.906 9.905-1.06-1.06 9.905-9.906z"/><path d="m7.577 6.516 9.905 9.907-1.06 1.06-9.905-9.905z"/></g></symbol><use href="#ai:local:close"></use></svg></button></site-search></div><button type="button" class="_search-trigger_4s5x6_118" data-search-trigger aria-label="Search"><svg width="1em" height="1em" data-icon="search"><symbol id="ai:local:search" viewBox="0 0 24 24"><g fill="currentColor"><path d="M17.969 10.783a7.182 7.182 0 1 0-7.182 7.182v1.5l-.446-.012a8.682 8.682 0 1 1 9.128-8.67l-.012.447a8.68 8.68 0 0 1-8.67 8.235v-1.5a7.18 7.18 0 0 0 7.182-7.182"/><path d="M16.19 16.193a.75.75 0 0 1 1.06 0l4.424 4.424a.75.75 0 1 1-1.06 1.06l-4.425-4.423a.75.75 0 0 1 0-1.06"/></g></symbol><use href="#ai:local:search"></use></svg></button></div><div class="_nav-bottom-row_4s5x6_82"><div class="_main-nav_4s5x6_102"><a href="/" title="Home" data-logo-global><svg role="img" width="100" viewBox="0 0 1709 768"><title>Fastly</title><g><path d="M1154.2 134.3v421.1h126.4v-64.3h-41.8V70.2h-84.7zM55.9 491.1h43V287.9h-43V232l43-7.1v-56.6c0-68.5 14.9-98.2 102.3-98.2 18.9 0 41.2 2.8 60.8 6.3l-11.6 68.9c-13.3-2.1-19.8-2.5-28.2-2.5-30.8 0-38.6 3.1-38.6 33.1V225h63.9v62.9h-63.9V491h42.5v64.3H55.9v-64.2zM1111.1 470.7c-13.2 2.8-24.8 2.5-33.2 2.7-34.8.9-31.8-10.6-31.8-43.5v-142h66.3V225H1046V70.2h-84.7v377.3c0 74.1 18.3 107.9 98 107.9 18.9 0 44.8-4.9 64.4-9zM1637.2 491.4c17.8 0 32.2 14.1 32.2 32 0 17.8-14.4 31.9-32.2 31.9s-32.1-14.1-32.1-31.9 14.3-32 32.1-32m0 58.9c14.8 0 26.8-12.1 26.8-26.9s-12-26.6-26.8-26.6-26.7 11.8-26.7 26.6 11.9 26.9 26.7 26.9m5.9-11.2l-6.5-9.5h-4.5v9.5h-7.2v-31.4h13.1c7.8 0 12.6 3.9 12.6 10.9 0 5.1-2.6 8.6-6.6 9.8l7.8 10.8h-8.7zm-10.9-15.8h5.7c3.3 0 5.5-1.3 5.5-4.7 0-3.3-2.2-4.6-5.3-4.6h-5.9zM855.6 287.8v-11.3c-25.6-4.7-51.1-4.7-64.9-4.7-39.4 0-44.2 20.9-44.2 32.2 0 16 5.5 24.7 48.2 34 62.4 14 125.1 28.6 125.1 106 0 73.4-37.8 111.3-117.3 111.3-53.2 0-104.8-11.4-144.2-21.4v-63.2h64.1v11.2c27.6 5.3 56.5 4.8 71.6 4.8 42 0 48.8-22.6 48.8-34.6 0-16.7-12.1-24.7-51.5-32.7-74.2-12.7-133.2-38-133.2-113.5 0-71.4 47.7-99.4 127.3-99.4 53.9 0 94.8 8.4 134.2 18.4v62.8h-64zM465.9 343.4l-6.4-6.4-32.7 28.5c-1.7-.6-3.4-.9-5.3-.9-8.8 0-16 7.4-16 16.4 0 9.1 7.2 16.4 16 16.4s16-7.4 16-16.4c0-1.7-.3-3.4-.7-4.9z"></path><path d="M595.6 470.7l-.1-263.6h-84.7v24.7c-17.4-10.5-36.9-17.9-57.6-21.8h.5v-29.2H464v-21.5h-85.3v21.5H389V210h.6c-81 14.9-142.4 85.8-142.4 171.2 0 96.2 77.9 174.1 174.1 174.1 32.8 0 63.5-9.1 89.7-24.9l15.3 24.9h89.5v-84.7h-20.2zm-169.1-.1v-10h-10.1v9.9c-45.5-2.6-81.8-39.2-84.2-84.7h10.1v-10.1h-10c2.7-45.2 38.9-81.4 84.1-84v10h10.1v-10c44.6 2.4 80.5 37.4 84.4 81.5v2.9h-10.2v10.1h10.2v2.8c-3.8 44.2-39.8 79.2-84.4 81.6zM1495 225h174.7v62.9h-41.8l-107.1 263.6c-30.7 74-81.1 143.7-157.9 143.7-18.9 0-44-2.1-61.5-6.3l7.7-76.9c11.2 2.1 25.8 3.5 33.5 3.5 35.6 0 75.8-22.1 88.4-60.5l-108.6-267.1h-41.8V225h174.8v62.9h-41.7l61.5 151.3 61.5-151.3H1495z"></path></g></svg></a><ul class="_nav-list_q3t6p_4" role="menubar"><li role="none"><button id="trigger-5gP65RTXqyBSElVOKRl3h0" class="_nav-item_q3t6p_17" type="button" role="menuitem" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-5gP65RTXqyBSElVOKRl3h0" data-nav-trigger>Platform</button></li><li role="none"><button id="trigger-6Q6clmKNVvIfkU07bJ4VPZ" class="_nav-item_q3t6p_17" type="button" role="menuitem" aria-expanded="false" aria-haspopup="true"

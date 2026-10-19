@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /api/v2/package/*$
+Disallow: /api/v2/package/*/*$
+Disallow: /packages/*/ReportAbuse
+Disallow: /packages/*/ContactOwners

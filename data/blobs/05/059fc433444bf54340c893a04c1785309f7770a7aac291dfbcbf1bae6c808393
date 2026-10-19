@@ -1,0 +1,705 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:900" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/suggest.css" type="text/css" id="suggest">
+  <title>404 | DLsite</title>
+  <style>
+    /* =========================================================
+   リセット (reset.css)
+  ========================================================= */
+
+  html {
+    overflow-y: scroll;
+  }
+
+  div,h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ul,ol,li,
+  brockquote,pre,table,caption,th,td,address,
+  form,fieldset,legend,img {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-style: normal;
+    text-align: left;
+  }
+
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  /* for IE */
+  *:first-child+html table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  * html table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  /* for IE end */
+
+  li {
+    list-style-type: none;
+  }
+
+  input {
+    font-size: 12px;
+  }
+
+  textarea {
+    font-size: 100%;
+  }
+
+  img {
+    vertical-align: bottom;
+  }
+
+  a img {
+    border: none;
+  }
+
+  fieldset {
+    border: 0;
+  }
+
+  /* ==================================================
+   初期設定 (default.css)
+  ================================================== */
+  /* ボタン用フォント（記述位置は先頭固定） */
+  @import url('https://fonts.googleapis.com/css?family=Sawarabi+Gothic');
+
+  /* ----- body ----- */
+  html {
+    height: 100%;
+  }
+
+  body {
+    color: #333;
+    font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN", Meiryo, メイリオ, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background-color: #fff;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  label {
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  label:hover {
+    color: #e58600;
+  }
+
+  select,
+  textarea {
+    font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN", Meiryo, メイリオ, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  input {
+    vertical-align: middle;
+    font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN", Meiryo, メイリオ, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* chromeのオートフィル時の背景を白に */
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px white inset;
+  }
+
+  /* ----- link ----- */
+  a:link {
+    color: #039;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #639;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #639;
+    text-decoration: underline;
+  }
+
+  /* ----- new clearfix ----- */
+  .clearfix::after {
+    content: " ";
+    display: block;
+    clear: both;
+  }
+
+  /* ==================================================
+  １カラム レイアウト (layout_1col.css)
+  ================================================== */
+  #container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .bugfix_container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  #wrapper {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #main {
+    width: 100%;
+  }
+
+  #main_inner {
+    margin: 0 15px;
+    text-align: left;
+  }
+
+  /* ----- wrapper上にタイトル等がある場合 ----- */
+  #top_wrapper {
+    margin: 5px 15px 0;
+  }
+
+  #footer {
+    margin-top: auto;
+  }
+
+  /* ----- 簡易ヘッダ ----- */
+  div#header_simple {
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  div#header_simple_inner {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    height: 60px;
+    border-bottom: solid 1px #ccc;
+  }
+
+  div#header_simple_inner div#logo {
+    margin-right: auto;
+  }
+
+  div#rightlink a {
+    color: #666;
+    text-decoration: none;
+  }
+
+  div#rightlink a:hover {
+    text-decoration: underline;
+  }
+
+  /* ヘルプ */
+  p.qa_link_12 {
+    display: inline;
+    font-size: 12px;
+    padding: 3px 0 3px 20px;
+    background: url(/modpub/images/common/icon_qa.png) no-repeat left center;
+  }
+
+
+  /* ====================================================
+    エラーページ
+  ======================================================= */
+  .error_box {
+    margin: 70px 0;
+  }
+
+  .error_box_work {
+    margin-right: -255px;
+  }
+
+  .error_box .title_img img {
+    max-width: 213px;
+    margin-bottom: 20px;
+  }
+
+  .error_box .title_img,
+  .error_box_inner,
+  .error_box_inner p,
+  .error_box .btn_wrap,
+  .error_box .list {
+    text-align: center;
+  }
+
+  .error_box .title_text {
+    font-size: 24px;
+    color: #3a1616;
+  }
+
+  .error_box_work .title_text {
+    font-size: 20px;
+  }
+
+  .error_box .illust {
+    width: 203px;
+    margin-bottom: 30px;
+  }
+
+  .error_box .title_img {
+    margin-bottom: 30px;
+  }
+
+  .error_box .text {
+    display: block;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    font-size: 15px;
+    color: #333;
+  }
+
+  .error_box_work .text {
+    color: #333;
+  }
+
+  .error_box .btn_wrap a {
+    display: inline-block;
+    background: #f5f7fa;
+    padding: 12px 0;
+    width: 235px;
+    border-radius: 4px;
+    border: 1px solid #b8c3d9;
+    color: #536280;
+    box-shadow: 0 1px 0 #b8c3d9;
+    font-size: 16px;
+    margin-right: 30px;
+    position: relative;
+  }
+
+  .error_box .btn_wrap a:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #536280;
+    background-color: #fefefe;
+  }
+
+  .error_box .btn_wrap a:last-child {
+    margin: 0;
+  }
+
+  .error_box .btn_wrap a:before {
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    height: 10px;
+    width: 10px;
+    margin-top: -5px;
+    box-shadow: 1px -1px 0px #aaa inset;
+    -webkit-transform: rotate(225deg);
+    transform: rotate(225deg);
+    content: "";
+  }
+
+  .error_box .list {
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 30px;
+    max-width: 470px;
+  }
+
+  .error_box .list li {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .btn_wrap {
+    margin-bottom: 30px;
+  }
+
+  .error_box .list li::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: .5em;
+    left: -1.1em;
+    width: 6px;
+    height: 6px;
+    background-color: #536280;
+    border-radius: 100%;
+  }
+
+  .type_female .error_box .list li::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: .5em;
+    left: -1.1em;
+    width: 6px;
+    height: 6px;
+    background-color: #79615f;
+    border-radius: 100%;
+  }
+
+  .error_box .under_text {
+    font-size: 12px;
+  }
+
+  .error_box .error_code {
+    display: block;
+    font-family: 'M PLUS Rounded 1c', cursive;
+    font-size: 140px;
+    letter-spacing: 6px;
+    text-indent: 6px;
+    line-height: 1;
+    margin: -20px 0 15px;
+    color: #3a1616;
+  }
+
+  /* グローバルサーチ
+  ---------------------------------------- */
+  .globalSearch {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .globalSearchSelect {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .globalSearchSelect-label {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 0 18px 0 0;
+    height: 36px;
+    width: 110px;
+    border-right: solid 1px #ccc;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .globalSearchSelect-label::before {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    left: 1px;
+    border-radius: 4px 0 0 4px;
+    background: #f6f6f6;
+    content: "";
+  }
+
+  .globalSearchSelect:hover .globalSearchSelect-label::before {
+    background: #eee;
+  }
+
+  .globalSearchSelect-label::after {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    margin-top: -5px;
+    transform: rotate(45deg);
+    box-shadow: -2px -2px 0 #aaa inset;
+    content: "";
+  }
+
+  .globalSearchSelect-label>span {
+    color: #333;
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex-grow: 1;
+  }
+
+  .globalSearchSelect-list {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: -1px;
+    top: 0;
+    width: auto;
+    height: 36px;
+    border: 1px solid #a4a4a4;
+    background: #fff;
+    border-radius: 0 0 3px 3px;
+    transition: all 0.2s ease-out;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 500;
+    color: #333;
+    font-size: 13px;
+    margin: 0;
+    padding: 5px 8px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .globalSearchSelect-list.is-active {
+    visibility: visible;
+    width: 100%;
+  }
+
+  .globalSearchForm {
+    width: 100%;
+  }
+
+  .globalSearchForm>input {
+    outline: none;
+    padding: 0 54px 0 138px;
+    height: 36px;
+    line-height: 36px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font-size: 13px;
+  }
+
+  .globalSearchForm>input:focus {
+    border-color: #f7b051;
+    box-shadow: 0 0 8px rgba(245, 140, 0, 0.4);
+  }
+
+  /* for IE10, IE11 */
+  .globalSearchForm>input:-ms-input-placeholder {
+    color: #aaa;
+  }
+
+  /* for Chrome, Safari, Opera, Edge */
+  .globalSearchForm>input::-webkit-input-placeholder {
+    color: #aaa;
+  }
+
+  /* for Firefox 18 and below */
+  .globalSearchForm>input:-moz-placeholder {
+    color: #aaa;
+  }
+
+  /* for Firefox 19 and above */
+  .globalSearchForm>input::-moz-placeholder {
+    color: #aaa;
+    opacity: 1;
+  }
+
+  /* for CSS4 */
+  .globalSearchForm>input::placeholder {
+    color: #aaa;
+  }
+
+  .globalSearchBtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #f58c00;
+    border: none;
+    width: 44px;
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+
+  .globalSearchBtn:hover {
+    background: #fda228;
+  }
+
+  .globalSearchBtn:focus {
+    outline: none;
+  }
+
+  .globalSearchBtn>i {
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    display: block;
+  }
+
+  .globalSearchBtn::before {
+    background: url(/modpub/images/web/common/icon_search.png) no-repeat;
+    position: absolute;
+    display: block;
+    font-size: 20px;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    background-size: 24px;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    content: "";
+    transform: translateY(-50%) translateX(-50%);
+  }
+
+  .search {
+    width: 508px;
+    margin: 0 auto 32px;
+  }
+
+  .search .title {
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .title_img::after {
+    display: block;
+    width: 199px;
+    height: 120px;
+    margin: 30px auto 0;
+    background: url(/modpub/images/common/pic_not_found_01.png) no-repeat center center;
+    background-size: contain;
+    content: "";
+  }
+
+  /* 女性向け対応
+  ---------------------------------------- */
+  .type_female .title_img::after {
+    background: url(/modpub/images/common/pic_not_found_02.png) no-repeat center center;
+    background-size: contain;
+  }
+
+  .type_female .error_box .btn_wrap a {
+    display: inline-block;
+    background: #fffbf9;
+    padding: 12px 0;
+    width: 235px;
+    border-radius: 4px;
+    border: 1px solid #c5b3af;
+    color: #79615f;
+    box-shadow: 0 1px 0 #c5b3af;
+    font-size: 16px;
+    margin-right: 30px;
+    position: relative;
+  }
+
+  .type_female .error_box .btn_wrap a:hover {
+    color: #79615f;
+  }
+  </style>
+</head>
+
+<body>
+  <!-- container -->
+  <div id="container">
+    <!--  女性向けの場合は、class="type_female"の付与をお願いします。↑-->
+    <!-- header -->
+    <div id="header">
+      <div id="header_simple" class="clearfix">
+        <div id="header_simple_inner" class="clearfix">
+          <div id="logo">
+            <a href="https://www.dlsite.com/home">
+              <img src="/modpub/images/common/logo_dlsite.png" alt="DLsite" width="89" height="25">
+            </a>
+          </div>
+          <div id="rightlink">
+            <p class="qa_link_12"><a href="https://www.dlsite.com/home/faq/=/type/user/">ヘルプ</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /header -->
+    <!-- wrapper -->
+    <div id="wrapper">
+      <!-- main -->
+      <div id="main">
+        <!-- main_inner -->
+        <div id="main_inner">
+          <!-- error_box -->
+          <div class="error_box">
+            <div class="error_box_inner">
+              <div class="title_img">
+                <span class="error_code">Sorry</span>
+                <p class="title_text">ページが見つかりませんでした</p>
+              </div>
+              <p class="text">ページが削除されたか、URLが変更になった可能性がございます。<br>お手数ですがサイトTOP、サイト検索より再度お試しください。
+              </p>
+              <div class="search">
+                <p class="title">作品をお探しでしょうか？</p>
+                <div class="globalSearch">
+                  <form action="/home/fs" method="post" class="globalSearch-form">
+                    <input name="_qf__fulltext_search" type="hidden" value="">
+                    <input name="_layout" type="hidden" value="fs">
+                    <input name="_site" type="hidden" value="home">
+                    <input name="_form_id" type="hidden" value="FulltextSearchProductForm">
+                    <input name="_view" type="hidden" value="input">
+                    <input name="from" type="hidden" value="fs.header" id="header_search_from">
+                    <input type="hidden" name="site_category">
+                    <!---->
+                    <!---->
+                    <!---->
+                    <!---->
+                    <!---->
+                    <div class="globalSearchSelect">
+                      <div class="globalSearchSelect-label">
+                        <span id="search_site">すべて</span>
+                      </div>
+                      <select id="selected_site" class="globalSearchSelect-list is-active">
+                        <option value="home">すべて</option>
+                        <option value="home">同人</option>
+                        <option value="comic">コミック</option>
+                        <option value="soft">PCソフト</option>
+                      </select>
+                    </div>
+                    <div class="globalSearchForm">
+                      <input name="keyword" type="search" id="search_text" maxlength="255" autocomplete="off" aria-autocomplete="list" placeholder="キーワードから探す（作品名、サークル名など）">
+                    </div>
+                    <button id="search_button" type="submit" class="globalSearchBtn">
+                      <i>検索</i>
+                    </button>
+                  </form>
+                  <div id="is_error" value="true"></div>
+                </div>
+              </div>
+
+              <div class="btn_wrap">
+                <a href="https://www.dlsite.com/home/">トップページへ戻る</a>
+                <a href="https://www.dlsite.com/home/faq/=/type/user/">ヘルプページへ</a>
+              </div>
+            </div>
+          </div>
+          <!-- /error_box -->
+        </div>
+        <!-- /main_inner -->
+      </div>
+      <!-- /main -->
+    </div>
+    <!-- /wrapper -->
+  </div>
+  <script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
+  <script type="text/javascript" src="/js/dlsite_util.js"></script>
+  <script type="text/javascript" src="/js/dlsite_suggest.js"></script>
+  <script>
+    // 選択肢を変更すれば、labelを書き換える
+    $('#selected_site').change(function() {
+      var value = $('option:selected').val();
+      var txt = $('option:selected').text();
+      // valueとtextの書き換え
+      $('#search_site').val(value);
+      $('#search_site').text(txt);
+    })
+  </script>
+  <!-- /container -->
+</body>
+
+</html>

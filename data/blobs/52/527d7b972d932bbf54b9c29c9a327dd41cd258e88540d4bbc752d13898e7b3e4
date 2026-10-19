@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <script>
+        const subscriberUser = !!document.cookie.split('; ').find(row => row.startsWith('wordpress_subscriber_user='));
+
+        const userDetails = subscriberUser ? JSON.parse(window.localStorage.getItem('userDetails')) : null;
+        const darkModeEnabled = userDetails ? userDetails?.userPreferences?.darkMode === true : false;
+        const stickyHeaderEnabled = userDetails ? userDetails?.userPreferences?.stickyHeader === true : false;
+
+        // Helper function to read cookies
+        function getCookie(name) {
+            var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+            return v ? v[2] : null;
+        }
+
+        // Check for the 'wordpress_premium_member' cookie
+        const hasPremiumCookie = getCookie('wordpress_premium_member') === '1';
+        const hasPremiumRoleInLS = userDetails
+            && userDetails.userRoles
+            && Array.isArray(userDetails.userRoles)
+            && userDetails.userRoles.includes('premium_member');
+        const isPremium = hasPremiumCookie || hasPremiumRoleInLS;
+
+        if (darkModeEnabled) {
+            document.documentElement.classList.add('dark');
+        }
+
+        if (isPremium) {
+            document.documentElement.classList.add('premium');
+        }
+    </script>
+
+            <!-- START email detection/removal script -->
+        <script>
+            !function(){"use strict";const t={adt_ei:{identityApiKey:"plainText",source:"url",type:"plaintext",priority:1},adt_eih:{identityApiKey:"sha256",source:"urlh",type:"hashed",priority:2},sh_kit:{identityApiKey:"sha256",source:"urlhck",type:"hashed",priority:3}},e=Object.keys(t);function i(t){return function(t){const e=t.match(/((?=([a-z0-9._!#$%+^&*()[\]<>-]+))\2@[a-z0-9._-]+\.[a-z0-9._-]+)/gi);return e?e[0]:""}(function(t){return t.replace(/\s/g,"")}(t.toLowerCase()))}!async function(){const n=new URL(window.location.href),o=n.searchParams;let a=null;const r=Object.entries(t).sort(([,t],[,e])=>t.priority-e.priority).map(([t])=>t);for(const e of r){const n=o.get(e),r=t[e];if(!n||!r)continue;const c=decodeURIComponent(n),d="plaintext"===r.type&&i(c),s="hashed"===r.type&&c;if(d||s){a={value:c,config:r};break}}if(a){const{value:t,config:e}=a;window.adthrive=window.adthrive||{},window.adthrive.cmd=window.adthrive.cmd||[],window.adthrive.cmd.push(function(){window.adthrive.identityApi({source:e.source,[e.identityApiKey]:t},({success:i,data:n})=>{i?window.adthrive.log("info","Plugin","detectEmails",`Identity API called with ${e.type} email: ${t}`,n):window.adthrive.log("warning","Plugin","detectEmails",`Failed to call Identity API with ${e.type} email: ${t}`,n)})})}!function(t,e){const i=new URL(e);t.forEach(t=>i.searchParams.delete(t)),history.replaceState(null,"",i.toString())}(e,n)}()}();
+        </script>
+        <!-- END email detection/removal script -->
+                    <!-- Raptive Head Tag Manual -->
+        <script data-no-optimize="1" data-cfasync="false">
+            (function(w, d) {
+
+                if (isPremium) {
+                    return;
+                }
+
+                w.adthrive = w.adthrive || {};
+                w.adthrive.cmd = w.adthrive.cmd || [];
+                w.adthrive.plugin = 'adthrive-ads-manual';
+                w.adthrive.host = 'ads.adthrive.com';
+                var s = d.createElement('script');
+                s.async = true;
+                s.referrerpolicy = 'no-referrer-when-downgrade';
+                s.src = 'https://' + w.adthrive.host + '/sites/69caa2a59c365653ba27aeb9/ads.min.js?referrer=' + w.encodeURIComponent(w.location.href) + '&cb=' + (Math.floor(Math.random() * 100) + 1);
+                var n = d.getElementsByTagName('script')[0];
+                n.parentNode.insertBefore(s, n);
+            })(window, document);
+        </script>
+        <!-- End of Raptive Head Tag -->
+                    <!-- Dianomi Context Feed -->
+        <script type="text/javascript" id="dianomi_context_script" src="https://www.dianomi.com/js/contextfeed.js"></script>
+        <!-- End Dianomi Context Feed -->
+        
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MGRKVFC2');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts pre-connect
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.salon.com/app/themes/salon/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.salon.com/app/themes/salon/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.salon.com/app/themes/salon/assets/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="https://www.salon.com/app/themes/salon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta property="fb:pages" content="120680396518" />
+    <meta property="fb:app_id" content="134091381200152" />
+    <meta name="p:domain_verify" content="afd252c603232fed8ddf2554b144079b"/>
+
+    <link rel="preload" href="https://www.salon.com/app/themes/salon/dist/assets/icomoon.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="https://www.salon.com/app/themes/salon/dist/assets/Helvetica-Bold-subset.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://www.salon.com/app/themes/salon/dist/assets/Helvetica-subset.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://www.salon.com/app/themes/salon/dist/assets/Helvetica-Oblique-subset.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://www.salon.com/app/themes/salon/dist/assets/Georgia-Bold-subset.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://www.salon.com/app/themes/salon/dist/assets/TimesNewRoman-subset.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <meta name='robots' content='noindex, follow' />
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v25.9 (Yoast SEO v25.9) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Page not found - Salon.com</title>
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:site_name" content="Salon.com" />
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//a.omappapi.com' />
+<link rel='stylesheet' id='optinmonster-memberpress-css' href='https://www.salon.com/app/plugins/optinmonster/assets/dist/css/memberpress.min.css?ver=2.16.24' media='all' />
+<link rel='stylesheet' id='mp-theme-css' href='https://www.salon.com/app/plugins/memberpress/css/ui/theme.css?ver=1.12.15' media='all' />
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+
+
+<link rel='stylesheet' id='global-salon-css' href='https://www.salon.com/app/themes/salon/dist/assets/global.css?ver=1.0.31' media='all' />
+<link rel='stylesheet' id='ad-salon-css' href='https://www.salon.com/app/themes/salon/dist/assets/ad.css?ver=1.0.31' media='all' />
+<script id="nelio-ab-testing-visitor-type-js" src="https://www.salon.com/app/plugins/nelio-ab-testing/assets/dist/js/visitor-type.js?ver=287e8e4cd3bcff28c95d"></script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@graph":[{"@type":"Organization","url":"https:\/\/www.salon.com\/","sameAs":["https:\/\/www.facebook.com\/salon","https:\/\/www.instagram.com\/salonofficial","https:\/\/x.com\/salon","https:\/\/www.instagram.com\/salondotcom\/"],"logo":{"@type":"ImageObject","url":"https:\/\/www.salon.com\/app\/themes\/salon\/assets\/img\/salon-logo.svg"}}]}</script>
+
+    <!--<script src="https://www.google.com/recaptcha/api.js?render=6LckLQkrAAAAABD30EsnOQxmtgweb-aPZojeUU3v" async defer></script>-->
+    <script>
+        let siteUrl = 'https://www.salon.com';
+        let captchaKey = '6LckLQkrAAAAABD30EsnOQxmtgweb-aPZojeUU3v';
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '134091381200152',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v21.0'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+      
+<!-- Chartbeat -->
+<script type="text/javascript">
+(function() {
+    
+    let userType = 'anon';
+
+    if (subscriberUser) {
+        
+        if (isPremium) {
+            userType = 'paid';
+        }
+        else {
+            userType = 'lgdin';
+        }
+    }
+
+    let path = window.location.pathname;
+    var _sf_async_config = window._sf_async_config = (window._sf_async_config || {});
+    _sf_async_config.uid = 1614;
+    _sf_async_config.domain = 'salon.com'; //CHANGE THIS TO THE ROOT DOMAIN
+    _sf_async_config.flickerControl = false;
+    _sf_async_config.path = path;
+    _sf_async_config.sections = ""; // CHANGE THIS TO YOUR SECTION NAME(s)
+    _sf_async_config.authors = ""; // CHANGE THIS TO YOUR AUTHOR NAME(s)
+
+    var _cbq = window._cbq = (window._cbq || []);
+    _cbq.push(["_acct", userType]);
+
+    function loadChartbeat() {
+        var e = document.createElement('script');
+        var n = document.getElementsByTagName('script')[0];
+        e.type = 'text/javascript';
+        e.async = true;
+        e.src = '//static.chartbeat.com/js/chartbeat.js';;
+        n.parentNode.insertBefore(e, n);
+    }
+    loadChartbeat();
+})();
+</script>
+<script async src="//static.chartbeat.com/js/chartbeat_mab.js"></script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="error404 wp-theme-salon">
+    <script>
+        if (stickyHeaderEnabled) {
+            document.body.setAttribute('data-fixed', 'true');
+        } else {
+            document.body.removeAttribute('data-fixed');
+        }
+    </script>
+        <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MGRKVFC2"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+        
+            <div class="loader-modal">
+    <div></div>
+</div>
+        <header class="main-header-container">
+            
+<section class="header__mobile">
+    <div>
+        <div class="header__mobile__logo">
+            <a href="https://www.salon.com" aria-label="To Salon Homepage">
+                <img class="-mt-2.5" src="https://www.salon.com/app/themes/salon/assets/img/mobile-logo.svg" width="136" height="40" alt="Salon logo" />
+            </a>
+        </div>
+        <div class="header__mobile__actions">
+            <a href="https://www.salon.com/premium?utm_source=header&#038;utm_medium=onsite&#038;utm_campaign=become-a-member-header-subscribe-premium" class="hide-if-premium header__subscribe-link" data-subscription-cta-region="header">
+    <button class="bg-[#ed2c1d] px-2 py-1 text-base font-bold text-white uppercase hover:bg-[#b20000]">
+    Subscribe</button>
+</a>
+            <button class="button__burger group/button__burger text-[#1e1e1e] dark:text-white text-2xl" aria-pressed="false" aria-controls="mobile-menu">
+    <i class="icon icon-burger block group-aria-pressed/button__burger:hidden" ></i>
+    <i class="icon icon-close hidden group-aria-pressed/button__burger:block" ></i>
+</button>
+        </div>
+    </div>
+    <nav
+    class="navigation__mobile"
+    aria-expanded="false"
+    id="mobile-menu"
+>
+    <div>
+        <div class="search__form w-full">
+    <form role="search" method="GET" action="https://www.salon.com/search/">
+        <div>
+                        <label for="search-form-1" class="hidden">Search</label>
+            <div class="relative">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-[#666666] dark:text-white">
+                    <i class="icon icon-search" ></i>
+                </div>
+                <input type="search" name="s" id="search-form-1" class="block w-full rounded-sm border border-[#a6a6a6] dark:border-white py-2 pr-4 pl-10 text-[#666666] dark:text-white text-base leading-4 placeholder:text-sm placeholder:text-[#666666] dark:placeholder:text-white placeholder:leading-4 outline-0 dark:bg-[#1d1d1d]" placeholder="Search" value="" />
+            </div>
+        </div>
+    </form>
+</div>
+        <div class="menu-burger-menu-container"><ul class="menu"><li class="menu-item"><a href="https://www.salon.com/category/news-and-politics">News &amp; Politics</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/culture">Culture</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/food">Food</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/science-and-health">Science &amp; Health</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/money">Money</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/life-stories">Life Stories</a></li>
+<li class="menu-item"><a href="https://www.salon.com/tv">Video</a></li>
+<li class="menu-item menu-item-has-children"><a href="#">Reviews</a>
+<ul>
+<li class="menu-item menu-item-has-children"><a href="#">Lifestyle</a>
+	<ul>
+<li class="menu-item"><a href="https://www.salon.com/2023/12/16/navigating-the-new-sober-boom-where-a-persons-sobriety-is-as-unique-as-their-fingerprint/">The New Sober Boom</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2023/12/30/secrets-of-a-serial-addict-how-i-got-hooked-on-quitting-over-and-over-again/">Getting Hooked on Quitting</a></li>
+	</ul>
+</li>
+<li class="menu-item menu-item-has-children"><a href="#">Education</a>
+	<ul>
+<li class="menu-item"><a href="https://www.salon.com/2024/03/16/ignorance-and-democracy-capitalisms-long-against-higher-education/">Liberal Arts Cuts Are Dangerous</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2022/09/16/college-was-necessary-for-me-will-my-own-child-need-it-like-i-did/">Is College Necessary?</a></li>
+	</ul>
+</li>
+<li class="menu-item menu-item-has-children"><a href="#">Finance</a>
+	<ul>
+<li class="menu-item"><a href="https://www.salon.com/2023/08/26/my-parents-are-deadcan-i-afford-avocado-toast-now/">Dying Parents Costing Millennials Dear</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2023/09/09/how-did-le-creuset-the-self-described-heirloom-quality-cookware-change-the-cooking-game/">Gen Z Investing In Le Creuset</a></li>
+	</ul>
+</li>
+<li class="menu-item menu-item-has-children"><a href="#">Crypto</a>
+	<ul>
+<li class="menu-item menu-item-has-children"><a href="#">Investing</a>
+		<ul>
+<li class="menu-item"><a href="https://www.salon.com/2023/03/23/on-thursdays-we-wear-orange-sec-sues-lindsay-lohan-and-others-over-crypto-money-laundering-scam/">SEC vs Celebrity Crypto Promoters</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2022/04/16/impulsive-psychopaths-like-crypto-dark-personality-traits-increase-bitcoin-enthusiasm_partner/">&#8216;Dark&#8217; Personalities Drawn to BTC</a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+</ul>
+</li>
+</ul></div>        <div id="userMenuContainerMobile">
+                    </div>
+        <div>
+            <div class="navigation__social">
+    <a href="https://x.com/Salon" target="_blank">
+        <i class="icon icon-twitter" ></i>
+    </a>
+    <a href="https://www.instagram.com/salonofficial" target="_blank">
+        <i class="icon icon-instagram" ></i>
+    </a>
+    <a href="https://www.youtube.com/user/SalonDotCom" target="_blank">
+        <i class="icon icon-youtube" ></i>
+    </a>
+    <a href="https://www.facebook.com/salon" target="_blank">
+        <i class="icon icon-facebook" ></i>
+    </a>
+    <a href="https://www.tiktok.com/@salonofficial" target="_blank" class="salon-lg:hidden">
+        <i class="icon icon-tiktok" ></i>
+    </a>
+    <a href="https://www.reddit.com/domain/salon.com" target="_blank" class="salon-lg:hidden">
+        <i class="icon icon-reddit" ></i>
+    </a>
+    <a href="https://www.linkedin.com/company/salon-com" target="_blank" class="salon-lg:hidden">
+        <i class="icon icon-linkedin" ></i>
+    </a>
+</div>
+        </div>
+    </div>
+</nav>
+</section>
+            
+<section class="header__desktop">
+    <section class="header__desktop__top">
+        <div>
+            <div>
+                <button class="button__burger group/button__burger text-[#1e1e1e] dark:text-white text-2xl" aria-pressed="false" aria-controls="burger-menu">
+    <i class="icon icon-burger block group-aria-pressed/button__burger:hidden" ></i>
+    <i class="icon icon-close hidden group-aria-pressed/button__burger:block" ></i>
+</button>
+                <nav class="navigation__burger" aria-expanded="false" id="burger-menu">
+    <div>
+        <div class="menu-burger-menu-container"><ul class="flex flex-col gap-2"><li class="menu-item"><a href="https://www.salon.com/category/news-and-politics">News &amp; Politics</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/culture">Culture</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/food">Food</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/science-and-health">Science &amp; Health</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/money">Money</a></li>
+<li class="menu-item"><a href="https://www.salon.com/category/life-stories">Life Stories</a></li>
+<li class="menu-item"><a href="https://www.salon.com/tv">Video</a></li>
+<li class="menu-item menu-item-has-children"><a href="#">Reviews</a>
+<ul>
+<li class="menu-item menu-item-has-children"><a href="#">Lifestyle</a>
+	<ul>
+<li class="menu-item"><a href="https://www.salon.com/2023/12/16/navigating-the-new-sober-boom-where-a-persons-sobriety-is-as-unique-as-their-fingerprint/">The New Sober Boom</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2023/12/30/secrets-of-a-serial-addict-how-i-got-hooked-on-quitting-over-and-over-again/">Getting Hooked on Quitting</a></li>
+	</ul>
+</li>
+<li class="menu-item menu-item-has-children"><a href="#">Education</a>
+	<ul>
+<li class="menu-item"><a href="https://www.salon.com/2024/03/16/ignorance-and-democracy-capitalisms-long-against-higher-education/">Liberal Arts Cuts Are Dangerous</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2022/09/16/college-was-necessary-for-me-will-my-own-child-need-it-like-i-did/">Is College Necessary?</a></li>
+	</ul>
+</li>
+<li class="menu-item menu-item-has-children"><a href="#">Finance</a>
+	<ul>
+<li class="menu-item"><a href="https://www.salon.com/2023/08/26/my-parents-are-deadcan-i-afford-avocado-toast-now/">Dying Parents Costing Millennials Dear</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2023/09/09/how-did-le-creuset-the-self-described-heirloom-quality-cookware-change-the-cooking-game/">Gen Z Investing In Le Creuset</a></li>
+	</ul>
+</li>
+<li class="menu-item menu-item-has-children"><a href="#">Crypto</a>
+	<ul>
+<li class="menu-item menu-item-has-children"><a href="#">Investing</a>
+		<ul>
+<li class="menu-item"><a href="https://www.salon.com/2023/03/23/on-thursdays-we-wear-orange-sec-sues-lindsay-lohan-and-others-over-crypto-money-laundering-scam/">SEC vs Celebrity Crypto Promoters</a></li>
+<li class="menu-item"><a href="https://www.salon.com/2022/04/16/impulsive-psychopaths-like-crypto-dark-personality-traits-increase-bitcoin-enthusiasm_partner/">&#8216;Dark&#8217; Personalities Drawn to BTC</a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+</ul>
+</li>
+</ul></div>    </div>
+</nav>
+            </div>
+            <a href="https://www.salon.com/premium?utm_source=header&#038;utm_medium=onsite&#038;utm_campaign=become-a-member-header-subscribe-premium" class="hide-if-premium header__subscribe-link" data-subscription-cta-region="header">
+    <button class="bg-[#ed2c1d] px-2 py-1 text-base font-bold text-white uppercase hover:bg-[#b20000]">
+    Subscribe</button>
+</a>
+            <div class="subscriptionSlogan hide-if-premium">
+                Go ad-free with Premium            </div>
+                    </div>
+        <div>
+                            <a href="https://www.salon.com/newsletter?utm_source=header&#038;utm_medium=onsite&#038;utm_campaign=newsletter-signup-onsite-header" >
+    <button class="border border-[#ed2c1d] text-[#ed2c1d] px-2 py-1 text-base font-bold uppercase hover:text-[#b20000] hover:border-[#b20000]">
+    Newsletters</button>
+</a>
+                        <div class="navigation__social">
+    <a href="https://x.com/Salon" target="_blank">
+        <i class="icon icon-twitter" ></i>
+    </a>
+    <a href="https://www.instagram.com/salonofficial" target="_blank">
+        <i class="icon icon-instagram" ></i>
+    </a>
+    <a href="https://www.youtube.com/user/SalonDotCom" target="_blank">
+        <i class="icon icon-youtube" ></i>
+    </a>
+    <a href="https://www.facebook.com/salon" target="_blank">
+        <i class="icon icon-facebook" ></i>
+    </a>
+    <a href="https://www.tiktok.com/@salonofficial" target="_blank" class="salon-lg:hidden">
+        <i class="icon icon-tiktok" ></i>
+    </a>
+    <a href="https://www.reddit.com/domain/salon.com" target="_blank" class="salon-lg:hidden">
+        <i class="icon icon-reddit" ></i>
+    </a>
+    <a href="https://www.linkedin.com/company/salon-com" target="_blank" class="salon-lg:hidden">
+        <i class="icon icon-linkedin" ></i>
+    </a>
+</div>
+            <div class="dropdown__user group/dropdown__user relative text-left">
+    <div class="flex justify-center">
+        <button type="button" class="text-[#1e1e1e] dark:text-white group-hover/dropdown__user:text-[#ed2c1d]" id="dropdown-user-2" aria-haspopup="true">
+            <i class="icon icon-user text-2xl" ></i>
+        </button>
+    </div>
+    <div class="absolute right-0 z-10 pt-2 w-56 origin-top-right rounded-md bg-white dark:bg-[#1d1d1d] shadow-lg invisible transition-opacity ease-out delay-100 opacity-0 group-hover/dropdown__user:opacity-100 group-hover/dropdown__user:visible" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-user-2" tabindex="-1">
+        <div role="none" id="userMenuContainer"></div>
+    </div>
+</div>
+        </div>
+    </section>
+    <section class="header__desktop__middle">
+        
+<nav class="navigation__desktop">
+    <div>
+        <div>
+            
+                <ul class="menu"><li class="menu-item"><a href="https://www.salon.com/category/news-and-politics">News &amp; Politics</a></li><li class="menu-item"><a href="https://www.salon.com/category/culture">Culture</a></li><li class="menu-item"><a href="https://www.salon.com/category/food">Food</a></li></ul>            <div class="logo__desktop">
+                <a href="https://www.salon.com" aria-label="To Salon Homepage">
+                    <img src="https://www.salon.com/app/themes/salon/assets/img/salon-logo.svg" width="341" height="100" alt="Salon logo" />
+                </a>
+            </div>
+                <ul class="menu"><li class="menu-item"><a href="https://www.salon.com/category/science-and-health">Science &amp; Health</a></li><li class="menu-item"><a href="https://www.salon.com/category/money">Money</a></li><li class="menu-item"><a href="https://www.salon.com/tv">Video</a></li></ul>                    </div>
+    </div>
+</nav>
+    </section>
+    <section class="header__desktop__bottom">
+        <div>
+            <div class="search__form w-full">
+    <form role="search" method="GET" action="https://www.salon.com/search/">
+        <div>
+                        <label for="search-form-3" class="hidden">Search</label>
+            <div class="relative">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-[#666666] dark:text-white">
+                    <i class="icon icon-search" ></i>
+                </div>
+                <input type="search" name="s" id="search-form-3" class="block w-full rounded-sm border border-[#a6a6a6] dark:border-white py-2 pr-4 pl-10 text-[#666666] dark:text-white text-base leading-4 placeholder:text-sm placeholder:text-[#666666] dark:placeholder:text-white placeholder:leading-4 outline-0 dark:bg-[#1d1d1d]" placeholder="Search" value="" />
+            </div>
+        </div>
+    </form>
+</div>
+        </div>
+    </section>
+</section>
+        </header>
+    
+    <div class="raptive-salon-header hide-if-premium"></div>
+
+    <main class="main-container">
+
+    <section class="main__404 font-times-new-roman grid place-content-center h-full text-center">
+        <h2 class="font-bold text-[80px] leading-[normal]">404</h2>
+        <p class="text-3xl mt-8">Whoops! The page you're looking for does not exist.</p>
+    </section>
+
+    </main>
+
+    <footer>
+        <ul class="navigation__footer mt-4 text-center"><li class="menu-item"><a href="https://www.salon.com">Home</a></li>
+<li class="menu-item"><a href="https://www.salon.com/about">About</a></li>
+<li class="menu-item"><a href="https://www.salon.com/about/staff">Staff</a></li>
+<li class="menu-item"><a href="https://www.salon.com/about/contact">Contact</a></li>
+<li class="menu-item"><a href="https://www.salon.com/about/policy">Privacy</a></li>
+<li class="menu-item"><a href="https://www.salon.com/about/tos">Terms of Service</a></li>
+<li class="menu-item"><a href="https://www.salon.com/archive">Archive</a></li>
+<li class="menu-item"><a href="/premium?utm_source=onsite&amp;utm_medium=organic&amp;utm_campaign=go-ad-free-footer">Go Ad Free</a></li>
+</ul>        <div class="footer__copyright">
+    <p>
+        Copyright © 2026 Salon.com, LLC. Reproduction of material from any Salon pages without written permission is strictly prohibited. SALON ® is registered in the U.S. Patent and Trademark Office as a trademark of Salon.com, LLC. Associated Press articles: Copyright © 2016 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed.    </p>
+    <p>
+        <a href="https://www.salon.com/2026/06/02/best-vpn-services-for-2026/">
+            VPN Providers        </a>
+    </p>
+    <p>
+        <a href="https://www.salon.com/about/dmca">
+            DMCA Policy        </a>
+    </p>
+</div>
+    </footer>
+
+    <div class="modal__alert" role="dialog" aria-modal="true" aria-hidden="true" id="alert-modal">
+    <div></div>
+    <div>
+        <div>
+            
+<div class="modal__close">
+    <button type="button" aria-controls="alert-modal">
+        <i class="icon icon-close-extrabold block w-5 text-xl" ></i>
+    </button>
+</div>
+            <div class="modal__content">
+                <div class="message">
+                    This is an alert message.                </div>
+                <div class="modal__close">
+                    <button type="button" aria-controls="alert-modal">
+                        OK                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp/wp-*.php","/wp/wp-admin/*","/app/uploads/*","/app/*","/app/plugins/*","/app/themes/salon/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com :: Campaign Title: 9a1Sept Article: Enjoying this Article ad-free + community CTA JOIN NOW & SAVE 20% -->
+<script>(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.campaign=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,380517,'hmqefknz381sverddtce');</script>
+<!-- / OptinMonster --><!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com :: Campaign Title: 10a2 Oct HP Want to skip the ads? -->
+<script>(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.campaign=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,380517,'ctflmwzzxpbmhestcqzm');</script>
+<!-- / OptinMonster --><!-- This site is converting visitors into subscribers and customers with OptinMonster - https://optinmonster.com :: Campaign Title: 9a2 Sept Article Page We need your help-support our work -->
+<script>(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.campaign=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,380517,'gnqxbubjiym7gdwo38a5');</script>
+<!-- / OptinMonster -->		<script type="text/javascript">
+		var hmqefknz381sverddtce_shortcode = true;var ctflmwzzxpbmhestcqzm_shortcode = true;var gnqxbubjiym7gdwo38a5_shortcode = true;		</script>
+		<script id="global-salon-js-extra">
+var salonSubscriptionTracking = {"eventsEndpoint":"https://www.salon.com/wp-json/salon/v1/subscription-tracking/events","measurementId":"G-7VPPFM7ET6","pageContext":{"contentCategory":"site","currentPlan":null,"isCheckoutPage":false},"pendingSessionIds":[],"bootstrapEvents":[],"approximateBeginCheckout":"1"};
+//# sourceURL=global-salon-js-extra
+</script>
+<script type="module" data-wp-strategy="defer" defer id="global-salon-js" src="https://www.salon.com/app/themes/salon/dist/assets/global.js?ver=1.0.31"></script>
+<script data-wp-strategy="defer" defer id="ad-salon-js" src="https://www.salon.com/app/themes/salon/dist/assets/ad.js?ver=1.0.31"></script>
+<script>(function(d){var s=d.createElement("script");s.type="text/javascript";s.src="https://a.omappapi.com/app/js/api.min.js";s.async=true;s.id="omapi-script";d.getElementsByTagName("head")[0].appendChild(s);})(document);</script><script id="raptive-adblock-detection-js" src="https://www.salon.com/app/themes/salon/assets/js/ad/raptive-adblock-detection.js"></script>
+<script data-cfasync="false" data-abr-mode="essential" id="raptive-adblock-recovery-js" src="https://www.salon.com/app/themes/salon/assets/js/ad/raptive-adblock-recovery.js"></script>
+<script id="optinmonster-wp-helper-js" src="https://www.salon.com/app/plugins/optinmonster/assets/dist/js/helper.min.js?ver=2.16.24"></script>
+		<script type="text/javascript">var omapi_localized = {
+			ajax: 'https://www.salon.com/wp/wp-admin/admin-ajax.php?optin-monster-ajax-route=1',
+			nonce: 'ac2e4f45e5',
+			slugs:
+			{"hmqefknz381sverddtce":{"slug":"hmqefknz381sverddtce","mailpoet":false},"ctflmwzzxpbmhestcqzm":{"slug":"ctflmwzzxpbmhestcqzm","mailpoet":false},"gnqxbubjiym7gdwo38a5":{"slug":"gnqxbubjiym7gdwo38a5","mailpoet":false}}		};</script>
+				<script type="text/javascript">var omapi_data = {"object_id":0,"object_key":"","object_type":"","term_ids":[],"wp_json":"https:\/\/www.salon.com\/wp-json","wc_active":false,"edd_active":false,"nonce":"3501e47495"};</script>
+		</body>
+</html>

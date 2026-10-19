@@ -1,0 +1,344 @@
+<!doctype html><html dir="ltr"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="pmail-verification" content="8266c382a8fba56b338554bbbab7d879"><meta name="MobileOptimized" content="320"/><meta name="HandheldFriendly" content="true"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/><meta name="theme-color" content="#000000"><meta name="color-scheme" content="only light"><meta name="msapplication-TileColor" content="#000000"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" type="image/svg+xml" href="https://vkplay.ru/hotbox/favicon/favicon.svg"/><link rel="icon" href="https://vkplay.ru/hotbox/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="https://vkplay.ru/hotbox/favicon/android-chrome-180x180.png"/><link rel="preload" href="https://cdn.vkplay.ru/hotbox/leela/fonts/VK-Sans-Display-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="https://cdn.vkplay.ru/hotbox/leela/fonts/VK-Sans-Display-DemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><link rel="preload" href="https://cdn.vkplay.ru/hotbox/leela/fonts/VK-Sans-Display-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"/><script src="https://vkplay.ru/hotbox/feedback/feedback-nps.js"></script><script>// Preload fonts
+        function addFontPreload(name) {
+            const fontLink = document.createElement("link");
+            const fontLocation = "https://cdn.vkplay.ru/hotbox/leela/fonts/";
+
+            if (!name) {
+                return;
+            }
+
+            fontLink.setAttribute("rel", "preload");
+            fontLink.setAttribute("as", "font");
+            fontLink.setAttribute("type", "font/woff2");
+            fontLink.setAttribute("crossorigin", "anonymous");
+            fontLink.href = fontLocation + name;
+
+            document.head.appendChild(fontLink);
+        }
+
+        const expandedPreload = ['/demofest', '/play/event', '/play/collections', '/collections_preview', `/pin_code`];
+
+        if (!!expandedPreload.find((path) => window.location.pathname.startsWith(path))) {
+            addFontPreload("VK-Sans-Display-Expanded-Regular.woff2");
+            addFontPreload("VK-Sans-Display-Expanded-DemiBold.woff2");
+        }
+
+        if (window.location.pathname.includes('/gamecenter/wishlist')) {
+            const style = document.createElement('style');
+            style.textContent = 'body { background-color: #272829 !important; }'
+            document.head.append(style);
+        }</script><style>body {
+            background: #121415 no-repeat 50% 0;
+        }
+
+        .vkp-app-shell {
+            background: none !important;
+        }
+
+        .page-skeleton,
+        .page-skeleton * {
+            box-sizing: border-box;
+        }
+
+        .page-skeleton {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .page-skeleton-container {
+            position: relative;
+            margin: 0 auto;
+            max-width: 1920px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+        }
+
+        .page-skeleton-block {
+            background: linear-gradient(90deg, #1E2021 16%, #2F3132 30%, #1E2021 34%);
+            background-size: 400% 100%;
+            animation: vkp-skeleton-animation-base 1.4s ease infinite;
+            border-radius: 12px;
+        }
+
+        .page-skeleton-sidebar,
+        .page-skeleton-nav {
+            position: relative;
+        }
+
+        .page-skeleton-sidebar {
+            padding: 18px 24px 24px;
+            width: 281px;
+            height: 100%;
+            border-right: 1px solid #4a4c4d;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .narrow .page-skeleton-sidebar {
+            padding: 18px 16px 24px;
+            width: 79px;
+        }
+
+        .page-skeleton-logo {
+            margin-left: -4px;
+            margin-bottom: 30px;
+            width: 133px;
+            height: 36px;
+        }
+
+        .narrow .page-skeleton-logo {
+            margin-left: 4px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .page-skeleton-menu {
+            margin: 0 -24px;
+            padding: 2px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .narrow .page-skeleton-menu {
+            margin: 0 -14px;
+        }
+
+        .page-skeleton-menu-item {
+            height: 40px;
+        }
+
+        .narrow .page-skeleton-menu-item {
+            height: 48px;
+        }
+
+        .page-skeleton-button {
+            margin: 18px 0 40px;
+            height: 40px;
+        }
+
+        .narrow .page-skeleton-button {
+            margin-top: 34px;
+            height: 48px;
+        }
+
+        .page-skeleton-launcher {
+            margin-top: auto;
+            height: 194px;
+        }
+
+        .narrow .page-skeleton-launcher {
+            width: 48px;
+            height: 96px;
+        }
+
+        .page-skeleton-toggle {
+            margin-top: 32px;
+            max-width: 110px;
+            height: 24px;
+        }
+
+        .page-skeleton-nav {
+            padding: 16px 48px;
+            height: 72px;
+            flex: 1 0 auto;
+            display: flex;
+        }
+
+        .page-skeleton-search {
+            margin-right: 24px;
+            width: 460px;
+            height: 40px;
+        }
+
+        .page-skeleton-nav-btn {
+            margin: -4px 4px 0 0;
+            width: 48px;
+            height: 48px;
+        }
+
+        .page-skeleton-user {
+            margin-left: auto;
+            width: 102px;
+            height: 40px;
+        }
+
+        @media screen and (max-width: 1600px) {
+            .page-skeleton-sidebar {
+                width: 261px;
+            }
+        }
+
+        @media screen and (max-width: 1460px) {
+            .page-skeleton-sidebar {
+                padding: 18px 16px 24px;
+                width: 79px;
+            }
+
+            .page-skeleton-logo {
+                margin-left: 4px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .page-skeleton-menu {
+                margin: 0 -14px;
+            }
+
+            .page-skeleton-menu-item {
+                height: 48px;
+            }
+
+            .page-skeleton-button {
+                margin-top: 34px;
+                height: 48px;
+            }
+
+            .page-skeleton-launcher {
+                width: 48px;
+                height: 96px;
+            }
+
+            .page-skeleton-toggle {
+                display: none;
+            }
+
+            .page-skeleton-nav {
+                padding: 16px 32px;
+            }
+        }
+
+        @media screen and (max-width: 1179px) {
+            .page-skeleton-button,
+            .page-skeleton-launcher,
+            .page-skeleton-toggle,
+            .page-skeleton-search,
+            .page-skeleton-nav-btn {
+                display: none;
+            }
+
+            .page-skeleton-container {
+                padding: 8px 12px;
+            }
+
+            .page-skeleton-sidebar {
+                padding: 0;
+                border-right: none;
+            }
+
+            .page-skeleton-logo {
+                width: 137px;
+                height: 40px;
+            }
+
+            .page-skeleton-menu {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 60px;
+                border-top: 1px solid #4a4c4d;
+                flex-direction: row;
+                justify-content: space-between;
+                align-self: center;
+                gap: 0;
+            }
+
+            @supports (padding-bottom: env(safe-area-inset-bottom)) {
+                .page-skeleton-menu {
+                    padding-bottom: env(safe-area-inset-bottom);
+                }
+            }
+
+            .page-skeleton-menu-item {
+                margin: auto;
+                width: 44px;
+                height: 44px;
+            }
+
+            .page-skeleton-menu-item:nth-child(n+6) {
+                display: none;
+            }
+
+            .page-skeleton-nav {
+                padding: 0;
+            }
+
+            .page-skeleton-user {
+                margin: 4px 4px 4px auto;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+            }
+
+            .inner-page .page-skeleton-logo,
+            .inner-page .page-skeleton-user {
+                display: none;
+            }
+        }
+
+        @keyframes vkp-skeleton-animation-base {
+            0% {
+                background-position: 100% 50%
+            }
+
+            to {
+                background-position: -20% 50%
+            }
+        }</style><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/runtime~index-ac23b00d7632b3c6d9a2.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/vkplay-vendor-57c106727abc6576a6d0.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/5018-93880de92a68e358f22c.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/210-a5d84ba15413e6f7c594.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/9743-4aa8bb7a8102c493884c.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/805-68454adb4436e30e3228.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/6500-c7499bc66daf3a274aac.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/7210-8ba87e3b1e6079ff2682.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/3008-171be21eefb3d496f3a4.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/4210-f3c15a51f53a3fdfc85c.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/2537-68a431ed7a2a5334b5b7.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/4716-b54fe982c9858b2d9a39.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/3868-ab1d16703f61c059febd.js?312f075df7ddffaea892"></script><script defer="defer" src="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/index-01d2dbc9e1cb88cfc2c3.js?312f075df7ddffaea892"></script><link href="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/vkplay-vendor-4e74aebd5b96a45a599f.css?312f075df7ddffaea892" rel="stylesheet"><link href="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/4210-f1afe88dfcc0c36e1f09.css?312f075df7ddffaea892" rel="stylesheet"><link href="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/1896-9e017130dd8622222994.css?312f075df7ddffaea892" rel="stylesheet"><link href="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/4716-81bd756fb169a0c3531c.css?312f075df7ddffaea892" rel="stylesheet"><link href="//cdn.vkplay.ru/hotbox/showcase/frontend/builds/v3-12-39/index-9d2de17a8c23b711a983.css?312f075df7ddffaea892" rel="stylesheet"></head><body style="margin:0;padding:0;" class="page_games_new"><div class="page-skeleton" id="page-skeleton"><div class="page-skeleton-container"><div class="page-skeleton-sidebar"><div class="page-skeleton-block page-skeleton-logo"></div><div class="page-skeleton-menu"><div class="page-skeleton-block page-skeleton-menu-item"></div><div class="page-skeleton-block page-skeleton-menu-item"></div><div class="page-skeleton-block page-skeleton-menu-item"></div><div class="page-skeleton-block page-skeleton-menu-item"></div><div class="page-skeleton-block page-skeleton-menu-item"></div><div class="page-skeleton-block page-skeleton-menu-item"></div></div><div class="page-skeleton-block page-skeleton-button"></div><div class="page-skeleton-block page-skeleton-launcher"></div><div class="page-skeleton-block page-skeleton-toggle"></div></div><div class="page-skeleton-nav"><div class="page-skeleton-block page-skeleton-search"></div><div class="page-skeleton-block page-skeleton-nav-btn"></div><div class="page-skeleton-block page-skeleton-nav-btn"></div><div class="page-skeleton-block page-skeleton-user"></div></div></div></div><div id="root" class="b-wrapper"></div></body><script>function getCookie(name) {
+        const cookies = document.cookie.split('; ');
+
+        for (let cookie of cookies) {
+            const [key, value] = cookie.split('=');
+
+            if (key === name) {
+                return decodeURIComponent(value);
+            }
+        }
+
+        return null;
+    }
+
+    const isMainPage = window.location.pathname === '/';
+    const sidebarState = getCookie('sidebar_state');
+    const skeletonContainer = document.getElementById('page-skeleton');
+
+    if (sidebarState === 'narrow') {
+        skeletonContainer.classList.add('narrow');
+    }
+
+    if (!isMainPage) {
+        skeletonContainer.classList.add('inner-page');
+    }
+
+    const events = [
+        '/demofest',
+        '/play/event',
+        '/play/collections',
+        '/collections_preview',
+        '/pin_code',
+        '/events2025',
+        '/events2026',
+        '/research',
+        '/play/giftgames',
+        '/laboratory',
+        '/landing/',
+        '/services/payment_steam_miniapp',
+    ];
+
+    if (
+        window.location.pathname.includes('/gamecenter/')
+        || window.location.search.includes('in_gamecenter=1')
+        || navigator.userAgent.match(/\bDownloader\/\d+\b/)
+        || !!events.find((path) => window.location.pathname.startsWith(path))
+        || window.location.search.includes('is_miniapp=1')
+        || window.location.search.includes('vk_app_id')
+        || window.location.hash.includes('WebAppData')
+        || window.self !== window.top
+    ) {
+        skeletonContainer.style.display = 'none';
+    }</script></html>

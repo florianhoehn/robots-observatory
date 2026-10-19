@@ -1,0 +1,99 @@
+# Search and answer-engine crawlers share one rule set. The AI crawlers are
+# named here rather than left to `*` alone so that their parsers and policy
+# scanners see an affirmative Allow (RFC 9309: a crawler obeys only its most
+# specific group, so naming them anywhere else would detach them from the
+# hygiene rules below). The affirmative `Allow: /` closes the group: RFC 9309
+# longest-match parsers rank it below every Disallow wherever it sits, and
+# first-match parsers (Python's robotparser) read the Disallows before it.
+User-agent: *
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+# Each `/*/…` rule covers the locale-prefixed path; its twin below it, the
+# unprefixed default-locale one.
+Disallow: /*/generator/image?task=*
+Disallow: /generator/image?task=*
+Disallow: /*/generator/image?initialValues=*
+Disallow: /generator/image?initialValues=*
+Disallow: /*/profile/*
+Disallow: /profile/
+Disallow: /*/submit/upload
+Disallow: /submit/upload
+Disallow: /*/market/submit
+Disallow: /market/submit
+Disallow: /*/decorations
+Disallow: /decorations
+Disallow: /*/search
+Disallow: /search
+# Auth-gated, non-indexed, not in sitemap — crawl-only waste. Retired tabs are
+# absent on purpose: they 301 or 404 now, and a blocked URL hides its own answer.
+Disallow: /*/collections
+Disallow: /collections
+Disallow: /*/collection/
+Disallow: /collection/
+Disallow: /*/@*/tasks
+Disallow: /@*/tasks
+Disallow: /*/@*/likes
+Disallow: /@*/likes
+Disallow: /*/@*/credits
+Disallow: /@*/credits
+Disallow: /*/@*/assets
+Disallow: /@*/assets
+Disallow: /*/@*/files
+Disallow: /@*/files
+# Route-manifest prefetch endpoint; no content (each page inlines its own).
+Disallow: /__manifest
+# React Router loader-data payloads (JSON, no page content); real users still fetch them, only crawlers are blocked.
+Disallow: /*.data$
+Disallow: /*.data?
+# Feed sort/filter variants fold into the plain URL via canonical anyway;
+# blocking them saves the crawl needed to discover that (#13365)
+Disallow: /*?sort=
+Disallow: /*&sort=
+Disallow: /*?hidePrompts=
+Disallow: /*&hidePrompts=
+Disallow: /*?promptVisibility=
+Disallow: /*&promptVisibility=
+# Legacy path, now the client-only #relevant view; only 301s. `$` spares the fragment.
+Disallow: /*/artwork/*/relevant$
+Disallow: /artwork/*/relevant$
+# Feed cursors duplicate content already reachable via ?page=N.
+Disallow: /*_cursor=
+Allow: /
+# Content Signals (https://contentsignals.org/): allow search indexing and
+# answer-time AI reads (consistent with the on-demand fetchers allowed below);
+# opt out of third-party AI training. A preference declaration, not enforcement.
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
+# On-demand fetchers only (previews, ads checks, user-triggered AI reads).
+# Crawlers (Googlebot's tools and the AI crawlers named in the * group above)
+# stay under that group so its hygiene rules keep applying to them.
+User-agent: AdsBot-Google
+User-agent: AdsIdxBot
+User-agent: facebookexternalhit
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Perplexity-User
+User-agent: Canva-Slackapp-LinkExpanding
+User-agent: Twitterbot
+User-agent: Pinterestbot
+Allow: /
+
+# Training-corpus crawlers with no search or referral surface (Common Crawl,
+# ByteDance). This is the enforcement half of the ai-train=no signal above.
+User-agent: CCBot
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://pixai.art/sitemap_main.xml
+Sitemap: https://pixai.art/sitemap_locales.xml
+Sitemap: https://pixai.art/theme/sitemap.xml
+Sitemap: https://pixai.art/tools/sitemap.xml
+Sitemap: https://cdn.pixai.art/seo/sitemap_index_artwork.xml
+Sitemap: https://cdn.pixai.art/seo/sitemap_index_tag.xml
+Sitemap: https://cdn.pixai.art/seo/sitemap_index_olm.xml
+Sitemap: https://cdn.pixai.art/seo/sitemap_index_news.xml
+
+#DaumWebMasterTool:147d6ebbf8344d67bc1a67ae7024c9ed71f4663bee9df65f26a850da1bfcbe23:SQz8q8gaEwm8DvTv0cIRow==

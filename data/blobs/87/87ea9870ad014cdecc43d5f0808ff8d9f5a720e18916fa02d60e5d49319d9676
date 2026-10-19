@@ -1,0 +1,27 @@
+User-agent: *
+Disallow: /api/
+Disallow: /api/comment/user/featureds
+Disallow: /api/comment/user/subscribers
+Disallow: /api/comment/user/muted
+Disallow: /api/comment/user/voted
+Disallow: /bbtcaptcha/
+Disallow: /bbtcomment/create/
+Disallow: /bbtcomment/vote/
+Disallow: /bbtcomment/report/
+Disallow: /bbtcomment/entityComments/
+Disallow: /bbtcontent/poll/vote/
+Disallow: /bbtcontent/poll/getresults/
+Disallow: /props/
+Disallow: /bbtmail/sendEntity/
+Disallow: /bbtshop/
+Disallow: /bbtstats/
+Disallow: /logout.html
+Disallow: /buscador/
+Disallow: /vertele/lo-mas-visto-tv/2*
+Disallow: /vertele/lo-mas-visto-tv/cadenas/2*
+Disallow: /vertele/lo-mas-visto-tv/cadenas/mes/2*
+Disallow: /vertele/lo-mas-visto-tv/informativos/2*
+Disallow: /vertele/lo-mas-visto-tv/todos/2*
+
+Sitemap: https://www.eldiario.es/sitemap_index_25b87.xml
+Sitemap: https://www.eldiario.es/sitemap_google_news_25b87.xml

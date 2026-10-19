@@ -1,0 +1,265 @@
+User-agent: FAST Enterprise Crawler
+User-agent: FAST-WebCrawler
+User-agent: barkrowler
+User-agent: rogerbot
+User-agent: dotbot
+User-agent: DataForSeoBot
+User-agent: BLEXBot
+User-agent: AwarioRssBot
+User-agent: AwarioSmartBot
+User-agent: MJ12bot
+User-Agent: ZoomBot
+User-agent: CCBot
+User-agent: Bytespider
+Disallow: /
+
+User-agent: *
+# IMPORTANT: every user-facing route below is mirrored with a `/*/...`
+# wildcard variant so it also matches locale-prefixed URLs (e.g. both
+# `/tour/123/embed` AND `/de-de/tour/123/embed`). Per Google's robots.txt
+# spec the path match is anchored at the start of the URL, so the
+# unprefixed pattern does NOT cover the 21 canonical locale variants.
+# https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt#url-matching-based-on-path-values
+# Backend-only paths (/api, /tiles, /static, /_*, /error, ...) and the
+# /contact and /external static helpers don't need the wildcard variant
+# because they're not served under a locale prefix.
+Disallow: /_democase-test-area/
+Disallow: /_fb-apps/
+Disallow: /_mail/
+Disallow: /_newsletter/
+Disallow: /_partner/
+Disallow: /_plugin-test-area/
+Disallow: /tiles
+Disallow: /account
+Disallow: /*/account
+Disallow: /api
+# Internal XHR/JSON API consumed by the SPA (e.g. /webapi/v007/points/<lat>,<lng>/…,
+# /webapi/v007/guides/<id>/seo_guides/). It already returns `X-Robots-Tag: noindex`
+# but Googlebot was still crawling it and logging the responses as "Not found (404)"
+# in GSC — over half of that bucket. Block the crawl entirely; pages are SSR'd so
+# blocking these XHRs does not affect rendered content.
+Disallow: /webapi
+Disallow: /contact/goodbye.html
+Disallow: /error
+Disallow: /external/importer.html
+Disallow: /privacy
+Disallow: /*/privacy
+Disallow: /tools
+Disallow: /*/tools
+Disallow: /product/buy
+Disallow: /*/product/buy
+Disallow: /service
+Disallow: /*/service
+Disallow: /terms-of-service
+Disallow: /*/terms-of-service
+Disallow: /static
+Disallow: /5years
+Disallow: /*/5years
+Disallow: /g/
+Disallow: /*/g/
+Disallow: /redeem
+Disallow: /*/redeem
+Disallow: /campaign
+Disallow: /*/campaign
+Disallow: /dpp
+Disallow: /*/dpp
+Disallow: /product/promotion
+Disallow: /*/product/promotion
+Disallow: /user/kommot
+Disallow: /*/user/kommot
+Disallow: /user/komot
+Disallow: /*/user/komot
+Disallow: /user/koomot
+Disallow: /*/user/koomot
+Disallow: /user/kommoot
+Disallow: /*/user/kommoot
+Disallow: /plan?*similar=*
+Disallow: /*/plan?*similar=*
+Disallow: /projects/vef
+Disallow: /*/projects/vef
+Disallow: /projects/volksentscheid-fahrrad
+Disallow: /*/projects/volksentscheid-fahrrad
+Disallow: /projects/radg
+Disallow: /*/projects/radg
+
+# The entries below were previously served with a `<meta name="robots"
+# content="noindex">` tag. `noindex` still requires Googlebot to fetch the
+# page to discover the tag, which burns crawl budget on URLs we never want
+# indexed. Google's crawl-budget guide for large sites explicitly recommends
+# `Disallow` over `noindex` in exactly this scenario:
+#   https://developers.google.com/search/docs/crawling-indexing/large-site-managing-crawl-budget#manage-your-crawl-budget
+# None of the patterns below have organic search impressions in GSC, so
+# blocking the crawl does not cost us any traffic.
+
+# Route planner pages with a pre-populated tour (/plan/tour/:compactpath)
+# are always noindex — they are user-specific edit surfaces, not
+# discoverable content. `/plan` (empty planner) remains crawlable so its
+# landing copy can rank.
+Disallow: /plan/tour/
+Disallow: /*/plan/tour/
+
+# Tour creation and customization flows are user-specific edit surfaces
+# that always render with noindex.
+Disallow: /tour-create/
+Disallow: /*/tour-create/
+Disallow: /customize/
+Disallow: /*/customize/
+
+# Embed pages for every embeddable entity type are served exclusively for
+# iframe consumption and always render with noindex. They have no organic
+# search value and should not compete with the canonical entity pages.
+Disallow: /tour/*/embed
+Disallow: /*/tour/*/embed
+Disallow: /user/*/embed
+Disallow: /*/user/*/embed
+Disallow: /collection/*/embed
+Disallow: /*/collection/*/embed
+Disallow: /guide/*/embed
+Disallow: /*/guide/*/embed
+Disallow: /smarttour/*/embed
+Disallow: /*/smarttour/*/embed
+
+# Zoom views (full-viewport map presentations) and privacy-check
+# redirect targets are always noindex variants of the canonical entity
+# pages.
+Disallow: /tour/*/zoom
+Disallow: /*/tour/*/zoom
+Disallow: /smarttour/*/zoom
+Disallow: /*/smarttour/*/zoom
+Disallow: /tour/*/is-private
+Disallow: /*/tour/*/is-private
+Disallow: /collection/*/is-private
+Disallow: /*/collection/*/is-private
+
+# Account-adjacent notification inbox that sits outside `/account/…`
+# (already disallowed above). Noindex, no search intent.
+Disallow: /notifications/follow-requests
+Disallow: /*/notifications/follow-requests
+
+# Internal auth / rejoin / licence flows — noindex, one-shot pages with
+# no search intent.
+Disallow: /auth-done
+Disallow: /*/auth-done
+Disallow: /rejoin/francis
+Disallow: /*/rejoin/francis
+
+# Mobile splash / streak / multiday-library landing pages are always
+# noindex and exist purely as app-open surfaces.
+Disallow: /multiday-library
+Disallow: /*/multiday-library
+Disallow: /external/streak
+Disallow: /*/external/streak
+Disallow: /upload/streak
+Disallow: /*/upload/streak
+
+# Community-contribution onboarding flow (noindex). The user-specific
+# `/user/:username/contributions` tab is blocked by the user sub-tab
+# rules below; this is the separate `/community/contribute` standalone
+# landing page.
+Disallow: /community/contribute
+Disallow: /*/community/contribute
+
+# Pioneer region admin pages — noindex, no search intent.
+Disallow: /pioneers/region/
+Disallow: /*/pioneers/region/
+
+# User profile sub-tabs (everything under /user/:username/ except the summary
+# tab) are always rendered with `noindex, nofollow` regardless of the
+# underlying user's quality — see `com.komoot/app/server/routes/user.js`,
+# which sets `robots: 'noindex, nofollow'` for every `activeTab !== 'summary'`.
+# Each user has ~12 such sub-tab URLs × ~22 locales, so for the ~20M user
+# accounts on the platform this is a very large slice of Googlebot's
+# wasted crawl budget (visible in GSC as "Crawled - currently not
+# indexed" and "Excluded by 'noindex' tag"). Blocking the crawl removes
+# the same wasted fetches the same way #6342 did for embed/zoom/etc.
+#
+# The canonical `/user/:username` (default summary tab) is deliberately
+# NOT blocked — high-quality users (ambassadors, partners, editorially-
+# recommended) are indexable there and are explicitly included in the
+# sitemap by google-sitemap-generation #37. `/user/:username/summary`
+# (explicit summary variant) is also left crawlable since it resolves
+# to the same indexable summary content.
+Disallow: /user/*/highlights
+Disallow: /*/user/*/highlights
+Disallow: /user/*/collections
+Disallow: /*/user/*/collections
+Disallow: /user/*/contributions
+Disallow: /*/user/*/contributions
+Disallow: /user/*/peak_bagging
+Disallow: /*/user/*/peak_bagging
+Disallow: /user/*/routes
+Disallow: /*/user/*/routes
+Disallow: /user/*/activities
+Disallow: /*/user/*/activities
+Disallow: /user/*/tours
+Disallow: /*/user/*/tours
+Disallow: /user/*/followers
+Disallow: /*/user/*/followers
+Disallow: /user/*/following
+Disallow: /*/user/*/following
+Disallow: /user/*/merits
+Disallow: /*/user/*/merits
+Disallow: /user/*/friends
+Disallow: /*/user/*/friends
+Disallow: /user/*/backfilled-tours
+Disallow: /*/user/*/backfilled-tours
+Disallow: /user/*/streak
+Disallow: /*/user/*/streak
+
+# Geo-coordinate discover pages (/discover/<name>/@<lat>,<lng>/…) are
+# personalized, location-specific search results served by the
+# `discover-location` route and are ALWAYS noindex. They were a large slice of
+# GSC's "Excluded by 'noindex' tag" bucket, and `noindex` still costs a fetch
+# per URL. The `/@<lat>,<lng>` coordinate segment is unique to these pages — no
+# indexable discover page (the `/discover` landing, `/discover/<category>` hubs,
+# sport hubs, or `/discover/<category>/:id/:name` pages) contains an `@`, so this
+# only blocks the personalized variants. Migrated from noindex to Disallow for
+# the same crawl-budget reason as the embed/zoom/sub-tab rules above.
+Disallow: /discover/*/@
+Disallow: /*/discover/*/@
+
+# Sign-in page. Pure auth utility with no organic search value. It is served
+# crawlable (no `noindex`) and the `?redirect=<url>&reason=<x>` params produce a
+# huge number of unique URLs (e.g. one per content-blocking/signup prompt), all
+# canonicalising to `/signin` — i.e. crawl budget burned on "Alternate page with
+# proper canonical" duplicates. robots.txt only affects crawlers, so real users'
+# sign-in flow is unaffected.
+Disallow: /signin
+Disallow: /*/signin
+
+# Route-planner geo deep-links (/plan/@<lat>,<lng>?waypoint=…&sport=…). These are
+# interactive planner states, not discoverable content: served crawlable but with
+# effectively infinite coordinate/waypoint variants that canonicalise away (they
+# show up under "Page with redirect" / "Alternate page with proper canonical").
+# The bare `/plan` landing is intentionally left crawlable so its copy can rank —
+# only the `/@<lat>,<lng>` states are blocked, matching the existing
+# `/plan/tour/` and `/plan?*similar=*` rules.
+Disallow: /plan/@
+Disallow: /*/plan/@
+
+# Sitemaps. Generated weekly by the google-sitemap-generation ECS job, uploaded
+# to S3, and served via CloudFront under the komoot.com origin. Per the
+# robots.txt standard, Sitemap directives are host-agnostic and apply to all
+# user agents.
+# https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview
+Sitemap: https://www.komoot.com/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/de-de/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/fr-fr/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/it-it/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/es-es/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/nl-nl/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/pl-pl/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/pt-pt/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/pt-br/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/ja-jp/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/ko-kr/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/nb-no/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/sv-se/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/fi-fi/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/da-dk/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/cs-cz/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/hr-hr/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/ro-ro/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/hu-hu/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/el-gr/_sitemaps/sitemap-index.xml
+Sitemap: https://www.komoot.com/tr-tr/_sitemaps/sitemap-index.xml

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /mtk/photos/
+Disallow: /mtk/contact.html
+Disallow: *@@*.html
+Disallow: *.license.html

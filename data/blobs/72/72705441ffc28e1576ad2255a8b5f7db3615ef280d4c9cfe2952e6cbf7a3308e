@@ -1,0 +1,830 @@
+# Sanity
+
+> Sanity is the Content Operating System for the AI era. It gives teams a structured content backbone (Content Lake), a fully customizable editing environment (Sanity Studio), and APIs that power everything from websites to AI agents. Model content around how your business actually works, automate the repetitive stuff, and deliver to any channel from a single source of truth.
+
+## Docs
+
+- [Manage Sanity with code](https://www.sanity.io/docs/blueprints)
+- [Introduction](https://www.sanity.io/docs/blueprints/blueprints-introduction): Learn what Blueprints are, how they work, and how to get started.
+- [Stacks and scope](https://www.sanity.io/docs/blueprints/stacks-and-scope): How one blueprint file maps to many stacks, and what project versus organization scope means.
+- [Manage environments with Blueprints](https://www.sanity.io/docs/blueprints/manage-environments): Deploy one blueprint file to staging, production, and other stacks.
+- [The resource graph](https://www.sanity.io/docs/blueprints/resource-graph): How resources reference each other with the $ syntax, and why a blueprint file is a connected system.
+- [Errors and rollbacks](https://www.sanity.io/docs/blueprints/errors-and-rollbacks): How Blueprints catches mistakes early and what happens when a deploy fails.
+- [Your first Blueprint](https://www.sanity.io/docs/blueprints/your-first-blueprint): Set up a blueprint, run a plan, and deploy your first resource (a CORS origin) to a real Sanity stack.
+- [Project layout and monorepos](https://www.sanity.io/docs/blueprints/project-layout-and-monorepos): Lay out a Sanity project so Blueprints, Functions, and your application code coexist cleanly in monorepos.
+- [Promote a stack](https://www.sanity.io/docs/blueprints/promote-stack-to-organization-scope): Learn how to promote an existing project-scoped blueprint stack to organization scope to unlock scheduled functions.
+- [Deploy from CI](https://www.sanity.io/docs/blueprints/deploy-blueprints-from-ci): How to deploy your Blueprint automatically from any CI system using a deploy token and environment variables.
+- [Deploy with GitHub Actions](https://www.sanity.io/docs/blueprints/blueprint-action): Use the official action to deploy your blueprints with GitHub Actions.
+- [Define a webhook](https://www.sanity.io/docs/blueprints/blueprints-webhook): Blueprints allow you to define and manage your webhooks in code, then deploy them in a predictable manner.
+- [Define a CORS origin](https://www.sanity.io/docs/blueprints/blueprints-cors): Blueprints allow you to define and manage your CORS origins in code, then deploy them in a predictable manner.
+- [Define a robot token](https://www.sanity.io/docs/blueprints/blueprints-robot-tokens): Blueprints allow you to create robot tokens alongside other resources for use in the blueprint.
+- [Define a custom role](https://www.sanity.io/docs/blueprints/blueprints-role): Use Blueprints to define a custom role in code alongside your project's other resources.
+- [Define an application](https://www.sanity.io/docs/blueprints/deploy-an-application-with-blueprints): Deploy an SDK app as a blueprint resource with defineApplication and its view definers.
+- [Configure Media Library](https://www.sanity.io/docs/blueprints/blueprints-media-library): Configure Media Library fields as code with defineMediaLibraryConfig, a singleton config resource.
+- [Configuration file reference](https://www.sanity.io/docs/blueprints/blueprint-config): Reference documentation for the Blueprint configuration files.
+- [Application reference](https://www.sanity.io/docs/blueprints/application-blueprints-reference): Field reference for defineApplication and the application view definers: window, panel, tile, asset source, and web worker.
+- [Blueprints glossary](https://www.sanity.io/docs/blueprints/glossary): Definitions of the core Blueprints terms: stacks, scopes, values, deletion policies, and more.
+- [Blueprints scopes reference](https://www.sanity.io/docs/blueprints/scopes): Project versus organization scope, which resource types need which scope, and how the CLI resolves scope.
+- [Blueprints](https://www.sanity.io/docs/cli-reference/cli-blueprints): Reference documentation for the Sanity CLI Blueprints command.
+- [Deploy custom functions to automate content operations](https://www.sanity.io/docs/functions)
+- [Introduction](https://www.sanity.io/docs/functions/functions-introduction): Learn how to take advantage of Functions in your Sanity projects.
+- [Create a Document Function](https://www.sanity.io/docs/functions/function-quickstart): Start building with Functions by deploying a new function to Sanity's infrastructure.
+- [Create a Media Library Asset Function](https://www.sanity.io/docs/functions/asset-function-quickstart): Start building a function that reacts to changes to a Media Library asset.
+- [Create a Sync Tag Invalidate Function](https://www.sanity.io/docs/functions/sync-tag-function-quickstart): Build and deploy a new Sync Tag Invalidate function to Sanity's infrastructure.
+- [Create a Scheduled Function](https://www.sanity.io/docs/functions/scheduled-function-quickstart): Create your first scheduled function, a Sanity function that runs on a set schedule, with Blueprints.
+- [Create a PubSub function](https://www.sanity.io/docs/functions/pubsub-function-quickstart): Create your first PubSub (Publisher/Subscriber) function, a Sanity Function you can trigger from other functions.
+- [Manage dependencies](https://www.sanity.io/docs/functions/function-dependencies): Functions can be self-contained, or part of a larger ecosystem. Learn how to manage function dependencies in your projects.
+- [Local testing](https://www.sanity.io/docs/functions/functions-local-testing): Simulate Functions locally with real data and an interactive playground.
+- [Function to function invocation](https://www.sanity.io/docs/functions/function-to-function-invocation): Learn how to invoke one function from another.
+- [Configure @sanity/client](https://www.sanity.io/docs/functions/functions-js-client): Learn to use the JavaScript client in a Sanity Function.
+- [Add environment variables](https://www.sanity.io/docs/functions/function-env-vars): Learn to add environment variables to your functions.
+- [Assign custom robot tokens](https://www.sanity.io/docs/functions/robot-tokens-with-functions): Learn how to authenticate Sanity Functions using robot tokens defined with Blueprints.
+- [Common patterns](https://www.sanity.io/docs/functions/functions-cheatsheet): Common patterns and techniques for creating Functions.
+- [Handler reference](https://www.sanity.io/docs/functions/function-wrapper): Reference documentation for the shape of the function wrapper.
+- [Functions](https://www.sanity.io/docs/cli-reference/functions): Interact with and test your Sanity Functions from the CLI.
+- [Canvas](https://www.sanity.io/docs/canvas)
+- [Introduction](https://www.sanity.io/docs/canvas/introduction-to-canvas): A familiar writing tool that understands your content structure, so content can flow directly into the right Studio fields with a single click.
+- [Introduction](https://www.sanity.io/docs/canvas/writing): Write and collaborate in Canvas with AI assistance, contextual notes, and real-time collaboration.
+- [Keyboard shortcuts](https://www.sanity.io/docs/canvas/keyboard-shortcuts): Reference for Canvas keyboard shortcuts covering text formatting, document navigation, text selection, document management, collaboration, and Canvas-specific features.
+- [Working with templates](https://www.sanity.io/docs/canvas/templates): Create reusable Canvas templates with pre-configured content types and field labels for repeatable content workflows.
+- [Troubleshooting Canvas](https://www.sanity.io/docs/canvas/troubleshooting): Common issues writers run into when using Canvas, with suggested fixes.
+- [Configure Canvas for your content](https://www.sanity.io/docs/canvas/configure-canvas): Make your Studio schema available in Canvas and configure how it surfaces to writers.
+- [Build with AI](https://www.sanity.io/docs/ai)
+- [Best practices](https://www.sanity.io/docs/ai/get-started): Set up the Sanity Agent Toolkit and MCP server to help AI assistants generate high-quality Sanity code that follows established best practices.
+- [MCP setup and introduction](https://www.sanity.io/docs/ai/mcp-server): Enable AI agents to interact with your Sanity workspace through the Model Context Protocol (MCP).
+- [Agent Skills](https://www.sanity.io/docs/ai/skills): Understand and use agent skills to help AI assistants generate high-quality Sanity code that follows established best practices.
+- [Get to know Sanity Context](https://www.sanity.io/docs/ai/sanity-context): Sanity Context exposes the content kept in Sanity to your agents through a hosted, read-only MCP server, from your live dataset or from Knowledge Bases built ahead of time.
+- [Quick start](https://www.sanity.io/docs/ai/sanity-context-quick-start): Install the Sanity Context skill, run the guided setup, and verify your agent can read your content.
+- [Retrieval modes](https://www.sanity.io/docs/ai/sanity-context-retrieval-modes): How GROQ mode and Knowledge Bases differ, when each one fits, and where dataset embeddings bridge the two.
+- [Inline initial context](https://www.sanity.io/docs/ai/sanity-context-initial-context): Fetch initial context over HTTP and drop the tool from your agent to remove a round trip from every conversation.
+- [Knowledge Bases](https://www.sanity.io/docs/ai/sanity-context-knowledge-bases): A Knowledge Base is a pre-built index over material you choose, attached as sources and served to agents through Context MCP.
+- [Knowledge Base source types](https://www.sanity.io/docs/ai/sanity-context-source-types): Dataset, website, and file sources for a Knowledge Base: what each accepts, how it is scoped, and which file formats a file source reads.
+- [Create a Knowledge Base](https://www.sanity.io/docs/ai/sanity-context-create-knowledge-base): Create a Knowledge Base, add its first source, run a build, and review the entries and issues it produces.
+- [Keep a Knowledge Base current](https://www.sanity.io/docs/ai/sanity-context-maintain-knowledge-base): Set refresh schedules for dataset and website sources, respond to change detection, and decide when to rebuild.
+- [Resolve Knowledge Base issues](https://www.sanity.io/docs/ai/sanity-context-resolve-issues): Work through conflicts a build detected and turn your decisions into instructions that carry across future builds.
+- [Add insights to Sanity Context](https://www.sanity.io/docs/ai/sanity-context-insights): Sanity Context insights tracks and analyzes your agent conversations
+- [Sanity Context patterns and best practices](https://www.sanity.io/docs/ai/sanity-context-patterns): Production patterns and best practices for building agents with Sanity Context.
+- [Connect Sanity Context with OpenAI Agents SDK](https://www.sanity.io/docs/ai/sanity-context-openai-agents-sdk): Connect Sanity Context to a Python agent using the OpenAI Agents SDK with built-in MCP support.
+- [Connect Sanity Context with Vercel AI SDK](https://www.sanity.io/docs/ai/sanity-context-vercel-ai-sdk): Connect Sanity Context to a TypeScript agent using the Vercel AI SDK and Anthropic.
+- [Connect Sanity Context with LangChain](https://www.sanity.io/docs/ai/sanity-context-langchain): Connect Sanity Context to a Python agent using LangChain and langchain-mcp-adapters.
+- [Content access and security](https://www.sanity.io/docs/ai/sanity-context-security): How the organization token, the MCP's sources, and groqFilter decide what an agent connected to Context MCP can read.
+- [Configure an MCP](https://www.sanity.io/docs/ai/sanity-context-configure-mcp): Create an MCP in the Context app, scope what it serves, and connect an agent to the endpoint.
+- [Context MCP reference](https://www.sanity.io/docs/ai/sanity-context-mcp): The reference for Context MCP: endpoints, URL parameters, configuration fields, and text search.
+- [Context MCP tools](https://www.sanity.io/docs/ai/sanity-context-mcp-tools): Every tool Context MCP serves, by mode, with what each one returns and when an agent reaches for it.
+- [Content Agent API](https://www.sanity.io/docs/apis-and-sdks/content-agent-api): Build custom integrations with the Sanity Content Agent API.
+- [Installation](https://www.sanity.io/docs/studio/install-and-configure-sanity-ai-assist): How to install and configure the AI Assist plugin for Sanity Studio.
+- [HTTP API Reference](https://www.sanity.io/docs/http-reference)
+- [Actions](https://www.sanity.io/docs/http-reference/actions): Reference documentation for the Actions HTTP endpoint.
+- [Assets](https://www.sanity.io/docs/http-reference/assets): Upload images and files to Content Lake, and link Media Library assets to your dataset.
+- [Copy](https://www.sanity.io/docs/http-reference/copy): The Copy API, or Cloud Clone, lets you copy existing datasets.
+- [Backups](https://www.sanity.io/docs/http-reference/backups): Reference documentation for the Backups API.
+- [Doc](https://www.sanity.io/docs/http-reference/doc): Retrieve one or more documents by ID and bypass the caching layer.
+- [Export](https://www.sanity.io/docs/http-reference/export): Reference documentation for the export HTTP endpoint.
+- [History](https://www.sanity.io/docs/http-reference/history): Reference documentation for the History HTTP endpoint.
+- [Jobs](https://www.sanity.io/docs/http-reference/jobs): Reference documentation for the Jobs HTTP endpoint.
+- [Listen](https://www.sanity.io/docs/http-reference/listen): Reference documentation for the Listen HTTP endpoint.
+- [Live](https://www.sanity.io/docs/http-reference/live): Reference documentation for the Live HTTP endpoint.
+- [Mutation](https://www.sanity.io/docs/http-reference/mutation): Reference documentation for the Mutation HTTP reference.
+- [Query](https://www.sanity.io/docs/http-reference/query): Reference documentation for the Query HTTP endpoint.
+- [Scheduling](https://www.sanity.io/docs/http-reference/scheduling): Reference documentation for the Scheduling HTTP endpoints.
+- [Webhooks API reference](https://www.sanity.io/docs/http-reference/webhooks): Reference documentation for the Webhooks HTTP endpoints.
+- [Agent Actions](https://www.sanity.io/docs/http-reference/agent-actions): Reference documentation for the Agent Actions HTTP API.
+- [Content Agent](https://www.sanity.io/docs/http-reference/content-agent): HTTP reference documentation for the Content Agent API
+- [Embeddings index API reference](https://www.sanity.io/docs/http-reference/embeddings-index): Reference documentation for the Embeddings Index HTTP endpoints.
+- [Functions](https://www.sanity.io/docs/http-reference/functions-api): Reference documentation for the Sanity Functions HTTP endpoints.
+- [Media Library API reference](https://www.sanity.io/docs/http-reference/media-library): HTTP endpoints reference for the Media Library API
+- [Application management](https://www.sanity.io/docs/http-reference/applications-api): Reference documentation for the applications & user-applications HTTP endpoints.
+- [Access](https://www.sanity.io/docs/http-reference/access-api): A centralized API to manage resource access control through roles and permissions.
+- [Projects](https://www.sanity.io/docs/http-reference/projects-api): Reference documentation for the projects HTTP endpoint.
+- [Roles](https://www.sanity.io/docs/http-reference/roles): Reference documentation for the Roles HTTP endpoints.
+- [User attributes](https://www.sanity.io/docs/http-reference/user-attributes): Manage user attributes and attribute definitions to enable parameterized role-based access control
+- [Activity Log](https://www.sanity.io/docs/http-reference/activity-log): HTTP endpoints for fetching organization/project activity logs of management activities. E.g. invites, role changes, plan changes.
+- [Libraries and tooling](https://www.sanity.io/docs/libraries)
+- [Embeddings Index CLI reference (deprecated)](https://www.sanity.io/docs/libraries/embeddings-index-cli-reference): Reference documentation of the Sanity Embeddings Index CLI to create and manage embeddings indexes for your content.
+- [Specifications](https://www.sanity.io/docs/specifications)
+- [Syntax reference](https://www.sanity.io/docs/specifications/groq-syntax): Reference documentation for the GROQ syntax.
+- [Data types](https://www.sanity.io/docs/specifications/groq-data-types): Data types supported by GROQ
+- [Parameters](https://www.sanity.io/docs/specifications/groq-parameters): User-provided parameters in GROQ
+- [Operators](https://www.sanity.io/docs/specifications/groq-operators): A description of operators in GROQ
+- [Functions](https://www.sanity.io/docs/specifications/groq-functions): Reference documentation for GROQ functions.
+- [Pipeline components](https://www.sanity.io/docs/specifications/groq-pipeline-components): A description of GROQ pipeline components
+- [Joins](https://www.sanity.io/docs/specifications/groq-joins): A description of joining multiple documents in GROQ
+- [Visual Editing](https://www.sanity.io/docs/visual-editing)
+- [Introduction](https://www.sanity.io/docs/visual-editing/introduction-to-visual-editing): Framework quickstarts, a framework-agnostic conceptual series, and task-focused guides for specific features.
+- [Visual Editing for App Router](https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-app-router): Set up visual editing between Sanity Studio and a Next.js App Router frontend, including the Sanity client, Draft Mode, Visual Editing, and Live Content.
+- [Visual Editing for Pages Router](https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-pages-router): Get started with Sanity Visual Editing in a new or existing Next.js application using the Pages Router.
+- [Nuxt.js](https://www.sanity.io/docs/visual-editing/visual-editing-with-nuxt): Get started with Sanity Visual Editing in a new or existing Nuxt application.
+- [SvelteKit](https://www.sanity.io/docs/visual-editing/visual-editing-with-sveltekit): Get started with Sanity Visual Editing in a new or existing SvelteKit application.
+- [React Router/Remix](https://www.sanity.io/docs/visual-editing/visual-editing-with-react-router): Get started with Sanity Visual Editing in a new or existing React Router (Remix) application.
+- [React Native](https://www.sanity.io/docs/visual-editing/visual-editing-with-react-native): Get started with Sanity Visual Editing in a new or existing React Native application using the Sanity React Loader.
+- [Visual Editing with Astro](https://www.sanity.io/docs/visual-editing/astro-visual-editing): Configure Sanity’s Presentation Tool, draft mode, and visual editing overlays to work with an Astro 7 server-rendered frontend.
+- [Architecture overview](https://www.sanity.io/docs/visual-editing/visual-editing-architecture): Understand how Sanity's visual editing works across seven architectural layers: Content Source Maps, stega encoding, overlays, live updates, preview mode, and the Presentation Tool.
+- [Presentation Tool](https://www.sanity.io/docs/visual-editing/configuring-the-presentation-tool): Configure the Presentation Tool: previewUrl, document location resolvers, allowed origins, components, and navigation for multi-environment setups.
+- [Client setup and stega](https://www.sanity.io/docs/visual-editing/visual-editing-client-stega): Configure the Sanity client for visual editing: stega encoding, Content Source Maps, perspectives, and secure token handling.
+- [Implement draft mode](https://www.sanity.io/docs/visual-editing/implementing-draft-mode): Implement secure draft mode from scratch using @sanity/preview-url-secret and standard Web APIs, with draft mode cookies, validation, and framework-agnostic endpoints.
+- [Live preview updates](https://www.sanity.io/docs/visual-editing/live-preview-content-updates): Build real-time content updates using the core-loader, Fetcher interface, enableLiveMode(), and the Live Content API for progressive enhancement.
+- [Overlays and click-to-edit](https://www.sanity.io/docs/visual-editing/visual-editing-overlays): Enable overlays with enableVisualEditing(), understand the five content detection methods, integrate your router, and handle refreshes when content changes.
+- [End to end example](https://www.sanity.io/docs/visual-editing/build-a-visual-editing-integration): Build a complete framework-agnostic visual editing integration step-by-step with Vite and a Node.js HTTP server.
+- [Overlay and control components](https://www.sanity.io/docs/visual-editing/custom-overlay-components): Visual editing overlays can be extended with custom React components for direct in-app content editing and displaying content metadata.
+- [Preview header and navigation](https://www.sanity.io/docs/visual-editing/customizing-preview-header-and-navigation): Learn to customize the preview header in Sanity Studio's Presentation tool, enabling users to interact with overlays and toggle features.
+- [Drag and drop](https://www.sanity.io/docs/visual-editing/enabling-drag-and-drop): Core concepts for drag-and-drop functionality in the Presentation Tool
+- [Create Studio edit intent links](https://www.sanity.io/docs/visual-editing/studio-edit-intent-links): Learn how to construct URLs that open specific documents and fields in Sanity Studio for custom editorial interfaces and preview environments.
+- [Keep Presentation fast on large pages](https://www.sanity.io/docs/visual-editing/presentation-performance): Cut preview latency on page-builder pages with per-section queries, scoped revalidation, narrow projections, and deferred sections.
+- [Resolver API](https://www.sanity.io/docs/visual-editing/presentation-resolver-api): Programmatically generate shortcuts from document forms to relevant routes in the Presentation Tool
+- [useOptimistic hook](https://www.sanity.io/docs/visual-editing/useoptimistic-reference): Instantly update UI with mutation results created directly in an application while awaiting updated content from Content Lake.
+- [Content Source Maps](https://www.sanity.io/docs/visual-editing/content-source-maps): Content source maps allow tools to annotate content with metadata and use it to connect tools to content.
+- [Vercel protection bypass](https://www.sanity.io/docs/visual-editing/vercel-protection-bypass): Bypass protection for automation is a Vercel feature for bypassing authenticated deployments. It requires additional setup to use with Presentation and Studio.
+- [Troubleshooting Visual Editing](https://www.sanity.io/docs/visual-editing/troubleshooting-visual-editing)
+- [Integrate Sanity with your Astro app](https://www.sanity.io/docs/astro)
+- [Introduction](https://www.sanity.io/docs/astro/introduction): Build content-driven Astro websites with Sanity. The integration, key features, and resources to get started.
+- [Configure @sanity/astro](https://www.sanity.io/docs/astro/configure-sanity-astro): Reference for Sanity integration configuration in Astro. Covers integration options, the sanity:client virtual module, environment variables, type declarations, and creating additional client instances.
+- [Embedding Studio in Astro](https://www.sanity.io/docs/astro/embedding-studio-in-astro): Mount Sanity Studio as a route in your Astro application using @sanity/astro. Covers installation, configuration, CORS setup, and known issues.
+- [Query content](https://www.sanity.io/docs/astro/query-content-astro): Use the @sanity/astro integration to fetch content with GROQ in your Astro components. Covers basic queries, dynamic routes, typed queries, and the loadQuery helper for Visual Editing.
+- [Images and Portable Text](https://www.sanity.io/docs/astro/images-and-portable-text-astro): Render Sanity images with CDN transforms and rich text with Portable Text in your Astro components.
+- [Static and server rendering](https://www.sanity.io/docs/astro/static-and-server-rendering): Choose the right rendering mode for your Astro + Sanity project. Covers static generation, server-side rendering, and hybrid mode.
+- [Sanity CLI](https://www.sanity.io/docs/cli-reference)
+- [Reference](https://www.sanity.io/docs/cli-reference/cli-config): Wrangle datasets and webhooks, initialize plugin boilerplate code, build and deploy, all from the command line
+- [API](https://www.sanity.io/docs/cli-reference/cli-api): Reference documentation for the Sanity CLI API command.
+- [Assets](https://www.sanity.io/docs/cli-reference/cli-assets): Reference documentation for the Sanity CLI assets command.
+- [Backups](https://www.sanity.io/docs/cli-reference/cli-backups): Reference documentation for the sanity backups CLI command.
+- [Build](https://www.sanity.io/docs/cli-reference/build): Builds the current Sanity configuration to a static bundle.
+- [Codemod](https://www.sanity.io/docs/cli-reference/codemod): Runs a code modification script
+- [Context](https://www.sanity.io/docs/cli-reference/cli-context): Reference documentation for the Sanity CLI context command.
+- [CORS](https://www.sanity.io/docs/cli-reference/cors-in-cli): Interact with CORS-entries for your project
+- [Datasets](https://www.sanity.io/docs/cli-reference/cli-datasets): Interact with datasets in your project
+- [Debug](https://www.sanity.io/docs/cli-reference/debug): Gathers information about your local Sanity environment.
+- [Deploy](https://www.sanity.io/docs/cli-reference/deploy): Deploys a statically built Sanity studio
+- [Dev](https://www.sanity.io/docs/cli-reference/dev): Starts a development server for the Sanity Studio
+- [Docs](https://www.sanity.io/docs/cli-reference/docs): Browse, read, and search the Sanity documentation from the CLI.
+- [Documents](https://www.sanity.io/docs/cli-reference/documents): Interact with documents in your project
+- [Exec](https://www.sanity.io/docs/cli-reference/exec): Runs a script in Sanity context
+- [GraphQL](https://www.sanity.io/docs/cli-reference/cli-graphql): Deploy, delete and list GraphQL APIs for Sanity projects
+- [Help](https://www.sanity.io/docs/cli-reference/help): Displays help information about Sanity
+- [Hooks](https://www.sanity.io/docs/cli-reference/cli-hooks): Interact with hooks in your project
+- [Init](https://www.sanity.io/docs/cli-reference/init): Initialize a new Sanity project or plugin
+- [Install](https://www.sanity.io/docs/cli-reference/install): Installs dependencies of the current project
+- [Learn](https://www.sanity.io/docs/cli-reference/cli-learn): Reference documentation for the Sanity CLI learn command.
+- [Login](https://www.sanity.io/docs/cli-reference/login): Authenticates against the Sanity.io API or a third-party identity provider via SAML SSO (Business / Enterprise plan feature).
+- [Logout](https://www.sanity.io/docs/cli-reference/logout): Logs out of the Sanity.io session
+- [Manage](https://www.sanity.io/docs/cli-reference/manage): Opens the Sanity project management UI
+- [Manifest](https://www.sanity.io/docs/cli-reference/manifest): Extracts a JSON manifest for use with Sanity Canvas.
+- [MCP](https://www.sanity.io/docs/cli-reference/cli-mcp): Reference documentation for the Sanity CLI mcp command.
+- [Media Library CLI commands](https://www.sanity.io/docs/cli-reference/media): CLI reference documentation for the media command.
+- [Migrations](https://www.sanity.io/docs/cli-reference/cli-migrations): Create, list, and run content migrations
+- [New](https://www.sanity.io/docs/cli-reference/cli-new): Reference documentation for the Sanity CLI new command.
+- [OpenAPI](https://www.sanity.io/docs/cli-reference/openapi): Command group with list and get subcommands for accessing Sanity OpenAPI specifications directly from the CLI.
+- [Organizations](https://www.sanity.io/docs/cli-reference/cli-organizations): Reference documentation for the Sanity CLI organizations command.
+- [Preview](https://www.sanity.io/docs/cli-reference/preview): Starts a local web server for previewing production build
+- [Projects](https://www.sanity.io/docs/cli-reference/projects): Get information about projects for your logged in user
+- [Schemas](https://www.sanity.io/docs/cli-reference/cli-schemas): List, validate, extract, and deploy schema.
+- [Skills](https://www.sanity.io/docs/cli-reference/cli-skills): Reference documentation for the Sanity CLI skills command.
+- [Start](https://www.sanity.io/docs/cli-reference/start): Alias of `sanity preview`
+- [Telemetry](https://www.sanity.io/docs/cli-reference/telemetry): Interact with telemetry settings for your logged in user
+- [Tokens](https://www.sanity.io/docs/cli-reference/tokens): Create, inspect and manage tokens
+- [TypeGen](https://www.sanity.io/docs/cli-reference/cli-typegen): Generate TypeScript type definition from a Studio schema and GROQ queries
+- [Undeploy](https://www.sanity.io/docs/cli-reference/undeploy): Removes the deployed studio from <your-studio-name>.sanity.studio.
+- [Users](https://www.sanity.io/docs/cli-reference/users): Manage users of your project
+- [Versions](https://www.sanity.io/docs/cli-reference/versions): Shows the installed versions of Sanity CLI and core components
+- [Whoami](https://www.sanity.io/docs/cli-reference/cli-whoami): Reference documentation for the Sanity CLI whoami command.
+- [Store and query structured content](https://www.sanity.io/docs/content-lake)
+- [Technical limits](https://www.sanity.io/docs/content-lake/technical-limits): A list of Content Lake limits.
+- [API Versioning](https://www.sanity.io/docs/content-lake/api-versioning): How to handle versioning in the Sanity API
+- [API CDN](https://www.sanity.io/docs/content-lake/api-cdn): Description of the CDN-distributed, cached version of the Sanity API.
+- [Datasets](https://www.sanity.io/docs/content-lake/datasets): Managing multiple datasets within a project
+- [Documents](https://www.sanity.io/docs/content-lake/documents): Sanity stores your data, and some system data, in JSON documents.
+- [Drafts and versions](https://www.sanity.io/docs/content-lake/drafts-and-versions): How draft and version documents work, what they share, and how to disable drafts
+- [IDs and paths](https://www.sanity.io/docs/content-lake/ids): How document IDs work, and what you can do with them
+- [Perspectives](https://www.sanity.io/docs/content-lake/perspectives): Perform the same query but with different results based on the published or draft status of a document.
+- [Attribute limit](https://www.sanity.io/docs/content-lake/attribute-limit): Everything about the attribute limit: what it is, how to avoid it, and what to do if you hit the limit on one of your projects.
+- [Hot swap](https://www.sanity.io/docs/content-lake/how-to-use-hot-swapping-for-datasets): Use a dataset alias to switch the dataset your applications read from, for recovery or breaking content migrations
+- [Cloud clone](https://www.sanity.io/docs/content-lake/how-to-use-cloud-clone-for-datasets): Copy a dataset inside Sanity's infrastructure using either the CLI or HTTP API.
+- [Environments](https://www.sanity.io/docs/content-lake/environments): How drafts, content releases, previews, and separate datasets fit together when you test schema and content changes before production.
+- [Managing backups](https://www.sanity.io/docs/content-lake/backups): Sanity's dataset backups for disaster recovery and auditing. Backups need a plan that includes them, are off by default, and are enabled per dataset with the Sanity CLI.
+- [Embeddings](https://www.sanity.io/docs/content-lake/dataset-embeddings): Search your Content Lake by meaning, not just keywords.
+- [Programmatic control](https://www.sanity.io/docs/content-lake/content-release-document-flow): How Content Releases store document versions, and the states a release moves through from creation to publish.
+- [Hierarchy](https://www.sanity.io/docs/content-lake/hierarchy): Sanity’s hierarchy primitive lets you organise documents into a tree, similar to a file system.
+- [Introduction](https://www.sanity.io/docs/content-lake/groq-introduction): GROQ (Graph-Relational Object Queries) is Sanity's powerful query language designed to help you describe exactly what information your application needs.
+- [How queries work](https://www.sanity.io/docs/content-lake/how-queries-work): A tutorial on using the Sanity query language GROQ.
+- [Custom functions](https://www.sanity.io/docs/content-lake/custom-groq-functions): Learn how to create your own GROQ functions.
+- [Query cheat sheet](https://www.sanity.io/docs/content-lake/query-cheat-sheet): Data query examples.
+- [Search with GROQ](https://www.sanity.io/docs/content-lake/search-content-with-groq): A guide to searching Sanity text content using GROQ, from basic text matching to advanced hybrid search that combines keyword and semantic strategies.
+- [Vision plugin](https://www.sanity.io/docs/content-lake/the-vision-plugin): Quickly test your GROQ queries using this studio plugin.
+- [GROQ feature support across Sanity](https://www.sanity.io/docs/content-lake/groq-feature-support-by-context): A summary of GROQ language support and limitations across different Sanity contexts.
+- [Introduction](https://www.sanity.io/docs/content-lake/graphql): How to deploy and query GraphQL API for your Sanity projects
+- [GROQ for GraphQL developers](https://www.sanity.io/docs/content-lake/what-about-graphql): Why don't we use GraphQL as our primary query language, and what to do if you want a GraphQL API on your data
+- [Introduction to document mutations](https://www.sanity.io/docs/content-lake/mutations-introduction): Sanity's Content Lake offers a variety of methods for creating, editing, and deleting documents.
+- [Mutate documents with actions](https://www.sanity.io/docs/content-lake/dispatch-actions): The Actions API let you use the same system Sanity Studio uses to mutate documents in Content Lake.
+- [Transactions](https://www.sanity.io/docs/content-lake/transactions): How transactions for Content Lake work
+- [Patches](https://www.sanity.io/docs/content-lake/http-patches): The valid patch types when using the direct HTTP mutations api.
+- [Document mutation patterns](https://www.sanity.io/docs/content-lake/mutation-patterns): Common patterns and snippets for mutating documents and data in the Sanity Content Lake.
+- [Introduction](https://www.sanity.io/docs/content-lake/assets): Sanity provides extensible UI for managing assets, and an API for dealing with storage, resizing and deletion.
+- [Upload, query, and delete assets](https://www.sanity.io/docs/content-lake/manage-assets): Programmatically manage assets in your project dataset.
+- [Image metadata](https://www.sanity.io/docs/apis-and-sdks/image-metadata): This article takes a closer look at the types of metadata available for images and the values they might return.
+- [Image transformations](https://www.sanity.io/docs/apis-and-sdks/image-urls): Reference documentation for image transformations.
+- [International Image Interoperability Framework (IIIF) API reference](https://www.sanity.io/docs/apis-and-sdks/iiif-api-reference): The International Image Interoperability Framework (IIIF) provides a standardized way of delivering and describing images shared on the web. This is the reference documentation for how you can interact with the asset pipeline using IIIF.
+- [Importing content](https://www.sanity.io/docs/content-lake/importing-data): How to go about importing data in bulk, including file and image assets.
+- [Export a dataset](https://www.sanity.io/docs/content-lake/exporting-data): How to export a dataset with the Sanity CLI, what the export archive contains, and how asset binaries are handled.
+- [Restore a deleted dataset from a backup](https://www.sanity.io/docs/content-lake/restore-deleted-dataset): Use an backup to restore a deleted dataset.
+- [Migrating your schema and content](https://www.sanity.io/docs/content-lake/schema-and-content-migrations): How to migrate schema and content within a Sanity project
+- [Content migration cheat sheet](https://www.sanity.io/docs/content-lake/content-migration-cheatsheet): Common content migration patterns that can be run by the Sanity CLI
+- [Schema migration principles](https://www.sanity.io/docs/content-lake/important-considerations-for-schema-and-content-migrations): How to derisk changes to your schema and plan for successful content migrations
+- [Schema validation](https://www.sanity.io/docs/content-lake/schema-validation-and-the-content-lake): Understand why schema validation only runs in Sanity Studio and what that means when writing data through the API or client libraries.
+- [Perspectives for preview and presentation](https://www.sanity.io/docs/content-lake/presenting-and-previewing-content): Previewing changes to your content in a secure and high-fidelity setting before publishing is essential to a smooth editorial process.
+- [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api): The Live Content API is perfect for fast-moving events like sports, news, and commerce. Deliver real-time experiences at scale.
+- [Listening API](https://www.sanity.io/docs/content-lake/realtime-updates): How API clients can listen for data changes in realtime.
+- [Introduction](https://www.sanity.io/docs/content-lake/webhooks): Send customized HTTP requests when something in your Content Lake has changed.
+- [Best practices](https://www.sanity.io/docs/content-lake/webhook-best-practices): Best practices for configuring webhooks and handling them in your system.
+- [Introduction](https://www.sanity.io/docs/content-lake/embeddings-index-api-overview): Embeddings allow you to search for what your documents are about. Use the Embeddings Index API to build LLM agents or to enable semantic search.
+- [Create and query an embeddings index (deprecated)](https://www.sanity.io/docs/content-lake/create-query-embeddings-index): To get started with using the embeddings index API, you first need to create an index.
+- [Migrate to dataset embeddings](https://www.sanity.io/docs/content-lake/migrate-from-embeddings-index-api): Replace the deprecated Embeddings Index API with Dataset Embeddings and GROQ: export your index, enable embeddings, rewrite your queries, and cut over.
+- [Access your data (CORS)](https://www.sanity.io/docs/content-lake/cors): Decide which websites can access your project data.
+- [CORS and browser security](https://www.sanity.io/docs/content-lake/browser-security-and-cors): Best practices for configuring CORS origins securely while letting trusted websites interact with your Sanity Dataset.
+- [Keeping your data safe](https://www.sanity.io/docs/content-lake/keeping-your-data-safe): Best practices for access token security.
+- [Activity Feed](https://www.sanity.io/docs/platform-management/activity-feed): Keep track of what happens in your Sanity organizations and projects
+- [Roles and permissions](https://www.sanity.io/docs/content-lake/roles-concepts): Concepts behind Sanity's roles and permissions system: resources, permissions, roles, and users, plus when to reach for custom roles.
+- [Create custom roles](https://www.sanity.io/docs/content-lake/build-a-custom-role-with-the-access-api): How to build, assign, and verify custom Sanity roles via the Access API, with recipes for common scenarios.
+- [Roles](https://www.sanity.io/docs/user-guides/roles): Sanity enforces user access control with roles. Roles help control resource access to datasets and documents.
+- [Common Sanity document types](https://www.sanity.io/docs/content-lake/document-reference): Reference documentation for common Sanity document shapes.
+- [URL format](https://www.sanity.io/docs/content-lake/http-urls): tl;dr: <projectId>.api.sanity.io/<version>/<path>
+- [Authentication and tokens](https://www.sanity.io/docs/content-lake/http-auth): How to create tokens and make authenticated requests.
+- [JSONMatch](https://www.sanity.io/docs/content-lake/json-match): Rich ways to address specific values in Sanity documents
+- [IP addresses used by Sanity](https://www.sanity.io/docs/content-lake/ip-addresses): Reference documentation for Sanity IP address ranges.
+- [Setting up your studio](https://www.sanity.io/docs/next-js-quickstart/setting-up-your-studio): Quickstart for getting up and running with Sanity from scratch.
+- [Defining a schema](https://www.sanity.io/docs/next-js-quickstart/defining-a-schema): A new Sanity Studio project has no schema types registered, so there is nothing to edit yet. Define your first document type and register it.
+- [Displaying content in Next.js](https://www.sanity.io/docs/next-js-quickstart/displaying-content-in-next-js): Query your content and render it in a Next.js app.
+- [Deploying Studio and inviting editors](https://www.sanity.io/docs/next-js-quickstart/deploying-studio-and-inviting-editors): Your Sanity Studio is still only running on your local computer. It's time to deploy and get it into the hands of other content editors.
+- [Administer organizations, projects, datasets, and users](https://www.sanity.io/docs/platform-management)
+- [Platform terminology](https://www.sanity.io/docs/platform-management/platform-terminology): To understand how to share work among teams, familiarize yourself with core Sanity concepts that describe where the hard boundaries and connected features are.
+- [Plans and payments](https://www.sanity.io/docs/platform-management/plans-and-payments): Learn how billing and quotas work for different plans.
+- [Projects, organizations, and billing](https://www.sanity.io/docs/platform-management/projects-organizations-and-billing): Create, manage, and delete organizations, and delete, archive, or leave a project.
+- [Understanding the Growth plan trial](https://www.sanity.io/docs/platform-management/growth-plan-trial): The Growth plan trial lets you experience more of Sanity's additional capabilities for free for a limited period of time.
+- [Extending the Growth plan with paid add-ons](https://www.sanity.io/docs/platform-management/growth-plan-add-ons): Add-ons let you customize your Growth plan project further with enterprise-grade à la carte features.
+- [Not-profit plan](https://www.sanity.io/docs/platform-management/non-profit-plan): Sanity offers a heavily discounted non-profit plan for eligible non-profit organizations.
+- [Understanding AI Credits](https://www.sanity.io/docs/platform-management/how-ai-credits-work): Understand how AI credits are consumed and billed for Sanity AI tooling.
+- [Spending alerts](https://www.sanity.io/docs/platform-management/spending-alerts): Get notified when your organization's estimated monthly overage reaches an amount you choose.
+- [Export activity to Google Cloud Storage](https://www.sanity.io/docs/platform-management/export-activity-to-google-cloud-storage): Set up hourly Activity Feed Export delivery of organization management events to a Google Cloud Storage bucket, and verify that exports arrive.
+- [Request logs](https://www.sanity.io/docs/platform-management/request-logs): Learn how to set up Sanity to deliver detailed logs for API requests, enabling insights into content interaction and bandwidth usage.
+- [Request tags](https://www.sanity.io/docs/platform-management/reference-api-request-tags): Request tags in Sanity Log Delivery can be added to API and CDN requests for filtering and aggregating log data, supported by @sanity/client.
+- [Diagnose an API request spike](https://www.sanity.io/docs/platform-management/diagnose-api-request-spikes): Find out why API request usage jumped: check your client's useCdn setting, then use request logs to find the caller, tag, or query.
+- [Manage your account](https://www.sanity.io/docs/platform-management/manage-your-account): What you can change in your Sanity account settings, and why the sign-in method and the email address can't be changed.
+- [Delete your account](https://www.sanity.io/docs/platform-management/deleting-your-account): Delete your Sanity account permanently, and clear the checks that block deletion when you're the sole administrator of a project or organization.
+- [Prevent non-SAML users](https://www.sanity.io/docs/platform-management/prevent-non-saml-users): This article describes how to prevent non-SAML users from joining your organization and what to do with existing users on non-SAML identity providers.
+- [Activity Feed Export data reference](https://www.sanity.io/docs/platform-management/activity-feed-export-data-reference): Reference for Activity Feed Export file paths, manifests, and OCSF event fields.
+- [Request logs data reference](https://www.sanity.io/docs/platform-management/reference-request-log-data): The article explains the file format and data structure of the API request log feature, detailing the content and available data.
+- [User Guides](https://www.sanity.io/docs/user-guides)
+- [Meet the Dashboard](https://www.sanity.io/docs/dashboard/dashboard-introduction): The central hub for all your content operations.
+- [Quick start](https://www.sanity.io/docs/user-guides/content-operations-cheatsheet): Practical tips and instructions for managing your content within the Sanity ecosystem
+- [Comments](https://www.sanity.io/docs/studio/comments): Learn to use Comments in Sanity Studio for effective collaboration, including leaving comments, @mentions, and resolving comments.
+- [Task](https://www.sanity.io/docs/studio/tasks): Learn to use Sanity Studio's tasks for collaboration, assign tasks, comment on tasks, and resolve tasks for efficient content creation.
+- [Copy and paste fields](https://www.sanity.io/docs/user-guides/field-copy-and-paste): How to copy and paste fields and documents within your Sanity Studio.
+- [Preview and page building](https://www.sanity.io/docs/user-guides/preview-and-page-building): The Presentation Tool in Sanity Studio lets editorial teams preview and edit content visually, in context.
+- [Content Releases](https://www.sanity.io/docs/user-guides/content-releases): Learn to use Content Releases to organize and schedule updates across multiple documents.
+- [Compare document versions](https://www.sanity.io/docs/studio/compare-document-versions): The document comparison view in Sanity Studio provides a side-by-side view of different document versions.
+- [History experience](https://www.sanity.io/docs/user-guides/history-experience): Understanding retention time, and document history status
+- [Create instructions with AI Assist](https://www.sanity.io/docs/user-guides/ai-assist-working-with-instructions): How to create, run, and work with instructions for Sanity AI Assist.
+- [Instruction ideas for AI Assist](https://www.sanity.io/docs/user-guides/ai-assist-cheat-sheet): Instruction cheat sheet with common tasks that can be adapted to your specific use case.
+- [Quick start](https://www.sanity.io/docs/user-guides/media-library-user-cheatsheet): Practical tips and instructions for managing your media assets within the Sanity ecosystem
+- [Meet the library](https://www.sanity.io/docs/media-library/interface): Get to know Media Library's user interface.
+- [Content mapping](https://www.sanity.io/docs/canvas/canvas-content-mapping): Bridge the gap between Canvas and Studio with content mapping
+- [Quick start](https://www.sanity.io/docs/user-guides/content-agent-user-guide): Practical tips and instructions for managing content with the Content Agent
+- [Setting up your studio](https://www.sanity.io/docs/astro-quickstart/setting-up-your-studio): Quickstart for getting up and running with Sanity from scratch.
+- [Defining a schema](https://www.sanity.io/docs/astro-quickstart/defining-a-schema): A new Sanity Studio project has no schema types registered, so there is nothing to edit yet. Define your first document type and register it.
+- [Query content with GROQ](https://www.sanity.io/docs/astro-quickstart/querying-content-with-groq): Content from Sanity is typically fetched as JSON from your hosted dataset using the GROQ query language.
+- [Displaying content in an Astro front end](https://www.sanity.io/docs/astro-quickstart/displaying-content-in-an-astro-front-end): You’ve configured your Studio with a post document type and learned how to query from your hosted dataset. Before deploying the Studio, let’s query and display this content on the front-end framework of your choice.
+- [Deploying Studio and inviting editors](https://www.sanity.io/docs/astro-quickstart/deploying-studio-and-inviting-editors): Your Sanity Studio is still only running on your local computer. It's time to deploy and get it into the hands of other content editors.
+- [Agent Actions](https://www.sanity.io/docs/agent-actions)
+- [Introduction](https://www.sanity.io/docs/agent-actions/introduction): Get to know Agent Actions and how to start using them.
+- [Operations](https://www.sanity.io/docs/agent-actions/operations): Use the `targetDocument` property to control how Agent Actions create or edit documents.
+- [Targets and paths](https://www.sanity.io/docs/agent-actions/targets-paths): Use target to target specific parts of a document with Agent Actions
+- [Creating instructions](https://www.sanity.io/docs/agent-actions/instructions): How instructions and style guides shape what Agent Actions produce, and how to pass data into them with parameters.
+- [Common patterns](https://www.sanity.io/docs/agent-actions/agent-action-cheatsheet): Explore common patterns across all Agent Actions
+- [Enable references](https://www.sanity.io/docs/agent-actions/generate-add-references): Use references in Generate to populate fields and connect documents based on your instructions.
+- [Enable image generation](https://www.sanity.io/docs/agent-actions/agent-actions-image-generation): Generate and transform images with Agent Actions, either by targeting an image asset directly or by configuring image prompt fields for AI Assist.
+- [Enable date and datetime support](https://www.sanity.io/docs/agent-actions/agent-actions-date-support): Configure instructions to write to date and datetime fields.
+- [Quick start](https://www.sanity.io/docs/agent-actions/generate-quickstart): Get started with Generate by writing your first instructions to create and modify documents.
+- [Common patterns](https://www.sanity.io/docs/agent-actions/generate-cheatsheet): Common patterns and best practices for using Generate
+- [Quick start](https://www.sanity.io/docs/agent-actions/translate-quickstart): Learn to translate documents with the Translate Agent Actions action.
+- [Common patterns](https://www.sanity.io/docs/agent-actions/translate-cheatsheet): Common patterns and examples for using Translate.
+- [Quick start](https://www.sanity.io/docs/agent-actions/transform-quickstart): Get started with Transform by writing your first instructions to modify documents.
+- [Common patterns](https://www.sanity.io/docs/agent-actions/transform-cheatsheet): Common patterns and techniques for using Agent Actions Transform.
+- [Quick start](https://www.sanity.io/docs/agent-actions/prompt-quickstart): Learn to send requests to the LLM using Agent Actions Prompt.
+- [Quick start](https://www.sanity.io/docs/agent-actions/patch-quickstart): Make schema-aware patches with Agent Action Patch.
+- [Troubleshooting](https://www.sanity.io/docs/agent-actions/troubleshooting): Diagnose failed Agent Actions requests by status code, covering 401s, 403s, schema and API version errors, usage limits, and silent no-ops.
+- [Setting up your studio](https://www.sanity.io/docs/sanity-studio-quickstart/setting-up-your-studio): Quickstart for getting up and running with Sanity from scratch.
+- [Defining a schema](https://www.sanity.io/docs/sanity-studio-quickstart/defining-a-schema): A new Sanity Studio project has no schema types registered, so there is nothing to edit yet. Define your first document type and register it.
+- [Query content with GROQ](https://www.sanity.io/docs/sanity-studio-quickstart/querying-content-with-groq): Content from Sanity is typically fetched as JSON from your hosted dataset using the GROQ query language.
+- [Deploying the Studio](https://www.sanity.io/docs/sanity-studio-quickstart/deploying-studio-and-inviting-editors): Your Sanity Studio is still only running on your local computer. It's time to deploy and get it into the hands of other content editors.
+- [Dashboard](https://www.sanity.io/docs/dashboard)
+- [Configuring the Dashboard](https://www.sanity.io/docs/dashboard/dashboard-configure): Get started with Sanity Dashboard, the central hub of all your content operations.
+- [Integrate Sanity with your Next.js app](https://www.sanity.io/docs/nextjs)
+- [Introduction](https://www.sanity.io/docs/nextjs/introduction): Build content-driven Next.js applications with Sanity. The toolkit, key features, and resources to get started.
+- [Configure the next-sanity client](https://www.sanity.io/docs/nextjs/configure-sanity-client-nextjs): Reference for Sanity client configuration in Next.js. Covers base config, environment setup, useCdn, feature layers, token handling, and per-request overrides.
+- [Embedding Sanity Studio in Next.js](https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs): Mount Sanity Studio as a route in your Next.js application using NextStudio. Covers auto and manual installation, App Router catch-all route, metadata, and route separation.
+- [Query content](https://www.sanity.io/docs/nextjs/query-content-nextjs): Use the next-sanity library to write typed GROQ queries with defineQuery and fetch content in App Router or Pages Router.
+- [Rendering images in Next.js](https://www.sanity.io/docs/nextjs/next-sanity-image-component): Reference for the Image component and imageLoader exported from next-sanity/image. Wraps next/image with a Sanity CDN-aware loader.
+- [Add live content to your application](https://www.sanity.io/docs/developer-guides/live-content-guide): Learn to use the Live Content API with Next.js or your own integration for real-time content updates in your app.
+- [Caching and revalidation](https://www.sanity.io/docs/nextjs/caching-and-revalidation-in-nextjs): Manual caching strategies for Next.js + Sanity apps. Covers the sanityFetch helper, time-based, tag-based, and path-based revalidation, and debugging.
+- [Sanity Live with Next.js Cache Components](https://www.sanity.io/docs/nextjs/cache-components): Configure next-sanity v13 for Next.js Cache Components (cacheComponents: true). Covers the three-layer component pattern, defineLive setup, draft mode handling, and manual migration from earlier versions.
+- [Validate webhooks](https://www.sanity.io/docs/nextjs/validating-sanity-webhooks-nextjs): Set up webhook-based cache revalidation in Next.js using parseBody from next-sanity/webhook. Covers path-based and tag-based revalidation for App Router and Pages Router.
+- [Setting up your studio](https://www.sanity.io/docs/nuxt-js-quickstart/setting-up-your-studio): Quickstart for getting up and running with Sanity from scratch.
+- [Defining a schema](https://www.sanity.io/docs/nuxt-js-quickstart/defining-a-schema): A new Sanity Studio project has no schema types registered, so there is nothing to edit yet. Define your first document type and register it.
+- [Query content with GROQ](https://www.sanity.io/docs/nuxt-js-quickstart/querying-content-with-groq): Content from Sanity is typically fetched as JSON from your hosted dataset using the GROQ query language.
+- [Displaying content in Nuxt.js](https://www.sanity.io/docs/nuxt-js-quickstart/displaying-content-in-nuxt-js): You’ve configured your Studio with a post document type and learned how to query from your hosted dataset. Before deploying the Studio, let’s query and display this content on the front-end framework of your choice.
+- [Deploying Studio and inviting editors](https://www.sanity.io/docs/nuxt-js-quickstart/deploying-studio-and-inviting-editors): Your Sanity Studio is still only running on your local computer. It's time to deploy and get it into the hands of other content editors.
+- [APIs and SDKs](https://www.sanity.io/docs/apis-and-sdks)
+- [Introduction to schemas](https://www.sanity.io/docs/apis-and-sdks/introduction-to-schemas): Learn how schemas define content structure across Sanity and design effective, evolving content models that grow with your business needs.
+- [Naming things](https://www.sanity.io/docs/apis-and-sdks/naming-things): Requirements and suggestions for naming documents and fields
+- [Studio schema configuration](https://www.sanity.io/docs/studio/schema-types): A schema describes the types of documents and fields editors may author in a Sanity Studio workspace.
+- [Schema deployment](https://www.sanity.io/docs/apis-and-sdks/schema-deployment): Deploy your schema into your dataset to enable deep integration between your content model and Sanity apps.
+- [Create an aspect](https://www.sanity.io/docs/media-library/create-aspect): Create and deploy aspects for Media Library.
+- [Get started](https://www.sanity.io/docs/apis-and-sdks/js-client-getting-started): Learn how to install and configure the official Sanity JavaScript client for querying and mutating content across different environments.
+- [Querying content](https://www.sanity.io/docs/apis-and-sdks/js-client-querying): Learn how to fetch content from your Sanity dataset using GROQ queries, perspectives, and document lookup methods with @sanity/client.
+- [Creating and updating documents](https://www.sanity.io/docs/apis-and-sdks/js-client-mutations): Learn how to create, update, and patch documents with @sanity/client, including array manipulation, chained operations, and conditional updates.
+- [Working with assets and images](https://www.sanity.io/docs/apis-and-sdks/js-client-assets): Learn how to upload, query, and delete assets in both Content Lake and Media Library using the Sanity JavaScript client.
+- [Creating transactions](https://www.sanity.io/docs/apis-and-sdks/js-client-transactions): Learn how to group multiple mutations into atomic transactions using @sanity/client, including chaining operations, inline patches, and clientless patterns.
+- [Deleting documents](https://www.sanity.io/docs/apis-and-sdks/js-client-deleting): Learn how to delete documents by ID or by query using the Sanity JavaScript client.
+- [Create content releases](https://www.sanity.io/docs/apis-and-sdks/js-client-releases): Learn how to create releases, manage document versions, and schedule publishing using the Sanity JavaScript client.
+- [Listening to content updates](https://www.sanity.io/docs/apis-and-sdks/js-client-realtime): Learn how to receive real-time content updates using the Sanity JavaScript client, with the Live Content API and query listeners.
+- [Request tags for filtering logs](https://www.sanity.io/docs/apis-and-sdks/js-client-request-tags): Learn how to use request tags to identify and filter API requests in your Sanity project's request logs for debugging and monitoring.
+- [Advanced client patterns](https://www.sanity.io/docs/apis-and-sdks/js-client-advanced): Learn about mutation options, request cancellation, and other advanced patterns when using the Sanity JavaScript client.
+- [Upgrade @sanity/client from an older major version](https://www.sanity.io/docs/apis-and-sdks/js-client-upgrade): Find which @sanity/client version you run, why pre-v3 clients with a token skip the API CDN, and what changed in each major version.
+- [Introduction](https://www.sanity.io/docs/apis-and-sdks/cli): Build, deploy, init plugin boilerplate, run scripts, and wrangle datasets and webhooks, all from the command line
+- [Authentication](https://www.sanity.io/docs/apis-and-sdks/cli-authentication): Before interacting with the Sanity CLI, you need to login.
+- [Generating types](https://www.sanity.io/docs/apis-and-sdks/sanity-typegen): How to use Sanity TypeGen tooling to generate TypeScript definitions from Sanity Studio schemas and GROQ queries.
+- [Cheat sheet](https://www.sanity.io/docs/apis-and-sdks/content-releases-cheat-sheet): Query and modify Content Releases using the API
+- [Presenting images](https://www.sanity.io/docs/apis-and-sdks/presenting-images): Presenting images through the Sanity image pipeline
+- [Asset CDN](https://www.sanity.io/docs/apis-and-sdks/asset-cdn): Describes the CDN used for delivering assets
+- [Sanity Connect for Shopify](https://www.sanity.io/docs/apis-and-sdks/sanity-connect-for-shopify): Setting up and configuring Sanity Connect for Shopify
+- [Custom sync handlers for Sanity Connect](https://www.sanity.io/docs/developer-guides/custom-sync-handlers-for-sanity-connect): A custom sync handler allows you to provide an endpoint which receives updates from Shopify and passes data into your Content Lake.
+- [Reference](https://www.sanity.io/docs/apis-and-sdks/sanity-connect-for-shopify-reference): Reference documentation and code examples to set up and configure Sanity Connect for Shopify
+- [Get started](https://www.sanity.io/docs/apis-and-sdks/sanity-connect-for-salesforce-commerce-cloud): Install, configure, and use Sanity Connect to sync SFCC catalogs into Sanity and power enriched composable storefronts.
+- [Configuration reference](https://www.sanity.io/docs/apis-and-sdks/sanity-connect-sfcc-configuration-reference): Reference for all configuration options in Sanity Connect for Salesforce Commerce Cloud, including preferences, mappings, and jobs.
+- [Content Agent](https://www.sanity.io/docs/content-agent)
+- [Get started](https://www.sanity.io/docs/content-agent/introduction): Sanity Content Agent is an AI assistant that helps you work with content across your Sanity projects.
+- [Custom instructions](https://www.sanity.io/docs/content-agent/custom-instructions): Give the Content Agent standing guidelines, like tone of voice, language, or house style for you or for your whole organization.
+- [Content Agent for Slack](https://www.sanity.io/docs/content-agent/content-agent-for-slack): Use the Sanity Content Agent directly in Slack. Search, create, and update content in your Sanity projects through conversation, without leaving your workspace.
+- [Content Agent for Linear](https://www.sanity.io/docs/content-agent/content-agent-for-linear): Use the Sanity Content Agent in Linear. Search, create, and update content in your Sanity projects through conversation, without leaving your workspace.
+- [Build custom applications on Sanity](https://www.sanity.io/docs/app-sdk)
+- [Quickstart](https://www.sanity.io/docs/app-sdk/sdk-quickstart): Get up and running quickly with the Sanity App SDK by following this step-by-step guide!
+- [Introduction](https://www.sanity.io/docs/app-sdk/sdk-introduction): Get a high-level introduction to the Sanity App SDK.
+- [Installation](https://www.sanity.io/docs/app-sdk/installation-and-development): Learn how to bootstrap a new custom application using the Sanity App SDK.
+- [Configuration](https://www.sanity.io/docs/app-sdk/sdk-configuration): Learn how to connect your custom app to your Sanity content
+- [App SDK deployment](https://www.sanity.io/docs/app-sdk/sdk-deployment): Learn how to deploy your custom application to your organization dashboard.
+- [Document handles](https://www.sanity.io/docs/app-sdk/document-handles): Document handles are a central concept in the Sanity App SDK, and are important to understand when working with many of the SDK's React hooks.
+- [React hooks](https://www.sanity.io/docs/app-sdk/sdk-react-hooks): Meet some of the most important hooks from the React SDK package.
+- [Suspense](https://www.sanity.io/docs/app-sdk/react-suspense-sdk): Learn how the Sanity App SDK uses established React patterns to facilitate working with live content.
+- [Authentication](https://www.sanity.io/docs/app-sdk/sdk-authentication): Learn about the mechanisms that enable authentication when building with the App SDK.
+- [App SDK best practices](https://www.sanity.io/docs/app-sdk/sdk-best-practices): Opinionated patterns and guidance for building custom apps with the Sanity App SDK
+- [Fetching and handling content](https://www.sanity.io/docs/app-sdk/fetching-and-handling-content): Learn about the central concepts and hooks for pulling content from your Sanity project into your custom app.
+- [Editing documents](https://www.sanity.io/docs/app-sdk/editing-documents): Explore different methods and patterns for editing documents with the App SDK.
+- [Sanity UI](https://www.sanity.io/docs/app-sdk/sanity-ui-sdk): How to integrate @sanity/ui, or any other UI library, in your app.
+- [Tailwind CSS](https://www.sanity.io/docs/app-sdk/tailwind-sdk): Learn how to use Tailwind in your custom apps built on Sanity, powered by the App SDK.
+- [TypeGen](https://www.sanity.io/docs/app-sdk/sdk-typegen): Generate per-dataset types with Sanity TypeGen so App SDK hooks infer document, query, and projection types.
+- [Migrate from experimental TypeGen](https://www.sanity.io/docs/app-sdk/migrating-from-experimental-typegen-in-app-sdk): Upgrade an App SDK app from the deprecated experimental TypeGen packages to released groq and typegen.resources.
+- [Workflows](https://www.sanity.io/docs/workflows)
+- [Studio](https://www.sanity.io/docs/studio)
+- [Installation](https://www.sanity.io/docs/studio/installation): How to install and initiate a new Sanity Studio project
+- [Project structure](https://www.sanity.io/docs/studio/project-structure): The file structure of a typical Sanity Studio project
+- [Development](https://www.sanity.io/docs/studio/development): Learn how the default local development environment for Sanity Studio works
+- [Hosting and deployment](https://www.sanity.io/docs/studio/deployment): How to deploy Sanity Studio, either on your own or using our hosted service.
+- [Embedding Sanity Studio](https://www.sanity.io/docs/studio/embedding-sanity-studio): Embedding allows Studio to run as a route in your existing application.
+- [Upgrading Sanity Studio](https://www.sanity.io/docs/studio/upgrade): How to upgrade Sanity Studio
+- [Environment variables](https://www.sanity.io/docs/studio/environment-variables): You can use environment variables to dynamically configure the Studio depending on what context it's in.
+- [Using TypeScript in Sanity Studio](https://www.sanity.io/docs/studio/using-typescript-in-sanity-studio): How to use TypeScript with Sanity Studio
+- [Understanding the latest version of Sanity](https://www.sanity.io/docs/studio/latest-version-of-sanity): Explore the features and improvements in the latest version of Sanity.
+- [System requirements](https://www.sanity.io/docs/studio/system-requirements): Network, browser, and infrastructure requirements for running Sanity Studio in managed environments.
+- [Introduction](https://www.sanity.io/docs/studio/configuration): Sanity Studio lets you quickly get up and running by configuring it with JavaScript or TypeScript.
+- [Workspaces](https://www.sanity.io/docs/studio/workspaces): Learn about working with multiple workspaces within a single studio setup
+- [Schema and forms](https://www.sanity.io/docs/studio/schemas-and-forms): Schemas are the main mechanism for describing your content and how to interact with it in the Studio.
+- [Conditional fields](https://www.sanity.io/docs/studio/conditional-fields): How to make fields hidden or read-only based on other fields' values or on information about the current user.
+- [Field groups](https://www.sanity.io/docs/studio/field-groups): Organize your content editing experience by grouping fields together under tabs.
+- [List previews](https://www.sanity.io/docs/studio/previews-list-views): Configure and customize how documents are displayed within Sanity Studio's document lists.
+- [Connected content](https://www.sanity.io/docs/studio/connected-content): Structured content is connected. It's what enables reusing and repurposing the same chunk of content in different contexts, and it's how you enable your content to be treated as data.
+- [Validation](https://www.sanity.io/docs/studio/validation): Describes how to validate documents in Sanity Studio.
+- [Initial Value Templates](https://www.sanity.io/docs/studio/initial-value-templates): Define an initial value for a new document created in Sanity Studio.
+- [Cross-dataset references](https://www.sanity.io/docs/studio/cross-dataset-references): All you need to know about creating references across datasets.
+- [Sort orders](https://www.sanity.io/docs/studio/sort-orders): Manage how Studio sorts documents.
+- [Incoming reference decoration](https://www.sanity.io/docs/studio/incoming-reference-decoration): Display incoming references directly in a document's form, without storing the data as part of the document.
+- [Introduction](https://www.sanity.io/docs/studio/block-content): Block content lets you create a rich text experience tailored to the needs of your content.
+- [Configure the Portable Text Editor](https://www.sanity.io/docs/studio/portable-text-editor-configuration): Configure the Portable Text Editor: styles, lists, decorators, annotations, custom blocks, tables, and the built-in Markdown and typography behaviors.
+- [Customize the Portable Text Editor](https://www.sanity.io/docs/studio/customizing-the-portable-text-editor): Customization guidelines and examples to tailor the Portable Text editor to your needs.
+- [Create a Portable Text behavior plugin](https://www.sanity.io/docs/studio/pte-plugins): Use behavior plugins to add custom interactions to the Portable Text block editor in Studio.
+- [Add Portable Text Editor plugins to Studio](https://www.sanity.io/docs/studio/add-portable-text-plugins): Use official and community-built Portable Text Editor plugins in your studio.
+- [Common patterns](https://www.sanity.io/docs/studio/customizing-block-content): This series of practical examples shows how to customize block content and the Portable Text Editor in Sanity Studio.
+- [Introduction](https://www.sanity.io/docs/studio/studio-customization): With Studio customization, you can transform the default editing experience into one that matches your team's needs.
+- [Custom components for Sanity Studio](https://www.sanity.io/docs/studio/intro-to-custom-studio-components): Change the look and feel of your Studio and craft tailor-made editorial interactions.
+- [Custom authentication](https://www.sanity.io/docs/studio/custom-auth): The Studio can be configured to use your own login solution rather than the standard ones by supplying the auth provider details in your studio configuration.
+- [Custom asset sources](https://www.sanity.io/docs/studio/custom-asset-sources): How to add custom asset sources for Sanity Studio.
+- [Diff components](https://www.sanity.io/docs/studio/custom-diff-components): Customizing how changes between two versions of a data structure are displayed within the Sanity Studio.
+- [Form components](https://www.sanity.io/docs/studio/form-components): The Form Components API lets you customize the look and feel of the fields in your studio individually, or at a root level that will affect every field in the Studio.
+- [Re-enable browser autocomplete on Studio fields](https://www.sanity.io/docs/studio/re-enable-browser-autocomplete): Turn native browser autocomplete back on for Studio form fields, on a single field or across the whole studio, by overriding autoComplete in the input's elementProps.
+- [How form paths work](https://www.sanity.io/docs/studio/how-form-paths-work): Learn more about form paths, their structure, and their role as unique references to specific values in Sanity documents.
+- [Icons](https://www.sanity.io/docs/studio/icons-for-data-types): Use icons for types to display in the creation dialogue and when you're missing an media preview.
+- [Favicons](https://www.sanity.io/docs/studio/favicons): A "favicon" appears in places such as browser tabs, the URL field, and browser bookmarks. Learn how to replace the default Sanity icon with your own.
+- [Localizing Sanity Studio](https://www.sanity.io/docs/studio/localizing-studio-ui): Sanity Studio supports UI localization via plugins. Users can install languages, override translations, and contribute to localization.
+- [New document options](https://www.sanity.io/docs/studio/new-document-options): Customize the new document creation experience for creators in Sanity Studio.
+- [Studio components](https://www.sanity.io/docs/studio/studio-components): The studio components API allows you to customize the UI of your Sanity Studio.
+- [Studio search configuration](https://www.sanity.io/docs/studio/studio-search-config): Global search for Sanity Studio allows content search, can hide specific documents, and allows custom field weighting.
+- [Focus and UI state in custom inputs](https://www.sanity.io/docs/studio/focus-and-ui-state-in-custom-inputs): Learn more about handling UI disclosure elements. Manage focus and UI state in custom UI input elements.
+- [Real-time safe patches for input components](https://www.sanity.io/docs/studio/from-input-components-to-real-time-safe-patches): Learn more about real-time safe patches, with recommendations to safely sync changes between the frontend and the backend.
+- [Sanity UI](https://www.sanity.io/docs/studio/sanity-ui): Keep your custom studio elements consistent with built-in UI components.
+- [Studio tools](https://www.sanity.io/docs/studio/studio-tools): A tool is a top-level view in the Sanity Studio application that you can access through its menu bar.
+- [Create a custom Studio tool](https://www.sanity.io/docs/studio/custom-studio-tool): Add bespoke functionality to Studio with a custom tool.
+- [Tools common patterns](https://www.sanity.io/docs/studio/tools-cheat-sheet): Common code snippets to help customize the tools in your studio.
+- [Link from custom components](https://www.sanity.io/docs/studio/link-from-custom-components): Use IntentLink, StateLink, and useIntentLink from sanity/router to navigate your studio from custom React components, so links behave like links.
+- [Theming Sanity Studio](https://www.sanity.io/docs/studio/theming): Learn how to customize the styling and branding of your studio
+- [The Dashboard tool for Sanity Studio](https://www.sanity.io/docs/studio/dashboard): How to set up and configure the Dashboard tool for Sanity Studio
+- [Add widgets to dashboard](https://www.sanity.io/docs/studio/installing-and-configuring-widgets): How to install and configure widgets for the Dashboard tool for Sanity Studio
+- [Document actions](https://www.sanity.io/docs/studio/document-actions): Introduction to building custom document actions.
+- [Release Actions](https://www.sanity.io/docs/studio/release-actions): Create custom actions that display alongside the default Content Release actions.
+- [Custom document badges](https://www.sanity.io/docs/studio/custom-document-badges): Introduction to implementing your own document badges.
+- [Localization](https://www.sanity.io/docs/studio/localization): Localization allows you to deliver your content in different languages for your users.
+- [Content Releases configuration](https://www.sanity.io/docs/studio/content-releases-configuration): Configure Content Releases in Sanity Studio
+- [Enable and configure Comments](https://www.sanity.io/docs/studio/configuring-comments): Learn how to enable and configure the Comments feature in Sanity Studio.
+- [Configuring Tasks](https://www.sanity.io/docs/studio/configuring-tasks): Learn how to enable, configure, and use the Tasks feature in Sanity Studio for effective team collaboration on content creation.
+- [Scheduled drafts](https://www.sanity.io/docs/studio/scheduled-drafts): Scheduled drafts allows you to schedule single-document releases for a time in the future.
+- [Scheduled publishing (deprecated)](https://www.sanity.io/docs/studio/scheduled-publishing): Schedule your content for future publication and organize upcoming releases. No custom tasks or serverless functions required.
+- [Manage notifications](https://www.sanity.io/docs/studio/studio-notifications): Manage your Sanity Studio notifications from the user account settings page.
+- [Archive documents without deleting them](https://www.sanity.io/docs/studio/archive-documents): Compare ways to take content off your site but keep it: unpublish, an archived field, delete and restore, or unpublish in a release.
+- [Introduction](https://www.sanity.io/docs/studio/structure-introduction): The Structure tool is included with Sanity Studio and allows you to customize the experience of creating, browsing, and managing documents.
+- [Get started with Structure Builder API](https://www.sanity.io/docs/studio/structure-builder-introduction): This is an introduction to important concepts for the Structure Builder API.
+- [Override default list views](https://www.sanity.io/docs/studio/set-up-structure-builder-to-override-the-default-list-view): In this article, we'll explore how to initialize Structure Builder and override the default title of the "Content" list.
+- [Create a link to a single edit page in your main document type list](https://www.sanity.io/docs/studio/create-a-link-to-a-single-edit-page-in-your-main-document-type-list): In this article, we'll explore how to add a link to a single document from the main document type list.
+- [Manually group items in a pane](https://www.sanity.io/docs/studio/manually-group-items-in-a-pane): In this article, we'll manually group a few singleton "site setting" documents.
+- [Dynamically group list items with a GROQ filter](https://www.sanity.io/docs/studio/dynamically-group-list-items-with-a-groq-filter): In this article, we'll use the documentList() method to dynamically group documents with a GROQ filter.
+- [Create custom document views with Structure Builder](https://www.sanity.io/docs/studio/create-custom-document-views-with-structure-builder): In this article, we'll look at adding a custom document view to view the JSON data for our posts.
+- [Handle intents](https://www.sanity.io/docs/studio/handle-intents-in-structure): How the Structure Tool matches intents to panes, and how to declare intent handling on lists that don't match on their own.
+- [Reorganize your structure without breaking links](https://www.sanity.io/docs/studio/reorganize-structure-without-breaking-links): Rename, regroup, and re-nest Structure Builder items without breaking editors' saved links or dropping document types from the structure.
+- [Cheat sheet](https://www.sanity.io/docs/studio/structure-builder-cheat-sheet): The Structure Builder is a powerful (but complex) set of methods. There are a few commonly used methods which you are likely to need in your projects, and they are presented here in quick, copy-and-paste-friendly form.
+- [Structure tool](https://www.sanity.io/docs/studio/structure-tool): Customize the document browsing and management experience in Sanity Studio with the Structure tool.
+- [Reference](https://www.sanity.io/docs/studio/structure-builder-reference): Overview of different methods in the Structure Builder API
+- [Introduction](https://www.sanity.io/docs/studio/studio-plugins): Plugins let you extend and customize Sanity Studio with additional functionality.
+- [Installing and configuring plugins](https://www.sanity.io/docs/studio/installing-and-configuring-plugins): Learn how to extend and customize Sanity Studio with plugins.
+- [Developing plugins](https://www.sanity.io/docs/studio/developing-plugins): Package plugins in a reusable and shareable way.
+- [Publishing plugins](https://www.sanity.io/docs/studio/publishing-plugins): Publish a plugin for distribution
+- [Internationalizing plugins](https://www.sanity.io/docs/studio/internationalizing-plugins-ui): This article provides a guide for plugin authors to add localization capabilities to their Sanity Studio plugins.
+- [Reference](https://www.sanity.io/docs/studio/plugins-api-reference): Extend the capabilities of your studio using plugins
+- [Translation](https://www.sanity.io/docs/studio/ai-assist-content-translation): How to set up and use AI Assist for content translations for documents and fields.
+- [Custom field actions](https://www.sanity.io/docs/studio/ai-assist-field-actions): Set up and use custom field actions in AI Assist to add Agent Actions or other custom actions to the document or field action menus.
+- [Field action patterns](https://www.sanity.io/docs/studio/field-actions-patterns): Examples and best practices for using AI Assist custom field actions.
+- [Scheduled drafts](https://www.sanity.io/docs/studio/scheduled-drafts-user-guide): Learn to schedule individual drafts and browse scheduled drafts in the releases interface.
+- [View incoming references](https://www.sanity.io/docs/studio/incoming-references): The incoming references interface displays documents that reference the active document.
+- [Common keyboard shortcuts](https://www.sanity.io/docs/studio/sanity-studio-keyboard-shortcuts): A comprehensive reference guide to keyboard shortcuts available in Sanity Studio for faster navigation and editing.
+- [Array](https://www.sanity.io/docs/studio/array-type): Schema type for arrays of other types.
+- [Block](https://www.sanity.io/docs/studio/block-type): Schema type for block which provides a rich text editor for block content.
+- [Boolean](https://www.sanity.io/docs/studio/boolean-type): Schema type reference for expressing truthy values.
+- [Cross Dataset Reference](https://www.sanity.io/docs/studio/cross-dataset-reference-type): A schema type for referencing documents in another dataset within the same project.
+- [Date](https://www.sanity.io/docs/studio/date-type): Schema type reference for the Date type.
+- [Datetime](https://www.sanity.io/docs/studio/datetime-type): The schema type for expressing an exact date and time.
+- [Document](https://www.sanity.io/docs/studio/document-type): Schema type reference for expressing documents.
+- [Email](https://www.sanity.io/docs/studio/email-type): Schema type reference for the email type.
+- [File](https://www.sanity.io/docs/studio/file-type): Schema type reference for the File type.
+- [Geopoint](https://www.sanity.io/docs/studio/geopoint-type): Schema type reference for the geopoint type.
+- [Global document reference](https://www.sanity.io/docs/studio/global-document-reference-type): Reference documentation for the `globalDocumentReference` schema type.
+- [Image](https://www.sanity.io/docs/studio/image-type): Schema type for uploading, selecting, and editing images.
+- [Number](https://www.sanity.io/docs/studio/number-type): Schema type reference for the Number type.
+- [Object](https://www.sanity.io/docs/studio/object-type): Schema type to create custom types to use in a document.
+- [Reference](https://www.sanity.io/docs/studio/reference-type): A schema type for referencing other documents.
+- [Slug](https://www.sanity.io/docs/studio/slug-type): A schema type for slugs is typically used to create unique URLs.
+- [Span](https://www.sanity.io/docs/studio/span-type): Schema type reference for the Span type.
+- [String](https://www.sanity.io/docs/studio/string-type): A schema type for strings and a selectable lists of strings.
+- [Text](https://www.sanity.io/docs/studio/text-type): Schema type reference for the Text type.
+- [URL](https://www.sanity.io/docs/studio/url-type): Schema type reference for the URL type.
+- [Asset Source](https://www.sanity.io/docs/studio/asset-source-api-reference): As part of the Form API, you can define custom asset sources for both file and image inputs.
+- [Configuration](https://www.sanity.io/docs/studio/config-api-reference): The Configuration API in Sanity Studio is the primary mechanism that allows you to customize the Studio.
+- [Document](https://www.sanity.io/docs/studio/document-api-reference): The document configuration API enables adding actions/badges to your studio, setting defaults for new documents, and defining a URL resolver.
+- [Document Badges](https://www.sanity.io/docs/studio/document-badges-api): Reference documentation for the document badges.
+- [Document Actions](https://www.sanity.io/docs/studio/document-actions-api): Add custom operations to documents.
+- [Form](https://www.sanity.io/docs/studio/form-api-reference): The form API lets you customize the rendering of form components and specify options for asset sources in your studio.
+- [Form components API reference](https://www.sanity.io/docs/studio/form-components-reference): The Form Components API lets you override default form widgets with your own custom components.
+- [Hooks](https://www.sanity.io/docs/studio/studio-react-hooks): The sanity package provides utility hooks for creating custom components in your Studio.
+- [Structure tool](https://www.sanity.io/docs/studio/structure-tool-api): How to use the Structure Tool API to configure your structure tool(s).
+- [Studio components reference](https://www.sanity.io/docs/studio/studio-components-reference): The Studio Components API lets you override parts of the Studio UI with custom React components.
+- [Tools](https://www.sanity.io/docs/studio/tool-api-reference): A Studio tool is a top-level view that you can access through the menu bar.
+- [Initial Value Templates API reference](https://www.sanity.io/docs/studio/initial-value-templates-api): Reference documentation for the Initial Value Templates API.
+- [Help and troubleshooting](https://www.sanity.io/docs/help)
+- [Array items resolve to same JSON type](https://www.sanity.io/docs/help/schema-array-of-duplicate-primitive-json-type)
+- [Studio Performance Issues Caused by legacy HTTP protocols](https://www.sanity.io/docs/help/http1-performance-issues): Learn how to resolve Sanity Studio performance issues caused by outdated HTTP protocols like HTTP/1.1 by enabling HTTP/2 or 3.
+- [Error: Value of type "object" is not allowed in this array field](https://www.sanity.io/docs/help/error-value-of-type-object-is-not-allowed-in-this-array-field): Error message: "Invalid clipboard item Value of type "object" is not allowed in this array field"
+- [AVIF](https://www.sanity.io/docs/help/avif)
+- [Client API CDN configuration](https://www.sanity.io/docs/help/js-client-cdn-configuration)
+- [Desk is now Structure](https://www.sanity.io/docs/help/desk-is-now-structure): The deskTool API was renamed structureTool in v3.24.1 of Sanity Studio. The old names still work as deprecated aliases.
+- [Invalid configuration for cross dataset reference](https://www.sanity.io/docs/help/cross-dataset-reference-invalid): The Studio reports this error when a crossDatasetReference field definition is missing a required property or has an invalid value.
+- [Missing or duplicate context error](https://www.sanity.io/docs/help/missing-context-error): Missing or duplicate context errors in Sanity Studio usually mean more than one version of the `sanity` package is installed. Learn why this happens, how to clean up dependencies, and how to use package manager overrides.
+- [React Compiler and Sanity](https://www.sanity.io/docs/help/react-compiler): Learn how to use the React Compiler with Sanity Studio, React 18 & 19, and for publishing Sanity plugins. Improve performance and reduce manual memoization.
+- [Specify API version for studio client](https://www.sanity.io/docs/help/studio-client-specify-api-version)
+- [Why give schema types a title?](https://www.sanity.io/docs/help/schema-type-title-is-recommended)
+- [Array type has a invalid value for property "of"](https://www.sanity.io/docs/help/schema-array-of-invalid)
+- [React 19 and Sanity](https://www.sanity.io/docs/help/react-19): Sanity Studio requires React 19.2.2 or later, and Next.js 15 with React 19 is supported.
+- [Schema: Lift anonymous object types](https://www.sanity.io/docs/help/schema-lift-anonymous-object-type)
+- [Reference type has a invalid value for property "to"](https://www.sanity.io/docs/help/schema-reference-to-invalid)
+- [Incorrect location for reference options](https://www.sanity.io/docs/help/schema-reference-options-nesting): Reference field options such as `filter` must be nested under the `options` key, not placed on the root of the reference type.
+- [Invalid part syntax](https://www.sanity.io/docs/help/plugin-parts-syntax)
+- [Asset metadata field](https://www.sanity.io/docs/help/asset-metadata-field-invalid)
+- [Warning: userStore.currentUser is deprecated](https://www.sanity.io/docs/help/studio-user-store-currentuser-deprecated)
+- [CLI errors](https://www.sanity.io/docs/help/cli-errors)
+- [Renamed plugin sanity-plugin-vision](https://www.sanity.io/docs/help/renamed-plugin-vision): The Studio v2 plugin sanity-plugin-vision was renamed @sanity/vision. On Studio v3 and later, add visionTool() to your Studio configuration.
+- [Part name format](https://www.sanity.io/docs/help/part-name-format)
+- [Changes in block schema customization properties](https://www.sanity.io/docs/help/schema-deprecated-blockeditor-key)
+- [Invalid shape of predefined choices](https://www.sanity.io/docs/help/schema-predefined-choices-invalid)
+- [Introducing the document type](https://www.sanity.io/docs/help/toplevel-objects-to-document-type)
+- [Unable to get a ref to an input component](https://www.sanity.io/docs/help/input-component-no-ref)
+- [Outdated modules](https://www.sanity.io/docs/help/outdated-modules)
+- [Upgrade studio packages](https://www.sanity.io/docs/help/upgrade-packages)
+- [Block Content rendering: Image materializing](https://www.sanity.io/docs/help/block-content-image-materializing)
+- [Structure: Document schema type required](https://www.sanity.io/docs/help/structure-document-type-required)
+- [Parts: Declare vs implement](https://www.sanity.io/docs/help/part-declare-vs-implement)
+- [Incorrect options declaration in reference](https://www.sanity.io/docs/help/schema-reference-invalid-options): Sanity Studio reports that a reference type expects `options` to be an object when the `options` key on a reference is set to anything other than a plain object.
+- [Block type cannot be used outside of array](https://www.sanity.io/docs/help/schema-standalone-block-type)
+- [Structure: Node ID required](https://www.sanity.io/docs/help/structure-node-id-required)
+- [Structure: List items must be an array](https://www.sanity.io/docs/help/structure-list-items-must-be-array)
+- [Installing Node.js](https://www.sanity.io/docs/help/a5f6caba-53c9-4a9f-96ef-1bd1ae8f5c10)
+- [Structure: Action or intent required](https://www.sanity.io/docs/help/structure-action-or-intent-required)
+- [Object type has a invalid value for fields](https://www.sanity.io/docs/help/schema-object-fields-invalid)
+- [`studioHost` and `externalStudioHost` properties deprecated](https://www.sanity.io/docs/help/studio-host-user-applications): You can deploy more than a single studio or other Sanity-powered application. Learn how to use the right API to find out where they are located.
+- [Schema type is ES Module but imported through require](https://www.sanity.io/docs/help/schema-type-is-esm-module)
+- [Structure: Invalid list item](https://www.sanity.io/docs/help/structure-invalid-list-item)
+- [Structure: Query provided where filter is expected](https://www.sanity.io/docs/help/structure-query-provided-for-filter)
+- [Structure: List item IDs must be unique](https://www.sanity.io/docs/help/structure-list-item-ids-must-be-unique)
+- [Given type name is a reserved type](https://www.sanity.io/docs/help/schema-type-name-reserved)
+- [Structure: Schema type not found](https://www.sanity.io/docs/help/structure-schema-type-not-found)
+- [Migrating the legacy webhook behavior to GROQ-powered Webhooks](https://www.sanity.io/docs/help/6816a33e-f07d-4fdf-ad29-14c6337e19e3)
+- [Schema type is invalid](https://www.sanity.io/docs/help/schema-type-invalid)
+- [Input component is missing a required prop](https://www.sanity.io/docs/help/form-builder-input-missing-required-prop)
+- [Structure: Title is required](https://www.sanity.io/docs/help/structure-title-required)
+- [Structure: Filter is required](https://www.sanity.io/docs/help/structure-filter-required)
+- [Import: Asset file does not exist](https://www.sanity.io/docs/help/import-asset-file-does-not-exist): An asset document in your import file points to a URL that returns 404. Skip URL verification to finish the import, or fix the asset URLs.
+- [Input component is missing a required method](https://www.sanity.io/docs/help/input-component-missing-required-method)
+- [Implementing non-overridable part](https://www.sanity.io/docs/help/implement-non-overridable-part)
+- [Structure: Item returned no child](https://www.sanity.io/docs/help/structure-item-returned-no-child)
+- [Structure: Schema type is required](https://www.sanity.io/docs/help/structure-schema-type-required)
+- [Array type cannot contain array member](https://www.sanity.io/docs/help/schema-array-of-array)
+- [Using tokens in the browser](https://www.sanity.io/docs/help/js-client-browser-token)
+- [Array member type name conflicts with built-in type](https://www.sanity.io/docs/help/schema-array-of-type-builtin-type-conflict)
+- [Source vs. compiled paths](https://www.sanity.io/docs/help/source-vs-compiled-paths)
+- [Import: Asset has different target than source](https://www.sanity.io/docs/help/import-asset-has-different-target)
+- [Using global studio client without specifying API version](https://www.sanity.io/docs/help/studio-client-global-config)
+- [Structure: Action and intent are mutually exclusive](https://www.sanity.io/docs/help/structure-action-and-intent-mutually-exclusive)
+- [Plugin is missing a sanity.json file](https://www.sanity.io/docs/help/missing-plugin-sanity-json)
+- [Structure: Document ID required](https://www.sanity.io/docs/help/structure-document-id-required)
+- [Incompatible combination of params and filter](https://www.sanity.io/docs/help/schema-reference-filter-params-combination)
+- [Using listener with tokens is not supported in browsers](https://www.sanity.io/docs/help/js-client-listener-tokens-browser)
+- [Schema type is missing a required property](https://www.sanity.io/docs/help/schema-type-missing-name-or-type)
+- [API versioning in Javascript Client](https://www.sanity.io/docs/help/js-client-api-version)
+- [Slug: `slugifyFn` renamed](https://www.sanity.io/docs/help/slug-slugifyfn-renamed)
+- [Renamed plugin @sanity/date-input](https://www.sanity.io/docs/help/deprecated-sanity-date-input): The Studio v2 plugin @sanity/date-input was renamed @sanity/rich-date-input. On Studio v3 and later, install and register the plugin directly.
+- [Specify API version when using custom document list filters](https://www.sanity.io/docs/help/structure-api-version-required-for-custom-filter): Custom document list filters in Structure Builder require an `apiVersion`. Learn where to add `.apiVersion()` and what value to set.
+- [Function timeout](https://www.sanity.io/docs/help/functions-timeout): Resolve timeout errors in Sanity Functions by adjusting the timeout duration.
+- [Functions rate limit](https://www.sanity.io/docs/help/functions-rate-limit): Rate limiting helps prevent recursive functions from running indefinitely.
+- [Configure TypeGen](https://www.sanity.io/docs/help/configuring-typegen-in-sanity-cli-config): As of version 4.19.0 it is recommended to configure typegen through the Sanity CLI config.
+- [Studio v3 to v4](https://www.sanity.io/docs/help/v3-to-v4): Upgrading to v4 adds Node.js 20 as a requirement and requires minimal, if any, changes in your apps.
+- [Email addresses show [email protected]](https://www.sanity.io/docs/help/cloudflare-email-protection): Fix email addresses that render as [email protected] when Cloudflare Email Address Obfuscation is on.
+- [Next.js 16 and SanityLive](https://www.sanity.io/docs/help/nextjs-16-sanitylive-status): Upgrading to Next.js 16 with SanityLive on next-sanity v12 can multiply prefetch requests and ISR writes, leading to Sanity API overages. What to expect and how next-sanity v13 resolves it.
+- [Platform introduction](https://www.sanity.io/docs/getting-started/the-sanity-content-operating-system-an-introduction): Sanity is a fully customizable all-code backend for all your content-driven websites and apps—their builders and creators.
+- [Coding agents](https://www.sanity.io/docs/getting-started/ai-coding-agents): Written for AI coding agents: point your agent (Claude Code, Cursor) at this page and it installs the toolkit, gets you authenticated, and scaffolds a running Sanity Studio while guiding you.
+- [AI app builders](https://www.sanity.io/docs/getting-started/ai-app-builder-quickstart): Connect Sanity to your AI app builders and prompt it to turn your existing Markdown or hardcoded content into editable Sanity content.
+- [Setting up your studio](https://www.sanity.io/docs/react-router-quickstart/setting-up-your-studio): Quickstart for getting up and running with Sanity from scratch.
+- [Defining a schema](https://www.sanity.io/docs/react-router-quickstart/defining-a-schema): A new Sanity Studio project has no schema types registered, so there is nothing to edit yet. Define your first document type and register it.
+- [Query content with GROQ](https://www.sanity.io/docs/react-router-quickstart/querying-content-with-groq): Content from Sanity is typically fetched as JSON from your hosted dataset using the GROQ query language.
+- [Displaying content in a React Router front end](https://www.sanity.io/docs/react-router-quickstart/displaying-content-in-a-react-router-front-end): You’ve configured your Studio with a post document type and learned how to query from your hosted dataset. Before deploying the Studio, let’s query and display this content on the front-end framework of your choice.
+- [Deploying Studio and inviting editors](https://www.sanity.io/docs/react-router-quickstart/deploying-studio-and-inviting-editors): Your Sanity Studio is still only running on your local computer. It's time to deploy and get it into the hands of other content editors.
+- [Media Library](https://www.sanity.io/docs/media-library)
+- [Introduction](https://www.sanity.io/docs/media-library/introduction): Learn about Media Library, how to incorporate it into your workflow, and how to get started.
+- [Asset versions](https://www.sanity.io/docs/media-library/asset-versions): Manage asset versions in Media Library
+- [Configure your studios and CLI](https://www.sanity.io/docs/media-library/configure-library): Once Media Library is enabled for your organization, you can connect it to your Studio and the CLI.
+- [Use Media Library with AI agents](https://www.sanity.io/docs/media-library/mcp): Connect an AI agent to upload, find, edit, organize, and link assets in your organization's Media Library.
+- [Assign an aspect to an asset](https://www.sanity.io/docs/media-library/assign-aspects): Assign aspects to an asset programmatically.
+- [Query aspects in Media Library](https://www.sanity.io/docs/media-library/query-aspects): Query aspects in the Media Library dataset.
+- [Aspect patterns](https://www.sanity.io/docs/media-library/aspect-patterns): Common patterns for defining aspects
+- [Importing assets (media + aspects)](https://www.sanity.io/docs/media-library/importing-assets): Import assets in bulk and automatically categorize with aspect data.
+- [Upload an asset](https://www.sanity.io/docs/media-library/upload-assets): Programmatically upload assets to your Media Library.
+- [Folders](https://www.sanity.io/docs/media-library/folders): Organize Media Library assets into a navigable hierarchy with folders.
+- [Link assets to documents](https://www.sanity.io/docs/media-library/link-media-assets): Linking an asset in the Media Library to a document in your project requires a few extra steps.
+- [Update asset versions](https://www.sanity.io/docs/media-library/update-asset-versions): Upload a new version of a Media Library asset, set it as current, and update the documents that use it with the HTTP API.
+- [Asset visibility](https://www.sanity.io/docs/media-library/asset-visibility): Control asset access using visibility settings and enable secure delivery using signed URLs.
+- [Container URLs](https://www.sanity.io/docs/media-library/container-urls): Container URLs provide a stable, shareable link to Media Library assets.
+- [Working with video](https://www.sanity.io/docs/media-library/working-with-video): Learn how to handle video content in Sanity's Media Library.
+- [Migrate assets from Media Plugin](https://www.sanity.io/docs/media-library/media-migration): Moving from Media Plugin to Media Library requires that you move your assets, re-link them to your documents, and update any references.
+- [Limits and usage](https://www.sanity.io/docs/media-library/limits-and-usage): Technical limits and details on included usage for the media library.
+- [Developer guides](https://www.sanity.io/docs/developer-guides)
+- [Paginating with GROQ](https://www.sanity.io/docs/developer-guides/paginating-with-groq): Learn efficient pagination in GROQ using cursor-based filtering instead of array slicing. Covers tiebreakers for non-unique fields and batch processing.
+- [High-performance GROQ](https://www.sanity.io/docs/developer-guides/high-performance-groq): GROQ gives you a fast, expressive way to query data from Sanity.
+- [Setting up single sign-on with SAML](https://www.sanity.io/docs/developer-guides/sso-saml): This article will take you through the process of setting up SAML (Security Assertion Markup Language) SSO (single sign-on) for your organization.
+- [Third-Party Login (Deprecated)](https://www.sanity.io/docs/developer-guides/third-party-login): Describes integration with third-party authentication systems
+- [Set up SSO authentication with SAML and Azure/Entra ID](https://www.sanity.io/docs/developer-guides/set-up-sso-authentication-with-saml-and-azure): Implement single sign-on authentication with the SAML protocol and Microsoft Azure AD/ Entra ID as the identity provider.
+- [Set up SSO authentication with SAML and PingIdentity](https://www.sanity.io/docs/developer-guides/set-up-sso-authentication-with-saml-and-pingidentity): Implement single-sign on for Sanity with PingIdentity SAML
+- [Set up SSO authentication with SAML and JumpCloud](https://www.sanity.io/docs/developer-guides/set-up-sso-authentication-with-saml-and-jumpcloud): Implement single-sign on for Sanity with JumpCloud
+- [Reconcile users against internal systems](https://www.sanity.io/docs/developer-guides/remove-project-users-in-bulk): Use Sanity APIs to compare current project members against an internal list to remove those that no longer require access
+- [Restrict access to specific documents](https://www.sanity.io/docs/developer-guides/restrict-access-to-specific-documents): Create document-level access controls with Sanity
+- [Setting up a Default Relay State for IdP Initiated - SAML Logins](https://www.sanity.io/docs/developer-guides/setting-up-a-default-relay-state-for-idp-initiated-saml-logins): Add a default landing url for users logging in through SSO
+- [Scalable navigation patterns](https://www.sanity.io/docs/developer-guides/navigation-with-sanity): Build scalable navigation in Sanity—from basic menus to mega menus—with best practices for structure and dynamic links.
+- [An opinionated guide to Sanity Studio](https://www.sanity.io/docs/developer-guides/an-opinionated-guide-to-sanity-studio): Sanity Studio is an incredibly flexible tool with near limitless customization. Here's how I use it.
+- [Browsing Content How You Want with Structure Builder](https://www.sanity.io/docs/developer-guides/getting-started-with-structure-builder): How to make content more browseable using the Structure Builder API for Sanity Studio’s Structure Tool
+- [Deciding on fields and relationships](https://www.sanity.io/docs/developer-guides/deciding-fields-and-relationships): How to work through tricky content questions and build structures that will stand the test of time.
+- [Create richer array item previews](https://www.sanity.io/docs/developer-guides/create-richer-array-item-previews): Object types use a preview property to display contextual information about an item when they are inside of an array; customizing the preview component can make them even more useful for content creators.
+- [Dynamic folder structure using the currentUser and workflow states](https://www.sanity.io/docs/developer-guides/dynamic-folder-structure-using-the-currentuser-and-workflow-states): In this guide you will learn how to setup such a listener-based structure and also how to combine the results with the workflow plugin metadata.
+- [Create a time duration object field](https://www.sanity.io/docs/developer-guides/create-a-time-duration-object-field): Delight your content creators with intelligent inputs for more complex data structures
+- [Level up Your Edit Modal with Next/Previous Navigation Buttons for Array Items](https://www.sanity.io/docs/developer-guides/level-up-your-edit-modal-with-next-previous-navigation-buttons-for-array-items): Streamline your array edit workflow by enabling smooth navigation through array items within the default edit modal. This guide walks you through building a clean, user-friendly solution for your Sanity Studio.
+- [Create a “coupon generator” string field input](https://www.sanity.io/docs/developer-guides/create-a-coupon-generator-string-field-input): Take the guesswork out of creating fields with correct values and automate content creation for authors.
+- [Managing redirects with Sanity](https://www.sanity.io/docs/developer-guides/managing-redirects-with-sanity): How to use Sanity to control redirects in your JavaScript framework of choice.
+- [Create a document form progress component](https://www.sanity.io/docs/developer-guides/create-a-document-progress-root-level-component): Summarise form progression by decorating the entire editing form for a document with a component loaded at the root level.
+- [Create an array input field with selectable templates](https://www.sanity.io/docs/developer-guides/create-an-array-input-field-with-selectable-templates): Make repetitive content creation tasks a breeze by supplying content creators with buttons to populate complex fields.
+- [Creating a Parent/Child Taxonomy](https://www.sanity.io/docs/developer-guides/parent-child-taxonomy): Create common taxonomy schemas like Categories and Tags with parent/child relationships
+- [Create interactive array items for featured elements](https://www.sanity.io/docs/developer-guides/create-interactive-array-items-for-featured-elements): Save time going in-and-out of modals by moving some light interactivity to array items.
+- [Create a visual string selector field input](https://www.sanity.io/docs/developer-guides/create-a-rich-string-selector-field-input): Go beyond a plain radio list of inputs by giving authors more contextually useful buttons to select values from.
+- [Create a survey rating number field input](https://www.sanity.io/docs/developer-guides/create-a-survey-rating-number-field-input): Give content creators quick access to valid values by replacing the default number field input with a list of options.
+- [How to use structured content for page building](https://www.sanity.io/docs/developer-guides/how-to-use-structured-content-for-page-building): Learn how to create a page builder from structured content that can withstand the test of time and redesigns.
+- [Create a recycling bin for deleted documents via Sanity Functions](https://www.sanity.io/docs/developer-guides/bin-for-restoring-deleted-documents): Help your editors restore deleted documents in a dataset using Sanity Functions and a singleton bin document type.
+- [Relay live draft updates through your server](https://www.sanity.io/docs/developer-guides/relay-live-draft-updates): Keep your Sanity token on the server and relay Live Content API draft updates to the browser in a Next.js app, with no token in client-side code.
+- [Forms with Sanity](https://www.sanity.io/docs/developer-guides/forms-with-sanity): Common approaches for using forms with Sanity
+- [Vercel integration](https://www.sanity.io/docs/developer-guides/vercel-integration): How to install and use Sanity's official Vercel integration
+- [Build your blog with Astro and Sanity](https://www.sanity.io/docs/developer-guides/sanity-astro-blog): A complete guide to setting up your blog using Astro and Sanity
+- [How to implement front-end search with Sanity](https://www.sanity.io/docs/developer-guides/how-to-implement-front-end-search-with-sanity): By integrating Sanity's structured content with Algolia, you can provide your users with fast, relevant search results
+- [Displaying Sanity content in Shopify](https://www.sanity.io/docs/developer-guides/displaying-sanity-content-in-shopify): This guide outlines how to sync additional data from Sanity into Shopify.
+- [Cookie consent integrations with Sanity](https://www.sanity.io/docs/developer-guides/cookie-consent-integrations-with-sanity): How to integrate a cookie consent banner with your Sanity-powered website
+- [Integrating external data sources with Sanity](https://www.sanity.io/docs/developer-guides/integrating-external-data): Learn the two most common patterns for integrating external data sources with Sanity
+- [Klaviyo (email campaigns)](https://www.sanity.io/docs/developer-guides/email-marketing-campaigns-powered-by-sanity-functions-and-klaviyo): Learn how to use Functions to stage and send email campaigns from Sanity through Klaviyo.
+- [Developing with Next.js on GitHub Codespaces](https://www.sanity.io/docs/developer-guides/developing-with-next-js-on-github-codespaces): A guide covering step-by-step instructions for developing Next.js applications with Sanity Studio Live Preview on GitHub Codespaces.
+- [Add analytics to Sanity Studio](https://www.sanity.io/docs/developer-guides/add-analytics-to-sanity-studio): How to inject analytics scripts like Google Tag Manager into a Sanity Studio, including Sanity-hosted deployments.
+- [How to pitch Sanity.io to your team](https://www.sanity.io/docs/developer-guides/how-to-pitch-sanity-io-to-your-team): Need help to convince your developer team to build with Sanity.io? Here are some points that may be useful!
+- [Agencies: Navigating the Spring 2025 organization changes](https://www.sanity.io/docs/developer-guides/agencies-navigating-the-spring-2025-organization-changes): How to handle the changes to organizations and projects in Sanity
+- [How to generate massive amounts of demo content for Sanity](https://www.sanity.io/docs/developer-guides/create-fake-demo-content-with-sanity-cli): It can be useful for testing plugins, front ends, or other integrations to have a Sanity Studio populated with fake content.
+- [How to implement multi-tenancy with Sanity](https://www.sanity.io/docs/developer-guides/multi-tenancy-implementation): In this guide, you’ll see how Sanity separates organizations, projects, datasets, and members by working through a hypothetical example of a growing company that can expand its content model as they grow – without needing a complete overhaul.
+- [GROQ-Powered Webhooks – Intro to Filters](https://www.sanity.io/docs/developer-guides/filters-in-groq-powered-webhooks): A thorough intro to using GROQ filters in a webhook context
+- [GROQ-Powered Webhooks – Intro to Projections](https://www.sanity.io/docs/developer-guides/projections-in-groq-powered-webhooks): A thorough intro to using GROQ-projections in a webhook context
+- [Presenting Portable Text](https://www.sanity.io/docs/developer-guides/presenting-block-text): Transform Portable Text to whatever you want
+- [Add inline blocks for the Portable Text Editor](https://www.sanity.io/docs/developer-guides/add-inline-blocks-to-portable-text-editor): Enrich your content and add inline blocks to your Portable Text Editor. This guide takes you from schema to query output
+- [Beginners guide to Portable Text](https://www.sanity.io/docs/developer-guides/beginners-guide-to-portable-text): Discover the power of Portable Text with this essential guide. From data structure, serialization to validation strategies, you'll learn everything you need to harness its potential.
+- [How to add custom YouTube blocks to Portable Text](https://www.sanity.io/docs/developer-guides/portable-text-how-to-add-a-custom-youtube-embed-block): How to add a YouTube embed in the Studio, and render it on front ends
+- [Converting Inline Styles to Sanity Block Decorators](https://www.sanity.io/docs/developer-guides/converting-inline-styles-to-sanity-block-decorators): Learn how to seamlessly migrate rich text with inline styles (like bold, italic, and underline) into Sanity block content. This guide provides a step-by-step solution to handle custom deserialization, including nested spans and advanced inline styles.
+- [Add things to Portable Text](https://www.sanity.io/docs/developer-guides/ultimate-guide-for-customising-portable-text-from-schema-to-react-component): This Guide will lead you through the all the steps you need to level-up your use of Portable Text: from setting up block content, adding custom blocks and renderers for the Portable Text Editor in your studio. But also help you query for everything and render your awesome content in React!
+- [Change the height of the PTE](https://www.sanity.io/docs/developer-guides/change-the-height-of-a-portable-text-editor-pte-using-a-custom-input-component): Ever used a PTE and thought you would like it to take up less space and be focusable without activating it? Now you can!
+- [Create your own Sanity template](https://www.sanity.io/docs/developer-guides/create-your-own-sanity-template): Guide on creating, validating, and submitting a Sanity template for community use.
+- [Community Code of Conduct](https://www.sanity.io/docs/developer-guides/community-code-of-conduct): This is the Code of Conduct that details the expected and unacceptable behaviors when participating in Sanity events or community spaces.
+- [Migrate plugins to support Content Releases](https://www.sanity.io/docs/developer-guides/migrating-plugins-to-support-content-releases): Guide to supporting Content Releases and perspectives in Sanity Studio plugins
+- [Getting started with Sanity](https://www.sanity.io/docs/getting-started)
+- [What is content operations?](https://www.sanity.io/docs/getting-started/what-is-content-operations): What content operations means, what changes when AI agents join the system, and the five core concepts behind it in Sanity: structured content, governance, content applications, automation, and agentic context.
+- [Projects without an account](https://www.sanity.io/docs/getting-started/projects-without-an-account): How an AI coding agent can create a Sanity project before you sign up, what works before you claim it, and what changes when you do.
+
+## Reference
+
+- [Sanity API Reference](https://reference.sanity.io/llms.txt): TypeScript API reference for every official Sanity JavaScript library — start here for canonical hook, function, class, and type signatures.
+
+## Products
+
+- [App SDK](https://www.sanity.io/app-sdk): Build custom editorial applications for your team with built-in authentication and one-command deploy. All using React hooks.
+- [Canvas](https://www.sanity.io/canvas): AI-powered content creation that knows your schema and lands in the right fields. Ready to publish.
+- [Content Agent](https://www.sanity.io/content-agent): The AI agent built to run content operations at scale. Run bulk edits, content audits, and more through conversation, in minutes.
+- [Content Releases](https://www.sanity.io/content-releases): Bundle changes across your site, preview them together, and publish everything at once — on schedule or on demand.
+- [Feature Grid Testing](https://www.sanity.io/--feature-grid-testing): test
+- [MCP Server](https://www.sanity.io/mcp): Connect Claude, Cursor, Lovable, and more to create projects and manage content.
+- [Media Library](https://www.sanity.io/media-library): Structured, queryable, and versioned media that lives alongside your content. One source of truth for every asset, across every channel and team.
+- [Sanity Context](https://www.sanity.io/context): Ship agents that query your content with structured retrieval, not just semantic search.
+- [Sanity Studio](https://www.sanity.io/studio): Schema as code, real-time collaboration, Visual Editing, and AI built in. Customize every part of the editing experience with React components and plugins.
+
+## Solutions
+
+- [E-commerce](https://www.sanity.io/ecommerce): Model your products once. Publish to storefronts, apps, and AI agents without the manual work.
+- [Marketing](https://www.sanity.io/marketing): Replace obsolete CMS workflows with structured content and AI that accelerates creation, reuse, and distribution across every channel.
+- [Media](https://www.sanity.io/media): Publish faster, reuse content across every channel, and power AI workflows at scale. Sanity gives media teams the structured foundation to keep up with demand.
+
+## Pricing
+
+- [Pricing](https://www.sanity.io/pricing): Find the right plan to power your Sanity project. Includes free plans for individuals, $15 per user per month to grow & enterprise plans for more complex needs.
+
+## Legal
+
+- [AI Credits Terms of Service](https://www.sanity.io/legal/ai-credits-terms)
+- [Data Processing Addendum](https://www.sanity.io/legal/dpa)
+- [Privacy Policy](https://www.sanity.io/legal/privacy)
+- [Sanity Developer Programs T&C](https://www.sanity.io/legal/sanity-developer-programs)
+- [Service Level Agreement](https://www.sanity.io/legal/sla)
+- [Terms of Service](https://www.sanity.io/legal/tos)
+- [Terms of Service - Growth](https://www.sanity.io/legal/tos-growth)
+- [Terms of Service for AI Features](https://www.sanity.io/legal/tos-ai)
+- [Third-party Subprocessors](https://www.sanity.io/legal/third-party-sub-processors)
+
+## Company
+
+- [Careers](https://www.sanity.io/careers): Do you want to join the team behind Sanity and help us build a great experience for structured content?
+- [Contact](https://www.sanity.io/contact): Get in touch and let us know how we can help
+- [Agency Partners](https://www.sanity.io/agency-partners): Get help from one of our agency partners to build your product or service with Sanity, adopt best practices, or improve an existing project.
+
+## Blog
+
+- [Blog](https://www.sanity.io/blog): News, releases, tutorials, and musings from the team behind Sanity
+- [What’s new in October: MCP asset uploads, SAML enforcement, and more customizations](https://www.sanity.io/blog/october-releases-2026): Agents can now upload assets via the Sanity MCP server from URLs, local files, or ChatGPT. Plus SAML enforcement and custom dimensions in Insights.
+- [How to give your content the context it needs](https://www.sanity.io/blog/give-content-the-right-context): Adding AI to old workflows can slow teams down. Map what your AI needs to know and how work moves between people and agents before you add agents.
+- [The five layers of agentic context](https://www.sanity.io/blog/five-layers-agentic-context): Learn about the often overlooked context layer canon, the content your business stands behind, and what it takes to get it right for agents.
+- [Manage your AI agent with content, not code](https://www.sanity.io/blog/manage-your-ai-agent-with-content-not-code): If your editors can update a page, they can shape your AI agent. Five patterns for running a system prompt in Sanity with roles, history, and review.
+- [What's new in September: trustworthy agents, security improvements, and new integrations](https://www.sanity.io/blog/whats-new-september-releases): September releases: a new Linear integration, better security posture, and agents that can provision without creating a Sanity account.
+- [Everything we shipped so you can trust agents with your content](https://www.sanity.io/blog/everything-we-shipped-so-you-can-trust-agents-with-your-content): Read all about the latest Sanity product releases that aim to provide more context for agents and more control for the humans that run everything.
+- [Taking Karpathy’s wiki to work](https://www.sanity.io/blog/taking-karpathys-wiki-to-work): The idea of the “LLM knowledge base” is powerful, but how do you bring it into organizational contexts?
+- [How a media newsroom scales judgment, not volume](https://www.sanity.io/blog/the-future-of-media-hangs-on-judgment-not-volume): Inside the structure, workflows, and standards that let editors move faster without lowering the bar.
+- [Content block showcase](https://www.sanity.io/blog/content-block-showcase): A hidden reference post showcasing every available content block type in the blog body field. Not for publication — internal use only.
+- [Shipping fast doesn't equal value: Judgment, understanding, and humanity are the new competitive edge](https://www.sanity.io/blog/shipping-fast-vs-shipping-right): Code & Theory, Braze, and Sanity leaders on AI productivity, hiring, and winning over skeptics.
+- [What’s new in August: inline tables, functions calling functions, and visual editing without React](https://www.sanity.io/blog/august-releases-2026): Read about all the recent Sanity releases including tables in Portable Text Editor, Functions Invoke, and more.
+- [How Gong shipped AI translation, automated summaries, and AI-ready content on a single backend](https://www.sanity.io/blog/gong-customer-story-content-backend): Read how the Gong team rebuilt its content foundation on Sanity to power consistent design at scale and AI-assisted translation.
+- [The next e-commerce personalization layer is search](https://www.sanity.io/blog/the-next-e-commerce-personalization-layer-is-search): Read about how to use Sanity and Vercel to create personalized shopping experiences at the search level, and why it's a lot easier today.
+- [What agents need to operate your content](https://www.sanity.io/blog/what-agents-need-to-operate-your-content): What developers doing agentic engineering need to know about what it takes to run content ops for real businesses today.
+- [How Braze built better customer experiences with AI Content Operations](https://www.sanity.io/blog/how-braze-built-better-customer-experiences-with-ai-content-operations): Braze rebuilt its AI Content Operations on Sanity, replacing rigid models and manual translation with one place to power search, translation, and AI agents.
+- [Skills are how your company works, written down for agents](https://www.sanity.io/blog/skills-are-how-your-company-works): How we built an internal skills platform on Sanity, so anyone at the company can author what our agents know, not just engineers.
+- [Agents leave receipts. We read 1.46 million of them](https://www.sanity.io/blog/ai-content-operations-2026): We analyzed what agents are actually doing with content. Here is what you can learn from teams succefully running AI content operations today.
+- [Sanity Studio v6: A focused upgrade](https://www.sanity.io/blog/sanity-studio-v6): Builds got 2–9× faster on Vite 8 in our testing. Improvements to default search and custom auth. Dropping end-of-life Node 20 support.
+- [What’s New - June 2026](https://www.sanity.io/blog/what-s-new-june-2026): From prompt to a hosted Studio in one chat, agents that know your users, Content Agent on Slack Marketplace, and more
+- [A Board Game agent built using Sanity Context and Vercel's AI SDK](https://www.sanity.io/blog/context-board-game-agent): An OpenAI Agent, a board game API, and Sanity Context walk into a bar… the result: a CLI agent that returns exact game recs with real-time data using queries
+
+## Engineering
+
+- [Engineering](https://www.sanity.io/engineering): Deep dives, post-mortems, and hard-won lessons from the engineers building Sanity.
+- [The 0.5-second Jev agent](https://www.sanity.io/engineering/the-0-5-second-agent): We made a ludicrously fast docs agent with Jev, Knowledge Bases, and gpt-oss-120b by moving four decisions off the LLM. Here's the (not-so) secret sauce.
+- [We found a fix for wobbly spinners in Safari (without using AI)](https://www.sanity.io/engineering/we-fixed-wobbly-spinners-in-safari-without-ai): Turns out, it was just CSS all along.
+- [How we cut our Mimir bill (nearly) in half](https://www.sanity.io/engineering/how-we-cut-our-mimir-bill-nearly-in-half): Two infrastructure changes, zonal cache placement and arm64 CPUs, cut our self-hosted Mimir bill nearly in half while reducing latency. Here's how.
+- [How well do agents use your design system?](https://www.sanity.io/engineering/design-system-evals): We figured out how to run agent evals for design systems, so you can too.
+- [When agents wield our pens: announcing Sanity‘s engineering blog](https://www.sanity.io/engineering/announcing-the-sanity-engineering-blog): We want to tell the stories from building the AI Content Operating System. And how we think about agents helping us out.
+- [How to get product feedback from agents](https://www.sanity.io/engineering/how-to-get-product-feedback-from-agents): Agents are some of Sanity's heaviest users, but none of them report bugs. Here's how we've started gathering feedback from agents, and how you can do it too.
+- [We don't write code anymore](https://www.sanity.io/engineering/we-dont-write-code-anymore): An engineering manager’s field report from an AI-first engineering team
+- [How to write for an agent](https://www.sanity.io/engineering/how-to-write-for-an-agent): Spoiler: It’s not prompting
+- [The logo soup problem (and how to solve it)](https://www.sanity.io/engineering/the-logo-soup-problem): A deep dive into the math behind making mismatched brand logos actually look good together. And a tiny React library that does it for you.
+- [How we solved the agent memory problem](https://www.sanity.io/engineering/how-we-solved-the-agent-memory-problem): Being able to rely on agents for their experience feels … odd.
+- [Cut styled-components into pieces: This is our last resort](https://www.sanity.io/engineering/cut-styled-components-into-pieces-this-is-our-last-resort): After styled-components entered maintenance mode, we forked it with React 18's useInsertionEffect. Result: 40% faster renders for Linear. Open source solution.
+- [First attempt will be 95% garbage: A staff engineer's 6-week journey with Claude Code](https://www.sanity.io/engineering/first-attempt-will-be-95-garbage): This started as an internal Sanity workshop where I demoed how I actually use AI. Spoiler: it's running multiple agents like a small team with daily amnesia.
+- [Mendoza - The totally non-human readable diff format for structured JSON documents](https://www.sanity.io/engineering/mendoza): Mendoza is a new, super efficient format for expressing differences between JSON documents.
+- [Introducing Glush: a robust, human readable, top-down parser compiler](https://www.sanity.io/engineering/why-we-wrote-yet-another-parser-compiler): Glush is a new parser compiler that offers human readable grammar.
+- [Migrating the Sanity codebase from Flow to TypeScript (in 2019)](https://www.sanity.io/engineering/from-flow-to-typescript): The story of moving from Flow to TypeScript.
+
+## Glossary
+
+- [Glossary](https://www.sanity.io/glossary): Explore definitions and explanations for terms relating to the world of CMSes and Sanity. Let this be your guide to the content management world.
+- [AI agent definition](https://www.sanity.io/glossary/ai-agent): An AI agent runs a language model in a loop with tools, deciding each step itself. How the loop works, how agents differ from workflows, chatbots, and RPA.
+- [AI gateway definition](https://www.sanity.io/glossary/ai-gateway): An AI gateway sits between your app and many model providers, offering one API and account. How it works, how it differs from an API gateway, and the trade-offs
+- [AI guardrails definition](https://www.sanity.io/glossary/ai-guardrails): AI guardrails are runtime controls that keep an AI system inside defined boundaries. Learn the rail types, how they differ from alignment and evals, and what to
+- [AI workflows definition](https://www.sanity.io/glossary/ai-workflows): AI workflows are structured, automated sequences using machine learning, NLP, and generative tools to streamline tasks, improve decisions, reduce errors, freeing teams for impactful work.
+- [AI-assisted schema generation definition](https://www.sanity.io/glossary/aiassisted-schema-generation): AI assisted schema generation uses machine learning to build database or markup structures from examples or prompts, accelerating setup, improving consistency, enabling optimizations, reducing errors.
+- [API gateway definition](https://www.sanity.io/glossary/api-gateway): An API gateway is the front door between client applications and backend services, handling routing, authorization, monitoring, and traffic management.
+- [API rate limiting definition](https://www.sanity.io/glossary/api-rate-limiting): API rate limiting caps how many requests a client can make in a time window. Learn how 429 responses, token buckets, quotas, and concurrency limits differ.
+- [API versioning definition](https://www.sanity.io/glossary/api-versioning): API versioning publishes an API in parallel, labeled editions so changes reach clients on their own schedule. Compare URI, header, semantic, and date-based API
+- [API-First definition](https://www.sanity.io/glossary/api-first): API-First is a development approach that defines the API contract before any code is written. What it means, its benefits, and how agents consume it.
+- [Accessibility compliance workflow definition](https://www.sanity.io/glossary/accessibility-compliance-workflow): Accessibility compliance workflow is a process ensuring digital products meet WCAG and legal standards through inclusive design, automated and manual testing, training, and iterative reviews.
+- [Accessibility definition](https://www.sanity.io/glossary/accessibility): Discover the importance of accessibility in design and development. Learn how to create inclusive products and environments that everyone can use.
+- [Agent action selection definition](https://www.sanity.io/glossary/agent-action-selection): Agent action selection is how an AI agent decides what to do next: tool calling, workflow branches, or a decision model picking from a closed list of actions.
+- [Agent memory definition](https://www.sanity.io/glossary/agent-memory): Agent memory is the external store that lets an AI agent carry information across turns and sessions. Learn the five types and how memory differs from RAG.
+- [Agentic workflow definition](https://www.sanity.io/glossary/agentic-workflow): An agentic workflow is a process where AI agents, not a fixed script, decide the next step. How the agent loop works, its components, and what it is not.
+- [Angular overview](https://www.sanity.io/glossary/angular): Angular is Google's open-source TypeScript framework for web and mobile apps: components, signals, two-way data binding, SSR, and how it compares to React and V
+- [Answer engine optimization (AEO) definition](https://www.sanity.io/glossary/answer-engine-optimization-aeo): AEO is the practice of structuring content so AI answer engines can retrieve, trust, and cite a passage from it. How it differs from SEO and GEO, and its limits
+- [Astro overview](https://www.sanity.io/glossary/astro): Astro is a server-first web framework for content-rich sites, with client and server islands, the Content Layer API, and a Sanity integration.
+- [Asynchronous loading definition](https://www.sanity.io/glossary/asynchronous-loading): Asynchronous loading lets a page keep working while resources load, using callbacks, promises, and async/await instead of blocking each task in turn.
+- [Atomic design definition](https://www.sanity.io/glossary/atomic-design): Atomic design breaks interfaces into atoms, molecules, organisms, templates, and pages, with design tokens as the subatomic layer beneath them.
+- [Automated content task routing definition](https://www.sanity.io/glossary/automated-content-task-routing): Automated content task routing assigns work via rules and AI to suitable owners, balancing workloads, prioritizing urgency, reducing manual triage, and speeding approvals and publishing.
+- [Automated image tagging definition](https://www.sanity.io/glossary/automated-image-tagging): Automated image tagging uses a model to label images with subject, objects, brand, and rights metadata. How it works, controlled vocabularies, and review queues
+- [Backend as a Service definition](https://www.sanity.io/glossary/backend-as-a-service): Backend as a Service (BaaS) gives developers ready-made backend features through SDKs and APIs, and now exposes control planes to AI coding agents.
+- [Brand-voice governance definition](https://www.sanity.io/glossary/brandvoice-governance): Brand-voice governance sets rules, tools, and training to keep tone consistent, authentic, and compliant across channels—boosting recognition, trust, and efficiency with scalable workflows and AI.
+- [Bring your own key (BYOK) definition](https://www.sanity.io/glossary/bring-your-own-key-byok): BYOK lets a product call an AI model provider with the customer's own API key, so usage is billed to them and runs under their terms. How it works and what it8
+- [C2PA definition](https://www.sanity.io/glossary/c2pa): C2PA is an open standard for Content Credentials, attaching cryptographically signed, tamper-evident provenance to media—like a digital nutrition label—showing origins, edits, and helping combat misinformation.
+- [Cache invalidation definition](https://www.sanity.io/glossary/cache-invalidation): Learn about cache invalidation, its strategies, and how it boosts performance.
+- [Calibrated confidence definition](https://www.sanity.io/glossary/calibrated-confidence): Calibrated confidence means a model's stated probability matches how often it is right. How it differs from accuracy, and how to gate automation on it.
+- [Canonical URL definition](https://www.sanity.io/glossary/canonical-url): A canonical URL is the preferred address you want search engines to index. How to set one, including with client-side rendering, and what to avoid.
+- [Client Side Rendering (CSR) overview](https://www.sanity.io/glossary/client-side-rendering): Discover how CSR enhances web experiences with seamless interactivity.
+- [Collaborative content briefing definition](https://www.sanity.io/glossary/collaborative-content-briefing): Collaborative content briefing is a structured, shared process aligning teams on goals, audience, SEO, messaging, and workflow—boosting consistency, speed, and outcomes with tools like Sanity.
+- [Component library definition](https://www.sanity.io/glossary/component-library): A component library is an organized collection of reusable UI elements. How to build one, plus design tokens, registries, and agent-ready distribution.
+- [Componentized content definition](https://www.sanity.io/glossary/componentized-content): Componentized content structures information into reusable, modular pieces, enabling faster updates, consistent messaging, and omnichannel delivery across websites and apps using CCMS and headless platforms.
+- [Composability definition](https://www.sanity.io/glossary/composability): Composability is an architecture of interchangeable components. How it works, how to implement it, and how it now underpins API and agent integration.
+- [Constrained decoding definition](https://www.sanity.io/glossary/constrained-decoding): Constrained decoding restricts a model to tokens that keep output valid against a grammar or JSON Schema. How it works, and why it guarantees format, not truth.
+- [Content Delivery Network (CDN) definition](https://www.sanity.io/glossary/content-delivery-network): Discover how CDNs enhance web performance and security. Learn more!
+- [Content QA & validation workflow definition](https://www.sanity.io/glossary/content-qa--validation-workflow): Content QA & validation workflow ensures accuracy, consistency, and compliance. Blending standards, automated checks, and human review—aided by AI and Sanity—it reduces errors and risk.
+- [Content archiving definition](https://www.sanity.io/glossary/content-archiving): Discover what content archiving is and why it’s essential for your digital assets.
+- [Content audit methodology definition](https://www.sanity.io/glossary/content-audit-methodology): Content audit methodology is a structured process to inventory, evaluate, and improve digital content—aligning with user needs and business goals, boosting SEO, accessibility, and efficiency.
+- [Content auditing definition](https://www.sanity.io/glossary/content-auditing): Content auditing is a systematic review of all your content for performance, relevance, and business fit, including the corpus that grounds AI assistants.
+- [Content automation definition](https://www.sanity.io/glossary/content-automation): Content automation uses software, rules, and AI agents to plan, create, personalize, schedule, and measure content with less manual work.
+- [Content backlog prioritization definition](https://www.sanity.io/glossary/content-backlog-prioritization): Content backlog prioritization ranks content ideas by impact, effort, and strategic value, helping teams plan sprints, align stakeholders, reduce waste, and deliver high‑value content consistently.
+- [Content block definition](https://www.sanity.io/glossary/content-block): A content block is a reusable unit of content, such as text, images, or buttons, used to assemble emails, landing pages, and other digital assets.
+- [Content classification definition](https://www.sanity.io/glossary/content-classification): Content classification assigns content to categories from a defined set. How rules, trained classifiers, LLMs, and decision models compare, and what breaks.
+- [Content dependency mapping definition](https://www.sanity.io/glossary/content-dependency-mapping): Content dependency mapping visualizes how pages, assets, and data relate, helping teams spot impacts, broken links, reduce risk, and plan changes, migrations, and integrations confidently.
+- [Content domain modeling definition](https://www.sanity.io/glossary/content-domain-modeling): Content domain modeling maps real-world topics and relationships to structure content, enabling consistent, reusable experiences across channels. It complements content models and tools like Sanity.
+- [Content federation definition](https://www.sanity.io/glossary/content-federation): Content federation makes content in several separate systems queryable through one API without copying it. How it works, how it differs from aggregation and syn
+- [Content governance framework definition](https://www.sanity.io/glossary/content-governance-framework): A content governance framework defines roles, standards and workflows to keep content consistent, compliant and on-brand—reducing chaos, improving collaboration, scaling quality across channels and teams.
+- [Content graph definition](https://www.sanity.io/glossary/content-graph): Content graph is a structured map of content and relationships that powers discovery, personalization, and reuse across channels in systems like Sanity.
+- [Content hub definition](https://www.sanity.io/glossary/content-hub): A content hub centralizes curated, topic-specific content to educate, build brand authority, and streamline reuse—supporting creation and distribution across channels with modern CMS and AI.
+- [Content layer definition](https://www.sanity.io/glossary/content-layer): A content layer is the tier in an application architecture that stores and serves content as structured, queryable data, separate from the interfaces that show它
+
+## Events
+
+- [Events](https://www.sanity.io/events): Get inspired. Get momentum. Get on board.
+- [How Amplitude drives product-led growth with Sanity](https://www.sanity.io/events/amplitude): Hear how Amplitude built a self-serve content engine with Sanity to drive self-serve product growth.
+- [Sanity Spring Release](https://www.sanity.io/events/spring-release-2025): Join us for the premiere on May 8th!
+- [Building a shopping agent on your live catalog](https://www.sanity.io/events/building-a-shopping-agent): By the end, you'll have a working shopping assistant grounded in your catalog, governed by your team, and personalized to every shopper.
+- [Sanity Winter Release](https://www.sanity.io/events/developer-deep-dive-launch): Watch the deep dive into our Winter Release with updates to Sanity Create, Visual Editing, and more.
+- [Building Resilient Applications with Sanity.](https://www.sanity.io/events/developer-deep-dive-august): Our live virtual developer-focused event featuring stories from our community and a deep dive into new Sanity features. Full agenda coming soon!
+- [Sanity Hackathon: Learn with Jason](https://www.sanity.io/events/hackathon-nextjsconf): Join Jason Lengstorf and 4 special guests for a live-recorded Web Dev Challenge episode where you'll build a content-driven app alongside Jason & co. All participants will be entered into a raffle to win a Keychron K Pro Series mechanical keyboard.
+- [How Complex saves editors 80 hours a month with just 60 lines of code](https://www.sanity.io/events/complex): Discover how Complex slashed manual editorial work and sped up content delivery using Sanity Functions and Embeddings Index API.
+- [Transform how your teams work with digital assets](https://www.sanity.io/events/media-library-demo): Join this live demo of the Sanity Media Library to see how it streamlines workflows, reduces duplication, and enables scaling without chaos.
+- [Community Event: Content Agent Q&A](https://www.sanity.io/events/community-event-content-agent): Join us live to discuss the first AI agent built to run content operations at scale. Featuring our co-founder, Even, Roboto Agency, and the team behind it.
+- [Optimizing Reusability with Sanity](https://www.sanity.io/events/developer-deep-dive-may): A developer-focused event featuring stories from our community and a deep dive into new Sanity features.
+
+## Community
+
+- [Exchange](https://www.sanity.io/exchange): A global community of developers, editors, and digital dreamers building a better future for content.
+- [Plugins](https://www.sanity.io/plugins): Plugins, integrations, and tools to extend and customize your Sanity Studio and content pipeline.
+- [Templates](https://www.sanity.io/templates): Have a Sanity powered app up and running in minutes with best-practice projects.
+- [Guides](https://www.sanity.io/guides): Learn how to use Sanity to its full potential. Introductions, step-by-step tutorials, and deep dives into the many features of Sanity.
+- [Sanity Learn](https://www.sanity.io/learn): Free courses on structured content and the Sanity platform.

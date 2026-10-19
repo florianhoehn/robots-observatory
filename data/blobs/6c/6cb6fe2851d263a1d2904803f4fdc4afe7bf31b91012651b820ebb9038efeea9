@@ -1,0 +1,35 @@
+# Content-Signal declares Tanium's preferences for how automated clients may use
+# this site's content. See https://contentsignals.org/ for the full definitions.
+#
+#   search:   building a search index and surfacing links to this content
+#   ai-input: using this content as input to a generative AI answer, with attribution
+#   ai-train: using this content to train or fine-tune a generative AI model
+#
+# A `no` signal is an express reservation of rights, not a technical access control.
+
+User-Agent: *
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /studio/
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: OAI-SearchBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.tanium.com/sitemap.xml

@@ -1,0 +1,16 @@
+User-agent: *
+Disallow: /checkout/
+Disallow: /customer/
+Disallow: /cart/
+Disallow: /*index.scss
+Disallow: /*reqwest/index
+Disallow: /catalog/
+Disallow: /wangpu/
+Disallow: /shop/*.htm
+Disallow: /wow/gcp/daraz/megascenario/pk/12_12_2020/12-12-coming-soon/
+Disallow: /12-12-sale-2020/
+Disallow: /wow/gcp/daraz/megascenario/pk/12_12_2020/12-12-2020-Live/
+Disallow: /*from=
+Disallow: /wow/gcp/daraz/megascenario/pk/pakistanday2021/pakistan-day-sale-2021-coming-soon/
+Disallow: /wow/gcp/daraz/megascenario/pk/pakistanday2021/pakistan-day-sale-2021-live/
+Disallow: /wow/gcp/

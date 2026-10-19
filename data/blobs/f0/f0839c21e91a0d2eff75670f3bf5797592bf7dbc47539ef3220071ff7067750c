@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,user-scalable=yes" />
+    <link rel="stylesheet" href="https://www.eldebate.com/css/screen.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript">window.gdprAppliesGlobally=true;(function(){function a(e){if(!window.frames[e]){if(document.body&&document.body.firstChild){var t=document.body;var n=document.createElement("iframe");n.style.display="none";n.name=e;n.title=e;t.insertBefore(n,t.firstChild)}
+    else{setTimeout(function(){a(e)},5)}}}function e(n,r,o,c,s){function e(e,t,n,a){if(typeof n!=="function"){return}if(!window[r]){window[r]=[]}var i=false;if(s){i=s(e,t,n)}if(!i){window[r].push({command:e,parameter:t,callback:n,version:a})}}e.stub=true;function t(a){if(!window[n]||window[n].stub!==true){return}if(!a.data){return}
+        var i=typeof a.data==="string";var e;try{e=i?JSON.parse(a.data):a.data}catch(t){return}if(e[o]){var r=e[o];window[n](r.command,r.parameter,function(e,t){var n={};n[c]={returnValue:e,success:t,callId:r.callId};a.source.postMessage(i?JSON.stringify(n):n,"*")},r.version)}}
+        if(typeof window[n]!=="function"){window[n]=e;if(window.addEventListener){window.addEventListener("message",t,false)}else{window.attachEvent("onmessage",t)}}}e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");a("__tcfapiLocator");(function(e){
+        var t=document.createElement("script");t.id="spcloader";t.type="text/javascript";t.async=true;t.src="https://sdk.privacy-center.org/"+e+"/loader.js?target="+document.location.hostname;t.charset="utf-8";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)})("cd30451b-643c-4afe-846a-3329db73bd7f")})();</script>
+
+    <script>
+        var width = screen.width;
+        function isMobileDevice(){
+            if(typeof window.ontouchstart !== 'undefined' && width <= 1024){
+                return 'mobile';
+            }else{
+                return 'desktop';
+            }
+        }
+        var platform = isMobileDevice();
+        var cookies = document.cookie;
+        var gid = cookies.split(';');
+        for(i = 0; i < gid.length; i++){
+            if(gid[i].includes('_ga=')){
+                var array = gid[i].split('.');
+                gid = array[array.length - 2] + '.' + array[array.length - 1];
+                break;
+            }
+        }
+
+        var url = window.location.href;
+
+        var dataLayer = [{
+            'db_tit': 'Error 404',
+            'db_url': url,
+            'db_can': url,
+            'db_nsw': 'https://www.eldebate.com',
+            'db_sec': 'error',
+            'db_su1': 'no-data',
+            'db_su2': 'no-data',
+            'db_idn': 'no-data',
+            'db_fir': 'no-data',
+            'db_fpu': 'no-data',
+            'db_tag': 'no-data',
+            'db_tpc': 'error',
+            'db_pla': platform,
+            'db_idg': gid,
+            'db_idu': 'no-data',
+            'db_acc': 'anonimo',
+        }];
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TT4LJP8');</script>
+    <!-- End Google Tag Manager -->
+
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            var articles = $('.c-article ');
+            for(let article of articles){
+                if(typeof article.getElementsByTagName('a') !== 'undefined' && typeof article.getElementsByTagName('a')[0]){
+                    var href = article.getElementsByTagName('a')[0].getAttribute('href');
+                    if(typeof article.getElementsByClassName('c-article__comment') !== 'undefined' && typeof article.getElementsByClassName('c-article__comment')[0]) {
+                        if( typeof article.getElementsByClassName('c-article__comment')[0] !== 'undefined'){
+                            var linkHref = article.getElementsByClassName('c-article__comment')[0];
+
+                            linkHref.href = href+'#disqus_thread';
+                        }
+                    }
+                }
+            }
+            $(".c-header__nav-btn").click(function (){
+
+
+                if($(".c-nav__menu").css("display") === "none"){
+                    $(".c-nav__menu").css("display", "block");
+                    $(document.body).addClass("open-navigation");
+                }else{
+                    $(".c-nav__menu").css("display", "none");
+                    $(document.body).removeClass("open-navigation");
+                }
+
+
+            });
+            $(".c-search__close").first().click(function () {
+                $(".o-section-search").css("display", "none");
+            });
+            $(".c-header__nav-btn-search").first().click(function (){
+                if($(".o-section-search").css("display") === "none"){
+                    $(".o-section-search").css("display", "block");
+                }else{
+                    $(".o-section-search").css("display", "none");
+                }
+
+            });
+
+            $("#section-menu").click(function(){
+                if($(".c-nav__menu").css("display") === "none"){
+                    $(".c-nav__menu").css("display", "block");
+                    $(document.body).addClass("open-navigation");
+                }
+            });
+            $(".c-nav__menu__close").click(function (){
+                $(".c-nav__menu").css("display", "none");
+                $(document.body).removeClass("open-navigation");
+            });
+            var currentUrl = window.location.href;
+            var category = currentUrl.split('/').slice(3).join("/");
+            var links = Array.from(document.getElementsByClassName("c-nav__links__item"));
+            category = category.substring(category, category.length -1);
+            links.forEach(function (link){
+                if(link.getAttribute('href') !== null){
+                    var linkHref = link.getAttribute('href');
+
+                    if( linkHref.indexOf(category) >= 1){
+                        link.classList.add("current");
+                    }else if(linkHref.indexOf(category) === 0){
+                        $(".c-nav__links__item:first").addClass("current");
+                    }
+                }
+
+            } );
+
+            $('.c-header__date').text(getSpanishDate());
+        });
+
+        function getSpanishDate(numeric = false)
+        {
+            var date = new Date();
+            var day = date.getDate();
+
+            if (10 > day) {
+                day = '0' + day;
+            }
+
+            var month = date.getMonth();
+
+            var monthNames= [
+                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ]
+
+            var monthName = monthNames[month];
+            var year = date.getFullYear();
+
+            if (undefined === monthName || true === numeric) {
+                // Date.getMonth() returns months from 0 to 11.
+                month += 1;
+                if (10 > month) {
+                    month = '0' + month;
+                }
+
+                return [day, month, year].join('/');
+            }
+
+            var unitSeparator = 'de';
+
+            return [day, unitSeparator, monthName.toLowerCase(), unitSeparator, year].join(' ');
+        }
+    </script>
+    <title>
+        Error 404 - El Debate
+    </title>
+
+    <link rel="shortcut icon" href="/favicon.ico?1626772336" />
+</head>
+<body class="error-page">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TT4LJP8"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<header class="c-header c-header-sticky">
+    <div class="o-container ">
+        <!-- START: c-header__brand -->
+        <div class="c-header__brand">
+            <a href="https://www.eldebate.com/" title="El Debate">
+                <svg xmlns="http://www.w3.org/2000/svg" id="logo-debate" width="208" height="20" viewBox="0 0 232 22.238">
+                    <g fill="currentColor">
+                        <path id="Trazado_1" d="M23.584 16.139l.983 1.293v4.8H.884l-.663-.968 23.363-.012zM0 20.441V0h22.388v4.122H5.618v4.216h10.219v3.592H5.618v4.216H22.77v4.295H0zM16.652 8.333l.983 1.293v4.1H7.416v1.612h-.983v-2.597h10.219V8.333zM23.2.008l.983 1.29v4.619H7.416v1.61h-.983V4.935H23.2V.008z" class="cls-1" transform="translate(0 .004)"></path>
+                        <path id="Trazado_2" d="M33.114 15.787l.986 1.293v5.154H12.885l-.665-.968 20.894-.012v-5.467zM12 20.441V0h5.618v15.794H32.3v4.647zM18.432.008l.983 1.29v13.683h-.983z" class="cls-1" transform="translate(15.618 .004)"></path>
+                        <path id="Trazado_3" d="M54.447 2.609l.591.873.071.107a8.229 8.229 0 0 1 1.158 4.793v5.9c0 4.494-2.237 7.957-9.248 7.957H28l-.658-.968 18.809-.012c6.633 0 9.147-2.27 9.147-7.8V6.994a9.614 9.614 0 0 0-.847-4.385zM27.12 20.441V0h19.027c6.306 0 8.339 2.015 8.339 6.991v6.459c0 4.976-2.032 6.991-8.339 6.991H27.12zm20.763-5.6c.725-.558 1.038-1.54 1.038-3.171V8.792a6.645 6.645 0 0 0-.228-1.927l-.074-.051c-.465-1.772-1.754-2.34-4.046-2.34H32.685v11.32h11.888a4.458 4.458 0 0 0 3.31-.954zm-.269-8.425a7.775 7.775 0 0 0-1.664-.148H34.467v8.715h-.976V5.287h11.082c1.618 0 2.562.252 3.04 1.128z" class="cls-1" transform="translate(35.299 .004)"></path>
+                        <path id="Trazado_4" d="M64.459 16.144l.976 1.29v4.8H41.973l-.656-.968 23.142-.012zM41.1 20.441V0h22.176v4.122H46.663v4.216h10.123v3.592H46.663v4.216h16.99v4.295H41.1zM57.591 8.335l.976 1.293v4.1H48.442v1.612h-.974v-2.599h10.123V8.335zM64.082.008l.976 1.29v4.619H48.442v1.61h-.974V4.935h16.614V.008z" class="cls-1" transform="translate(53.493 .004)"></path>
+                        <path id="Trazado_5" d="M79.347 11.981l.366.54.364.537a6.053 6.053 0 0 1 .831 3.54c0 3.653-2.912 5.636-6.831 5.636H53.86l-.656-.968 19.883-.012c3.791 0 6.845-1.035 6.845-6.044a7.447 7.447 0 0 0-.585-3.229zm-26.362 8.46V0h18.123c5.089 0 7.262 1.355 7.262 5.173 0 2.94-.58 3.824-3.119 4.566v.753c3.04.378 3.876 1.661 3.876 4.719 0 4.327-2.424 5.228-6.037 5.228zm20.3-6.449c0-1.32-1.006-1.974-2.73-1.974h-12v4.128h12c1.745 0 2.73-.753 2.73-2.154zm-.826-.162c-.168-.014-.343-.019-.525-.019h-11.6v1.524h-.976v-2.506h11.2c1.195 0 1.779.225 1.9 1zm6.82-10.614l.106.158a5.642 5.642 0 0 1 .582 2.9 7.361 7.361 0 0 1-.311 2.483 3.789 3.789 0 0 1-1.392 1.888 4.288 4.288 0 0 0-1.3-.651c1.326-.642 2.214-1.816 2.214-4.821a6.718 6.718 0 0 0-.59-2.973l.688 1.015zm-6.573 3A2.047 2.047 0 0 0 70.408 4.3H58.55v4.13h11.858A2.063 2.063 0 0 0 72.7 6.211zm-.819-.118H60.332v1.517h-.976v-2.5h11.052c.941 0 1.388.264 1.475.982z" class="cls-1" transform="translate(68.965 .004)"></path>
+                        <path id="Trazado_6" d="M86.9 17.5l.525.982H74.993l-1.9 3.755h-6.809l-.658-.968 6.755-.012 1.894-3.757H86.9zM85.433 0l1.609 1.531 11.441 20.707h-7.952l-.6-.968 7.1-.012zm3.979 20.445l-.76-1.388-1.268-2.37h-13.6l-1.894 3.757h-6.21L76.667.007h7.848l11.156 20.438zm-4.019-7.524l-4.87-9.266-4.737 9.266zm-4.28-6.442l-2.844 5.631h-1.16l3.425-6.7z" class="cls-1" transform="translate(85.418)"></path>
+                        <path id="Trazado_7" d="M102.38.008l.976 1.29v4.969h-9.094v15.967h-6.47l-.658-.968 6.152-.012V5.287h9.094V.008zM77.822 4.474V0h23.752v4.474h-9.093v15.967h-5.664V4.474h-8.995zm8.189 1.793H78.7l-.659-.967 7.97-.012v.98z" class="cls-1" transform="translate(101.292 .004)"></path>
+                        <path id="Trazado_8" d="M113.591 16.137l.974 1.293v4.8H91.1l-.656-.968 23.145-.012v-5.113zm-23.366 4.3V0h22.18v4.122H95.793v4.216h10.122v3.592H95.793v4.216h16.99v4.295zm16.5-12.108l.976 1.293v4.1H97.572v1.612H96.6v-2.593h10.12V8.333zm6.49-8.325l.974 1.29v4.623H97.572v1.61H96.6V4.935h16.613V.008z" class="cls-1" transform="translate(117.436 .004)"></path>
+                    </g>
+                </svg>
+            </a>
+        </div>
+        <!-- END: c-header__brand -->
+        <span class="c-header__foundation">Fundado en 1910</span>
+        <button class="c-header__nav-btn" data-type="menu" aria-label="Menu">
+            <div class="hamburger-box">
+                <div class="hamburger-inner"></div>
+            </div>
+            <span class="sr-only">Menú</span>
+        </button>
+        <button class="c-header__nav-btn-search" data-type="search" aria-label="Buscador">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0z"/>
+                <path fill="#030303" d="M15.5 14h-.79l-.28-.27a6.51 6.51 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.494 4.494 0 0 1 9.5 14z"/>
+            </svg>
+            <span class="u-hide-xs u-show-sm">Buscar</span>
+        </button>        </div>
+</header>
+<aside class="o-section o-section-search">
+    <div class="o-container">
+        <div class="c-search">
+            <button class="c-search__close" data-type="search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path fill="#030303" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                </svg>
+                <span class="sr-only">Cerrar</span>
+            </button>
+            <form action="https://www.eldebate.com/search/" class="c-search__form" target="_top">
+                <input class="search-input" id="search_input" placeholder="Que estas buscando?" type="text" name="q" >
+                <button class="c-search__btn" type="submit">
+                    <span>Buscar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</aside>
+<header class="c-header">
+    <div class="o-container">
+        <div class="c-header__bottom">
+            <p class="c-header__date"></p>
+        </div>
+    </div>
+</header>
+<aside class="o-section o-section-head">
+    <div class="o-container">
+        <div id="m60334-60332-60335"><div class="c-nav__group">
+            <!-- START: c-nav__links -->
+            <ul class="c-nav__links">
+
+                <li id="m60339-60338-60340">
+
+                    <a class="c-nav__links__item current" id="m60384-60383-60385" href="https://www.eldebate.com/" title="El Debate">portada</a></li><li id="m60344-60343-60345">
+
+                <a class="c-nav__links__item" id="m60389-60388-60390" href="https://www.eldebate.com/espana/" title="España">españa</a></li><li id="m60349-60348-60350">
+
+                <a class="c-nav__links__item" id="m60394-60393-60395" href="https://www.eldebate.com/economia/" title="Economía">economía</a></li><li id="m60354-60353-60355">
+
+                <a class="c-nav__links__item" id="m60399-60398-60400" href="https://www.eldebate.com/opinion/" title="Opinión">opinión</a></li><li id="m60359-60358-60360">
+
+                <a class="c-nav__links__item" id="m60404-60403-60405" href="https://www.eldebate.com/internacional" title="Internacional">internacional</a></li><li id="m60364-60363-60365">
+
+                <a class="c-nav__links__item" id="m60409-60408-60410" href="https://www.eldebate.com/sociedad/" title="Sociedad">sociedad</a></li><li id="m60369-60368-60370">
+
+                <a class="c-nav__links__item" id="m60414-60413-60415" href="https://www.eldebate.com/cultura/" title="Cultura">cultura</a></li><li id="m60374-60373-60375">
+
+                <a class="c-nav__links__item" id="m60419-60418-60420" href="https://www.eldebate.com/religion/" title="Religión">religión</a></li><li id="m60379-60378-60380">
+
+                <a class="c-nav__links__item" id="m60424-60423-60425" href="https://www.eldebate.com/salud-y-bienestar/" title="Salud y Bienestar">Salud y Bienestar</a></li></ul>
+            <!-- END: c-nav__links-->
+            <a class="c-nav__group__link" id="section-menu" data-type="menu" title="Más secciones">Más secciones</a>
+        </div></div>
+        <div class="c-nav__menu" style="display: none;">
+            <div class="o-container">
+                <button class="c-nav__menu__close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                        <path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                    </svg>
+                    <span class="sr-only">Cerrar</span>
+                </button>
+
+                    <ul class="c-nav__menu__link">
+
+                        <li id="m56111-56110-56112">
+                            <div>
+
+                                <a href="https://www.eldebate.com/espana/" id="m56251-56250-56252" title="España">ESPAÑA</a></div>
+
+                            <div id="m56256-56255-56257">
+                                <ul>
+
+                                    <li id="m56261-56260-56262">
+
+                                        <a href="https://www.eldebate.com/espana/madrid/" id="m56271-56270-56272" title="España-Madrid">Madrid</a></li><li id="m56266-56265-56267">
+
+                                    <a href="https://www.eldebate.com/espana/defensa" id="m56276-56275-56277" title="España-Defensa y Fuerzas Armadas">Defensa</a></li></ul>
+                            </div></li><li id="m56116-56115-56117">
+                        <div>
+
+                            <a href="https://www.eldebate.com/economia/" id="m56281-56280-56282" title="Economía">ECONOMÍA</a></div>
+
+                    </li><li id="m56121-56120-56122">
+                        <div>
+
+                            <a href="https://www.eldebate.com/opinion/" id="m56286-56285-56287" title="Opinión">OPINIÓN</a></div>
+
+                    </li><li id="m56126-56125-56127">
+                        <div>
+
+                            <a href="https://www.eldebate.com/internacional/" id="m56296-56295-56297" title="Internacional">INTERNACIONAL</a></div>
+
+                        <div id="m56301-56300-56302">
+                            <ul>
+
+                                <li id="m56306-56305-56307">
+
+                                    <a href="https://www.eldebate.com/temas/guerra-ucrania-rusia/" id="m56311-56310-56312" title="Guerra Rusia Ucrania">Guerra Rusia Ucrania</a></li></ul>
+                        </div></li><li id="m56131-56130-56132">
+                        <div>
+
+                            <a href="https://www.eldebate.com/sociedad/" id="m56316-56315-56317" title="Sociedad">SOCIEDAD</a></div>
+
+                    </li><li id="m56136-56135-56137">
+                        <div>
+
+                            <a href="https://www.eldebate.com/cultura/" id="m56321-56320-56322" title="Cultura">CULTURA</a></div>
+
+                    </li><li id="m56141-56140-56142">
+                        <div>
+
+                            <a href="https://www.eldebate.com/cultura/libros/" id="m56326-56325-56327" title="Cultura-Libros">LIBROS</a></div>
+
+                    </li><li id="m56146-56145-56147">
+                        <div>
+
+                            <a href="https://www.eldebate.com/religion/" id="m56331-56330-56332" title="Religión">RELIGIÓN</a></div>
+
+                    </li><li id="m56151-56150-56152">
+                        <div>
+
+                            <a href="https://www.eldebate.com/salud-y-bienestar/" id="m56336-56335-56337" title="Salud y Bienestar">Salud y Bienestar</a></div>
+
+                    </li><li id="m56156-56155-56157">
+                        <div>
+
+                            <a href="https://www.eldebate.com/deportes/" id="m56341-56340-56342" title="Deportes">DEPORTES</a></div>
+
+                    </li><li id="m56161-56160-56162">
+                        <div>
+
+                            <a href="https://www.eldebate.com/debatetv/" id="m56346-56345-56347" title="DebateTV">DEBATETV</a></div>
+
+                    </li><li id="m56166-56165-56167">
+                        <div>
+
+                            <a href="https://www.eldebate.com/podcast/" id="m56351-56350-56352" title="Podcast">PODCAST</a></div>
+
+                    </li><li id="m56171-56170-56172">
+                        <div>
+
+                            <a href="https://www.eldebate.com/historia/" id="m56356-56355-56357" title="Historia">HISTORIA</a></div>
+
+                    </li><li id="m56176-56175-56177">
+                        <div>
+
+                            <a href="https://www.eldebate.com/tecnologia/" id="m56361-56360-56362" title="Tecnología">TECNOLOGÍA</a></div>
+
+                    </li><li id="m56181-56180-56182">
+                        <div>
+
+                            <a href="https://www.eldebate.com/motor/" id="m56366-56365-56367" title="Motor">Motor</a></div>
+
+                    </li><li id="m56186-56185-56187">
+                        <div>
+
+                            <a href="https://www.eldebate.com/familia/" id="m56371-56370-56372" title="Familia">FAMILIA</a></div>
+
+                    </li><li id="m56191-56190-56192">
+                        <div>
+
+                            <a href="https://www.eldebate.com/cine-tv-series/" id="m56376-56375-56377" title="Cine, TV y Series">CINE, TV Y SERIES</a></div>
+
+                    </li><li id="m56196-56195-56197">
+                        <div>
+
+                            <a href="https://www.eldebate.com/gente/" id="m56386-56385-56387" title="GENTE Y ESTILO DE VIDA">GENTE Y ESTILO DE VIDA</a></div>
+
+                        <div id="m56391-56390-56392">
+                            <ul>
+
+                                <li id="m56396-56395-56397">
+
+                                    <a href="https://www.eldebate.com/estilo-vida/moda/" id="m56411-56410-56412" title="Estilo de vida-Moda">Moda</a></li><li id="m56401-56400-56402">
+
+                                <a href="https://www.eldebate.com/estilo-vida/restaurantes/" id="m56416-56415-56417" title="Estilo de vida-Restaurantes">Restaurantes</a></li><li id="m56406-56405-56407">
+
+                                <a href="https://www.eldebate.com/estilo-vida/recetas/" id="m56421-56420-56422" title="Estilo de vida-Recetas">Recetas</a></li></ul>
+                        </div></li><li id="m56201-56200-56202">
+                        <div>
+
+                            <a href="https://www.eldebate.com/master/" id="m56426-56425-56427" title="Máster" target="_blank" rel="noopener">Máster el debate</a></div>
+
+                    </li><li id="m56206-56205-56207">
+                        <div>
+
+                            <a href="https://eldebatedehoy.eldebate.com/" id="m56431-56430-56432" title="El Debate de hoy" target="_blank">el debate de hoy</a></div>
+
+                    </li></ul></div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+
+<section class="o-section ">
+    <div class="o-container">
+        <article class="u-grid u-grid-columns-3 u-grid-col-gap-20 c-detail c-detail-error">
+            <div class="u-grid-col-start-2">
+                <div class="c-detail__media__thumb">
+                    <img src="https://www.eldebate.com/images/galeon-astrolabio-404.png" srcset="https://www.eldebate.com/images/galeon-astrolabio-404@2x.png 2x, https://www.eldebate.com/images/galeon-astrolabio-404@3x.png 3x" alt="El Astrolabio" width="220px" height="235px">
+                </div>
+                <div class="c-detail__body">
+                    <p>Vaya hemos perdido la página que buscabas, pero no queremos perderte a ti.</p>
+                    <p>Puedes probar con nuestro buscador</p>
+                    <div class="buscador">
+                        <form action="/search/" class="c-search__form">
+                            <input type="text" class="search-input" id="search_input" name="q" placeholder="¿Qué estas buscando?">
+                            <input type="reset" value="X">
+                            <button class="btn" type="submit">
+                                <span>Buscar</span>
+                            </button>
+                            <div >
+                                <p>Ordenar por:</p>
+                                <a href="/search/"><input type="radio" id="fecha" name="orden" value="Fecha"></a>
+                                <label for="fecha">Fecha</label><br>
+                                <a href="/search/?sort_field=_score"><input type="radio" id="relevancia" name="orden" value="Relevancia"></a>
+                                <label for="relevancia">Relevancia</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+<footer class="c-footer">
+    <div class="o-container">
+        <div class="c-footer__top">
+            <div id="m8766-8764-8767"><div class="c-footer__brand " id="m8771-8770-8772">
+                <a href="https://www.eldebate.com/" target="_self">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="216" height="36" viewBox="0 0 216 36" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M25.114.007v19.85h18.46v-4.514H30.226V.007h-5.112zm35.222 0v19.85h17.467c5.789 0 7.654-1.958 7.654-6.789V6.797c0-4.831-1.865-6.79-7.654-6.79H60.336zm20.009 11.326c0 1.584-.288 2.541-.95 3.081v-.007c-.634.684-1.628.929-3.039.929H65.448V4.342h10.908c2.102 0 3.262.51 3.744 2.188.151.483.245 1.246.245 2.01v2.793zM89.863.007v19.85h20.7V15.69H94.968v-4.097h9.295V8.107h-9.295V4.01h15.25V.007H89.863zm77.595 0V4.35h8.258v15.509h5.198V4.348h8.345V.009h-21.801zm26.2 0v19.85h20.708V15.69H198.77v-4.097h9.296V8.107h-9.296V4.01h15.25V.007h-20.362zm-62.683 4.176c1.181 0 2.11.72 2.11 1.858 0 1.159-.598 2.153-2.11 2.153h-10.886v-4.01h10.886zm.137 7.495c1.584 0 2.506.634 2.506 1.916 0 1.36-.9 2.095-2.506 2.095h-11.016v-4.01h11.016zM114.984.008v19.85h18.446c3.32 0 5.544-.872 5.544-5.076 0-2.974-.763-4.22-3.556-4.587v-.727c2.332-.72 2.865-1.577 2.865-4.435 0-3.708-1.994-5.026-6.667-5.026h-16.632zm40.385 3.542 4.471 9h-8.82l4.349-9zm7.459 14.961.698 1.347h5.739L159.026.008h-7.207l-10.087 19.85h5.702l1.743-3.65h12.485l1.166 2.303zM0 .007v19.85h20.707V15.69H5.112v-4.097h9.295V8.107H5.112V4.01h15.25V.007H0zM21.989 1.26 21.096.007v4.788H5.854v2.52h.892V5.753H21.99V1.26zm-6.84 6.843-.007-.01.007-.007v.017zm.885 1.243-.885-1.243v4.267H5.854v2.52h.892v-1.563h9.288V9.346zm6.308 7.581-.893-1.253v4.961L.202 20.65l.604.943h21.536v-4.666zm9.51-15.667L30.96.007v14.551h.893V1.26zm13.35 15.329-.893-1.253v5.3l-19.001.014.605.943h19.289v-5.004zM85.45 2.582l-.03-.048h.007l.023.048zm.042.068-.042-.068c.517 1.102.755 2.497.755 4.215v6.264c0 5.378-2.304 7.581-8.396 7.581l-17.265.015.605.943h17.46c6.436 0 8.488-3.37 8.488-7.733V8.143c0-1.994-.324-3.528-1.13-4.759l-.137-.209-.137-.209-.064-.108-.137-.208zm-7.87 3.434c.59 0 1.095.043 1.527.144l.007.007c-.44-.85-1.31-1.094-2.794-1.094H66.19v9.41h.892V6.084h10.541zM111.86 1.26l-.893-1.253v4.788h-15.25v2.52h.894V5.753h15.249V1.26zm-5.954 8.093-.893-1.253v4.277h-9.295v2.52h.893v-1.563h9.295V9.353zm6.307 7.581-.893-1.252v4.953l-21.247.015.605.943h21.535v-4.659zM190.894 1.26l-.893-1.253h-.007v5.134h-8.345v15.501l-5.645.015.605.943h5.94V6.084h8.345V1.26zm-22.63 4.831h6.71v-.957l-7.315.014.605.943zm47.383-4.831-.893-1.253v4.788h-15.249v2.52h.893V5.753h15.249V1.26zm-5.954 8.086-.893-1.253v4.277h-9.295v2.52h.893v-1.563h9.295V9.346zM216 16.927l-.893-1.253v4.961l-21.247.015.605.943H216v-4.666zM161.345 1.49 159.869 0l10.649 20.642-6.516.015.547.943h7.301L161.345 1.49zm-22.14 1.786-.094-.151-.007-.007-.634-.987c.36.77.54 1.728.54 2.887 0 2.924-.813 4.061-2.03 4.688a4.01 4.01 0 0 1 1.195.633c.641-.547.979-.979 1.275-1.836.165-.475.288-1.18.288-2.412 0-.857-.022-1.865-.533-2.815zm.012 8.428-.041-.069.007-.007.034.076zm.024.04-.024-.04c.351.802.506 1.821.506 3.063 0 4.86-2.808 5.868-6.285 5.868l-18.252.015.604.943h18.555c3.6 0 6.271-1.923 6.271-5.472 0-1.512-.23-2.643-.828-3.543l-.137-.208-.137-.21-.136-.208-.137-.209zm-6.395 1.684h.001v.007l-.001-.007zm0 0c-.117-.75-.658-.965-1.748-.965h-10.275v2.434h.893v-1.483h10.649c.165 0 .33 0 .481.014zm-11.13-7.517h10.606c-.08-.698-.49-.957-1.354-.957h-10.145v2.433h.893V5.911zm31.565 5.84 2.613-5.465v-.008l-.532-1.036-3.147 6.508h1.066zm8.409 6.191-.482-.95v-.007h-11.592l-1.742 3.65-6.2.015.605.943h6.257l1.742-3.65h11.412zm-50.66 14.975c0 1.981-1.685 3.083-3.335 3.083-1.813 0-3.393-1.02-3.393-2.884v-2.673c0-1.981 1.685-3.083 3.335-3.083 1.813 0 3.393 1.184 3.393 3.048v2.509zm-5.183.117c0 1.008.866 1.583 1.848 1.583.796 0 1.79-.422 1.79-1.618v-2.673c0-1.008-.865-1.583-1.848-1.583-.796 0-1.79.422-1.79 1.618v2.673zm-16.385 2.825h-1.533l3.1-8.37h1.428l3.077 8.37h-1.65l-.608-1.782h-3.182l-.632 1.782zm2.211-6.47-1.146 3.352h2.305l-1.135-3.353h-.024zM57.6 35.858h1.568v-3.517h3.463v-1.36h-3.463v-2.11h4.036v-1.371H57.6v8.358zm10.027.13c1.942 0 3.264-1.138 3.264-3.13V27.5h-1.556v5.287c0 1.196-.573 1.794-1.708 1.794-1.217 0-1.708-.763-1.708-1.794V27.5h-1.556v5.474c0 2.005 1.322 3.013 3.264 3.013zm6.392-.13h-1.497v-8.358h1.509l3.627 5.697h.023v-5.697h1.498v8.358h-1.521l-3.615-5.709h-.024v5.71zm6.843 0h3.264c1.65 0 3.276-1.102 3.276-3.083V30.55c0-1.864-1.474-3.048-3.287-3.048h-3.253v8.358zm1.556-1.371v-5.616h1.591c.983 0 1.85.575 1.85 1.583v2.415c0 1.196-.995 1.618-1.791 1.618h-1.65zm14.086 1.371h3.264c1.65 0 3.276-1.102 3.276-3.083V30.55c0-1.864-1.474-3.048-3.288-3.048h-3.252v8.358zm1.556-1.371v-5.616h1.591c.983 0 1.849.575 1.849 1.583v2.415c0 1.196-.995 1.618-1.79 1.618h-1.65zm17.364 1.371h5.839v-1.371h-4.283v-2.204h3.756v-1.372h-3.756v-2.04h4.236v-1.371h-5.792v8.358zm8.81 0h-1.497v-8.358h1.509l3.627 5.697h.023v-5.697h1.498v8.358h-1.521l-3.615-5.709h-.024v5.71zm9.499 0h4.984v-1.102h-1.696v-7.303h-.538l-2.75.504.117 1.055 1.697-.176v5.92h-1.814v1.102zm11.637-2.356c0 1.57-1.334 2.497-2.902 2.497-1.614 0-2.609-.785-2.609-2.087v-.304h1.451v.175c0 .657.492 1.02 1.217 1.02.854 0 1.275-.563 1.275-1.278V32.12c-.374.574-1.158.844-1.907.844-1.263 0-2.141-.786-2.141-1.935v-1.36c0-1.512 1.264-2.309 2.843-2.309 1.568 0 2.773.961 2.773 2.462v3.681zm-4.118-2.837c0 .774.643 1.067 1.205 1.067.596 0 1.345-.493 1.345-1.36v-.563c0-.656-.421-1.266-1.275-1.266-.854 0-1.275.504-1.275 1.114v1.008zm5.301 5.193h4.984v-1.102h-1.697v-7.303h-.538l-2.749.504.117 1.055 1.696-.176v5.92h-1.813v1.102zm11.847-2.391c0 1.676-1.427 2.532-2.89 2.532-1.462 0-2.913-.715-2.913-2.497v-3.576c0-1.735 1.416-2.567 2.925-2.567s2.878.809 2.878 2.58v3.528zm-4.235-.024c0 .715.456 1.325 1.345 1.325.878 0 1.334-.633 1.334-1.336V29.88c0-.716-.456-1.29-1.322-1.29-.866 0-1.357.586-1.357 1.336v3.517z" fill="#fff"/>
+                    </svg>
+                 </a>
+            </div></div>
+            <div id="m8958-8956-8959"><nav class="c-footer__share">
+
+                <strong id="m8963-8962-8964">
+                    <a rel="noopener noreferrer" target="_self" href="https://www.facebook.com/eldebatecom/">
+                        <img loading="lazy" alt="facebook" src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc34ca41a8b.svg" data-full-src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc34ca41a8b.svg">
+
+                    </a>
+                </strong><strong id="m8982-8981-8983">
+                <a rel="noopener noreferrer" target="_self" href="https://www.instagram.com/eldebate_com/">
+                    <img loading="lazy" alt="instagram" src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc34fe09e7c.svg" data-full-src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc34fe09e7c.svg">
+
+                </a>
+            </strong><strong id="m9001-9000-9002">
+                <a rel="noopener noreferrer" target="_self" href="https://twitter.com/eldebate_com">
+                    <img loading="lazy" alt="twitter" src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc351beb3bb.svg" data-full-src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc351beb3bb.svg">
+
+                </a>
+            </strong><strong id="m9020-9019-9021">
+                <a rel="noopener noreferrer" target="_self" href="https://www.youtube.com/eldebate1910">
+                    <img loading="lazy" alt="youtube" src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc354cb5343.svg" data-full-src="https://imagenes.eldebate.com/uploads/2022/06/29/62bc354cb5343.svg">

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
+  <head>
+
+      <link rel="preload" href="/themes/custom/ukg_theme/fonts/DMSans/DMSans-Regular.woff2" as="font" crossorigin="anonymous"/>
+      <link rel="preload" href="/themes/custom/ukg_theme/fonts/DMSans/DMSans-SemiBold.woff2" as="font" crossorigin="anonymous"/>
+      <link rel="apple-touch-icon" sizes="180x180" href="/themes/custom/ukg_theme/icons/favicons/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/themes/custom/ukg_theme/icons/favicons/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/themes/custom/ukg_theme/icons/favicons/favicon-16x16.png">
+
+      
+          <!-- ====================================================-->
+          <!-- Didomi & Google Consent Mode v2 Integration Script  -->
+          <!-- ====================================================-->
+          <script type="text/javascript">
+
+              /**
+              * ------------------------------------------------
+              * INITIALIZE DATA LAYER & DEFINE EVENT LISTENERS
+              * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              * We ensure the dataLayer and Didomi listener arrays exist so we can push
+              * commands and listeners to them immediately, without waiting for other
+              * scripts to load. The gtag function is also defined for Consent Mode.
+              */
+              window.dataLayer = window.dataLayer || [];
+              window.didomiOnReady = window.didomiOnReady || [];
+              window.didomiEventListeners = window.didomiEventListeners || [];
+
+              /**
+              * ------------------------------------------------
+              * DIDOMI GEOLOCATION OVERRIDE (QA / LOCAL TESTING)
+              * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              * Allows developers and QA testers to simulate visits from a specific
+              * country by supplying a `country` query string parameter in the URL.
+              *
+              * When provided, the country code is passed to Didomi before initialization so
+              * regional consent rules (such as GDPR banners) can be tested without a VPN.
+              * If omitted, normal geolocation detection is used by Didomi.
+              *
+              */
+              const params = new URLSearchParams(window.location.search);
+              const country = params.get('country');
+
+              window.didomiConfig = window.didomiConfig || {};
+
+              if (country) {
+                  window.didomiConfig.user = {
+                      ...(window.didomiConfig.user || {}),
+                      country: country.toUpperCase()
+                  };
+              }
+
+              /**
+              * ------------------------------------------------
+              * GOOGLE TAG MANAGER DATA LAYER HELPER
+              * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              * Lightweight wrapper used by Google Tag Manager and Google Consent Mode
+              * to push commands and events into the dataLayer queue.
+              *
+              */
+              function gtag() {
+                  dataLayer.push(arguments);
+              }
+
+              /**
+              * Syncs UKG-owned consent state from Didomi into the U20K20G cookie.
+              *
+              * Called unconditionally on every page load. PHP derives elqCookieWrite from
+              * gdprConsentRequired and vendor.consent on this cookie at submit time
+              * (UtilityManager::eloquaVendorConsentGiven), so the cookie must always carry
+              * Didomi's current determination rather than the fail-closed defaults that
+              * ukg_cookies.js writes on first visit.
+              *
+              * Deliberately ungated. Any "has the visitor chosen yet" predicate — a
+              * created/updated timestamp gap, or Didomi.shouldConsentBeCollected() — skips
+              * exactly the visitors whose cookie is still holding those defaults. Reducing
+              * redundant writes is the job of the change detection inside
+              * updateU20K20GCookieWithGdprProperties(), not of a gate out here.
+              *
+              * Google Consent Mode is not updated here. Confirm whether Didomi's native GCM
+              * integration is enabled in the Didomi console; nothing in this file sets the
+              * consent defaults before GTM loads.
+              */
+              function ukgUpdateU20K20GCookie() {
+
+                if (window.Drupal && Drupal.helperCore && Drupal.helperDidomi && typeof Drupal.helperDidomi.updateU20K20GCookieWithGdprProperties === 'function') {
+                  Drupal.helperCore.log_vars('🍩 html.html.twig:syncing U20K20G from Didomi', {}, true);
+                  Drupal.helperDidomi.updateU20K20GCookieWithGdprProperties();
+                }
+
+              }
+
+              /**
+              * Waits for Didomi to resolve the visitor's consent status before loading GTM.
+              *
+              * Consent Mode is updated first so the GTM container starts with the correct
+              * Google consent state.
+              */
+              window.didomiOnReady.push(async function (Didomi) {
+
+                // REFINEMENT: All logic is now inside a single try/catch block for
+                // comprehensive error handling of the entire OnReady lifecycle.
+                try {
+
+                  // Awaited purely for sequencing: it guarantees Didomi has resolved the
+                  // visitor's status before the sync below reads isConsentRequired() and
+                  // getUserStatus(). The returned value itself is no longer needed.
+                  await Didomi.getCurrentUserStatus();
+
+                  // update the U20K20G cookie with vendor specific changes
+                  ukgUpdateU20K20GCookie();
+
+                } catch (error) {
+
+                  console.error('html.html.twig:didomiOnReady: Didomi SDK is ready: could not process Google Consent Mode status.', error);
+
+                } finally {
+
+                  // Load the GTM container
+                  loadGoogleTagManager();
+
+                }
+
+              });
+
+              /**
+              * Loads the GTM container after Didomi has initialized.
+              *
+              * The guard prevents duplicate container injection if multiple Didomi callbacks
+              * or consent events attempt to load GTM during the same page view.
+              *
+              */
+              function loadGoogleTagManager() {
+
+                if (window.__ukgGtmLoaded) {
+                  return;
+                }
+
+                window.__ukgGtmLoaded = true;
+
+                //-- ==========================================================================================-->
+                //-- Google Tag Manager - .core (2025) - GTM-T85PP8H4 - For Business Intelligence & Governance -->
+                //-- ==========================================================================================-->
+                (function(w,d,s,l,i){
+
+                    w[l]=w[l]||[];
+                    w[l].push({
+                        'gtm.start': new Date().getTime(),
+                        'event':'gtm.js'
+                    });
+
+                    let f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';
+                    j.async=true;
+                    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+                    f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-T85PP8H4');
+
+              }
+
+              /**
+               * ------------------------------------
+               * REGISTER LISTENER (consent.changed)
+               * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+               * This listener fires whenever a user's consent status changes, which most
+               * commonly happens when a user clicks "Agree" or "Disagree" on the banner.
+               *
+               */
+              window.didomiEventListeners.push({
+
+                  event: 'consent.changed',
+
+                  // use 'async' to allow the use of 'await' functionality.
+                  listener: async function () {
+
+                      try {
+
+                          // validate if Didomi and the async function are available.
+                          if (window.Didomi && typeof window.Didomi.getCurrentUserStatus === 'function') {
+
+                            // The customer triggered a 'consent.changed' event; update their U20K20G cookie accordingly
+                            // as we rely upon its vendor values to determine which functionality is enabled/disabled.
+                            // Routed through ukgUpdateU20K20GCookie() so the Drupal-availability guard applies here
+                            // too — consent can change before the Drupal JS bundle has finished loading, and the
+                            // direct call would throw into the catch below and silently skip the update.
+                            ukgUpdateU20K20GCookie();
+
+                          }
+
+                      } catch (error) {
+
+                        // add error handling in case the Promise rejects.
+                        console.error("Didomi 'consent.changed' Error: Could not get user status.", error);
+
+                      }
+                  }
+              });
+
+          </script>
+
+          <!-- =================================-->
+          <!-- Inject Didomi SDK via Notice ID  -->
+          <!-- =================================-->
+          <script type="text/javascript">(function(){function i(e){if(!window.frames[e]){if(document.body&&document.body.firstChild){var t=document.body;var n=document.createElement("iframe");n.style.display="none";n.name=e;n.title=e;t.insertBefore(n,t.firstChild)}else{setTimeout(function(){i(e)},5)}}}function e(n,o,r,f,s){function e(e,t,n,i){if(typeof n!=="function"){return}if(!window[o]){window[o]=[]}var a=false;if(s){a=s(e,i,n)}if(!a){window[o].push({command:e,version:t,callback:n,parameter:i})}}e.stub=true;e.stubVersion=2;function t(i){if(!window[n]||window[n].stub!==true){return}if(!i.data){return}var a=typeof i.data==="string";var e;try{e=a?JSON.parse(i.data):i.data}catch(t){return}if(e[r]){var o=e[r];window[n](o.command,o.version,function(e,t){var n={};n[f]={returnValue:e,success:t,callId:o.callId};if(i.source){i.source.postMessage(a?JSON.stringify(n):n,"*")}},o.parameter)}}if(typeof window[n]!=="function"){window[n]=e;if(window.addEventListener){window.addEventListener("message",t,false)}else{window.attachEvent("onmessage",t)}}}e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");i("__tcfapiLocator")})();</script><script type="text/javascript">(function(){(function(e,i,o){var n=document.createElement("link");n.rel="preconnect";n.as="script";var t=document.createElement("link");t.rel="dns-prefetch";t.as="script";var r=document.createElement("script");r.id="spcloader";r.type="text/javascript";r["async"]=true;r.charset="utf-8";window.didomiConfig=window.didomiConfig||{};window.didomiConfig.sdkPath=window.didomiConfig.sdkPath||o||"https://sdk.privacy-center.org/";const d=window.didomiConfig.sdkPath;var a=d+e+"/loader.js?target_type=notice&target="+i;if(window.didomiConfig&&window.didomiConfig.user){var c=window.didomiConfig.user;var s=c.country;var f=c.region;if(s){a=a+"&country="+s;if(f){a=a+"&region="+f}}}n.href=d;t.href=d;r.src=a;var m=document.getElementsByTagName("script")[0];m.parentNode.insertBefore(n,m);m.parentNode.insertBefore(t,m);m.parentNode.insertBefore(r,m)})("9dcf4f6a-5a49-43a8-b371-c1572ce5a033","rgH4YXrR")})();</script>
+
+      
+    <meta charset="utf-8" />
+<meta name="description" content="Simplify HR, payroll, and workforce management with the workforce intelligence platform built for modern operations." />
+<link rel="canonical" href="https://www.ukg.com/" />
+<link rel="shortlink" href="https://www.ukg.com/" />
+<link rel="image_src" href="/themes/custom/ukg_theme/images/social-1200x630.png" />
+<meta property="og:title" content="UKG - HR, pay, and workforce management | UKG" />
+<meta property="og:image" content="https://www.ukg.com/themes/custom/ukg_theme/images/social-1200x630.png" />
+<meta name="Generator" content="Drupal 11 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="text/markdown" href="/for-llms/home" />
+<script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": "https://www.ukg.com",
+            "description": "UKG™ delivers HCM, payroll, HR service delivery, and workforce management solutions.",
+            "name": "UKG",
+            "url": "https://www.ukg.com",
+            "sameAs": [
+                "https://en.wikipedia.org/wiki/UKG",
+                "https://www.crunchbase.com/organization/ukg"
+            ],
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+1-800-225-1561",
+                "url": "https://www.ukg.com"
+            },
+            "image": {
+                "@type": "ImageObject",
+                "representativeOfPage": "False",
+                "url": "https://www.ukg.com/themes/custom/ukg_theme/logo.svg"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2250 North Commerce Parkway",
+                "addressLocality": "Weston",
+                "addressRegion": "FL",
+                "postalCode": "33326",
+                "addressCountry": "USA"
+            }
+        },
+        {
+            "@type": "WebPage",
+            "@id": "https://www.ukg.com",
+            "description": "Simplify HR, payroll, and workforce management with the workforce intelligence platform built for modern operations."
+        },
+        {
+            "potentialAction": {
+                "@type": "SearchAction",
+                "query": "https:/www.ukg.com/search?searchstax[query]={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    ]
+}</script>
+<link rel="alternate" hreflang="en" href="https://www.ukg.com/" />
+<link rel="alternate" hreflang="en-CA" href="https://www.ukg.ca/" />
+<link rel="alternate" hreflang="fr-CA" href="https://fr.ukg.ca/" />
+<link rel="alternate" hreflang="es-MX" href="https://www.ukg.mx/" />
+<link rel="alternate" hreflang="en-GB" href="https://www.ukg.co.uk/" />
+<link rel="alternate" hreflang="fr-FR" href="https://www.ukg.fr/" />
+<link rel="alternate" hreflang="de-DE" href="https://www.ukg.de/" />
+<link rel="alternate" hreflang="nl-NL" href="https://www.ukg.nl/" />
+<link rel="alternate" hreflang="en-IN" href="https://www.ukg.in/" />
+<link rel="alternate" hreflang="en-AU" href="https://www.ukg.com.au/" />
+<link rel="alternate" hreflang="pt-BR" href="https://www.ukg.com.br/" />
+
+    <title>UKG - HR, pay, and workforce management | UKG</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_jbv1pAVX8OwQKBt571tgDsAWhYO_6TAyw4Tz0lxTxiA.css?delta=0&amp;language=en&amp;theme=ukg_theme&amp;include=eJyVlEFy5CAMRS9kmtWch5JBtlWWESVBMr794E7KnRWdWUCBeKAPfADyQGFlmYGnuGOiKvonFG4r5VAg7oFywlzDzBJ3_7Nz8wFiFE0k2d-tx6KSK-Y09QD6KEeR3Kfao-1rqBse6NxNO6p4jMgIzNLqbzkbM5quSpohD8HnDqpjskp5_Q_0rU48cVb5HCELQm2KT7lDTvRwVk_G4a43WjfupboZckYdsXTA-j4xU96H47KKs6jCw1M-uonAFZVDRli5JL2X_lzHGVPCX2LD5Uy41cug3SoYu9eHcIUvhw4v4qJsYji7T0Mii_KBevoORuGpgMKqUDbzSVsBfrwij5ZLm7vFNkyT9USfXX4ARq39YVKd7LSe3c9gOF0Z7wfao4WhonlZlhAhf4CF58EHpllBz7DQ326gW6f__hNegQozY_oHYfKfYQ" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_a2qiBYJYEWpBWXozYaNy9ERJwsYCSQHN1AQDWyfMnOw.css?delta=1&amp;language=en&amp;theme=ukg_theme&amp;include=eJyVlEFy5CAMRS9kmtWch5JBtlWWESVBMr794E7KnRWdWUCBeKAPfADyQGFlmYGnuGOiKvonFG4r5VAg7oFywlzDzBJ3_7Nz8wFiFE0k2d-tx6KSK-Y09QD6KEeR3Kfao-1rqBse6NxNO6p4jMgIzNLqbzkbM5quSpohD8HnDqpjskp5_Q_0rU48cVb5HCELQm2KT7lDTvRwVk_G4a43WjfupboZckYdsXTA-j4xU96H47KKs6jCw1M-uonAFZVDRli5JL2X_lzHGVPCX2LD5Uy41cug3SoYu9eHcIUvhw4v4qJsYji7T0Mii_KBevoORuGpgMKqUDbzSVsBfrwij5ZLm7vFNkyT9USfXX4ARq39YVKd7LSe3c9gOF0Z7wfao4WhonlZlhAhf4CF58EHpllBz7DQ326gW6f__hNegQozY_oHYfKfYQ" />
+<link rel="stylesheet" media="print" href="/sites/default/files/css/css_lOv-q9dJ1lPwTqU9gda3yFIRs4Ogtpu7UWySQ7GQIqs.css?delta=2&amp;language=en&amp;theme=ukg_theme&amp;include=eJyVlEFy5CAMRS9kmtWch5JBtlWWESVBMr794E7KnRWdWUCBeKAPfADyQGFlmYGnuGOiKvonFG4r5VAg7oFywlzDzBJ3_7Nz8wFiFE0k2d-tx6KSK-Y09QD6KEeR3Kfao-1rqBse6NxNO6p4jMgIzNLqbzkbM5quSpohD8HnDqpjskp5_Q_0rU48cVb5HCELQm2KT7lDTvRwVk_G4a43WjfupboZckYdsXTA-j4xU96H47KKs6jCw1M-uonAFZVDRli5JL2X_lzHGVPCX2LD5Uy41cug3SoYu9eHcIUvhw4v4qJsYji7T0Mii_KBevoORuGpgMKqUDbzSVsBfrwij5ZLm7vFNkyT9USfXX4ARq39YVKd7LSe3c9gOF0Z7wfao4WhonlZlhAhf4CF58EHpllBz7DQ326gW6f__hNegQozY_oHYfKfYQ" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_lXzdPLsOLc5r9n5trnKtglSqMmAd5r5xY4m65CQuzuo.css?delta=3&amp;language=en&amp;theme=ukg_theme&amp;include=eJyVlEFy5CAMRS9kmtWch5JBtlWWESVBMr794E7KnRWdWUCBeKAPfADyQGFlmYGnuGOiKvonFG4r5VAg7oFywlzDzBJ3_7Nz8wFiFE0k2d-tx6KSK-Y09QD6KEeR3Kfao-1rqBse6NxNO6p4jMgIzNLqbzkbM5quSpohD8HnDqpjskp5_Q_0rU48cVb5HCELQm2KT7lDTvRwVk_G4a43WjfupboZckYdsXTA-j4xU96H47KKs6jCw1M-uonAFZVDRli5JL2X_lzHGVPCX2LD5Uy41cug3SoYu9eHcIUvhw4v4qJsYji7T0Mii_KBevoORuGpgMKqUDbzSVsBfrwij5ZLm7vFNkyT9USfXX4ARq39YVKd7LSe3c9gOF0Z7wfao4WhonlZlhAhf4CF58EHpllBz7DQ326gW6f__hNegQozY_oHYfKfYQ" />
+
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"node\/1276","currentPathIsAdmin":false,"isFront":true,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"theme":"ukg_theme","clientside_validation_jquery":{"validate_all_ajax_forms":2,"force_validate_on_blur":true,"force_html5_validation":false,"messages":{"required":"This field is required.","remote":"Please fix this field.","email":"Please enter a valid email address.","url":"Please enter a valid URL.","date":"Please enter a valid date.","dateISO":"Please enter a valid date (ISO).","number":"Please enter a valid number.","digits":"Please enter only digits.","equalTo":"Please enter the same value again.","maxlength":"Please enter no more than {0} characters.","minlength":"Please enter at least {0} characters.","rangelength":"Please enter a value between {0} and {1} characters long.","range":"Please enter a value between {0} and {1}.","max":"Please enter a value less than or equal to {0}.","min":"Please enter a value greater than or equal to {0}.","step":"Please enter a multiple of {0}."}},"ukgCore":{"linkDecoration":{"hosts":["apply.ukg.com"],"trackedKeys":["utm_source","utm_medium","utm_campaign","utm_content","utm_term"]}},"ukgConstants":{"campaign":{"SFCAMPAIGNID":"sfcampaignid","LEGACY_SFCAMPAIGNID":"ecid","ELQCAMPAIGNID":"elqcampaignid","LEGACY_ELQCAMPAIGNID":"eqid","UTM_MEDIUM":"utm_medium","UTM_SOURCE":"utm_source","UTM_CONTENT":"utm_content","UTM_TERM":"utm_term","UTM_CAMPAIGN":"utm_campaign","INTERSTITIAL_QUERYSTRING_PARAMETER_NAME":"rsrcid","GCLID_QUERYSTRING_PARAMETER_NAME":"gclid","MCLID_QUERYSTRING_PARAMETER_NAME":"mclid","MSCLKID_QUERYSTRING_PARAMETER_NAME":"msclkid"},"cookies":{"UKG_COOKIE_NAME":"U20K20G","XDEBUG_COOKIE_NAME":"XDEBUG_SESSION","ELOQUA_COOKIE_NAME":"ELOQUA","DIDOMI_COOKIE_NAME":"didomi_token","IAB_TCF_COOKIE_NAME":"euconsent-v2","COOKIE_SAME_SITE":"Lax","COOKIE_PATH":"\/","COOKIE_EXPIRES":30,"COOKIE_DOMAIN":"site.COOKIE_DOMAIN","DEFAULT_COOKIE":{"_exp":null,"sfcampaignid":null,"elqcampaignid":null,"gdprConsentRequired":true,"ccpaRegulationApplied":true,"vendor":{"consent":[]}}},"eloqua":{"OPTIONS_Contact_2026_DLKey":"d0366a33eb924f399b03a9582e9fe303","OPTIONS_Visitor_2026_DLKey":"3c8a2e2657cd44e48ed8272ba253436b","OPTIONS_Preference_Center_2026_DLKey":"0dab01af727247399679d9da85ce6865"},"gdpr":{"GDPRCONSENTREQUIRED":"gdprConsentRequired","CCPAREGULATIONAPPLIED":"ccpaRegulationApplied","GDPR_VENDOR_ELOQUA":"eloqua","GDPR_VENDOR_ACQUIA":"acquia-TtKqaNN4","GDPR_VENDOR_GOOGLE":"googleana-4TXnJigR","VENDOR":"vendor","CONSENT":"consent"},"localeToCampaign":{"de-de":{"sfcampaignid":"7018Y000001hszvQAA","elqcampaignid":"34821","nssfcampaignid":"701Qn00001a8sneIAA","nselqcampaignid":"45265","bnssfcampaignid":"701Qn00001a8sneIAA","bnselqcampaignid":"45265","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"en":{"sfcampaignid":"7018Y000001hsztQAA","elqcampaignid":"34819","nssfcampaignid":"701Qn00001a9B9XIAU","nselqcampaignid":"45272","bnssfcampaignid":"7018Y000001WFc9QAG","bnselqcampaignid":"33766","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"en-au":{"sfcampaignid":"7018Y000001hszuQAA","elqcampaignid":"34820","nssfcampaignid":"701Qn00001a9WI0IAM","nselqcampaignid":"45270","bnssfcampaignid":"701Qn00001a9WI0IAM","bnselqcampaignid":"45270","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"en-ca":{"sfcampaignid":"7018Y000001hsztQAA","elqcampaignid":"34819","nssfcampaignid":"701Qn00001a9V0yIAE","nselqcampaignid":"45273","bnssfcampaignid":"701Qn00001a9V0yIAE","bnselqcampaignid":"45273","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"fr-ca":{"sfcampaignid":"7018Y000001hsztQAA","elqcampaignid":"34819","nssfcampaignid":"701Qn00001a9V0yIAE","nselqcampaignid":"45273","bnssfcampaignid":"701Qn00001a9V0yIAE","bnselqcampaignid":"45273","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"en-gb":{"sfcampaignid":"7018Y000001hszxQAA","elqcampaignid":"34822","nssfcampaignid":"701Qn00001a8nEhIAI","nselqcampaignid":"45266","bnssfcampaignid":"701Qn00001a8nEhIAI","bnselqcampaignid":"45266","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"en-in":{"sfcampaignid":"7018Y000001hszyQAA","elqcampaignid":"34824","nssfcampaignid":"701Qn00001a8lPdIAI","nselqcampaignid":"45267","bnssfcampaignid":"701Qn00001a8lPdIAI","bnselqcampaignid":"45267","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"fr-fr":{"sfcampaignid":"7018Y000001hszwQAA","elqcampaignid":"34822","nssfcampaignid":"701Qn00001a8uw0IAA","nselqcampaignid":"45268","bnssfcampaignid":"701Qn00001a8uw0IAA","bnselqcampaignid":"45268","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"nl-nl":{"sfcampaignid":"7018Y000001ht00QAA","elqcampaignid":"34826","nssfcampaignid":"701Qn00001a9nyjIAA","nselqcampaignid":"45269","bnssfcampaignid":"701Qn00001a9nyjIAA","bnselqcampaignid":"45269","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"es-mx":{"sfcampaignid":"7018Y000001hszzQAA","elqcampaignid":"34825","nssfcampaignid":"701Qn00001a8miOIAQ","nselqcampaignid":"45271","bnssfcampaignid":"701Qn00001a8miOIAQ","bnselqcampaignid":"45271","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"pt-br":{"sfcampaignid":"7018Y000001SNqMQAW","elqcampaignid":"38467","nssfcampaignid":"701Qn00001aOgZLIA0","nselqcampaignid":"45318","bnssfcampaignid":"701Qn00001aOgZLIA0","bnselqcampaignid":"45318","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"fr-be":{"sfcampaignid":"7018Y0000010kG8QAI","elqcampaignid":"22677","nssfcampaignid":"7018Y0000010kG6QAI","nselqcampaignid":"22687","bnssfcampaignid":"7018Y0000010kG6QAI","bnselqcampaignid":"22687","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"es-es":{"sfcampaignid":"7018Y0000010kG2QAI","elqcampaignid":"22675","nssfcampaignid":"7018Y0000010kGGQAY","nselqcampaignid":"22685","bnssfcampaignid":"7018Y0000010kGGQAY","bnselqcampaignid":"22685","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"},"nl-be":{"sfcampaignid":"7018Y0000010kG8QAI","elqcampaignid":"22677","nssfcampaignid":"7018Y0000010kG6QAI","nselqcampaignid":"22687","bnssfcampaignid":"7018Y0000010kG6QAI","bnselqcampaignid":"22687","aisfcampaignid":"701Qn00000n5TWoIAM","aielqcampaignid":"42312","lisfcampaignid":"701Qn00000tlcD3IAI","lielqcampaignid":"42541"}},"localeToAlpha3":{"de-de":"DEU","en":"USA","en-au":"AUS","en-ca":"CAN","en-gb":"GBR","en-in":"IND","es-es":"ESP","es-mx":"MEX","fr-be":"FRA","fr-ca":"CAN","fr-fr":"FRA","nl-be":"NLD","nl-nl":"NLD","pt-br":"BRA"},"alpha2ToAlpha3":{"AF":"AFG","AL":"ALB","DZ":"DZA","AS":"ASM","AD":"AND","AO":"AGO","AI":"AIA","AQ":"ATA","AG":"ATG","AR":"ARG","AM":"ARM","AW":"ABW","AU":"AUS","AT":"AUT","AZ":"AZE","BS":"BHS","BH":"BHR","BD":"BGD","BB":"BRB","BY":"BLR","BE":"BEL","BZ":"BLZ","BJ":"BEN","BM":"BMU","BT":"BTN","BO":"BOL","BQ":"BES","BA":"BIH","BW":"BWA","BV":"BVT","BR":"BRA","IO":"IOT","BN":"BRN","BG":"BGR","BF":"BFA","BI":"BDI","CV":"CPV","KH":"KHM","CM":"CMR","CA":"CAN","KY":"CYM","CF":"CAF","TD":"TCD","CL":"CHL","CN":"CHN","CX":"CXR","CC":"CCK","CO":"COL","KM":"COM","CD":"COD","CG":"COG","CK":"COK","CR":"CRI","HR":"HRV","CU":"CUB","CW":"CUW","CY":"CYP","CZ":"CZE","CI":"CIV","DK":"DNK","DJ":"DJI","DM":"DMA","DO":"DOM","EC":"ECU","EG":"EGY","SV":"SLV","GQ":"GNQ","ER":"ERI","EE":"EST","SZ":"SWZ","ET":"ETH","FK":"FLK","FO":"FRO","FJ":"FJI","FI":"FIN","FR":"FRA","GF":"GUF","PF":"PYF","TF":"ATF","GA":"GAB","GM":"GMB","GE":"GEO","DE":"DEU","GH":"GHA","GI":"GIB","GR":"GRC","GL":"GRL","GD":"GRD","GP":"GLP","GU":"GUM","GT":"GTM","GG":"GGY","GN":"GIN","GW":"GNB","GY":"GUY","HT":"HTI","HM":"HMD","VA":"VAT","HN":"HND","HK":"HKG","HU":"HUN","IS":"ISL","IN":"IND","ID":"IDN","IR":"IRN","IQ":"IRQ","IE":"IRL","IM":"IMN","IL":"ISR","IT":"ITA","JM":"JAM","JP":"JPN","JE":"JEY","JO":"JOR","KZ":"KAZ","KE":"KEN","KI":"KIR","KP":"PRK","KR":"KOR","KW":"KWT","KG":"KGZ","LA":"LAO","LV":"LVA","LB":"LBN","LS":"LSO","LR":"LBR","LY":"LBY","LI":"LIE","LT":"LTU","LU":"LUX","MO":"MAC","MG":"MDG","MW":"MWI","MY":"MYS","MV":"MDV","ML":"MLI","MT":"MLT","MH":"MHL","MQ":"MTQ","MR":"MRT","MU":"MUS","YT":"MYT","MX":"MEX","FM":"FSM","MD":"MDA","MC":"MCO","MN":"MNG","ME":"MNE","MS":"MSR","MA":"MAR","MZ":"MOZ","MM":"MMR","NA":"NAM","NR":"NRU","NP":"NPL","NL":"NLD","NC":"NCL","NZ":"NZL","NI":"NIC","NE":"NER","NG":"NGA","NU":"NIU","NF":"NFK","MK":"MKD","MP":"MNP","NO":"NOR","OM":"OMN","PK":"PAK","PW":"PLW","PS":"PSE","PA":"PAN","PG":"PNG","PY":"PRY","PE":"PER","PH":"PHL","PN":"PCN","PL":"POL","PT":"PRT","PR":"PRI","QA":"QAT","RO":"ROU","RU":"RUS","RW":"RWA","RE":"REU","BL":"BLM","SH":"SHN","KN":"KNA","LC":"LCA","MF":"MAF","PM":"SPM","VC":"VCT","WS":"WSM","SM":"SMR","ST":"STP","SA":"SAU","SN":"SEN","RS":"SRB","SC":"SYC","SL":"SLE","SG":"SGP","SX":"SXM","SK":"SVK","SI":"SVN","SB":"SLB","SO":"SOM","ZA":"ZAF","GS":"SGS","SS":"SSD","ES":"ESP","LK":"LKA","SD":"SDN","SR":"SUR","SJ":"SJM","SE":"SWE","CH":"CHE","SY":"SYR","TW":"TWN","TJ":"TJK","TZ":"TZA","TH":"THA","TL":"TLS","TG":"TGO","TK":"TKL","TO":"TON","TT":"TTO","TN":"TUN","TR":"TUR","TM":"TKM","TC":"TCA","TV":"TUV","UG":"UGA","UA":"UKR","AE":"ARE","GB":"GBR","UM":"UMI","US":"USA","UY":"URY","UZ":"UZB","VU":"VUT","VE":"VEN","VN":"VNM","VG":"VGB","VI":"VIR","WF":"WLF","EH":"ESH","YE":"YEM","ZM":"ZMB","ZW":"ZWE","AX":"ALA"},"localeToHostname":{"de-de":{"hostname":".ukg.de"},"en":{"hostname":".ukg.com"},"en-au":{"hostname":".ukg.com.au"},"en-ca":{"hostname":".ukg.ca"},"en-gb":{"hostname":".ukg.co.uk"},"en-in":{"hostname":".ukg.in"},"es-es":{"hostname":".ukg.es"},"es-mx":{"hostname":".ukg.mx"},"fr-ca":{"hostname":".fr.ukg.ca"},"fr-be":{"hostname":".ukg.be"},"fr-fr":{"hostname":".ukg.fr"},"nl-be":{"hostname":".nl.ukg.be"},"nl-nl":{"hostname":".ukg.nl"},"pt-br":{"hostname":".ukg.com.br"}},"gdprAlpha3ToCountry":{"AUT":"Austria","BEL":"Belgium","BGR":"Bulgaria","HRV":"Croatia","CYP":"Cyprus","CZE":"Czech Republic","DNK":"Denmark","EST":"Estonia","FIN":"Finland","FRA":"France","DEU":"Germany","GRC":"Greece","HUN":"Hungary","IRL":"Ireland","ITA":"Italy","LVA":"Latvia","LTU":"Lithuania","LUX":"Luxembourg","MLT":"Malta","NLD":"Netherlands","POL":"Poland","PRT":"Portugal","ROU":"Romania","SVK":"Slovakia","SVN":"Slovenia","ESP":"Spain","SWE":"Sweden","GBR":"United Kingdom"},"requiredFormFields":{"default":["edit-c-firstname","edit-c-lastname","edit-c-emailaddress","edit-c-busphone","edit-c-title","edit-c-purchase-timeframe1","edit-c-company","edit-c-country"],"de-de":["edit-c-totalemployees","edit-c-optin"],"en":["edit-c-address1","edit-c-city","edit-c-state-prov","edit-c-zip-postal","edit-c-totalemployees"],"en-au":[],"en-ca":["edit-c-address1","edit-c-city","edit-c-state-prov","edit-c-zip-postal","edit-c-totalemployees"],"en-gb":["edit-c-totalemployees","edit-c-optin"],"en-in":[],"es-mx":["edit-c-totalemployees"],"fr-ca":["edit-c-address1","edit-c-city","edit-c-state-prov","edit-c-zip-postal","edit-c-totalemployees"],"fr-fr":["edit-c-totalemployees","edit-c-optin"],"nl-nl":["edit-c-totalemployees","edit-c-optin"],"pt-br":["edit-c-totalemployees","edit-c-optin"]},"isLoggedIn":false},"ckeditorAccordion":{"accordionStyle":{"collapseAll":0,"keepRowsOpen":1,"animateAccordionOpenAndClose":1,"openTabsWithHash":1,"allowHtmlInTitles":0}},"searchSuggestions":[],"sitewideAlert":{"refreshInterval":15000,"automaticRefresh":false,"showCount":false,"serverSideRender":false},"csp":{"nonce":"ODDJuOByIigHtBkSMpojnQ"},"user":{"uid":0,"permissionsHash":"564f4133a52c410f9d2bc900a29b8da0aeaff6f82fc51b8d7d031bac95f96e06"}}</script>
+<script src="/modules/custom/ukg_helpers/js/constants/main.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/site.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/campaigns.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/cookies.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/eloqua.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/gdpr.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/debug.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/forms.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/constants/utils.js?tn5pj2" type="module"></script>
+<script src="/sites/default/files/js/js_Uq4X08HKR2kdgYCKmECaVlwLfRPtNBjMDJwSD26UkJc.js?scope=header&amp;delta=9&amp;language=en&amp;theme=ukg_theme&amp;include=eJx9UdGOhDAI_CG1n9RgRZdIi6Ho3v390VvP3eQSX9rJMJRhChSA4sIyAndpxYlMNEJKohNJCRcaZpViWKbOCQxJ8iYFi9VhX5doD8zY9wl0aofsFflOyLJIX5MK38o2lew6pgn1TleFd3OTvY_F5Bvcig2sdpUMn_5uBEa1QIWsa6KRJa01vOFvK0NZdlgw1idZeribxl55GeaNwbAGmeeYoBxQY_YiRKZRQb_jTF9YX10iK-FrxIlP3i3_Ae8ra5zQMbTNumuBkJjSCiNjbHF_FM5ffBPWVJ-KgzJKj4dH0puC-9fuieMsmsN5D55g9vogW5tb_9VbfFh_APnX3g8"></script>
+<script src="/modules/custom/ukg_cookies/js/ukg_cookies.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/core.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/didomi.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/cookie.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_helpers/js/datalayer.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_core/js/ukg_core_link_decoration.js?tn5pj2" type="module"></script>
+<script src="/sites/default/files/js/js_BZNCKB5usx3-MQmW6-xjpiHs2h5hp3IxOm21J9VyogY.js?scope=header&amp;delta=16&amp;language=en&amp;theme=ukg_theme&amp;include=eJx9UdGOhDAI_CG1n9RgRZdIi6Ho3v390VvP3eQSX9rJMJRhChSA4sIyAndpxYlMNEJKohNJCRcaZpViWKbOCQxJ8iYFi9VhX5doD8zY9wl0aofsFflOyLJIX5MK38o2lew6pgn1TleFd3OTvY_F5Bvcig2sdpUMn_5uBEa1QIWsa6KRJa01vOFvK0NZdlgw1idZeribxl55GeaNwbAGmeeYoBxQY_YiRKZRQb_jTF9YX10iK-FrxIlP3i3_Ae8ra5zQMbTNumuBkJjSCiNjbHF_FM5ffBPWVJ-KgzJKj4dH0puC-9fuieMsmsN5D55g9vogW5tb_9VbfFh_APnX3g8"></script>
+<script src="/modules/custom/ukg_didomi/js/ukg_didomi.js?tn5pj2" type="module"></script>
+<script src="/modules/custom/ukg_datalayer/js/ukg_datalayer.js?tn5pj2" type="module"></script>
+
+
+    
+
+  </head>
+
+  <body class="path-frontpag

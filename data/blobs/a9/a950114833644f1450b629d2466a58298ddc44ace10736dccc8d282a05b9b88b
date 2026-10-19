@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><script>(function(){"use strict";var __webpack_modules__={348:function(e,t,r){r.d(t,{IP:function(){return i},Pz:function(){return a},Sg:function(){return l},XV:function(){return _},_9:function(){return c},e:function(){return o},qQ:function(){return s},t9:function(){return n}});const o="eudaEnableAgent",n="eudaSyncLoad",_="eudaAgentVersion",a="eudaLoaderVersion",c="eudaForce",s="eudaClearText",i="eudaFailed",l="eudaMode"},405:function(e,t,r){r.d(t,{Pt:function(){return n}});let o=!1;function n(e){o=e}}},__webpack_module_cache__={};function __webpack_require__(e){var t=__webpack_module_cache__[e];if(void 0!==t)return t.exports;var r=__webpack_module_cache__[e]={exports:{}};return __webpack_modules__[e](r,r.exports,__webpack_require__),r.exports}__webpack_require__.d=function(e,t){for(var r in t)__webpack_require__.o(t,r)&&!__webpack_require__.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:t[r]})},__webpack_require__.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)};var __webpack_exports__={},_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(348),_lib_service_worker_wrapper_js__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(405);(function(){let registerSWStarted=!1;const resourceBasePath="/678c37f1-fcea-354f-853d-32b794d02404",csmBasePath="/4359d65e-dd82-3237-8c34-3c0c315503df",getVersionIntervalSeconds="60",loaderVersion="1.2";localStorage.setItem(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.Pz,loaderVersion);const serviceWorkerUrl=`${resourceBasePath}/eudaapi/get-script/serviceworker`;let attempt=0,enableAgent=!1,syncLoad=!1,oldAgentVersion=!1,newAgentVersion=!1,agentVersion=!1,forceAgent=getBooleanFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__._9),clearText=getBooleanFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.qQ),agentLoaded=!1;function getBooleanFromLocalStorage(e){return"true"===getFromLocalStorage(e)}function getFromLocalStorage(e){return localStorage.getItem(e)}function loader(){const e=parseInt(localStorage.getItem("eudaRefreshPolicyInterval"));let t=3e4;e>0?t=1e3*e:parseInt(getVersionIntervalSeconds)>0&&(t=1e3*getVersionIntervalSeconds),captureConfig(),init().then(()=>{"serviceWorker"in navigator&&navigator.serviceWorker.addEventListener("message",function(e){"reload"===e.data.type&&location.reload()}),setTimeout(loader,t)}).catch(e=>{if(attempt<3)setTimeout(loader,t);else{const e=Math.floor(Date.now()/1e3)+86400;localStorage.setItem(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.IP,e.toString())}attempt++})}function captureConfig(e){enableAgent=getBooleanFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.e),syncLoad=getBooleanFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.t9),agentVersion=getFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.XV),forceAgent=getBooleanFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__._9),oldAgentVersion=agentVersion,e&&(enableAgent=e.enableAgent,syncLoad=e.syncLoad,newAgentVersion=e.agentVersion,agentVersion=newAgentVersion,controlServiceWorker(newAgentVersion).then(()=>{}),localStorage.setItem(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.XV,agentVersion),localStorage.setItem(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.e,enableAgent),localStorage.setItem(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.t9,syncLoad))}function init(){const e=getFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.IP);if(!(null!==e&&Date.now()-Number(e)<=0))return localStorage.removeItem(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.IP),new Promise(async(e,t)=>{syncLoad&&enableAgent?loadAgentCode().then(()=>loadConfigFromServer().then(()=>e()).catch(e=>t(e))).catch(e=>t(e)):loadConfigFromServer().then(()=>isAgentRequired()?loadAgentCode().then(()=>e()).catch(e=>t(e)):e()).catch(e=>t(e))})}function loadConfigFromServer(){return new Promise(async(e,t)=>{try{const r=await fetch(`${csmBasePath}/eudaapi/version`,{method:"POST",headers:{Accept:"application/json","Content-Type":"application/json"},body:JSON.stringify({location:location.href})});if(r.status>=400)return t(new Error("Bad response from server"));return captureConfig(await r.json()),e()}catch(e){return t(e)}})}function isAgentRequired(){return!!forceAgent||enableAgent}function loadAgentCodeAsync(e){return new Promise((t,r)=>{let o=0,n=setInterval(()=>{o++;let _=document.getElementsByTagName("head")[0];if(_){clearInterval(n);let r=document.createElement("script");return r.src=e,_.appendChild(r),agentLoaded=!0,t()}if(o>10)return clearInterval(n),console.info("couldn't load script no Head present"),r(new Error("couldn't load script no Head present"))},10)})}function loadAgentCodeSync(url){return new Promise((resolve,reject)=>{let xhr=new XMLHttpRequest;xhr.onreadystatechange=function(){if(this.readyState)return 200===this.status?(eval(xhr.responseText),agentLoaded=!0,resolve()):reject(new Error(`request returned status ${this.status}`))},xhr.open("GET",url,!1),xhr.send()})}function getModeArg(){let e="",t=getFromLocalStorage(_lib_local_storage_js__WEBPACK_IMPORTED_MODULE_0__.Sg);return t&&(e=`&mode=${encodeURIComponent(t)}`),e}function loadAgentCode(){return new Promise((e,t)=>{if(agentLoaded)return e();let r=`${resourceBasePath}/eudaapi/get-script/euda?ver=${agentVersion}${getModeArg()}`;(syncLoad?loadAgentCodeSync:loadAgentCodeAsync)(r).then(()=>e()).catch(e=>t(e))})}function compareAgentVersions(e){if(!oldAgentVersion)return!0;if(!e)return!1;return oldAgentVersion.substring(0,oldAgentVersion.lastIndexOf("."))<e.substring(0,e.lastIndexOf("."))}function registerServiceWorker(){return new Promise((e,t)=>{const r=setTimeout(()=>{t(new Error("service worker registration time out"))},3e4),o=agentVersion.substring(0,agentVersion.lastIndexOf("."));navigator.serviceWorker.register(`${serviceWorkerUrl}?v=${o}${getModeArg()}`,{scope:"/"}).then(t=>((0,_lib_service_worker_wrapper_js__WEBPACK_IMPORTED_MODULE_1__.Pt)(t),clearTimeout(r),e())).catch(e=>(clearTimeout(r),t(new Error(`service worker register failed: ${e}`))))})}function handleRegisterSW(e,t){registerServiceWorker().then(()=>(navigator.serviceWorker.ready.then(e=>{e.active&&e.active.postMessage({type:"FORCE_AGENT_VALUE",forceAgent:forceAgent})}).catch(e=>{console.warn("Failed to send force agent value to service worker:",e)}),registerSWStarted=!1,e())).catch(e=>(registerSWStarted=!1,t(e)))}function controlServiceWorker(e){return new Promise((t,r)=>{if(registerSWStarted)return t();const o="serviceWorker"in navigator,n=window.isSecureContext||"localhost"===location.hostname||"127.0.0.1"===location.hostname;if(!o||!n)return t();let _=compareAgentVersions(e);registerSWStarted=!0,navigator.serviceWorker.getRegistration("/").then(e=>e&&e.active?(e.active.postMessage({type:"FORCE_AGENT_VALUE",forceAgent:forceAgent}),_?handleRegisterSW(t,r):(registerSWStarted=!1,t())):enableAgent||forceAgent?handleRegisterSW(t,r):(registerSWStarted=!1,t())).catch(e=>(console.log(e),registerSWStarted=!1,r()))})}loader()})()})();
+//# sourceMappingURL=capture.bundle.js.map{}
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base href="https://www.mako.co.il/IIS_Errors/" />
+<title>הודעת שגיאה |mako  - תוכניות קשת, חדשות, ספורט, משחקים, מתכונים ועוד</title>
+<meta name="description" content="עמוד שגיאה. mako פורטל התוכן של קשת: אוכל, גברים ונשים, רוח, ספורט, טיולים, מוזיקה, ביפ וכמובן חדשות ערוץ 2 והתכניות של קשת: האח הגדול, כוכב נולד וארץ נהדרת"/>
+<link href="error.css" rel="stylesheet">
+	<script> 
+		var currentChannelId = '3d385dd2dd5d4110VgnVCM100000290c10acRCRD';
+		//var gemiusTrafficId = 'bJuan5ipN7kW0iIsDT_y7pR7.GM6dCQPBtYq.lv0YLf.J7';
+	</script> 
+</head>
+<body style="width:100%;height:100%;">
+<div style="width:660px;margin:0 auto">
+<table class="tbl_error" style="direction: rtl;" align="center" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td><a href="/"><img src="header_error.jpg" alt="mako.co.il" border="0" height="108" width="610"></a></td>
+</tr>
+<tr>
+<td class="error_txt">
+<h1>העמוד שחיפשת לא נמצא</h1>
+    <ul>
+		<!--
+        <li style="margin-bottom:24px;"> לא מוצאים את מה שחיפשתם? נסו לחפש לפי מילות מפתח <a href="/portal/site/mako/nSearch/?vgnextoid=3d385dd2dd5d4110VgnVCM100000290c10acRCRD&">בעמוד החיפוש</a> שלנו.</li>
+		-->
+        <li style="margin:24px 0;">נתקלתם בתקלה? זקוקים לעזרה? צוות mako ישמח לעמוד לרשותכם. <a href="mailto:support@mako.co.il">לחצו כאן כדי לכתוב אלינו</a>.</li>
+        <li>חזרה <a href="/">לעמוד הראשי</a></li>
+    </ul>
+<br>
+<br>
+<br>
+<div id="idletimeout">	הנך מועבר לעמוד הבית בעוד  <span></span>&nbsp;שניות</div>
+<table class="tbl_channels" align="center" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td align="center" valign="top" class="bg_bottom">
+<table border="0" cellpadding="0" cellspacing="0" width="520">
+    <tbody><tr>
+        <td>
+            <h2 align=right>חזרה לערוצים</h2>
+			<table class="tbl_progs" align="center" border="0" cellpadding="0" cellspacing="0">
+                <tbody align="right">
+				<tr>
+	                <td style="margin-right:23px;width:87px;"><a href="/news"><img src="bullet.gif" border="0" height="5" width="5">חדשות</a></td>
+					<td style="width:93px;"><a href="/music"><img src="bullet.gif" border="0" height="5" width="5">מוזיקה</a></td>
+					<td style="width:99px;"><a href="/ambatia"><img src="bullet.gif" border="0" height="5" width="5">אמבטיה</a></td>
+					<td style="width:114px;"><a href="/home-family"><img src="bullet.gif" border="0" height="5" width="5">בית ומשפחה</a></td>
+					<td style="width:117px;"><a href="/digital"><img src="bullet.gif" border="0" height="5" width="5">דיגיטל</a></td>
+	            </tr>
+                <tr>
+	                <td style="margin-right:23px;width:87px;"><a href="/men"><img src="bullet.gif" border="0" height="5" width="5">גברים</a></td>
+					<td style="width:93px;"><a href="/entertainment"><img src="bullet.gif" border="0" height="5" width="5">בידור</a></td>
+					<td style="width:99px;"><a href="/travel"><img src="bullet.gif" border="0" height="5" width="5">חופש</a></td>
+					<td style="width:114px;"><a href="/Sports"><img src="bullet.gif" border="0" height="5" width="5">ספורט</a></td>
+					<td style="width:117px;"><a href="/spirituality"><img src="bullet.gif" border="0" height="5" width="5">רוח</a></td>
+				</tr>
+                <tr>
+					<td style="margin-right:23px;width:87px;"><a href="/women"><img src="bullet.gif" border="0" height="5" width="5">נשים</a></td>
+					<td style="width:93px;"><a href="/forum"><img src="bullet.gif" border="0" height="5" width="5">קהילות</a></td>
+	   	            <td style="width:99px;"><a href="/humor"><img src="bullet.gif" border="0" height="5" width="5">צחוק</a></td>
+	                <td style="width:114px;"><a href="/food"><img src="bullet.gif" border="0" height="5" width="5">אוכל</a></td>
+					<td style="width:117px;"><a href="/tv"><img src="bullet.gif" border="0" height="5" width="5">תכניות קשת</a></td>
+				</tr>  
+				<tr style="padding-bottom: 15px;">
+					<td style="margin-right: 23px; width: 87px;"><a href="/vod"><img height="5" border="0" width="5" src="bullet.gif"/>VOD</a></td>
+					<td style="width:93px;"><a href="/Games"><img src="bullet.gif" border="0" height="5" width="5">משחקים</a></td>
+					<td style="width:99px;"><a href="/cellular"><img src="bullet.gif" border="0" height="5" width="5">סלולר</a></td>
+				</tr>  				
+            </tbody></table>
+
+        </td>
+    </tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<br><br><br><br><br><br>
+</td></tr>
+</tbody></table>
+<iframe src="https://www.tech12.co.il/index-opinion/more_articles" width="100%" height="400" style="border:none;margin-top:20px;" scrolling="no"></iframe>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+/* (function($) {    
+    var $elm = $('#idletimeout');
+    var $time =    $elm.find('span');
+    var counter = 3;    
+    var countDown = function(){
+        $time.text(counter--);
+        if(counter===-1) {
+            return location.href = '/';
+        }
+        setTimeout(countDown, 1000);
+    }; 
+    setTimeout(function(){$elm.slideDown();countDown();}, 1500);    
+})(jQuery);  */
+
+var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3886828-1'], ['_setDomainName', 'mako.co.il']);
+		_gaq.push(['_trackEvent', 'Generic Events', 'RedirectSUtoHPfromNotFoundPage' , 'notFoundError']);        
+		_gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script');ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+</script>
+
+<script>
+   /*****storage handler******
+    ** general purpose: Fix local storage cross browser behavior
+    ****/
+(function(b){function g(){this.makoCreateUniqueId=this.makoGetUniqueId=function(){return"noStorageSupported"};this.makoGetObject=this.makoSetObject=this.getItem=this.setItem=this.clear=this.removeItem=this.key=function(){return!1}}function k(){for(var a=[],b=0;36>b;b++)a[b]="0123456789abcdef".substr(Math.floor(16*Math.random()),1);a[19]="0123456789abcdef".substr(a[19]&3|8,1);a[8]=a[13]=a[18]=a[23]="-";return a.join("")}function l(){return Array(37).join("x").replace(/[x]/g,function(a){return(h.getRandomValues(new Uint8Array(1))[0]%
+16).toString(16)})}var h=b.crypto||b.msCrypto,d=h?l:k;if(!b.safeLocalStorage){var e=!1,f=!1;try{f="localStorage"in b&&null!==b.localStorage}catch(a){f=!1}if(f)try{b.localStorage.setItem("__storage_test__","__storage_test__"),b.localStorage.removeItem("__storage_test__"),e=!0}catch(a){e=!1}e?(b.safeSessionStorage=b.sessionStorage,b.safeLocalStorage=b.localStorage,b.Storage.prototype.makoGetUniqueId=function(a){var b="uniqueId";"string"===typeof a&&(b=a);a=this.getItem(b);a||(a=d(),this.setItem(b,a));
+return a},b.Storage.prototype.makoGetObject=function(a){"string"===typeof a?(a=this.getItem(a))&&"string"===typeof a&&b.JSON&&(a=b.JSON.parse(a)):a=!1;return a},b.Storage.prototype.makoSetObject=function(a,d){var c;c=d;"string"===typeof a?(c&&"object"===typeof c&&b.JSON&&(c=b.JSON.stringify(c)),this.setItem(a,c),c=!0):c=!1;return c},b.Storage.prototype.makoCreateUniqueId=d):(b.safeLocalStorage=new g,b.safeSessionStorage=new g)}})(window);
+
+			window.statsDomainPrefix = "//stats.mako.co.il";
+            window.metricsParams = {
+                vcmId:'notFound',
+                channelId:'notFound',
+                contentType:'Vertical',
+                contentUsername:'',
+                uniqueCookieId: safeLocalStorage.makoGetUniqueId(),
+                referrer:document.referrer
+            };
+			
+</script>
+<script src="//rcs.mako.co.il/js/scripts/metrics.js"></script>
+</div>             
+</body></html>

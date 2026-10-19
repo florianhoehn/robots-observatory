@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="">
+    <title data-lang="text1"></title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Source Han Sans SC', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1440px;
+        height: 900px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .pic-container {
+        position: relative;
+        width: 1000px;
+        height: 560px;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pic {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .text-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        text-align: center;
+        pointer-events: none;
+        width: 100%;
+      }
+
+      .main-title,
+      .subtitle {
+        font-family: 'Source Han Sans SC', sans-serif;
+        font-weight: 700;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .main-title {
+        font-size: 38px;
+        color: #333333;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 24px;
+        color: #999999;
+        margin-bottom: 0;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: transparent;
+        border: 1px solid #999999;
+        border-radius: 20px;
+        color: #333333;
+        font-family: 'PingFang SC', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.4;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #333333;
+        color: #ffffff;
+        border-color: #333333;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 1200px) {
+        .pic-container {
+          width: 80vw;
+          height: auto;
+          aspect-ratio: 1000/560;
+        }
+      }
+
+      @media (max-width: 1000px) {
+
+        .pic-container {
+          width: 80vw;
+          height: auto;
+          aspect-ratio: 1000/560;
+          margin-bottom: 30px;
+          position: static;
+        }
+
+        .text-overlay {
+          position: static;
+          transform: none;
+          margin-bottom: 30px;
+          width: 100%;
+        }
+
+        .main-title {
+          font-size: 36px;
+        }
+
+        .subtitle {
+          font-size: 22px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          height: auto;
+          min-height: 100vh;
+          padding: 40px 20px;
+        }
+
+        .pic-container {
+          width: 90vw;
+          height: auto;
+          aspect-ratio: 375/210;
+          margin-bottom: 30px;
+        }
+
+        .main-title {
+          font-size: 30px;
+        }
+
+        .subtitle {
+          font-size: 20px;
+        }
+
+        .back-button {
+          padding: 12px 24px;
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 30px 15px;
+          max-width: 375px;
+        }
+
+        .pic-container {
+          width: 100%;
+          max-width: 375px;
+          height: auto;
+          aspect-ratio: 375/210;
+          margin-bottom: 20px;
+        }
+
+        .text-overlay {
+          margin-bottom: 20px;
+        }
+
+        .main-title {
+          font-size: 30px;
+        }
+
+        .subtitle {
+          font-size: 20px;
+          max-width: 180px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .back-button {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 375px) {
+        .container {
+          padding: 20px 15px;
+          justify-content: flex-start;
+          padding-top: 60px;
+        }
+
+        .pic-container {
+          margin-bottom: 15px;
+        }
+
+        .text-overlay {
+          margin-bottom: 15px;
+        }
+
+        
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text-overlay">
+        <h1 class="main-title" data-lang="text2"></h1>
+        <p class="subtitle" data-lang="text3"></p>
+      </div>
+      <div class="pic-container">
+        <img src="https://lilithimage.lilithcdn.com/allgames-official-web/404/404.png" alt="" class="pic" data-lang="text5" data-lang-attr="alt">
+      </div>
+      <a href="/" class="back-button" data-lang="text4"></a>
+    </div>
+    <script>
+      (function() {
+        const en = {
+          text1: '404 - Page Not Found',
+          text2: 'Oops!',
+          text3: 'Page not found',
+          text4: 'Back to Home',
+          text5: '404 pic',
+          htmlLang: 'en'
+        };
+
+        const zh = {
+          text1: '404 - 页面未找到',
+          text2: '糟糕！',
+          text3: '您访问的页面不存在',
+          text4: '返回首页',
+          text5: '404 图片',
+          htmlLang: 'zh'
+        };
+        
+        // 获取浏览器语言
+        const navLang = String(navigator.language || 'en');
+        const dict = navLang.indexOf('zh') === 0 ? zh : en;
+        
+        document.documentElement.setAttribute('lang', dict.htmlLang);
+        document.title = dict.text1;
+        
+        const nodes = document.querySelectorAll('[data-lang]');
+        for (let i = 0; i < nodes.length; i++) {
+          const el = nodes[i];
+          const key = el.getAttribute('data-lang');
+          const attr = el.getAttribute('data-lang-attr');
+          const val = dict[key];
+          if (val == null) continue;
+          if (attr) {
+            el.setAttribute(attr, val);
+          } else {
+            el.textContent = val;
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

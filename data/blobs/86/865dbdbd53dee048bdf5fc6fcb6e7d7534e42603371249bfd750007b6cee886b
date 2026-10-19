@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /101612.rss

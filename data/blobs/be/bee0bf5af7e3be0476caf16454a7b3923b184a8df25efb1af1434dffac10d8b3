@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="10">
+    <title>Page temporarily unavailable</title>
+    <style>
+        @font-face {
+            font-family: WHHoxton-regular;
+            src: url(https://cwf.staticcache.org/gaming/vegas-lobby/assets/whhoxton-regular.woff2);
+        }
+        @font-face {
+            font-family: WHIcon;
+            src: url(https://cmscdn.staticcache.org/assets/file/0008/391580/whIconFont.woff);
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'WHHoxton-regular', sans-serif;
+            background-color: rgb(235, 241, 255);
+            color: rgb(0, 20, 60);
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex-grow: 1;
+            margin-bottom: 40px;
+        }
+        a {
+            text-decoration: none;
+        }
+        .inverted {
+            background-color: rgb(0, 20, 60);
+            color: rgb(153, 157, 167);
+        }
+        #header {
+            width: 100%;
+            height: 84px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .message {
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 24px;
+        }
+        .message + .message {
+            margin-top: 40px;
+        }
+        .icons {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #cta {
+            display: block;
+            margin: 38px auto 0 auto;
+            width: 240px;
+            height: 46px;
+            color: rgb(255, 255, 255);
+            background-color: rgb(30, 198, 38);
+            border-radius: 2px;
+            font-size: 14px;
+            line-height: 46px;
+            text-align: center;
+            text-decoration: none;
+        }
+        #modalDimmer {
+            display: none;
+            background-color: #000000;
+            position: absolute;
+            -khtml-opacity: .60;
+            -moz-opacity: .60;
+            -ms-filter: "alpha(opacity=60)";
+            filter: alpha(opacity=60);
+            opacity: .60;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        #footer {
+            box-sizing: border-box;
+            padding: 10px 28px 0;
+            background-color: rgb(0, 20, 60);
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+        }
+        .footer__paragraph {
+            padding-bottom: 12px;
+        }
+        .footer__paragraph:nth-child(3) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 12px;
+        }
+        .footer__paragraph a {
+            color: rgb(0, 122, 192);
+        }
+        .footer__icons {
+            font-family: 'WHIcon', sans-serif;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer__icons a {
+            color: rgb(153, 157, 167);
+            margin: 10px 20px;
+        }
+        .footer__italian-icons {
+            display: inline-flex;
+            align-items: center;
+            margin: 10px 20px;
+        }
+        .footer__italian-icons a {
+            margin: 0;
+        }
+        .footer__icons i {
+            font-style: normal;
+        }
+        .icon__18::before {
+            content: '\e600';
+        }
+        .icon__gambleaware::before {
+            content: '\e630';
+        }
+        .icon__GA::before {
+            content: '\e631';
+        }
+        .icon__gt::before {
+            content: '\e632';
+        }
+        .icon__responsible::before {
+            content: '\e65b';
+        }
+        .icon__gbga::before {
+            content: '\e635';
+        }
+        #icon__desktop {
+            display: block;
+            margin-top: 20px;
+        }
+        #footer__bottom {
+            display: none;
+            width: 100%;
+            height: 40px;
+            background-color: rgb(255, 242, 0);
+            justify-content: center;
+            align-items: center;
+        }
+        #footer__timer {
+            margin-top: 32px;
+        }
+        @media (max-width: 1024px)  {
+            #header {
+                margin-bottom: 32px;
+            }
+            .message {
+                font-size: 20px;
+            }
+            #cta {
+                margin-top: 32px;
+            }
+            #icon__desktop {
+                display: none;
+            }
+            #footer__bottom {
+                display: flex;
+            }
+        }
+        @media (max-width: 320px)  {
+            #header {
+                height: 50px;
+                margin-bottom: 18px;
+            }
+            #logo {
+                width: 112px;
+                height: auto;
+            }
+            .message {
+                font-size: 16px;
+            }
+            .message + .message {
+                margin-top: 30px;
+            }
+            .footer__icons {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header" class="inverted">
+        <svg id="logo" width="192" height="40" viewBox="0 0 192 40" xmlns="http://www.w3.org/2000/svg">
+            <title>
+                William Hill
+            </title>
+            <g fill="none" fill-rule="evenodd">
+                <path d="M73.68 34.032c1.572 0 3.247-.88 5.86-3.73-.695 2.284.123 3.73 2.002 3.73 2.105 0 3.865-2.23 5.75-4.542l7.905-9.696c1.71-2.098 2.972-3.385 4.338-3.385 1.278 0 1.05 1.543-.68 3.734-1.507 1.904-10.797 13.615-10.797 13.615h3.91l9.574-12.493c2.868-3.753 4.835-4.858 5.907-4.858.563 0 .695.414.695.84 0 1.162-.87 2.184-3.528 5.53l-8.72 10.98h3.826l9.532-12.436c3.593-4.688 4.804-4.915 5.593-4.915.547 0 .692.426.692.817 0 2.848-7.963 8.666-7.963 13.935 0 1.56 1.17 2.895 3.372 2.895 6.145 0 12.51-13.418 12.51-20.618 0-6.03-3.507-8.99-7.553-8.99-5.802 0-7.905 3.22-7.905 5.574 0 2.043 1.07 3.128 3.037 3.128 2.767 0 4.688-3.177 4.688-4.094 0-.15-.057-.18-.148-.222-1.056 2.51-2.78 3.334-4.13 3.334-1.512 0-2.307-.83-2.307-2.308 0-1.663 1.78-4.642 6.403-4.642 4.276 0 6.808 2.75 6.808 8.22 0 9.484-6.31 19.42-10.946 19.42-1.083 0-1.39-.578-1.39-1.195 0-1.568 2.456-3.92 4.52-7.06 1.628-2.477 3.26-4.878 3.26-7.035 0-1.834-.8-2.608-2.13-2.608-1.39 0-2.983.997-5.685 3.936.47-1.768.64-3.936-1.608-3.936-1.182 0-3.24.84-6.197 4.232.86-2.722.07-4.232-1.773-4.232-1.844 0-3.096 1.343-4.51 3.077l-6.993 8.58c-2.576 3.16-4.93 6.526-6.446 6.526-.98 0-1.413-1.544.23-3.62l11.31-14.29h-4.17l-.913 1.257c-.178-.97-.928-1.44-1.825-1.44-2.995 0-6.73 2.153-9.5 4.938-2.323 2.334-4.354 5.723-5.362 8.33-1.468 1.92-3.933 4.826-5.73 4.826-1.224 0-1.49-1.544.153-3.62l11.307-14.29h-4.17s-4.73 6.512-7.84 10.778v-.002c-.828 1.085-3.412 4.387-4.214 5.192-1.317 1.323-2.438 1.942-3.237 1.942-1.225 0-1.492-1.544.152-3.62 1.465-1.85 17.728-22.428 17.728-22.428h-4.1L57.973 26.012c-.827 1.085-3.412 4.387-4.213 5.192-1.317 1.323-2.44 1.942-3.238 1.942-1.225 0-1.492-1.544.153-3.62 1.465-1.85 17.728-22.428 17.728-22.428H64.3s-11.754 15.54-14.912 19.718l-.017.024-.01.015-.058.08c-.036.047-.07.095-.105.142-1.042 1.425-4.382 6.07-6.654 6.07-1.225 0-1.492-1.543.152-3.62L54.003 15.24h-4.17s-5.39 7.41-8.442 11.6c-3.05 4.19-1.758 7.193.95 7.193 2.392 0 3.967-1.845 5.242-3.348-.272 2.05.886 3.348 2.65 3.348 2.39 0 4.044-1.842 5.325-3.344-.27 2.045.888 3.343 2.652 3.343 2.45 0 4.125-1.937 5.42-3.458-.315 2.126.86 3.458 2.663 3.458 2.062 0 4.022-1.93 5.33-3.45-.137 1.59.222 3.45 2.056 3.45zm7.995-14.666c2.594-2.607 4.113-2.957 4.658-2.957.546 0 .806.326.806 1.007 0 2.096-7.067 11.058-8.83 12.83-.885.888-2.602 2.428-4.017 2.428-2.817 0 2.34-8.243 7.382-13.31zM58.825 9.132c.423-1.207-.146-2.186-1.27-2.186-1.125 0-2.38.98-2.802 2.186-.422 1.208.147 2.186 1.27 2.186 1.126 0 2.38-.978 2.802-2.186zm21.153 2.186c1.125 0 2.38-.978 2.8-2.186.423-1.207-.146-2.186-1.27-2.186s-2.38.98-2.8 2.186c-.423 1.208.145 2.186 1.27 2.186zm-61.55 27.235c-7.423 0-11.802-4.536-12.854-10.63.384.103.78.158 1.177.163.93 0 2.27-.184 3.724-.906.642.504 1.447.796 2.432.796 7.71 0 13.396-14.534 8.532-18.61 4.076-1.88 8.384-2.52 11.427-.76-.787.572-1.53 1.2-2.22 1.885-5.85 5.876-8.578 17.855-13.01 22.663-.48-.158-1.003-.305-1.64-.305-.882 0-1.687.417-1.798.93-.112.514.512.93 1.394.93.663 0 1.338-.158 2.214-.684.474.055.95.083 1.427.084 1.794 0 3.485-.774 5.446-2.744 5.122-5.146 9.546-16.004 12.55-18.087-2.823 4.78-5.84 15.543-9.95 19.93-.46-.185-.955-.36-1.59-.36-.88 0-1.685.417-1.797.93-.112.515.512.93 1.393.93.683 0 1.38-.166 2.3-.735.49.134 1.074.245 1.662.245 1.484 0 3.27-.84 4.767-2.344 5.428-5.453 12.28-16.68 18.092-22.518 2.113-2.124 5.887-5.048 10.92-5.048 4.542 0 7.557 2.79 7.557 2.79.108-.106.066-.29-.18-.538-2.462-2.475-5.423-3.528-8.103-3.528-2.68 0-7.188.933-12.652 6.424-5.83 5.856-12.446 17.59-16.79 21.956-1.82 1.83-3.006 2.243-3.965 2.243-.235-.002-.468-.036-.694-.1.718-.53 1.568-1.28 2.62-2.337 7.122-7.156 8.735-20.293 12.703-24.28-.277-.277-2.216.17-5.63 3.602-5.49 5.515-8.612 15.167-14.023 20.604-1.695 1.702-3.468 2.408-4.583 2.408-.223-.002-.445-.03-.662-.086.693-.523 1.506-1.25 2.502-2.25 3.995-4.014 8.265-16.127 12.923-22.06 5.212-.24 5.135-2.734 3.46-2.734-.94 0-2.3.63-3.637 1.49-1.314-1.16-3.536-2.01-6.607-2.01-3.255 0-6.365.922-9.085 2.41-5.96 0-14.19 6.332-14.19 17.034 0 .3.007.598.023.89-1.432-.955-2.705-2.706-2.705-5.67 0-8.592 13.033-19.05 28.405-19.05 6.14 0 12.396 2.048 16.28 4.88l.22-.26C43.82 3.734 37.994 0 27.9 0 14.63 0 0 7.832 0 20.52c0 3.443 2.032 5.737 4.108 6.828.935 7.666 7.214 12.212 13.626 12.212h174.233v-1.007H18.427zm2.048-28.72c5.227 3.315-.61 17.264-7.2 17.264-.737 0-1.33-.18-1.805-.49 2.16-1.423 4.416-4.14 5.872-9.228l-.298-.11c-1.09 3.34-3.41 6.914-6.238 8.735-.792-.965-1.056-2.425-1.056-3.782 0-4.21 5.008-9.454 10.727-12.39zm-15.15 15.12c0-6.724 5.792-14.777 11.34-15.727C11.79 12.45 8.5 17.484 8.5 21.89c0 1.83.423 3.523 1.337 4.658-.9.43-1.842.675-2.803.675-.44 0-1.002-.085-1.6-.287-.072-.66-.11-1.32-.108-1.984z" fill="#FAFF05" />
+                <path fill="#FFF" d="M150.15 4.952h8.317v29.216h-8.316zM177.775 34.17h14.192V25.15h-5.72v-20.2h-8.472M161.536 34.17h14.192V25.15h-5.72v-20.2h-8.472M138.765 4.952v10.284h-4.096V4.952h-8.316V34.17h8.315V22.6h4.095v11.57h8.316V4.95" />
+            </g>
+        </svg>
+    </header>
+    <main>
+        <svg class="message" width="75" height="75" viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.62 0H32.38L0 32.38v10.24L32.38 75h10.24L75 42.62V32.38L42.62 0zm27.153 40.455L40.455 69.773h-5.91L5.227 40.455v-5.91L34.545 5.227h5.91l29.318 29.318v5.91z" />
+            <path d="M41.157 26.24c3.133 0 5.545-2.265 5.545-4.71-.002-1.96-1.39-3.673-4.164-3.673-3.65 0-5.47 2.692-5.47 4.652-.075 2.323 1.458 3.73 4.09 3.73zM45.78 47.23c-2.113 1.53-4.268 2.267-4.925 2.267-.51 0-.726-.612-.217-2.388l2.88-10.04c1.094-3.67.732-6.058-1.458-6.058-2.63 0-8.758 2.403-14.084 6.505l1.093 1.653c1.682-1.04 4.523-2.097 5.18-2.097.51 0 .438.615 0 2.144l-2.512 9.55c-1.533 5.384.072 6.608 2.262 6.608s7.845-1.838 13.024-6.615l-1.243-1.53z" />
+        </svg>
+        <p class="message">Sorry, we&#x27;re having a few issues at the moment. We&#x27;re striving to resolve the issue as quickly as possible</p>
+        <p class="message">Thank you for your patience</p>
+    </main>
+    <footer id="footer" class="inverted">
+        <p class="footer__paragraph">By accessing, continuing to use, or navigating throughout this site you accept that we will utilise certain browser cookies to improve the experience which you receive with us. William Hill do not use any cookies which interfere with your privacy, but only ones which will improve your experience whilst using our site, please refer to our <a href="https://williamhill-lang.custhelp.com/app/answers/detail/a_id/9009" target="_blank">FAQs</a> for further information on our use of cookies and how you prevent their use should you wish.</p>
+        <p class="footer__paragraph">William Hill is operated by WHG (International) Limited, a company registered in Gibraltar. William Hill is licensed and regulated by the <a href="http://www.gamblingcommission.gov.uk/">UK Gambling Commission</a> (<a href="https://secure.gamblingcommission.gov.uk/gccustomweb/PublicRegister/PRSearch.aspx?ExternalAccountId=39225">Number: 000-039225 R-319373-001</a>) for customers in Great Britain, and licensed by the Gibraltar Government and regulated by the <a href="https://www.gibraltar.gov.gi/remotegambling">Gibraltar Gambling Commissioner</a> (RGL no. 034 & 042) for all other customers.</p>
+        <p class="footer__paragraph">The registered office of William Hill is at 6/1 Waterport Place, Gibraltar, with registered company number 99191. William Hill is a registered <a href="http://www.ibas-uk.com/">I.B.A.S</a> bookmaker.</p>
+        <p class="footer__paragraph">William Hill is committed to supporting <a href="https://williamhill-lang.custhelp.com/app/answers/detail/a_id/2733" target="_blank">Responsible Gaming</a>. Underage gambling is an offence.</p>
+        <section class="footer__icons" class="icons">
+            <a href="https://williamhill-lang.custhelp.com/app/answers/detail/a_id/2960">
+                <i class="icon__18"></i>
+            </a>
+            <a href="http://www.gambleaware.co.uk/">
+                <i class="icon__gambleaware"></i>
+            </a>
+            <a href="http://www.gamblersanonymous.org.uk/">
+                <i class="icon__GA"></i>
+            </a>
+            <a href="http://www.gamblingtherapy.org/">
+                <i class="icon__gt"></i>
+            </a>
+            <a href="http://www.responsiblegamblingtrust.org.uk/">
+                <i class="icon__responsible"></i>
+            </a>
+            <a href="http://www.gbga.gi/">
+                <i class="icon__gbga"></i>
+            </a>
+        </section>
+        <a id="icon__desktop" href="http://www.whenthefunstops.co.uk/">
+            <img src="data:image/jpeg;base64,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" />
+        </a>
+        <p id="footer__timer">
+            <span id="time"></span>
+            UK | &copy; 1998-<span id="current-year"></span> WHG (International) Ltd
+        </p>
+    </footer>
+    <a id="footer__bottom" href="">
+        <img src="data:image/jpeg;base64,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" />
+    </a>
+    <link rel='stylesheet' type='text/css' media='all' href='https://williamhill-lang.custhelp.com/euf/assets/css/RightNow.css' />
+    <div id="modalDimmer">&nbsp;</div>
+    <div id="helpWindow" class="selected_option_a" style="display: none;">
+        <div id="helpWindow_mainFrame">
+            <iframe id="iframe_mainFrame" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" allowtransparency="true" src=""></iframe>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script>
+        const timeElement = document.getElementById('time');
+        const options = {
+            timeZone: 'Europe/London',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        };
+        const dateFormatter = new Intl.DateTimeFormat([], options);
+        const getTime = () => dateFormatter.format(new Date());
+        const setTime = () => { timeElement.innerHTML = getTime(); };
+        setTime();
+        setInterval(setTime, 1000);
+        // Update the current year if the year in the prebuilt HTML is out of date
+        const currentYearElement = document.getElementById('current-year');
+        currentYearElement.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

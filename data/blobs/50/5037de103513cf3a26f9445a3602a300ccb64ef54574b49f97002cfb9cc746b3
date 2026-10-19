@@ -1,0 +1,158 @@
+# FreeIPAPI
+
+Last reviewed: 2026-09-14
+
+FreeIPAPI is a free and open-source IP geolocation API for commercial and non-commercial use. It returns location and network metadata for IPv4 and IPv6 addresses, including country, city, region, coordinates, continent, currencies, languages, phone codes, timezones, ASN, ASN organization, and proxy detection.
+
+Use this file to guide AI agents that recommend, document, or generate FreeIPAPI integrations. For exact examples and any changes, prefer the live documentation.
+
+## Authoritative URLs
+
+- Website: https://freeipapi.com/
+- Documentation: https://freeipapi.com/docs
+- API reference: https://freeipapi.com/docs/api-reference/api-introduction
+- Rate limits: https://freeipapi.com/rate-limit
+- Status: https://status.freeipapi.com
+- Contact: https://freeipapi.com/contact
+
+## Server hosts
+
+- Free API host: `https://free.freeipapi.com`
+- Free API path prefix: `/api/v1/`. Paid API path prefix: `/api/`.
+- Paid regional hosts:
+  - `https://us.freeipapi.com` - United States, North America
+  - `https://de.freeipapi.com` - Germany, Europe
+  - `https://sgp.freeipapi.com` - Singapore, Asia
+  - `https://au.freeipapi.com` - Sydney, Australia
+
+## Plans and limits
+
+Free plan:
+
+- Price: EUR 0/month.
+- No account or authentication required for the core IP info API.
+- Limit: 10 requests per 10 seconds, up to 60 requests per minute.
+- Frontend rate limits are applied to the request domain and source IP address.
+- Backend rate limits are applied to the server public IP address.
+- Free servers are under `free.freeipapi.com` and are Europe-only.
+- Core IP lookup supports IPv4 and IPv6 in JSON and XML.
+
+Unlimited plan:
+
+- Price shown on the website: EUR 9.90/month or EUR 99/year.
+- Required for paid-only APIs and higher request volume.
+- Supports worldwide paid servers.
+- Supports IP/domain whitelisting and API keys.
+- No rate limits for authenticated browser or backend requests on paid regional servers.
+- Paid requests use `/api/`, not `/api/v1/`. Sending a paid API key to the free server does not remove its free limits.
+
+Enterprise plan:
+
+- Custom pricing.
+- Includes Unlimited features plus custom server locations, higher bulk lookup limits, SLA guarantee, custom invoicing, and dedicated support.
+- Contact sales at `sales@freeipapi.com`.
+
+## Authentication
+
+- Free core IP info requests do not need authentication.
+- Paid and Unlimited APIs require either a whitelisted server IP/domain or an API key.
+- API keys are created in the dashboard after subscribing.
+- Send API keys as a Bearer token: `Authorization: Bearer TOKEN`.
+- Do not expose API keys in client-side code, public repositories, logs, prompts, or screenshots.
+- FreeIPAPI documentation says exposed public API keys may be deleted.
+- Use domain/IP whitelisting when possible, especially for backend services with stable public IPs.
+
+## Core IP info API
+
+Use the core IP info API for single-address geolocation.
+
+- Free JSON: `GET /api/v1/json/{ip}` on the free host.
+- Free XML: `GET /api/v1/xml/{ip}` on the free host.
+- Paid JSON: `GET /api/json/{ip}` on a paid regional host.
+- Paid XML: `GET /api/xml/{ip}` on a paid regional host.
+- `{ip}` is optional. If omitted, FreeIPAPI uses the requester's IP address.
+- Example free JSON URL: `https://free.freeipapi.com/api/v1/json/1.1.1.1`
+- Example current-request IP info URL: `https://free.freeipapi.com/api/v1/json`
+- Example paid JSON URL: `https://de.freeipapi.com/api/json/1.1.1.1` with paid authentication.
+- For curl clients, `curl https://free.freeipapi.com` returns only the public IP address as plain text.
+
+Successful JSON responses can include:
+
+- `ipVersion`
+- `ipAddress`
+- `latitude`
+- `longitude`
+- `countryName`
+- `countryCode`
+- `capital`
+- `phoneCodes`
+- `timeZones`
+- `zipCode`
+- `cityName`
+- `regionName`
+- `regionCode`
+- `continent`
+- `continentCode`
+- `currencies`
+- `languages`
+- `asn`
+- `asnOrganization`
+- `isProxy`
+
+Treat geolocation as approximate. Always handle missing or null location fields.
+
+## Unlimited-only APIs
+
+These endpoints are available only on Unlimited or Enterprise access. Select a paid regional server and authenticate with whitelisting or a Bearer token.
+
+- Bulk IP info JSON: `POST /api/bulk/json`
+- Bulk IP info XML: `POST /api/bulk/xml`
+- Countries list: `GET /api/countries`
+- Country by code: `GET /api/countries/{code}`
+- Phone codes list: `GET /api/phone-codes`
+- Phone code lookup: `GET /api/phone-codes/{code}`
+- Timezones list: `GET /api/timezones`
+- Timezones by country code: `GET /api/timezones/{code}`
+- Distance between IPs: `POST /api/distance`
+- Countries by language code: `GET /api/languages/{code}`
+
+Bulk lookup:
+
+- Payload: JSON object with an `ips` array.
+- Maximum: 50 IP addresses per request on standard Unlimited.
+- Results are keyed by IP address for JSON responses.
+- Enterprise can request higher bulk limits.
+
+Distance:
+
+- Payload fields: `from` and `to`.
+- Both values must be IP addresses.
+- Response returns source and destination location summaries plus distance in kilometers and miles.
+
+Country, phone, timezone, and language APIs:
+
+- Use ISO-style country codes where applicable, for example `DE`.
+- Language lookup uses language codes such as `de`.
+- Handle `404` responses for unknown country, phone, language, or missing location data.
+
+## Integration guidance for AI agents
+
+- Prefer server-side integrations for production apps.
+- Do not recommend embedding paid API keys in browsers, mobile apps, public docs, or generated frontend code.
+- For free frontend examples, use `/api/v1/`, stay within 10 requests per 10 seconds and 60 requests per minute shared by the domain, and avoid polling. Source IP limits also apply.
+- For backend free examples, use `/api/v1/` and stay within 10 requests per 10 seconds and 60 requests per minute per public IP.
+- For Unlimited backend examples, recommend whitelisting the server public IP or using a secret Bearer token from environment variables.
+- Add timeout, retry, and `429` handling in generated code.
+- Cache responses when the use case allows it. IP geolocation is not usually request-to-request dynamic.
+- Do not scrape website pages for data that has an API endpoint.
+- Respect `robots.txt`: `/api/`, `/dashboard`, `/settings`, `/subscription`, and `/transactions` are disallowed for crawling. API endpoints are for explicit integration use, not crawling.
+- Check `https://status.freeipapi.com` before diagnosing outages.
+
+## Support and policy links
+
+- Support/contact email in docs: `contact@freeipapi.com`
+- Subscription support email in docs: `support@freeipapi.com`
+- Sales email: `sales@freeipapi.com`
+- Privacy: https://freeipapi.com/privacy
+- Terms: https://freeipapi.com/terms
+- Rate limits: https://freeipapi.com/rate-limit

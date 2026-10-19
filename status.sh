@@ -6,6 +6,8 @@
 set -uo pipefail
 cd "$(dirname "$(readlink -f "$0")")" || exit 1
 
+BRIEF=0
+if [ "${1:-}" = "--brief" ]; then BRIEF=1; shift; fi
 PANEL="${1:-panel-02}"
 RUN="${2:-}"
 
@@ -20,10 +22,12 @@ REC="${RUN}records.jsonl"
 
 PANEL_N=$(( $(wc -l < "panel/$PANEL.csv") - 1 ))
 
-python3 - "$REC" "$PANEL_N" "$RUN" <<'PY'
+python3 - "$REC" "$PANEL_N" "$RUN" "$BRIEF" "${PREV:-0}" <<'PY'
 import collections, json, sys, os, time
 
 rec_path, panel_n, run_dir = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+brief = len(sys.argv) > 4 and sys.argv[4] == "1"
+prev = int(sys.argv[5]) if len(sys.argv) > 5 else 0
 recs = []
 for ln in open(rec_path, encoding="utf-8"):
     ln = ln.strip()
@@ -36,6 +40,39 @@ for ln in open(rec_path, encoding="utf-8"):
 
 n = len(recs)
 pct = 100 * n / panel_n if panel_n else 0
+
+if brief:
+    # One line, for a watcher. Everything the long form reports, compressed.
+    import datetime
+    errs = sum(1 for r in recs if r.get("errors"))
+    dup = n - len({r["host"] for r in recs})
+    pol = lambda r, k, d=None: r.get("policy", {}).get(k, d)
+    pres = [r for r in recs if pol(r, "file_state") == "present"]
+    named = sum(1 for r in pres if pol(r, "ai_tokens_named"))
+    def ca(r):
+        c = collections.Counter(v.get("sha256") for v in (r.get("wellknown") or {}).values()
+                                if v.get("file_state") == "present" and v.get("sha256"))
+        return {h for h, x in c.items() if x > 1}
+    wk = collections.Counter()
+    for r in recs:
+        bad = ca(r)
+        for k, v in (r.get("wellknown") or {}).items():
+            if v.get("file_state") == "present" and v.get("sha256") not in bad:
+                wk[k] += 1
+    bits = [f"{n}/{panel_n} ({pct:.0f}%)", f"err {100*errs/max(n,1):.0f}%"]
+    if dup:
+        bits.append(f"DUPES {dup}")
+    if pres:
+        bits.append(f"namesAI {100*named/len(pres):.0f}%")
+    for k, lab in (("llms_txt", "llms"), ("ads_txt", "ads"), ("security_txt", "sec")):
+        bits.append(f"{lab} {100*wk[k]/max(n,1):.1f}%")
+    bits.append(f"AGENTS {wk['agent_card']}+{wk['ai_catalog']}+{wk['agent_card_legacy']}")
+    if prev and n > prev:
+        rate = (n - prev) / 600
+        eta = datetime.datetime.now() + datetime.timedelta(seconds=(panel_n - n) / rate)
+        bits.append(f"{rate:.2f}/s ETA {eta:%H:%M}")
+    print(" | ".join(bits))
+    raise SystemExit(0)
 age = time.time() - os.path.getmtime(rec_path)
 print(f"{n:,} / {panel_n:,} hosts  ({pct:.1f}%)   last write {age:.0f}s ago")
 

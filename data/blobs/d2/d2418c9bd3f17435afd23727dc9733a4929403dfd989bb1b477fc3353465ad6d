@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0",
+  "name": "CookieYes",
+  "description": "Consent management platform for cookie scanning, consent banners, and privacy law compliance.",
+  "url": "https://www.cookieyes.com",
+  "documentation_url": "https://www.cookieyes.com/category/documentation/",
+  "logo_url": "https://assets.cookieyes.com/cookieyes_logo_9fa85f5b07.svg",
+  "provider": {
+    "organization": "CookieYes Limited",
+    "url": "https://www.cookieyes.com"
+  },
+  "capabilities": {
+    "llms_txt": "https://www.cookieyes.com/llms.txt",
+    "llms_full_txt": "https://www.cookieyes.com/llms-full.txt",
+    "agent_md": "https://www.cookieyes.com/agent.md",
+    "auth_md": "https://www.cookieyes.com/auth.md",
+    "sitemap": "https://www.cookieyes.com/sitemap.xml",
+    "robots_txt": "https://www.cookieyes.com/robots.txt",
+    "security_txt": "https://www.cookieyes.com/.well-known/security.txt",
+    "openapi_spec": null,
+    "mcp": "https://app.cookieyes.com/mcp",
+    "mcp_server_card": "https://www.cookieyes.com/.well-known/mcp/server-card.json"
+  },
+  "mcp": {
+    "endpoint": "https://app.cookieyes.com/mcp",
+    "transport": "http",
+    "authorization_servers": [
+      "https://app.cookieyes.com"
+    ],
+    "resource_metadata": "https://app.cookieyes.com/.well-known/oauth-protected-resource",
+    "openid_configuration": "https://app.cookieyes.com/.well-known/openid-configuration",
+    "auth": "OAuth 2.1 (authorization_code + PKCE S256, dynamic client registration)",
+    "scopes": [
+      "mcp:read",
+      "mcp:write"
+    ],
+    "server_card": "https://www.cookieyes.com/.well-known/mcp/server-card.json",
+    "documentation": "https://www.cookieyes.com/documentation/mcp-server/",
+    "setup_guide": "https://www.cookieyes.com/documentation/mcp-server-claude/",
+    "plans": "All plans, including free",
+    "tools": {
+      "read": [
+        "list_domains",
+        "get_website_details",
+        "get_embed_code",
+        "list_banners",
+        "get_banner_status",
+        "get_scan_results",
+        "get_compliance_status"
+      ],
+      "write": [
+        "update_banner_colours",
+        "update_banner_layout",
+        "trigger_cookie_scan"
+      ]
+    },
+    "constraints": "Account owner must enable MCP access. Consent logs, cookie values and personal data are never exposed. English only."
+  },
+  "free_tools": [
+    {
+      "name": "Cookie Checker",
+      "url": "https://www.cookieyes.com/cookie-checker/",
+      "description": "Check a website for cookie compliance and get an instant report",
+      "auth_required": false,
+      "interaction": "form",
+      "entry": "website URL"
+    },
+    {
+      "name": "CPRA Compliance Checker",
+      "url": "https://www.cookieyes.com/free-tools/cpra-compliance-checker/",
+      "description": "Check a business's CCPA/CPRA readiness and get a compliance guide",
+      "auth_required": false,
+      "interaction": "form",
+      "entry": "questionnaire"
+    },
+    {
+      "name": "Google Consent Mode Checker",
+      "url": "https://www.cookieyes.com/google-consent-mode-checker/",
+      "description": "Verify Google Consent Mode implementation",
+      "auth_required": false,
+      "interaction": "form",
+      "entry": "website URL"
+    }
+  ],
+  "in_app_tools": [
+    {
+      "name": "Cookie Scanner",
+      "url": "https://www.cookieyes.com/cookie-scanner/",
+      "description": "Detailed cookie scan and classification. The page takes a website URL, but the scan runs after signup — the form submits to the trial signup.",
+      "auth_required": true,
+      "interaction": "in-app"
+    },
+    {
+      "name": "Cookie Policy Generator",
+      "url": "https://www.cookieyes.com/cookie-policy-generator/",
+      "description": "Generate a cookie policy",
+      "auth_required": true,
+      "interaction": "in-app"
+    },
+    {
+      "name": "Privacy Policy Generator",
+      "url": "https://www.cookieyes.com/privacy-policy-generator/",
+      "description": "Generate a privacy policy",
+      "auth_required": true,
+      "interaction": "in-app"
+    }
+  ],
+  "webmcp": {
+    "available": true,
+    "api": [
+      "navigator.modelContext",
+      "document.modelContext"
+    ],
+    "auth_required": false,
+    "registered_on": "every page",
+    "limits": {
+      "scans_per_hour_per_visitor": 5,
+      "mailed_copies_per_day_per_recipient": 10
+    },
+    "tools": [
+      {
+        "name": "cy_scan_cookies",
+        "description": "Scan a website for the cookies it sets, grouped by category. Returned inline; an optional email address also gets a mailed copy.",
+        "input": [
+          "url",
+          "email (optional)"
+        ],
+        "read_only": false
+      },
+      {
+        "name": "cy_check_consent_mode",
+        "description": "Check a website's Google Consent Mode v2 implementation and explain the verdict. Returned inline; an optional email address also gets a mailed copy.",
+        "input": [
+          "url",
+          "email (optional)"
+        ],
+        "read_only": false
+      },
+      {
+        "name": "cy_list_pages",
+        "description": "List the main CookieYes pages as titles, URLs and descriptions.",
+        "input": [],
+        "read_only": true
+      },
+      {
+        "name": "cy_list_products",
+        "description": "List everything CookieYes offers as titles, URLs and descriptions, in two groups: products (paid — consent platform, WordPress, Shopify, Wix, accessibility widget, advanced cookie scanner, cookie and privacy policy generators) and free_tools (free — cookie scanner, Consent Mode checker, CPRA compliance checker).",
+        "input": [],
+        "read_only": true
+      },
+      {
+        "name": "cy_list_pricing_plans",
+        "description": "List subscription plans with monthly and yearly prices and what each includes. Optional currency: usd, eur or gbp.",
+        "input": [
+          "currency (optional)"
+        ],
+        "read_only": true
+      },
+      {
+        "name": "cy_calculate_affiliate_earnings",
+        "description": "Estimate affiliate commission (30% of referred yearly sales, recurring up to three years) and return a signup link for the affiliate program.",
+        "input": [
+          "basic",
+          "pro",
+          "ultimate",
+          "years (optional)",
+          "currency (optional)"
+        ],
+        "read_only": true
+      },
+      {
+        "name": "cy_calculate_agency_savings",
+        "description": "Estimate the agency partner discount and yearly savings for a mix of Basic, Pro and Ultimate licences, and return a signup link for the agency program.",
+        "input": [
+          "basic",
+          "pro",
+          "ultimate",
+          "currency (optional)"
+        ],
+        "read_only": true
+      },
+      {
+        "name": "cy_read_page",
+        "description": "Read any page on this site as clean Markdown.",
+        "input": [
+          "url",
+          "page_key"
+        ],
+        "read_only": true
+      }
+    ]
+  },
+  "authenticated_services": {
+    "dashboard": "https://app.cookieyes.com?ref=CYM_agentjson",
+    "signup": "https://app.cookieyes.com/signup?ref=CYM_agentjson",
+    "login": "https://app.cookieyes.com/login?ref=CYM_agentjson",
+    "note": "Account actions require user authentication and explicit consent."
+  },
+  "contact": {
+    "support_email": "support@cookieyes.com",
+    "contact_page": "https://www.cookieyes.com/contact/",
+    "security": "https://www.cookieyes.com/.well-known/security.txt"
+  },
+  "content_signals": {
+    "search": "yes",
+    "ai-input": "yes",
+    "ai-train": "yes",
+    "policy": "https://contentsignals.org/",
+    "declared_in": "https://www.cookieyes.com/robots.txt"
+  },
+  "compliance": [
+    "GDPR",
+    "CCPA",
+    "CPRA",
+    "LGPD",
+    "PIPEDA",
+    "POPIA",
+    "IAB TCF v2.4",
+    "Google Consent Mode v2"
+  ]
+}

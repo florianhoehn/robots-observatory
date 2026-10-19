@@ -1,0 +1,132 @@
+# beehiiv
+
+> beehiiv is the newsletter platform built for growth. It provides creators, publishers, and brands with the tools to create, distribute, grow, and monetize newsletters — all in one platform.
+
+The platform serves 130,000+ publishers who have collectively sent over 50 billion emails to 425 million+ unique readers and earned $45M+ through the platform. Plans start free and scale with your audience.
+
+## When to use beehiiv
+
+- Start, write, and send a newsletter, with automations and personalized content. [Newsletter platform](https://www.beehiiv.com/newsletter-platform.md)
+- Build a website or link-in-bio page on a custom domain, with AI design help. [Website builder](https://www.beehiiv.com/web-builder.md)
+- Host and distribute a podcast alongside a newsletter. [Podcasts](https://www.beehiiv.com/features/podcasts.md)
+- Give readers a members-only community, free or behind a paid tier, synced with the newsletter. [Community](https://www.beehiiv.com/features/community.md)
+- Grow an audience with referrals, recommendations, and segmentation. [Referral program](https://www.beehiiv.com/features/referral-program.md)
+- Earn from an audience with ads, paid subscriptions, and digital products. [Ad Network](https://www.beehiiv.com/ad-network.md), [paid subscriptions](https://www.beehiiv.com/features/premium-subscriptions.md), [digital products](https://www.beehiiv.com/features/digital-products.md)
+- Advertise to newsletter readers through the beehiiv Ad Network. [Advertise](https://www.beehiiv.com/i-want-to/advertise.md)
+- Run many publications for a media company, with SSO and SCIM. [Enterprise](https://www.beehiiv.com/enterprise.md)
+- Move a newsletter from another platform, or compare beehiiv with one. [Migrate](https://www.beehiiv.com/migrate.md), [comparisons](https://www.beehiiv.com/comparisons.md)
+- Manage subscribers, posts, and publications in code. [Developers](https://developers.beehiiv.com)
+
+## How agents should use beehiiv
+
+- Quote pricing for a subscriber count with the MCP tool `get_pricing` at `https://www.beehiiv.com/api/mcp`. Do not scrape the HTML slider.
+- Help a creator choose Free, Lite, Pro, or Enterprise with `get_pricing` and `pricing_faq`.
+- Answer product, feature, or comparison questions from the markdown pages (`*.md`), or with the MCP tools `get_page_markdown` and `compare_with`.
+- Call the REST API at `https://api.beehiiv.com/v2`. Spec: `https://developers.beehiiv.com/openapi/api-reference.json`. Docs: `https://developers.beehiiv.com`.
+- Connect an AI client to beehiiv. The public MCP server is `https://www.beehiiv.com/api/mcp` and needs no login (tool list: `https://www.beehiiv.com/api/mcp/tools`). The workspace MCP server is `https://mcp.beehiiv.com/mcp` and uses OAuth.
+
+## How to read this site as a machine
+
+Every page below is also available as plain markdown. Append `.md` to its URL,
+or request the page with `Accept: text/markdown`.
+For example: `https://www.beehiiv.com/pricing` → `https://www.beehiiv.com/pricing.md`.
+The homepage is `https://www.beehiiv.com/index.md`.
+The markdown twins strip navigation, decorative chrome, and JavaScript, leaving
+clean structured content optimized for LLM ingestion. They are kept in sync with
+the live HTML page and served with `Content-Type: text/markdown`.
+
+For an **exact price at a subscriber count**, do not interpolate from `/pricing.md`
+and do not scrape the HTML slider. Call the beehiiv MCP tool `get_pricing` with
+`{ "subscribers": <integer> }` at `https://www.beehiiv.com/api/mcp`. Policy
+questions (trial, take rate, refunds): MCP tool `pricing_faq`.
+
+The Substack comparison includes a paid-subscription **earnings calculator**.
+Do not scrape the HTML sliders. Read the formula, assumptions, and worked
+example in `https://www.beehiiv.com/comparisons/substack.md` (section
+"Substack vs beehiiv paid subscription earnings").
+
+A full concatenated content dump is available at `https://www.beehiiv.com/llms-full.txt`.
+
+### Agent entry points
+
+- Site and agent endpoints (OpenAPI): `https://www.beehiiv.com/openapi.json`
+- REST API (OpenAPI): `https://developers.beehiiv.com/openapi/api-reference.json`
+- Public MCP tool list: `https://www.beehiiv.com/api/mcp/tools`
+
+## Product
+
+- [Features](https://www.beehiiv.com/features.md): Full directory of platform capabilities
+- [Pricing](https://www.beehiiv.com/pricing.md): Four plans — Free (free, up to 2,500 subscribers), Lite (from $49/mo billed annually), Pro (from $95/mo billed annually), and Enterprise (custom)
+- [Enterprise](https://www.beehiiv.com/enterprise.md): Solutions for publishers with 100,000+ subscribers
+- [Integrations](https://www.beehiiv.com/integrations.md): Stripe, Zapier, Google Analytics, REST API, and webhook support
+- [API and Integrations](https://www.beehiiv.com/features/api-and-integrations.md): Use the API to automate workflows and connect external systems
+
+### Create
+
+- [Newsletter Platform](https://www.beehiiv.com/newsletter-platform.md): Drag-and-drop editor with custom templates and unlimited sends
+- [Editor](https://www.beehiiv.com/features/editor.md): Newsletter editor with templates, AI tools, and drag-and-drop design
+- [Customization](https://www.beehiiv.com/features/customization.md): Control fonts, brand colors, layouts, and templates
+- [Website Builder](https://www.beehiiv.com/web-builder.md): No-code website hosting with AI-powered design and custom domains
+- [AI Features](https://www.beehiiv.com/features/artificial-intelligence.md): AI writing assistant, AI website designer, and AI-powered tools
+- [Automations](https://www.beehiiv.com/features/automations.md): Automated email sequences and workflows
+- [Digital Products](https://www.beehiiv.com/features/digital-products.md): Sell courses, guides, and digital downloads directly to subscribers
+- [Podcasts](https://www.beehiiv.com/features/podcasts.md): Native podcast hosting — publish, distribute, and grow alongside your newsletter
+- [Audio Newsletters](https://www.beehiiv.com/features/audio-newsletter.md): Turn a written post into audio with AI text-to-speech
+- [Community](https://www.beehiiv.com/features/community.md): Members-only community spaces, free or gated to paid tiers, synced with your newsletter posts
+- [Link-in-Bio](https://www.beehiiv.com/features/link-in-bio.md): Customizable link-in-bio pages
+- [Dynamic Content](https://www.beehiiv.com/features/dynamic-content.md): Personalize newsletter content per subscriber segment
+
+### Grow
+
+- [Referral Program](https://www.beehiiv.com/features/referral-program.md): Built-in referral system to incentivize subscriber sharing
+- [Recommendations](https://www.beehiiv.com/features/recommendations.md): Free and paid cross-promotion to grow subscribers and earn by recommending other newsletters
+- [Segmentation](https://www.beehiiv.com/features/segmentation.md): Target subscribers based on behavior, interests, and attributes
+- [Subscribe Forms](https://www.beehiiv.com/features/subscribe-forms.md): Embeddable subscribe forms for any site
+- [Pop-ups and Gating](https://www.beehiiv.com/features/pop-ups-gating.md): Targeted pop-ups and gated content
+- [Magic Links](https://www.beehiiv.com/features/magic-links.md): One-click subscribe links with no form
+
+### Monetize
+
+- [Ad Network](https://www.beehiiv.com/ad-network.md): Industry's largest native ad network for newsletters
+- [Paid Subscriptions](https://www.beehiiv.com/features/premium-subscriptions.md): Offer premium paid newsletter tiers with 0% take rate on Lite+
+- [Recommendations](https://www.beehiiv.com/features/recommendations.md): Earn money by recommending other newsletters
+- [Direct Sponsorships](https://www.beehiiv.com/features/direct-sponsorships.md): Sell sponsorship placements directly to advertisers
+
+### Data
+
+- [Analytics](https://www.beehiiv.com/features/analytics.md): Campaign performance, subscriber metrics, and engagement tracking
+- [A/B Testing](https://www.beehiiv.com/features/ab-testing.md): Test subject lines, content, and send times
+- [Surveys](https://www.beehiiv.com/features/survey-forms.md): Surveys that show what your audience wants
+- [Verified Clicks](https://www.beehiiv.com/features/verified-clicks.md): Click tracking that filters out bot clicks
+
+## Solutions
+
+- [Independent Journalist](https://www.beehiiv.com/i-am-a/independent-journalist.md)
+- [Publisher](https://www.beehiiv.com/i-am-a/publisher.md)
+- [Newsroom](https://www.beehiiv.com/i-am-a/newsroom.md)
+- [Startup](https://www.beehiiv.com/i-am-a/startup.md)
+- [Writer](https://www.beehiiv.com/i-am-a/writer.md)
+- [Founder](https://www.beehiiv.com/i-am-a/founder.md)
+- [Influencer](https://www.beehiiv.com/i-am-a/influencer.md)
+- [Small Business](https://www.beehiiv.com/i-am-a/small-business.md)
+- [Business](https://www.beehiiv.com/beehiiv-for/business.md)
+- [Content Creators](https://www.beehiiv.com/beehiiv-for/content-creators.md)
+- [Journalism & News](https://www.beehiiv.com/beehiiv-for/journalism.md)
+
+## Comparisons
+
+- [All Comparisons](https://www.beehiiv.com/comparisons.md): Feature-by-feature comparisons against other newsletter and email platforms
+- [beehiiv vs Substack](https://www.beehiiv.com/comparisons/substack.md)
+- [beehiiv vs Mailchimp](https://www.beehiiv.com/comparisons/mailchimp.md)
+- [beehiiv vs ConvertKit](https://www.beehiiv.com/comparisons/convertkit.md)
+- [beehiiv vs ActiveCampaign](https://www.beehiiv.com/comparisons/activecampaign.md)
+- [beehiiv vs MailerLite](https://www.beehiiv.com/comparisons/mailer-lite.md)
+- [beehiiv vs Klaviyo](https://www.beehiiv.com/comparisons/klaviyo.md)
+
+## Resources
+
+- [Blog](https://www.beehiiv.com/blog): Guides, tutorials, and industry insights for newsletter creators (individual posts available at `/blog/[slug].md`)
+- [Case Studies](https://www.beehiiv.com/case-studies.md): Publisher success stories and growth strategies
+- [Developers](https://developers.beehiiv.com): API documentation, SDKs, and developer guides
+- [Support](https://www.beehiiv.com/support): Help center and knowledge base (individual articles available at `/support/article/[id].md`)
+- [Security](https://security.beehiiv.com): Security practices and compliance information

@@ -1,0 +1,331 @@
+<!DOCTYPE html> <html> <head> <script type="text/javascript">
+    window.dataLayer = window.dataLayer || []
+    const userId = ""
+    window.dataLayer = window.dataLayer || []
+    const pageType = ""
+    let contentPage = getContentPage(pageType)
+    dataLayer.push({
+        user_id: userId,
+        content_group: contentPage
+    });
+    localStorage.setItem('content_group', contentPage);
+
+    function getContentPage(){
+        let contentPage
+        switch (pageType) {
+        case 'home':
+            const actionPage = ""
+            if(actionPage == 'index'){
+                contentPage = "Homepage"
+            } else {
+                contentPage = "Page"
+            }
+            break;
+        case 'tags':
+            contentPage = "Tag Page"
+            break;
+        case 'komunitas/topics':
+        case 'komunitas/discussions':
+            contentPage = "Komunitas Page"
+            break;
+        case 'categories':
+            //Hidup Sehat Page, Keluarga Page and Kesehatan Page for index page
+            contentPage = ''
+            break;
+        case 'article':
+            //Hidup Sehat Page, Keluarga Page and Kesehatan Page for article page
+            contentPage = '' + " Page"
+            break;
+        case 'disease':
+            contentPage = "Disease Page"
+            break;
+        case 'drugs':
+            contentPage = "Drug Page"
+            break;
+        case 'komunitas/users':
+            contentPage = "Profile Page"
+            break;
+        default:
+            contentPage = "Page"
+            break;
+        }
+        return contentPage
+    }
+</script> <script defer type="text/javascript" src="https://static.criteo.net/js/ld/ld.js" defer></script> <script defer>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.defer=true;j.src=   
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-52W4MMF');</script> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <title>Page not found - Alodokter</title> <meta http-equiv="Pragma" content="public"> <meta http-equiv="Cache-Control" content="public"> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700;900&display=swap" rel="stylesheet"> <style>
+    html, body {
+        margin: 0 auto;
+        font-family: "Lato", sans-serif;
+        font-size: 16px;
+        color: #3b3738;
+        line-height: 1.44;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        -moz-font-feature-settings: "liga" on;
+      }
+
+    input{
+       font-family: "Lato", sans-serif !important;
+    }
+
+      ::placeholder {
+        color: #dadee4;
+      }
+
+      /* GLOBAL CSS */
+      .container-fluid {
+        width: 1340px;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      .container {
+        width: 1000px;
+        margin: 0 auto;
+        padding: 0;
+        display:flex;
+        justify-content: space-between;
+      }
+
+      blockquote {
+        box-sizing: border-box;
+        margin: 1.5em 0px;
+        padding: 0 8px;
+        border-left: 4px solid #3570d2;
+        font-weight: bold;
+      }
+
+      .main-container {
+        width: 667px;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        padding-top: 45px;
+      }
+
+      .side-container {
+        width: 300px;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        padding-top: 45px;
+      }
+
+      .dfp-container {
+        margin-bottom: 20px;
+      }
+
+      .post-index-title{color:#000;}
+
+      .post-content {
+        line-height: 1.7;
+      }
+
+      .post-content a {
+          color: #3570d2;
+        }
+
+      .search-tag-container{
+        margin: 20px 0px;
+      }
+      .adunit {
+        margin-bottom: 20px;
+      }
+      .search-result-view {
+        font-size: 22px;
+        font-weight: bold;
+        line-height: 1.55;
+        margin: 45px 0 -35px 0;
+      }
+      .h2-related{
+        font-size: 24px;
+        font-weight: 900;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.42;
+        letter-spacing: normal;
+        color: #000000;
+        margin-top: 20px;
+        margin-bottom: 12px;
+      }
+      .h2-related-article{
+        font-size: 24px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.32;
+        letter-spacing: -0.3px;
+        margin: 0;
+        margin-bottom: 20px;
+        color: #000;
+      }
+      .post-index-inner {
+          display: flex;
+          padding: 16px 0px 8px;
+      }
+      .post-index-image-container {
+          width: 300px;
+          margin-right: 25px;
+          height: 155px;
+          border-radius: 3px;
+      }
+      .loading {
+        position: relative;
+        background-color: #E2E2E2;
+      }
+      .loading::after { 
+        display: block;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+        animation: loading 1.5s infinite;
+      }
+      @keyframes loading {
+        100% {
+          transform: translateX(100%);
+        }
+      }
+      .post-index-content-container {
+          width: calc(100% - 92px);
+          height: 155px;
+          border-radius: 3px;
+      }
+
+      .trending-now-main-container{
+          width: 1000px;
+          margin: 0 auto;
+          padding: 0;
+          display: flex;
+          justify-content: space-between;
+      }
+
+      .trending-now-inner-container{
+          width: 667px;
+      }
+
+      .trending-now-image-container{
+        width: 667px;
+        margin: 70px 0 5px;
+        height: 336px;
+        border-radius: 3px;
+      }
+
+      .hero-container{
+        height: 552px;
+        border-radius: 3px;
+        background-color: #E2E2E2;
+      }
+
+      .hero-content-inner {
+        height: 450px;
+        width: 1000px;
+        border-radius: 3px;
+        margin: auto;
+      }
+
+      .hero-content-list {
+        display: flex;
+        background-color: #ffffff;
+        margin : 0 auto
+      }
+      .hero-content-list-inner{
+        width: 1000px;
+        display: flex;
+        margin: 10px auto;
+      }
+
+      .hero-content-icon {
+        width: 211px;
+        height: 80px;
+        background-color: #e2e2e2;
+        margin: 0 auto;
+      }
+
+      @media only screen and (max-width: 1340px) {
+          .content-inner {
+            width: 1340px;
+          }
+
+          .hero-skeleton {
+            width: 1340px;
+          }
+
+        }
+
+        .grecaptcha-badge { visibility: hidden; }
+</style> <script src="/assets/custom-elements-es5-adapter-8c38dd9f2e16de3af85d83b3567ad32138ea58f33ec1412f607f10acf62ae652.js"></script> <script src="/packs/no-container-page-8c0c91dbb8285ed285d3.js"></script> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5"> <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon-73b49b1e9302b388560f5836153dcf6a1ec42c607c96fc65d5b29e773c85374a.ico"/> <link rel="icon" type="image/png" href="/assets/favicon-48x48-fe366add8379860e5ee5041f0b6b9745ff450a945001d5f04fd8a0d706837ea6.png" sizes="48x48"/> <link rel="apple-touch-icon" type="image/png" href="/assets/apple-touch-icon-fbe9a22f2fc74b52818c962ab91b40031f1e6dd2d614f376eb1efcc03c5bba0b.png" sizes="192x192"/> <meta name="apple-mobile-web-app-title" content="Alodokter"> <meta name="application-name" content="Alodokter"> <meta name="msapplication-TileColor" content="#ffffff"> <meta name="apple-mobile-web-app-status-bar-style" content="#3973cf"> <meta name="theme-color" content="#3973cf"> <meta name="alexaVerifyID" content="n_Kykr_OZlOYYRDisl_bHGZYccc"> <meta name="google-site-verification" content=j8xshrH7uBo3AEjk-HfjufpapvzwkNHw57NXFN3G07Y> <meta name="msvalidate.01" content=C233DAA628883F2DD70CD54C789D0494> <meta name="wellness_card" content="false"> <meta name="criteo_account" content="62444"> <meta name="description" content="App Kesehatan No. 1 di Indonesia. Dapatkan Info Kesehatan Terlengkap, Booking Online Rumah Sakit &amp; Dokter, Chat Dokter 24 jam, dan Apotek Online Instan Diskon Ongkir."/> <meta name="keywords" content="alodokter, kesehatan, medis, penyakit, komunitas kesehatan, dokter, konsultasi kesehatan, informasi kesehatan, komunitas, diskusi kesehatan"/> <meta name="facebook-domain-verification" content="v9k4b24zt24dxdo39v3ab3gnt5ns5b"/> <meta property="fb:app_id" content="331705120345014"/> <meta property="og:site_name" content="Alodokter"/> <meta property="og:type" content="website"/> <meta property="og:title" content="Page not found - Alodokter"/> <meta property="og:url" content="https://www.alodokter.com/llms.txt"/> <meta property="og:description" content="App Kesehatan No. 1 di Indonesia. Dapatkan Info Kesehatan Terlengkap, Booking Online Rumah Sakit &amp; Dokter, Chat Dokter 24 jam, dan Apotek Online Instan Diskon Ongkir."/> <meta property="og:locale" content="en_US"/> <meta property="og:image" itemprop="image" content="https://www.alodokter.com/wp-content/uploads/2014/07/dokter-indonesia-alodokter.jpg"/> <meta property="og:image:width" content="650"/> <meta property="og:image:height" content="433"/> <meta property="og:image:type" content="image/jpeg"/> <link rel='canonical' href='https://www.alodokter.com/llms.txt'/> <meta name="referer" content="http://www.google.com"/> <meta name="platform" content="Desktop"/> <meta name="recaptcha-site-key" content="6Ldg7gQhAAAAAN8ebL4Gr-hTid51r0i9BpsdaEWE"/> <script src="https://www.google.com/recaptcha/enterprise.js?render=6Ldg7gQhAAAAAN8ebL4Gr-hTid51r0i9BpsdaEWE"></script> <meta name="csrf-param" content="authenticity_token"/> <meta name="csrf-token" content="YSlnXPgI09zUDy2kWGc+lzQNBnXLA/bWgoU2KIFkObpgpYDP/LAo+4UVarqnaL/dleT9wOCE6cAVUt3pzCY2vw=="/> <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+        (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '948327898593359');
+        fbq('track', "PageView");
+    </script> <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=948327898593359&ev=PageView&noscript=1"/></noscript> </head> <body> <top-navbar-view id="top-navbar-view" user-photo="" is-show-kemenkes ="{&quot;kemenkes_partnership&quot;:true,&quot;kemenkes_top_bar_desktop&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/f_auto,q_auto/v1634020083/aloweb_assets/logo-header.png&quot;,&quot;kemenkes_bottom_banner_desktop&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/f_auto,q_auto/v1730097699/setting/1730097698.png&quot;,&quot;kemenkes_top_bar_mobile&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/v1634020083/aloweb_assets/logo-header.png&quot;,&quot;kemenkes_bottom_banner_mobile&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/f_auto,q_auto/v1730097809/setting/1730097808.png&quot;}" user-login="" user-fullname="" total-notif="0" doctor-editor-link="" user-link="" show-hide-menu="{&quot;web_show_top_navbar_aloproteksi&quot;:true,&quot;web_show_top_navbar_aloshop&quot;:true,&quot;web_show_top_navbar_caridokter&quot;:true,&quot;web_show_top_navbar_hidupsehat&quot;:true,&quot;web_show_top_navbar_infokesehatan&quot;:true,&quot;web_show_top_navbar_keluarga&quot;:true,&quot;web_show_top_navbar_kesehatan&quot;:true,&quot;web_show_top_navbar_obat&quot;:true,&quot;web_show_top_navbar_penyakit&quot;:true,&quot;web_show_top_navbar_tanyadokter&quot;:true,&quot;web_show_top_navbar_alochoice&quot;:true}" pdpa-content="{&quot;title&quot;:&quot;Perlindungan Data Anda yang Utama Bagi Kami&quot;,&quot;description&quot;:&quot;Saya telah memercayakan informasi untuk disimpan \u0026 digunakan. Keamanan data terlindungi sesuai \u003ca href=&#39;/syarat-dan-ketentuan&#39; target=&#39;_blank&#39;\u003e\u003cb\u003eSyarat \u0026 Ketentuan\u003c/b\u003e\u003c/a\u003e serta \u003ca href=&#39;/privasi&#39; target=&#39;_blank&#39;\u003e\u003cb\u003ePrivasi Alodokter\u003c/b\u003e\u003c/a\u003e&quot;,&quot;error_text&quot;:&quot;Klik centang untuk menyetujui Syarat Ketentuan dan Aturan Privasi ALODOKTER&quot;}" alodokter-otp-service="whatsapp"></top-navbar-view> <div class="content" id="content"> <sub-navbar-left></sub-navbar-left> <div class="content-inner"> <div> <script>
+    function initExperiment(ExperimentID, callback){if (!ExperimentID){return callback(null);}var r=false; var s=document.createElement('script'); s.type='text/javascript'; s.src='//www.google-analytics.com/cx/api.js?experiment='+ExperimentID; s.onload=function(){if (!r && (!this.readyState || this.readyState=='complete')){r=true; callback(cxApi.chooseVariation());}else{callback(null)}}; s.onerror=function(){callback(null)}; var t=document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);}
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-52179504-1', 'alodokter.com');
+    ga('require', 'displayfeatures');
+</script> <error-page> </error-page> </div> </div> </div> <footer-view is-show-kemenkes ="{&quot;kemenkes_partnership&quot;:true,&quot;kemenkes_top_bar_desktop&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/f_auto,q_auto/v1634020083/aloweb_assets/logo-header.png&quot;,&quot;kemenkes_bottom_banner_desktop&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/f_auto,q_auto/v1730097699/setting/1730097698.png&quot;,&quot;kemenkes_top_bar_mobile&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/v1634020083/aloweb_assets/logo-header.png&quot;,&quot;kemenkes_bottom_banner_mobile&quot;:&quot;https://images.alodokter.com/dk0z4ums3/image/upload/f_auto,q_auto/v1730097809/setting/1730097808.png&quot;}" show-hide-submenu-alo="{&quot;web_show_footer_aloproteksi&quot;:true,&quot;web_show_footer_aloproteksi_corporate&quot;:true,&quot;web_show_footer_hubungikami&quot;:true,&quot;web_show_footer_karier&quot;:true,&quot;web_show_footer_tentangkami&quot;:true,&quot;web_show_footer_timeditorial&quot;:true}" insurance-menu-nav="{&quot;is_display&quot;:false,&quot;title&quot;:&quot;Dapatkan Komisi Referral&quot;,&quot;link&quot;:&quot;https://program.alodokter.com/aloproteksi-komisi-referral&quot;}"></footer-view> <script type='text/javascript'>
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete"){
+                console.log("ready!");
+                // create cookies previous_url
+                document.cookie = "previous_url=" + window.location.pathname+";path=/";
+
+
+            }
+        };
+    </script> <script type='text/javascript'>
+        (function() {
+            function getScript(url,success){
+                var script=document.createElement('script');
+                script.src=url;
+                var head=document.getElementsByTagName('head')[0],
+                    done=false;
+                script.onload=script.onreadystatechange = function(){
+                    if ( !done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete') ) {
+                        done=true;
+                        success();
+                        script.onload = script.onreadystatechange = null;
+                        head.removeChild(script);
+                    }
+                };
+                head.appendChild(script);
+              }
+            // getScript('/assets/application-1e965ee7180075d5489f58ae814fa9ee752f72c8abc42a5da64f911f7cc7b73a.js',function(){});
+        })();
+    </script> <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52W4MMF" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>
+    function sendEventGA4(data) {
+        const metaUserId = document.head.querySelector('meta[name="user_id"][content]') ? document.head.querySelector('meta[name="user_id"][content]').content : ''
+        const contentGroup = localStorage.getItem('content_group')
+        if(dataLayer) {
+            window.dataLayer.push(function() { this.reset(); });
+            if (metaUserId) data["user_id"] = metaUserId
+            if (contentGroup) data["content_group"] = contentGroup // re-add content_group
+            dataLayer.push(data);
+        }
+    }
+
+    function getFromDataLayer(key) {
+        let result = null
+        dataLayer.push(function() { 
+            let value = this.get(key)
+            if (value) {
+                result = value;
+            }
+        })
+        return result
+    }
+</script> </body> </html>

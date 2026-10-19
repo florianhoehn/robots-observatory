@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='stylesheet' type='text/css' href=https://static.concursolutions.com/coreui/ui-theming/ui-theming-v3.48.0/sap_horizon/css_variables.css><script src='https://static.concursolutions.com/coreui/ui-floorplans/ui-floorplans-v5.24.6/ui-floorplans-v5.24.6.js'></script>
+<style>
+		html {
+			height: 100%;
+		}
+
+		body {
+			display: flex;
+			flex-direction: column;
+			min-height: 100%;
+			margin: 0;
+		}
+
+		#app-error-container {
+			flex: 1;
+		}
+	</style>
+</head>
+<body id="app-container">
+	<div id="app-mini-header-container"></div>
+	<div id="app-error-container"></div>
+	<div id="app-footer-container"></div>
+
+	<script nonce="7CF723CE7DFD8923195B6AE5A4066CD436563845822BCDFFF81C885BC221E48F">
+		function getCookie(name) {
+			var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+			return match ? match[1] : null;
+		}
+
+		var lang = getCookie('OTLang') || 'en';
+		// fix encoding issues in OTLang cookie
+		lang = lang.trim().match(/^[^%]*/g)[0];
+
+		var brandingId = getCookie('brandingid');
+		// brandingid cookie is a string, floorplans expects a number
+		brandingId = brandingId && parseInt(brandingId, 10);
+
+		// ui-floorplans fixes OTTheme encoding itself
+		var themeName = getCookie('OTTheme');
+
+		document.getElementById("app-container").style.backgroundColor = "var(--cnqrColors_Body_BackgroundColor)";
+
+		// Safe back function that validates the referrer
+		function safeBack() {
+			var referrer = document.referrer;
+			var currentDomain = window.location.hostname;
+			var currentProtocol = window.location.protocol;
+
+			// Check if referrer is from the same domain
+			if (referrer && referrer.indexOf(currentProtocol + '//' + currentDomain) === 0) {
+				window.history.back();
+				return;
+			}
+			// Default to home page for safety
+			window.location.href = '/home.asp';
+		}
+
+		var errorProps = {
+			brandingId: brandingId,
+			themeName: themeName,
+			lang: lang,
+			backFn: safeBack,
+			homeUrl: '/home.asp',
+			type: 'notFound'
+		};
+
+		
+
+		var footerProps = {
+			brandingId: brandingId,
+			themeName: themeName,
+			lang: lang,
+			useFullWidth: true,
+			useSmallViewportBreakpoints: true,
+			stretchContent: true,
+			isLoggedIn: true
+		};
+
+		var miniHeaderProps = {
+			lang: lang,
+			brandingId: brandingId,
+			themeName: themeName,
+			isLoggedIn: true,
+		};
+
+        cnqr.coreui.AppMiniHeader.render(miniHeaderProps, 'app-mini-header-container');
+		cnqr.coreui.AppError.render(errorProps, 'app-error-container');
+		cnqr.coreui.AppFooter.render(footerProps, 'app-footer-container');
+	</script>
+</body>
+</html>

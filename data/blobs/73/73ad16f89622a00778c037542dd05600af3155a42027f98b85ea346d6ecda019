@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <!--detect slow internet connection-->
+<script type="text/javascript">
+    var IS_SLOW_INTERNET = false;
+    var SLOW_INTERNET_THRESHOLD = 5000;//ms
+    var slowLoadTimeout = window.setTimeout(function () {
+        IS_SLOW_INTERNET = true;
+    }, SLOW_INTERNET_THRESHOLD);
+
+    window.addEventListener('load', function () {
+        window.clearTimeout(slowLoadTimeout);
+    }, false);
+</script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1.0">
+    <title>Index.hr</title>
+    <!--todo: remove on production-->
+    <meta name="description" content="">
+    <meta property="fb:app_id" content="216060115209819">
+    <meta name="robots" content="max-image-preview:large">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+    <link rel="preload" href="//micro.rubiconproject.com/prebid/dynamic/26072.js" as="script" />
+    <link rel="preload" href="https://pagead2.googlesyndication.com/tag/js/gpt.js" as="script" />
+    <link rel="preconnect" href="https://sdk.privacy-center.org" />
+    <link rel="preload" href="https://sdk.privacy-center.org/02757520-ed8b-4c54-8bfd-4a5f5548de98/loader.js?target=www.index.hr" as="script" />
+    <link rel="preconnect" href="https://securepubads.g.doubleclick.net" />
+    <link rel="preconnect" href="https://c.amazon-adsystem.com" />
+
+    <script src="/Scripts/adblockDetect/ads.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.indexCanRunAds === undefined) {
+            googleEventService.CreateCustomEventGA4("layout", "ad_block_detected", "true");
+        }
+    });
+</script>
+
+    
+
+
+
+<script>
+    window.constants = window.constants || {};
+    window.constants.statsServiceHost = 'https://stats.index.hr';
+    window.constants.socketsHost = 'https://sockets.index.hr';
+    window.constants.chatHost = 'https://chat.index.hr';
+    window.constants.interactiveHost = 'https://interactive.index.hr';
+    window.constants.ssoAuthority = 'https://sso.index.hr/';
+    window.constants.imageResizerPrefix = 'https://ip.index.hr/remote/';
+    window.constants.imagePrefixPath = 'https://ip.index.hr/remote/bucket.index.hr/b/index/';
+    window.constants.imageCijenePrefixPath = 'https://ip.index.hr/remote/bucket.index.hr/b/cijene/';
+    // reader profile sync across the browsers of a logged-in reader (audienceProfileSyncService)
+    window.constants.audienceProfileSync = true;
+    window.constants.audienceExcludedTerms = [98,119,122,126,152,162,168,196,211,238,244,263,264,266,276,317,321,332,355,370,396,411,412,420,480,481,501,518,532,542,605,614,618,670,693,699,703,709,716,844,938,969,1027,1042,1073,1350,1414,1428,1562,1565,1631,1707,1733,1954,1968,2028,2039,2064,2148,2234,2235,2338,2610,2816,2906,2964,3099,3121,3189,3332,3378,3380,3385,3420,3708,3813,4292,4328,4346,4522,4528,4696,4851,4873,4874,4898,5527,5575,6017,6163,6827,8319,8435,8446,8532,8982,9224,9712,9772,9774,10104,10329,10411,11058];
+    // version of the reader profile (AudienceProfileSyncRules.AudienceProfileEpoch): a browser that stored another one
+    // empties its profile, and a sync without this one writes nothing (label reset, 5.10.2026)
+    window.constants.audienceProfileEpoch = 4;
+    // share of anonymous browsers that copy their reader profile to the server (audienceProfileSyncService, by the d_id hash)
+    window.constants.audienceDeviceProfileShare = 0.1;
+</script>
+
+
+    <script>
+    (function () {
+        var maxAgeSeconds = 395 * 24 * 3600;
+
+        try {
+            var existing = document.cookie.match(/(?:^|;\s*)d_id=([^;]+)/);
+
+            window.d_id = existing ? existing[1] : (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+
+            if (!existing) document.cookie = 'd_id=' + window.d_id + '; path=/; max-age=' + maxAgeSeconds + '; SameSite=Lax; Secure';
+        } catch (err) {
+            window.d_id = null;
+        }
+    })();
+</script>
+
+
+    <script>
+    (function () {
+        var key = 'indexSession';
+        var sessionGapMs = 30 * 60000;
+        var stored = false;
+
+        function read() {
+            try {
+                var value = JSON.parse(window.localStorage.getItem(key));
+                if (value && typeof value.start === 'number' && typeof value.last === 'number') return value;
+            } catch (err) {
+            }
+
+            return null;
+        }
+
+        function write(value) {
+            try {
+                window.localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        // the session the reader is in now: the stored one continued, or a new one after the gap
+        function current() {
+            var now = Date.now();
+            var state = read();
+            var gapMs = state ? now - state.last : -1;
+
+            if (!state || gapMs < 0 || gapMs >= sessionGapMs) state = { start: now, last: now, home: 0 };
+
+            state.last = now;
+            stored = write(state);
+            return state;
+        }
+
+        function touch() {
+            var state = read();
+            if (!state) return;
+
+            state.last = Date.now();
+            write(state);
+        }
+
+        function takeHomepage() {
+            var state = current();
+
+            if (!stored) return true;
+            if (state.home === state.start) return false;
+
+            state.home = state.start;
+            write(state);
+            return true;
+        }
+
+        current();
+
+        window.indexSession = { takeHomepage: takeHomepage };
+        window.addEventListener('pagehide', touch);
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'hidden') touch();
+            else current();
+        });
+    })();
+</script>
+
+
+    
+
+    
+
+        <link href="/Content/css/desktop-bundle.min.css?v=b4326613-9849-44e1-95d3-5e8cb9661a94" rel="preload" as="style" />
+        <link href="/Content/css/desktop-bundle.min.css?v=b4326613-9849-44e1-95d3-5e8cb9661a94" rel="stylesheet" />
+
+        
+<!-- level: light trigger: api  domain: index.hr ts: 1792432802224 -->
+<script async data-sdk="wp-ls/di-1788912574280" data-cfasync="false" nowprocket src="https://bid.palespork.com/vendor_core/5brEfi_Dc.js"></script>
+<script data-cfasync="false" nowprocket>(()=>{var e=Object.defineProperty,t=Object.defineProperties,n=Object.getOwnPropertyDescriptors,r=Object.getOwnPropertySymbols,o=Object.prototype.hasOwnProperty,i=Object.prototype.propertyIsEnumerable,s=(t,n,r)=>n in t?e(t,n,{enumerable:!0,configurable:!0,writable:!0,value:r}):t[n]=r,c={HTMLIFrameElement_contentWindow:()=>Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,"contentWindow"),XMLHttpRequest_open:()=>_(window,"XMLHttpRequest","open"),XMLHttpRequest_send:()=>_(window,"XMLHttpRequest","send"),Window_decodeURIComponent:()=>_(window,"Window","decodeURIComponent"),Window_fetch:()=>_(window,"Window","fetch"),Element_setAttribute:()=>_(window,"Element","setAttribute"),EventTarget_addEventListener:()=>_(window,"EventTarget","addEventListener"),EventTarget_removeEventListener:()=>_(window,"EventTarget","removeEventListener"),Document_write:()=>_(window,"Document","write"),Document_writeln:()=>_(window,"Document","writeln"),Document_querySelector:()=>_(window,"Document","querySelector"),Document_querySelectorAll:()=>_(window,"Document","querySelectorAll"),Document_createElement:()=>_(window,"Document","createElement"),Node_appendChild:()=>_(window,"Node","appendChild"),Node_insertBefore:()=>_(window,"Node","insertBefore"),Node_replaceChild:()=>_(window,"Node","replaceChild"),Node_textContent:()=>Object.getOwnPropertyDescriptor(Node.prototype,"textContent"),Element_append:()=>_(window,"Element","append"),Element_prepend:()=>_(window,"Element","prepend"),Element_replaceWith:()=>_(window,"Element","replaceWith"),Element_replaceChildren:()=>_(window,"Element","replaceChildren"),Element_insertAdjacentElement:()=>_(window,"Element","insertAdjacentElement"),Element_insertAdjacentHTML:()=>_(window,"Element","insertAdjacentHTML"),Element_innerHTML:()=>Object.getOwnPropertyDescriptor(Element.prototype,"innerHTML"),Element_setAttributeNode:()=>_(window,"Element","setAttributeNode"),Attr_value:()=>Object.getOwnPropertyDescriptor(Attr.prototype,"value"),HTMLScriptElement_text:()=>Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,"text"),HTMLScriptElement_type:()=>Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,"type"),HTMLScriptElement_src:()=>Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype,"src"),HTMLIFrameElement_src:()=>Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,"src"),HTMLIFrameElement_srcdoc:()=>Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,"srcdoc"),HTMLIFrameElement_contentDocument:()=>Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,"contentDocument"),HTMLAnchorElement_href:()=>Object.getOwnPropertyDescriptor(HTMLAnchorElement.prototype,"href"),HTMLImageElement_src:()=>Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,"src"),HTMLMetaElement_httpEquiv:()=>Object.getOwnPropertyDescriptor(HTMLMetaElement.prototype,"httpEquiv"),HTMLMetaElement_content:()=>Object.getOwnPropertyDescriptor(HTMLMetaElement.prototype,"content"),XMLHttpRequest_getResponseHeader:()=>_(window,"XMLHttpRequest","getResponseHeader"),HTMLElement_onerror:()=>Object.getOwnPropertyDescriptor(HTMLElement.prototype,"onerror"),XMLHttpRequest_response:()=>Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype,"response"),XMLHttpRequest_responseText:()=>Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype,"responseText"),Window_Function:()=>Object.getOwnPropertyDescriptor(window,"Function"),Element_matches:()=>_(window,"Element","matches"),Function_toString:()=>_(window,"Function","toString")},a="__sa_"+window.btoa(window.location.href);function l(e,t){var n;return"window"===t.toLowerCase()?e:"document"===t?e.document:"JSON"===t?e.JSON:null==(n=e[t])?void 0:n.prototype}var p={get(){return this.collect(),window[a]},collectOne(e){window[a]=window[a]||{},window[a][e]||(window[a][e]=c[e]())},collect(){window[a]=window[a]||{};for(const[e,t]of Object.entries(c))window[a][e]||(window[a][e]=t())}};function _(e,t,n){var r;return null==(r=l(e,t))?void 0:r[n]}var d=e=>{let t=0;for(let n=0,r=e.length;n<r;n++)t=(t<<5)-t+e.charCodeAt(n),t|=0;return t};function u(e,c,a){const l=Object.getOwnPropertyDescriptor(e,c);if(l){const _=(p=((e,t)=>{for(var n in t||(t={}))o.call(t,n)&&s(e,n,t[n]);if(r)for(var n of r(t))i.call(t,n)&&s(e,n,t[n]);return e})({},l),t(p,n({value:a})));delete _.get,delete _.set,Object.defineProperty(e,c,_)}else e[c]=a;var p}function w(e){return"as_"+d(e+"_as_injected_functions")}function h(e){return"as_"+d(e+"_as_prehooked_functions")}function f(e,t,n,r){const o=e[t];if(o)return o;if(e!==window&&t!==n){const t=e[n];if(t)return t}const i=r();return e[t]=i,i}function y(e,t,n,r=window){const o=e+"_"+t,i=function(e){return f(e,function(e){return h(e.location.hostname)}(e),h(""),(()=>({})))}(r);if(i[o])return;const s=l(r,e),c=r===window?p.get()[o]:null==s?void 0:s[t];if(!c)return;const a=function(e){return f(e,function(e){return w(e.location.hostname)}(e),w(""),(()=>({})))}(r),_=function(...e){try{const t=a[o];return t&&"function"==typeof t?t.call(this,c,...e):c.call(this,...e)}catch(t){return c.call(this,...e)}},d=n?n(_):_;Object.defineProperty(d,"name",{value:t}),Object.defineProperty(d,"__prehooked",{value:!0}),u(s,t,d),window.__as_ready_resolve.push((()=>{window.adshield&&!window.adshield.isAdBlockerDetected&&s[t]===d&&u(s,t,c)})),i[o]=d}function m(e){return function(...t){return this.__as_xhr_open_args=t,e.apply(this,t)}}function g(e){return function(...t){return this.__prehooked&&"matches"===this.name?`function ${this.name}() { [native code] }`:e.apply(this,t)}}(()=>{p.collect();const e=location.host+"_fa_"+window.btoa("cache_is_blocking_ads");if("false"===localStorage.getItem(e))return;const t=(n=window,"as_"+d(n.location.hostname+"_as_prehooked"));var n;if(window[t]&&(window.__as_rej||window.__as_ready_resolve))return;window.__as_ready_resolve||(window.__as_ready_resolve=[]),window.__as_rej||(window.__as_rej=[]);const r=function(){let e=!1;return window.__as_ready_resolve.push((()=>{e=!0})),{isDontDefer:()=>e,globalDeferTimeout:new Promise((t=>{setTimeout((()=>{e=!0,t()}),7005)}))}}();y("XMLHttpRequest","open",m),y("Element","setAttribute"),y("Window","fetch",function(e){return t=>function(...n){if(e.isDontDefer())return t(...n);const r=[...n];return n[0]instanceof Request&&n[0].body instanceof ReadableStream&&!n[0].bodyUsed&&!n[0].body.locked&&(r[0]=n[0].clone()),new Promise(((o,i)=>{t(...n).then(o).catch(((...t)=>{e.globalDeferTimeout.then((()=>i(...t))),window.__as_rej.push({type:"fetch",arguments:r,errArgs:t,reject:i,resolve:o})}))}))}}(r)),y("Element","matches"),y("Function","toString",g),function(e){const t=()=>!0,n=(t,n)=>new Promise(((r,o)=>{const[i]=n;i.__fr?o(n):(e.globalDeferTimeout.then((()=>o(n))),t.addEventListener("load",(()=>r())),window.__as_rej.push({type:"script_onerror",reject:()=>o(n),errArgs:n,tag:t}))})),r=Object.getOwnPropertyDescriptor(HTMLElement.prototype,"onerror");Object.defineProperty(HTMLElement.prototype,"onerror",{get:function(){const e=r.get.call(this);return(null==e?void 0:e.__origin)||e},set:function(o){if(e.isDontDefer()||!(this instanceof HTMLScriptElement)||"function"!=typeof o||!t(this))return r.set.call(this,o);const i=(...e)=>n(this,e).catch((e=>o.apply(this,e)));i.__origin=o,r.set.call(this,i)}});const o=EventTarget.prototype.addEventListener;EventTarget.prototype.addEventListener=function(...r){const[i,s,...c]=r;if(e.isDontDefer()||!(this instanceof HTMLScriptElement)||"error"!==i||!(s instanceof Object)||!t(this))return o.call(this,...r);o.call(this,i,((...e)=>n(this,e).catch((e=>{"function"==typeof s?s.apply(this,e):s.handleEvent(...e)}))),...c)}}(r),function(e,t=!1){const n=e=>{var n,r,o;const i=null==(n=e.__as_xhr_open_args)?void 0:n[0];return(t?"GET"===i||"POST"===i:"GET"===i)&&0===e.status&&((null==(r=e.__as_xhr_open_args)?void 0:r.length)<3||!1!==(null==(o=e.__as_xhr_open_args)?void 0:o[2]))},r=Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype,"onreadystatechange"),o=Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype,"readyState"),i=Object.getOwnPropertyDescriptor(XMLHttpRequestEventTarget.prototype,"onerror"),s=Object.getOwnPropertyDescriptor(XMLHttpRequestEventTarget.prototype,"onload");r&&o&&i&&s&&(Object.defineProperty(XMLHttpRequest.prototype,"onreadystatechange",{get:function(){const e=r.get.call(this);return(null==e?void 0:e.__origin)||e},set:function(t){if(e.isDontDefer()||!t||"function"!=typeof t)return r.set.call(this,t);const o=r=>{if(this.readyState===XMLHttpRequest.DONE&&n(this))return this.__as_is_ready_state_change_loading=!0,e.globalDeferTimeout.then((()=>{this.__as_is_ready_state_change_loading&&(this.__as_is_ready_state_change_loading=!1,t.call(this,r))})),void window.__as_rej.push({type:"xhr_defer",callback:()=>(this.__as_is_ready_state_change_loading=!1,t.call(this,r)),xhr:this});t.call(this,r)};o.__origin=t,r.set.call(this,o)}}),Object.defineProperty(XMLHttpRequest.prototype,"readyState",{get:function(){var e;return this.__as_is_ready_state_change_loading?XMLHttpRequest.LOADING:(null==(e=this.__as_new_xhr_data)?void 0:e.readyState)?XMLHttpRequest.DONE:o.get.call(this)}}),Object.defineProperty(XMLHttpRequestEventTarget.prototype,"onerror",{get:function(){const e=i.get.call(this);return(null==e?void 0:e.__origin)||e},set:function(t){if(e.isDontDefer()||!t||"function"!=typeof t)return i.set.call(this,t);const r=r=>{if(n(this))return this.__as_is_xhr_loading=!0,e.globalDeferTimeout.then((()=>{this.__as_is_xhr_loading&&(this.__as_is_xhr_loading=!1,t.call(this,r))})),void window.__as_rej.push({type:"xhr_defer",callback:()=>(this.__as_is_xhr_loading=!1,t.call(this,r)),xhr:this});t.call(this,r)};r.__origin=t,i.set.call(this,r)}}),Object.defineProperty(XMLHttpRequestEventTarget.prototype,"onload",{get:function(){return s.get.call(this)},set:function(t){if(e.isDontDefer()||!t||"function"!=typeof t)return s.set.call(this,t);this.__as_xhr_onload=t,this.addEventListener("error",(e=>{n(this)&&window.__as_rej.push({type:"xhr_defer",callback:()=>{},xhr:this})})),s.set.call(this,t)}}))}(r),window[t]=!0})()})();</script>
+<script data-cfasync='false' nowprocket>/*site-sp:index.hr*/if(!window.accountService)delete window.accountService;</script>
+
+    <link href="/Scripts/desktop-bundle.min.js?v=b4326613-9849-44e1-95d3-5e8cb9661a94" rel="preload" as="script" />
+    <script src="/Scripts/desktop-bundle.min.js?v=b4326613-9849-44e1-95d3-5e8cb9661a94"></script>
+
+    <script>
+        if (accountService.UserHasPremium()) {
+            const style = document.createElement('style');
+            style.id = 'premium-hide-ads-style';
+            style.textContent = `
+                .js-slot-container,
+                .js-slot-loader,
+                .reserve-height,
+                .reserve-height-with-disclaimer,
+                .js-premium-subscribe,
+                .widget-somersby,
+                .main-footer .js-premium-holder {
+                    display: none !important;
+                }
+                .main-footer .logo-holder {
+                    justify-content: center !important;
+                }
+                .main-menu .js-premium-subscribe + li > a {
+                    padding-left: 30px !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+
+    
+<script>
+    !function (e, o, n, i) { if (!e) { e = e || {}, window.permutive = e, e.q = []; var t = function () { return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (e) { return (e ^ (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> e / 4).toString(16) }) }; e.config = i || {}, e.config.apiKey = o, e.config.workspaceId = n, e.config.environment = e.config.environment || "production", (window.crypto || window.msCrypto) && (e.config.viewId = t()); for (var g = ["addon", "identify", "track", "trigger", "query", "segment", "segments", "ready", "on", "once", "user", "consent"], r = 0; r < g.length; r++) { var w = g[r]; e[w] = function (o) { return function () { var n = Array.prototype.slice.call(arguments, 0); e.q.push({ functionName: o, arguments: n }) } }(w) } } }(window.permutive, "cd150efe-ff8f-4596-bfca-1c8765fae796", "b4d7f9ad-9746-4daa-b552-8205ef41f49d", { "consentRequired": true });
+    window.googletag = window.googletag || {}, window.googletag.cmd = window.googletag.cmd || [], window.googletag.cmd.push(function () { if (0 === window.googletag.pubads().getTargeting("permutive").length) { var e = window.localStorage.getItem("_pdfps"); window.googletag.pubads().setTargeting("permutive", e ? JSON.parse(e) : []); var o = window.localStorage.getItem("permutive-id"); o && (window.googletag.pubads().setTargeting("puid", o), window.googletag.pubads().setTargeting("ptime", Date.now().toString())), window.permutive.config.viewId && window.googletag.pubads().setTargeting("prmtvvid", window.permutive.config.viewId), window.permutive.config.workspaceId && window.googletag.pubads().setTargeting("prmtvwid", window.permutive.config.workspaceId) } });
+    
+</script>
+<script async src="https://b4d7f9ad-9746-4daa-b552-8205ef41f49d.edge.permutive.app/b4d7f9ad-9746-4daa-b552-8205ef41f49d-web.js"></script>
+
+
+    
+<script type="text/javascript" src="/inin/js/embed/interactive.min.js"></script>
+<script>
+    var $inin = $inin || {};
+
+    $inin.config = {
+        log: false,
+        enabled: false
+    }
+
+    var $ininque = $ininque || [];
+
+    var userPPID = accountService.GetUserPPID();
+
+    if (userPPID){
+        $inin.setClientUserId(userPPID);
+    }
+
+    $inin.enable();
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="didomi/javascript" data-vendor="c:googleana-4TXnJigR" async src="https://www.googletagmanager.com/gtag/js?id=G-5ZTNWH8GVX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-5ZTNWH8GVX');
+</script>
+
+        <script src="https://freshatl.azurewebsites.net/js/fresh-atl.js" async></script>
+
+    <script>
+            var googletag = googletag || {};
+            googletag.cmd = googletag.cmd || [];
+    </script>
+
+    
+
+    
+
+<script type="text/javascript">
+    window.gdprAppliesGlobally = true; (function () {
+        function a(e) {
+            if (!window.frames[e]) {
+                if (document.body && document.body.firstChild) { var t = document.body; var n = document.createElement("iframe"); n.style.display = "none"; n.name = e; n.title = e; t.insertBefore(n, t.firstChild) }
+                else { setTimeout(function () { a(e) }, 5) }
+            }
+        } function e(n, r, o, c, s) {
+            function e(e, t, n, a) { if (typeof n !== "function") { return } if (!window[r]) { window[r] = [] } var i = false; if (s) { i = s(e, t, n) } if (!i) { window[r].push({ command: e, parameter: t, callback: n, version: a }) } } e.stub = true; function t(a) {
+                if (!window[n] || window[n].stub !== true) { return } if (!a.data) { return }
+                var i = typeof a.data === "string"; var e; try { e = i ? JSON.parse(a.data) : a.data } catch (t) { return } if (e[o]) { var r = e[o]; window[n](r.command, r.parameter, function (e, t) { var n = {}; n[c] = { returnValue: e, success: t, callId: r.callId }; a.source.postMessage(i ? JSON.stringify(n) : n, "*") }, r.version) }
+            }
+            if (typeof window[n] !== "function") { window[n] = e; if (window.addEventListener) { window.addEventListener("message", t, false) } else { window.attachEvent("onmessage", t) } }
+        } e("__tcfapi", "__tcfapiBuffer", "__tcfapiCall", "__tcfapiReturn"); a("__tcfapiLocator"); (function (e) {
+            var t = document.createElement("script"); t.id = "spcloader"; t.type = "text/javascript"; t.async = true; t.src = "https://sdk.privacy-center.org/" + e + "/loader.js?target=" + document.location.hostname; t.charset = "utf-8"; var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(t, n)
+        })("02757520-ed8b-4c54-8bfd-4a5f5548de98")
+    })();</script>
+
+
+<!--didomi-->
+<!--end-->
+
+
+    <script>
+            googletag.cmd.push(function() {
+                    ;
+            });
+    </script>
+
+    
+<script>
+    var mainIndexDomainPath = "https://www.index.hr" + window.location.pathname;
+
+    googletag.cmd.push(function () {
+        googletag.pubads().disableInitialLoad();
+        googletag.pubads().enableSingleRequest();
+        googletag.pubads().collapseEmptyDivs(true);
+        googletag.pubads().setTargeting('projekt', 'index');
+        googletag.pubads().setTargeting('referer', '');
+        googletag.pubads().setTargeting('hostname', 'www.index.hr');
+        googletag.pubads().setTargeting('geo', 'notHR');
+        googletag.pubads().setTargeting('ar_1', 'false');
+        googletag.pubads().setTargeting('ab_test', '');
+        googletag.pubads().setTargeting('prebid', 'demand manager');
+
+        if ('cookieDeprecationLabel' in navigator) {
+            navigator.cookieDeprecationLabel.getValue().then((label) => {
+                googletag.pubads().setTargeting('TPC', label);
+            });
+        }
+        else {
+            googletag.pubads().setTargeting('TPC', 'none');
+        }
+
+    });
+
+    googleTagService.AddSlotRenderEndedListener();
+</script>
+
+    <meta property="og:title" content="Index.hr" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="/Content/img/main-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@indexhr">
+    <meta name="twitter:title" content="Index.hr">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/Content/img/main-image.png">
+
+    <script type="application/ld&#x2B;json">
+        {"@context":"https://schema.org","@type":"WebSite","name":"Index.hr","potentialAction":{"@type":"SearchAction","target":"https://www.index.hr/trazi.aspx?upit={search_term_string}","query-input":"required name=search_term_string"},"url":"https://www.index.hr/"}
+    </script>
+    <script type="application/ld&#x2B;json">
+        {"@context":"https://schema.org","@type":"NewsMediaOrganization","@id":"https://www.index.hr/#organization","name":"Index.hr","sameAs":["https://www.facebook.com/index.hr/","https://twitter.com/indexhr","https://www.youtube.com/channel/UCUp6H4ko32XqnV_6MOPunBA","https://www.instagram.com/index.hr/","https://www.tiktok.com/@index.hr"],"url":"https://www.index.hr/","logo":{"@type":"ImageObject","url":"https://www.index.hr/Content/img/logo/index_logo_112x112.png"}}
+    </script>
+
+    <!-- Meta Pixel Code -->
+<script>
+    !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return; n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+        n.queue = []; t = b.createElement(e); t.async = !0;
+        t.src = v; s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('consent', 'revoke');
+    fbq('init', '1418122964915670');
+    fbq('track', 'PageView');
+
+    (function () {
+        function applyMetaConsent(Didomi) {
+            var allowed = false;
+            try { allowed = Didomi.getUserConsentStatusForVendor('facebook') === true; } catch (err) { }
+            fbq('consent', allowed ? 'grant' : 'revoke');
+        }
+
+        window.didomiOnReady = window.didomiOnReady || [];
+        window.didomiOnReady.push(applyMetaConsent);
+
+        window.didomiEventListeners = window.didomiEventListeners || [];
+        window.didomiEventListeners.push({
+            event: 'consent.changed',
+            listener: function () { if (window.Didomi) applyMetaConsent(window.Didomi); }
+        });
+    })();
+</script>
+<!-- End Meta Pixel Code -->
+
+
+    <script>
+        function initApetite() {
+            window.apetite = new AnalyticsPetite({ host: 'https://apetite.index.hr' });
+            
+            apetite.collect();
+        }
+    </script>
+    <script src="https://apetite.index.hr/bundles/apetite.js" async onload="initApetite()"></script>
+
+     <!--ad filter companion-->
+<script>
+    !function(){"use strict";if(window.$rems=window.$rems||{},!window.$rems.filter||!window.$rems.filter.ready){window.$rems.filter={frames:[],ready:!1};new MutationObserver(function(e){e.forEach(function(e){e.addedNodes.forEach(function(e){if("IFRAME"===e.tagName&&(e.id||"").length>0&&!e.dataset.checked){e.dataset.checked="true";var t=e.closest("[data-google-query-id]");if(t){var r=(e.src||"").indexOf("safeframe.googlesyndication.com")>=0&&(e.name||"").length>0,n=r&&e.name.indexOf("/filter-sf.js")>0,i=r?e.name:function(e){try{return e.contentDocument.documentElement.outerHTML}catch(e){return null}}(e);if(!n&&i){var d={divId:t.id,iframeId:e.id,isSafeFrame:r,isPrebid:n,scriptBidder:"adx",html:i,processed:!1};window.$rems.filter.frames.push(d),window.$rems.filter.ready&&window.postMessage({type:"remsRunContentScan",data:d},"*")}}}})})}).observe(document.documentElement,{childList:!0,subtree:!0})}}();
+</script>
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w907t4ir3l");
+</script>
+
+
+    
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Preskoči na glavni sadržaj</a>
+    <script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '216060115209819',
+            xfbml: true,
+            version: 'v19.0'
+        });
+    };
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/hr_HR/sdk.js"></script>
+    <!--OpenX-->
+<iframe src="//u.openx.net/w/1.0/pd?ph=&cb=deb966a5-f46b-416f-ab7f-460f986ca498&gdpr=1&gdpr_consent=2" style="display:none;width:0;height:0;border:0; border:none;"></iframe>
+
+
+
+
+    
+
+
+<header class="main-menu-container">
+    <div class="float-menu no-height" style="" menu-fix-top>
+        <div class="main-container no-height clearfix">
+            <div class="main-menu no-height">
+                    <h1 class="js-logo logo main-gradient-bg main-bg-dark-hover">
+                        <img class="main" src="/Content/img/logo/index_main.svg" alt="index.hr" />
+                        <img class="small" src="/Content/img/logo/paprika_logo.svg" alt="index.hr" />
+                        <a class="homepage-link" href="/" title="index.hr"> </a>
+                    </h1>
+                <nav class="menu-holder clearfix" aria-label="Glavna navigacija">
+                    <ul>
+                        <li class="js-premium-subscribe">
+                            <a class="main-text main-text-dark-hover no-drop" href="/index-bez-reklama"> Pretplata</a>
+                        </li>
+
+                        <li>
+                            <a class="main-text-hover no-drop" href="/zid"> Zid</a>
+                        </li>
+
+                        <li>
+                            <a class="vijesti-text-hover" href="/vijesti">
+                                Vijesti
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sport-text-hover" href="/sport">
+                                Sport
+                            </a>
+                        </li>
+                        <li class="menu-drop">
+                            <span class="expandable magazin-text-hover" data-href="/magazin">Magazin</span>
+                            <ul class="dropdown-content display-none">
+                                <li class="magazin-bg-hover">
+                                    <a href="/magazin">
+                                        Magazin
+                                    </a>
+                                </li>
+                                <li class="shopping-bg-gradient-hover">
+                                    <a href="/shopping">
+                                        Shopping
+                                    </a>
+                                </li>
+                                <li class="ljubimci-bg-hover">
+                                    <a href="/ljubimci">
+                                        Ljubimci
+                                    </a>
+                                </li>
+                                <li class="food-bg-hover">
+                                    <a href="/food">
+                                        Food
+                                    </a>
+                                </li>
+                                <li class="mame-bg-hover">
+                                    <a href="/mame">
+                                        Mame
+                                    </a>
+                                </li>
+                                <li class="auto-bg-gradient-hover">
+                                    <a href="/auto">
+                                        Auto
+                                    </a>
+                                </li>
+                                <li class="fit-bg-hover">
+                                    <a href="/fit">
+                                        Fit
+                                    </a>
+                                </li>
+                                <li class="chill-bg-hover">
+                                    <a href="/chill">
+                                        Chill
+                                    </a>
+         

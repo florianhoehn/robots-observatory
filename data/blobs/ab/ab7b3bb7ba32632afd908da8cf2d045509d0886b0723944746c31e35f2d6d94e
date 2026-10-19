@@ -1,0 +1,425 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+<meta charset="utf-8">
+
+<meta name="Copyright" content="Hudl">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="fb:pages" content="112477931222">
+
+<link rel="home" href="https://www.hudl.com/">
+
+<link rel="dns-prefetch" href="https://cdn.cookielaw.org">
+<link rel="preconnect" href="https://cdn.cookielaw.org" crossorigin>
+
+<link rel="dns-prefetch" href="https://static.hudl.com">
+<link rel="dns-prefetch" href="https://sc.hudl.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="icon" href="https://sc.hudl.com/favicon.ico" sizes="any">
+<link rel="icon" href="https://sc.hudl.com/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="https://sc.hudl.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://sc.hudl.com/safari-pinned-tab.svg" color="#ff6300">
+<meta name="theme-color" content="#ffffff">
+<title>We can&#039;t find the page you&#039;re looking for • Error 404</title>
+<meta name="description" content="Hudl provides video review and performance analysis tools for sports teams and athletes at every level.">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hudl">
+<meta name="twitter:title" content="We can&#039;t find the page you&#039;re looking for • Error 404">
+<meta name="twitter:description" content="Hudl provides video review and performance analysis tools for sports teams and athletes at every level.">
+<meta name="twitter:url" content="https://www.hudl.com/ai.txt">
+<meta name="twitter:image" content="https://static.hudl.com/craft/hudl-default-OG.jpg?mtime=20191218113232">
+
+<meta property="og:title" content="We can&#039;t find the page you&#039;re looking for • Error 404">
+<meta property="og:description" content="Hudl provides video review and performance analysis tools for sports teams and athletes at every level.">
+<meta property="og:url" content="https://www.hudl.com/ai.txt">
+<meta property="og:image" content="https://static.hudl.com/craft/hudl-default-OG.jpg?mtime=20191218113232">
+<meta property="og:type" content="website">
+<meta property="og:app_id" content="137562929649180" />
+<meta property="og:site_name" content ="Hudl">
+    <link rel="canonical" href="https://www.hudl.com/ai.txt">
+
+	<script>
+		window.hudl = window.hudl || {};
+		window.hudl.l10n = window.hudl.l10n || {};
+		window.hudl.l10n.alternates = [];
+		window.hudl.l10n.sites = [{"language":"en-US","languageDisplay":"English (United States)","url":"https:\/\/www.hudl.com\/","external":false},{"language":"en-GB","languageDisplay":"English (International)","url":"https:\/\/www.hudl.com\/en_gb\/","external":false},{"language":"es-419","languageDisplay":"espa\u00f1ol (Latinoam\u00e9rica)","url":"https:\/\/es.hudl.com\/es-xl","external":true},{"language":"pt-BR","languageDisplay":"portugu\u00eas (Brasil)","url":"https:\/\/pt.hudl.com\/pt","external":true},{"language":"ja","languageDisplay":"\u65e5\u672c\u8a9e","url":"https:\/\/jp.hudl.com\/ja","external":true}];
+	</script>
+        
+<script>
+(function() {
+  // Constants: hardcoded site configuration
+  const COOKIE_NAME = 'mktgLanguagePref';
+  const LANG_DEFAULT = 'en-us';
+  const LANG_FALLBACK = 'en-gb';
+  const MATCH_PATHS = ['/', '/sports'];
+
+  // Site mapping: handle -> base URL
+  const SITES = {
+    'en-us': { primary: true, baseUrl: '/' },
+    'en-gb': { primary: false, baseUrl: '/en_gb/' }
+  };
+
+  // Language code mappings (e.g., en-ca -> en-us)
+  const LANG_MAP = {
+    'en-ca': LANG_DEFAULT
+  };
+
+  function getCookieValue() {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      const [name, value] = cookie.trim().split('=');
+      if (name === COOKIE_NAME) {
+        return decodeURIComponent(value).toLowerCase();
+      }
+    }
+    return '';
+  }
+
+  function normalizeLanguage(language) {
+    language = language.toLowerCase();
+    return LANG_MAP[language] || language;
+  }
+
+  function getBrowserLanguage() {
+    const navLang = navigator.language;
+    if (!navLang) return null;
+
+    const normalized = normalizeLanguage(navLang);
+
+    if (SITES[normalized]) {
+      return normalized;
+    }
+
+    if (normalized.includes('-')) {
+      const langComponent = normalized.split('-')[0];
+      for (const siteHandle in SITES) {
+        if (siteHandle.startsWith(langComponent)) {
+          return siteHandle;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  function getRequestedSite() {
+    const cookieValue = getCookieValue();
+    if (cookieValue && SITES[cookieValue]) {
+      return cookieValue;
+    }
+
+    const browserLang = getBrowserLanguage();
+    if (browserLang) {
+      return browserLang;
+    }
+
+    return LANG_FALLBACK;
+  }
+
+  function isPreventRedirect(targetSite) {
+    if (SITES[targetSite].primary) {
+      return true;
+    }
+
+    if (getCookieValue() === LANG_DEFAULT) {
+      return true;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('token') || params.has('ignore-lang')) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function shouldCheckRedirect() {
+    const pathname = window.location.pathname;
+    const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
+    return MATCH_PATHS.includes(normalizedPath);
+  }
+
+  function checkForRedirect() {
+    if (!shouldCheckRedirect()) {
+      return;
+    }
+
+    const targetSite = getRequestedSite();
+    if (isPreventRedirect(targetSite)) {
+      return;
+    }
+
+    const pathname = window.location.pathname;
+    const search = window.location.search;
+    const hash = window.location.hash;
+
+    const baseUrl = SITES[targetSite].baseUrl;
+    const targetUrl = baseUrl + pathname.replace(/^\//, '') + search + hash;
+
+    window.location.replace(targetUrl);
+  }
+
+  checkForRedirect();
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Teko:wght@300;400;500;600" rel="stylesheet">
+  <link rel="stylesheet" href="https://sc.hudl.com/cms/assets/styles/external/external.css?id=fe187efd5dbc8e40ef3b8092b54bd126">
+  <link rel="stylesheet" href="https://sc.hudl.com/cms/assets/styles/critical.css?id=30fcc07bfecc8fd15c5cc1831f5fded1">
+  <link rel="stylesheet" href="https://sc.hudl.com/cms/assets/styles/styles.css?id=9fae242bd5ef22f7977bf90836064957">
+  
+  <script>var _hsq = window._hsq = window._hsq || []; _hsq.push(["setContentType", "site-page"]);</script>
+
+  <!-- OneTrust Cookies Consent Notice start for hudl.com -->
+<script
+    src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+    data-document-language="true"
+    data-domain-script="3bd688f5-b6bf-4b17-939b-ebc3cf875964"
+></script>
+<!-- OneTrust Cookies Consent Notice end for hudl.com -->    
+    <script>
+        function OptanonWrapper() {}
+
+        /* Utility function for checking user consent values */
+        function hasConsent(category) {
+            const categories = {
+                "performance": "C0002",
+                "functional": "C0003",
+                "targeting": "C0004",
+                "social": "C0005"
+            }
+            return !!(
+                (window.OptanonActiveGroups !== undefined) &&                           // OptanonActiveGroups is defined
+                (categories[category] !== undefined) &&                                 // the provided category is valid
+                (window.OptanonActiveGroups.indexOf(','+categories[category]+',') > -1) // Consent is given for this category
+            )
+        }
+    </script>
+
+<script>
+    window.craftCMS = true;
+    window.hudlEnableRumScripts = true;
+</script>
+
+            <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-57574Z');
+    </script>
+    
+
+  <style>
+html.is-embedded {
+  .mainnav,
+  .site-footer .footer-links,
+  .site-footer hr,
+  .site-footer .social-icons,
+  .site-footer .l10n-selector {
+      display: none;
+  }
+}
+</style>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const isEmbeddedQuery = params.get('isEmbedded');
+  if (isEmbeddedQuery === 'false') {
+    document.cookie = 'isEmbedded=false; path=/';
+  } else if (isEmbeddedQuery !== null) {
+    const isHttps = window.location.protocol === 'https:';
+    const cookieAttributes = isHttps
+      ? '; path=/; Secure; SameSite=None'
+      : '; path=/; SameSite=Lax';
+    document.cookie = 'isEmbedded=true' + cookieAttributes;
+  }
+  if (document.cookie.split(';').some(cookie => cookie.trim().startsWith('isEmbedded=true'))) {
+    document.documentElement.classList.add('is-embedded');
+  }
+})();
+</script>
+
+  
+  <link href="https://sc.hudl.com/cms/assets/styles/error-page/error-page-styles.css?id=d82117a8ad539c25612c6afb80110697" rel="stylesheet">
+</head>
+
+<body class="">
+<script>window.dataLayer = window.dataLayer || [];</script>
+        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-57574Z"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+  <header class="mainnav mainnav--hide-mobile de mainnav--de">
+  <a href="#maincontent" class="skip-nav">Skip to main content</a>
+  <svg style="display:none;">
+    <symbol id="chevron" viewBox="0 0 16 16">
+      <path fill="currentColor" stroke="currentColor" stroke-width=".4" d="m8 5 4.711 4.711-.679.68L8 6.359 3.968 10.39l-.68-.68z"/>
+    </symbol>
+    <symbol id="arrow_right_alt" viewBox="0 -960 960 960">
+      <path fill="currentColor" d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/>
+    </symbol>
+  </svg>
+
+  <a href="https://www.hudl.com/" class="mainnav__sitename" title="Home" data-qa-id="site-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.2 28.5"><title>Hudl</title><style>.st0{fill:#ff6300}.st1{fill:#232a31}</style><path d="M14.5 4.6c-1.8-1.5-4-2.6-6.4-3q-.9.45-1.8 1.2h-.1C4.1 2.2 1.8 3.1.7 5c-1.2 2-.7 4.5.8 6v.1c-.1.6-.1 1.2-.1 1.8 0 3.5 1.4 6.6 3.7 9 .1.1.2 0 .2-.1-.5-1.4-.8-2.8-.8-4.4 0-1.8.4-3.4 1-4.9 0 0 0-.1.1-.1 1.4-.2 2.8-1 3.6-2.4.5-1 .6-2 .5-3v-.1c1.4-1 3-1.7 4.7-2.1.2 0 .2-.2.1-.2" class="st0"/><path d="M6.9 16.7c-.5 2.3-.3 4.8.6 7.1.6.4 1.3.7 1.9.9l.1.1c.5 2.1 2.4 3.7 4.7 3.7s4.2-1.6 4.7-3.7c0 0 0-.1.1-.1.5-.2 1.1-.5 1.6-.8 3-1.7 5.1-4.5 5.9-7.6 0-.1-.1-.2-.2-.1-.9 1.1-2.1 2.1-3.4 2.9-1.5.9-3.1 1.4-4.8 1.6H18c-.9-1.1-2.3-1.9-3.8-1.9-1.1 0-2 .3-2.8.9h-.1q-2.4-1.05-4.2-3c0-.1-.1-.1-.2 0" class="st0"/><path d="M21.2 17.2c2.2-.8 4.3-2.2 5.8-4.1 0-.7 0-1.4-.1-2.1v-.1c1.6-1.5 2-4 .8-5.9-1.1-2-3.5-2.8-5.6-2.2H22c-.5-.4-1-.7-1.5-1C17.5.1 14-.3 10.9.5c-.1 0-.1.2 0 .2q2.1.45 4.2 1.5c1.5.9 2.8 2 3.8 3.3v.1c-.5 1.3-.5 2.9.3 4.3.5.9 1.3 1.6 2.2 2 0 0 .1 0 .1.1.2 1.7 0 3.4-.5 5.1.1.1.1.1.2.1" class="st0"/><path d="M40.8 24.7v-9.6c0-1-.5-1.6-1.7-1.6-.4 0-.8.1-1.2.2v11h-5.5V2.6H38v7.2c.8-.3 1.7-.5 2.7-.5 3.7 0 5.6 1.9 5.6 5.2v10.2zm14.8.4c-4.7 0-7-1.7-7-5.9V9.5h5.5v9.7c0 1 .5 1.4 1.5 1.4.5 0 .9-.1 1.2-.1v-11h5.5v14.4c-1.5.7-4.2 1.2-6.7 1.2m16.9 0c-5.2 0-8-2.8-8-8 0-4.7 2.4-7.7 7.2-7.7.5 0 1.2.1 1.6.2v-7h5.5V24c-1.3.6-3.6 1.1-6.3 1.1m.8-11.5c-.2-.1-.6-.2-1-.2-1.5 0-2.3 1.4-2.3 3.6 0 2.6.8 3.8 2.4 3.8.4 0 .7 0 .9-.1zm8.3 11.1V2.6h5.5v22.1z" class="st1"/></svg>
+
+  </a>
+
+  <button class="mainnav__toggle">
+    <svg class="mainnav__toggle__open" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="8 8 22 22">
+      <title>Menu</title>
+      <rect fill="currentColor" x="8" y="8" width="22" height="3" />
+      <rect fill="currentColor" x="8" y="17" width="18" height="3" />
+      <rect fill="currentColor" x="8" y="26" width="20" height="3" />
+    </svg>
+    <svg class="mainnav__toggle__close" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="8 8 22 22">
+      <title>Close</title>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M29.57 10.67a.9.9 0 000-1.26l-.98-.98a.9.9 0 00-1.26 0L19 16.76l-8.33-8.33a.9.9 0 00-1.26 0l-.98.98a.9.9 0 000 1.26L16.76 19l-8.33 8.33a.9.9 0 000 1.26l.98.98a.9.9 0 001.26 0L19 21.24l8.33 8.33a.9.9 0 001.26 0l.98-.98a.9.9 0 000-1.26L21.24 19l8.33-8.33z" fill="currentColor" />
+    </svg>
+  </button>
+
+  <nav id="site-navigation" class="mainnav__items">
+    <div class="mainnav__container mainnav__container--horizontal-compact">
+          <a href="#" class="mainnav__item mainnav__item--expandable">
+        Solutions
+        <svg class="mainnav__item__disclosure">
+          <use xlink:href="#chevron"></use>
+        </svg>
+      </a>
+              <div class="subnav" hidden>
+        <div class="subnav__inner">
+                  <div class="subnav__group half-split">
+        <div class="subnav__group subnav__group--first">
+      <p class="subnav__heading">Browse by Organization</p>
+        <ul class="subnav__items">
+  <li>
+    <a href="https://www.hudl.com/solutions/club" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="13" fill="none">
+  <path fill="currentColor" fill-rule="evenodd" d="M5.464 3.536A3.535 3.535 0 0 0 9 7.07 3.535 3.535 0 1 0 9 0a3.536 3.536 0 0 0-3.536 3.536m7.567-2.342c.4.688.629 1.488.629 2.342a4.64 4.64 0 0 1-1.051 2.948q.375.185.707.407.17.02.344.02a2.893 2.893 0 1 0-.63-5.717M1.447 4.019A2.892 2.892 0 0 0 4.683 6.89q.333-.222.707-.407a4.64 4.64 0 0 1-1.05-2.948c0-.854.229-1.654.63-2.342a2.893 2.893 0 0 0-3.523 2.825m12.877 3.739c.703.788 1.105 1.76 1.105 2.85q0 .328-.01.642h1.967a.593.593 0 0 0 .59-.573s.024-.321.024-.874c0-1.228-.855-2.189-2.13-2.696-.452.324-.977.55-1.546.651M0 9.803a12 12 0 0 0 .026.875.6.6 0 0 0 .593.572h1.963q-.01-.314-.01-.642c0-1.09.4-2.062 1.104-2.85a3.8 3.8 0 0 1-1.546-.651C.855 7.614 0 8.575 0 9.803m9-1.627c-1.007 0-1.94-.32-2.7-.865-1.56.62-2.604 1.794-2.604 3.297 0 .676.039 1.202.039 1.202.017.312.29.565.594.565h9.349c.31 0 .576-.25.59-.566 0 0 .035-.527.035-1.201 0-1.503-1.045-2.678-2.603-3.297a4.62 4.62 0 0 1-2.7.865" clip-rule="evenodd"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Club and Youth Sports</div>
+      <div class="subnavitem__desc">Elevate your club with automatic video capture, livestreaming and sharing.</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/solutions/high-school" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" fill="none">
+  <rect width="8.571" height="2.857" x="3.571" fill="currentColor" rx=".357"></rect>
+  <rect width="4.286" height="4.286" x="5.714" y="10.714" fill="currentColor" rx=".357"></rect>
+  <rect width="4.286" height="4.286" x="11.428" y="10.714" fill="currentColor" rx=".357"></rect>
+  <rect width="4.286" height="4.286" y="10.714" fill="currentColor" rx=".357"></rect>
+  <path fill="currentColor" d="M7.143 2.857h1.429v9.286H7.143z"></path>
+  <path fill="currentColor" d="M7.143 2.857h1.429v7.857H7.143zm5.714 3.572h1.071c.198 0 .357.16.357.357v3.928h-1.428zm-11.429.357c0-.198.16-.357.357-.357h1.072v4.285H1.428z"></path>
+  <path fill="currentColor" d="M12.856 6.429v1.429h-10v-1.43z"></path>
+</svg>
+
+
+    <div class="subnavitem__label">High School Teams and Athletic Departments</div>
+      <div class="subnavitem__desc">Our all-in-one solutions simplify athletic departments and elevate every team.</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/solutions/college" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" fill="none">
+  <path fill="currentColor" fill-rule="evenodd" d="M9.565.274a.18.18 0 0 1 .252-.166l4.298 1.842a.18.18 0 0 1 .007.33l-3.51 1.671a.18.18 0 0 0-.104.163v1.608c0 .1-.08.181-.18.181h-.582a.18.18 0 0 1-.18-.18zm.944 2.395c0 .133.138.22.258.163l1.066-.507a.18.18 0 0 0-.007-.33l-1.065-.457a.18.18 0 0 0-.252.167z" clip-rule="evenodd"></path>
+  <path stroke="currentColor" d="M15.283 20.37v-9.435h2.648c.867 0 1.57.702 1.57 1.569v7.866ZM2.069 10.935h2.648v9.435H.5v-7.866c0-.867.702-1.57 1.569-1.57zm11.844-1.37c0-1.92-1.752-3.478-3.913-3.478S6.087 7.644 6.087 9.565" style="display:inline"></path>
+  <path fill="currentColor" fill-rule="evenodd" d="M4.348 9.11c0-.23.185-.414.414-.414h10.477c.228 0 .413.185.413.413v11.347a.414.414 0 0 1-.413.414H4.762a.414.414 0 0 1-.414-.414Zm4.47 7.05a.17.17 0 0 0-.049.12v2.115c0 .1-.08.18-.18.18h-.582a.18.18 0 0 1-.18-.18v-2.249c0-.182.064-.36.182-.499a2.436 2.436 0 0 1 3.722 0c.118.14.183.317.183.5v2.248c0 .1-.081.18-.181.18h-.582a.18.18 0 0 1-.18-.18V16.28a.17.17 0 0 0-.05-.12 1.493 1.493 0 0 0-2.103 0m-2.631-4.856a.1.1 0 0 0-.1.1v.67a.1.1 0 0 0 .1.1h7.626a.1.1 0 0 0 .1-.1v-.67a.1.1 0 0 0-.1-.1z" clip-rule="evenodd" style="display:inline"></path>
+  <path fill="currentColor" d="M16.522 13.144a.1.1 0 0 1 .1-.1h1.539a.1.1 0 0 1 .1.1v.669a.1.1 0 0 1-.1.1h-1.54a.1.1 0 0 1-.1-.1zm-14.783 0a.1.1 0 0 1 .1-.1h1.54a.1.1 0 0 1 .1.1v.669a.1.1 0 0 1-.1.1h-1.54a.1.1 0 0 1-.1-.1z"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Colleges and Universities</div>
+      <div class="subnavitem__desc">Advanced video and data solutions—with every team on one invoice and one platform.</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/solutions/professional" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" fill="none">
+  <path fill="currentColor" fill-rule="evenodd" d="M18.315 9.288c.39-.353.487-.631.487-.82s-.096-.467-.487-.82c-.39-.353-1.003-.71-1.835-1.028-1.658-.634-4.007-1.045-6.645-1.045s-4.987.41-6.644 1.045c-.832.318-1.446.675-1.836 1.028s-.487.632-.487.82c0 .189.096.467.487.82.39.353 1.004.71 1.836 1.029 1.657.633 4.006 1.044 6.644 1.044s4.987-.41 6.645-1.044c.832-.318 1.445-.676 1.835-1.029m-8.48 2.94c5.432 0 9.835-1.683 9.835-3.76s-4.403-3.76-9.835-3.76S0 6.39 0 8.468s4.403 3.76 9.835 3.76" clip-rule="evenodd"></path>
+  <path fill="currentColor" fill-rule="evenodd" d="M9.735 9.48c-1.693 0-3.206.172-4.265.44a8 8 0 0 0-.248.067.185.185 0 0 1-.228-.12l-.153-.483a.177.177 0 0 1 .118-.225q.144-.042.298-.08c1.148-.29 2.737-.466 4.478-.466 1.842 0 3.517.196 4.68.52.097.026.15.127.122.222l-.147.485a.184.184 0 0 1-.226.123c-1.06-.291-2.642-.482-4.429-.482" clip-rule="evenodd"></path>
+  <path fill="currentColor" fill-rule="evenodd" d="M9.903 7.745c-2.57 0-4.87.343-6.486.882a10 10 0 0 0-.478.173.184.184 0 0 1-.238-.098l-.195-.467A.18.18 0 0 1 2.603 8q.258-.102.539-.196c1.728-.576 4.126-.927 6.76-.927 2.838 0 5.406.407 7.157 1.068.093.035.139.14.102.233l-.188.47a.184.184 0 0 1-.235.103c-1.621-.608-4.07-1.006-6.835-1.006" clip-rule="evenodd"></path>
+  <path fill="currentColor" fill-rule="evenodd" d="M19.307 8.628a.36.36 0 0 1 .281.427l-1.67 8.07a.36.36 0 0 1-.197.252l-.032.016c-2.028.976-4.772 1.489-7.598 1.507-2.83.018-5.783-.458-8.236-1.499l-.035-.015a.36.36 0 0 1-.214-.265L.075 9.049a.36.36 0 0 1 .288-.423L.505 8.6a.36.36 0 0 1 .423.287l1.443 7.61c.023.12.105.222.22.267 2.242.873 4.91 1.285 7.494 1.268 2.571-.016 5.023-.457 6.867-1.256a.35.35 0 0 0 .205-.255l1.581-7.642a.36.36 0 0 1 .428-.28zM1.736 1.142a.18.18 0 0 1 .252-.166l3.904 1.673a.18.18 0 0 1 .007.33l-3.193 1.52a.18.18 0 0 0-.103.163v1.745c0 .1-.08.181-.18.181h-.507a.18.18 0 0 1-.18-.18zM2.603 3.3c0 .133.139.22.259.164l.93-.444a.18.18 0 0 0-.006-.33l-.93-.398a.18.18 0 0 0-.253.166zM8.533.274a.18.18 0 0 1 .252-.166l3.905 1.673a.18.18 0 0 1 .007.33L9.504 3.63a.18.18 0 0 0-.103.163V5.25c0 .1-.08.181-.18.181h-.507a.18.18 0 0 1-.18-.18zm.868 2.159c0 .132.139.22.259.163l.93-.444a.18.18 0 0 0-.006-.329l-.93-.399a.18.18 0 0 0-.253.166zm6.075-1.291a.18.18 0 0 1 .252-.166l3.905 1.673a.18.18 0 0 1 .006.33l-3.192 1.52a.18.18 0 0 0-.103.163v1.456c0 .1-.081.18-.181.18h-.506a.18.18 0 0 1-.181-.18zm.868 2.158c0 .133.138.22.258.164l.931-.444a.18.18 0 0 0-.006-.33l-.931-.398a.18.18 0 0 0-.252.166z" clip-rule="evenodd"></path>
+  <path fill="currentColor" fill-rule="evenodd" d="m10 12-9-2 1 7 8 1.5 7.5-1.5 1.5-7zm-1.177 2.751c0-.045.016-.089.048-.12a1.374 1.374 0 0 1 1.928 0 .17.17 0 0 1 .049.12v1.925c0 .1.08.181.18.181h.506c.1 0 .181-.08.181-.18v-2.054a.72.72 0 0 0-.168-.46 2.24 2.24 0 0 0-3.424 0 .7.7 0 0 0-.168.46v2.053c0 .1.08.181.18.181h.507c.1 0 .18-.08.18-.18z" clip-rule="evenodd"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Professional Sports</div>
+      <div class="subnavitem__desc">An end-to-end platform, designed for the world’s top organizations.</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/advertise" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none">
+  <path fill="currentColor" fill-rule="evenodd" d="M7.885 2.873a1.5 1.5 0 0 0-.333-.355c-1.168-.896-3.45.104-5 2.12C1 6.659.688 9.022 1.856 9.919q.275.21.616.29c.574.275 1.919.913 3.579 1.67a1.3 1.3 0 0 0-.362.502 1.33 1.33 0 0 0 .734 1.733l3.136 1.261a1.33 1.33 0 0 0 1.824-1.17c.953.39 1.873.75 2.695 1.042.023.21.104.382.249.493.425.327 1.23-.013 1.803-.755.573-.745.692-1.611.266-1.938-.155-.12-.361-.15-.589-.104-2.627-3.538-7.215-9.199-7.922-10.07M4.2 9.986c.883-.37 1.81-1.097 2.578-2.095.8-1.04 1.29-2.196 1.419-3.195l7.363 9.092s-.387.922-.76 1.034c-.19-.05-1.91-.826-3.98-1.776-.08-.058-3.335-1.537-3.335-1.537zm5.385 4.355c.372.149.704.192.853-.18a1.6 1.6 0 0 0 .053-.325 158 158 0 0 1-3.645-1.593c-.119.19-.202.35-.218.388-.149.372.12.57.492.72z" clip-rule="evenodd"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Advertisers</div>
+      <div class="subnavitem__desc">Partner with Hudl and make your brand part of a global sports destination.</div>
+  </a>
+  </li>
+</ul>
+  </div>
+      <div class="subnav__group subnav__group--second subnav__group--accent">
+      <p class="subnav__heading">Browse by Sport</p>
+        <div class="subnav__group subnav__items--twocol-alt">
+        <ul class="subnav__items">
+  <li>
+    <a href="https://www.hudl.com/sports/basketball" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 3C8.82 3 3 8.82 3 16s5.82 13 13 13 13-5.82 13-13S23.18 3 16 3m10.952 9.933c-2.17-1.062-4.473-1.283-5.276-1.288q-.217-1.095-.586-2.153c.968-.005 2.315-.153 3.267-1.207a11.36 11.36 0 0 1 2.595 4.648m.42 3.067c0 .973-.122 1.916-.352 2.817-1.334-2.154-3.067-3.208-4.97-3.424a22 22 0 0 0-.213-2.783c3.71.102 4.848 1.104 5.421 1.784q.115.784.115 1.606m-6.571-6.95c-.582-.93-1.407-2.876-2.528-4.04 2.043.416 3.891 1.457 5.374 2.808-.331.552-1.02 1.232-2.774 1.232zm-4.049-4.397c.794.633 1.954 1.95 2.838 4.07-2.553-.06-3.99-.353-5.952-1.674-1.045-.706-2.26-.926-3.301-.914A11.3 11.3 0 0 1 16 4.623q.383.005.752.03m-7.71 2.353c.98-.204 2.225-.14 4.103 1.045.37.251 2.71 1.666 6.772 1.517.22.637.416 1.338.57 2.103-7.894.314-13.978 3.76-15.847 4.856a11.34 11.34 0 0 1 4.401-9.52M4.745 17.661c4.992-2.834 10.668-4.911 15.906-5.051.127.845.204 1.763.217 2.753-2.337.22-4.746 2.205-6.347 4.078-1.462 1.712-4.274 4.253-5.897 5.209a11.32 11.32 0 0 1-3.879-6.989m4.818 7.72c1.826-.893 4.125-3.276 4.698-3.952 3.54-4.1 5.693-4.881 6.594-5.03-.09 2.94-.735 6.483-2.265 10.677a11.37 11.37 0 0 1-9.028-1.695m10.476 1.253c.446-1.173 1.87-5.43 2.005-10.196 2.439.412 3.909 2.43 4.516 3.785a11.4 11.4 0 0 1-6.52 6.41" fill="currentColor"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Basketball</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/sports/baseball" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 3C8.82 3 3 8.82 3 16s5.82 13 13 13 13-5.82 13-13S23.18 3 16 3m-.412 24.13c.23.09.438.17.637.239l-.22.004c-6.19 0-11.225-4.945-11.37-11.101.073-.034.166-.098.29-.2.08-.068.148-.14.22-.216q.377.109.803.276c-.06.063-.119.106-.17.114-.556.077-.301 1.02.413.625.216-.055.433-.17.62-.348.331.165.68.352 1.032.565-.39.144-.671.203-.85.267-.475.166-.008.604.277.659.633-.081 1.07-.225 1.38-.42q.534.355 1.088.777c-.476.072-.964.123-1.194.204-.476.165-.217.633.072.692.876.06 1.492-.038 1.93-.246q.514.431 1.032.921a.5.5 0 0 1-.111.035c-.518.05-1.083.063-1.343.135-.484.132-.254.616.026.697.99.132 1.682.08 2.175-.115q.416.427.824.893c-.03.008-.06.017-.08.017-.519.017-1.088 0-1.347.05-.493.102-.293.6-.017.697 1.024.204 1.678.213 2.137.064q.32.401.633.82c-.455.009-.905 0-1.126.047-.493.102-.293.599-.017.696.777.153 1.33.183 1.742.11q.3.446.586.91c-.45-.05-.994-.136-1.19-.115-.458.056-.02.604.226.714.595.115 1.05.174 1.414.174q.236.422.46.863c-.396-.034-.761-.094-.97-.068-.45.046-.258.459-.012.565m2.545.15-.005-.069c.226-.178.455-.446.71-.781.37-.48-.196-.918-.722-.366-.128.136-.26.234-.391.315a30 30 0 0 0-.523-.922c.255-.208.45-.518.676-.939.284-.535-.468-1.075-.701-.476-.12.302-.272.51-.438.654a33 33 0 0 0-.735-1.117c.23-.26.4-.595.612-.964.327-.574-.518-.863-.833-.323a3.4 3.4 0 0 1-.344.493c-.246-.34-.51-.684-.781-1.033.148-.225.28-.497.424-.811.332-.714-.488-1.321-.764-.54-.077.217-.187.4-.31.557a29 29 0 0 0-.846-.96c.178-.28.289-.616.374-.994.14-.646-.616-.99-.892-.302a2.5 2.5 0 0 1-.26.488 21 21 0 0 0-1.062-.99c.137-.335.17-.73.154-1.142-.03-.659-.825-.799-.888-.179-.022.226-.068.43-.124.612q-.561-.44-1.155-.828c.089-.37.093-.795.115-1.25.025-.513-.833-.352-.82-.029.017.327.02.616.008.854q-.643-.374-1.317-.671.071-.324.06-.744c-.03-.658-.655-.692-.714-.072-.004.064-.077.26-.174.484a10 10 0 0 0-.837-.25c.174-.578.068-1.13-.438-1.28a.6.6 0 0 0-.331-.003 11.39 11.39 0 0 1 9.418-8.943c-.242.182-.497.442-.777.807-.37.48.195.9.722.348.153-.161.306-.272.455-.356q.215.402.514.913c-.285.204-.493.531-.73.981-.285.536.466 1.075.7.476.132-.336.31-.556.493-.7.22.347.463.721.73 1.108-.254.263-.433.62-.662 1.024-.327.573.518.862.832.323a3.4 3.4 0 0 1 .396-.553q.368.504.781 1.02c-.17.242-.314.535-.476.884-.33.713.49 1.32.765.54.09-.252.221-.46.37-.63q.407.474.845.94c-.212.297-.344.666-.437 1.091-.14.646.616.99.892.302.089-.225.208-.42.331-.59q.505.49 1.05.95c-.192.366-.234.812-.217 1.284.03.658.824.799.888.178.03-.293.093-.552.178-.773q.562.426 1.156.807c-.145.412-.145.901-.17 1.432-.026.514.832.353.82.03-.022-.434-.026-.803.008-1.067q.658.378 1.347.68c-.08.264-.123.574-.11.943.03.659.654.693.713.073.009-.085.115-.37.26-.672.267.094.539.29.815.366-.259.637-.187 1.572.374 1.572h.004c-.9 4.686-4.482 7.931-9.006 8.79m8.42-11.556c.004 0 .008-.004.008-.004.557-.077.302-1.02-.412-.625a1.4 1.4 0 0 0-.484.234q-.466-.23-.964-.519c.28-.093.497-.144.641-.195.476-.166.009-.603-.276-.659-.527.069-.918.179-1.21.328a25 25 0 0 1-1.016-.718c.39-.056.765-.102.956-.166.476-.166.216-.633-.072-.693-.765-.05-1.334.018-1.755.17a24 24 0 0 1-1.007-.888c.493-.042 1.011-.059 1.253-.127.485-.132.255-.616-.025-.697-.884-.119-1.534-.089-2.014.06q-.408-.412-.803-.858c.489-.013 1.003 0 1.245-.051.493-.102.293-.6.017-.697-.918-.183-1.542-.208-1.988-.106a38 38 0 0 1-.616-.778c.395-.004.769-.004.964-.046.493-.102.293-.6.017-.697-.697-.136-1.21-.17-1.606-.128q-.294-.426-.578-.879c.417.05.871.119 1.046.098.458-.056.02-.604-.226-.714a9 9 0 0 0-1.3-.174q-.24-.42-.467-.854c.353.034.667.08.858.06.459-.056.268-.464.021-.574a16 16 0 0 0-.543-.204c6.164.11 11.135 5.123 11.169 11.305-.017.017-.039.034-.056.05a6 6 0 0 1-.777-.254" fill="currentColor"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Baseball</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/sports/football" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.237 8.72c6.676-5.756 15.152-5.114 17.6-3.91 2.075 2.815 1.789 12.06-4.302 17.988-8.91 8.669-17.755 5.31-18.772 4.694C.61 16.727 8.183 9.456 9.237 8.72m16.427-2.737c.36.76.609 1.745.715 2.868q-.068.294-.147.588c-.683-1.152-1.475-3.1-4.429-3.995 1.614 0 2.946.253 3.86.54M10.802 9.501c2.884-2.288 5.736-3.383 8.223-3.82 2.664.988 5.2 3.076 6.598 5.613-2.598 6.68-8.808 10.903-13.747 13.265-1.683-3.55-5.061-5.23-6.814-5.879.785-3.22 2.52-6.626 5.74-9.18m-6.16 11.581c2.054 1.046 4.334 2.745 5.085 4.424a32 32 0 0 1-3.55 1.222 11 11 0 0 1-1.246-.409c-.359-1.331-.51-3.182-.29-5.237m16.72.543c-4.976 4.437-9.473 5.659-12.921 5.458 11.067-3.574 16.001-10.07 17.84-14.792-.454 3.158-1.928 6.663-4.919 9.334M9.14 15.727q.216.115.436.242a20 20 0 0 0-.292.458c-.301.485.45.668.653.359.096-.13.195-.253.293-.38.09.069.18.138.274.22.528.461.854-.254.544-.494-.098-.076-.225-.18-.37-.295q.373-.462.752-.902c.128.095.244.187.365.288.342.286 1.272-.121.657-.583a29 29 0 0 0-.462-.34q.412-.455.823-.883c.21.144.382.268.5.353.304.216 1.19-.072.558-.58a9 9 0 0 0-.48-.36q.528-.525 1.038-.994c.283.182.522.342.658.438.336.233.974-.274.387-.678a18 18 0 0 0-.448-.296 32 32 0 0 1 .773-.66c.204.111.395.217.545.3.496.27.96-.191.56-.57a3 3 0 0 0-.388-.297c.276-.21.538-.404.777-.568.137.103.265.207.372.307.349.328.828.021.496-.305a8 8 0 0 0-.359-.331 7 7 0 0 1 .534-.298c.699-.334.152-.67-.194-.596a10 10 0 0 0-1.023.43 1.3 1.3 0 0 0-.406-.12c-.182-.005-.742.23-.467.327.086.03.171.073.257.112q-.488.273-.954.59a6 6 0 0 0-.4-.126c-.574-.15-1.156.404-.692.525.1.027.224.074.357.13q-.37.285-.722.587a4 4 0 0 0-.544-.264c-.321-.099-.964.292-.485.547.14.075.289.16.438.246q-.526.492-1 .995a14 14 0 0 0-.454-.258c-.412-.225-.938.412-.452.67q.18.094.35.194-.401.457-.751.89a3 3 0 0 0-.377-.213c-.315-.14-.916.392-.357.744l.212.135c-.26.34-.487.655-.681.933a3 3 0 0 0-.478-.231c-.367-.136-.699.429-.373.602" fill="currentColor"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Football</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/sports/ice-hockey" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M20.384 12.553c1.487-2.846 4.27-8.2 4.755-9.185.582-1.181 3.13.803 2.838 1.47-.123.28-1 2.213-1.982 4.382a1324 1324 0 0 0-2.943 6.515c-.027.068-.18.294-.367.569-.106.155-.223.326-.334.494-.357.59-.717 1.151-1.088 1.728-.4.625-.813 1.267-1.244 1.98H18.31c.496-.829 1.09-1.685 1.645-2.484.684-.985 1.307-1.883 1.61-2.533q-.058-.028-.127-.066c-.266-.145-.64-.348-.847.058-1.24 1.988-3.093 4.397-4.376 4.529-1.657.17-6.832-2.367-8.858-3.382-2.016-1.01-2.796 1.094-3.038 1.748l-.004.01c-1.118 2.367-.714 3.48-.34 3.684 2.383 1.389 4.777 2.134 6.983 2.82l.805.252v1.852c-3.766-.882-6.488-2.416-7.756-3.13q-.214-.122-.372-.209c-2.337-1.286-1.726-3.21-.88-5.87q.033-.109.069-.218c1.074-3.4 3.573-2.962 4.486-2.588.436.18 1.118.499 1.917.873 2.238 1.05 5.389 2.526 6.585 2.526 1.543 0 3.82-4.434 4.387-5.537l.074-.143a.5.5 0 0 1 .11-.145m-7.418 13.944c0 1.118 2.452 2.027 5.477 2.027s5.48-.91 5.476-2.027V23.66c0-1.117-2.451-2.026-5.476-2.026s-5.477.905-5.477 2.026zm9.33-2.438c0-.672-1.725-1.215-3.853-1.215s-3.854.548-3.854 1.219 1.725 1.215 3.854 1.215c2.132 0 3.853-.548 3.853-1.22" fill="currentColor"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Ice Hockey</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/sports/rugby" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M27.072 5.617a4.5 4.5 0 0 0-.72-.984c-2.8-2.876-11.885-2.165-17.882 3.832-5.993 5.995-6.724 15.199-3.828 17.879.282.261.613.494.98.694 1.86 1.021 4.727 1.25 7.81.543 3.077-.706 6.369-2.344 9.093-5.069a19.1 19.1 0 0 0 4.955-8.68c.834-3.256.642-6.311-.408-8.215M5.169 23.958c-1.38-3.17.02-9.656 4.583-14.219 4.58-4.58 11.021-6.311 14.301-4.546-2.173.261-4.86 1.446-7.598 3.365-1.184-.526-3.59.47-5.465 2.325-1.785 1.764-2.439 3.876-2.05 5.008-2.153 2.896-3.485 5.772-3.77 8.067m5.747-10.967c1.352-1.77 2.602-3.02 4.163-3.334 1.72.364-2.03 2.292-3.75 4.996-.36.576-1.765.106-.413-1.662m-4.37 12.446c-.593-2.002.772-5.302 3.378-8.73 1.184.184 3.223-.653 4.873-2.283 1.585-1.568 2.435-3.541 2.345-4.763 3.149-2.25 6.253-3.52 8.292-3.124.65 2.765-2.108 7.777-6.614 12.278-4.256 4.257-9.33 7.116-12.274 6.622m17.425-7.684a18.5 18.5 0 0 1-2.728 3.485 18.1 18.1 0 0 1-4.077 3.043c-2.549 1.4-5.24 2.095-7.438 2.07 3.035-.943 6.687-3.267 10.024-6.604 3.345-3.346 5.67-7.006 6.609-10.049.078 2.37-.723 5.306-2.39 8.055" fill="currentColor"></path>
+</svg>
+
+
+    <div class="subnavitem__label">Rugby</div>
+  </a>
+  </li>
+  <li>
+    <a href="https://www.hudl.com/sports/soccer" class="subnavitem subnavitem--icon" >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M16 3C8.82 3 3 8.82 3 16s5.82 13 13 13 

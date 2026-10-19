@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found – Lycos</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    :root {
+      --lycos-accent: #0066cc;
+      --lycos-accent-hover: #0052a3;
+      --lycos-dark-bg: #181c1a;
+      --lycos-dark-border: #353937;
+      --lycos-dark-text: #e8e8e8;
+      --lycos-dark-text-muted: #a0a8a4;
+      --home-news-thumb: 200px;
+      --home-surface-border: rgba(0, 0, 0, 0.08);
+      --home-text-secondary: #5c6368;
+      --home-hero-accent: rgba(0, 102, 204, 0.12);
+      --home-card-radius: 0.65rem;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      background-color: #fff;
+    }
+     
+    .lycos-footer-stack {
+      position: relative;
+      z-index: 0;
+      flex-shrink: 0;
+      width: 100%;
+    }
+    .boston-ground {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 100%;
+      height: min(58vh, 620px);
+      pointer-events: none;
+      z-index: 0;
+       
+      background-color: #fff;
+      background-image: url("/static/boston.png");
+      background-position: center bottom;
+       
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .navbar-lycos {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(180deg, #2a2e2c 0%, #181c1a 100%) !important;
+      border-bottom: 1px solid var(--lycos-dark-border);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .navbar-lycos .navbar-brand,
+    .navbar-lycos .nav-link { color: var(--lycos-dark-text) !important; }
+    .navbar-lycos .nav-link:hover { color: #fff !important; }
+    .navbar-lycos .nav-link.active { font-weight: 600; color: #7eb8f0 !important; }
+    .navbar-lycos .navbar-toggler { border-color: var(--lycos-dark-border); }
+    .navbar-lycos .navbar-toggler-icon { filter: invert(1); }
+    .navbar-lycos .nav-severe-weather {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.1rem;
+      height: 1.1rem;
+      margin-left: 0.2rem;
+      padding: 0 0.2rem;
+      border-radius: 999px;
+      background: #dc2626;
+      color: #fff !important;
+      font-size: 0.7rem;
+      font-weight: 800;
+      line-height: 1;
+      vertical-align: 0.05em;
+    }
+    .nav-global-search .input-group {
+      min-width: min(100%, 14rem);
+      max-width: 20rem;
+    }
+    .nav-search-input {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: var(--lycos-dark-border) !important;
+      color: var(--lycos-dark-text) !important;
+    }
+    .nav-search-input::placeholder {
+      color: var(--lycos-dark-text-muted);
+    }
+    .nav-search-input:focus {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: var(--lycos-accent) !important;
+      color: #fff !important;
+      box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+    }
+    .footer-lycos {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(0deg, #2a2e2c 0%, #181c1a 100%) !important;
+      border-top: 1px solid var(--lycos-dark-border);
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
+      color: var(--lycos-dark-text-muted);
+    }
+     
+    main.main-shell {
+      position: relative;
+      z-index: 1;
+      flex: 1 0 auto;
+      width: 100%;
+      max-width: 100%;
+      background: transparent;
+      min-width: 0;
+      padding-bottom: min(52vh, 580px);
+    }
+    main.main-shell > .container {
+      background-color: #fff;
+       
+      background-image: linear-gradient(
+        to bottom,
+        #fff 0%,
+        #fff calc(100% - 10rem),
+        rgba(255, 255, 255, 0.88) calc(100% - 5rem),
+        rgba(255, 255, 255, 0.72) 100%
+      );
+    }
+.footer-lycos a { color: var(--lycos-dark-text-muted); text-decoration: none; }
+.footer-lycos a:hover { color: var(--lycos-dark-text); }
+.footer-lycos .footer-made { color: var(--lycos-dark-text); }
+    .navbar-brand { font-weight: 700; }
+    .navbar-brand img { height: 2rem; width: auto; display: block; }
+    .home-logo { height: 3rem; width: auto; display: block; margin-left: auto; margin-right: auto; }
+     
+    .home-hero-band {
+      background: linear-gradient(165deg, var(--home-hero-accent) 0%, rgba(255, 255, 255, 0.92) 42%, #f8f9fa 100%);
+      border-bottom: 1px solid var(--home-surface-border);
+      width: 100%;
+    }
+     
+    main.home-main {
+      max-width: none;
+      width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .home-hero {
+      padding: 1.25rem 0 1.25rem;
+      margin-bottom: 0;
+    }
+    @media (min-width: 768px) {
+      .home-hero { padding: 1.5rem 0 1.5rem; }
+    }
+    .home-hero-panel {
+      max-width: 40rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .home-hero-kicker {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lycos-accent);
+      margin-bottom: 0.65rem;
+    }
+    .home-hero-tagline {
+      max-width: 26rem;
+      font-size: clamp(1rem, 2.3vw, 1.1875rem);
+      line-height: 1.5;
+      color: var(--home-text-secondary);
+    }
+    .home-hero-quick {
+      gap: 0.35rem 0.85rem;
+    }
+    .home-hero-quick a {
+      color: var(--lycos-accent);
+      font-weight: 600;
+      font-size: 0.8125rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .home-hero-quick a:hover { text-decoration: underline; color: var(--lycos-accent-hover); }
+    .home-search-form { max-width: 36rem; }
+    .home-search-wrap { width: 100%; }
+    .home-search-input-group {
+      border-radius: 999px !important;
+      overflow: hidden;
+      border: 1px solid var(--home-surface-border);
+      transition: box-shadow 0.15s ease;
+      background: #fff;
+    }
+    .home-search-input-group:focus-within {
+      box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+      border-color: rgba(0, 102, 204, 0.3);
+    }
+    .home-search-icon {
+      color: #8b939c;
+      padding-left: 1rem;
+      padding-right: 0.25rem;
+    }
+    .home-search-input {
+      box-shadow: none !important;
+    }
+    .home-search-input-group .btn {
+      border-radius: 0 999px 999px 0 !important;
+    }
+    .home-advertiser-tiles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1rem 1.35rem;
+      max-width: 40rem;
+      margin: 1.15rem auto 0;
+      padding: 0 0.5rem;
+    }
+    .home-advertiser-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      width: 5.4625rem;  
+      text-decoration: none;
+      color: #1a1d21;
+    }
+    .home-advertiser-tile:hover {
+      color: #1a1d21;
+    }
+    .home-advertiser-tile:hover .home-advertiser-tile-logo {
+      box-shadow: 0 4px 14px rgba(16, 24, 40, 0.12);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    .home-advertiser-tile:focus-visible {
+      outline: 2px solid #0d6efd;
+      outline-offset: 3px;
+      border-radius: 0.5rem;
+    }
+    .home-advertiser-tile-logo {
+      width: 4.3125rem;  
+      height: 4.3125rem;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px rgba(16, 24, 40, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .home-advertiser-tile-logo img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      display: block;
+    }
+    .home-advertiser-tile-name {
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.25;
+      text-align: center;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .home-suggest-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 0.4rem);
+      z-index: 30;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 1rem;
+      box-shadow: 0 10px 28px rgba(16, 24, 40, 0.12);
+      overflow: hidden;
+      text-align: left;
+    }
+    .home-suggest-forbes {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: #f3eee6;
+      color: inherit;
+      text-decoration: none;
+    }
+    .home-suggest-forbes:hover,
+    .home-suggest-forbes.is-active {
+      background: #ebe4d8;
+      color: inherit;
+    }
+    .home-suggest-forbes-mark {
+      flex: 0 0 auto;
+      min-width: 3.1rem;
+      height: 1.85rem;
+      padding: 0 0.4rem;
+      border-radius: 0.15rem;
+      background: #000;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      margin-top: 0.15rem;
+    }
+    .home-suggest-forbes-body { min-width: 0; }
+    .home-suggest-forbes-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.3;
+      margin: 0 0 0.2rem;
+    }
+    .home-suggest-forbes-meta {
+      font-size: 0.78rem;
+      color: #5c6570;
+      line-height: 1.3;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .home-suggest-forbes-meta strong {
+      color: #1a1d21;
+      font-weight: 700;
+    }
+    .home-suggest-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1rem;
+      color: #1a1d21;
+      text-decoration: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    .home-suggest-item:hover,
+    .home-suggest-item.is-active {
+      background: #f5f7f9;
+      color: #1a1d21;
+    }
+    .home-suggest-item-icon {
+      flex: 0 0 auto;
+      color: #9aa3ad;
+      display: inline-flex;
+    }
+    .home-suggest-item-text {
+      font-size: 0.95rem;
+      line-height: 1.35;
+      min-width: 0;
+    }
+    .home-suggest-item-text .suggest-rest {
+      font-weight: 700;
+    }
+     
+    .home-main-columns {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1rem;
+      padding-top: 0;
+      padding-left: clamp(0.75rem, 2vw, 1rem);
+      padding-right: clamp(0.75rem, 2vw, 1rem);
+    }
+    @media (min-width: 992px) {
+      .home-main-columns {
+        margin-top: 1.25rem;
+      }
+    }
+    .home-intro-line {
+      font-size: 0.9375rem;
+      color: var(--home-text-secondary);
+      line-height: 1.5;
+      max-width: 36rem;
+    }
+    .home-section-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #5c636a;
+      margin: 0 0 1.125rem 0;
+    }
+    .home-main-news { min-width: 0; }
+    .home-news { width: 100%; margin-left: auto; margin-right: auto; }
+    .home-news-tile {
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .home-news-tile-link:focus-visible {
+      outline: 2px solid var(--lycos-accent);
+      outline-offset: 2px;
+      border-radius: 0.375rem;
+    }
+    .home-news-tile-link:hover .home-news-tile {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+      border-color: rgba(0, 102, 204, 0.22) !important;
+    }
+    .home-news-tile-inner { min-height: 100%; }
+    .home-news-tile-media {
+      width: var(--home-news-thumb);
+      flex: 0 0 var(--home-news-thumb);
+      padding: 0.75rem 0 0.75rem 0.75rem;
+      display: flex;
+      align-items: center;
+      align-self: center;
+    }
+    .home-news-tile-img {
+      width: 100%;
+      height: 112px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      display: block;
+      background: rgba(0, 0, 0, 0.06);
+    }
+    .home-news-tile-body { flex: 1 1 auto; }
+    .home-news-cat { color: var(--lycos-accent); font-weight: 600; }
+    .home-news-source { color: var(--home-text-secondary); }
+    .home-news-title { line-height: 1.35; }
+    .home-news-tile-link:hover .home-news-title { text-decoration: underline; color: var(--lycos-accent) !important; }
+    .home-sidebar {
+      min-width: 0;
+    }
+    .home-sidebar-card {
+      border-radius: var(--home-card-radius) !important;
+      border: 1px solid var(--home-surface-border) !important;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .home-sidebar-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+      border-color: rgba(0, 102, 204, 0.12) !important;
+    }
+    .home-sidebar-card .home-section-title {
+      margin-bottom: 1rem;
+    }
+    .home-travel-lead {
+      font-size: 0.8125rem;
+      color: var(--home-text-secondary);
+      line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+    .home-travel-more {
+      margin-top: 0.85rem;
+    }
+    .home-travel-more a {
+      color: var(--lycos-accent);
+      text-decoration: none;
+    }
+    .home-travel-more a:hover {
+      color: var(--lycos-accent-hover);
+      text-decoration: underline;
+    }
+    @media (max-width: 991.98px) {
+      .home-sidebar {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+      }
+    }
+    @media (min-width: 1200px) {
+      .home-sidebar { position: sticky; top: 1rem; align-self: flex-start; }
+    }
+    .home-weather { width: 100%; }
+    .home-weather-mount {
+      width: 100%;
+      max-width: 100%;
+    }
+    .home-weather-mount .home-weather-inner {
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid var(--home-surface-border);
+      box-sizing: border-box;
+    }
+    .home-weather-surface-link:hover .home-weather-inner {
+      border-color: rgba(13, 110, 253, 0.35);
+    }
+    .home-weather-surface-link:focus-visible {
+      outline: 2px solid #0d6efd;
+      outline-offset: 3px;
+    }
+    .home-weather-icon { object-fit: contain; }
+    .home-weather-attribution {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .home-weather-accu-link {
+      display: inline-flex;
+      line-height: 0;
+      text-decoration: none;
+    }
+    .home-weather-accu-logo {
+      width: 100px;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: left center;
+    }
+    .home-sidebar-extra:not([hidden]) { display: block; }
+    .home-news-desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.5;
+      color: var(--home-text-secondary);
+    }
+    @media (max-width: 575.98px) {
+      .home-news-tile-media {
+        width: 120px;
+        flex-basis: 120px;
+        padding-left: 0.5rem;
+      }
+      .home-news-tile-img { height: 72px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .home-news-tile,
+      .home-search-input-group {
+        transition: none;
+      }
+    }
+    main { min-height: 60vh; flex: 1; }
+
+    .not-found-code {
+      letter-spacing: 0.2em;
+      color: var(--lycos-accent);
+    }
+    .not-found-path {
+      font-size: 0.9em;
+      background: rgba(0, 102, 204, 0.08);
+      color: #1a1d21;
+      word-break: break-all;
+    }
+
+    .search-side-news { position: sticky; top: 1rem; }
+    .search-side-news-title { color: var(--lycos-accent); font-size: 0.9rem; line-height: 1.35; }
+    .search-side-news-title:hover { text-decoration: underline !important; color: #0052a3; }
+    .search-side-news-thumb { max-height: 120px; object-fit: cover; display: block; }
+
+    .search-empty { max-width: 36rem; }
+    .search-empty-form { max-width: 36rem; }
+    .search-empty-input-group {
+      border-radius: 0.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(24, 28, 26, 0.18);
+    }
+    .search-empty-input-group:focus-within {
+      border-color: rgba(0, 102, 204, 0.55);
+      box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.15);
+    }
+
+    .shopping-ad-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #b07d3a;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .shopping-amazon-btn .shopping-ad-tag {
+      color: rgba(92, 52, 8, 0.55);
+    }
+    .shopping-cat-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .shopping-cat-pill {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(24, 28, 26, 0.14);
+      background: #fff;
+      color: #3a3f3d;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+    .shopping-cat-pill:hover {
+      border-color: rgba(0, 102, 204, 0.35);
+      color: var(--lycos-accent);
+      text-decoration: none;
+    }
+    .shopping-cat-pill.active {
+      background: var(--lycos-dark-bg);
+      border-color: var(--lycos-dark-bg);
+      color: #fff;
+    }
+    .shopping-product {
+      border: 1px solid rgba(24, 28, 26, 0.1);
+      border-radius: 0.65rem;
+      background: #fff;
+    }
+    .shopping-product-media {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 11rem;
+      background: #f3f4f6;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .shopping-product-img {
+      width: 100%;
+      max-width: 11rem;
+      height: auto;
+      max-height: 11rem;
+      object-fit: contain;
+      display: block;
+    }
+    .shopping-product-title { color: var(--lycos-accent); }
+    .shopping-product-title:hover { color: var(--lycos-accent-hover); text-decoration: underline !important; }
+    .shopping-amazon-btn {
+      background: #ff9900;
+      border-color: #ff9900;
+      color: #111827;
+      font-weight: 600;
+    }
+    .shopping-amazon-btn:hover {
+      background: #e88a00;
+      border-color: #e88a00;
+      color: #111827;
+    }
+    .shopping-visit-amazon {
+      font-weight: 700;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .shopping-footer-disclaimer {
+      border-top: 1px solid rgba(24, 28, 26, 0.1);
+    }
+
+     
+    .serp-section { max-width: 42rem; }
+    .serp-section-heading {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #70757a;
+      margin: 0 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(24, 28, 26, 0.12);
+    }
+    .serp-section-results {
+      padding-top: 0.25rem;
+    }
+    .serp-section-ads + .serp-section-results {
+      margin-top: 0.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(24, 28, 26, 0.1);
+    }
+    .serp-ad,
+    .serp-result { max-width: 42rem; }
+    .serp-ad-title,
+    .serp-result-title {
+      display: inline-block;
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: #1a0dab;
+      text-decoration: none;
+      margin: 0 0 0.125rem 0;
+    }
+    .serp-ad-title:hover,
+    .serp-ad-title:focus,
+    .serp-result-title:hover,
+    .serp-result-title:focus {
+      text-decoration: underline;
+    }
+    .serp-ad-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.5rem;
+      margin: 0 0 0.25rem 0;
+      line-height: 1.35;
+    }
+    .serp-ad-display-url {
+      font-size: 0.875rem;
+      color: #016723;
+      text-decoration: underline;
+    }
+    .serp-ad-display-url:hover,
+    .serp-ad-display-url:focus {
+      color: #014a19;
+    }
+    .serp-ad-label {
+      font-size: 0.75rem;
+      color: #70757a;
+      font-weight: 400;
+      text-transform: capitalize;
+      user-select: none;
+    }
+    .serp-ad-description,
+    .serp-result-desc {
+      font-size: 0.875rem;
+      line-height: 1.45;
+      color: #4d5156;
+      margin: 0;
+    }
+    .serp-keyword-suggestions {
+      max-width: 42rem;
+    }
+    .serp-keyword-suggestions .serp-section-heading {
+      margin-bottom: 0.75rem;
+    }
+    .serp-keyword-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .serp-keyword-pill {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8125rem;
+      line-height: 1.3;
+      color: #1a1d21;
+      text-decoration: none;
+      background: #f1f3f4;
+      border: 1px solid rgba(24, 28, 26, 0.12);
+      border-radius: 999px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .serp-keyword-pill:hover,
+    .serp-keyword-pill:focus {
+      background: #e8f0fe;
+      border-color: rgba(0, 102, 204, 0.35);
+      color: var(--lycos-accent);
+      text-decoration: none;
+    }
+    .serp-result-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem;
+      margin: 0 0 0.25rem 0;
+      line-height: 1.35;
+    }
+    .serp-result-url {
+      font-size: 0.875rem;
+      color: #016723;
+      text-decoration: underline;
+    }
+    .taboola-homepage-wrap {
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: clamp(0.75rem, 2vw, 1rem);
+      padding-right: clamp(0.75rem, 2vw, 1rem);
+    }
+     
+    @media (min-width: 992px) {
+      main.home-main > .taboola-homepage-wrap {
+        max-width: 50%;
+      }
+    }
+     
+    #root > .taboola-homepage-wrap {
+      max-width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 1.5rem;
+    }
+    .taboola-rightrail-wrap {
+      width: 100%;
+      max-width: 100%;
+    }
+    .taboola-rightrail-wrap #taboola-search-rightrail {
+      width: 100%;
+    }
+    .lycos-consent-banner {
+      position: fixed;
+      z-index: 1080;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 1rem 1.25rem;
+      background: #1a1d21;
+      color: #f4f4f4;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.25);
+    }
+    .lycos-consent-banner p { margin: 0 0 0.75rem; font-size: 0.9rem; line-height: 1.45; }
+    .lycos-consent-banner a { color: #9ec9f5; }
+    .lycos-consent-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .lycos-consent-ca-bar {
+      position: fixed;
+      z-index: 1070;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0.75rem 1.25rem;
+      background: #fff;
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+      font-size: 0.85rem;
+    }
+  </style>
+  
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WHVZFPX5');</script>
+  
+  
+  
+  <script type="text/javascript">
+    window._taboola = window._taboola || [];
+    
+    
+  </script>
+  
+  
+  
+
+
+</head>
+<body>
+  
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WHVZFPX5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+  <nav class="navbar navbar-expand-md navbar-lycos">
+    <div class="container">
+      <a class="navbar-brand" href="/"><img src="/static/logo_white.png" alt="Lycos"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link " href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/tools">Tools</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/weather">Weather</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/travel">Travel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/news">News</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://jobs.lycos.com" target="_blank" rel="noopener noreferrer">Jobs</a>
+          </li>
+        </ul>
+        
+        <form action="/search" method="get" class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 ms-md-auto mt-3 mt-md-0 nav-global-search" role="search" aria-label="Web search">
+          <label for="nav-search-kw" class="visually-hidden">Search query</label>
+          <div class="input-group input-group-sm">
+            <input id="nav-search-kw" type="search" name="kw" class="form-control nav-search-input" placeholder="Search the web…" value="" autocomplete="off">
+            <button type="submit" class="btn btn-outline-light">Search</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </nav>
+  <main class="main-shell py-4">
+    <div class="container">
+    
+<div class="not-found-page py-4 py-md-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-7 text-center">
+      <p class="not-found-code text-uppercase small fw-semibold mb-2">404</p>
+      <h1 class="h2 fw-bold mb-3">Page not found</h1>
+      <p class="text-secondary mb-4">
+        <br><img src="/static/lycos_404_dog.webp" alt="404 dog" style="max-height:300px;" class="img-fluid mb-4"><br>
+        
+        Nothing lives at <code class="not-found-path px-1 rounded">/robots.txt</code>. The link may be outdated or the page may have moved.
+        
+      </p>
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <a class="btn btn-dark px-4" href="/">Back to home</a>
+        <a class="btn btn-outline-secondary px-4" href="/search">Search the web</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+    
+  </main>
+  <div class="lycos-footer-stack">
+    <div class="boston-ground" aria-hidden="true"></div>
+    <footer class="footer-lycos py-3">
+      <div class="container small">
+        <a href="/">Lycos</a> ·  <a href="/tools">Tools</a> · <a href="https://www.accuweather.com?partner=web_lycos&#43;inc._adc" target="_blank" rel="noopener noreferrer">Weather</a> · <a href="/travel">Travel</a> · <a href="/news">News</a> · <a href="https://jobs.lycos.com" target="_blank" rel="noopener noreferrer">Jobs</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/advertisers">For Advertisers</a>
+        
+        
+      </div>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  
+  
+  <div id="lycos-consent-root" hidden data-cookie-days="180"></div>
+  
+  <div class="lycos-consent-banner" role="dialog" aria-labelledby="lycos-consent-eu-title" aria-describedby="lycos-consent-eu-desc">
+    <p id="lycos-consent-eu-title" class="fw-semibold mb-2">Cookies and personalized recommendations</p>
+    <p id="lycos-consent-eu-desc">We use advertising partners (including Taboola) to show recommendations. Accept to allow personalized ads, or decline for contextual ads only. See our <a href="/privacy">privacy policy</a>.</p>
+    <div class="lycos-consent-actions">
+      <button type="button" class="btn btn-light btn-sm" id="lycos-consent-eu-accept">Accept</button>
+      <button type="button" class="btn btn-outline-light btn-sm" id="lycos-consent-eu-decline">Decline</button>
+    </div>
+  </div>
+  
+  
+  <script src="/static/consent.js" defer></script>
+  
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+        
+    <!-- adverts:header start -->
+    <link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin>
+    <link rel="preconnect" href="https://tpc.googlesyndication.com" crossorigin>
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script>
+    window.googletag = window.googletag || {cmd: []};
+    window.__debugAds = window.location && window.location.search && window.location.search.includes('googfc');
+    window.isElemVisible = (div) => {
+        // https://stackoverflow.com/a/33456469/50475
+        return div && (!!(div.offsetWidth || div.offsetHeight || div.getClientRects().length));
+    }
+
+    // Relocate Ads (and mobile-specific overrides) after DOM is ready
+    window.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-selector]').forEach(ad => {
+            if (target = document.querySelector(ad.getAttribute('data-selector'))) {
+                if (ad.closest('.ad-sticky-slide')) {
+                    ad = ad.closest('.ad-sticky-slide');
+                }
+                target.insertAdjacentElement('afterend', ad);
+            }
+        });
+
+        if (window.matchMedia('(max-width: 720px)').matches) {
+            document.querySelectorAll('[data-selector-mobile]').forEach(ad => {
+                if (target = document.querySelector(ad.getAttribute('data-selector-mobile'))) {
+                    target.insertAdjacentElement('afterend', ad);
+                }
+            });
+        }
+    });
+
+    googletag.cmd.push(function() {
+                
+        googletag.defineSlot('/1029551/Dawn-Responsive-ATF-MREC', [[300,250]], 'div-gpt-ad-1683363673257-0')
+            .defineSizeMapping([[[0,0],[[300,250]]]])
+            .addService(googletag.pubads());        
+        googletag.defineSlot('/1029551/Dawn-Responsive-SKY-MREC', [[300,250],[160,600],[300,600]], 'div-gpt-ad-1683363860950-0')
+            .defineSizeMapping([[[0,0],[[300,250],[160,600],[300,600]]]])
+            .addService(googletag.pubads());        
+        googletag.defineSlot('/1029551/Dawn-Responsive-Footer-Stickable-Leaderboard', [[300,250],[728,90],[320,50],[320,100],[300,50],[970,250],[970,90]], 'div-gpt-ad-1693559286339-0')
+            .defineSizeMapping([[[970,0],[[728,90],[320,50],[320,100],[300,50],[970,250],[970,90]]],[[728,0],[[728,90],[320,50],[320,100],[300,50]]],[[0,0],[[300,250],[320,50],[320,100],[300,50]]]])
+            .addService(googletag.pubads());        
+        googletag.defineSlot('/1029551/Dawn-Responsive-Header-Leaderboard', [[300,250],[728,90],[320,50],[320,100],[300,50],[970,250],[970,90]], 'div-gpt-ad-1683363187247-0')
+            .defineSizeMapping([[[970,0],[[970,250],[970,90],[728,90],[320,50],[320,100],[300,50]]],[[728,0],[[728,90],[320,50],[320,100],[300,50]]],[[0,0],[[320,50],[320,100],[300,50]]]])
+            .addService(googletag.pubads());        
+        googletag.defineSlot('/1029551/Dawn-Responsive-Header-Pixel', [[1,1]], 'div-gpt-ad-1785229313610-0')
+            .defineSizeMapping([])
+            .addService(googletag.pubads());
+        
+                    
+        googletag.setConfig({
+            lazyLoad: {
+                fetchMarginPercent: -1,
+                renderMarginPercent: -1,
+                mobileScaling: 1.0,
+            },
+            
+            singleRequest: true,
+            targeting: {
+                'site': ["www.dawn.com"]
+            }
+        });
+
+        googletag.enableServices();
+
+        // Eager load anchor slot right away
+        if (typeof anchorSlot !== 'undefined' && anchorSlot) {
+            googletag.pubads().refresh(anchorSlot);
+        }
+
+        // Eager-load handler — deferred to DOMContentLoaded since ad divs
+        // are in <body> but this script runs in <head>
+        function handleEagerSlots() {
+            var prebidEnabled = false;
+            document.querySelectorAll('[data-eager="true"]').forEach(function(eagerSlot) {
+                var slotId = eagerSlot.id;
+                if (slotId) {
+                    
+
+                    // When Prebid is disabled, GPT's native lazy-loader will automatically
+                    // identify ATF slots as in-viewport and fetch them — no manual refresh needed.
+                    // Manual refresh() is only needed when disableInitialLoad() is active (Prebid).
+                    if (!prebidEnabled) {
+                        if (window.__debugAds) { console.log('EagerLoad: skipping refresh() — GPT lazy-loader handles ATF: ' + slotId); }
+                        return;
+                    }
+
+                    // Find the slot by element ID directly
+                    var slot = googletag.pubads().getSlots().find(function(s) { return s.getSlotElementId() === slotId; });
+                    if (slot) {
+                        if (window.__debugAds) { console.log('Slot to EagerLoad: ' + slot.getAdUnitPath() + ' ' + slotId); }
+                        googletag.pubads().refresh([slot]);
+                    }
+                }
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', handleEagerSlots);
+        } else {
+            handleEagerSlots();
+        }
+        
+        
+        window.refreshAd = ((id, smart = true) => {
+            const INVIEW_THRESHOLD = 30;
+            const WAIT_TIMEOUT = 3000;
+            const delayedIds = new Set();
+
+            const log = (label, extra = '') =>
+                window.__debugAds && console.log(new Date().toISOString().substr(11, 8) + ' ' + label + '(' + extra + ')');
+
+            const getMatchingSlots = id =>
+                googletag.pubads().getSlots().filter(
+                    slot => slot.getAdUnitPath() === id || slot.getSlotElementId() === id
+                );
+            
+            // no smart refresh, just refresh the ad after x seconds
+            if (smart === false) {
+                log('dumb refreshAd', id + '!!');
+                googletag.pubads().refresh(getMatchingSlots(id));
+                return;
+            }
+
+            function attemptRefresh(id, doRefresh, remainingTimeout = 3000) {
+                log('delayedRefresh', id + ', ' + doRefresh + ', ' + remainingTimeout);
+
+                if (doRefresh && !delayedIds.has(id)) {
+                    if (remainingTimeout === 0) {
+                        log('refreshAd', id + '!!');
+                        googletag.pubads().refresh(getMatchingSlots(id));
+                        return;
+                    }
+                    
+                    delayedIds.add(id);
+                    
+                    setTimeout(() => {
+                        if (!delayedIds.has(id)) return;
+
+                        delayedIds.delete(id);
+                        const percent = percentageInView(id);
+                        attemptRefresh(id, percent >= INVIEW_THRESHOLD, remainingTimeout - 1000);
+                    }, WAIT_TIMEOUT);
+                }
+                
+                if (!doRefresh) {
+                    delayedIds.delete(id);
+                    setTimeout(() => refreshAd(id, true), 1000);
+                }
+            }
+            
+            log('refreshAd', id);
+
+            const slots = getMatchingSlots(id);
+            for (const slot of slots) {
+                const percent = percentageInView(id);
+                log('inViewPercent', percent);
+                // smart refresh recurrsive function to handle ad refreshing
+                // when in view and x seconds have passed
+                attemptRefresh(id, percent >= INVIEW_THRESHOLD);
+            }
+        }); 
+        
+        window.percentageInView = ((id) => {
+            const element = document.getElementById(id);
+            if (!element) {
+                return 0;
+            }
+            
+            let adRect = element.getBoundingClientRect();
+            
+            let needsHiding = false;
+            if (adRect.x == 0) {
+                adRect = element.getBoundingClientRect();
+                element.style.display = 'block';
+                needsHiding = true;
+                
+            }
+            
+            // Calculate visible vertical height
+            const visibleHeight = Math.min(adRect.bottom, window.innerHeight) - Math.max(adRect.top, 0);
+
+            // Ensure visibility is non-negative
+            const clampedVisibleHeight = Math.max(0, visibleHeight);
+            const totalHeight = adRect.height;
+
+            // Calculate vertical percentage in view
+            const percentageInView = totalHeight > 0 ? (clampedVisibleHeight / totalHeight) * 100 : 0;
+
+            if (needsHiding) element.style.display = 'none';
+            
+            return percentageInView;
+        });
+        
+        
+        
+        // <div data-refresh="30" id='div-gpt-ad-1234567890123-0' ...
+        // https://developers.google.com/publisher-tag/reference#googletag.events.SlotRenderEndedEvent
+        googletag.pubads().addEventListener("slotRenderEnded", (e) => {
+            const id = e.slot.getSlotElementId();
+            const element = document.getElementById(id);
+            if (!element) return;
+
+            const isFilled   = !e.isEmpty;
+            const isDebug    = window.__debugAds;
+            const hasSize    = e.size && (e.size[0] > 1 || e.size[1] > 1);
+            const wantsFloat = element.dataset.floating === 'true' && typeof initFloatingAdUnit === 'function';
+
+            // Apply visual styling only to ads with real dimensions
+            if (isFilled && hasSize) {
+                element.classList.add('ad-rendered');
+                const renderedClasses = (element.getAttribute('data-rendered-classes') || '').trim();
+                if (renderedClasses) element.classList.add(...renderedClasses.split(/\s+/));
+            }
+
+            if (isFilled) {
+                console.log(new Date().toISOString().substr(11, 8) + ' %cADVERT%c: ' + (e.size ? e.size[0] + ',' + e.size[1] : '1x1') + ' | Id: ' + id + ' | Path: ' + e.slot.getAdUnitPath() + ' | Advertiser: ' + e.advertiserId + ' | LineItem: ' + (e.lineItemId || 'Adx') + ' | Creative: ' + e.creativeId, 'color: orange;', 'color: initial;');
+            } else if (isDebug) {
+                console.log(new Date().toISOString().substr(11, 8) + ' %cADVERT%c: (empty/debug) | Id: ' + id + ' | Path: ' + e.slot.getAdUnitPath(), 'color: orange;', 'color: initial;');
+            }
+
+            if ((isFilled || isDebug) && wantsFloat) {
+                initFloatingAdUnit(element);
+            }
+
+            // data-refresh
+            const smartRefreshSeconds = element.getAttribute('data-smart-refresh') ?? null;
+            const seconds = element.getAttribute('data-refresh') ?? smartRefreshSeconds;
+            if (seconds) {
+                const isSmart = smartRefreshSeconds ?? false;
+                console.log(new Date().toISOString().substr(11, 8) + ' %crefreshAd%c(' + id + ', ' + isSmart  + ') in ' + seconds + 's ' + e.slot.getAdUnitPath(), 'color: orange;', 'color: initial;');
+                // We clear the timeouts in case refresh was initiated via data-refresh
+                // but then also called manually refreshAd(id, boolean) which will create two timers.
+                // Or if the user called refreshAd multiple times we just bullet proof the code
+                // since its adverts and want to avoid violations and be extra careful.
+                window.__refreshAdTimeouts = window.__refreshAdTimeouts || [];
+                clearTimeout(window.__refreshAdTimeouts[id]);
+                window.__refreshAdTimeouts[id] = setTimeout(() => refreshAd(id, isSmart), seconds * 1000);
+            };
+        });
+
+
+        
+        // create an array of rendered slots
+        // this event is fired only for ads with content, no empty slots (SlotRenderEndedEvent)
+        // https://developers.google.com/publisher-tag/reference#googletag.events.SlotOnloadEvent
+        googletag.pubads().addEventListener('slotOnload', function(e) {
+            const id = e.slot.getSlotElementId(); 
+            const slot = document.getElementById(id);
+            
+            const parent = slot.closest('.ad-sticky-slide');
+            if (parent) {
+                const height = slot.getBoundingClientRect().height * 1.5;
+                parent.style.width = '100%';
+                parent.style.height = height + 'px';
+                parent.style.backgroundColor = '#fafafa';
+                parent.style.marginBottom = '16px';
+            }
+        });
+
+        googletag.pubads().getSlots().forEach(slot => {
+            const divId = slot.getSlotElementId();
+            const div = document.getElementById(divId);
+            // Prevent collapsing on data-collapse="false"
+            if (div && div.dataset.collapse === 'false') {
+                slot.setCollapseEmptyDiv(false);
+            }
+        });
+        
+        if (__debugAds) {
+            function logEventDetails(name, e) {
+                const id = e.slot.getSlotElementId(); 
+                const slot = document.getElementById(id);
+                const isEagerLoaded = slot.dataset.eager === "true";
+
+                console.log('');
+                console.log('=============== Event Details ' + name + ' ====================');
+                console.log('[AdUnitPath]', e.slot.getAdUnitPath());
+                console.log('[Id]', id);
+                console.log('[EagerLoaded]', isEagerLoaded);
+                console.log('[event]', e);
+            }
+            googletag.pubads().addEventListener('slotRequested', e => {
+                logEventDetails('slotRequested', e);
+            });
+            googletag.pubads().addEventListener('slotRenderEnded', e => {
+                logEventDetails('slotRenderEnded', e);
+            });
+            
+            // debugging is enabled, add bgcolor and padding on all ad divs
+            document.querySelectorAll('[id^="div-gpt-ad-"]').forEach(el => {
+                var hasError = el.classList.contains('advert-error');
+                el.style.backgroundColor = hasError ? '#ecc' : '#ccc';
+                el.title = el.dataset.name || '';
+                el.innerHTML = hasError ? el.dataset.name : '';
+                if (hasError) {
+                    el.style.padding = '10px';
+                }
+                el.style.height = el.dataset.height || '';
+                el.style.width = el.dataset.width || '';
+
+                var renderedClasses = (el.getAttribute('data-rendered-classes') || '').trim();
+                if (renderedClasses) el.classList.add(...renderedClasses.split(/\s+/));
+            });
+        } else {
+            googletag.pubads().collapseEmptyDivs();
+        }
+        
+    });
+    </script>
+            
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <!--[if IE]> <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <![endif]-->
+    <title>Not Found - DAWN.COM</title> 
+    <meta name='subject' content='Your window to latest news, analysis and features from Pakistan, South Asia and the world.' />  
+    <meta property='fb:app_id' content='1383068068604634' />  
+    <meta property='og:locale' content='en_US' /> 
+    <link rel='canonical' href='https://www.dawn.com/llms.txt' />   
+    
+    <link rel='index' href='https://www.dawn.com/' />
+    <meta name='twitter:image' content='https://www.dawn.com/_img/social-default.jpg' />
+    <meta property='og:image' content='https://www.dawn.com/_img/social-default.jpg' />
+    <meta itemprop='image' content='https://www.dawn.com/_img/social-default.jpg' />
+    <meta name='robots' content='max-image-preview:large' />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C521GRS8DF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        window.googletag = window.googletag || {cmd: []};
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-C521GRS8DF', {
+           send_page_view: false
+       });
+    </script>
+    <script data-infinite='true'>
+        // 'Subcategory' is actually Primary Subcategory
+        gtag('event', 'page_view', {
+            "Category": "404","Categories": "404",
+            "non_interaction": true
+        });
+    </script>
+            <!-- - - - - start:counters - - - - -->
+            <script type='text/javascript' data-infinite='true'>
+                function runMyCounter() {
+                    Counter.count([{"category":"404"}]);
+                }
+
+                // Check the document's state
+                if (document.readyState === "interactive" || document.readyState === "complete") {
+                    // If already loaded, run it now
+                    runMyCounter();
+                } else {
+                    // Otherwise, wait for the event
+                    document.addEventListener("DOMContentLoaded", runMyCounter);
+                }
+            </script>
+        <!-- - - - - end:counters - - - - -->    
+    <style type='text/css'>
+    /* CRITICALCSS */
+    @charset "UTF-8";@font-face{font-family:NafeesNaksh;font-style:normal;font-weight:400;unicode-range:U+06??,U+0750-077f,U+fb50-fdff,U+fe70-feff;src:url(https://cdn.jsdelivr.net/npm/urdu-web-fonts@1.0.3/Nafees-Web-Naskh/fonts/Nafees-Web-Naskh.woff) format("woff")}@font-face{font-family:"Playfair Display Fallback";src:local("Times New Roman");font-weight:400;font-style:normal;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:"Playfair Display Fallback";src:local("Times New Roman Bold");font-weight:700;font-style:normal;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:"Playfair Display Fallback";src:local("Times New Roman Italic");font-weight:400;font-style:italic;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:"Playfair Display Fallback";src:local("Times New Roman Bold Italic");font-weight:700;font-style:italic;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTXtHA_A.ttf) format('truetype')}@font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_k-UXtHA_A.ttf) format('truetype')}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtY.ttf) format('truetype')}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKeiunDXbtY.ttf) format('truetype')}@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url(https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKfsunDXbtY.ttf) format('truetype')}@font-face{font-family:Playfair Display Fallback;src:local(Times New Roman);font-weight:400;font-style:normal;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:Playfair Display Fallback;src:local(Times New Roman Bold);font-weight:700;font-style:normal;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:Playfair Display Fallback;src:local(Times New Roman Italic);font-weight:400;font-style:italic;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@font-face{font-family:Playfair Display Fallback;src:local(Times New Roman Bold Italic);font-weight:700;font-style:italic;ascent-override:101.19%;descent-override:23.47%;line-gap-override:0%;size-adjust:106.93%}@media (max-width:720px){.box .media--left{float:none;margin-right:0}.media--expand-25{margin-left:0;height:100%;width:100%}}.float-left{float:left}.-ml-1\.5{margin-left:-.375rem}.-mt-4{margin-top:-1rem}.mr-4{margin-right:1rem}.mt-3{margin-top:.75rem}.w-1\/10{width:10%}.w-9\/10{width:90%}.grid-flow-row{grid-auto-flow:row}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.bg-beige-300{background-color:rgba(var(--beige-300-rgb,248 243 232)/var(--tw-bg-opacity,1))}.text-left{text-align:left}.text-3\.25{font-size:.8125rem}.leading-normal{line-height:1.5}.tracking-wide{letter-spacing:.025em}ul{list-style:none;margin:0;padding:0}.media__item--vignette>:after{position:absolute;top:0;left:0;height:100%;width:100%;background-color:var(--black,#000)}.media__item--vignette>:after{opacity:.35;content:""}.media__item--vignette-light>:after{position:absolute;top:0;left:0;height:100%;width:100%;background-color:var(--black,#000)}.media__item--vignette-light>:after{opacity:.1;content:""}.media--fill img{height:100%;width:100%}@media (min-width:720px){.sm\:mb-4{margin-bottom:1rem}.sm\:w-3\/10{width:30%}.sm\:w-5\/12{width:41.666667%}.sm\:w-7\/10{width:70%}.sm\:max-w-full{max-width:100%}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:gap-6{gap:1.5rem}.sm\:border-none{border-style:none}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pb-0{padding-bottom:0}.sm\:pl-5\.5{padding-left:1.375rem}.sm\:pr-0\.5{padding-right:.125rem}.sm\:text-3\.25{font-size:.8125rem}.sm\:text-3{font-size:.75rem}.media--left{padding-right:.5rem}.media--right{padding-left:.5rem}.sm\:mb-0{margin-bottom:0}.sm\:ml-3{margin-left:.75rem}.sm\:ml-4{margin-left:1rem}.sm\:mt-3{margin-top:.75rem}.sm\:mt-4{margin-top:1rem}.sm\:block{display:block}.sm\:inline-block{display:inline-block}.sm\:flex{display:flex}.sm\:hidden{display:none}.sm\:w-1\/2{width:50%}.sm\:w-auto{width:auto}.sm\:w-full{width:100%}.sm\:flex-row{flex-direction:row}.sm\:flex-row-reverse{flex-direction:row-reverse}.sm\:items-start{align-items:flex-start}.sm\:px-0{padding-left:0;padding-right:0}.sm\:px-1{padding-left:.25rem;padding-right:.25rem}.sm\:px-6\.5{padding-left:1.625rem;padding-right:1.625rem}.sm\:py-4{padding-top:1rem;padding-bottom:1rem}.sm\:text-3\.5{font-size:.875rem}}@media (min-width:960px){.md\:w-full{width:100%}.md\:ad-250{min-height:270px}}.ad-rendered:not(.pixelad):before{content:"Advertisement";display:block;position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:10px;font-family:Arial;color:#888}nav.tabs a{border-style:solid;border-color:#fff;border-width:0 1px 1px;background:#ddd;color:#666}nav.tabs a.active{border-top:2px solid red;border-bottom:1px solid #eee;border-left:none;border-right:none;background:#eee}*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(147,197,253,0.5);--tw-ring-offset-shadow:0 0 transparent;--tw-ring-shadow:0 0 transparent;--tw-shadow:0 0 transparent;--tw-shadow-colored:0 0 transparent;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(147,197,253,0.5);--tw-ring-offset-shadow:0 0 transparent;--tw-ring-shadow:0 0 transparent;--tw-shadow:0 0 transparent;--tw-shadow-colored:0 0 transparent;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }*,:after,:before{box-sizing:border-box;border:0 solid rgba(var(--gray-200-rgb,229 231 235)/var(--tw-bg-opacity,1))}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:NafeesNaksh,ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal}body{margin:0;line-height:inherit}h2,h3{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}button,input{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button{text-transform:none}button{-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}figure,h2,h3,p,pre{margin:0}ol,ul{list-style:none;margin:0;padding:0}input::-moz-placeholder{opacity:1;color:rgba(var(--gray-400-rgb,159 166 178)/var(--tw-bg-opacity,1))}input:-ms-input-placeholder{opacity:1;color:rgba(var(--gray-400-rgb,159 166 178)/var(--tw-bg-opacity,1))}iframe,img,svg{display:block;vertical-align:middle}img{max-width:100%;height:auto}[type=text]{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-color:#fff;border-color:rgba(var(--gray-500-rgb,107 114 128)/var(--tw-bg-opacity,1));border-width:1px;border-radius:0;padding:.5rem .75rem;font-size:1rem;line-height:1.5rem;--tw-shadow:0 0 transparent}input::-moz-placeholder{color:rgba(var(--gray-500-rgb,107 114 128)/var(--tw-bg-opacity,1));opacity:1}input:-ms-input-placeholder{color:rgba(var(--gray-500-rgb,107 114 128)/var(--tw-bg-opacity,1));opacity:1}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-date-and-time-value{min-height:1.5em;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-meridiem-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-year-field{padding-top:0;padding-bottom:0}.container{width:100%}@media (min-width:720px){.container{max-width:720px}}@media (min-width:960px){.container{max-width:960px}}@media (min-width:1280px){.lg\:w-full{width:100%}.container{max-width:1280px}}.container{margin-left:auto;margin-right:auto;padding-left:.5rem;padding-right:.5rem}@media (min-width:960px){.container{margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}}figure.media{position:relative;clear:both;max-width:100%;overflow:hidden}.media__item{position:relative;display:block;text-align:center;padding:0 0 60%}.media__item iframe,.media__item img{position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;max-height:100%;max-width:100%}.media__item iframe{border-style:none}.media__item__overlay{position:absolute;background-color:transparent;top:10%;left:5%;z-index:9999999;width:90%;height:70%}@media (max-width:720px){.media__item__overlay{display:hidden}}.media__item--relative iframe{position:relative;max-height:none}.media__item--twitter iframe{max-height:none}.media__item--twitter .twitter-tweet-rendered{margin-left:auto;margin-right:auto}.media__item--vimeo{padding-bottom:56.5%}.media__item--soundcloud{padding-bottom:24%}.media__item--youtube{padding-bottom:56.25%}.media__item--issuu iframe{height:625px}.media__item--scribe iframe{width:1px;min-width:100%}.media__item--vignette>:after{opacity:.35}.media__item--vignette-light>:after,.media__item--vignette>:after{position:absolute;top:0;left:0;background-color:var(--black,#000);width:100%;height:100%;content:""}.media__item--vignette-light>:after{opacity:.1}.media__item--transparent{background-color:transparent}.media__item--40{padding-bottom:40%}.media__item--50{padding-bottom:50%}.media__item--60{padding-bottom:60%}.media__item--80{padding-bottom:80%}.media__item--100{padding-bottom:100%}.media__item--120{padding-bottom:120%}.media__item--140{padding-bottom:140%}.media__item--177{padding-bottom:177.777%}.media__title{display:block;font-weight:700;text-align:initial}.media__caption{margin-bottom:0;overflow:hidden;vertical-align:top;line-height:1.5rem;padding:.45em}.media__caption em,.media__caption strong{display:contents}.media__caption--black{background-color:var(--black,#000);color:var(--white,#fff);opacity:.85}.media__caption--white{background-color:var(--white,#fff);color:var(--black,#000)}.media__caption--overlay{position:absolute;bottom:0;left:0;width:100%;overflow-y:auto;overflow-x:hidden}.media__caption--overlay{max-height:35%;opacity:.85}.media__caption--reveal{opacity:0;backface-visibility:hidden}.media__icon-video:after{position:absolute;top:50%;left:50%;margin-top:-20px;margin-left:-20px;content:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAD3klEQVRYw72YS0hbURCGlQiiiZWAuPAt2gR8oMEn7SIbg62rVpSWPrJQcKGgS21FF9kIrptFNoW61j52fbiRNrR1Iy221pXGm5vEpGKMfRhtTWdkLpyGaO45uTcHfgg358x8zLl3zpzJaWtryxGUGXQFNAF6DHoN8pLe0DP87yrNFfLDuyAX1At6AoqAEir1ndb0kg1dAG+DPjNOf4HCoEAahWmusg5t3NES8DLoLeMgBJJVgCVLprWKnXcgS6aAdxmDuyC/AFiy/Emg90QBH5CBI5CkAViyJLKdIF9cgNO0MKoTHAsZJV/TagGHaMGBznAs5AH5HEoHaKOJ8SzBsZBx8m27CPADTUoL19HREWhqapIbGxtl/K0RJPp+fx7gBE1QZdBmswXsdnuorq7OX15eLnV3dwc1imaCWP4DxOy+QX+qSiUINTY2tre2thbHSJpMJh9Gsr29PdMUlCCWXBbwPk/0UGVlZdLg4GA4ASMej5/29/eH8/LytgE20NnZqUUUnSzgU3qo+oTACA4MDJwBKmNubi6an5/vq6qqkrq6ukS3XCaWZwpgLeWiGI+hVIA4lpeXf1dWVkrFxcU7GEnBLY8RUy0CXmOOsowBcYRCoT89PT0h3PLW1taAwFe+S0zXEdDFu73pAJUxMzOzj5D4pcOWi2yzCwGXeD8QtYA4FhcXf5aWlkolJSW87yUyLbHJWRdAHJubmyf4LhYWFvKkorOkjYCfQCd6AirD5XJFa2pq/JjkVfg4Bn3JKqDb7Y5VVFRI+OGo8IFn81cEXAWd6gkYiUT+9vX17RqNRh+u5djiVQR8ruc76PV6j+rr6/1FRUU7nEchMr1AwHm90ozH4znEMxrncn7BSpqZR8AbzGVIE0A8m51OZ8RgMGw3NDTInDkwwNxZbiKgla6F+1oArq+vH+NHUFBQ4MPtFDzq9onJqhQLL7UoFhYWFn6YzeYdTMwYNUE4ZXtfsdXMCE8tqAAq5RaO8fHxPTzWLBaLyJamqglHWEAjaIvSjay2HhwdHd0LBoNnhQGWWZiAMyz/ZWLYBpmSS/5Znii2tLQEHA5HqLm5WYZzNpPSKlX0Zs+7NG2ovTQhEF6YrFarrEEFzV6avl10q3PQpJhGbQ6eyMXId2+6i7vS8ohkCdLPtPIeqm19uLMEycK5eZtHbp1bIGzL45Fo+22SaZPJgn3BVKlEZuxOZtrAtFOOVFpxoqDKOqXltkW2NWkBG0BT1M5NUDLFa2EwDaxMc6K0JkE2psim5k30S6Bh0ApV4Wqb6Ce0Zphs6NblZ1UNugXyULGBAB9JK/TMQ3OqRf38A4x7LEl+q7UJAAAAAElFTkSuQmCC")}.media--left{float:left;clear:left;margin-right:0}.media--right{float:right;clear:right;margin-left:0}@media (min-width:720px){.media--left{padding-right:.5rem}.media--right{padding-left:.5rem}}.media--left .media__item--scribe{margin-right:.25rem}.media--right .media__item--scribe{margin-left:.25rem}.media--center{clear:both;margin-right:auto;margin-left:auto}.media__caption--overlay:hover{opacity:.5}.media--focus{height:auto;overflow:hidden}.media--focus .media__item{direction:ltr}.media--focus img{max-width:none;max-height:none;margin:auto;left:50%;width:auto;height:100%;trans

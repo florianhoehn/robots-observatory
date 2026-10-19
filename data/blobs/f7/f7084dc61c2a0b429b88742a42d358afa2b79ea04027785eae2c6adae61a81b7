@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Not found &middot; restspan</title>
+<meta name="description" content="That path does not exist on restspan.com. Every page on the site is listed here.">
+<link rel="canonical" href="https://restspan.com/ai.txt">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#0f1416">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="restspan">
+<meta property="og:title" content="Not found &middot; restspan">
+<meta property="og:description" content="That path does not exist on restspan.com. Every page on the site is listed here.">
+<meta property="og:url" content="https://restspan.com/ai.txt">
+<meta property="og:image" content="https://restspan.com/og.svg">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="restspan: span-level latency measurement for REST and gRPC endpoints">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Not found &middot; restspan">
+<meta name="twitter:description" content="That path does not exist on restspan.com. Every page on the site is listed here.">
+<meta name="twitter:image" content="https://restspan.com/og.svg">
+<style>
+:root{
+  color-scheme:light;
+
+  /* Ground: cool paper, white sheets, one shaded band for table heads. */
+  --paper:#eceff0;
+  --sheet:#ffffff;
+  --shade:#e2e7e9;
+
+  /* Ink */
+  --ink:#0f1416;    /* headings, rules of record */
+  --ink-2:#2b3437;  /* body */
+  --ink-3:#545f62;  /* labels, secondary readouts */
+
+  /* Rules. Hairline is the structural unit of this design. */
+  --rule:#c8d0d2;
+  --rule-2:#9fabae;
+
+  /* Signal. Three states, and nothing else gets colour. */
+  --signal:#0d4f6c;
+  --signal-2:#093a51;
+  --warn:#7a4f00;
+  --alert:#a3271b;
+
+  /* Chart marks, held apart from text colours on purpose. */
+  --bar:#3d7f9c;
+  --bar-key:#0d4f6c;
+  --bar-warn:#b8791a;
+  --bar-alert:#a3271b;
+  --track:#dce1e3;
+  --hi:#f2f6f8;      /* the recommended plan column, one tint above sheet */
+
+  /* Type: grotesque display, transitional serif body, mono for measurements. */
+  --display:"Segoe UI","Avenir Next",Avenir,"Noto Sans",sans-serif;
+  --body:Charter,"Bitstream Charter",Georgia,"Nimbus Roman No9 L","Times New Roman",serif;
+  --mono:ui-monospace,SFMono-Regular,"Cascadia Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  /* Scale: 13.5 / 17 / 21.5 / 27 / 42, each step at least 1.25x the last. */
+  --t-mono:13.5px;
+  --t-body:17px;
+  --t-3:21.5px;
+  --t-2:27px;
+  --t-1:42px;
+
+  /* Shape: marks 2, panels and controls 4, pill for tags only. */
+  --r-mark:2px;
+  --r-panel:4px;
+  --r-pill:999px;
+
+  --maxw:1140px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink-2);
+  font:var(--t-body)/1.6 var(--body);font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;text-align:left}
+h1,h2,h3,h4{font-family:var(--display);color:var(--ink);margin:0;font-weight:600}
+h1{font-size:var(--t-1);line-height:1.06;letter-spacing:-.022em;max-width:16ch}
+h2{font-size:var(--t-2);line-height:1.16;letter-spacing:-.016em;max-width:24ch}
+h3{font-size:var(--t-3);line-height:1.28;letter-spacing:-.01em}
+h4{font-size:var(--t-body);line-height:1.4}
+p{margin:0 0 12px;max-width:68ch}
+p:last-child{margin-bottom:0}
+a{color:var(--signal);text-decoration:none;border-bottom:1px solid var(--rule-2);
+  transition:color 160ms var(--ease),border-color 160ms var(--ease)}
+a:hover{color:var(--signal-2);border-bottom-color:var(--signal)}
+code{font-family:var(--mono);font-size:.85em;color:var(--ink)}
+strong{font-weight:600;color:var(--ink)}
+::selection{background:var(--signal);color:var(--sheet)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;background:var(--sheet);color:var(--ink);padding:10px 16px;
+  z-index:9;border:1px solid var(--ink);border-radius:var(--r-panel)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* the one label register: mono, uppercase, tracked. Never used above a heading. */
+.lbl{font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0}
+
+/* ---------- masthead bar + live strip ---------- */
+.top{position:sticky;top:0;z-index:6}
+header{background:var(--sheet);border-bottom:1px solid var(--rule)}
+.bar{display:flex;align-items:center;gap:26px;height:56px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--display);font-size:19px;
+  font-weight:600;letter-spacing:-.02em;color:var(--ink);border:0}
+.brand:hover{color:var(--ink)}
+.brand em{font-style:normal;color:var(--signal)}
+.brand svg{display:block;flex:none}
+nav.pri{margin-left:auto;display:flex;align-items:center;gap:20px;
+  font-family:var(--display);font-size:15px}
+nav.pri a{position:relative;color:var(--ink-2);border:0;padding:18px 0}
+nav.pri a:hover{color:var(--ink)}
+nav.pri a::after{content:"";position:absolute;left:0;right:0;bottom:14px;height:2px;
+  background:var(--ink);transform:scaleX(0);transform-origin:left center;
+  transition:transform 180ms var(--ease)}
+nav.pri a:hover::after{transform:scaleX(1)}
+nav.pri a[aria-current="page"]{color:var(--ink);font-weight:600}
+nav.pri a[aria-current="page"]::after{transform:scaleX(1);background:var(--signal)}
+nav.pri a.act{padding:0}
+nav.pri a.act::after{display:none}
+
+.btn{display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:.08em;
+  text-transform:uppercase;padding:9px 16px;border-radius:var(--r-panel);cursor:pointer;
+  border:1px solid var(--ink);background:transparent;color:var(--ink);
+  transition:background-color 160ms var(--ease),color 160ms var(--ease),
+    border-color 160ms var(--ease),transform 120ms var(--ease)}
+.btn:hover{background:var(--ink);color:var(--sheet)}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--ink);color:var(--sheet)}
+.btn.pri:hover{background:var(--signal);border-color:var(--signal)}
+.btn.sm{padding:7px 12px;font-size:12px}
+
+/* the live strip: inverted instrument readout, static values, no pulsing */
+.strip{background:var(--ink);color:var(--paper);overflow-x:auto}
+.strip .wrap{display:flex;align-items:center;gap:26px;height:34px;white-space:nowrap;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.04em}
+.strip dl{display:flex;gap:22px;margin:0;padding:0}
+.strip div{display:flex;align-items:center;gap:7px}
+.strip dt{color:var(--rule-2)}
+.strip dd{margin:0;color:var(--paper)}
+.strip .sq{width:8px;height:8px;border-radius:var(--r-mark);background:var(--bar);flex:none}
+.strip .sq.up{background:var(--bar-warn)}
+.strip .last{margin-left:auto;color:var(--rule-2)}
+
+/* ---------- the two-column ruled ledger ---------- */
+.ledger{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--ink);
+  background:var(--sheet);border-bottom:1px solid var(--rule)}
+.ledger > *{padding:24px 26px 26px;min-width:0}
+.ledger > *:nth-child(odd){border-right:1px solid var(--rule)}
+.ledger > *:nth-child(n+3){border-top:1px solid var(--rule)}
+.ledger.open{background:transparent;border-bottom:0}
+.mast{margin:28px 0 0}
+.mast .lede{font-size:var(--t-3);line-height:1.45;color:var(--ink-2);margin:14px 0 0;max-width:40ch}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.meta{font-family:var(--mono);font-size:var(--t-mono);line-height:1.65;color:var(--ink-3);
+  margin:18px 0 0;max-width:62ch}
+.meta a{border-bottom-color:var(--rule)}
+
+/* ---------- bands ---------- */
+.band{margin-top:56px}
+.band > h2:first-child,.bandhead{margin-bottom:18px}
+.bandhead{display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+  flex-wrap:wrap;border-top:2px solid var(--ink);padding-top:14px}
+.band .intro{font-size:var(--t-3);line-height:1.45;color:var(--ink-2);max-width:56ch;margin:0 0 22px}
+.band .meta:first-child{margin-top:0}
+
+/* ---------- sheets ---------- */
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-panel)}
+.sheet + .sheet{margin-top:18px}
+.cap{display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);padding:12px 16px;margin:0;border-bottom:1px solid var(--rule);max-width:none}
+.cap b{color:var(--ink);font-weight:600;letter-spacing:.06em}
+.pad{padding:18px 16px}
+
+/* ---------- tables: dense, ruled, tabular ---------- */
+.scroller{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:var(--t-mono)}
+caption{text-align:left;font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);padding:12px 16px;border-bottom:1px solid var(--rule)}
+caption b{color:var(--ink);font-weight:600;letter-spacing:.06em}
+.wf caption{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+th,td{text-align:left;padding:9px 16px;border-top:1px solid var(--rule);vertical-align:top;
+  line-height:1.5}
+thead th{border-top:0;background:var(--shade);font-size:12.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600;white-space:nowrap;
+  border-bottom:1px solid var(--rule-2)}
+tbody th{font-weight:600;color:var(--ink);white-space:nowrap}
+tbody tr{transition:background-color 150ms var(--ease)}
+tbody tr:hover{background:var(--shade)}
+td.num,th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tfoot th,tfoot td{border-top:3px double var(--ink-3);color:var(--ink);font-weight:600;
+  background:var(--sheet)}
+.plans td,.plans th{white-space:nowrap}
+.plans thead th{font-family:var(--display);font-size:15px;letter-spacing:0;text-transform:none;
+  color:var(--ink);padding-bottom:10px;vertical-align:bottom}
+.plans thead th span{display:block;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;
+  color:var(--ink-3);font-weight:400;margin-top:4px}
+.plans col.hi{background:var(--hi)}
+.plans tbody th{white-space:normal}
+
+/* ---------- signature device: trace waterfall ---------- */
+.wf{table-layout:fixed}
+.wf th,.wf td{padding:7px 16px;vertical-align:middle}
+.wf .sp{width:31%;font-weight:400;color:var(--ink-2)}
+.wf .ms{width:17%}
+.wf .bc{width:52%}
+.bar{position:relative;display:block;height:9px;background:var(--track);border-radius:var(--r-mark);
+  min-width:130px}
+.bar i{position:absolute;top:0;height:9px;display:block;border-radius:var(--r-mark);
+  left:var(--o,0);width:var(--w,0);background:var(--bar);transform-origin:left center}
+.bar i.key{background:var(--bar-key)}
+.bar i.warn{background:var(--bar-warn)}
+.bar i.alert{background:var(--bar-alert)}
+.axis{position:relative;display:flex;padding-top:5px;border-top:1px solid var(--rule-2)}
+.axis b{flex:1 1 0;border-left:1px solid var(--rule-2);margin-top:-5px;padding:5px 0 0 5px;
+  font:400 12px/1 var(--mono);color:var(--ink-3)}
+.axis b:first-child{border-left:0;padding-left:0}
+.axis em{position:absolute;right:0;top:5px;font:400 12px/1 var(--mono);font-style:normal;
+  color:var(--ink-3)}
+.wf tfoot td.axc{padding-top:2px;padding-bottom:10px;border-top:0}
+.wf tfoot tr.ax th,.wf tfoot tr.ax td{border-top:0;background:transparent}
+.wf tfoot tr.tot th,.wf tfoot tr.tot td{border-top:3px double var(--ink-3)}
+.wf tbody tr:hover .bar i{background:var(--signal-2)}
+
+/* ---------- key/value readout rows ---------- */
+.kv{list-style:none;margin:0;padding:0;font-family:var(--mono);font-size:var(--t-mono)}
+.kv li{display:flex;justify-content:space-between;gap:18px;padding:9px 16px;
+  border-top:1px solid var(--rule)}
+.kv li:first-child{border-top:0}
+.kv b{font-weight:600;color:var(--ink);letter-spacing:.02em}
+.kv span{color:var(--ink-3);text-align:right}
+
+/* ---------- ordered procedure ---------- */
+ol.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+ol.steps li{counter-increment:s;padding:14px 0 14px 38px;border-top:1px solid var(--rule);
+  position:relative;max-width:66ch}
+ol.steps li:first-child{border-top:0;padding-top:2px}
+ol.steps li::before{content:counter(s) '.';position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12.5px;color:var(--signal)}
+ol.steps li:first-child::before{top:4px}
+ol.steps b{font-family:var(--display);font-weight:600;color:var(--ink)}
+pre{margin:0;padding:16px;overflow-x:auto;font-family:var(--mono);font-size:var(--t-mono);
+  line-height:1.65;color:var(--ink-2)}
+pre .c{color:var(--ink-3)}
+pre .k{color:var(--signal)}
+
+/* ---------- tags and severity marks ---------- */
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 10px;padding:0;list-style:none}
+.tags li{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-3);border:1px solid var(--rule-2);border-radius:var(--r-pill);padding:2px 10px}
+.tags li.on{color:var(--signal);border-color:var(--signal)}
+.sev{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;
+  border:1px solid currentColor;border-radius:var(--r-mark);padding:1px 5px;white-space:nowrap}
+.sev.s1{color:var(--alert)}
+.sev.s2{color:var(--warn)}
+.sev.s3{color:var(--signal)}
+
+/* ---------- ledger entries: incidents, releases, cases ---------- */
+.entry{display:grid;grid-template-columns:168px 1fr;gap:32px;padding:26px 0;
+  border-top:1px solid var(--rule)}
+.entry:first-of-type{border-top:2px solid var(--ink)}
+.entry h3{margin-bottom:10px}
+.stamp{font-family:var(--mono);font-size:var(--t-mono);color:var(--ink);margin:0}
+.stamp span{display:block;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-3);margin-top:6px}
+ul.bul{margin:10px 0 0;padding-left:20px}
+ul.bul li{margin-bottom:6px;max-width:66ch}
+.tl{list-style:none;margin:14px 0 0;padding:0;font-size:16px}
+.tl li{padding:8px 0 8px 100px;position:relative;border-top:1px solid var(--rule);max-width:70ch}
+.tl li:first-child{border-top:0}
+.tl li b{position:absolute;left:0;top:8px;font-family:var(--mono);font-size:12.5px;
+  font-weight:400;color:var(--ink-3)}
+
+/* ---------- status day bars ---------- */
+.comp{padding:16px}
+.comp + .comp{border-top:1px solid var(--rule)}
+.chd{display:flex;justify-content:space-between;align-items:baseline;gap:18px;
+  font-family:var(--mono);font-size:var(--t-mono);margin:0 0 10px;max-width:none}
+.chd b{color:var(--ink);font-weight:600}
+.chd span{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.chd span.up{color:var(--warn)}
+.bars{display:flex;gap:2px;height:24px;align-items:flex-end}
+.bars i{display:block;flex:1 1 0;height:100%;border-radius:var(--r-mark);background:var(--bar);
+  transform-origin:bottom center;transition:transform 140ms var(--ease)}
+.bars i:hover{transform:scaleY(1.15)}
+.bars i.w{background:var(--bar-warn)}
+.bars i.e{background:var(--bar-alert)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:12px 16px;
+  border-top:1px solid var(--rule);margin:0;max-width:none}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:var(--r-mark);
+  margin-right:7px;background:var(--bar)}
+.legend i.w{background:var(--bar-warn)}
+.legend i.e{background:var(--bar-alert)}
+
+/* ---------- forms (inert) ---------- */
+.field{margin:0 0 16px}
+.field label{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);
+  font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.field label em{font-style:normal;color:var(--signal);letter-spacing:.06em}
+.field input,.field select,.field textarea{width:100%;background:var(--sheet);
+  border:1px solid var(--rule-2);border-radius:var(--r-panel);color:var(--ink);
+  font:var(--t-mono)/1.5 var(--mono);padding:11px 12px;
+  transition:border-color 160ms var(--ease)}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-3)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--signal)}
+.field textarea{min-height:140px;resize:vertical}
+.hint{font-family:var(--body);font-size:15px;line-height:1.5;color:var(--ink-3);
+  margin:6px 0 0;max-width:56ch}
+.err{display:block;font-family:var(--mono);font-size:12.5px;color:var(--alert);
+  margin-top:6px;min-height:17px}
+[aria-invalid="true"]{border-color:var(--alert)}
+.formbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:2px}
+.formbar .sub{font-size:15px;color:var(--ink-3)}
+.notice{font-family:var(--body);font-size:15px;line-height:1.55;background:var(--paper);
+  border:1px solid var(--rule-2);border-radius:var(--r-panel);padding:14px 16px;
+  margin:16px 0 0;max-width:62ch}
+.notice:empty{display:none}
+.notice b{display:block;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:600;margin-bottom:6px;color:var(--alert)}
+.notice.good b{color:var(--signal)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* ---------- docs ---------- */
+.docwrap{display:grid;grid-template-columns:196px 1fr;gap:0;border-top:2px solid var(--ink);
+  background:var(--sheet);border-bottom:1px solid var(--rule)}
+.docnav{position:sticky;top:106px;align-self:start;padding:20px 20px 26px;font-size:15px;
+  border-right:1px solid var(--rule)}
+.docnav p{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 8px}
+.docnav ul{list-style:none;margin:0 0 22px;padding:0}
+.docnav ul:last-child{margin-bottom:0}
+.docnav li{border-top:1px solid var(--rule)}
+.docnav a{display:block;padding:7px 0;color:var(--ink-2);border:0}
+.docnav a:hover{color:var(--signal)}
+.docnav a.on{color:var(--ink);font-weight:600;font-family:var(--display)}
+.doc{padding:26px;min-width:0}
+.doc section{border-top:1px solid var(--rule);padding:30px 0 6px}
+.doc section:first-of-type{border-top:0;padding-top:0}
+.doc section > h3{font-size:var(--t-2);line-height:1.16;letter-spacing:-.016em;margin:0 0 12px}
+.doc h4{margin:26px 0 10px;font-size:var(--t-body);color:var(--ink)}
+
+/* ---------- prose ---------- */
+.prose p,.prose li{max-width:68ch}
+.prose ul{margin:0 0 14px;padding-left:20px}
+.prose li{margin-bottom:6px}
+.prose h3{font-size:var(--t-body);margin:24px 0 8px}
+.prose .sheet{margin:18px 0}
+
+/* ---------- footer ---------- */
+footer{background:var(--sheet);border-top:2px solid var(--ink);margin-top:64px;padding:36px 0 24px}
+.fcols{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px}
+.fcols h2{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 10px;font-weight:600;max-width:none}
+.fcols ul{list-style:none;margin:0;padding:0;font-size:15px;line-height:1.95}
+.fcols a{color:var(--ink-2);border:0}
+.fcols a:hover{color:var(--signal)}
+.fcols a[aria-current="page"]{color:var(--ink);font-weight:600}
+.fnote{font-size:15px;line-height:1.5;color:var(--ink-3);max-width:34ch;margin-top:12px}
+.fbot{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;margin-top:32px;
+  padding-top:16px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:12.5px;
+  color:var(--ink-3)}
+.fbot p{margin:0;max-width:none}
+
+/* ---------- motion. Everything below is transform and opacity only. ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.js .rise{animation:rise 380ms var(--ease) both;animation-delay:var(--d,0ms)}
+.js .bar i{animation:draw 300ms var(--ease) both;animation-delay:var(--d,0ms)}
+
+@media (max-width:900px){
+  :root{--t-1:33px;--t-2:24px;--t-3:20px}
+  .ledger,.docwrap{grid-template-columns:1fr}
+  .ledger > *:nth-child(odd){border-right:0}
+  .ledger > *:nth-child(n+2){border-top:1px solid var(--rule)}
+  .docnav{position:static;border-right:0;border-bottom:1px solid var(--rule)}
+  .entry{grid-template-columns:1fr;gap:12px}
+  .fcols{grid-template-columns:1fr 1fr}
+  nav.pri{gap:15px}
+  nav.pri a.hide{display:none}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .fcols{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .bars i:nth-child(n+46){display:none}
+  .tl li{padding-left:0}
+  .tl li b{position:static;display:block;margin-bottom:2px}
+  .ledger > *{padding:20px 16px 22px}
+  .doc{padding:20px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="top">
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="10" height="4" rx="1" fill="currentColor"></rect><rect x="6" y="10" width="15" height="4" rx="1" fill="#0d4f6c"></rect><rect x="3" y="15.5" width="7" height="4" rx="1" fill="currentColor"></rect></svg> rest<em>span</em></a>
+    <nav class="pri" aria-label="Primary">
+      <a href="/#signals">Signals</a>
+      <a href="/integrations">Integrations</a>
+      <a href="/docs">Docs</a>
+      <a href="/pricing">Pricing</a>
+      <a class="hide" href="/status">Status</a>
+      <a class="btn sm act" href="/login">Sign in</a>
+    </nav>
+  </div>
+</header>
+<div class="strip">
+  <div class="wrap">
+    <dl aria-label="Median probe dispatch time by region, last sweep">
+      <div><span class="sq" aria-hidden="true"></span><dt>fra1</dt><dd>38 ms</dd></div>
+      <div><span class="sq" aria-hidden="true"></span><dt>lhr1</dt><dd>41 ms</dd></div>
+      <div><span class="sq" aria-hidden="true"></span><dt>iad1</dt><dd>52 ms</dd></div>
+      <div><span class="sq up" aria-hidden="true"></span><dt>sfo1</dt><dd>96 ms</dd></div>
+      <div><span class="sq" aria-hidden="true"></span><dt>sin1</dt><dd>74 ms</dd></div>
+    </dl>
+    <p class="last">sweep 09:14:22Z / 30 s interval / sfo1 above trailing median</p>
+  </div>
+</div>
+</div><main id="main" class="wrap">
+  <div class="ledger open mast">
+    <div class="rise">
+      <h1>No page at that path.</h1>
+      <p class="lede">The request resolved, connected and completed in 50 ms. There is just nothing here.</p>
+      <div class="acts">
+        <a class="btn pri" href="/">Overview</a>
+        <a class="btn" href="/support">Report a broken link</a>
+      </div>
+      <p class="meta">Requested path <code>/ai.txt</code></p>
+    </div>
+    <div class="rise" style="--d:70ms">
+      <div class="scroller">
+        <table class="wf">
+          <caption><b>this request</b><span>404 Not Found &middot; measured by the Worker serving it</span></caption>
+          <tbody>
+          <tr><th scope="row" class="sp">dns.lookup</th><td class="ms num">3 ms</td><td class="bc"><span class="bar"><i class="" style="--o:0.0%;--w:6.0%;--d:0ms"></i></span></td></tr>
+          <tr><th scope="row" class="sp">tcp.connect</th><td class="ms num">9 ms</td><td class="bc"><span class="bar"><i class="" style="--o:6.0%;--w:18.0%;--d:45ms"></i></span></td></tr>
+          <tr><th scope="row" class="sp">tls.handshake</th><td class="ms num">21 ms</td><td class="bc"><span class="bar"><i class="key" style="--o:24.0%;--w:42.0%;--d:90ms"></i></span></td></tr>
+          <tr><th scope="row" class="sp">request.write</th><td class="ms num">2 ms</td><td class="bc"><span class="bar"><i class="" style="--o:66.0%;--w:4.0%;--d:135ms"></i></span></td></tr>
+          <tr><th scope="row" class="sp">server.ttfb</th><td class="ms num">12 ms</td><td class="bc"><span class="bar"><i class="" style="--o:70.0%;--w:24.0%;--d:180ms"></i></span></td></tr>
+          <tr><th scope="row" class="sp">body.transfer</th><td class="ms num">3 ms</td><td class="bc"><span class="bar"><i class="" style="--o:94.0%;--w:6.0%;--d:225ms"></i></span></td></tr>
+          </tbody>
+          <tfoot>
+            <tr class="ax"><td></td><td></td><td class="bc axc"><span class="axis"><b>0</b><b>13</b><b>25</b><b>38</b><em>50 ms</em></span></td></tr>
+            <tr class="tot"><th scope="row">total</th><td class="num">50 ms</td><td></td></tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" aria-labelledby="h-404b">
+    <div class="bandhead">
+      <h2 id="h-404b">Every page that does exist</h2>
+      <p class="lbl">17 pages</p>
+    </div>
+    <div class="sheet">
+      <div class="scroller">
+        <table>
+          <thead><tr><th scope="col">Path</th><th scope="col">Page</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a href="/">/</a></th><td>Overview, signals, setup, plans</td></tr>
+            <tr><th scope="row"><a href="/pricing">/pricing</a></th><td>Plans row by row, add-ons, questions</td></tr>
+            <tr><th scope="row"><a href="/docs">/docs</a></th><td>Quickstart, YAML schema, API, alerting, limits</td></tr>
+            <tr><th scope="row"><a href="/integrations">/integrations</a></th><td>Alert destinations, metrics export, CI</td></tr>
+            <tr><th scope="row"><a href="/customers">/customers</a></th><td>Three case studies with numbers</td></tr>
+            <tr><th scope="row"><a href="/status">/status</a></th><td>Component health and incidents</td></tr>
+            <tr><th scope="row"><a href="/changelog">/changelog</a></th><td>Dated release notes</td></tr>
+            <tr><th scope="row"><a href="/security">/security</a></th><td>Controls, audits, disclosure</td></tr>
+            <tr><th scope="row"><a href="/sla">/sla</a></th><td>Availability commitment and credits</td></tr>
+            <tr><th scope="row"><a href="/support">/support</a></th><td>Severity, targets, how to file</td></tr>
+            <tr><th scope="row"><a href="/about">/about</a></th><td>Company, timeline, open roles</td></tr>
+            <tr><th scope="row"><a href="/signup">/signup</a></th><td>Create a workspace</td></tr>
+            <tr><th scope="row"><a href="/login">/login</a></th><td>Sign in</td></tr>
+            <tr><th scope="row"><a href="/contact">/contact</a></th><td>Addresses and registered office</td></tr>
+            <tr><th scope="row"><a href="/subprocessors">/subprocessors</a></th><td>Named subprocessors and changes</td></tr>
+            <tr><th scope="row"><a href="/privacy">/privacy</a></th><td>Privacy policy</td></tr>
+            <tr><th scope="row"><a href="/terms">/terms</a></th><td>Terms of service</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section></main><footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <a class="brand" href="/"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="10" height="4" rx="1" fill="currentColor"></rect><rect x="6" y="10" width="15" height="4" rx="1" fill="#0d4f6c"></rect><rect x="3" y="15.5" width="7" height="4" rx="1" fill="currentColor"></rect></svg> rest<em>span</em></a>
+        <p class="fnote">Latency and uptime checks for REST and gRPC endpoints. Run by Restspan Labs Ltd from five regions.</p>
+      </div>
+      <div>
+        <h2>Product</h2>
+        <ul>
+          <li><a href="/#signals">Signals</a></li>
+          <li><a href="/#setup">Setting up a check</a></li>
+          <li><a href="/integrations">Integrations</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/changelog">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Developers</h2>
+        <ul>
+          <li><a href="/docs">Documentation</a></li>
+          <li><a href="/docs#api">HTTP API</a></li>
+          <li><a href="/status">Service status</a></li>
+          <li><a href="/support">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/customers">Customers</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/signup">Create a workspace</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Trust</h2>
+        <ul>
+          <li><a href="/security">Security</a></li>
+          <li><a href="/sla">Service level</a></li>
+          <li><a href="/subprocessors">Subprocessors</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>&copy; 2026 Restspan Labs Ltd. Registered in England and Wales, 11482093.</p>
+      <p>Probe regions fra1 lhr1 iad1 sfo1 sin1</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

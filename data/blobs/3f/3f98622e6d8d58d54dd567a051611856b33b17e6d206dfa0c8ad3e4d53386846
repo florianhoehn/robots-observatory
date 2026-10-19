@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="pt">Error</title>
+<link rel="icon" type="image/vnd.microsoft.icon" href="https://www.costco.com/wcsstore/CostcoGLOBALSAS/images/favicon.ico">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:'Costco Sans Web';src:url('https://bfasset.costco-static.com/fonts/CostcoSans-Upright.woff2') format('woff2');font-weight:100 900;font-display:swap;font-style:normal}
+@font-face{font-family:'Costco Sans Web';src:url('https://bfasset.costco-static.com/fonts/CostcoSans-Italic.woff2') format('woff2');font-weight:100 900;font-display:swap;font-style:italic}
+:root{--title1-t1-bold-font-family:'Costco Sans Web',Arial,Helvetica,sans-serif;--body1-b1-font-family:'Costco Sans Web',Arial,Helvetica,sans-serif;--body3-b3-font-family:'Costco Sans Web',Arial,Helvetica,sans-serif;--label2-l2-font-family:'Costco Sans Web',Arial,Helvetica,sans-serif;--Font-family-sans:'Costco Sans Web',Arial,Helvetica,sans-serif}
+body{min-height:100vh;display:flex;flex-direction:column;background:#fafafa;font-family:var(--body1-b1-font-family);color:#333;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+.logo{max-width:768px;width:100%;margin:0 auto;padding:32px 16px 0;text-align:center}
+.logo img{height:50px}
+.main{flex:1;max-width:768px;width:100%;margin:0 auto;padding:32px 16px}
+.layout{display:flex;flex-direction:column;gap:24px;align-items:center}
+.bear img{width:186px;height:186px;border-radius:50%;object-fit:cover}
+.txt{display:flex;flex-direction:column;gap:16px;text-align:center;width:100%;max-width:400px}
+.desc{display:flex;flex-direction:column;gap:8px}
+h1{font-size:32px;font-weight:700;color:#333;line-height:1.3;font-family:var(--title1-t1-bold-font-family)}
+.msg{font-size:16px;color:#333;line-height:24px;font-style:normal;font-weight:400;font-family:var(--body1-b1-font-family)}
+.rid{font-size:12px;color:#707070;line-height:18px;font-style:normal;font-weight:400;font-family:var(--body3-b3-font-family);font-feature-settings:'liga' off,'clig' off}
+.lang fieldset{border:1px solid #707070;border-radius:3px;padding:0;background:#fff}
+.lang legend{font-size:12px;color:#5f5f5f;padding:0 4px;margin-left:8px;overflow:hidden;text-overflow:ellipsis;font-style:normal;font-weight:400;line-height:15.6px;font-family:var(--label2-l2-font-family)}
+.lang select{width:100%;border:none;font-size:16px;background:transparent;outline:0;cursor:pointer;padding:7px 40px 8px 12px;color:#333;font-style:normal;font-weight:400;line-height:24px;font-family:var(--body1-b1-font-family);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23333' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.rsn{text-align:left;font-size:12px;color:#707070;line-height:18px;font-style:normal;font-weight:400;font-family:var(--body3-b3-font-family);font-feature-settings:'liga' off,'clig' off}
+.rsn p{margin-bottom:4px}
+.rsn ul{padding-left:18px}
+.rsn li{margin-bottom:4px}
+.btns{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:16px}
+.bp{background:#005dab;color:#fff;border:none;border-radius:3px;padding:12px 16px;font-size:16px;cursor:pointer;min-height:40px;text-align:center;font-style:normal;font-weight:400;line-height:16px;font-family:var(--Font-family-sans);font-feature-settings:'liga' off,'clig' off;transition:background-color .2s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.bp:hover{background:#004a8c}
+.bs{background:#fff;color:#005dab;border:1px solid #005dab;border-radius:3px;padding:12px 16px;font-size:16px;cursor:pointer;min-height:40px;text-align:center;font-style:normal;font-weight:400;line-height:16px;font-family:var(--Font-family-sans);font-feature-settings:'liga' off,'clig' off;transition:all .2s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.bs:hover{background:#f0f6ff}
+.bp:focus-visible,.bs:focus-visible,.lang select:focus-visible{outline:2px solid #005dab;outline-offset:2px}
+.ftr{text-align:center;padding:8px 16px;font-size:12px;color:#707070;line-height:20px;margin-top:auto;font-style:normal;font-weight:400;font-family:var(--Font-family-sans);font-feature-settings:'liga' off,'clig' off}
+@media(min-width:768px){
+.logo{text-align:left;padding:32px 24px 0}
+.main{padding:32px 24px 0}
+.layout{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:32px;align-items:start}
+.txt{grid-column:1;grid-row:1;text-align:left;max-width:400px}
+.bear{grid-column:2;grid-row:1;display:flex;justify-content:center;align-items:start}
+.bear img{width:320px;height:320px}
+h1{font-size:40px;line-height:48px}
+.msg{font-size:16px;line-height:24px}
+.lang{max-width:160px}
+.btns{flex-direction:row;gap:24px}
+.bp,.bs{min-width:160px}
+}
+@media(min-width:1024px){
+.bear img{width:320px;height:320px}
+}
+</style>
+</head>
+<body>
+<div class="logo"><a href="/" onclick="tk('logo | costco us homepage')"><img id="la" src="https://www.costco.com/wcsstore/CostcoGLOBALSAS/images/Costco_Logo-1.png" alt="Costco Wholesale"></a></div>
+<main class="main"><div class="layout">
+<div class="bear"><img id="bi" src="https://www.costco.com/wcsstore/CostcoGLOBALSAS/images/bearOnKirklandWater_desktop.png" alt=""></div>
+<div class="txt">
+<h1 id="hd"></h1>
+<div class="desc">
+<p class="msg" id="mg"></p>
+<p class="rid"><span id="rl"></span>: <span id="rv">36191fc4ac2f4b2bace600000000000b</span></p>
+</div>
+<div class="lang"><fieldset><legend id="ll">Select language</legend><select id="ls">
+<option value="en" lang="en">English</option>
+</select></fieldset></div>
+<div class="rsn"><p id="rh"></p><ul><li id="r1"></li><li id="r2"></li><li id="r3"></li></ul></div>
+<div class="btns"><a class="bp" id="b1" href="/"></a><a class="bs" id="b2" href="#"></a></div>
+</div>
+</div></main>
+<div class="ftr">&copy; 1998 - <script>document.write(new Date().getFullYear())</script> Costco Wholesale Corporation. <span id="fr">All rights reserved.</span></div>
+<script>
+var RID=document.getElementById('rv').textContent||"";
+var C={"ck":"costco_maintenance_lang","o":["en"],"t":{"en":{"b1":"Return Home","b2":"Back","ba":"Giant Costco teddy bear taking a nap on a pallet of bottled water","fr":"All rights reserved.","hl":"en","la":"Costco Wholesale Homepage","ll":"Select language","mg":"We are unable to find the page you are looking for. Please go back or try again.","pv":"en","r1":"The item is no longer available.","r2":"The url address might be incorrect.","r3":"The page is no longer available on our site.","rh":"Possible reasons for seeing this page are...","rl":"Request ID","tt":"Oops! Something went wrong" }}};
+window.digitalDataEvents=window.digitalDataEvents||[];
+function tk(v){window.digitalDataEvents.push({nav:v})}
+(function(){
+function gc(n){if(!n){return null}var m=document.cookie.match(new RegExp('(?:^|;\\s*)'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):null}
+function sc(n,v){if(!n){return}var d=new Date();d.setTime(d.getTime()+31536e6);document.cookie=n+'='+encodeURIComponent(v)+'; path=/; expires='+d.toUTCString()+'; SameSite=Lax'}
+function gs(){try{return sessionStorage.getItem('language')}catch(e){return null}}
+function ss(v){try{sessionStorage.setItem('language',v)}catch(e){}}
+function ml(v,t,ks){if(v){for(var i=0;i<ks.length;i++){if(t[ks[i]].pv===v){return ks[i]}}}return null}
+function sd(p){window.digitalData=window.digitalData||{};window.digitalData.siteLang='en-US';window.digitalData.siteReleaseEnv='prod';window.digitalData.siteStore='bd';window.digitalData.siteCountry='us';window.digitalData.pagePlatform='react';window.digitalData.pageCms='ContentStack';window.digitalData.authStatus='Authenticated';window.digitalData.deliveryZip='98101';window.digitalData.pageName=p;window.digitalData.pageType='Error'}
+var cn=function(){var h=(location.hostname||'').toLowerCase();if(/\\.ca$/.test(h)){return 'CA'}if(/\\.com$/.test(h)){return 'US'}return ''};
+var ca=function(a,c){if(!a){return a}if(a.indexOf('{CountryName}')!==-1){return a.replace('{CountryName}',c||'US')}if(!c||a.indexOf(c)!==-1){return a}if(/Homepage$/i.test(a)){return a.replace(/Homepage$/i,c+' Homepage')}return a+' '+c};
+function nav(a){if(a==='back'){if(history.length>1){history.back()}else{location.href='/';}}else if(a){location.href=a}}
+function show(l){var t=C.t[l],logoAlt=t.la,c=cn(),P='General Error';document.documentElement.lang=t.hl;document.getElementById('pt').textContent=t.tt;document.getElementById('hd').textContent=t.tt;document.getElementById('mg').textContent=t.mg;document.getElementById('rl').textContent=t.rl;document.getElementById('rv').textContent=RID;document.getElementById('ll').textContent=t.ll;document.getElementById('rh').textContent=t.rh;document.getElementById('r1').textContent=t.r1;document.getElementById('r2').textContent=t.r2;document.getElementById('r3').textContent=t.r3;document.getElementById('fr').textContent=t.fr;document.getElementById('bi').alt=t.ba;document.getElementById('la').alt=ca(logoAlt,c);var b1=document.getElementById('b1');b1.textContent=t.b1;b1.href='/';b1.onclick=function(){tk(P+' | Return Home')};var b2=document.getElementById('b2');b2.textContent=t.b2;b2.href='#';b2.onclick=function(e){e.preventDefault();tk(P+' | Back');nav('back')};document.getElementById('ls').value=l;sc(C.ck,t.pv);ss(t.pv);}
+var sv=gs(),cv=gc(C.ck),ks=C.o||Object.keys(C.t),l=ks[0],sl=ml(sv,C.t,ks),cl=ml(cv,C.t,ks);
+if(sl){l=sl}else if(cl){l=cl}
+sd("Error | General Error");
+show(l);document.getElementById('ls').addEventListener('change',function(){show(this.value)});
+})();
+</script>
+</body>
+</html>

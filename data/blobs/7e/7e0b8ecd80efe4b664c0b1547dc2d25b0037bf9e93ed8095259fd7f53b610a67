@@ -1,0 +1,58 @@
+User-agent: *
+Allow: /
+
+# General Exclusions
+Disallow: /cdn-cgi/
+Disallow: /jira-switch
+Disallow: /partners/aws-activate
+Disallow: /pdf/Take_These_3_Actions_751984_ndx.pdf
+Disallow: /preview/
+Disallow: /remove*
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-json/
+
+# Backup / rollback snapshots (written by build-deploy-stage1.yml)
+# These prefixes live in the S3 bucket alongside clickup_next/ and would
+# otherwise be crawlable if a bot guessed the URL. Keep in sync with the
+# ROLLBACK_URI prefix in prepare-*-rollback-snapshot / *-rollback-snapshot.yml.
+Disallow: /_rollback/
+
+# Blog Pagination and Taxonomy
+Disallow: /blog/tag/
+Disallow: /*/blog/tag/
+
+# Query Parameters (General)
+Disallow: /*?attachment_id=
+Disallow: /*?cat=
+Disallow: /*?q=
+Disallow: /*?s=
+Disallow: /*replytocom=
+
+# Tracking and Marketing Parameters
+Disallow: /*_bhiiv=
+Disallow: /*_ga=
+Disallow: /*_gl=
+Disallow: /*bhcl_id=
+Disallow: /*dclid=
+Disallow: /*fbclid=
+Disallow: /*gclid=
+Disallow: /*gclsrc=
+Disallow: /*icid=
+Disallow: /*irclickid=
+Disallow: /*mc_cid=
+Disallow: /*mc_eid=
+Disallow: /*msclkid=
+Disallow: /*ref=
+Disallow: /*reg=
+Disallow: /*spc-source=
+Disallow: /*utm_*
+Disallow: /*yclid=
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+Sitemap: https://clickup.com/sitemap.xml

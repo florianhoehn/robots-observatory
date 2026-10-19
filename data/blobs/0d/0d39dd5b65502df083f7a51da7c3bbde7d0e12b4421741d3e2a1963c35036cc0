@@ -1,0 +1,49 @@
+User-agent: *
+
+Allow: /sitemaps_v3/*
+
+Disallow: /auth/*
+
+Disallow: /search*
+Disallow: /*?*comment=*
+Disallow: /*?*review=*
+
+Disallow: /my/*
+Disallow: /yours*
+Disallow: /notifications
+Disallow: /@*/*
+
+# Auth-gated and redirect-only endpoints — no indexable content.
+# `$` anchors the match so post/discussion/forum slugs starting with
+# "new" (e.g. /p/news) remain crawlable.
+Disallow: /login$
+Disallow: /p/new$
+Disallow: /discussions/new$
+Disallow: /forums/new$
+
+# Disable short links leading to external websites
+# ========================
+Disallow: /r/*
+
+# Explicitly allow shortlink to posts
+Allow: /r/p/*
+
+# Disable indexing of search
+Disallow: /search*
+
+Sitemap: https://www.producthunt.com/sitemaps_v3/root_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/stories_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/topics_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/newsletters_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/forums_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/discussions_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/product_about_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/product_alternatives_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/product_reviews_sitemap.xml.gz
+Sitemap: https://www.producthunt.com/sitemaps_v3/products_categories_sitemap.xml.gz
+
+User-agent: SemrushBot
+Crawl-delay: 1
+
+User-agent: SiteAuditBot
+Crawl-delay: 1

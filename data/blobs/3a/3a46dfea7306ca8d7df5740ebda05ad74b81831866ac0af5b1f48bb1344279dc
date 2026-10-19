@@ -1,0 +1,107 @@
+User-agent: Googlebot
+Disallow: /index2.html
+Disallow: /portale/index2.html
+Disallow: /maps/
+Disallow: /password/
+Disallow: /892424/
+Disallow: /portale/manutenzione.html
+Disallow: /portale/indexbusy.php
+
+User-agent: 008
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Nutch
+Disallow: /
+
+User-agent: Riddler
+Disallow: /
+
+User-agent: *
+Crawl-delay: 2
+Disallow: /*standard=1
+Disallow: /?t=*
+Disallow: /?f=*
+Disallow: /?b=*
+Disallow: /?p=*
+Disallow: /?page=*
+Disallow: /portale/node/*/amp
+
+
+# =====================================================================
+# CRAWLER AI (dal 20-07-2026)
+# Policy: consentiamo i bot che scaricano la pagina per CITARLA con un
+# link (AI search, risposte con fonti). Blocchiamo i crawler di solo
+# addestramento massivo, che prendono il corpus senza dare traffico.
+# Documentazione per i modelli: https://www.ilmeteo.it/llms.txt
+# =====================================================================
+
+# --- CONSENTITI: recupero per citazione / ricerca AI ---
+# OAI-SearchBot + ChatGPT-User = ChatGPT search e fetch su richiesta utente
+# Claude-User + Claude-SearchBot = Anthropic, fetch a tempo di risposta
+# PerplexityBot + Perplexity-User = Perplexity
+# Applebot = Siri/Spotlight (NON Applebot-Extended, che e' addestramento)
+# Google-Extended = grounding/citazioni di Gemini (le AI Overviews usano
+#   comunque Googlebot: bloccarlo non ci toglie dalle AI Overviews, ci
+#   toglie solo dalle citazioni Gemini)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Applebot
+User-agent: Google-Extended
+Allow: /
+Disallow: /*standard=1
+Disallow: /?t=*
+Disallow: /?f=*
+Disallow: /?b=*
+Disallow: /?p=*
+Disallow: /?page=*
+Disallow: /portale/node/*/amp
+Disallow: /maps/
+Disallow: /password/
+Disallow: /892424/
+
+# --- BLOCCATI: crawler di solo addestramento / raccolta massiva ---
+# (ClaudeBot e CCBot sono gia' bloccati anche via 403 in .htaccess)
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: meta-externalagent
+User-agent: FacebookBot
+User-agent: Amazonbot
+User-agent: Diffbot
+User-agent: Omgilibot
+User-agent: Omgili
+User-agent: cohere-ai
+User-agent: ImagesiftBot
+User-agent: Timpibot
+User-agent: Webzio-Extended
+Disallow: /
+
+
+# --- Sitemap ---
+Sitemap: https://www.ilmeteo.it/sitemap.xml
+Sitemap: https://www.ilmeteo.it/sitemap-sito.xml
+Sitemap: https://www.ilmeteo.it/sitemap-localita.xml
+Sitemap: https://www.ilmeteo.it/sitemap-localita-italia.xml
+Sitemap: https://www.ilmeteo.it/sitemap-localita-estero.xml
+Sitemap: https://www.ilmeteo.it/sitemap-localita-domani.xml
+Sitemap: https://www.ilmeteo.it/sitemap-localita-dopodomani.xml
+Sitemap: https://www.ilmeteo.it/sitemap-localita-lungotermine.xml
+Sitemap: https://www.ilmeteo.it/sitemap-zone.xml
+Sitemap: https://www.ilmeteo.it/sitemap-regioni.xml
+Sitemap: https://www.ilmeteo.it/sitemap_province.xml
+Sitemap: https://www.ilmeteo.it/sitemap_comuni.xml
+Sitemap: https://www.ilmeteo.it/sitemap-comuni-portale.xml
+Sitemap: https://www.ilmeteo.it/sitemap-comuni-neve-portale.xml
+Sitemap: https://www.ilmeteo.it/sitemap-citta-italia-marine.xml
+Sitemap: https://www.ilmeteo.it/sitemap-europa-portale.xml
+Sitemap: https://www.ilmeteo.it/sitemap-webcam-portale.xml
+Sitemap: https://www.ilmeteo.it/sitemap-news.xml

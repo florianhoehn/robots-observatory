@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+	<html>
+		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
+            <!-- Google tag (gtag.js) -->
+            <script>window.gtl = null;</script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPPLXMRF6Z" onload="window.gtl = true;" onerror="window.gtl = false;"></script>
+            <script>
+                var pbjs = pbjs || {};
+
+                // Used for Video players on Tropes
+                var tropes_videos_commands = tropes_videos_commands || [];
+
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-XPPLXMRF6Z');
+
+                window.googletag = window.googletag || {cmd: []};
+            </script>
+
+                        <script>
+                function object(objectId) {
+                    if (document.getElementById && document.getElementById(objectId)) {
+                        return document.getElementById(objectId);
+                    } else if (document.all && document.all(objectId)) {
+                        return document.all(objectId);
+                    } else if (document.layers && document.layers[objectId]) {
+                        return document.layers[objectId];
+                    } else {
+                        return false;
+                    }
+                }
+
+                // JAVASCRIPT COOKIES CODE: for getting and setting user viewing preferences
+                var cookies = {
+                    create: function (name, value, days2expire, path) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days2expire * 24 * 60 * 60 * 1000));
+                        var expires = date.toUTCString();
+                        document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
+                    },
+										createWithExpire: function(name, value, expires, path) {
+												document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
+										},
+                    read: function (name) {
+                        var cookie_value = "",
+                            current_cookie = "",
+                            name_expr = name + "=",
+                            all_cookies = document.cookie.split(';'),
+                            n = all_cookies.length;
+
+                        for (var i = 0; i < n; i++) {
+                            current_cookie = all_cookies[i].trim();
+                            if (current_cookie.indexOf(name_expr) === 0) {
+                                cookie_value = current_cookie.substring(name_expr.length, current_cookie.length);
+                                break;
+                            }
+                        }
+                        return cookie_value;
+                    },
+                    update: function (name, val) {
+                        this.create(name, val, 300, "/");
+                    },
+                    remove: function (name) {
+                        //delete cookie with and without domain setting
+                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.tvtropes.org; path=/;";
+                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+                    }
+                };
+
+                // show app promo banner
+                function show_promo(){
+                    var logged_in = false;
+
+                    // Check for the different possible cookies set by closeBanner()
+                    var banner_cookie_logged_in = cookies.read('app-announcement-banner-logged-in');
+                    var banner_cookie_guest = cookies.read('app-announcement-banner-guest');
+
+                    if(logged_in){
+                        document.body.classList.remove('app-promo');
+                        if(banner_cookie_logged_in){
+                            document.body.classList.add('footer-app-promo');
+                        }else{
+                            document.body.classList.remove('footer-app-promo');
+                        }
+                    }else{
+                        document.body.classList.remove('footer-app-promo');
+                        if(banner_cookie_guest){
+                            document.body.classList.remove('app-promo');
+                        }else{
+                            document.body.classList.add('app-promo');
+                        }
+                    }
+                }
+
+                function updateUserPrefs() {
+                    //GENERAL: detect and set browser, if not cookied (will be treated like a user-preference and added to the #user-pref element)
+                    if( !cookies.read('user-browser') ){
+                        var broswer = '';
+
+                        if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) ){
+                            browser = 'iOS';
+                        } else if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'opera';
+                        } else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+                            browser = 'MSIE';
+                        } else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'netscape';
+                        } else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'chrome';
+                        } else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'safari';
+                            /Version[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+                            browserVersion = new Number(RegExp.$1);
+                        } else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'firefox';
+                        } else {
+                            browser = 'internet_explorer';
+                        }
+                        cookies.create('user-browser',browser,1,'/');
+                        document.getElementById('user-prefs').classList.add('browser-' + browser);
+                    } else {
+                        document.getElementById('user-prefs').classList.add('browser-' + cookies.read('user-browser'));
+                    }
+
+                    //update user preference settings based on their database settings
+                    var logged_in = false;
+                    
+                    if(logged_in == false) {
+                        if(cookies.read('wide-load') !== '') document.getElementById('user-prefs').classList.add('wide-load');
+                        if(cookies.read('night-vision') !== '') document.getElementById('user-prefs').classList.add('night-vision');
+                        if(cookies.read('sticky-header') !== '') document.getElementById('user-prefs').classList.add('sticky-header');
+                        if(cookies.read('show-spoilers') !== '') document.getElementById('user-prefs').classList.add('show-spoilers');
+                        if(cookies.read('highlight-links') !== '') document.getElementById('user-prefs').classList.add('highlight-links');
+                    } else {
+                        if (false) document.getElementById('user-prefs').classList.add('wide-load');
+                        if (false) document.getElementById('user-prefs').classList.add('mono-font');
+                        if (false) document.getElementById('user-prefs').classList.add('night-vision');
+                        if (false) document.getElementById('user-prefs').classList.add('sticky-header');
+                        if (false) document.getElementById('user-prefs').classList.add('show-spoilers');
+                        if (false) document.getElementById('user-prefs').classList.add('tvtropes-editor-on');
+                        if (false) document.getElementById('user-prefs').classList.add('folders-open');
+                        if (false) document.getElementById('user-prefs').classList.add('lefthand-sidebar');
+                        if (false) document.getElementById('user-prefs').classList.add('highlight-links');
+                        if (false) document.getElementById('user-prefs').classList.add('forum-gingerbread');
+                        if (false) document.getElementById('user-prefs').classList.add('hide-likes-articles');
+                        if (false) document.getElementById('user-prefs').classList.add('hide-likes-posts');
+                        if (false) document.getElementById('user-prefs').classList.add('shared-avatars');
+                        if (false) document.getElementById('user-prefs').classList.add('stop-auto-play-video');
+                        if (false) document.getElementById('user-prefs').classList.add('hide-laconic-hover');
+                        if (false) document.getElementById('user-prefs').classList.add('show-namespaces');
+                    }
+                        
+                    //desktop view on mobile
+                    if (cookies.read('desktop-on-mobile') !== ''){
+                        document.getElementById('user-prefs').classList.add('desktop-on-mobile');
+
+                        var viewport = document.querySelector("meta[name=viewport]");
+                        viewport.setAttribute('content', 'width=1000');
+                    }
+
+                    if (logged_in) {
+                        if (1) cookies.remove('stop-auto-play-video');
+                        else if (0) cookies.create('stop-auto-play-video','true',300,'/');
+                    }
+
+                    //updates element
+                    if(cookies.read('stop-auto-play-video') !== '') document.getElementById('user-prefs').classList.add('stop-auto-play-video');
+                }
+
+                function updateDesktopPrefs() {
+                    var logged_in = false;
+
+                    if(logged_in == false) {
+                        if(cookies.read('wide-load') !== '') document.getElementById('sidebar-toggle-wideload').classList.add('active');
+                        if(cookies.read('night-vision') !== '') document.getElementById('sidebar-toggle-nightvision').classList.add('active');
+                        if(cookies.read('sticky-header') !== '') document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
+                        if(cookies.read('show-spoilers') !== '') document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
+                    } else {
+                        if (false) document.getElementById('sidebar-toggle-wideload').classList.add('active');
+                        if (false) document.getElementById('sidebar-toggle-nightvision').classList.add('active');
+                        if (false) document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
+                        if (false) document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
+                    }
+                }
+
+                function updateMobilePrefs() {
+                    var logged_in = false;
+
+                    if(logged_in == false) {
+                        if(cookies.read('highlight-links') !== '') document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
+                        if(cookies.read('night-vision') !== '') document.getElementById('mobile-toggle-nightvision').classList.add('active');
+                        if(cookies.read('sticky-header') !== '') document.getElementById('mobile-toggle-stickyheader').classList.add('active');
+                        if(cookies.read('show-spoilers') !== '') document.getElementById('mobile-toggle-showspoilers').classList.add('active'); 
+                    } else {
+                        if (false) document.getElementById('mobile-toggle-showspoilers').classList.add('active');
+                        if (false) document.getElementById('mobile-toggle-nightvision').classList.add('active');
+                        if (false) document.getElementById('mobile-toggle-stickyheader').classList.add('active');
+                        if (false) document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
+                    }
+                }
+
+                function is_mobile() {
+	                if(document.body.clientWidth && document.body.clientWidth<=768) return true;
+	                else return false;
+                }
+
+                function sendToSiteSearch(obj, q) {
+
+                    window.location.href = "/pmwiki/search_result.php#gsc.tab=0&gsc.q="+q+"&gsc.sort=";
+                    return false;
+                }
+
+            </script>
+			
+						<script type="text/javascript">
+                var ad_block_detected = cookies.read('ad_block_detected') ? true : false;
+
+                var site_bc_settings = {
+                    "adx"               : "yes",
+                    "groupname"         : "Unknown",
+                    "has_folders"       : "unknown",
+                    "user_type"         : "guest",
+                    "site_name"         : "tvtropes",
+                    "ad_block_detected" : ad_block_detected,
+                };
+
+                if(ad_block_detected) gtag('event', 'adblock', {'event_label': 'whitelist'});
+			</script>
+
+            
+                        <script>
+                window.BCLighthouseTag = window.BCLighthouseTag || {};
+window.BCLighthouseTag.cmd = window.BCLighthouseTag.cmd || [];
+
+BCLighthouseTag.cmd.push(function() {
+    if (site_bc_settings.groupname != "") {
+        BCLighthouseTag.setTargeting("groupname", site_bc_settings.groupname);
+    }
+    BCLighthouseTag.setTargeting("adx",               site_bc_settings.adx);
+    BCLighthouseTag.setTargeting("website",           site_bc_settings.site_name);
+    BCLighthouseTag.setTargeting("user_type",         site_bc_settings.user_type);
+    BCLighthouseTag.setTargeting("has_folders",       site_bc_settings.has_folders);
+    BCLighthouseTag.setTargeting("ad_block_detected", site_bc_settings.ad_block_detected);
+});
+            </script>
+
+                        <script type="text/javascript">
+                var tvtropes_config = {
+                    asteri_stream_enabled : "1",
+                    is_logged_in         : "",
+                    live_server          : "1",
+                    handle               : "",
+                    email_popup          : "0",
+                    troper_email         : "",
+                    get_asteri_stream     : "",
+                    revnum               : "837f7cb69e5ffd5f6af3cb233a80940a123205dd",
+                    img_domain           : "https://static.tvtropes.org",
+                    adblock              : "1",
+                    adblock_url          : "propermessage.io",
+                    universal_page_type  : "404",
+                    pause_editing        : "0",
+                    pause_editing_msg    : "Editing is disabled while we upgrade the servers. Estimated 5-10 minutes",
+                    pause_site_changes   : "0",
+                    assets_domain        : "https://assets.tvtropes.org",
+                    ranking              : 0,
+                };
+
+                // Video Ad Configuration (for IMA SDK) - only non-logged-in users see video ads
+                // BigCrunch builds the instream VAST URL per request from this ad unit code (defaults in the dashboard config).
+                var tvtropes_video_ad_config = {
+                    instream_ad_unit_code: 'tvtropes_instream_ctp'
+                };
+
+                // This will track the total number of ads inserted over time
+                var globalAdInsertionCount = 0;
+
+                // Check to see if this page is isolated, if so, run BCLighthouseTag.disableGoogleAdManager();
+                if(window.site_bc_settings.adx == "no"){
+                    console.log("disabling google");
+
+                    BCLighthouseTag.cmd.push(() => {
+                        BCLighthouseTag.disableGoogleAdManager();
+                    });
+                }
+
+                            </script>
+
+            <!-- CMP -->
+            <link rel="preload" as="fetch" href="https://cdn.bigcrunch.com/cmp/config/34a5ddec-697b-424e-81d2-e6bb46a1b83e.json" crossorigin="anonymous">
+            <script async src="https://dist.bigcrunch.com/cmp/cmp.js" data-property-id="34a5ddec-697b-424e-81d2-e6bb46a1b83e" crossorigin="anonymous" fetchpriority="high"></script>
+
+            <!-- Core -->
+            <link rel="preload" as="fetch" href="https://cdn.bigcrunch.com/config/34a5ddec-697b-424e-81d2-e6bb46a1b83e.json" crossorigin="anonymous">
+            <link rel="preload" as="script" href="https://cdn.bigcrunch.com/prebid/34a5ddec-697b-424e-81d2-e6bb46a1b83e.js" crossorigin="anonymous">
+            <script>window.bcl = null;</script>
+            <script async src="https://dist.bigcrunch.com/lighthouse/main.js" id="bigcrunchtag" data-property-id="34a5ddec-697b-424e-81d2-e6bb46a1b83e" crossorigin="anonymous" fetchpriority="high" onload="window.bcl = true;" onerror="window.bcl = false;"></script>
+			
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+			<title>TV Tropes</title>
+            <meta name="description" content="" />
+            
+
+                        <link rel="shortcut icon" href="https://assets.tvtropes.org/img/icons/favicon.ico" type="image/x-icon" />
+
+                        <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@tvtropes" />
+            <meta name="twitter:owner" content="@tvtropes" />
+            <meta name="twitter:title" content="TV Tropes" />
+            <meta name="twitter:description" content="" />
+            <meta name="twitter:image:src" content="https://static.tvtropes.org/pmwiki/pub/images/logo_light.png" />
+
+                        <meta property="og:site_name" content="TV Tropes" />
+            <meta property="og:locale" content="en_US" />
+            <meta property="article:publisher" content="https://www.facebook.com/tvtropes" />
+			<meta property="og:title" content="" />
+			<meta property="og:type" content="" />
+			<meta property="og:url" content="https://tvtropes.org/.well-known/gpc.json" />
+
+			<meta property="og:image" content="https://static.tvtropes.org/pmwiki/pub/images/logo_light.png" />
+			<meta property="og:description" content="" />
+
+                        <meta name="robots" content="max-image-preview:large">
+
+
+			            <link rel="apple-touch-icon" sizes="57x57" href="https://assets.tvtropes.org/img/icons/apple-icon-57x57.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="60x60" href="https://assets.tvtropes.org/img/icons/apple-icon-60x60.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="72x72" href="https://assets.tvtropes.org/img/icons/apple-icon-72x72.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="76x76" href="https://assets.tvtropes.org/img/icons/apple-icon-76x76.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="114x114" href="https://assets.tvtropes.org/img/icons/apple-icon-114x114.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="120x120" href="https://assets.tvtropes.org/img/icons/apple-icon-120x120.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="144x144" href="https://assets.tvtropes.org/img/icons/apple-icon-144x144.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="152x152" href="https://assets.tvtropes.org/img/icons/apple-icon-152x152.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="180x180" href="https://assets.tvtropes.org/img/icons/apple-icon-180x180.png" type="image/png">
+            <link rel="icon" sizes="16x16" href="https://assets.tvtropes.org/img/icons/favicon-16x16.png" type="image/png">
+            <link rel="icon" sizes="32x32" href="https://assets.tvtropes.org/img/icons/favicon-32x32.png" type="image/png">
+            <link rel="icon" sizes="96x96" href="https://assets.tvtropes.org/img/icons/favicon-96x96.png" type="image/png">
+            <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
+
+                                        <meta name="robots" content="NOINDEX, NOFOLLOW">
+            
+                        
+						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=837f7cb69e5ffd5f6af3cb233a80940a123205dd" />
+
+            <!-- Smart App Banner for iOS -->
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://.well-known/gpc.json">
+
+                                                
+                        
+                        
+                        
+        </head>
+ <body class=" ">
+
+        <i id="user-prefs"></i>
+    <script>updateUserPrefs(); 
+    show_promo();
+    const af = 0;
+    </script>
+
+    <div id="modal-box">
+        <div class="modal-loading-graphic"></div>
+    </div>
+    <style>
+        @keyframes rotate-forever {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #modal-box > .modal-loading-graphic {
+            display: none; /* Hidden by default */
+
+            width: 80px;
+            height: 80px;
+
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            box-sizing: border-box;
+
+            position: absolute;
+            top: calc(30% - 40px);
+            left: calc(50% - 40px);
+            z-index: 2;
+
+            animation: rotate-forever 0.34s linear infinite;
+
+        }
+        #modal-box.active > .modal-loading-graphic {
+            display: block; /* Show only when modal is active */
+        }
+    </style>
+
+    <!-- if user is logged in, show header banner otherwise show footer banner -->
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
+
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
+
+<script>
+    // Detect if browser is Safari
+    function is_ios_safari(){
+        var ua = navigator.userAgent;
+        return /iP(hone|ad|od)/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/.test(ua);
+    }
+
+    // Detect OS only
+    function get_mobile_type(){
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if(/iPhone|iPad|iPod/i.test(userAgent)){
+            return "iOS";
+        } else if(/Android/i.test(userAgent)){
+            return "Android";
+        } else {
+            return "Other";
+        }
+    }
+
+    // Get current page path for deep linking (use tvtropes:// custom scheme)
+    var deepLink = "tvtropes://" + window.location.pathname.replace(/^\//, '');
+
+    // App store URLs
+    var appStoreUrls = {
+        iOS: "https://apps.apple.com/app/6738365737",
+        Android: "https://play.google.com/store/apps/details?id=org.tvtropes.app"
+    };
+
+    var promo_link = document.getElementById("promo-app-link");
+    var os = get_mobile_type();
+
+    if(os === "iOS" && is_ios_safari()){
+        // Safari iOS — rely on native Smart App Banner, hide custom one
+        document.body.classList.remove("app-promo");
+    }
+    else{
+        // Handle click with smart fallback for all other browsers
+        promo_link.addEventListener("click", function(e){
+            e.preventDefault();
+
+            var fallbackUrl = appStoreUrls[os] || appStoreUrls.iOS;
+            var appOpened = false;
+
+            // Set up fallback to app store
+            var fallbackTimeout = setTimeout(function(){
+                // If we're still here after 1.5s, app probably isn't installed
+                if(!appOpened && document.visibilityState !== "hidden"){
+                    window.location.href = fallbackUrl;
+                }
+            }, 1500);
+
+            // Listen for page visibility change (app opened successfully)
+            var handleVisibilityChange = function(){
+                if(document.visibilityState === "hidden"){
+                    appOpened = true;
+                    clearTimeout(fallbackTimeout);
+                }
+            };
+            document.addEventListener("visibilitychange", handleVisibilityChange);
+
+            // Clean up listener after attempt
+            setTimeout(function(){
+                document.removeEventListener("visibilitychange", handleVisibilityChange);
+            }, 2000);
+
+            // Attempt to open the app
+            window.location.href = deepLink;
+        });
+    }
+</script>
+
+    <header id="main-header-bar" class="headroom-element ">
+        <div id="main-header-bar-inner">
+
+            <span id="header-spacer-left" class="header-spacer"></span>
+
+            <a href="#mobile-menu" id="main-mobile-toggle" class="mobile-menu-toggle-button tablet-on"><span></span><span></span><span></span></a>
+
+            <a href="/" id="main-header-logoButton" class="no-dev"></a>
+
+            <span id="header-spacer-right" class="header-spacer"></span>
+
+            <nav id="main-header-nav" class="tablet-off">
+                <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
+                <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
+                <a href="/pmwiki/review_activity.php" class="nav-browse">Reviews</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
+                <a href="/pmwiki/topics.php">Forums</a>
+                <a href="/pmwiki/recent_videos.php" >Videos</a>
+            </nav>
+
+            <div id="main-header-bar-right">
+                                <div id="signup-login-box" class="font-xs mobile-off">
+                    <a href="#" class="hover-underline bold" data-modal-target="signup">Join</a>
+                    <a href="#" class="hover-underline bold" data-modal-target="login">Login</a>
+                </div>
+                
+                                <div id="signup-login-mobileToggle" class="mobile-on inline">
+                    <a href="#" data-modal-target="login"><i class="fa fa-user"></i></a>
+                </div>
+                
+                <div id="search-box">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
+                        <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
+                    </form>
+                    <a href="#close-search" class="mobile-on mobile-search-toggle close-x"><i class="fa fa-close"></i></a>
+                </div>
+
+                <div id="random-box">
+                    <a href="/pmwiki/randomitem.php?p=1" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/randomitem.php?p=2" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="mobile-menu" class="tablet-on"><div class="mobile-menu-options">
+
+    <div class="nav-wrapper">
+        <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
+        <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
+        <a href="/pmwiki/review_activity.php" class="xl">Reviews</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
+        <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
+        <a href="/pmwiki/topics.php" class="xl">Forums</a>
+        <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
+
+        <a href="/pmwiki/query.php?type=att">Ask The Tropers</a>
+        <a href="/pmwiki/query.php?type=tf">Trope Finder</a>
+        <a href="/pmwiki/query.php?type=ykts">Media Finder</a>
+        <a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a>
+        <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
+        <a href="/pmwiki/browse.php">Browse</a> 
+        
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+        <div class="tools-dropdown mobile-dropdown-linkList">
+            <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
+            <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
+            <a href="/pmwiki/changes.php">New Edits</a>
+            <a href="/pmwiki/articles_new.php">New Articles</a>
+            <a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a>
+            <a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a>
+            <a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a>
+            <a href="/pmwiki/crown_activity.php">Crowner Activity</a>
+            <a href="/pmwiki/no_types.php">Un-typed Pages</a>
+            <a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a>
+            <a href="/pmwiki/changelog.php">Changelog</a>
+        </div>
+
+        <a href="#tips" data-click-toggle="active">Tips <i class="fa fa-chevron-down"></i></a>
+        <div class="tips-dropdown mobile-dropdown-linkList">
+                <a href="/pmwiki/pmwiki.php/Administrivia/CreatingNewRedirects">Creating New Redirects</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/Crosswicking">Cross Wicking</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TipsForEditing">Tips for Editing</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TextFormattingRules">Text Formatting Rules</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
+                <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
+        </div>
+        
+        <a href="#hq" data-click-toggle="active">Tropes HQ <i class="fa fa-chevron-down"></i></a>
+
+        <div class="tools-dropdown mobile-dropdown-linkList">
+            <a href="/pmwiki/about.php">About Us</a>
+            <a href="/pmwiki/contact.php">Contact Us</a>
+            <a href="/pmwiki/dmca.php">DMCA Notice</a>
+            <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
+            <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
+        </div>
+
+        <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
+        <a href="/pmwiki/changelog.php">Changelog</a></li>
+
+        <div class="toggle-switches">
+            <ul class="mobile-menu display-toggles">
+                <li>Show Spoilers <div id="mobile-toggle-showspoilers" class="display-toggle show-spoilers"></div></li>
+                <li>Night Vision <div id="mobile-toggle-nightvision" class="display-toggle night-vision"></div></li>
+                <li>Sticky Header <div id="mobile-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
+                <li>Highlight Links <div id="mobile-toggle-highlightlinks" class="display-toggle highlight-links"></div></li>
+            </ul>
+            <script>updateMobilePrefs();</script>
+        </div>
+

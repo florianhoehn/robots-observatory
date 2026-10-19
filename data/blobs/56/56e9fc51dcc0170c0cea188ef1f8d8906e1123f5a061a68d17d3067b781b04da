@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /search
+Disallow: /api
+Disallow: /administration
+Disallow: /account
+Disallow: /uploads
+Disallow: /me
+Disallow: /login
+Disallow: /logout
+Disallow: /records/*/preview
+Allow: /api/records/*/files
+Disallow: /api/records/*/files-archive
+Crawl-delay: 10

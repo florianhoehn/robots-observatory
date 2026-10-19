@@ -1,0 +1,313 @@
+# Hello, web crawlers and curious humans!
+# This file is here to guide well-behaved bots through the Skroutz universe.
+# We’ve crafted these rules to keep our servers happy and our users even happier.
+# If you're a bot, please play nice. If you're a developer, you know what to do.
+
+User-agent: *
+Disallow: /products/show
+Disallow: /products/compare_selected_products
+Disallow: /apiv2/
+Disallow: /users/
+Disallow: /account/
+Disallow: /signup
+Disallow: /sign_in
+Disallow: /api/
+Disallow: /suggest
+Disallow: /autocomplete/zero_prefix
+Disallow: /personalization/
+Disallow: /comparelists/
+Disallow: /badge/api
+Disallow: /adam/latest_keyphrases.json
+Disallow: /counters
+Disallow: /cart/*
+Disallow: /cart.json*
+Disallow: /current_cart_count
+Disallow: /checkout/
+Disallow: /s/recently_viewed
+Disallow: /s/*/shops_list
+Disallow: /s/variations.json?sku_ids=*
+Disallow: /s/*/recommendations
+Disallow: /s/*/price_graph
+Disallow: /users/account
+Disallow: /shop/*keyphrase=*
+Disallow: /shop/*/locations.json
+Disallow: *clipped_coupons.json
+Disallow: /c/*/manufacturers
+Disallow: /c/*/a/*
+Disallow: *manufacturer_ids=*_*
+Disallow: *author_ids=*_*
+Disallow: *filter_id=*
+Disallow: /cdn-cgi/*
+
+
+# Everything is prohibited except the main page at Yandex
+User-agent: Yandex
+Allow: /$
+Disallow: /
+User-agent: YandexBot
+Allow: /$
+Disallow: /
+User-agent: YandexMobileBot
+Allow: /$
+Disallow: /
+User-agent: YandexDirect
+Disallow: /
+
+# Disallow double filters Yandex
+User-agent: Yandex
+Disallow: /c/*/f/*_*
+Disallow: /c/*/m/*/f/*
+# Disallow deals except for the home deals page
+Disallow: /deals
+
+User-agent: APIs-Google
+Disallow: /m.*filter_id
+
+User-agent: AdsBot-Google-Mobile
+Disallow: /m.*filter_id
+
+User-agent: AdsBot-Google
+Disallow: /m.*filter_id
+
+User-agent: Mediapartners-Google
+Disallow: /m.*filter_id
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Baiduspider-render
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+##############
+# AI crawlers
+##############
+
+User-agent: OAI-SearchBot
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+User-agent: GPTBot
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*.html?utm_source=chatgpt.com
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+User-agent: ChatGPT-User/2.0
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*.html?utm_source=chatgpt.com
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+User-agent: Google-Extended
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+User-agent: PerplexityBot
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+User-agent: ClaudeBot
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+User-agent: Claude-SearchBot
+Disallow: /
+Allow: /$
+Allow: /c/*.html$
+Allow: /c/*/*/f/*/*.html$
+Allow: /c/*/*/m/*/*.html$
+Allow: /c/*.html?deals=1$
+Allow: /c/*/*/discussion
+Allow: /s/*/*.html$
+Allow: /s/*/*/discussion
+Allow: /m.*.html$
+Allow: /a/*/*.html$
+Allow: /articles/
+Allow: /short_videos/
+Allow: /deals$
+Allow: /black-friday$
+Allow: /plus$
+Allow: /ecommerce*
+Allow: /cs/*.html$
+Disallow: /c/*/*/m/*/*/f/*/*.html$
+Disallow: /c/*/*/f/*_*/*.html$
+Disallow: /c/*/*/f/*.html?deals=1$
+Disallow: /c/*/*/m/*_*/*.html$
+Disallow: /c/*/*/m/*.html?deals=1$
+Disallow: /c/*/*/a/*/
+Disallow: /*?
+Disallow: /sign_in
+
+###########
+# Sitemaps
+###########
+
+Sitemap: https://www.skroutz.gr/sitemaps/sitemap_index.xml.gz
+
+#:......:::..::::..::..:::::..:::.......::::.......::::::..:::::........::
+#:'######::'##:::'##:'########:::'#######::'##::::'##:'########:'########:
+#'##... ##: ##::'##:: ##.... ##:'##.... ##: ##:::: ##:... ##..::..... ##::
+# ##:::..:: ##:'##::: ##:::: ##: ##:::: ##: ##:::: ##:::: ##:::::::: ##:::
+#. ######:: #####:::: ########:: ##:::: ##: ##:::: ##:::: ##::::::: ##::::
+#:..... ##: ##. ##::: ##.. ##::: ##:::: ##: ##:::: ##:::: ##:::::: ##:::::
+#'##::: ##: ##:. ##:: ##::. ##:: ##:::: ##: ##:::: ##:::: ##::::: ##::::::
+#. ######:: ##::. ##: ##:::. ##:. #######::. #######::::: ##:::: ########:
+#:......:::..::::..::..:::::..:::.......::::.......::::::..:::::........::
+#:......::Work with us: https://corporate.skroutz.gr/en/careers/..:::...::

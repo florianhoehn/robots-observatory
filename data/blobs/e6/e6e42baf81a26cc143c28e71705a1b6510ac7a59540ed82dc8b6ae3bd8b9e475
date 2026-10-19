@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /adv
+Disallow: /article
+Disallow: /news/reklama
+Disallow: /news/label
+Disallow: *mycity*
+Disallow: *get-code*
+Disallow: /ajax
+Disallow: /*?*
+Disallow: /home/*
+Disallow: /profile*
+Host: https://www.gismeteo.ru
+Sitemap: https://www.gismeteo.ru/sitemap.xml

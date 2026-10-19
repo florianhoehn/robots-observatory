@@ -1,0 +1,37 @@
+User-agent: *
+# Bloqueia URLs de busca antigas
+Disallow: /busca
+Disallow: /busca/lojinha
+Disallow: /w/hlp
+Disallow: /admin
+
+# Bloqueia URLs de login com parâmetros irrelevantes
+Disallow: /usuario/identifique-se?*redirect_to=*
+
+# Bloqueia URLs de busca sem slug
+Disallow: /s?*
+
+# Bloqueia URLs de busca com filtros irrelevantes
+Disallow: /*/s?*o=*
+Disallow: /*/s?*sr=*
+Disallow: /*/s?*pg=*
+Disallow: /*/s?*pl=*
+Disallow: /*/s?*lp=*
+Disallow: /*/s?*dg=*
+Disallow: /*/s?*st[*
+
+# Bloqueia URLs da lojinha, permitindo apenas a página inicial
+Disallow: /@*/*
+Allow: /@*/$
+
+# Bloqueia URLs de paginação específicas
+Disallow: /s?*cc=*
+Disallow: /*/s?*cc=*
+Disallow: /s?*pc=*
+Disallow: /*/s?*pc=*
+
+# Bloqueia APIs desnecessárias para crawlers
+Disallow: /api/users/location
+
+# Sitemap principal
+Sitemap: https://www.enjoei.com.br/sitemaps/production/sitemap.xml.gz

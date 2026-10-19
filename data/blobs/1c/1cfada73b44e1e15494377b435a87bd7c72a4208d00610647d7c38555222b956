@@ -1,0 +1,1076 @@
+
+
+<!DOCTYPE html><html><head><meta name="wpk-bid" content="nzk9v4lx-mcsc0hok">
+        
+        
+        
+          
+
+
+
+    
+
+<script>
+      (function () {
+        try {
+          if (location.href.indexOf('disable_localStorage_hook=true') >= 0) {
+            return;
+          }
+
+          if (window.localStorageHooked === true) {
+            return;
+          }
+          window.localStorageHooked = true;
+
+          var iosVersion = -1;
+          var userAgent = window.navigator.userAgent;
+          if (/iPad|iPhone|iPod/.test(userAgent)) {
+            var iosMatch = userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/);
+            
+            if (iosMatch && iosMatch.length > 1) {
+              iosVersion = parseInt(iosMatch[1], 10);
+            }
+          }
+          if (iosVersion < 18) {
+            return;
+          }
+
+          console.log('通过ua判断系统为ios26，开始劫持localStorage');
+          var localStorageData = {};
+          for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            localStorageData[key] = localStorage.getItem(key);
+          }
+          console.log('localStorageData', localStorageData);
+
+          var taskQueue = [];
+          function processTaskQueue() {
+            while (taskQueue.length > 0) {
+              var task = taskQueue.shift();
+              try {
+                if (task.type === 'setItem') {
+                  localStorage.setItemOriginal(task.key, task.value);
+                  console.log(`处理任务${task.type}: ${task.key} = ${task.value}`);
+                } else if (task.type === 'removeItem') {
+                  localStorage.removeItemOriginal(task.key);
+                  console.log(`处理任务${task.type}: ${task.key}`);
+                } else {
+                  console.log(`处理任务unknown:${task}`);
+                }
+              } catch (error) {
+                console.warn(`处理任务时发生错误: ${task.type}, key: ${task.key}`, error);
+              }
+            }
+          }
+          setInterval(processTaskQueue, 500);
+
+          var originalSetItem = Storage.prototype.setItem;
+          Storage.prototype.setItem = function(key, value) {
+            console.log(`劫持到数据setItem:${key} = ${value}`);
+            // 完善类型判断，localStorage 只能存储字符串
+            var storageValue;
+            if (value === null || value === undefined) {
+              storageValue = '';
+            } else if (typeof value === 'string') {
+              storageValue = value;
+            } else if (typeof value === 'object' || typeof value === 'number' || typeof value === 'boolean') {
+              storageValue = JSON.stringify(value);
+            } else {
+              // function, symbol 等类型转为字符串
+              storageValue = String(value);
+            }
+            localStorageData[key] = storageValue;
+            taskQueue.push({ type: 'setItem', key, value: storageValue });
+            return;
+          };
+          Storage.prototype.setItemOriginal = function(key, value) {
+            return originalSetItem.call(this, key, value);
+          };
+
+          Storage.prototype.getItem = function(key) {
+            var value = localStorageData.hasOwnProperty(key) ? localStorageData[key] : null;
+            console.log(`劫持到数据getItem:${key} = ${value}`);
+            return value;
+          };
+
+          var originalRemoveItem = Storage.prototype.removeItem;
+          Storage.prototype.removeItem = function(key) {
+            console.log(`劫持到数据removeItem:${key}`);
+            delete localStorageData[key];
+            taskQueue.push({ type: 'removeItem', key });
+            return;
+          };
+          Storage.prototype.removeItemOriginal = function(key) {
+            return originalRemoveItem.call(this, key);
+          };
+        } catch (error) {
+          console.log('Error hook localStorage', error);
+        }
+      })();
+    </script><meta charset="utf-8"><meta name="spm-id" content="a2o4m.page-not-found"><meta name="aplus-waiting" content="1000"><meta name="wpk-sampleRate" content="0.25"><link rel="dns-prefetch" href="//lzd-img-global.slatic.net/"><link rel="dns-prefetch" href="//acs-m.lazada.co.th"><link rel="preload" as="style" href="https://g.lazcdn.com/g/code/npm/@ali/gcp-lzd-project-common-page/0.0.12/css/commError-pc.css"><link rel="preload" href="//g.lazcdn.com/g/alilog/mlog/aplus_int.js" as="script"><link rel="preload" href="//g.lazcdn.com/g/mtb/??3rd/0.0.10/require.js,lib-promise/3.1.3/polyfillB.js,lib-mtop/2.6.1/mtop.js,lib-windvane/3.0.6/windvane.js" as="script"><link rel="preload" href="//g.lazcdn.com/g/lzd/assets/1.2.0/??react/17.0.2/react.production.min.js,react-dom/17.0.2/react-dom.production.min.js" as="script"><link rel="preload" crossorigin="anonymous" href="https://g.lazcdn.com/g/woodpeckerx/itrace-next/??itrace-jserror.iife.js,itrace-interface.iife.js,itrace-perf.iife.js,itrace-flow.iife.js,itrace-blank.iife.js,itrace-resource.iife.js,itrace.iife.js" as="script"><link rel="preload" crossorigin="anonymous" href="https://g.lazcdn.com/res-o/lzdfe/lzd-h5-itrace/index.js" as="script"><link rel="preload" crossorigin="anonymous" href="https://g.lazcdn.com/g/code/npm/@ali/gcp-lzd-project-common-page/0.0.12/js/commError-pc.js" as="script">
+
+
+    <link rel="preload" href="//g.lazcdn.com/g/lzd/assets/1.2.13/font/EuclidCircularA-Regular.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="//g.lazcdn.com/g/lzd/assets/1.2.13/font/EuclidCircularA-Medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="//g.lazcdn.com/g/lzd/assets/1.2.13/font/EuclidCircularA-Bold.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+    <link rel="preload" href="//g.lazcdn.com/g/lzdmod/custom-font-uploader/0.0.7/fonts/NotoSansThai-Regular.woff" as="font" crossorigin="anonymous">
+    <link rel="preload" href="//g.lazcdn.com/g/lzdmod/custom-font-uploader/0.0.7/fonts/NotoSansThai-SemiBold.woff" as="font" crossorigin="anonymous">
+
+
+          
+        
+      
+        
+        
+        
+          <title>Page Not Found</title>
+          
+        
+      
+        
+        
+        
+          
+
+
+
+    
+
+<link rel="shortcut icon" href="/favicon.ico"><script>
+window.g_config = window.g_config || {};
+window.g_config.language = "en";
+window.g_config.regionID = "TH";
+</script>
+
+  <style id="th-font"></style>
+  <script>
+    var hng = '';
+    try {
+      var cookies = (document.cookie || '').split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var keyValue = cookies[i].split('=');
+        var key = (keyValue[0] || '').trim();
+        var value = (keyValue[1] || '').trim();
+        if (key && key === 'hng' && value) {
+          hng = value;
+          break;
+        }
+      }
+    } catch (e) {
+      console.error('[get-hng-from-cookie-error]:' + e.message + ';' + e.stack);
+    }
+
+    var language = 'th';
+    if (hng.toLowerCase().indexOf('en') > 0) {
+      language = 'en';
+    }
+
+    var style = '';
+    if (language === 'th') {
+      style = '' + 
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Regular";\n' +
+        '  src: url(//g.lazcdn.com/g/lzdmod/custom-font-uploader/0.0.7/fonts/NotoSansThai-Regular.woff) format("woff");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-SemiBold";\n' +
+        '  src: url(//g.lazcdn.com/g/lzdmod/custom-font-uploader/0.0.7/fonts/NotoSansThai-SemiBold.woff) format("woff");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Bold";\n' +
+        '  src: url(//g.lazcdn.com/g/lzdmod/custom-font-uploader/0.0.7/fonts/NotoSansThai-SemiBold.woff) format("woff");\n' +
+        '  font-display: fallback;\n' +
+        '}';
+    } else {
+      var isAliApp = navigator.userAgent.indexOf('AliApp') >= 0;
+      var fontFormat, fontNormal, fontSemiBold, fontBold, fontExtraBold;
+      if (isAliApp) {
+        fontFormat = "truetype";
+        fontNormal = "/lazada_asset_font/font/normal.ttf";
+        fontSemiBold = "/lazada_asset_font/font/semi_bold.ttf";
+        fontBold = "/lazada_asset_font/font/bold.ttf";
+        fontExtraBold = "/lazada_asset_font/font/extra_bold.ttf";
+      } else {
+        fontFormat = "woff2";
+        fontNormal = "//g.lazcdn.com/g/lzd/assets/1.2.13/font/EuclidCircularA-Regular.woff2";
+        fontSemiBold = "//g.lazcdn.com/g/lzd/assets/1.2.13/font/EuclidCircularA-Medium.woff2";
+        fontExtraBold = fontBold = "//g.lazcdn.com/g/lzd/assets/1.2.13/font/EuclidCircularA-Bold.woff2";
+      }
+      style = '' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Regular";\n' +
+        '  src:url("' + fontNormal + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Regular";\n' +
+        '  font-weight: 400;\n' +
+        '  src:url("' + fontNormal + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Regular";\n' +
+        '  font-weight: 500;\n' +
+        '  src:url("' + fontSemiBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Regular";\n' +
+        '  font-weight: 600;\n' +
+        '  src:url("' + fontBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Regular";\n' +
+        '  font-weight: 700;\n' +
+        '  src:url("' + fontExtraBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-SemiBold";\n' +
+        '  src:url("' + fontSemiBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-SemiBold";\n' +
+        '  font-weight: 500;\n' +
+        '  src:url("' + fontSemiBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-SemiBold";\n' +
+        '  font-weight: 600;\n' +
+        '  src:url("' + fontBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-SemiBold";\n' +
+        '  font-weight: 700;\n' +
+        '  src:url("' + fontExtraBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Bold";\n' +
+        '  src:url("' + fontBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}\n' +
+        '@font-face {\n' +
+        '  font-family: "NotoSans-Bold";\n' +
+        '  font-weight: 700;\n' +
+        '  src:url("' + fontBold + '") format("' + fontFormat + '");\n' +
+        '  font-display: fallback;\n' +
+        '}';
+    }
+
+    var styleEle = document.getElementById('th-font');
+    styleEle.innerHTML = style;
+  </script>
+
+
+
+<style>
+  *[style*=NotoSans-Regular i] {
+    font-family: NotoSans-Regular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Helvetica,Tahoma,Arial,"PingFang SC","Microsoft YaHei",sans-serif !important;
+    font-weight: 400;
+  }
+  *[style*=NotoSans-SemiBold i] {
+    font-family: NotoSans-SemiBold,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Helvetica,Tahoma,Arial,"PingFang SC","Microsoft YaHei",sans-serif !important;
+    font-weight: 500;
+  }
+  *[style*=NotoSans-Bold i] {
+    font-family: NotoSans-Bold,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Helvetica,Tahoma,Arial,"PingFang SC","Microsoft YaHei",sans-serif !important;
+    font-weight: 700;
+  }
+</style>
+
+
+<style>
+  *[style*=NotoSans-SemiBold i], *[style*=NotoSans-Bold i] {
+    letter-spacing: -0.5px;
+  }
+</style>
+
+
+<style>
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+button,hr,input {
+    overflow: visible
+}
+
+progress,sub,sup {
+    vertical-align: baseline
+}
+
+[type=checkbox],[type=radio],legend {
+    box-sizing: border-box;
+    padding: 0
+}
+
+a,a:hover {
+    text-decoration: none
+}
+
+a,html {
+    -webkit-tap-highlight-color: transparent
+}
+
+body {
+    font-family: NotoSans-Regular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Helvetica,Tahoma,Arial,"PingFang SC","Microsoft YaHei",sans-serif !important;
+    margin: 0;
+}
+
+details,main {
+    display: block
+}
+
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0
+}
+
+code,kbd,pre,samp {
+    font-family: NotoSans-Regular;
+    font-size: 1em
+}
+
+a {
+    background-color: transparent
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline;
+    text-decoration: underline dotted
+}
+
+b,strong {
+    font-weight: bolder
+}
+
+small {
+    font-size: 80%
+}
+
+sub,sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative
+}
+
+sub {
+    bottom: -.25em
+}
+
+sup {
+    top: -.5em
+}
+
+img {
+    border-style: none
+}
+
+button,input,optgroup,select,textarea {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0
+}
+
+button,select {
+    text-transform: none
+}
+
+[type=button],[type=reset],[type=submit],button {
+    -webkit-appearance: button
+}
+
+[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner {
+    border-style: none;
+    padding: 0
+}
+
+[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring {
+    outline: ButtonText dotted 1px
+}
+
+fieldset {
+    padding: .35em .75em .625em
+}
+
+legend {
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    white-space: normal
+}
+
+textarea {
+    overflow: auto
+}
+
+[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button {
+    height: auto
+}
+
+[type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px
+}
+
+[type=search]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit
+}
+
+summary {
+    display: list-item
+}
+
+[hidden],template {
+    display: none
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0
+}
+
+caption,td,th {
+    text-align: left;
+    font-weight: 400
+}
+
+table,td,th {
+    vertical-align: middle
+}
+
+blockquote:after,blockquote:before,q:after,q:before {
+    content: ""
+}
+
+blockquote,q {
+    quotes: "" ""
+}
+
+a img {
+    border: none
+}
+
+html {
+    font-family: NotoSans-Regular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Helvetica,Tahoma,Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+    font-weight: 400;
+    font-size: 100%;
+    line-height: 1.15
+}
+
+.lzd-font-thin {
+    font-weight: 300
+}
+
+.lzd-font-normal {
+    font-weight: 400
+}
+
+.lzd-font-bold {
+    font-weight: 500
+}
+
+.lzd-font-bolder {
+    font-weight: 600
+}
+
+.lzd-font-small {
+    font-size: 12px
+}
+
+.lzd-font-normal {
+    font-size: 14px
+}
+
+.lzd-font-large {
+    font-size: 16px
+}
+
+.lzd-font-larger {
+    font-size: 18px
+}
+
+.lzd-theme-color {
+    color: #ff330c
+}
+
+.lzd-text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.lzd-base-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.03)
+}
+
+.lzd-base-center {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.lzd-icon-navigation-arrow:hover {
+    background: rgba(0,0,0,.15)!important
+}
+
+.laz-icon-navigation-hover:hover {
+    color: #FE4960!important
+}
+
+.lzd-voucher-arrow:hover {
+    background: rgba(0,0,0,.3)!important
+}
+
+.lzd-two-line-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
+}
+
+.lzd-item-hover-mask:hover {
+    opacity: 1!important
+}
+
+.product-list .product-row:last-child {
+    margin-bottom: 0!important
+}
+
+.elevator-tab-item:hover {
+    background-image: linear-gradient(136deg,#FF933F 0,#F93782 67%,#F93782 100%)!important
+}
+
+.elevator-tab-item span:hover {
+    color: #fff!important
+}
+
+.lzd-rwb-bottom-bar-placeholder {
+    height: 52px
+}
+
+@media only screen and (device-width: 375px) and (device-height:812px),screen and (device-width:414px) and (device-height:896px) {
+    .lzdrwb-navigation-base {
+        padding-bottom:17px
+    }
+
+    .lzd-rwb-bottom-bar-placeholder {
+        height: 69px
+    }
+}
+
+</style>
+
+<link rel="stylesheet" href="https://g.lazcdn.com/g/code/npm/@ali/gcp-lzd-project-common-page/0.0.12/css/commError-pc.css">
+          
+        
+      <script src="https://g.lazcdn.com/g/alilog/mlog/aplus_int.js"></script></head><body><script>
+with(document)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("exparams","cfgver=1.0&aplus",id="beacon-aplus",src="//g.lazcdn.com/g/alilog/mlog/aplus_int.js")
+</script>
+        
+        
+        
+          
+
+
+
+    
+
+
+        
+        
+        
+          
+  
+
+  
+  
+
+  
+
+  
+    
+  
+
+  
+    
+    
+    
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      
+    
+  
+	
+  
+
+  
+  
+  
+	<script>
+    window.g_config = window.g_config || {};
+    window.g_config.wh_project = "lazada";
+    window.g_config.pageType = "default";
+    window.g_config.channel = "default";
+    window.g_config.language = "en";
+    window.g_config.regionID = "TH";
+    window.g_config.channelEnv = "product";
+    window.g_config.showPcSearchboxHotWords = false;
+    window.g_config.newPcHeadFoot = true;
+  </script><link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.4.4/css/615.css"/><link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.4.4/css/p_index-index.css"/>
+
+    <script>
+      console.log('[header debug data]:', 'header start');
+    </script>
+    <script>
+    (function() {
+      try {
+        if (window.aplusPageIdSetComplete || /AliApp/i.test(navigator.userAgent)) {
+          return;
+        }
+
+        var get_cookie = function (sName) {
+          var sRE = '(?:; )?' + sName + '=([^;]*);?';
+          var oRE = new RegExp(sRE);
+          if (oRE.test(document.cookie)) {
+          var str = decodeURIComponent(RegExp['$1']) || '';
+          if (str.trim().length > 0) {
+            return str;
+          } else {
+            return '-';
+          }
+          } else {
+            return '-';
+          }
+        };
+        var getRand = function () {
+          var page_id = get_cookie('cna') || '001';
+          page_id = page_id.toLowerCase().replace(/[^a-zd]/g, '');
+          page_id = page_id.substring(0, 16);
+          var d = (new Date()).getTime();
+          var randend = [
+            page_id,
+            d.toString(16)
+          ].join('');
+
+          for (var i = 1; i < 10; i++) {
+            var _r = parseInt(Math.round(Math.random() * 10000000000), 10).toString(16);
+            randend += _r;
+          }
+          randend = randend.substr(0, 42);
+          return randend;
+        };
+        var pageid = getRand();
+        var aq = (window.aplus_queue || (window.aplus_queue = []));
+        aq.push({
+          'action':'aplus.appendMetaInfo',
+          'arguments':['aplus-cpvdata', {"pageid":pageid}]
+        });
+        aq.push({
+          'action':'aplus.appendMetaInfo',
+          'arguments':['aplus-exdata',{"st_page_id":pageid}]
+        });
+        // 兼容老版本aplus
+        var gq = (window.goldlog_queue || (window.goldlog_queue = []));
+        gq.push({
+          'action':'goldlog.appendMetaInfo',
+          'arguments':['aplus-cpvdata', {"pageid":pageid}]
+        });
+        gq.push({
+          'action':'goldlog.appendMetaInfo',
+          'arguments':['aplus-exdata',{"st_page_id":pageid}]
+        });
+        window.aplusPageIdSetComplete = true;
+      } catch(err) {
+        console.error(err);
+      }
+    })();
+    </script>
+    
+		
+
+		
+			
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+
+		
+
+		
+
+		
+		
+		
+
+	<div id="New_LzdSiteNav" class="site-nav J_NavScroll"><div id="topActionHeaderWrapper" class="lzd-header" data-spm="header" data-tag="links"><div id="topActionHeader" class="lzd-header-content-wrap J_NavScroll"><div class="lzd-header-content "><div class="lzd-links-bar " id="topActionLinks"><div class="links-list header-content TH en">
+		
+      <div class="top-links-item" id="topActionInternalFeedback" style="display:none;">
+        <a class="highlight" target="_blank" href="https://pages.lazada.co.th/wow/gcp/route/lazada/th/upr_1000345_lazada/channel/th/upr-router/th?wx_navbar_transparent=true&amp;disable_smb=true&amp;lzd_pc_navbar_hidden=true&amp;hybrid=1&amp;data_prefetch=true&amp;prefetch_replace=1&amp;at_iframe=1&amp;wh_pid=/lazada/channel/th/feedback/internal-feedback"  data-spm-click="gostr=/lzdpub.header.tbar;locaid=internal_feedback">INTERNAL FEEDBACK</a>
+      </div>
+		
+		
+			<div class="top-links-item" id="topActionFeedback">
+				<a class="highlight" target="_blank" href="//pages.lazada.co.th/wow/gcp/route/lazada/th/upr_1000345_lazada/channel/th/upr-router/th?hybrid=1&amp;data_prefetch=true&amp;prefetch_replace=1&amp;at_iframe=1&amp;wh_pid=/lazada/channel/th/trade/feedback"  data-spm-click="gostr=/lzdpub.header.tbar;locaid=dfeedback">feedback</a>
+			</div>
+		
+	
+    
+      
+        <div class="top-links-item orange" id="topActionDownload" data-spm-click="gostr=/lzdpub.header.tbar;locaid=app_download">
+          <span>SAVE MORE ON APP</span>
+          <div class="lzd-download-popup top-popup-wrap" id="lzdDownloadPopup">
+            <div class="top-popup-content lzd-download-content">
+              <div class="get-the-app-scope">
+                <div class="get-the-app">
+                  <div class="get-the-app-title">Download the App for the best experience</div>
+
+                  <div class="get-the-app-promotion">
+                    
+                      <div class="get-the-app-lazada-qr-wrap">
+                        <img class="get-the-app-lazada-qr" src="https://img.lazcdn.com/us/domino/40845120240f19d13f738fa9a7978edd.png" alt="">
+                      </div>
+                    
+
+                    <div class="promotion-text" >
+                      
+                      <a href="//ali.lazada.co.th/wow/i/th/THCampaign/appbenefit?hybrid=1">
+                        <div class="get-the-app-download-text">
+                          <p>Shop through our app to enjoy:&nbsp;</p>
+<ul>
+<li>Exclusive Vouchers&nbsp;</li>
+<li>Better deals&nbsp;</li>
+<li>Personalised recommendations&nbsp;</li>
+<li>Find out first&nbsp;</li>
+</ul>
+                        </div>
+                      </a>
+                      
+                    </div>
+                  </div>
+
+                  
+                    <form class="get-the-app-form" id="topActionDownloadForm">
+                      <div class="top-input-wrap get-the-app-input-wrap">
+                        <input class="tel-text top-input" id="topActionDownloadInput" placeholder="eg. 0123456789" autocomplete="off">
+                        <button class="top-button button-submit" id="txt-submit">
+                          <i class="icon icon-arrow-on-button"></i>
+                        </button>
+                      </div>
+
+                    </form>
+                    <div class="success-message" id="topActionDownloadSuccessMsg">
+                      <span class="alert alert-success">Success! Please check your phone for the download link  </span>
+                    </div>
+
+                    <div class="error-message" id="topActionDownloadErrorMsg"></div>
+
+                  
+                  <div class="app-stores">
+                    <a href="https://itunes.apple.com/app/id785385147" class="store-link">
+                      <i class="app-apple"></i>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.lazada.android" class="store-link">
+                      <i class="app-google"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      
+    
+	
+    
+      <div class="top-links-item" id="topActionSell">
+        <a class="cyan" href="https://sellercenter.lazada.co.th/apps/register/index?gsc=1"  data-spm-click="gostr=/lzdpub.header.tbar;locaid=sell_on">sell on lazada</a>
+      </div>
+    
+	
+   
+
+    
+      
+        <div class="top-links-item grey" id="topActionCustomCare"  data-spm-click="gostr=/lzdpub.header.tbar;locaid=customer_care">
+          <span>CUSTOMER CARE</span>
+          <div class="lzd-customcare-popup top-popup-wrap">
+            <div class="top-popup-content l-customcare-content">
+              <ul class="care-list">
+                
+                  <li class="care-item">
+                    
+                      
+                        
+                        <a href="https://helpcenter.lazada.co.th/s/faq" class="care-item-anchor">
+                        
+                          <span class="care-icon help-center"></span>
+                          Help Center
+                        </a>
+                      
+                      
+                    
+                  </li>
+                
+                  <li class="care-item">
+                    
+                      
+                        
+                        <a href="//www.lazada.co.th/helpcenter/orders/#answer-faq-placeorder-ans" class="care-item-anchor">
+                        
+                          <span class="care-icon order-payment"></span>
+                          Orders &amp; Payment
+                        </a>
+                      
+                      
+                    
+                  </li>
+                
+                  <li class="care-item">
+                    
+                      
+                        
+                        <a href="//www.lazada.co.th/helpcenter/shipping-and-delivery/#answer-faq-trackorder-ans" class="care-item-anchor">
+                        
+                          <span class="care-icon shipping-delivery"></span>
+                          Shipping &amp; Delivery
+                        </a>
+                      
+                      
+                    
+                  </li>
+                
+                  <li class="care-item">
+                    
+                      
+                        
+                        <a href="//pages.lazada.co.th/wow/gcp/route/lazada/th/upr_1000345_lazada/channel/th/upr-router/th?hybrid=1&amp;data_prefetch=true&amp;prefetch_replace=1&amp;at_iframe=1&amp;wh_pid=/lazada/channel/th/search/NSS4eWddEw" class="care-item-anchor">
+                        
+                          <span class="care-icon returns-refunds"></span>
+                          Returns &amp; Refunds
+                        </a>
+                      
+                      
+                    
+                  </li>
+                
+                  <li class="care-item">
+                    
+                      
+                        
+                        <a href="//www.lazada.co.th/contact/" class="care-item-anchor">
+                        
+                          <span class="care-icon help-center"></span>
+                          Contact us
+                        </a>
+                      
+                      
+                    
+                  </li>
+                
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      
+    
+	
+  
+    <div class="top-links-item grey" id="topActionTrack" data-spm-click="gostr=/lzdpub.header.tbar;locaid=track_order">
+      <span>Track my order</span>
+      <div class="lzd-track-popup top-popup-wrap" id="lzdTrackPop">
+        <div class="top-popup-content lzd-track-content">
+          <div id="topActionMyLastOrder"></div>
+          <div class="track-title">Track my order</div>
+          <form class="track-order-form" id="topActionTrackForm">
+            <label for="topActionTrackOrderNumber" class="top-input-label" >Your order number:</label>
+            <div class="top-input-wrap track-order-input-wrap">
+              <input placeholder="eg.123456789" id="topActionTrackOrderNumber" class="order-text top-input">
+              <button type="button" class="top-button button-submit">
+                <i class="icon icon-arrow-on-button"></i>
+              </button>
+            </div>
+            <p class="track-order-more-text">For any other inquiries, <a href="//www.lazada.co.th/faq/#answer-faq-orderstatus-ans" title="For any other inquiries, ">Click here</a></p>
+          </form>
+          <div class="error-message" id="topActionTrackErrorMsg"></div>
+        </div>
+      </div>
+    </div>
+  
+	
+		<div class="top-links-item  grey" id="anonLogin">
+			
+			
+			
+			<a class="grey"  href="//member.lazada.co.th/user/login" data-spm-click="gostr=/lzdpub.header.tbar;locaid=login">login</a>
+		</div>
+	
+  <div class="top-links-item  grey" id="anonSignup">
+    
+    
+    
+    <a class="grey" href="//member.lazada.co.th/user/register" data-spm-click="gostr=/lzdpub.header.tbar;locaid=signup">signup</a>
+  </div>
+	
+    <div class="top-links-item top-links-item-hidden" id="topActionUserAccont"  data-spm-click="gostr=/lzdpub.header.tbar;locaid=account">
+      <span id="myAccountTrigger" class="grey top-links-item-text-limit"></span>
+
+      <div class="lzd-account-popup top-popup-wrap" id="lzdMyAccountPop">
+        <div class="top-popup-content lzd-account-content">
+          <ul class="account-list">
+            
+              <li class="account-item">
+                
+                
+                
+                  
+                  <a href="//member.lazada.co.th/user/account#/" class="account-item-anchor" id="account-popup-manage-account">
+                    <span class="account-icon test manage-account"></span>Manage My Account
+                  </a>
+                
+              </li>
+            
+              <li class="account-item">
+                
+                
+                
+                  <a href="//my.lazada.co.th/customer/order/index/" class="account-item-anchor">
+                    <span class="account-icon test my-orders"></span>My Orders
+                  </a>
+                
+              </li>
+            
+              <li class="account-item">
+                
+                
+                
+                  <a href="//my.lazada.co.th/wishlist/index" class="account-item-anchor">
+                    <span class="account-icon test wishlist"></span>My Wishlist &amp; Followed Stores
+                  </a>
+                
+              </li>
+            
+              <li class="account-item">
+                
+                
+                
+                  <a href="//my.lazada.co.th/customer/myReview/my-reviews" class="account-item-anchor">
+                    <span class="account-icon test my-reviews"></span>My Reviews
+                  </a>
+                
+              </li>
+            
+              <li class="account-item">
+                
+                
+                
+                  <a href="//my.lazada.co.th/customer/returns/index?requestType=return" class="account-item-anchor">
+                    <span class="account-icon test returns"></span>My Returns &amp; Cancellations
+                  </a>
+                
+              </li>
+            
+              <li class="account-item">
+                
+                
+                
+                  
+                  <a href="//member.lazada.co.th/user/logout" class="account-item-anchor" id="account-popup-logout">
+                    <span class="account-icon test logout"></span>Logout
+                  </a>
+                
+              </li>
+            
+          </ul>
+
+        </div>
+        </div>
+
+
+      </div>
+	
+  
+    <div class="top-links-item grey" id="topActionSwitchLang" data-spm-click="gostr=/lzdpub.header.tbar;locaid=change_language">
+      <span>เปลี่ยนภาษา</span>
+
+      
+      <div class="lzd-switch-popup top-popup-wrap" id="lzdSwitchPop">
+        <div class="top-popup-content lzd-switch-content">
+          
+            <div class="lzd-switch-item " data-lang="th">
+              <span class="lzd-switch-icon-lazada lzd-switch-icon lzd-switch-icon-th"></span>
+              ไทย / Thai
+              
+            </div>
+          
+            <div class="lzd-switch-item currentSelected" data-lang="en">
+              <span class="lzd-switch-icon-lazada lzd-switch-icon lzd-switch-icon-en"></span>
+              ภาษาอังกฤษ / English
+              <div class="lzd-switch-checked"></div>
+            </div>
+          
+        </div>
+      </div>
+
+    </div>
+  
+	</div></div><div class="lzd-logo-bar default"><div class="logo-bar-content

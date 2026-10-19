@@ -1,0 +1,813 @@
+<!DOCTYPE HTML>
+<html lang="nl" class="background--default theme--inherit">
+
+    <head>
+        
+        <!-- OneTrust Cookies Consent Notice start -->
+
+
+
+
+
+    <script type="text/javascript" src="/ruxitagentjs_ICA1589MNPRTUVXfghqrux_10347260902154543.js" data-dtconfig="rid=RID_-1955233846|rpid=-166309293|domain=telenet.be|reportUrl=https://bf72526xwo.bf.dynatrace.com/bf|app=472b56b1e30d0ac3|cors=1|srtbv=4|owasp=1|featureHash=ICA1589MNPRTUVXfghqrux|rdnt=1|uxrgce=1|cuc=0k6271jt|mdl=mdcc32=20|mel=100000|dpvc=1|md=mdcc32=bCS_CONF.integrations_handler.replaylink,mdcc1=a#ng-app ^rb div.upc-wrapper ^rb div.upc-content-wrapper ^rb div.upc-body-wrapper ^rb div.upc-bgcontainer-center_nospot ^rb div.upc_container_bg_full ^rb section ^rb div ^rb div.self-service-search.parbase.section ^rb div ^rb div.upc_container_bg_full.self-service-search-container ^rb div ^rb div ^rb div:nth-child(3) ^rb div.NoMobile.viewDesktop.menuSelfService ^rb div ^rb div ^rb div.defaultcell.maxavailablewidth.textinthemiddle ^rb div ^rb div ^rb div.pdInfo ^rb div:nth-child(2) ^rb div.pdCustomerNr ^rb span,mdcc2=a#ng-app ^rb div.upc-wrapper ^rb div.upc-content-wrapper ^rb header ^rb div.upc-bgcontainer-top_nospot.lgi-bgcontainer-topnav-fixed ^rb div.upc-bgcontainer-service.minibasket_empty.snavOpen ^rb div ^rb div.upc_login_nav_container ^rb div ^rb div.parbase.header-login.section ^rb div ^rb div.BlockInHeader ^rb content:nth-child(1) ^rb div ^rb div ^rb div ^rb div:nth-child(2) ^rb div.knownUser ^rb a,mdcc3=a^lbdiv class^e^dqknownUser^dq^rb,mdcc4=cAMCV_94B35888557A99487F000101%40AdobeOrg,mdcc5=bs.pageName,mdcc6=bs.pageURL,mdcc19=bs.events,mdcc24=bdocument.referrer,mdcc25=bs.eVar110,mdcc27=bs.campaign,mdcc29=clast_visited_page,mdcc31=bCS_CONF.integrations_handler.sessionID,mdcc33=bdigitalData.page.attributes.hasAngularJS|lastModification=1792061649938|mdp=mdcc32,mdcc24,mdcc31,mdcc33|postfix=0k6271jt|tp=500,50,0|srbbv=3|apn=webpackChunktelenetgroupApp|agentUri=/ruxitagentjs_ICA1589MNPRTUVXfghqrux_10347260902154543.js" data-config='{"revision":1792061649938,"beaconUri":"https://bf72526xwo.bf.dynatrace.com/bf","agentUri":"/ruxitagentjs_ICA1589MNPRTUVXfghqrux_10347260902154543.js","environmentId":"0k6271jt","modules":"ICA1589MNPRTUVXfghqrux"}' data-envconfig='{"tracestateKeyPrefix":"603c02db-3d6bc570"}' data-appconfig='{"app":"472b56b1e30d0ac3","userInteractionCapture":["all"],"traceContext":false,"disableUserTracking":true}' defer></script><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="93efa3b3-abd4-4452-b33f-e04e0b948864"></script>
+    <script type="text/javascript">
+        var initialConsents = undefined;
+        var areEventListenersBinded = false;
+
+        function OptanonWrapper() {
+            if (!areEventListenersBinded) {
+                areEventListenersBinded = true;
+                initialConsents = OnetrustActiveGroups;
+            	setPolicyEventBindings();
+            }
+        }
+
+        window.addEventListener("OTConsentApplied", () => {
+            if ( shouldReloadPage() ) {
+                reloadPage();
+            }
+        });
+
+        const setPolicyEventBindings = function() {
+            // Called when 'Accept all cookies' button is clicked on main on-page-load cookie banner
+            const acceptAllButton = document.querySelector("button#onetrust-accept-btn-handler");
+            if (acceptAllButton) {
+                acceptAllButton.addEventListener('mousedown', () => {
+                    const attributes = {};
+                    attributes.itemName = "Accept all cookies main";
+                    reportAnalyticsDataOnPageReload(attributes);
+                });
+            }
+
+            // Called when 'Reject all cookies' button is clicked on main on-page-load cookie banner
+            const rejectAllButton = document.querySelector("button#onetrust-reject-all-handler");
+            if (rejectAllButton) {
+                rejectAllButton.addEventListener('mousedown', () => {
+                    const attributes = {};
+                    attributes.itemName = "Reject all cookies main";
+                    reportAnalyticsData(attributes);
+                });
+            }
+
+            // Called when 'Accept Recommended Cookie' button is clicked on 'Cookie preferences' banner. Currently, this UI feature is disabled.
+            const acceptRecommendedButton = document.querySelector("button#accept-recommended-btn-handler");
+            if (acceptRecommendedButton) {
+                acceptRecommendedButton.addEventListener('mousedown', () => {
+                    const attributes = {};
+                    attributes.itemName = "All cookies accepted preference center";
+                    reportAnalyticsDataOnPageReload(attributes);
+                });
+            }
+
+            // Called when 'Save my cookie preferences' button is clicked on 'Cookie preferences' banner
+            const savePreferenceButton = document.querySelector(".save-preference-btn-handler.onetrust-close-btn-handler");
+            if (savePreferenceButton) {
+                savePreferenceButton.addEventListener('mousedown', () => {
+                    const attributes = {};
+                    attributes.itemName = "saved preferences";
+                    reportAnalyticsDataOnPageReload(attributes);
+                });
+            }
+
+            // Called when Close (X) button is clicked on 'Cookie preference' banner
+            const closeButton = document.querySelector("button#close-pc-btn-handler")
+            if (closeButton) {
+                closeButton.addEventListener('mousedown', () => {
+                    const attributes = {};
+                    attributes.itemName = "Cookie banner closed preference";
+                    reportAnalyticsData(attributes);
+                });
+            }
+        }
+
+        const reportAnalyticsData = function(eventAttributes) {
+            const e = prepareEventData(eventAttributes);
+            window.digitalData.addEvent(e);
+        }
+
+        const reportAnalyticsDataOnPageReload = function(eventAttributes) {
+            const e = prepareEventData(eventAttributes);
+            e.setStrategy(udl.AnalyticsCallFireStrategyEnum.FIRE_ON_PAGE_RELOAD);
+            window.digitalData.addEvent(e);
+        }
+
+        const prepareEventData = function(eventAttributes) {
+            const eventInfo = new udl.EventInfo();
+            eventInfo.setEventName("Cookie banner clicked");
+            eventInfo.setType("click");
+
+            const e = new udl.Event();
+            e.setEventInfo(eventInfo);
+            e.setAttributes(eventAttributes);
+            return e;
+        }
+
+        const shouldReloadPage = function() {
+            var oldConsents = initialConsents.split(',').sort();
+            var newConsents = OnetrustActiveGroups.split(',').sort();
+            return JSON.stringify(oldConsents) !== JSON.stringify(newConsents);
+        }
+
+        const reloadPage = function() {
+            location.reload();
+        }
+    </script>
+
+
+<!-- OneTrust Cookies Consent Notice end -->
+        
+    <meta charset="UTF-8"/>
+    <title>404 | Telenet</title>
+    
+    
+    <meta name="template" content="Default template"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="noindex"/>
+
+    
+    
+
+
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1"/>
+
+
+
+<script type="text/javascript">
+    (function () {
+        window.ContextHub = window.ContextHub || {};
+        ContextHub.Constants = ContextHub.Constants || {};
+        ContextHub.Constants.PROP_ENABLE_PEGA_PERSONALIZATION = "false";
+    }());
+</script>
+
+
+<script type="text/javascript">
+            (function() {
+                window.ContextHub = window.ContextHub || {};
+
+                /* setting paths */
+                ContextHub.Paths = ContextHub.Paths || {};
+                ContextHub.Paths.CONTEXTHUB_PATH = "/conf/global/settings/cloudsettings/default/contexthub";
+                ContextHub.Paths.RESOURCE_PATH = "\/content\/www\u002Dtelenet\u002Dtouch\/nl\/system\/404\/_jcr_content\/contexthub";
+                ContextHub.Paths.SEGMENTATION_PATH = "\/conf\/aff\u002Dtelenet\u002Dtouch\/settings\/wcm\/segments";
+                ContextHub.Paths.CQ_CONTEXT_PATH = "";
+
+                /* setting initial constants */
+                ContextHub.Constants = ContextHub.Constants || {};
+                ContextHub.Constants.ANONYMOUS_HOME = "/home/users/F/F2cZmahp5gUtECXFBj0j";
+                ContextHub.Constants.MODE = "no-ui";
+            }());
+        </script><script src="/etc/cloudsettings.kernel.js/conf/global/settings/cloudsettings/default/contexthub" type="text/javascript"></script>
+
+
+
+<script type="module" src="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/www/build/wink-core.esm.js"></script>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/www/build/wink-core-tabasco.css"/>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/www/assets/shared/tokens/tabasco-devices.css"/>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/www/assets/shared/tokens/tabasco-light-theme.css"/>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/www/assets/shared/tokens/tabasco-dark-theme.css"/>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/www/assets/tabasco/icons/icons-font/tabasco-icons-font.css"/>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/telwink/all-css.css"/>
+
+<link rel="stylesheet" href="https://customer-web-foundation-wink-cdn.aem-modules-prod.awsprod.external.telenet.be/v2.49.0/telwink/skeleton.css"/>
+
+
+<link rel="preload" href="/etc.clientlibs/atomic/clientlibs/aff-telenetgroup/resources/fonts/Telenet-Albra-Regular.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="/etc.clientlibs/atomic/clientlibs/aff-telenetgroup/resources/fonts/Telenet-Albra-Bold.woff2" as="font" type="font/woff2" crossorigin/>
+
+
+    
+<link rel="stylesheet" href="/etc.clientlibs/atomic/clientlibs/aff-tabasco-be/generic.min.ACSHASHd0e124f3f882bf13fc799af2d06a21fe.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/atomic/clientlibs/aff-tabasco-be/general.min.ACSHASHd3200b04544e731bdbd71e889be98307.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/atomic/clientlibs/aff-tabasco-be/structure.min.ACSHASHc89686a489c18f4636a73f5451577ede.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/atomic/clientlibs/aff-tabasco-be/container.min.ACSHASH698d98d5173652a0877639ebb72ef657.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/atomic/clientlibs/aff-tabasco-be/marketing.min.ACSHASH54ed1a677344deb401040af63475a70c.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/atomic/clientlibs/aff-tabasco-be/navigation.min.ACSHASH46738bd55243c09b2b763e3e584e6439.css" type="text/css">
+
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/etc/designs/aff-telenet-touch/media/icons/favicon/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" href="/etc/designs/aff-telenet-touch/media/icons/favicon/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="/etc/designs/aff-telenet-touch/media/icons/favicon/favicon-16x16.png" sizes="16x16"/>
+<link rel="manifest" href="/etc/designs/aff-telenet-touch/media/icons/favicon/manifest.json"/>
+<link rel="mask-icon" href="/etc/designs/aff-telenet-touch/media/icons/favicon/safari-pinned-tab.svg" color="#ffc421"/>
+<link rel="shortcut icon" href="/etc/designs/aff-telenet-touch/media/icons/favicon/favicon.ico"/>
+<meta name="msapplication-config" content="/etc/designs/aff-telenet-touch/media/icons/favicon/browserconfig.xml"/>
+
+
+    
+<script src="/etc/designs/aff-telenetgroup/aff/clientlibs/jquery.min.ACSHASHe0f0d5871d760750034a5d47a502e003.js"></script>
+
+
+
+
+
+    
+<script src="/etc.clientlibs/aff-telenet-touch/pages/page/clientlibs/home-page.min.ACSHASHba6163ff58a586257eca4c2689a4fc9c.js"></script>
+
+
+
+
+
+
+
+    
+<script src="/etc.clientlibs/aff-telenetgroup/pages/page/clientlibs/header.min.ACSHASH86167d4aac27f935503128292e96d360.js"></script>
+
+
+
+
+
+    
+<script src="/etc.clientlibs/aff-telenetgroup/js/components/structure/outdated-browser-notification/clientlibs.min.ACSHASH748539e11e574673c196a969e3b2a389.js"></script>
+
+
+
+
+
+    
+<script src="/etc/designs/aff-telenetgroup/aff/clientlibs/udl.min.ACSHASH5609ed6d0aed47ddba21e151571385b4.js"></script>
+
+
+
+<script type="esms-options">
+    {
+      "shimMode": true,
+      "mapOverrides": true,
+      "skip": ["https://sdk.onfido.com/"]
+    }
+</script>
+
+
+
+    <link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_common.ToCWZ_2_U6.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_common_http.2XkVIVcDdx.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_core.SQIdvyDM8P.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_core_primitives_di.96eIH_sWQs.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_core_primitives_signals.xUa3WlHTyV.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_core_rxjs_interop.Itw9-MgmR3.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_platform_browser.QyvWjEDOFE.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/_angular_router.yXzZDNcqJ-.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-4QDGTA55.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-5KS4G7QJ.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-6F4WQRLC.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-CQZTUUVM.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-F5E53WH2.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-GQDUZJZV.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-HJCVBADB.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-LQHSCWDP.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-NS4DXEPT.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-P6PMLPLU.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-RFTHTIT3.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-TB3OQ5YY.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-TPMJASNU.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-TSRGIXR5.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-UPVIRM57.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/chunk-XUI5CY45.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/rxjs.V2bLKIiBiP.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/rxjs_operators.gs9nvL2z-N.js"/>
+<link rel="modulepreload-shim" href="/etc/designs/aff-telenetgroup/ng/dist/telenetgroup-app/tslib.NuSubsGjOr.js"/>
+
+
+
+    <script src="/etc/designs/aff-telenetgroup/ng/clientlibs/ng-telenetgroup-polyfills.min.ACSHASH971d0a2f84ec675ec45d5fc30c3cf0fe.js" type="module"></script>
+
+
+
+    <script src="/etc/designs/aff-telenetgroup/ng/clientlibs/ng-telenetgroup-main.min.7dc4bb97d174327c4a3621b29e3ed230.js" type="module-shim"></script>
+
+
+
+
+    
+    
+    
+
+    
+
+    
+    
+    
+    
+
+    
+    
+
+        
+    <meta property="og:title" content="404"/>
+    <meta property="og:description"/>
+    
+    <meta property="og:image" content="https://www.telenet.be/etc.clientlibs/atomic/clientlibs/aff-telenetgroup/resources/graphics/AEM-thumbnails/16_9%20-%20TLN.png"/>
+
+        
+
+    
+    
+        <!--Preconnect.-->
+        <link rel="preconnect" href="//assets.adobedtm.com"/>
+        <link rel="preconnect" href="//dpm.demdex.net"/>
+        <link rel="preconnect" href="//cm.everesttech.net"/>
+        <!--/Preconnect-->
+
+        <script type="text/javascript" src="//assets.adobedtm.com/3ce8236b487d/67e43ea1bde4/launch-4c953f3ef5d7.min.js" async onerror="isSatelliteLoaded=true;"></script>
+    
+
+
+
+        
+    
+
+
+
+    
+
+
+    </head>
+
+
+    <body data-ng-app="aemApp" class="default-page background--default theme--inherit" data-ds-feature="false">
+    
+    
+
+
+
+
+    <div id="app" class="content-wrap">
+            
+
+
+            <div>
+    <script type="text/javascript">
+		var TelenetGroup = TelenetGroup || {};
+		TelenetGroup.pathCategorisation = TelenetGroup.pathCategorisation || {};
+		TelenetGroup.pathCategorisation.customerCategory = "RESIDENTIAL";
+		TelenetGroup.pathCategorisation.categoryLabelSuffix = "";
+		TelenetGroup.pathCategorisation.brandLabelSuffix = "tln";
+		TelenetGroup.pathCategorisation.customerBrand = "TELENET";
+	</script>
+</div>
+            
+
+<div>
+    <ocapi-config data-base-url="https://api.prd.telenet.be/ocapi" data-oauth-url="https://login.prd.telenet.be/openid/oauth/authorize" data-client-id="ocapi" data-ocapi-login-url="https://api.prd.telenet.be/ocapi/login/authorization/telenet_be" data-ocapi-login-override="false" data-openid-auth-url="https://login.prd.telenet.be/openid/oauth/authorize" data-openid-client-id="ocapi" data-ocapi-client-id="telenet_be" data-auth-provider="ocapi">
+    </ocapi-config>
+    <omapi-config data-base-url="https://api.prd.telenet.be"></omapi-config>
+    <form-config recaptcha-v3-site-key="6LdfgyQbAAAAAItOa6Ny9P9wiIhKd-s-CsJMGfpv">
+    </form-config>
+    <tg-config ocapi-url="https://api.prd.telenet.be/ocapi" oauth-url="https://login.prd.telenet.be/openid/oauth/authorize" openid-url="https://login.prd.telenet.be/openid" ocapi-login-endpoint-url="https://api.prd.telenet.be/ocapi/login/authorization/telenet_be" ocapi-login-override="false" oauth-client-id="ocapi" omapi-url="https://api.prd.telenet.be/omapi" omapi-query-url="https://api.prd.telenet.be/omapi-query/public" gateway-url="https://api.prd.telenet.be" gsa-url="https://api.prd.telenet.be/searchapi/gsa/api/" sofy-url="https://prd.sofy-prod.awscloud.external.telenet.be" oauth-callback-url="" base-ac-systems-url="https://base.rest.ac-systems.com" is-author-mode="false" recaptcha-api-url="https://www.google.com/recaptcha/api.js" recaptcha-site-key="6LfCPVIUAAAAAIUOmlRd6DL2SbEuus9WfXLQ9Dyc" recaptcha-base-site-key="6LeXva0UAAAAAEH9G3BR2qr1ngBtVPnx7bjzZX9a" recaptcha-v3-site-key="6LdfgyQbAAAAAItOa6Ny9P9wiIhKd-s-CsJMGfpv" search-index-parameter="supplier=TLN" search-api-url="https://api.prd.telenet.be/search/api/" product-finder-url="https://prd.sofy-prod.awscloud.external.telenet.be" openid-auth-url="https://login.prd.telenet.be/openid/oauth/authorize" openid-client-id="ocapi" ocapi-client-id="telenet_be" auth-provider="ocapi">
+    </tg-config>
+</div>
+
+            
+            
+    
+
+
+
+
+
+
+    
+<script src="/etc/designs/aff-telenetgroup/aff/clientlibs/tg-loader.min.ACSHASH553ee436c83a734296bd378786453c5b.js"></script>
+
+
+
+
+
+            
+
+    <tg-lazy-loading component="tg-redirection" module-id="redirection" inputs='{
+                "isRedirectionRequired": false,
+                "redirectTargets": [],
+                "isAuthenticationRequired": false,
+                "styleHint": "sales",
+                "dfdPage": false,
+                "sohoProductThreshold": "0"
+            }'>
+    </tg-lazy-loading>
+
+
+
+            <header>
+
+
+
+<wink-global-header theme="telenet-light-theme" class="theme--light-ui">
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/aem-wink-components/components/structure/globalheader/clientlibs/shopping-cart-icon.min.ACSHASH6cb6b95d002bd22bee528f4915339275.css" type="text/css">
+
+
+
+<div slot="utility-bar">
+    
+    
+<script src="/etc.clientlibs/aem-wink-components/components/structure/language-selector/clientlibs.min.ACSHASH64c3848b56c6c0d46acee612093046f6.js"></script>
+
+
+
+
+<wink-dropdown-menu data-wink-cmp-is="language-selector" class="dropdown-menu--align-list--top-left" exportparts="icon, icon-chevron-down-small" heading="NL" item-selected="NL">
+    
+        <wink-link appearance="dropdown-menu-link" class="active">NL</wink-link>
+        
+    
+        
+        <wink-link appearance="dropdown-menu-link" href="https://www2.telenet.be/residential/fr/system/404.html">FR</wink-link>
+    
+        
+        <wink-link appearance="dropdown-menu-link" href="https://www2.telenet.be/residential/en/system/404.html">EN</wink-link>
+    
+</wink-dropdown-menu>
+</div>
+
+    
+<script src="/etc.clientlibs/aem-wink-components/components/structure/brandlogo/clientlibs.min.ACSHASHf07eb2d6e5c39582050cd748e5bedf6e.js"></script>
+
+
+
+
+<div slot="brand">
+    <wink-logo data-wink-cmp-is="logo" appearance="telenet-black-tabasco" href="/residential/nl?intcmp=TopNav" alt="Telenet - Home" target="_self">
+    </wink-logo>
+</div>
+
+<div slot="mobile-utility-bar">
+    
+    
+
+
+
+
+<wink-dropdown-menu data-wink-cmp-is="language-selector" class="dropdown-menu--align-list--top-left" exportparts="icon, icon-chevron-down-small" heading="NL" item-selected="NL">
+    
+        <wink-link appearance="dropdown-menu-link" class="active">NL</wink-link>
+        
+    
+        
+        <wink-link appearance="dropdown-menu-link" href="https://www2.telenet.be/residential/fr/system/404.html">FR</wink-link>
+    
+        
+        <wink-link appearance="dropdown-menu-link" href="https://www2.telenet.be/residential/en/system/404.html">EN</wink-link>
+    
+</wink-dropdown-menu>
+</div>
+
+    
+
+
+
+
+<div slot="mobile-brand">
+    <wink-logo data-wink-cmp-is="logo" appearance="telenet-black-tabasco" href="/residential/nl?intcmp=TopNav" alt="Telenet - Home" target="_self">
+    </wink-logo>
+</div>
+
+
+
+    
+<script src="/etc.clientlibs/aem-wink-components/components/structure/main-navigation/clientlibs.min.ACSHASH8483de90ee37abfe67a4a80d3f371f48.js"></script>
+
+
+
+
+<div slot="main-navigation">
+    <wink-main-navigation data-wink-cmp-is="main-navigation" menu-items="[{&#34;name&#34;:&#34;Combo&#39;s&#34;,&#34;url&#34;:&#34;/residential/nl/producten/packs.html?intcmp=TopNav&#34;,&#34;hasSubNav&#34;:true},{&#34;name&#34;:&#34;Internet&#34;,&#34;url&#34;:&#34;/residential/nl/producten/internet-overzicht.html?intcmp=TopNav&#34;,&#34;hasSubNav&#34;:true},{&#34;name&#34;:&#34;Mobiel&#34;,&#34;url&#34;:&#34;/residential/nl/producten/mobiel.html?intcmp=TopNav&#34;,&#34;hasSubNav&#34;:true},{&#34;name&#34;:&#34;TV&#34;,&#34;url&#34;:&#34;/residential/nl/producten/telenet-tv/tvzenders.html?intcmp=TopNav&#34;,&#34;hasSubNav&#34;:true},{&#34;name&#34;:&#34;Streaming&#34;,&#34;url&#34;:&#34;/residential/nl/producten/telenet-tv/entertainment.html?intcmp=TopNav&#34;,&#34;hasSubNav&#34;:true},{&#34;name&#34;:&#34;Promo&#39;s&#34;,&#34;url&#34;:&#34;/residential/nl/promos.html?intcmp=TopNav&#34;,&#34;hasSubNav&#34;:false},{&#34;name&#34;:&#34;Toestellen&#34;,&#34;url&#34;:&#34;/residential/nl/toestellen.html?intcmp=ToestNav&#34;,&#34;hasSubNav&#34;:true}]"></wink-main-navigation>
+</div>
+
+<wink-flyout flyout-id="0" slot="flyout" back-button-label="Terug">
+    
+        <div slot="col-1">
+            
+
+            
+
+    
+    <div id="container-f083425491" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+<script src="/etc.clientlibs/aem-wink-components/components/structure/flyout-navigation-list/clientlibs.min.ACSHASHc04d9ce157c54036f39c0a150b97b8b1.js"></script>
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Combo&#39;s" has-bold-links>
+    <wink-navigation-list-item href="/residential/nl/producten/internet-mobiel-tv.html?intcmp=TopNav">Internet + Mobiel + TV</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/internet-mobiel.html?intcmp=TopNav">Internet + Mobiel</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/internet-tv.html?intcmp=TopNav">Internet  + TV</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+        <div slot="col-2">
+            
+
+            
+
+    
+    <div id="container-81f0a89f10" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Combo&#39;s" list-title="Je bent al klant">
+    <wink-navigation-list-item href="/residential/nl/mytelenet/mijn-producten.html?intcmp=TopNav">Beheer je producten</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/netwerk/netwerk-check-met-mytelenet-app.html?intcmp=TopNav">Check je abonnement</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+        <div slot="col-3">
+            
+
+            
+
+    
+    <div id="container-623075b94d" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Combo&#39;s" list-title="Hulp">
+    <wink-navigation-list-item href="/residential/nl/landingspaginas/speedtest.html?intcmp=TopNav">Speedtest</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/klantenservice/internet/je-wifi.html?intcmp=TopNav">Tips voor sterke wifi</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/klantenservice/internet/installatie.html?intcmp=TopNav">Installeer je internet</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/landingspaginas/verhuizen.html?intcmp=TopNav">Meld je verhuis</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+</wink-flyout>
+<wink-flyout flyout-id="1" slot="flyout" back-button-label="Terug">
+    
+        <div slot="col-1">
+            
+
+            
+
+    
+    <div id="container-a9f82e430d" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Internet" has-bold-links>
+    <wink-navigation-list-item href="/residential/nl/producten/internet.html?intcmp=TopNav">Internetabonnementen</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/packs.html?intcmp=TopNav">Combo&#39;s met internet</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+<div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Internet" list-title="Netwerk">
+    <wink-navigation-list-item href="/residential/nl/netwerk/fiber.html?intcmp=TopNav">HFC / Fiber</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+        <div slot="col-2">
+            
+
+            
+
+    
+    <div id="container-1d30259339" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Internet" list-title="Je bent al klant">
+    <wink-navigation-list-item href="/residential/nl/mytelenet/mijn-producten.html?intcmp=TopNav">Beheer je producten</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/netwerk/360wifi.html?intcmp=TopNav">Wifi-versterkers</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/pillar/cybersecurity.html?intcmp=TopNav">Beveiliging</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/netwerk/netwerk-check-met-mytelenet-app.html?intcmp=TopNav">Check je abonnement</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+        <div slot="col-3">
+            
+
+            
+
+    
+    <div id="container-ba893d2c29" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Internet" list-title="Hulp">
+    <wink-navigation-list-item href="/residential/nl/landingspaginas/speedtest.html?intcmp=TopNav">Speedtest</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/klantenservice/internet/je-wifi.html?intcmp=TopNav">Tips voor sterke wifi</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/klantenservice/internet/installatie.html?intcmp=TopNav">Installeer je internet</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/landingspaginas/verhuizen.html?intcmp=TopNav">Meld je verhuis</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+</wink-flyout>
+<wink-flyout flyout-id="2" slot="flyout" back-button-label="Terug">
+    
+        <div slot="col-1">
+            
+
+            
+
+    
+    <div id="container-bd5920880f" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Mobiel" has-bold-links>
+    <wink-navigation-list-item href="/residential/nl/producten/mobiel.html?intcmp=TopNav">Gsm-abonnementen</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/packs.html?intcmp=TopNav">Combo&#39;s met mobiel</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+<div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Mobiel" list-title="Netwerk">
+    <wink-navigation-list-item href="/residential/nl/netwerk/5G.html?intcmp=TopNav">5G mobiel netwerk</wink-navigation-list-item>
+</wink-navigation-list>
+</div>
+
+    
+</div>
+
+    </div>
+
+    
+
+        </div>
+    
+        <div slot="col-2">
+            
+
+            
+
+    
+    <div id="container-c3a2ca1178" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="flyout-navigation-list aem-GridColumn aem-GridColumn--default--12">
+    
+
+
+
+
+
+
+<wink-navigation-list data-wink-cmp-is="navigation-list" data-main-nav-title="Mobiel" list-title="Je bent al klant">
+    <wink-navigation-list-item href="/residential/nl/mytelenet/mijn-producten.html?intcmp=TopNav">Beheer je producten</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/mobiel/datasim.html?intcmp=TopNav">Datasim</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/mobiel/roaming-buitenland.html?intcmp=TopNav">Roaming pass </wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/mobiel/gsm-abonnement-voor-kinderen.html?intcmp=TopNav">Gsm-abonnement kind</wink-navigation-list-item>
+
+    <wink-navigation-list-item href="/residential/nl/producten/mobiel/telenet

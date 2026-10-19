@@ -1,0 +1,103 @@
+User-agent: *
+Disallow: /api/
+Disallow: /avatars/
+Disallow: /user/
+Disallow: /swagger.*.json
+Disallow: /explore/*?*
+
+Disallow: /repo/create
+Disallow: /repo/migrate
+Disallow: /org/create
+Disallow: /*/*/fork
+
+Disallow: /*/*/watchers
+Disallow: /*/*/stargazers
+Disallow: /*/*/forks
+
+Disallow: /*/*/src/
+Disallow: /*/*/blame/
+Disallow: /*/*/commit/
+Disallow: /*/*/commits/
+Disallow: /*/*/raw/
+Disallow: /*/*/media/
+Disallow: /*/*/tags
+Disallow: /*/*/graph
+Disallow: /*/*/branches
+Disallow: /*/*/compare
+Disallow: /*/*/lastcommit/
+Disallow: /*/*/rss/branch/
+Disallow: /*/*/atom/branch/
+
+Disallow: /*/*/activity
+Disallow: /*/*/activity_author_data
+
+Disallow: /*/*/actions
+Disallow: /*/*/projects
+Disallow: /*/*/labels
+Disallow: /*/*/milestones
+
+Disallow: /*/*/find/
+Disallow: /*/*/tree-list/
+Disallow: /*/*/search/
+Disallow: /*/-/code
+
+Disallow: /*/*/issues/new
+Disallow: /*/*/pulls/*/files
+Disallow: /*/*/pulls/*/commits
+
+Disallow: /attachments/
+Disallow: /*/*/attachments/
+Disallow: /*/*/issues/*/attachments/
+Disallow: /*/*/pulls/*/attachments/
+Disallow: /*/*/releases/attachments
+Disallow: /*/*/releases/download
+
+Disallow: /*/*/archive/
+Disallow: /*.bundle$
+Disallow: /*.patch$
+Disallow: /*.diff$
+Disallow: /*.atom$
+Disallow: /*.rss$
+
+Disallow: /*lang=*
+Disallow: /*redirect_to=*
+Disallow: /*tab=*
+Disallow: /*q=*
+Disallow: /*sort=*
+Disallow: /*repo-search-archived=*
+
+# Codeberg-specific changes
+Disallow: /Codeberg/*/*/Imprint.md
+Disallow: /mirror   ## huge linux mirror, pointless to index
+
+Crawl-delay: 2
+
+User-agent: Amazonbot
+User-agent: anthropic-ai
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: FacebookBot
+User-agent: facebookexternalhit
+User-agent: FriendlyCrawler
+User-agent: Google-Extended
+User-agent: GPTBot
+User-agent: ICC-Crawler
+User-agent: ImagesiftBot
+User-agent: img2dataset
+User-agent: meta-externalagent
+User-agent: OAI-SearchBot
+User-agent: Omgili
+User-agent: Omgilibot
+User-agent: PerplexityBot
+User-agent: PetalBot
+User-agent: Scrapy
+User-agent: Timpibot
+User-agent: VelenPublicWebCrawler
+User-agent: YouBot
+Disallow: /

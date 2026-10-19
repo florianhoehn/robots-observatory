@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+    <html lang="zh">
+        <head>
+            <meta charset="utf-8" />
+            <link rel="shortcut icon" href="//sf1-cdn-tos.douyinstatic.com/obj/eden-cn/lpqpflo/ixigua_favicon.ico">
+        </head>
+        <body>
+            <script nonce="a0261f94b7564ef5b26bb5c6a5045a1c">
+                var startTime = Date.now()
+            </script>
+            <script nonce="a0261f94b7564ef5b26bb5c6a5045a1c">
+                ;(function (w, d, u, b, n, pc, ga, ae, po, s, p, e, t, pp) {pc = 'precollect';ga
+                = 'getAttribute';ae = 'addEventListener';po = 'PerformanceObserver';s = function
+                (m) {p = [].slice.call(arguments);p.push(Date.now(), location.href);(m == pc ?
+                s.p.a : s.q).push(p)};s.q = [];s.p = { a: [] };w[n] = s;e =
+                document.createElement('script');e.src = u + '?bid=' + b + '&globalName=' +
+                n;e.crossOrigin = u.indexOf('sdk-web') > 0 ? 'anonymous' :
+                'use-credentials';d.getElementsByTagName('head')[0].appendChild(e);if (ae in w)
+                {s.pcErr = function (e) {e = e || w.event;t = e.target || e.srcElement;if (t
+                instanceof Element || t instanceof HTMLElement) {if (t[ga]('integrity'))
+                {w[n](pc, 'sri', t[ga]('href') || t[ga]('src'))} else {w[n](pc, 'st', { tagName:
+                t.tagName, url: t[ga]('href') || t[ga]('src') })}} else {w[n](pc, 'err', e.error
+                || e.message)}};s.pcRej = function (e) {e = e || w.event;w[n](pc, 'err',
+                e.reason || (e.detail && e.detail.reason))};w[ae]('error', s.pcErr,
+                true);w[ae]('unhandledrejection', s.pcRej,
+                true);};if('PerformanceLongTaskTiming' in w) {pp = s.pp = { entries: []
+                };pp.observer = new PerformanceObserver(function (l) {pp.entries =
+                pp.entries.concat(l.getEntries())});pp.observer.observe({ entryTypes:
+                ['longtask', 'largest-contentful-paint','layout-shift']
+                })}})(window,document,'https://lf3-short.ibytedapm.com/slardar/fe/sdk-web/browser.cn.js','xigua_video_web_pc','Slardar') </script>
+            <script defer nonce="a0261f94b7564ef5b26bb5c6a5045a1c" src="https://privacy.zijieapi.com/api/web-cmp/sdk/?project_key=b443652e7ef8089c"></script>
+            <script src="https://unpkg.byted-static.com/byted-ucenter/ttwid-js/1.0.1/dist/index.umd.production.js" nonce="a0261f94b7564ef5b26bb5c6a5045a1c"></script>
+            <script defer src="https://lf-c-flwb.bytetos.com/obj/rc-client-security/c-webmssdk/1.0.0.15/webmssdk.js"
+                nonce="a0261f94b7564ef5b26bb5c6a5045a1c"></script>
+            <script src="https://lf-cdn-tos.bytescm.com/obj/static/secsdk/secsdk-lastest.umd.js"
+                nonce="a0261f94b7564ef5b26bb5c6a5045a1c"></script>
+            <script nonce="a0261f94b7564ef5b26bb5c6a5045a1c">
+                secsdk.csrf.setProtectedHost({
+                    'www.ixigua.com': {
+                        'GET': '*',
+                        'POST': '*',
+                        "TOKEN_PATH": "/api/",
+                    },
+                });
+            </script>
+            <script nonce="a0261f94b7564ef5b26bb5c6a5045a1c">
+                var retryTimes = 0
+                var maxRetryTimes = 2
+                var instance = null
+
+                try {
+                    window.Slardar('init', {
+                        bid: 'xigua_video_web_pc',
+                        pid: 'ttwid'
+                    })
+                    window.Slardar('start')
+                    window.Slardar('sendEvent', {
+                        name: "ttwid-pv",
+                        metrics: { count: 1 },
+                    })
+                    init()
+                } catch (err) {
+                    ttwidInitError()
+                    reloadPage()
+                }
+                function insertParamAndReload(key, value) {
+                    var kvp = document.location.search ? document.location.search.substr(1).split('&') : [];
+                    var i = 0;
+                    // 替换已有的
+                    for (; i < kvp.length; i++) {
+                        if (new RegExp('^' + key + '=').test(kvp[i])) {
+                            var pair = kvp[i].split('=');
+                            pair[1] = value;
+                            kvp[i] = pair.join('=');
+                            break;
+                        }
+                    }
+                    // 新增
+                    if (i >= kvp.length) {
+                        kvp[kvp.length] = [key, value].join('=');
+                    }
+                    var params = kvp.join('&');
+                    document.location.search = params;
+                }
+                function init() {
+                    setRealReferrer()
+                    if (!instance) {
+                        instance = new window.TTWidInstance({
+                            region: undefined,
+                            aid: 1768,
+                            needFid: false,
+                            service: window.location.host,
+                            migrate_info: {"ticket":"","source":"node"},
+                            cbUrlProtocol: window.location.protocol.slice(0, -1)
+                        })
+                    }
+                    instance.registerUnionWebId({}, function(registerError, cbResponse){
+                        var callbackError = !cbResponse || cbResponse.status_code !== 0
+                        if (registerError || callbackError) {
+                            if (retryTimes < maxRetryTimes) {
+                                retryTimes ++
+                                init()
+                                return
+                            }
+                            ttwidRegisterError()
+                        } else {
+                            window.Slardar('sendEvent', {
+                                name: "ttwid-success",
+                                metrics: { count: 1 },
+                            })
+                        }
+                        reloadPage()
+                    })
+                }
+                function reloadPage() {
+                    reportDuration()
+                    insertParamAndReload('wid_try','1')
+                }
+                // 记录正确的referrer, 优先取风控中间页记录的值
+                function setRealReferrer() {
+                    var __AC_REFERER = '__ac_referer'
+                    var acReferrer = window.sessionStorage.getItem(__AC_REFERER)
+                    var realReferrer = acReferrer != null ? acReferrer : document.referrer
+                    window.sessionStorage.setItem(__AC_REFERER, realReferrer || '__ac_blank')
+                }
+                function setTmpCookie() {
+                    var maxAge = 60 * 60 * 24
+                    document.cookie = 'ttwid_date=1; max-age=' + maxAge
+                }
+                function ttwidInitError() {
+                    setTmpCookie()
+                    window.Slardar('sendEvent', {
+                        name: "ttwidInit-error",
+                        metrics: { count: 1 },
+                    })
+                }
+                function ttwidRegisterError() {
+                    setTmpCookie()
+                    window.Slardar('sendEvent', {
+                        name: 'ttwidRegister-error',
+                        metrics: { count: 1 },
+                    })
+                }
+                function reportDuration() {
+                    window.Slardar('sendEvent', {
+                        name: 'ttwid-duration',
+                        metrics: { count: Date.now() - startTime },
+                     })
+                }
+            </script>
+        </body>
+    </html>

@@ -1,0 +1,96 @@
+# =============================================================================
+# UPDATED robots.txt — 2026-10-15
+# Changes vs 2026-04-22 version:
+#   - Removed the trailing "$" from every asset Allow rule. WordPress loads
+#     CSS/JS with a version string (e.g. layout.min.css?ver=8.1), so "$" never
+#     matched and Googlebot was blocked from 268 render-critical files
+#     (jQuery, Enfold CSS, avia.min.js, Perfmatters lazyload.min.js).
+#   - Added Allow rules for CSS/JS inside /wp-includes/.
+#   - Added image + font Allow rules for /wp-content/plugins/.
+#   - Added .webp, .ico, .ttf, .otf, .eot to theme asset Allows.
+#   - Removed the old commented-out pre-April block.
+# Folder Disallows stay in place, so PHP files remain blocked: Google applies
+# the most specific (longest) matching rule, so the Allow lines win only for
+# the asset files.
+# =============================================================================
+ 
+User-agent: *
+ 
+# --- WordPress core ---
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /xmlrpc.php
+Disallow: /wp-cron.php
+Disallow: /readme.html
+Allow: /wp-admin/admin-ajax.php
+Allow: /wp-includes/*.css
+Allow: /wp-includes/*.js
+ 
+# --- Themes & plugins: block PHP, allow static assets for rendering ---
+Disallow: /wp-content/themes/
+Disallow: /wp-content/plugins/
+Allow: /wp-content/themes/*.css
+Allow: /wp-content/themes/*.js
+Allow: /wp-content/themes/*.png
+Allow: /wp-content/themes/*.jpg
+Allow: /wp-content/themes/*.jpeg
+Allow: /wp-content/themes/*.gif
+Allow: /wp-content/themes/*.svg
+Allow: /wp-content/themes/*.webp
+Allow: /wp-content/themes/*.ico
+Allow: /wp-content/themes/*.woff
+Allow: /wp-content/themes/*.woff2
+Allow: /wp-content/themes/*.ttf
+Allow: /wp-content/themes/*.otf
+Allow: /wp-content/themes/*.eot
+Allow: /wp-content/plugins/*.css
+Allow: /wp-content/plugins/*.js
+Allow: /wp-content/plugins/*.png
+Allow: /wp-content/plugins/*.jpg
+Allow: /wp-content/plugins/*.jpeg
+Allow: /wp-content/plugins/*.gif
+Allow: /wp-content/plugins/*.svg
+Allow: /wp-content/plugins/*.webp
+Allow: /wp-content/plugins/*.woff
+Allow: /wp-content/plugins/*.woff2
+Allow: /wp-content/plugins/*.ttf
+Allow: /wp-content/uploads/
+ 
+# --- Logs, backups, and internal directories ---
+Disallow: /wp-content/debug.log
+Disallow: /wp-content/autosignup-log/
+Disallow: /wp-content/webtoffee_iew_log/
+Disallow: /wp-content/webtoffee_import/
+Disallow: /wp-content/wflogs/
+Disallow: /wp-content/upgrade/
+Disallow: /wp-content/upgrade-temp-backup/
+Disallow: /wp-content/drop-ins/
+ 
+# --- Test / demo / internal files ---
+Disallow: /test/
+Disallow: /demo-*
+Disallow: /testIp.php
+Disallow: /ttfb.html
+ 
+# --- Referral, tracking, and low-value query strings ---
+Disallow: /refer/
+Disallow: /trackback/
+Disallow: /?utm
+Disallow: /*?s=
+Disallow: /*?replytocom=
+Disallow: /*?rest_route=
+Disallow: /*?attachment_id=
+Disallow: /*?preview=true
+Disallow: /*?preview_id=
+ 
+# --- MailPoet ---
+Disallow: /*?mailpoet_page=captcha
+Disallow: /*?mailpoet_page=subscriptions
+ 
+# --- Feeds ---
+Disallow: /*/feed/?attachment_id=
+Disallow: /feed/?attachment_id=
+ 
+Sitemap: https://www.leadsquared.com/sitemap_index.xml

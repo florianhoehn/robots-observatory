@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Redirecting...</title>
+<script>
+(function() {
+    var allowed_locales_str = "en|en-us|en-uk|en-in|en-au|de-de|es-es|fr-fr|it-it|nl-nl|sv-se|zh-cn|zh-tw|zh-hk|pt-pt|pt-br|pl-pl|ja-jp|ko-kr|cs-cz|th-th|tr-tr|hu-hu|la|da-dk|en-me|en-as|vi-vn|en-ph|en-gr|en-ca|fr-ca";
+    var allowed_locales = allowed_locales_str.split('|');
+    var target_url = '/s3/404/en.html';
+    try {
+        var match = document.cookie.match(new RegExp('(^| )locale=([^;]+)'));
+        if (match) {
+            var user_locale = match[2].toLowerCase();
+            if (allowed_locales.indexOf(user_locale) !== -1) {
+                target_url = '/s3/404/' + user_locale + '.html';
+            }
+        }
+    } catch (e) {}
+    window.location.replace(target_url);
+})();
+</script>
+</head>
+<body>
+<noscript><p>Redirecting... <a href="/s3/404/en.html">Click here</a></p></noscript>
+</body>
+</html>

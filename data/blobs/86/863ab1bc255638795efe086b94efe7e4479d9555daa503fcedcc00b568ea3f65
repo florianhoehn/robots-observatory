@@ -1,0 +1,37 @@
+# Policy: marketing pages crawlable; web app, user content and legacy media paths are not.
+# A crawler obeys ONE group (its own, else *). Named groups replace *, so unblock a bot by
+# deleting its group, never by adding a shorter one. Semrush and AI search agents are
+# intentionally unlisted and inherit *.
+
+Sitemap: https://photobucket.com/sitemap.xml
+
+# ----- All crawlers: marketing only -----
+User-agent: *
+Allow: /
+Allow: /auth/login
+Disallow: /auth/
+Disallow: /bucket/
+Disallow: /buckets
+Disallow: /confirm
+Disallow: /groups/
+Disallow: /home
+Disallow: /integrations/
+Disallow: /invite/
+Disallow: /library
+Disallow: /settings
+Disallow: /share/
+Disallow: /subscription/
+Disallow: /transfer/
+Disallow: /u/
+Disallow: /userprofilehp
+Disallow: /view-by-admin/
+# Legacy content paths
+Disallow: /albums/
+Disallow: /images/
+Disallow: /videos/
+Disallow: /user/
+Disallow: /loginbox
+
+# ----- Blocked entirely: training scrapers and aggressive crawlers -----
+User-agent: Bytespider
+Disallow: /

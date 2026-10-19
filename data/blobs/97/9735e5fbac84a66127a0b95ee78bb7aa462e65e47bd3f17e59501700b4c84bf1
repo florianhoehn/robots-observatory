@@ -1,0 +1,200 @@
+# As a condition of accessing this website, you agree to abide by the following
+# content signals:
+
+# (a)  If a Content-Signal = yes, you may collect content for the corresponding
+#      use.
+# (b)  If a Content-Signal = no, you may not collect content for the
+#      corresponding use.
+# (c)  If the website operator does not include a Content-Signal for a
+#      corresponding use, the website operator neither grants nor restricts
+#      permission via Content-Signal with respect to the corresponding use.
+
+# The content signals and their meanings are:
+
+# search:   building a search index and providing search results (e.g., returning
+#           hyperlinks and short excerpts from your website's contents). Search does not
+#           include providing AI-generated search summaries.
+# ai-input: inputting content into one or more AI models (e.g., retrieval
+#           augmented generation, grounding, or other real-time taking of content for
+#           generative AI search answers).
+# ai-train: training or fine-tuning AI models.
+
+# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF
+# RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
+# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
+
+# BEGIN Cloudflare Managed content
+
+User-agent: *
+Content-Signal: search=yes,ai-train=no
+Allow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CloudflareBrowserRenderingCrawler
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+# END Cloudflare Managed Content
+
+# GSM: https://www.groupon.com
+Sitemap: https://www.groupon.com/sitemap.xml
+
+User-agent: Uptimebot
+User-agent: ia_archiver
+Disallow: *
+
+User-agent: archive.org_bot
+Disallow: /login
+
+User-agent: *
+Disallow: /partial
+Allow: */get-lazy-loaded-cards
+Allow: */get-page-header-and-facets
+Allow: */get-paginated-cards
+Disallow: /deals/mttl4bos7k-
+Disallow: /merchant/*/contracts/*
+Disallow: /app/
+Disallow: /.well-known/apple-app-site-association
+Disallow: /apple-app-site-association
+Disallow: /browse/deals/partial
+Disallow: /coupons/*?*=*
+Disallow: /coupons/*click$
+Disallow: /coupons/*click/
+Disallow: /coupons/preview
+Disallow: /coupons/autocomplete
+Disallow: /coupons/subscribe
+Disallow: /coupons/superdupersri/callback
+Disallow: /coupons/images/zeroclipboard.swf
+Disallow: /dealqa-assets
+Disallow: /deals/update_deal_status
+Disallow: /deals/delivery_estimates_proxy
+Disallow: /deals/wishlists_proxy/
+Disallow: /deals/js/
+Disallow: /deals/tripadvisor
+Disallow: /facebook
+Disallow: /forgot_password?
+Disallow: /getaways/search
+Disallow: /getaways/tripadvisor
+Disallow: /gifts
+Disallow: /grpn/helloworld
+Disallow: /grpn/helloworld.html
+Disallow: /grpn/shadow.html
+Disallow: /in_app_messages
+Disallow: /intercept
+Disallow: /logout
+Disallow: /merchant-page/
+Allow: /merchant-page/js/locale.js
+Disallow: /post_redemption_survey
+Disallow: /status
+Disallow: /stores-manage/
+Disallow: /subscribe_gps
+Disallow: /user_sessions/
+Disallow: /verify_cookies
+Disallow: /user/
+Disallow: /local/grouber.html
+Disallow: /local/sem/feeds
+Disallow: /search*
+Disallow: /analytic/
+Disallow: /admin/
+Disallow: /api/
+Disallow: */redirect/
+Disallow: /session/
+Disallow: /unsubscribe
+Disallow: /content-assembly
+Disallow: /tracky
+Disallow: /wishlist
+Disallow: /coupons-blog/page/*
+Disallow: /coupons/blog/page/*
+Disallow: /deals/*/confirmation?pledge_id # refer - JPROD-382
+Disallow: */preview
+Disallow: *?checkoutError=deal_unavailable
+Disallow: /mobile-reservation
+Disallow: /local/merchandising*
+Disallow: /local/*?*=*
+Disallow: /local/*/local$
+Disallow: /local/*/all-deals
+Disallow: /local/*/goods
+# Disallow: /login?ref= # refer - MBNXT-30179
+Disallow: /amp/deals/analytics?*=* 
+Disallow: /deals/cardatron_proxy?*=*
+Disallow: /amp/local/*/www.groupon.com
+Disallow: /tpis/deals/*/booking/hbw?option_id=*
+Disallow: /*?tips_page=
+# Disallow: /signup # refer - MBNXT-30179
+# Disallow: /landing/*? # refer - MBNXT-30179
+Disallow: /gift/*?*=*
+Disallow: /travel/*?*=*
+Disallow: /deals/merchant_locations_proxy
+Disallow: /deals/static_pages_proxy
+Disallow: /deals/tip_widget
+# MBNXT-30676 : start
+Disallow: /merchant/center/*
+Disallow: /myaccount/*
+Disallow: /tpis/mindbody/*
+Disallow: /mobilenextapi/*
+Disallow: /_next/data/*
+Disallow: /subscription_center/*
+Disallow: /developers-api/*
+Disallow: /deals/proxy/*
+Disallow: /booking_tool_assets/*
+# MBNXT-30676 : end
+
+# MBNXT-35605 : start — disallow bot-noise patterns hitting non-existent/canonicalised URLs
+Disallow: /*?shop=
+Disallow: /*==$
+Disallow: /%
+Disallow: /2
+Disallow: /3
+Disallow: /4
+Disallow: /5
+Disallow: /6
+Disallow: /7
+Disallow: /8
+Disallow: /9
+# MBNXT-35605 : end
+
+# MBNXT-35704 / MBNXT-35705 : start — disallow account/checkout/infra namespaces (bounded) + dev_login param
+Disallow: /*dev_login=
+Disallow: /cart$
+Disallow: /cart/*
+Disallow: /checkout$
+Disallow: /checkout/*
+Disallow: /mygroupons$
+Disallow: /mygroupons/*
+Disallow: /mystuff$
+Disallow: /mystuff/*
+Disallow: /myprofile$
+Disallow: /myprofile/*
+Disallow: /receipt$
+Disallow: /receipt/*
+Disallow: /users$
+Disallow: /users/*
+Disallow: /dispatch$
+Disallow: /dispatch/*
+Disallow: /track_order$
+Disallow: /track_order/*
+Disallow: /cdn-cgi$
+Disallow: /cdn-cgi/*
+# MBNXT-35704 / MBNXT-35705 : end

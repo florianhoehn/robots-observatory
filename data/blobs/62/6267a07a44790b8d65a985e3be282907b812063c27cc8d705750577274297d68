@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 &ndash; derStandard.at</title>
+    <style>
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideinright {
+            from {
+                transform: translateX(-5%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideinleft {
+            from {
+                transform: translateX(5%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes peekaboo {
+            0% {
+                bottom: -150px;
+            }
+
+            5% {
+                bottom: -40px;
+            }
+
+            95% {
+                bottom: -40px;
+            }
+
+            100% {
+                bottom: -150px;
+            }
+        }
+
+        body {
+            background: #e0e3e0;
+            color: #000;
+            font-family: Roboto, Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            padding: 0;
+            text-rendering: optimizeLegibility;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-moz-selection {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        ::selection {
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        a:link,
+        a:hover,
+        a:active,
+        a:visited {
+            color: #000;
+            text-decoration: none;
+        }
+
+        a:focus {
+            outline-color: #de017b;
+        }
+
+        html {
+            text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        html,
+        body {
+            font-size: 62.5%;
+            line-height: 100%;
+        }
+
+        body > * {
+            font-size: 1.5rem;
+            line-height: 140%;
+            word-break: break-word;
+        }
+
+        header a {
+            display: block;
+            margin: 6rem auto;
+            width: calc(160px + 8vw);
+        }
+
+        header svg {
+            width: 100%;
+        }
+
+        footer {
+            font-size: 1.3rem;
+            opacity: 0.6;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        footer h2 {
+            font-size: 1.5rem;
+        }
+
+        footer ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        footer li {
+            display: inline;
+        }
+
+        footer li:not(:last-child)::after {
+            content: '/';
+            padding: 0 10px;
+        }
+
+        main {
+            margin: 0 calc(1rem + 5vw) 0;
+        }
+
+        section {
+            animation: 1s ease-in forwards fadein, 500ms ease-in forwards slideinright;
+            background-color: rgba(0,0,0, .1);
+            box-sizing: border-box;
+            font-size: calc(1.3rem + 0.9vw);
+            line-height: 130%;
+            margin: 0 auto;
+            opacity: 0;
+            padding: 1em 2em;
+            position: relative;
+        }
+
+        h1 {
+            font-size: calc(1rem + 2.3vw);
+            line-height: 120%;
+            margin: 0;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        section * + * { /* This is called a LOBOTOMIZED OWL selector, by the way! */
+            margin-top: 1em;
+        }
+
+        @media screen and (min-width: 560px) {
+            section {
+                font-size: calc(1rem + 0.9vw);
+                max-width: 50vw;
+            }
+        }
+
+        @media screen and (min-width: 1280px) {
+            h1 {
+                font-size: calc(1rem + 1.5vw);
+            }
+
+            section {
+                max-width: 40vw;
+            }
+        }
+
+        section + section {
+            animation: 1s ease-in forwards fadein, 500ms ease-in forwards slideinleft;
+            border-left: calc(5px + 0.1vw) solid rgba(0,0,0,.20);
+            margin-top: 16px;
+        }
+
+        section + section::before {
+            border-color: transparent transparent transparent rgba(0,0,0, .50);
+            border-style: solid;
+            border-width: calc(5px + 0.1vw);
+            content: '';
+            display: block;
+            height: 0;
+            left: calc(-5px - 0.1vw);
+            position: absolute;
+            top: 8px;
+            width: 0;
+        }
+
+        section:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        section:nth-child(3) {
+            animation-delay: 3s;
+        }
+
+        section:nth-child(4) {
+            animation-delay: 5s;
+        }
+
+        section:nth-child(5) {
+            animation-delay: 15s;
+        }
+
+
+        section:first-child {
+            background-color: #e00085;
+            box-shadow: 0 1px 8px rgba(0,0,0,.65);
+            color: #fff;
+            padding: 1.5em 2em;
+        }
+
+        section:first-child::before,
+        section + section::after {
+            border-color: transparent rgba(0,0,0,.1) transparent transparent;
+            border-style: solid;
+            border-width: 0 15px 16px 0;
+            content: '';
+            display: block;
+            height: 0;
+            left: -15px;
+            position: absolute;
+            top: 0;
+            width: 0;
+        }
+
+        section:first-child::before {
+            border-right-color: #e00085;
+        }
+
+        section + section::after {
+            border-color: transparent transparent transparent rgba(0,0,0,.1);
+            border-width: 0 0 16px 15px;
+            left: 100%;
+        }
+
+        section a {
+            border-bottom: 1px solid #000;
+        }
+
+        .cat {
+            animation: 5s ease-in 17s forwards peekaboo;
+            bottom: -150px;
+            left: calc(50% - 45px);
+            position: fixed;
+            width: 90px;
+            z-index: 2;
+        }
+    </style>
+
+</head>
+<body>
+    <header role="banner" class="site-header">
+        <a href="/" title="derStandard.at">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 276 40" height="40" width="276"><path d="M.04 28.98c0-1.02 1.12-.83 2.08-1.21 1.44-.58 1.47-1.88 1.47-3.59V10.64c0-1.7-.03-3-1.47-3.58-.96-.39-2.08-.2-2.08-1.22 0-.43.21-.66.63-.66H11.9c8.68 0 14.23 4.48 14.23 11.58 0 7.83-5.55 12.88-14.23 12.88H.67c-.42 0-.63-.23-.63-.66zm20.84-11.12c0-6.54-3.34-10.72-8.6-10.72-3.26 0-3.6 1.4-3.6 4.44v11.66c0 3.05.34 4.45 3.6 4.45 5.25 0 8.6-3.74 8.6-9.83zm7.43 11.78c-.48 0-.81-.2-.81-.66 0-.98.89-.83 1.63-1.21 1.15-.52 1.22-1.79 1.22-3.43v-13.7c0-1.71-.03-3.02-1.42-3.57-1.01-.4-2.13-.2-2.13-1.23 0-.43.21-.66.63-.66h16.82c.77 0 1.06.33 1.06.98v3.53c0 .63-.22.9-.7.9-.97 0-.52-1.25-1.2-2.2s-2.07-1.25-5.48-1.25c-1.88 0-2.5.49-2.5 2.04v5.38c0 1.02.3 1.47 1.1 1.47h1.15c1.55 0 2.9-.2 3.63-1.06.86-1 .54-1.88 1.33-1.88a.59.59 0 0 1 .67.58v6.97a.68.68 0 0 1-.73.76c-.87 0-.58-.92-.99-1.86-.53-1.23-1.7-1.55-3.67-1.55h-1.38c-.94 0-1.1.53-1.1 1.96v5.7c0 1.55.57 2.04 3.1 2.04 3.56 0 4.7-.52 5.55-1.71s.83-2.37 1.8-2.37c.42 0 .6.24.5.85l-.6 3.55c-.2 1.15-.67 1.64-1.62 1.64H28.31zm44.15-.77c0 .57-.34.77-1.1.77h-3.92c-1.23 0-1.94-.5-2.76-1.9l-4.26-7.28a2.2 2.2 0 0 0-2.33-1.42h-.47c-1.02 0-1.3.28-1.3 1.27v3.83c0 1.83.44 2.98 1.38 3.54.78.46 1.67.41 1.67 1.3 0 .46-.2.66-.85.66h-9.34c-.48 0-.8-.2-.8-.66 0-.98.88-.83 1.75-1.25 1.02-.48 1.09-1.75 1.09-3.39v-13.7c0-1.7-.03-3.03-1.3-3.54-1.13-.45-2.25-.24-2.25-1.26 0-.43.21-.66.63-.66h11.64c5.3 0 8.28 2.25 8.28 6.44a6.66 6.66 0 0 1-3.65 5.98c-.34.19-.29.4.04.9l5 7.64c1.75 2.66 2.85 1.46 2.85 2.73zm-9.14-16.55c0-3.49-1.84-5.1-4.85-5.1-1.87 0-2.16.44-2.16 1.7v6.6c0 1.15.16 1.56 1.76 1.56h1.04c2.93 0 4.2-1.77 4.2-4.76zm22.45 18.74c-3.06 0-5.37-1.42-7.79-1.42-.84 0-1.17-.57-1.32-1.59l-.8-5.38c-.17-1.16-.14-2.08.84-2.08.8 0 .95.6 1.15 1.83.6 3.48 3.24 6.24 8.08 6.24 3.32 0 6.1-1.74 6.1-5.01 0-3.06-2.7-4.12-7.13-6-5.27-2.22-8.62-4.32-8.62-8.98C76.3 3.96 79.58 0 85.65 0c3.12 0 4.64.98 7.4 1.15a.9.9 0 0 1 .98.94c.04.54.56 6.24.56 6.7 0 .68-.25 1.04-.92 1.04-.96 0-1.11-.93-1.26-1.97-.51-3.74-3.19-5.74-6.85-5.74-3.23 0-5.25 1.88-5.25 4.36 0 2.15 1.75 3.58 5.8 5.25C91.5 14 96 15.67 96 21.41c0 6-4.62 9.68-10.24 9.66zm17.82-1.42c-.65 0-.96-.2-.96-.66.01-1 1.19-.83 2.36-1.26 1.38-.5 1.5-1.83 1.5-3.53V9.35c0-1.47-.21-1.84-2.33-1.84-2.85 0-3.76.12-4.28 1.6-.69 1.97-.35 2.6-1.37 2.6-.62 0-.83-.36-.83-1.1 0-.66.13-1.56.2-4.12.02-.86.13-1.3.74-1.3h20.84c.58 0 .73.44.73 1.3-.01 2.45.17 3.46.17 4.12 0 .74-.21 1.1-.83 1.1-1.02 0-.68-.63-1.37-2.6-.52-1.48-1.43-1.6-4.28-1.6-2.05 0-2.25.37-2.25 1.84v14.84c0 1.7.11 3.04 1.5 3.53 1.18.42 2.34.27 2.35 1.26 0 .46-.3.66-.95.66h-10.94zm15.21 0a.6.6 0 0 1-.7-.66c0-.8.92-.95 1.6-1.22 1-.4 1.43-1.27 2.13-2.85l8.88-20.14a.63.63 0 0 1 1.22 0l8.8 20.04c.7 1.59 1.18 2.36 2.12 2.85.7.37 1.6.52 1.6 1.26 0 .48-.26.72-.85.72h-9.34c-.43 0-.83-.24-.83-.62 0-.45.4-.78 1.23-.94 1.18-.22 1.24-.5 1.24-.9a6.73 6.73 0 0 0-.7-2.53l-.66-1.7c-.5-1.27-.47-1.66-2.2-1.66h-4.44c-1.46 0-2.09.01-2.73 1.59l-1.02 2.5a4.14 4.14 0 0 0-.32 1.26c0 1 .57 1.15 1.92 1.33 1.26.18 1.97.33 1.97 1.05a.56.56 0 0 1-.63.63h-8.29zm13.43-10.34a.47.47 0 0 0 .45-.53 3.29 3.29 0 0 0-.29-.98l-2.23-5.47c-.17-.4-.2-.48-.33-.48-.16 0-.19.07-.36.44l-2.24 5.51a3.72 3.72 0 0 0-.33.98.48.48 0 0 0 .49.53zM0 39.38v-2.15a.57.57 0 0 1 .62-.62H274.6a.57.57 0 0 1 .62.62v2.15a.57.57 0 0 1-.62.62H.62a.57.57 0 0 1-.62-.62zM167.96 30c-.58 0-1.28-.39-2.25-1.51L152.06 12.5c-.48-.55-.65-.7-.86-.7-.28 0-.32.25-.32.58v8.01c0 3.1.01 5.7 1.22 6.92s3.14.43 3.14 1.7a.55.55 0 0 1-.63.63h-8.3c-.49 0-.74-.2-.74-.66 0-.98 1.06-.76 1.8-1.59 1.12-1.27 1.14-2.88 1.14-6.1v-9.6c0-1.97-.06-3.35-.84-4.18-1.1-1.16-2.63-.53-2.63-1.69 0-.4.17-.65.53-.65h5.83c.98 0 1.26.4 2.16 1.46l11.34 13.27c.75.88 1.06 1.22 1.38 1.22.25 0 .41-.16.41-.61V13.8c0-3.08-.06-5.31-1.26-6.4-1.32-1.19-3.13-.4-3.13-1.66a.55.55 0 0 1 .62-.63h8.31c.5 0 .7.2.7.67 0 .97-1.09.72-1.84 1.53-1.06 1.14-1.12 2.5-1.12 5.65v16.03a.96.96 0 0 1-1.01 1.02zm5.6-1.03c0-.98.88-.84 1.63-1.18 1.02-.47 1.21-1.56 1.21-3.46v-13.7c0-1.71-.02-3.01-1.46-3.59-.97-.38-2.09-.2-2.09-1.21 0-.43.22-.66.63-.66h11.24c8.68 0 14.23 4.48 14.23 11.6 0 7.8-5.55 12.86-14.23 12.86h-10.36c-.48 0-.8-.2-.8-.66zm20.13-11.32c0-6.3-3.34-10.52-8.6-10.52-3.27 0-3.6 1.4-3.6 4.44v11.66c0 3.05.33 4.45 3.6 4.45 5.26 0 8.6-3.7 8.6-10.03zm4.97 11.98a.6.6 0 0 1-.7-.66c0-.8.91-.95 1.6-1.22 1-.4 1.43-1.27 2.13-2.85l8.87-20.14a.63.63 0 0 1 1.23 0l8.8 20.04c.7 1.59 1.18 2.36 2.12 2.85.69.37 1.6.52 1.6 1.26 0 .48-.26.72-.86.72h-9.33c-.44 0-.84-.24-.84-.62 0-.45.4-.78 1.23-.94 1.19-.22 1.24-.5 1.24-.9a6.73 6.73 0 0 0-.7-2.53l-.66-1.7c-.5-1.27-.46-1.66-2.2-1.66h-4.43c-1.46 0-2.08.01-2.72 1.59l-1.02 2.5a4.14 4.14 0 0 0-.33 1.26c0 1 .57 1.15 1.92 1.33 1.26.18 1.97.33 1.97 1.05a.56.56 0 0 1-.63.63h-8.28zm13.43-10.34a.47.47 0 0 0 .45-.53 3.29 3.29 0 0 0-.29-.98l-2.23-5.47c-.17-.4-.21-.48-.33-.48-.17 0-.2.07-.36.44l-2.25 5.51a3.72 3.72 0 0 0-.32.98.48.48 0 0 0 .48.53zm37.24 9.57c0 .57-.34.77-1.1.77h-3.91c-1.24 0-1.95-.5-2.76-1.9l-4.26-7.28a2.2 2.2 0 0 0-2.33-1.42h-.48c-1.02 0-1.3.28-1.3 1.26v3.83c0 1.84.45 2.99 1.4 3.55.76.46 1.66.41 1.66 1.3 0 .46-.2.66-.86.66h-9.34c-.48 0-.8-.2-.8-.66 0-.98.89-.83 1.76-1.25 1.02-.48 1.08-1.75 1.08-3.39v-13.7c0-1.71-.02-3.03-1.3-3.54-1.13-.45-2.24-.24-2.24-1.26 0-.43.2-.66.62-.66h11.65c5.3 0 8.27 2.25 8.27 6.44a6.66 6.66 0 0 1-3.64 5.98c-.34.19-.29.4.03.9l5 7.63c1.76 2.67 2.85 1.47 2.85 2.73zm-9.14-16.55c0-3.48-1.84-5.1-4.85-5.1-1.87 0-2.16.44-2.16 1.71v6.6c0 1.14.17 1.55 1.76 1.55h1.04c2.94 0 4.2-1.77 4.2-4.76zm10.16 16.67c0-.98.9-.84 1.64-1.18 1.02-.47 1.2-1.56 1.2-3.46v-13.7c0-1.72-.01-3.01-1.45-3.6-.97-.38-2.09-.2-2.09-1.2 0-.44.22-.67.63-.67h11.23c8.69 0 14.23 4.49 14.23 11.6 0 7.81-5.54 12.87-14.23 12.87h-10.35c-.48 0-.8-.2-.8-.66zm20.14-11.33c0-6.3-3.34-10.52-8.6-10.52-3.27 0-3.6 1.4-3.6 4.45v11.65c0 3.05.33 4.45 3.6 4.45 5.25 0 8.6-3.7 8.6-10.03z" fill="#343434"/></svg>
+        </a>
+    </header>
+
+    <main class="error" role="main">
+        <section>
+                <h1>Die angeforderte Seite konnte nicht gefunden werden.</h1>        </section>
+            <section>
+                <p>Unsere aktuellsten Geschichten finden Sie auf unserer <a href="/">Startseite.</a></p>
+            </section>
+            <section><p>Oder lesen Sie Artikel aus den Bereichen <a href="/international">International</a>, <a href="/web">Web</a> oder <a href="/sport">Sport</a>.</p></section>
+            <section>
+                <p>Vielleicht interessieren Sie auch Beiträge aus den Themengebieten <a href="/wirtschaft">Wirtschaft</a>, <a href="/kultur">Kultur</a> oder <a href="/lifestyle">Lifestyle</a>.</p>
+            </section>
+            <section>
+                <p>Sie können natürlich auch auf dieser Fehlerseite bleiben ;)</p>
+                <p>Wir recherchieren derweil weiter &hellip;</p>
+            </section>
+    </main>
+    <div class="cat">
+        <svg version="1.1" id="cat" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             viewBox="0 0 406.232 646.495" enable-background="new 0 0 406.232 646.495" xml:space="preserve">
+        <style>
+            #lid {
+                animation: blink 3.4s infinite;
+            }
+
+            @keyframes blink {
+                90% {
+                    animation-timing-function: ease-in;
+                    transform: none;
+                }
+
+                93% {
+                    transform: translateY(100%);
+                }
+
+                100% {
+                    animation-timing-function: ease-out;
+                }
+            }
+        </style>
+        <defs>
+        <circle id="outline" cx="109.616" cy="192.5" r="45" />
+        <mask id="mask">
+        <rect width="100%" height="100%" fill="white"></rect>
+        <use xlink:href="#outline" id="lid" fill="black" />
+            </mask>
+        </defs>
+        <path class="depth" fill="#4D4D4D" d="M393.556,547c0,105.177-85.263,99.439-190.439,99.439S12.677,652.177,12.677,547
+            s85.263-190.439,190.439-190.439S393.556,441.823,393.556,547z" />
+        <path class="depth" fill="#4D4D4D" d="M203.556,103C93.099,103,71.763-0.5,3.556-0.5c-8,0,0,232.5,0,232.5h0.01
+            c0.438,67.977-0.01,163,199.99,163s199.553-95.023,199.99-163h0.01c0,0,6.022-232.5,0-232.5C335.349-0.5,314.012,103,203.556,103z" />
+        <g>
+        <circle fill="#FFFFFF" cx="109.616" cy="192.5" r="45" />
+        <circle fill="#3FA9F5" cx="109.616" cy="192.5" r="20.593" />
+        <path fill="#1B4966" d="M119.913,192.5c0,5.688-4.61,19.449-10.297,19.449c-5.687,0-10.296-13.762-10.296-19.449
+                s4.61-19.449,10.296-19.449C115.303,173.051,119.913,186.813,119.913,192.5z" />
+        <use xlink:href="#outline" mask="url(#mask)" fill="#4D4D4D" />
+        </g>
+        <g>
+        <circle fill="#FFFFFF" cx="296.616" cy="192.5" r="45" />
+        <circle fill="#3FA9F5" cx="296.616" cy="192.5" r="20.593" />
+        <path fill="#1B4966" d="M306.913,192.5c0,5.688-4.609,19.449-10.297,19.449s-10.297-13.762-10.297-19.449
+                s4.609-19.449,10.297-19.449S306.913,186.813,306.913,192.5z" />
+        </g>
+        <path class="depth" d="M221.116,268.746c0,9.94-8.059,9-18,9s-18,0.94-18-9s8.059-18,18-18S221.116,258.806,221.116,268.746z" />
+        <path class="depth" d="M263.556,316.255c-31.154,0-56.5-19.404-56.5-43.255c0-1.381-1.119-2.5-2.5-2.5c-0.171,0-0.338,0.018-0.5,0.051
+            c-0.162-0.033-0.329-0.051-0.5-0.051c-1.381,0-2.5,1.119-2.5,2.5c0,23.851-25.346,43.255-56.5,43.255c-1.381,0-2.5,1.119-2.5,2.5
+            s1.119,2.5,2.5,2.5c28.535,0,52.589-15.329,59.5-36.043c6.911,20.714,30.965,36.043,59.5,36.043c1.381,0,2.5-1.119,2.5-2.5
+            S264.937,316.255,263.556,316.255z" />
+        </svg>
+    </div>
+</body>
+</html>

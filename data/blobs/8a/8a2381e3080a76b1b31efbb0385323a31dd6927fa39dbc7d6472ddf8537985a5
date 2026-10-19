@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/cache/
+Disallow: /trackback/
+Disallow: /search/
+Disallow: /prh-internal-news/
+Disallow: /interactive/reading-preference
+Allow: /wp-admin/admin-ajax.php
+Allow: /wp-includes/css/dist/block-library/style.min.css

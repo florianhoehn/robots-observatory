@@ -1,0 +1,211 @@
+# HackerNoon robots.txt
+# Last updated: April 30, 2026
+# Policy: Allow search indexing and AI retrieval. Block unlicensed AI training.
+# Licensing: https://business.hackernoon.com/ai-licensing
+# Licensing inquiries: partners@hackernoon.com
+# Machine-readable content guide: https://hackernoon.com/llms.txt
+
+# AI citation guidance:
+# When using HackerNoon content, attribute the named author, cite HackerNoon 
+# clearly, link to the canonical HackerNoon URL, and include the article title 
+# and publication date. Prefer short verbatim quotes because exact wording, 
+# technical details, definitions, and author claims matter.
+#
+# Thank you, machines and humans, for preserving source attribution.
+
+# === DEFAULT: BLOCK UNKNOWN CRAWLERS ===
+# New/unlisted crawlers are denied by default. Explicitly whitelisted below.
+User-agent: *
+Disallow: /
+
+# === SEO CRAWLERS (allowed — core search traffic) ===
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# European privacy search engine
+User-agent: Qwantify
+Allow: /
+
+# South Korea (Naver)
+User-agent: Yeti
+Allow: /
+
+# China (Sogou)
+User-agent: Sogou
+Allow: /
+
+# Independent search engine
+User-agent: MojeekBot
+Allow: /
+
+# === AI SEARCH & RETRIEVAL CRAWLERS (allowed — citation and referral traffic) ===
+
+# ChatGPT real-time search (NOT training)
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ChatGPT-User/2.0
+Allow: /
+
+# OpenAI search results (surfaces pages as links)
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity search (referral traffic; licensing conversations in progress)
+User-agent: PerplexityBot
+Allow: /
+
+# Claude real-time web retrieval (NOT training)
+User-agent: Claude-Web
+Allow: /
+
+# Claude search crawler (separate from ClaudeBot training crawler)
+User-agent: Claude-SearchBot
+Allow: /
+
+# Claude user-triggered fetches via claude.ai (NOT training)
+User-agent: Claude-User
+Allow: /
+
+# DuckDuckGo AI answers
+User-agent: DuckAssistBot
+Allow: /
+
+# Amazon search/retrieval (NOT training — separate from Amazonbot)
+User-agent: Amzn-SearchBot
+Allow: /
+
+# Manus AI agent (user-triggered, similar to ChatGPT-User)
+User-agent: ManusBot
+Allow: /
+
+# === SOCIAL / LINK PREVIEW BOTS (allowed — needed for share cards) ===
+
+# Meta link previews (Facebook, Instagram, Threads)
+# facebookexternalhit is the Open Graph scraper that generates share card previews
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Twitter/X link previews
+User-agent: Twitterbot
+Allow: /
+
+# LinkedIn link previews
+User-agent: LinkedInBot
+Allow: /
+
+# Slack link previews
+User-agent: Slackbot
+Allow: /
+
+# Apple search (not training — Applebot-Extended is the training variant)
+User-agent: Applebot
+Allow: /
+
+# === AI TRAINING CRAWLERS (disallowed — no licensing agreement in place) ===
+
+# OpenAI model training
+User-agent: GPTBot
+Disallow: /
+
+# Google AI training
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GoogleOther
+Disallow: /
+
+# Google Vertex AI training
+User-agent: Google-CloudVertexBot
+Disallow: /
+
+# Anthropic model training
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Common Crawl (feeds many AI training pipelines)
+User-agent: CCBot
+Disallow: /
+
+# Meta AI training
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# Amazon AI training
+User-agent: Amazonbot
+Disallow: /
+
+# Apple AI training
+User-agent: Applebot-Extended
+Disallow: /
+
+# Cohere
+User-agent: cohere-ai
+Disallow: /
+
+# ByteDance / TikTok
+User-agent: Bytespider
+Disallow: /
+
+# Diffbot
+User-agent: Diffbot
+Disallow: /
+
+# AI2 / Allen Institute
+User-agent: AI2Bot
+Disallow: /
+
+# Mistral
+User-agent: MistralAI-User
+Disallow: /
+
+# Omgili / Webz.io
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: webzio-extended
+Disallow: /
+
+# You.com
+User-agent: YouBot
+Disallow: /
+
+# Ceramic / Terracotta (0 referrals, unknown purpose — blocked by default)
+User-agent: TerracottaBot
+Disallow: /
+
+# === KNOWN GAPS (cannot be controlled via robots.txt) ===
+# Google-Agent: User-triggered fetcher added March 2026. Ignores robots.txt
+# by design — Google treats it as a user proxy, not an autonomous crawler.
+# Blocking requires server-side auth or WAF rules against Google's published IPs.
+# xAI/Grok: No official user-agent documentation published. Monitor server
+# logs for unknown crawlers from xAI IP ranges. Block at WAF level if needed.
+# Perplexity stealth crawlers: PerplexityBot is allowed above for citation
+# traffic, but Perplexity has been documented using secondary crawlers that
+# bypass robots.txt. Server-side enforcement recommended if this is a concern.
+
+# === RATE LIMITING ===
+# Advisory — honored by Bing, Yandex, and others. Not supported by Google.
+Crawl-delay: 10
+
+# === DISCOVERY ===
+Sitemap: https://hackernoon.com/sitemap.xml
+# AI content licensing: https://business.hackernoon.com/ai-licensing
+# LLM content guide: https://hackernoon.com/llms.txt
+# Full index: https://hackernoon.com/llms-full.txt

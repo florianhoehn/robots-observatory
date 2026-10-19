@@ -1,0 +1,32 @@
+User-agent: usasearch
+Allow: /
+
+# existing disallow on va.gov (may not be needed)
+User-agent: Synapse
+Disallow: /
+
+# block Amazon's AI training crawler
+User-agent: Amazonbot
+Disallow: /
+
+# existing disallow from vets.gov
+User-Agent: *
+Disallow: /analytics-opt-out.html
+Disallow: /cgi-bin/
+Disallow: /drupal
+Disallow: /covid19screen
+Disallow: /service-member-benefits/solid-start/schedule
+Disallow: /sitemap.xml
+# on-site search results are not useful to index
+Disallow: /search
+
+# disallow WIP VAMCs
+# make sure to add a trailing slash at the end of the path
+# to prevent sub-directories from being indexed
+# see https://developers.google.com/search/docs/advanced/robots/create-robots-txt#useful-robots.txt-rules
+
+
+# sitemap index
+Sitemap: https://www.va.gov/sitemap_index.xml
+Sitemap: https://www.va.gov/sitemap-cb.xml
+Sitemap: https://www.va.gov/sitemap-nb.xml

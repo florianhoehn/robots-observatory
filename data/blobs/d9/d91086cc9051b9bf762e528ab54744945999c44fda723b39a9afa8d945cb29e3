@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html class="Page is-basic"
+      lang="en-US" data-has-secondary-nav
+      itemscope itemtype="http://schema.org/WebPage">
+
+<head>
+    
+    <script id="cf-newatlas">
+        function noop() {}
+        window.newatlas = window.newatlas || {
+            log: noop,
+            debug: noop,
+            mark: noop,
+            now: noop,
+        };
+    </script>
+
+    <meta charset="UTF-8">
+
+    <link rel="preconnect" href="https://assets.newatlas.com" crossorigin>
+
+    <style data-cssvarsponyfill="true">
+                :root {
+        --primaryColor1: #3761d6;
+        --primaryColor2: #000000;
+
+        --primaryTextColor: #333333;
+        --secondaryTextColor: #666666;
+        --breakingColor: #ff6f00;
+
+        --secondaryColor1: #858585;
+        --secondaryColor2: #cccccc;
+        --secondaryColor3: #e6e6e6;
+        --secondaryColor4: #f5f5f5;
+        --secondaryColor5: #ffffff;
+
+        --siteBgColor: #ffffff;
+        --siteInverseBgColor: #000000;
+
+        --headerBgColor: #ffffff;
+        --headerBgColorInverse: #000000;
+        --headerBorderColor: #e6e6e6;
+        --headerBorderColorInverse: #858585;
+        --headerTextColor: #333333;
+        --headerTextColorInverse: #ffffff;
+        --headerMenuBgColor: #ffffff;
+        --headerMenuTextColor: #333333;
+
+        --secondaryHeaderBgColor: #ffffff;
+        --secondaryHeaderTextColor: #333333;
+
+        --advertisementBgColor: #f8f8f8;
+
+        --footerBgColor: #ffffff;
+        --footerTextColor: #333333;
+
+        --primaryTextColorInverse: #ffffff;
+        --secondaryTextColorInverse: #cccccc;
+        --tertiaryTextColor: #999999;
+        --tertiaryTextColorInverse: #cccccc;
+
+        --inputTextColor: #333;
+        --tabTitleColor: #333;
+
+        --listBorderColor: #000000;
+        --gridBorderColor: #d8d8d8;
+
+        --buttonBgColor: #ffffff;
+        --buttonTextColor: #333333;
+        --inverseButtonBgColor: #030202;
+        --disabledButtonBgColor: #d8d8d8;
+        --tagButtonBorderColor: #e2dfdd;
+        --tagButtonTextColor: #3761d6;
+
+        --breakingTextColor: #ffffff;
+
+        --sectionTextColor: #fe6d01;
+
+        --primaryHeadlineFont: Open Sans;
+        --secondaryHeadlineFont: Open Sans;
+        --bodyFont: Lora;
+        }
+
+    </style>
+
+    <link data-cssvarsponyfill="true" class="Webpack-css" rel="stylesheet" href="https://assets.newatlas.com/resource/00000170-5da9-dc4c-adf0-ddebcfc10000/styleguide/All.min.cd40f1380f6f2749d60e89536b50858d.gz.css">
+    <style>:root {
+  --green-200: #c6f6d5;
+  --green-400: #68d391;
+  --red-100: #fff5f5;
+  --red-300: #feb2b2;
+  --blue-200: #bee3f8;
+  --blue-300: #90cdf4;
+  --gyst-blue: #303891;
+
+  --promo-line-height: 22px;
+  --quote-1: 1.9rem;
+}
+@media screen and (min-width: 1024px) {
+  :root {
+    --quote-1: 2.2rem;
+  }
+}
+.Enhancement .Quote {
+  margin: 2rem 0;
+}
+.quote-1,
+.Quote blockquote {
+  font-family: var(--bodyFont), Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+}
+@media screen and (min-width: 1024px) {
+  .Enhancement .Quote {
+    margin: 4rem;
+  }
+}
+.RichTextBody h2 {
+  font-family: var(--primaryHeadlineFont), Arial, Helvetica, sans-serif;
+}
+
+.alert {
+  padding: 1.5rem 2rem;
+  border: 1px solid transparent;
+  line-height: 1.4;
+}
+.alert-success {
+  background-color: var(--green-200);
+  border-color: var(--green-400);
+}
+.alert-error {
+  background-color: var(--red-100);
+  border-color: var(--red-300);
+}
+.alert-info {
+  background-color: var(--blue-200);
+  border-color: var(--blue-300);
+}
+
+.UserProfilePage .WelcomePage_verifiedMessage,
+.UserProfilePage .WelcomePage_fallbackMessage,
+.UserProfilePage .WelcomePage_basicMessage,
+.UserProfilePage .WelcomePage_plusMessage,
+.UserProfilePage .WelcomePage_paymentForm,
+.UserProfilePage .WelcomePage_paymentSuccess {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* BS inserts links without href as span.Link, see /data-protection/ */
+span.Link {
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 1px dotted rgb(0, 0, 0);
+  color: rgb(51, 51, 51);
+}
+
+/* Fix remnant padding on unsold, collapsed adslots */
+.OcelotAdModule.OcelotAdModule {
+  padding: 0;
+}
+.OcelotAdModule.OcelotAdModule > div {
+  padding: 20px 0;
+}
+.Page-aside .OcelotAdModule.OcelotAdModule > div {
+  padding: 0;
+}
+/* #desktop_article_leaderboard_header is rendered on mobile too :/ */
+#desktop_index_leaderboard,
+#desktop_article_leaderboard_header {
+  display: none;
+}
+@media screen and (min-width: 1024px) {
+  #desktop_index_leaderboard,
+  #desktop_article_leaderboard_header {
+    display: inherit;
+    height: 290px;
+  }
+}
+
+/* fix padding around Carousel ads on desktop */
+.flickity-enabled.is-fullscreen + .FullscreenCarousel-aside {
+  padding: 0;
+}
+
+/* Ensure that on device rotation desktop>mobile, the 300x600 doesn't spill out before the ad is refreshed */
+.FullscreenCarousel-aside {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 1024px) {
+  /* Force a 50px blank space below the captions, so they're not obscured by `mobile_footer` ad slot */
+  /* FIXME: this should target Basic/anon users only! (but we can't ID them at present) */
+  .FullscreenCarousel-slides.flickity-enabled.is-fullscreen {
+    padding-bottom: 50px;
+  }
+
+  /* hide the desktop gallery ad if the user has rotated to portrait */
+  #slideshow {
+    display: none;
+  }
+}
+@media screen and (min-width: 1025px) {
+  /* hide mobile gallery ads if the user has rotated to landscape */
+  #mobile_footer,
+  [id^='Mobile_Gallery_'] {
+    display: none;
+  }
+}
+
+.ListD-header-title, /* Index: Latest News */
+.ListE-header-title, /* Home: Latest News, Top Stories, Review, Features */
+.ListF-header-title, /* Home: Popular Photo Galleries */
+.ListG-header-title, /* Home: H1 "NEW TECHNOLOGY & SCIENCE NEWS" */
+.ListJ-header-title {
+  /* Article: Latest News */
+  color: #aaa;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+}
+@media screen and (min-width: 375px) {
+  .ListD-header-title,
+  .ListE-header-title,
+  .ListF-header-title,
+  .ListG-header-title,
+  .ListJ-header-title {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  /* allow the lead description to fill the available space */
+  .Page-pageLead .PromoC-description {
+    max-height: calc(var(--promo-line-height) * 8);
+  }
+}
+
+/* create space under lead underline */
+.HomePage-content .ListG-items {
+  margin-bottom: 40px;
+}
+
+.HomePage-content .Page-pageLead .PromoB-description,
+ps-list-loadmore .PromoB-description {
+  font-size: 16px;
+  line-height: 1.375;
+}
+
+/* ensure 3-line titles don't have descenders truncated */
+.PromoB-title {
+  max-height: 73px;
+}
+/* override specificity on tag pages */
+.ListD .PromoB-title,
+.ListG .PromoB-title {
+  max-height: 73px;
+}
+@media only screen and (min-width: 1024px) {
+  .PromoB-title {
+    max-height: 87px;
+  }
+  /* override specificity on tag pages */
+  .ListD .PromoB-title,
+  .ListG .PromoB-title {
+    max-height: 87px;
+  }
+}
+
+/* Adjust max-height on descriptions: JS truncate() will add an ellipsis if required */
+.HomePage-content .Page-pageLead .PromoC-description,
+.HomePage-content .Page-pageLead .PromoB-description,
+ps-list-loadmore .PromoB-description {
+  max-height: calc(var(--promo-line-height) * 6);
+}
+/* .SectionPage-content three cols */
+.ListD .PromoB-description {
+  /* top stories */
+  max-height: calc(var(--promo-line-height) * 6);
+}
+
+@media screen and (min-width: 768px) {
+  .HomePage-content .Page-pageLead .PromoC-description {
+    max-height: calc(var(--promo-line-height) * 5);
+  }
+  ps-list-loadmore .PromoB-description {
+    max-height: calc(var(--promo-line-height) * 6);
+  }
+  .HomePage-content .Page-pageLead .PromoB-description {
+    max-height: calc(var(--promo-line-height) * 4);
+    display: none;
+  }
+  /* .SectionPage-content three cols */
+  .ListD .PromoB-description {
+    /* top stories */
+    max-height: calc(var(--promo-line-height) * 5);
+  }
+}
+
+/* make the first headline match subsequent articles on mobile... */
+.Page-pageLead .PromoC-title {
+  font-size: var(--title-4);
+  font-weight: 600;
+  line-height: 1.4;
+}
+@media screen and (min-width: 768px) {
+  /* ...and reinstate more prominent styles in desktop layout */
+  .Page-pageLead .PromoC-title {
+    font-size: var(--title-3);
+  }
+
+  /* Bring down Top Stories carousel font-size on desktop */
+  .ListF .PromoB-title {
+    font-size: var(--title-4);
+  }
+}
+
+/* constrain text width on plus articles */
+.is-plus .RichTextArticleBody-body h2,
+.is-plus .RichTextArticleBody-body h3,
+.is-plus .RichTextArticleBody-body ol,
+.is-plus .RichTextArticleBody-body ul {
+  max-width: 748px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* prevent ads bunching up after last para */
+.ArticlePage-articleBody .RichTextBody p:last-of-type {
+  margin-bottom: 30px;
+}
+
+/* Button */
+.ButtonInverse {
+  color: white;
+}
+.ButtonInverse.ButtonInverse:hover {
+  color: black;
+  text-decoration: none;
+}
+.ButtonDisabled,
+.ButtonDisabled {
+  cursor: not-allowed;
+}
+.ButtonDisabled.ButtonDisabled:hover {
+  color: white;
+}
+
+/* .page-subscribe */
+.page-subscribe .UserProfilePage-body .RichTextModule {
+  border: none;
+}
+.page-subscribe.UserProfilePage .RichTextModule .RichTextBody {
+  font-size: var(--var-description-1);
+}
+.subscribePage__wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.subscribePage--join-plus-cta,
+.subscribePage--only-us-au,
+.subscribePage--or-basic {
+  margin-bottom: 2rem;
+}
+.subscribePage--only-us-au {
+  display: none;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+/* newsletter-subscription & page-profile */
+.UserProfilePage.page-profile .Page-footer-content,
+.UserProfilePage.page-other .Page-footer-content {
+  /* hide duplicate newsletter subscribe form */
+  display: none;
+}
+
+/* .page-welcome */
+.page-welcome.UserProfilePage .RichTextModule .RichTextBody {
+  font-size: var(--var-description-1);
+}
+.welcomePage__verifiedMessage {
+  margin-bottom: 2rem;
+}
+.welcomePage__fallbackMessage {
+}
+.welcomePage__basicMessage,
+.welcomePage__plusMessage,
+.welcomeAndUpgradePage__paymentSuccess {
+  display: none;
+}
+.welcomePage__basicMessageCta .ButtonInverse,
+.welcomeAndUpgradePage__paymentSuccess .ButtonInverse {
+  margin-top: 2rem;
+}
+.welcomePage__basicMessageCta,
+.welcomeAndUpgradePage__paymentSuccessCta {
+  text-align: center;
+}
+
+/* Reduce the gap between Column descendents on Section pages (esp carousels) */
+.SectionPage .OneColumnContainer-column > * {
+  margin-bottom: 2rem;
+}
+
+/* Circlular mask for bio images on /about */
+.Page .ListD .PromoB-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Page .ListD .PromoB-media {
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+}
+.Page .ListD .PromoB-media img {
+  width: 150%;
+  max-width: initial;
+  margin-left: -25%;
+}
+.Page .ListD .PromoB-title {
+  margin-top: 1rem;
+}
+.Page .ListD .PromoB-description {
+  margin-top: 0;
+}
+</style>
+<style>.Enhancement .InstagramUrl iframe {
+    min-height:600px;
+}</style>
+<style>.Page-header-menu-trigger .close-x {
+  width: 16px;
+}</style>
+<style>@media (max-width: 767px) {
+    .ArticlePage .CommentForm {
+        position: relative;
+        z-index: 200;
+    }
+}</style>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+    <title>Page Not Found</title>
+    
+    
+    <link rel="canonical" href="https://newatlas.com/404">
+    <meta name="brightspot.contentId" content="0000016b-943f-d204-ad6f-beff746a0000">
+
+    
+    
+<meta name="robots" content="noindex">
+
+
+    <meta property="og:title" content="Page Not Found">
+
+    <meta property="og:url" content="https://newatlas.com/404">
+
+
+    <meta property="og:site_name" content="New Atlas">
+
+
+
+    <meta property="og:type" content="website">
+
+    
+    <meta name="twitter:card" content="summary_large_image"/>
+    
+    
+    
+    
+    
+
+    
+    
+    <meta name="twitter:site" content="@nwtls"/>
+    
+    
+    
+    <meta name="twitter:title" content="Page Not Found"/>
+    
+
+    <meta property="fb:app_id" content="38456013908">
+
+
+    <link rel="apple-touch-icon"sizes="180x180"href="/apple-touch-icon.png"><link rel="icon"type="image/png"href="/favicon-32x32.png"><link rel="icon"type="image/png"href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <link type="application/rss+xml" rel="alternate" title="Page Not Found" href="https://newatlas.com/404.rss">
+    
+    
+
+    
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://newatlas.com/#organization","logo":{"@type":"ImageObject","height":60,"url":"https://assets.newatlas.com/c7/67/edd45d164cf99d6725d069f296b7/newatlas-logo.png","width":600},"name":"New Atlas","sameAs":["https://www.facebook.com/nwtls","https://www.instagram.com/new.atlas/","https://www.linkedin.com/company/new-atlas/","https://www.pinterest.com/newatlasdotcom","https://twitter.com/nwtls","https://flipboard.com/@NewAtlas"],"url":"https://newatlas.com"},{"@type":"WebSite","@id":"https://newatlas.com/#website","potentialAction":{"@type":"SearchAction","query-input":"required name=search_term_string","target":"https://newatlas.com/search/?q={search_term_string}"},"publisher":{"@id":"https://newatlas.com/#organization"},"url":"https://newatlas.com"},{"@type":"WebPage","@id":"https://newatlas.com/404#webpage","isPartOf":{"@id":"https://newatlas.com/#website"},"inLanguage":"en-US","publisher":{"@id":"https://newatlas.com/#organization"},"name":"Page Not Found","url":"https://newatlas.com/404"}]}</script>
+
+    
+
+    <script src="https://assets.newatlas.com/resource/00000170-5da9-dc4c-adf0-ddebcfc10000/styleguide/All.min.8e952c24acb4b27908e06a020165f458.gz.js" async></script>
+    <script>window.newatlas = window.newatlas || {}; Object.assign(window.newatlas, {"isSubscribed":null,"view":null,"subCategory":null,"tagSlugs":null,"userMode":"anon","subscriptionExpiration":null,"countryCode":"GB","articleId":null,"writer":null,"category":null,"buildInformation":"#95"});</script>
+<script>
+  window.fbAsyncInit = function() {
+      FB.init({
+          
+              appId : '38456013908',
+          
+          xfbml : true,
+          version : 'v3.3'
+      });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<script>
+  
+    // where `meta` is a dict of variables from the BS view:
+var meta = {}
+
+  
+
+  window.dataLayer = window.dataLayer || [];
+  var customDimensions = {};
+  // 
+  if (meta.view) {
+    customDimensions.view = meta.view;
+  }
+
+  // 
+  if (meta.articleId) {
+    customDimensions.article_id = meta.articleId;
+    customDimensions.category = meta.category;
+    customDimensions.subCategory = meta.subCategory;
+    customDimensions.tags = (meta.tagSlugs || []).join(',');
+    customDimensions.writer = meta.writer;
+  }
+  window.dataLayer.push(customDimensions);
+</script>
+
+<script>
+  (function(w,d,s,l,i) {
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TGZ8Q3J');
+</script>
+
+
+    <script id="fonts">
+        var link = document.createElement('link');
+        link.setAttribute('href', 'https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700|Open+Sans:400,500,600,700|Lora:400,500,600,700');
+        var relList = link.relList;
+
+        if (relList && relList.supports('preload')) {
+            link.setAttribute('as', 'style');
+            link.setAttribute('rel', 'preload');
+            link.setAttribute('onload', 'this.rel="stylesheet"');
+            link.setAttribute('crossorigin', 'anonymous');
+        } else {
+            link.setAttribute('rel', 'stylesheet');
+        }
+
+        document.head.appendChild(link);
+    </script>
+</head>
+
+
+<body class="Page-body">
+    <!-- Putting icons here, so we don't have to include in a bunch of -body hbs's -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" id="iconsMap">
+    <symbol id="mono-icon-facebook" viewBox="0 0 10 19">
+        <path fill-rule="evenodd"
+            d="M2.707 18.25V10.2H0V7h2.707V4.469c0-1.336.375-2.373 1.125-3.112C4.582.62 5.578.25 6.82.25c1.008 0 1.828.047 2.461.14v2.848H7.594c-.633 0-1.067.14-1.301.422-.188.235-.281.61-.281 1.125V7H9l-.422 3.2H6.012v8.05H2.707z">
+        </path>
+    </symbol>
+    <symbol id="mono-icon-instagram" viewBox="0 0 17 17">
+        <g>
+            <path fill-rule="evenodd"
+                d="M8.281 4.207c.727 0 1.4.182 2.022.545a4.055 4.055 0 0 1 1.476 1.477c.364.62.545 1.294.545 2.021 0 .727-.181 1.4-.545 2.021a4.055 4.055 0 0 1-1.476 1.477 3.934 3.934 0 0 1-2.022.545c-.726 0-1.4-.182-2.021-.545a4.055 4.055 0 0 1-1.477-1.477 3.934 3.934 0 0 1-.545-2.021c0-.727.182-1.4.545-2.021A4.055 4.055 0 0 1 6.26 4.752a3.934 3.934 0 0 1 2.021-.545zm0 6.68a2.54 2.54 0 0 0 1.864-.774 2.54 2.54 0 0 0 .773-1.863 2.54 2.54 0 0 0-.773-1.863 2.54 2.54 0 0 0-1.864-.774 2.54 2.54 0 0 0-1.863.774 2.54 2.54 0 0 0-.773 1.863c0 .727.257 1.348.773 1.863a2.54 2.54 0 0 0 1.863.774zM13.45 4.03c-.023.258-.123.48-.299.668a.856.856 0 0 1-.65.281.913.913 0 0 1-.668-.28.913.913 0 0 1-.281-.669c0-.258.094-.48.281-.668a.913.913 0 0 1 .668-.28c.258 0 .48.093.668.28.187.188.281.41.281.668zm2.672.95c.023.656.035 1.746.035 3.269 0 1.523-.017 2.62-.053 3.287-.035.668-.134 1.248-.298 1.74a4.098 4.098 0 0 1-.967 1.53 4.098 4.098 0 0 1-1.53.966c-.492.164-1.072.264-1.74.3-.668.034-1.763.052-3.287.052-1.523 0-2.619-.018-3.287-.053-.668-.035-1.248-.146-1.74-.334a3.747 3.747 0 0 1-1.53-.931 4.098 4.098 0 0 1-.966-1.53c-.164-.492-.264-1.072-.299-1.74C.424 10.87.406 9.773.406 8.25S.424 5.63.46 4.963c.035-.668.135-1.248.299-1.74.21-.586.533-1.096.967-1.53A4.098 4.098 0 0 1 3.254.727c.492-.164 1.072-.264 1.74-.3C5.662.394 6.758.376 8.281.376c1.524 0 2.62.018 3.287.053.668.035 1.248.135 1.74.299a4.098 4.098 0 0 1 2.496 2.496c.165.492.27 1.078.317 1.757zm-1.687 7.91c.14-.399.234-1.032.28-1.899.024-.515.036-1.242.036-2.18V7.689c0-.961-.012-1.688-.035-2.18-.047-.89-.14-1.524-.281-1.899a2.537 2.537 0 0 0-1.512-1.511c-.375-.14-1.008-.235-1.899-.282a51.292 51.292 0 0 0-2.18-.035H7.72c-.938 0-1.664.012-2.18.035-.867.047-1.5.141-1.898.282a2.537 2.537 0 0 0-1.512 1.511c-.14.375-.234 1.008-.281 1.899a51.292 51.292 0 0 0-.036 2.18v1.125c0 .937.012 1.664.036 2.18.047.866.14 1.5.28 1.898.306.726.81 1.23 1.513 1.511.398.141 1.03.235 1.898.282.516.023 1.242.035 2.18.035h1.125c.96 0 1.687-.012 2.18-.035.89-.047 1.523-.141 1.898-.282.726-.304 1.23-.808 1.512-1.511z">
+            </path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-email" viewBox="0 0 512 512">
+        <g>
+            <path
+                d="M67,148.7c11,5.8,163.8,89.1,169.5,92.1c5.7,3,11.5,4.4,20.5,4.4c9,0,14.8-1.4,20.5-4.4c5.7-3,158.5-86.3,169.5-92.1
+                c4.1-2.1,11-5.9,12.5-10.2c2.6-7.6-0.2-10.5-11.3-10.5H257H65.8c-11.1,0-13.9,3-11.3,10.5C56,142.9,62.9,146.6,67,148.7z">
+            </path>
+            <path d="M455.7,153.2c-8.2,4.2-81.8,56.6-130.5,88.1l82.2,92.5c2,2,2.9,4.4,1.8,5.6c-1.2,1.1-3.8,0.5-5.9-1.4l-98.6-83.2
+                c-14.9,9.6-25.4,16.2-27.2,17.2c-7.7,3.9-13.1,4.4-20.5,4.4c-7.4,0-12.8-0.5-20.5-4.4c-1.9-1-12.3-7.6-27.2-17.2l-98.6,83.2
+                c-2,2-4.7,2.6-5.9,1.4c-1.2-1.1-0.3-3.6,1.7-5.6l82.1-92.5c-48.7-31.5-123.1-83.9-131.3-88.1c-8.8-4.5-9.3,0.8-9.3,4.9
+                c0,4.1,0,205,0,205c0,9.3,13.7,20.9,23.5,20.9H257h185.5c9.8,0,21.5-11.7,21.5-20.9c0,0,0-201,0-205
+                C464,153.9,464.6,148.7,455.7,153.2z"></path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-print" viewBox="0 0 12 12">
+        <g fill-rule="evenodd">
+            <path fill-rule="nonzero"
+                d="M9 10V7H3v3H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v3.132A2.868 2.868 0 0 1 9.132 10H9zm.5-4.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM3 0h6v2H3z">
+            </path>
+            <path d="M4 8h4v4H4z"></path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-copylink" viewBox="0 0 12 12">
+        <g fill-rule="evenodd">
+            <path
+                d="M10.199 2.378c.222.205.4.548.465.897.062.332.016.614-.132.774L8.627 6.106c-.187.203-.512.232-.75-.014a.498.498 0 0 0-.706.028.499.499 0 0 0 .026.706 1.509 1.509 0 0 0 2.165-.04l1.903-2.06c.37-.398.506-.98.382-1.636-.105-.557-.392-1.097-.77-1.445L9.968.8C9.591.452 9.03.208 8.467.145 7.803.072 7.233.252 6.864.653L4.958 2.709a1.509 1.509 0 0 0 .126 2.161.5.5 0 1 0 .68-.734c-.264-.218-.26-.545-.071-.747L7.597 1.33c.147-.16.425-.228.76-.19.353.038.71.188.931.394l.91.843.001.001zM1.8 9.623c-.222-.205-.4-.549-.465-.897-.062-.332-.016-.614.132-.774l1.905-2.057c.187-.203.512-.232.75.014a.498.498 0 0 0 .706-.028.499.499 0 0 0-.026-.706 1.508 1.508 0 0 0-2.165.04L.734 7.275c-.37.399-.506.98-.382 1.637.105.557.392 1.097.77 1.445l.91.843c.376.35.937.594 1.5.656.664.073 1.234-.106 1.603-.507L7.04 9.291a1.508 1.508 0 0 0-.126-2.16.5.5 0 0 0-.68.734c.264.218.26.545.071.747l-1.904 2.057c-.147.16-.425.228-.76.191-.353-.038-.71-.188-.931-.394l-.91-.843z">
+            </path>
+            <path d="M8.208 3.614a.5.5 0 0 0-.707.028L3.764 7.677a.5.5 0 0 0 .734.68L8.235 4.32a.5.5 0 0 0-.027-.707">
+            </path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-flipboard" viewBox="0 0 500 500">
+        <g>
+            <path d="M0,0V500H500V0ZM400,200H300V300H200V400H100V100H400Z"></path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-linkedin" viewBox="0 0 16 17">
+        <g fill-rule="evenodd">
+            <path
+                d="M3.734 16.125H.464V5.613h3.27zM2.117 4.172c-.515 0-.96-.188-1.336-.563A1.825 1.825 0 0 1 .22 2.273c0-.515.187-.96.562-1.335.375-.375.82-.563 1.336-.563.516 0 .961.188 1.336.563.375.375.563.82.563 1.335 0 .516-.188.961-.563 1.336-.375.375-.82.563-1.336.563zM15.969 16.125h-3.27v-5.133c0-.844-.07-1.453-.21-1.828-.259-.633-.762-.95-1.512-.95s-1.278.282-1.582.845c-.235.421-.352 1.043-.352 1.863v5.203H5.809V5.613h3.128v1.442h.036c.234-.469.609-.856 1.125-1.16.562-.375 1.218-.563 1.968-.563 1.524 0 2.59.48 3.2 1.441.468.774.703 1.97.703 3.586v5.766z">
+            </path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-pinterest" viewBox="0 0 512 512">
+        <g>
+            <path d="M256,32C132.3,32,32,132.3,32,256c0,91.7,55.2,170.5,134.1,205.2c-0.6-15.6-0.1-34.4,3.9-51.4
+                c4.3-18.2,28.8-122.1,28.8-122.1s-7.2-14.3-7.2-35.4c0-33.2,19.2-58,43.2-58c20.4,0,30.2,15.3,30.2,33.6
+                c0,20.5-13.1,51.1-19.8,79.5c-5.6,23.8,11.9,43.1,35.4,43.1c42.4,0,71-54.5,71-119.1c0-49.1-33.1-85.8-93.2-85.8
+                c-67.9,0-110.3,50.7-110.3,107.3c0,19.5,5.8,33.3,14.8,43.9c4.1,4.9,4.7,6.9,3.2,12.5c-1.1,4.1-3.5,14-4.6,18
+                c-1.5,5.7-6.1,7.7-11.2,5.6c-31.3-12.8-45.9-47-45.9-85.6c0-63.6,53.7-139.9,160.1-139.9c85.5,0,141.8,61.9,141.8,128.3
+                c0,87.9-48.9,153.5-120.9,153.5c-24.2,0-46.9-13.1-54.7-27.9c0,0-13,51.6-15.8,61.6c-4.7,17.3-14,34.5-22.5,48
+                c20.1,5.9,41.4,9.2,63.5,9.2c123.7,0,224-100.3,224-224C480,132.3,379.7,32,256,32z"></path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-tumblr" viewBox="0 0 512 512">
+        <g>
+            <path d="M321.2,396.3c-11.8,0-22.4-2.8-31.5-8.3c-6.9-4.1-11.5-9.6-14-16.4c-2.6-6.9-3.6-22.3-3.6-46.4V224h96v-64h-96V48h-61.9
+                c-2.7,21.5-7.5,44.7-14.5,58.6c-7,13.9-14,25.8-25.6,35.7c-11.6,9.9-25.6,17.9-41.9,23.3V224h48v140.4c0,19,2,33.5,5.9,43.5
+                c4,10,11.1,19.5,21.4,28.4c10.3,8.9,22.8,15.7,37.3,20.5c14.6,4.8,31.4,7.2,50.4,7.2c16.7,0,30.3-1.7,44.7-5.1
+                c14.4-3.4,30.5-9.3,48.2-17.6v-65.6C363.2,389.4,342.3,396.3,321.2,396.3z"></path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-twitter" viewBox="0 0 512 512">
+        <path fill-rule="evenodd"
+            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+    </symbol>
+    <symbol id="mono-icon-reddit" viewBox="0 0 512 512">
+        <path fill-rule="evenodd"
+            d="M373 138.6c-25.2 0-46.3-17.5-51.9-41l0 0c-30.6 4.3-54.2 30.7-54.2 62.4l0 .2c47.4 1.8 90.6 15.1 124.9 36.3c12.6-9.7 28.4-15.5 45.5-15.5c41.3 0 74.7 33.4 74.7 74.7c0 29.8-17.4 55.5-42.7 67.5c-2.4 86.8-97 156.6-213.2 156.6S45.5 410.1 43 323.4C17.6 311.5 0 285.7 0 255.7c0-41.3 33.4-74.7 74.7-74.7c17.2 0 33 5.8 45.7 15.6c34-21.1 76.8-34.4 123.7-36.4l0-.3c0-44.3 33.7-80.9 76.8-85.5C325.8 50.2 347.2 32 373 32c29.4 0 53.3 23.9 53.3 53.3s-23.9 53.3-53.3 53.3zM157.5 255.3c-20.9 0-38.9 20.8-40.2 47.9s17.1 38.1 38 38.1s36.6-9.8 37.8-36.9s-14.7-49.1-35.7-49.1zM395 303.1c-1.2-27.1-19.2-47.9-40.2-47.9s-36.9 22-35.7 49.1c1.2 27.1 16.9 36.9 37.8 36.9s39.3-11 38-38.1zm-60.1 70.8c1.5-3.6-1-7.7-4.9-8.1c-23-2.3-47.9-3.6-73.8-3.6s-50.8 1.3-73.8 3.6c-3.9 .4-6.4 4.5-4.9 8.1c12.9 30.8 43.3 52.4 78.7 52.4s65.8-21.6 78.7-52.4z" />
+    </symbol>
+    <symbol id="mono-icon-youtube" viewBox="0 0 512 512">
+        <g>
+            <path fill-rule="evenodd" d="M508.6,148.8c0-45-33.1-81.2-74-81.2C379.2,65,322.7,64,265,64c-3,0-6,0-9,0s-6,0-9,0c-57.6,0-114.2,1-169.6,3.6
+                c-40.8,0-73.9,36.4-73.9,81.4C1,184.6-0.1,220.2,0,255.8C-0.1,291.4,1,327,3.4,362.7c0,45,33.1,81.5,73.9,81.5
+                c58.2,2.7,117.9,3.9,178.6,3.8c60.8,0.2,120.3-1,178.6-3.8c40.9,0,74-36.5,74-81.5c2.4-35.7,3.5-71.3,3.4-107
+                C512.1,220.1,511,184.5,508.6,148.8z M207,353.9V157.4l145,98.2L207,353.9z"></path>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-google" viewBox="0 0 46 46">
+        <defs>
+            <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+                <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+                <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.168 0" in="shadowBlurOuter1"
+                    type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+                <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+                <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.084 0" in="shadowBlurOuter2"
+                    type="matrix" result="shadowMatrixOuter2"></feColorMatrix>
+                <feMerge>
+                    <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                    <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+            <rect id="path-2" x="0" y="0" width="40" height="40" rx="2"></rect>
+        </defs>
+        <g id="Google-Button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+            <g id="9-PATCH" sketch:type="MSArtboardGroup" transform="translate(-668.000000, -160.000000)"></g>
+            <g id="btn_google_light_focus" sketch:type="MSArtboardGroup" transform="translate(-1.000000, -1.000000)">
+                <g id="button" sketch:type="MSLayerGroup" transform="translate(4.000000, 4.000000)"
+                    filter="url(#filter-1)">
+                    <g id="button-bg">
+                        <use fill="#FFFFFF" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-2"></use>
+                        <use fill="none" xlink:href="#path-2"></use>
+                        <use fill="none" xlink:href="#path-2"></use>
+                        <use fill="none" xlink:href="#path-2"></use>
+                    </g>
+                </g>
+                <g id="logo_googleg_48dp" sketch:type="MSLayerGroup" transform="translate(15.000000, 15.000000)">
+                    <path
+                        d="M17.64,9.20454545 C17.64,8.56636364 17.5827273,7.95272727 17.4763636,7.36363636 L9,7.36363636 L9,10.845 L13.8436364,10.845 C13.635,11.97 13.0009091,12.9231818 12.0477273,13.5613636 L12.0477273,15.8195455 L14.9563636,15.8195455 C16.6581818,14.2527273 17.64,11.9454545 17.64,9.20454545 L17.64,9.20454545 Z"
+                        id="Shape" fill="#4285F4" sketch:type="MSShapeGroup"></path>
+                    <path
+                        d="M9,18 C11.43,18 13.4672727,17.1940909 14.9563636,15.8195455 L12.0477273,13.5613636 C11.2418182,14.1013636 10.2109091,14.4204545 9,14.4204545 C6.65590909,14.4204545 4.67181818,12.8372727 3.96409091,10.71 L0.957272727,10.71 L0.957272727,13.0418182 C2.43818182,15.9831818 5.48181818,18 9,18 L9,18 Z"
+                        id="Shape" fill="#34A853" sketch:type="MSShapeGroup"></path>
+                    <path
+                        d="M3.96409091,10.71 C3.78409091,10.17 3.68181818,9.59318182 3.68181818,9 C3.68181818,8.40681818 3.78409091,7.83 3.96409091,7.29 L3.96409091,4.95818182 L0.957272727,4.95818182 C0.347727273,6.17318182 0,7.54772727 0,9 C0,10.4522727 0.347727273,11.8268182 0.957272727,13.0418182 L3.96409091,10.71 L3.96409091,10.71 Z"
+                        id="Shape" fill="#FBBC05" sketch:type="MSShapeGroup"></path>
+                    <path
+                        d="M9,3.57954545 C10.3213636,3.57954545 11.5077273,4.03363636 12.4404545,4.92545455 L15.0218182,2.34409091 C13.4631818,0.891818182 11.4259091,0 9,0 C5.48181818,0 2.43818182,2.01681818 0.957272727,4.95818182 L3.96409091,7.29 C4.67181818,5.16272727 6.65590909,3.57954545 9,3.57954545 L9,3.57954545 Z"
+                        id="Shape" fill="#EA4335" sketch:type="MSShapeGroup"></path>
+                    <path d="M0,0 L18,0 L18,18 L0,18 L0,0 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+                </g>
+                <g id="handles_square" sketch:type="MSLayerGroup"></g>
+            </g>
+        </g>
+    </symbol>
+    <symbol id="mono-icon-comments" viewBox="0 0 512 512">
+        <path
+            d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5a8 8 0 00-1.5 8.7c1.3 3 4.1 4.8 7.3 4.8 66.3 0 116-31.8 140.6-51.4A305 305 0 00256 448c141.4 0 256-93.1 256-208S397.4 32 256 32z">
+        </path>
+    </symbol>
+    <symbol id="icon-magnify" viewBox="0 0 512 512">
+        <g>
+            <path d="M337.509,305.372h-17.501l-6.571-5.486c20.791-25.232,33.922-57.054,33.922-93.257
+                C347.358,127.632,283.896,64,205.135,64C127.452,64,64,127.632,64,206.629s63.452,142.628,142.225,142.628
+                c35.011,0,67.831-13.167,92.991-34.008l6.561,5.487v17.551L415.18,448L448,415.086L337.509,305.372z M206.225,305.372
+                c-54.702,0-98.463-43.887-98.463-98.743c0-54.858,43.761-98.742,98.463-98.742c54.7,0,98.462,43.884,98.462,98.742
+                C304.687,261.485,260.925,305.372,206.225,305.372z"></path>
+        </g>
+    </symbol>
+    <symbol id="burger-menu" viewBox="0 0 14 10">
+        <g>
+            <path fill-rule="evenodd" d="M0 5.5v-1h14v1H0zM0 1V0h14v1H0zm0 9V9h14v1H0z"></path>
+        </g>
+    </symbol>
+    <symbol id="close-x" viewBox="0 0 14 14">
+        <g>
+            <path fill-rule="nonzero"
+                d="M6.336 7L0 .664.664 0 7 6.336 13.336 0 14 .664 7.664 7 14 13.336l-.664.664L7 7.664.664 14 0 13.336 6.336 7z">
+            </path>
+        </g>
+    </symbol>
+    <symbol id="share-more-arrow" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
+        <g>
+            <g>
+                <path
+                    d="M512,241.7L273.643,3.343v156.152c-71.41,3.744-138.015,33.337-188.958,84.28C30.075,298.384,0,370.991,0,448.222v60.436
+                    l29.069-52.985c45.354-82.671,132.173-134.027,226.573-134.027c5.986,0,12.004,0.212,18.001,0.632v157.779L512,241.7z
+                    M255.642,290.666c-84.543,0-163.661,36.792-217.939,98.885c26.634-114.177,129.256-199.483,251.429-199.483h15.489V78.131
+                    l163.568,163.568L304.621,405.267V294.531l-13.585-1.683C279.347,291.401,267.439,290.666,255.642,290.666z">
+                </path>
+            </g>
+        </g>
+    </symbol>
+    <symbol id="chevron" viewBox="0 0 100 100">
+        <g>
+            <path
+                d="M22.4566257,37.2056786 L-21.4456527,71.9511488 C-22.9248661,72.9681457 -24.9073712,72.5311671 -25.8758148,70.9765924 L-26.9788683,69.2027424 C-27.9450684,67.6481676 -27.5292733,65.5646602 -26.0500598,64.5484493 L20.154796,28.2208967 C21.5532435,27.2597011 23.3600078,27.2597011 24.759951,28.2208967 L71.0500598,64.4659264 C72.5292733,65.4829232 72.9450684,67.5672166 71.9788683,

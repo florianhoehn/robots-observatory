@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <base href="www.buienradar.nl" target="_self">
+    
+
+
+<script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+</script>
+
+<script>
+    var b = window.buienradar = window.buienradar || {};
+    b.appVersion = '20261009.1';
+    b.features = {};
+    b.locale = 'nl-NL';
+    b.cookieDomain = '.buienradar.nl';
+    b.eventPhotoChannelId = '500';
+    b.contentPhotoChannelId = '272';
+    b.language = 'nl';
+    b.country = 'NL';
+    b.siteName = 'live';
+    b.pageId = '404:ce4bb88f-0006-460b-bbeb-c06c5b69cbf5';
+    b.template = 'content';
+    b.askPublicationPoint = 'buienradarnl';
+    b.askUI = 'buienradarnl';
+    b.pageParams = {};
+    window.apiKey = '3c4a3037-85e6-4d1e-ad6c-f3f6e4b75f2f';
+    b.photoVideoAPIURL = 'https://photovideoapi.buienradar.nl';
+    b.photoVideoMainImageSizeId = '100116';
+    b.photoVideoAgreementVersion = '0.2';
+    b.prebidUrl = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js';
+    b.weerzineShowsAdAllianceBanners = false;
+    b.pipData = {
+        pipUrl: 'https://account.buienradar.nl',
+        pipIntegratorId: 'buienradar-nl',
+        myEnvironmentUrl: 'https://mijnomgeving.buienradar.nl',
+        usePip: 'False'
+    }
+
+    const usePip = b.pipData.usePip === "True" 
+
+    const loginUrl = usePip 
+        ? `${b.pipData.pipUrl}/login?integration_id=${b.pipData.pipIntegratorId}&callback_url=${window.location.href}` 
+        : "/auth/login?theme=buienradar";
+    const logoutUrl = usePip
+        ? `${b.pipData.pipUrl}/logout?integration_id=${b.pipData.pipIntegratorId}&callback_url=${window.location.href}`
+        : "/auth/logout";
+    const registerUrl = usePip ? loginUrl : "/account/register";
+    const userUrl = "/auth/user?slide=false";
+    let userPromise = null;
+    const dpgAppId = window.location.hostname.includes("buienradar.be") 
+        ? 'buienradar.be.web' 
+        : 'buienradar.nl.web';
+
+    const trackLoginSuccessEvent = function (claims) {
+        const sidClaim = claims?.find(
+            (claim) => claim.type === "sid"
+        );
+
+        if (!sidClaim?.value) {
+            return;
+        }
+
+        window.trackDpgSelfDescribingEvent?.({
+            event: {
+                schema: 'iglu:dpgmedia/authentication_interaction/jsonschema/1-0-3',
+                data: {
+                    action: 'login_success'
+                }
+            },
+            context: [
+                {
+                    schema: 'iglu:dpgmedia/user/jsonschema/3-0-7',
+                    data: {
+                        is_logged_in: true,
+                        account_id: sidClaim.value,
+                    },
+                },
+            ],
+        }, dpgAppId);
+    };
+
+    b.login = function login () {
+        cookieManager.deleteCookie("br-plus")
+        cookieManager.setCookie({ name: 'hasLoggedIn', value: 'true', expDays: 2});
+        window.location = loginUrl;
+    }
+
+    b.register = function register () {
+        const claims = JSON.parse(sessionStorage.getItem('claims')) ?? [];
+        const sidClaim = claims.find(
+            (claim) => claim.type === "sid"
+        );
+        window.trackDpgSelfDescribingEvent?.({ 
+            event: {
+                schema: 'iglu:dpgmedia/authentication_interaction/jsonschema/1-0-3',
+                data: {
+                    action: 'logout',
+                }
+            },
+            context: [
+				{
+					schema: 'iglu:dpgmedia/user/jsonschema/3-0-7',
+					data: {
+						is_logged_in: !!sidClaim?.value,
+						account_id: sidClaim?.value,
+					},
+				},
+			],
+        }, dpgAppId)
+        cookieManager.deleteCookie("br-plus")
+        cookieManager.setCookie({ name: 'hasLoggedIn', value: 'true', expDays: 2});
+
+        if (usePip || window.buienradar.enableOidcRegistration.toLowerCase() !== 'true') {
+            window.location = registerUrl;
+        }
+        else {
+            window.location = window.buienradar.openIdAuthority + "/register" + window.buienradar.returnUrl + "?theme=buienradar";
+        }
+    }
+
+    b.logout = function logout() {
+        if (usePip) {
+            window.location.href = logoutUrl;
+            return;
+        }
+        const claims = JSON.parse(sessionStorage.getItem('claims'));
+        const logoutUrlClaim = claims.find(
+            (claim) => claim.type === "bff:logout_url"
+        );
+
+        cookieManager.deleteCookie("br-plus");
+        cookieManager.deleteCookie("hasLoggedIn");
+        sessionStorage.removeItem('UID');
+        sessionStorage.removeItem('claims');
+        if (logoutUrlClaim) {
+            window.location = logoutUrlClaim.value;
+        }
+        window.buienradar.claims = "";
+    }
+
+    b.getPipUser = function () {
+        return new Promise((resolve) => {
+            const cachedPipUser = b.pipUser;
+            if (cachedPipUser) {
+                return resolve(cachedPipUser);
+            }
+            fetch('/api/accountdetails')
+                .then(res => res.json())
+                .then(pipUserData => {
+                    if (pipUserData.expiredToken) {
+                        window.location.href = `${loginUrl}&prompt=none`
+                        return resolve(null);
+                    }
+                    b.pipUser = pipUserData;
+                    return resolve(pipUserData);
+                })
+                .catch(e => {
+                    console.error('Error getting PIP user', e);
+                    return resolve(null);
+                });
+        });
+    }
+
+    b.getUser = function () {
+        if (userPromise) {
+            return userPromise;
+        }
+
+        userPromise = new Promise(async (resolve, reject) => {
+            const hasLoggedInCookie = cookieManager.getCookie("hasLoggedIn");
+            const brPlusCookie = cookieManager.getCookie("br-plus");
+            const cachedClaims = sessionStorage.getItem("claims");
+
+            if (!hasLoggedInCookie || hasLoggedInCookie !== 'true' && cachedClaims && brPlusCookie !== 'true') {
+                return reject(new Error("User has not logged in before"));
+            }
+
+            // Check if the response is already cached
+            if (cachedClaims) {
+                const parsedClaims = JSON.parse(cachedClaims);
+                resolve(parsedClaims);
+                userPromise = null;
+            }
+            const req = new Request(userUrl, {
+                headers: new Headers({
+                    "X-CSRF": "1",
+                }),
+            });
+
+            try {
+                const response = await fetch(req);
+                if (response.ok) {
+                    const claims = await response.json();
+
+                    sessionStorage.setItem("claims", JSON.stringify(claims));
+                    cookieManager.setCookie({ name: 'hasLoggedIn', value: 'true', expDays: 2});
+                    if (!cachedClaims) {
+                        trackLoginSuccessEvent(claims);
+                    }
+                    resolve(claims);
+                } else if (response.status === 401) {
+                    cookieManager.deleteCookie("br-plus");
+                    cookieManager.deleteCookie("hasLoggedIn");
+                    sessionStorage.removeItem("claims");
+                    sessionStorage.removeItem("UID");
+                    reject(new Error("User not logged in"));
+                } else {
+                    reject(new Error("Failed to fetch user"));
+                }
+            } catch (error) {
+                reject(error);
+            } finally {
+                userPromise = null;
+            }
+        });
+
+        return userPromise;
+    };
+</script>
+
+<script src="https://cdn.buienradar.nl/resources/js/site/otel.js?v=20261009.1"></script>
+
+<!-- OneTrust Cookies Consent Notice start -->
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="4749f878-dbbc-4ec1-9590-8cd1d7dc1d8b" onerror="console.error('Onetrust script did not load')"></script>
+<script type="text/javascript">
+    function OptanonWrapper() {
+        const consentChangedEvent = new Event('consent-changed');
+        window.dispatchEvent(consentChangedEvent);
+    }
+</script>
+<!-- OneTrust Cookies Consent Notice end -->
+<title>Buienradar.nl - Actuele neerslag, weerbericht, weersverwachting, sneeuwradar en satellietbeelden</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="utf-8">
+<meta http-equiv="language" content="nl" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Actuele buienradar en actueel weer voor Nederland, Belgi&#235; en Europa, actuele satellietbeelden, actuele temperaturen, neerslag, en veel meer!" />
+<meta name="keywords" content="het weer, weerbericht, weersverwachting, buienradar, regen, wolken, neerslag, KNMI, weer, klimaat, weerbericht, temperatuur, luchtdruk, reisweer, vliegweer, zeilweer, weergegevens, weerdienst, droogte, weersvoorspelling, bouwweer, hagel, weerinfo, wind, weerstation, regen, sneeuw, zon, onweer, bliksem, winter, sneeuw, RTL weer, zomer, mobiel" />
+<meta name="google-site-verification" content="Yjtl5ibZhWHNA5F_78PoRLpYZ1eIliLdjjdataKc1_M" />
+<meta name="countryofinterest" content="" />
+<meta name="placeofinterest" content="" />
+
+
+    <meta name="apple-itunes-app" content="app-id=621542526" />
+    <link href="https://plus.google.com/+buienradar" rel="publisher" />
+    <meta property="og:image" content="https://cdn.buienradar.nl/resources/images/br-logo-square.png" />
+    <meta property="og:title" content="Buienradar - Opgevraagde pagina niet gevonden (Code 404)" />
+    <meta property="og:description" content="Actuele buienradar en actueel weer voor Nederland, Belgi&#235; en Europa, actuele satellietbeelden, actuele temperaturen, neerslag, en veel meer!" />
+<meta property="fb:pages" content="115208271854672" />
+
+
+<script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+</script>
+<script>
+
+    b.selectedCountryCode = '';
+    b.selectedPlace = '';
+
+    var s = b.appSettings = b.appSettings || {};
+    s.googleAds = {"active":true,"trackingId":"UA-434951-24","tagManagerId":"GTM-WDF75J5","siteVerification":"Yjtl5ibZhWHNA5F_78PoRLpYZ1eIliLdjjdataKc1_M","dfpSlotArticle":"/21730500021,8932/rtl-buienradar/web/detail","dfpSlotIndex":"/21730500021,8932/rtl-buienradar/web/navigation","dfpSlotHome":"/21730500021,8932/rtl-buienradar/web/home"};
+
+    var isHomeRadarMap = false;
+    if (window.location.pathname == "/" || window.location.pathname == "/home/radarmapnl")
+        isHomeRadarMap = true;
+
+    try {
+        if (window.history.pushState && window.location.pathname.indexOf('/home') >= 0 && window.location.hostname != "localhost") {
+            window.history.pushState({}, document.title, "/");
+        }
+    } catch (e) { }
+</script>
+
+    <script src="/dynamicresource/actual/6260"></script>
+
+<!-- Google Tag Manager -->
+<noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-WDF75J5"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.setAttributeNode(d.createAttribute("data-ot-ignore")); j.async = true; j.src =
+            '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-WDF75J5');</script>
+<!-- End Google Tag Manager -->
+
+<script type="text/javascript">
+    var dfpNav = "home";
+    var dfpType = "home";
+    var dfpTitel = "";
+    var dfpUuid = "404:ce4bb88f-0006-460b-bbeb-c06c5b69cbf5";
+    var currPath = window.location.pathname;
+    if (currPath != "/") { // non-homepage
+        dfpNav = currPath.replace(/\/$/, "").substr(1, currPath.length - 1).replace(/\//g, ".");
+        var dfpTitel = dfpNav.replace(/\./g, ' ');
+
+        if (currPath.indexOf('/weer/') > -1) {
+            // Remove digits for WPP pages
+            dfpTitel = dfpTitel.replace(/[0-9]/g, '');
+        }
+
+        if ((currPath.split("/").length == 3) && currPath.indexOf('overbuienradar') == -1) {
+            //overzichtpagina's staan altijd op het 2e niveau binnen url structuur m.u.v. "over buienradar" pagina's
+            dfpType = "index";
+        }
+        else if (currPath.indexOf('/weerzine') == -1 && currPath.indexOf('/weer') > -1 && currPath.split("/").length == 5) {
+            // overzicht Weer per plaats
+            dfpType = "index";
+        }
+        else {
+            dfpType = "article";
+        }
+    }
+</script>
+
+    <script type="text/javascript">
+
+
+        var createGigyaScript = function() {
+            try {
+                var script = document.createElement('script');
+                var s = document.getElementsByTagName('script')[0];
+                script.innerHTML = '{ lang: "nl-inf", defaultRegScreenSet: "simple-screen-set", regSource: "web_3_-_7jnUGYNhqz-r1ayhYCRUytSJ-oQqSUHIzZ2pwWQL9mbZgVnJjc8mJRnRTe6KX7", defaultRegScreenSet: "", defaultMobileRegScreenSet: ""};';
+                script.src = 'https://cdns.gigya.com/JS/gigya.js?apikey=3_-_7jnUGYNhqz-r1ayhYCRUytSJ-oQqSUHIzZ2pwWQL9mbZgVnJjc8mJRnRTe6KX7';
+                script.id = "gigyaScript";
+                s.parentNode.insertBefore(script, s);
+            } catch (e) {
+            }
+        };
+
+        window.addEventListener('consent-changed',
+            function() {
+
+                window.OneTrust.getVendorConsentsRequestV2(function(response, success) {
+
+                    const categoryMatch = window.OptanonActiveGroups.match('C0005');
+                    if (categoryMatch != null && categoryMatch) {
+
+                        createGigyaScript();
+
+                        var script = document.querySelector('#gigyaScript');
+                        script.addEventListener('load',
+                            function() {
+                                window.a7f208efbcff401aadeb0a3abf5e5372 = '3_-_7jnUGYNhqz-r1ayhYCRUytSJ-oQqSUHIzZ2pwWQL9mbZgVnJjc8mJRnRTe6KX7';
+                                window.enableLogin = true;
+
+
+                                var GMTTimeout;
+                                setGTMMetaData();
+
+                                function setGTMMetaData() {
+                                    if (typeof gigya !== "undefined" && typeof gigya.accounts !== "undefined") {
+
+                                        gigya.accounts.getAccountInfo({
+                                            callback: function(e) {
+
+                                                const claimsJson = sessionStorage.getItem('claims');
+                                                let claims, userId;
+
+                                                if (claimsJson) {
+                                                    claims = JSON.parse(claimsJson);
+                                                    const subClaims = claims.find(claim => claim.type === 'sub');
+                                                    userId = subClaims ? subClaims.value : undefined;
+                                                }
+
+                                                window.dataLayer.push({
+                                                    "abstractkey": "294457",
+                                                    "seasonkey": "294458",
+                                                    "type": dfpType,
+                                                    "publicatiepunt": window.buienradar.askPublicationPoint,
+                                                    "nav": dfpNav,
+                                                    "settings": "",
+                                                    "uuid": "",
+                                                    "aj": "",
+                                                    "userid": userId,
+                                                    "event": "view"
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        GMTTimeout = setTimeout(function() {
+                                                setGTMMetaData();
+                                            },
+                                            50);
+                                    }
+                                }
+
+                                var gigyaScriptLoaded = new Event('gigya-script-loaded');
+                                window.dispatchEvent(gigyaScriptLoaded);
+                            });
+                    } else {
+                        var gigyaScriptBlocked = new Event('gigya-script-blocked');
+                        window.dispatchEvent(gigyaScriptBlocked);
+                    }
+                });
+            });
+
+    </script>
+
+
+<script>
+
+    (function () {
+
+        window.spotxDataLayer = [{
+            source: "102387"
+        }];
+
+        var createSpotx = function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start': new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        };
+
+        window.addEventListener('consent-changed', function () {
+
+            window.OneTrust.getVendorConsentsRequestV2(function (response, success) {
+
+                const category3Match = window.OptanonActiveGroups.match('C0003');
+                const category4Match = window.OptanonActiveGroups.match('C0004');
+
+                if (category3Match != null && category3Match && category4Match != null && category4Match) {
+                    // analytic + ad consent
+                    createSpotx(window, document, 'script', 'spotxDataLayer', 'GTM-NH3RQL3');
+                }
+            });
+        });
+
+    })();
+
+
+</script>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="apple-touch-icon" href="https://cdn.buienradar.nl/resources/images/favicon.png">
+<link rel="icon" sizes="192x192" href="https://cdn.buienradar.nl/resources/images/favicon.png">
+
+    <link href="https://cdn.buienradar.nl/resources/css/site/buienradar.min.css?v=20261009.1" rel="stylesheet" media="all" />
+    <script src="https://cdn.buienradar.nl/resources/js/site/packages.min.js?v=20261009.1" class="optanon-category-C0001"></script>
+    <script src="https://cdn.buienradar.nl/resources/js/site/buienradar.min.js?v=20261009.1"></script>
+
+<script src="https://cdn.buienradar.nl/resources/js/site/snowplow.js?v=20261009.1"></script>
+
+
+    <link href="https://cdn.buienradar.nl/resources/css/site/payok.css?v=20261009.1&production" rel="stylesheet" media="all" />
+    <script src="https://cdn.buienradar.nl/resources/js/site/payok.js?v=20261009.1&production"></script>
+    <style>
+        :root {
+            --payok-modal-spacing: 48px 80px;
+        }
+    </style>
+
+
+<link href="https://cdn.buienradar.nl/resources/css/site/tests.min.css?v=20261009.1" rel="stylesheet" media="all" />
+
+
+
+<script>
+    window.buienradar.api.apiUrl = '//api.buienradar.nl';
+    window.buienradar.api.graphApiUrl = '//graphdata.buienradar.nl';
+    window.buienradar.api.dataApiUrl = '//data.buienradar.nl';
+    window.buienradar.api.imageApiUrl = '//image.buienradar.nl';
+    window.buienradar.api.imageApiLiteUrl = '//image-lite.buienradar.nl';
+    window.buienradar.api.locationApiUrl = '//location.buienradar.nl';
+    window.buienradar.api.observationApiUrl = '//observations.buienradar.nl';
+    window.buienradar.api.forecastApiUrl = '//forecast.buienradar.nl';
+    window.buienradar.api.weerzineApiUrl = '//weerzine.buienradar.nl';
+    window.buienradar.api.photoVideoApiUrl = 'https://photovideoapi.buienradar.nl';
+    window.buienradar.api.photoVideoContentDomain = 'nl';
+    window.buienradar.cdn.domain = 'https://cdn.buienradar.nl/resources';
+    window.buienradar.cdn.processingdomain = 'https://processing-cdn.buienradar.nl/processing';
+    window.buienradar.openId = 'https://account.rtl.nl';
+    window.buienradar.openIdAuthority = 'https://account.rtl.nl/oidc';
+    window.buienradar.enableOneAccount = 'True';
+    window.buienradar.enableOidcRegistration = 'True';
+    window.buienradar.enablePayOrOkay = 'True';
+    window.buienradar.returnUrl = '?returnUrl=https://www.buienradar.nl/auth/login';
+    window.buienradar.subscriptionOverview = '/subscriptions/buienradar/overview?theme=buienradar';
+    window.buienradar.theme = '?theme=buienradar';
+</script>
+</head>
+<body class=" not-home content" data-payok-theme="Buienradar">
+    <div id="wrapper" class="side-push open-search">
+        <div class="hold">
+            
+    
+<header id="header">
+    <a href="#" class="nav-opener"><span>opener</span></a>
+<div class="header-t">
+    <div class="container">
+        <div class="logo" itemscope itemtype="http://schema.org/Brand"><a href="/" itemprop="url"><img src="https://cdn.buienradar.nl/resources/images/logor.svg" itemprop="image" alt="Buienradar"></a></div>
+            <div class="header-r">
+                <script type="text/javascript">
+    $(document).ready(function () {
+
+    (function () {
+        if (window.buienradar.enableOneAccount.toLowerCase() === 'true') {
+            $(".login").show();
+
+            function showLoggedInItems() {
+                const usePip = window.buienradar.pipData.usePip === "True";
+                $(".account-settings-link").attr(
+                    "href", 
+                    usePip
+                        ? window.buienradar.pipData.myEnvironmentUrl
+                        : window.buienradar.openId
+                );
+                $('.login-required').hide();
+                $('.login-not-required').show();
+
+                const hasBrPlus = cookieManager.getCookie("br-plus");
+
+                if (hasBrPlus === 'true') {
+                    $('.br-plus-promotions').removeClass("display-none-voordeelacties")
+                }
+                else {
+                    $('.discover-br-plus').removeClass("display-none-voordeelacties")
+                }
+            }
+
+            function showLoggedOutItems() {
+                $('.discover-br-plus').hide();
+                $('.discover-br-plus-button').show();
+                $('.login-not-required').hide();
+                $('.login-required').show();
+                $('.br-plus-promotions').hide();
+                sessionStorage.removeItem('UID');
+                sessionStorage.removeItem('claims');
+            }
+            
+            if (window.buienradar.pipData.usePip === 'True') {
+                window.buienradar.getPipUser().then(userData => {
+                    if (userData?.isLoggedIn) {
+                        showLoggedInItems();
+                    } else {
+                        showLoggedOutItems();
+                    }
+                });
+            } else {
+                window.buienradar.getUser()
+                    .then(showLoggedInItems)
+                    .catch(showLoggedOutItems);
+            }
+        }
+        else {
+            $(".login").hide();
+        }
+    })();
+
+    $(document).on("click", function (event) {
+
+    var $trigger = $(".login");
+
+    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+    $(".dropdown-content").removeClass("display-block")
+    $(".arrow-up").hide();
+    $(".arrow-down").show();
+    }
+    });
+    });
+
+    function deleteCookie(name) {
+    document.cookie = name + "=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    }
+
+    function toVouchers() {
+    window.location = "/weerzine/brplusvoordeelacties";
+    }
+
+    function openLogin() {
+    if ($(".dropdown-content").hasClass("display-block")) {
+    $(".dropdown-content").removeClass("display-block");
+    }
+    else {
+    $(".dropdown-content").addClass("display-block");
+    }
+
+    if ($(".arrow-down").is(":visible")) {
+    $(".arrow-up").show();
+    $(".arrow-down").hide();
+    }
+    else {
+    $(".arrow-up").hide();
+    $(".arrow-down").show();
+    }
+    }
+
+    function openMyPhotosAndVideos() {
+    window.location = "/foto-en-video/mijn-fotos-en-videos/" + window.gigyaUserInfo.newZuluID;
+    }
+</script>
+
+<div class="login display-none" style="margin-left:-10px">
+    <div onclick="openLogin()" class="one-account-login">
+        <em class="user-icon">
+            <svg style="margin-right:5px;" width="14" height="14" viewBox="0 0 14 14" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+                <path id="Color Copy 2" fill-rule="evenodd" clip-rule="evenodd"
+                d="M6.99961 7.711C4.86628 7.711 0.599609 8.84878 0.599609 11.1243V12.2621C0.599609 12.8879 1.07961 13.3999 1.66628 13.3999H12.3329C12.9196 13.3999 13.3996 12.8879 13.3996 12.2621V11.1243C13.3996 8.84878 9.13294 7.711 6.99961 7.711ZM6.99967 6.2885C5.42873 6.2885 4.15523 5.015 4.15523 3.44405C4.15523 1.87311 5.42873 0.599609 6.99967 0.599609C8.57061 0.599609 9.84411 1.87311 9.84411 3.44405C9.84411 5.015 8.57061 6.2885 6.99967 6.2885Z"
+                fill="#152B81" />
+            </svg>
+        </em>
+
+        <span class="title"><em>Mijn Account</em></span>
+
+        <svg class="arrow-down" width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path id="arrow-down" fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.62188 5.74834C4.96325 6.08341 5.51727 6.08396 5.85932 5.74956L10.2431 1.46384C10.5851 1.12944 10.5857 0.58673 10.2443 0.251659C9.90297 -0.0834112 9.34895 -0.0839553 9.0069 0.250444L5.23175 3.92016L1.49434 0.25166C1.15297 -0.0834107 0.598955 -0.0839558 0.256903 0.250443C-0.0851485 0.584842 -0.0857049 1.12755 0.25566 1.46263L4.62188 5.74834Z"
+            fill="#152B81" />
+        </svg>
+
+        <svg class="arrow-up display-none" width="11" height="6" viewBox="0 0 11 6" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+            <path id="arrow-up" fill-rule="evenodd" clip-rule="evenodd"
+            d="M5.87812 0.25166C5.53675 -0.0834115 4.98273 -0.083956 4.64068 0.250444L0.256902 4.53616C-0.08515 4.87056 -0.085705 5.41327 0.255661 5.74834C0.597028 6.08341 1.15105 6.08395 1.4931 5.74956L5.26825 2.07984L9.00566 5.74834C9.34703 6.08341 9.90104 6.08396 10.2431 5.74956C10.5851 5.41516 10.5857 4.87245 10.2443 4.53737L5.87812 0.25166Z"
+            fill="#152B81" />
+        </svg>
+
+    </div>
+    <div class="dropdown-content">
+        <div class="btn-group login-required display-none">
+            <button onclick="window.buienradar.login()" class="login-button">Inloggen</button>
+            <hr class="width-90">
+            <button onclick="window.buienradar.register()" class="login-button">Account aanmaken</button>
+            <hr class="width-90">
+            <button onclick="toVouchers()" class="login-button discover-br-plus-button">
+                Ontdek Buienradar
+                Premium
+            </button>
+        </div>
+        <div class="btn-group login-not-required display-none">
+            <a class="text-align-left account-settings-link"><b>&#62; Accountinstellingen</b></a>
+                <a href="javascript:openMyPhotosAndVideos()" class="text-align-left photoVideoUrl">
+                    <b>
+                        &#62; Mijn foto's en
+                        video's
+                    </b>
+                </a>
+            <a href="/weerzine/brplusvoordeelacties"
+               class="text-align-left br-plus-promotions display-none-voordeelacties"><b>&#62; Voordeelacties</b></a>
+            <a href="/weerzine/brplusvoordeelacties"
+               class="text-align-left discover-br-plus display-none-voordeelacties">
+                <b>
+                    &#62; Ontdek Buienradar
+                    Premium
+                </b>
+            </a>
+            <button onclick="window.buienradar.logout()" class="login-button" data-button-type="logout">Uitloggen</button>
+        </div>
+    </div>
+</div>
+
+<div class="routeradar" style="margin-right: 150px">
+    <a href="/nederland/weerbericht/verkeer"><span class="title"><em>Reisinformatie:</em></span></a>   
+    <ul>
+        <li>
+            <a href="/nederland/weerbericht/verkeer">
+                Files
+                <em>
+                    <script>document.write(typeof window.buienradar.actual.jamcount === "undefined" ? "" : window.buienradar.actual.jamcount)</script>
+                </em>
+                | Treinmeldingen
+                <em>
+                    <script>document.write(typeof window.buienradar.actual.traindisruptioncount === "undefined" ? "" : window.buienradar.actual.traindisruptioncount)</script>
+                </em>
+            </a>
+        </li>
+    </ul>
+
+</div>            </div>
+    </div>
+</div>
+    
+<div class="spec-block" id="bannerHeaderSpecBlock">
+    <div class="container">
+        <div class="center">
+            <div id="adholderContainerHeader">
+                <div id="adholder_header" class="adholder">
+                        <div id='br-ad-header'>
+                            <script type='text/javascript' class="optanon-category-C0004">
+                                if (window.innerWidth >= 768) {
+                                    window.addEventListener('adslots-defined', function () {
+                                        googletag.cmd.push(function () {
+                                            googletag.display('br-ad-header');
+                                        });
+                                    });
+                                    if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+                                        $(document).ready(function () {
+                                            $('#adholderContainerHeader').closest('.center').insertAfter('#header-b');
+                                        });
+                                    }
+                                }
+                            </script>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bblocked">
+    <div class="alert info">
+        We zien dat je waarschijnlijk onze banners blokkeert. Buienradar stelt zijn radarbeelden voor iedereen gratis beschikbaar. 
+        Om Buienradar te kunnen onderhouden en door te kunnen ontwikkelen is geld nodig, dit wordt mogelijk gemaakt door de reclames. 
+        Help ons door een uitzondering te maken voor Buienradar. Voor meer informatie <a href="/overbuienradar/faq#banners">klik hier</a>.
+        <div class="clearfix"></div>
+    </div>
+</div>
+    <script>
+    let index = 0;
+    let promoData = null;
+    const barTextId = "bar-text";
+
+    const getData = async function () {
+        try {
+            const response = await fetch(`${window.buienradar.photoVideoAPIURL}/api/ActiveTextualPromos`);
+            promoData = await response.json();
+            const textToAdd = promoData ? promoData[index]["text"] : null;
+            document.getElementById(barTextId).innerHTML = textToAdd
+        }
+        catch (error) {
+            promoData = null;
+            document.getElementById(barTextId).innerHTML = null;
+            console.error(error)
+        }
+    }
+    getData().then((x) => {
+        if (promoData == null) {
+            return;
+        }
+
+        window.setInterval(function () {
+            if (index < promoData.length - 1) {
+                index++;
+            }
+            else {
+                index = 0;
+            }
+            const nextItem = promoData[index];
+            document.getElementById(barTextId).innerHTML = nextItem["text"];
+        }, 7000)
+
+    })
+</script>
+
+<div class="promobar" id="promobar" style="display: none;">
+    <div class="bar-wrapper">
+        <p class="bar-text" id="bar-text" />
+        <div class="bar-text">
+            &nbsp;
+            <a href="/weerzine/brplusvoordeelacties">Lees meer.</a>
+        </div>
+    </div>
+</div>
+
+
+</div>
+    <div class="header-b">
+    <div class="menu">
+        <div class="drop">
+            <nav id="nav">
+                <div class="container">
+                    <ul>
+                                    <li class="home  ">
+                                        <a href="/"><span class="icon-home"></span></a>
+                                    </li>
+                                    <li class="  menu-mijn-weer">
+                                      

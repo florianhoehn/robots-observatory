@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>State Farm - Oops... didn't see that coming</title>
+  <link rel="stylesheet" href="https://sf-ui.demngd01.test.ic1.statefarm/css/sf-ui.css" />
+  <script type="module" src="https://sf-ui.demngd01.test.ic1.statefarm/all-components.js"></script>
+  <style>
+    /* Hide content by default based on language */
+    [data-lang] {
+      display: none;
+    }
+    [data-lang].active {
+      display: block;
+    }
+    .destination-columns[data-lang].active {
+      display: flex;
+    }
+    
+    /* Language toggle should always be visible and styled */
+    #langToggle, #langToggleEs {
+      display: inline-block !important;
+    }
+  </style>
+  <style>
+    /* Added styles for Suggested Destinations layout and separator */
+    .destination-columns {
+      /*display: flex;
+      gap: 34px; spacing between columns*/
+      flex-wrap: wrap;
+    }
+
+    .column {
+      flex: 1 1 200px;
+    }
+
+    .sf-separator {
+      border: none;
+      border-top: 1px solid #ccc;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+    }
+
+    /* Optional: uppercase h3 and h4 headings to match UI */
+    .suggested-destinations h3 {
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .suggested-destinations h4 {
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    /* Remove default ul padding/margin */
+    .sf-list-none {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    /* Add spacing between list items */
+    .sf-list-none li {
+      margin-bottom: 8px;
+    }
+
+
+    /* Link hover styles - underline on hover */
+    .suggested-destinations a {
+      text-decoration: none;
+    }
+    
+    .suggested-destinations a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hide accordion on larger screens */
+    .destination-accordion {
+      display: none !important;
+    }
+
+    /* Show accordion and hide columns on mobile */
+    @media (max-width: 480px) {
+      .destination-accordion[data-lang].active {
+        display: block !important;
+      }
+      .destination-columns {
+        display: none !important;
+      }
+      .destination-accordion sf-accordion {
+        text-transform: uppercase;
+      }
+      /* Reset text-transform for accordion content */
+      .destination-accordion sf-accordion ul,
+      .destination-accordion sf-accordion li,
+      .destination-accordion sf-accordion a {
+        text-transform: none;
+      }
+    }
+
+    /* General Styles */
+    ul {
+        list-style-type: none;
+    }
+
+
+    /* Hero Section */
+    .hero {
+        background-image: url('https://www.statefarm.com/content/dam/StateFarmAEM/oops-page/errorHero-1600.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #000; /* fallback color if image fails */
+        color: #fff;
+        min-height: 380px;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+    }
+
+    .hero-content {
+        max-width: 1200px;
+        width: 100%;
+        text-align: left;
+        z-index: 1;
+    }
+
+    .hero-content h1 {
+        /* color: #fff; */
+        color: #FFFFFF !important;
+        font-size: 55px !important;
+    }
+
+    .hero-content p {
+        font-size: 20px;
+        font-weight: 300;
+        color: #fff;
+    }
+
+    /* Search Bar Section */
+    .search-container {
+        width:95%;
+        position: relative;
+    }
+
+    .search-container input {
+        width: 100%;
+        padding: 15px 50px 15px 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    /* Make sf-textfield full width */
+    .search-container sf-textfield {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    }
+
+    .search-container button {
+        position: absolute;
+        right: 13px;
+        top: 70%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="%23333"/></svg>');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .destination-columns {
+        flex-wrap: wrap;
+    }
+
+    .column {
+        flex-basis: 23%;
+    }
+
+    .column ul {
+        padding: 0;
+    }
+
+    .column>a {
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #222 !important;
+        font-family: inherit !important;
+    }
+  </style>
+</head>
+<body>
+  <sf-app id="sfApp" locale="en" language-href="#">
+    <main>
+      <div class="page-content">
+        <section class="hero sf-bg-black sf-d-flex sf-align-center sf-justify-start sf-m-0 sf-p-0">
+          <div class="hero-content sf-px-4x sf-mx-auto">
+            <h1 class="sf-heading-xxl sf-heading-xl-md sf-heading-lg-sm sf-lh-tight sf-mb-2-5x" data-lang="en">Oops…<br>didn't see that coming</h1>
+            <h1 class="sf-heading-xxl sf-heading-xl-md sf-heading-lg-sm sf-lh-tight sf-mb-2-5x" data-lang="es">Uy…<br>No me lo esperaba.</h1>
+            <p class="sf-mb-0" data-lang="en">Let's see if we can get you back on track.</p>
+            <p class="sf-mb-0" data-lang="es">Veamos si podemos ayudarle a retomar su rumbo.</p>
+          </div>
+        </section>
+
+        <section class="search-bar-section sf-py-0-25x">
+          <div class="search-container">
+            <sf-textfield id="searchInput" placeholder="How can we help you?" autocomplete="off" data-lang="en"></sf-textfield>
+            <sf-textfield id="searchInputEs" placeholder="¿Cómo podemos ayudarte?" autocomplete="off" data-lang="es"></sf-textfield>
+            <button type="button" id="searchButton" class="sf-d-flex sf-align-center sf-justify-center" aria-label="Search"><sf-icon name="Search"></sf-icon></button>
+          </div>
+          <hr class="sf-separator sf-my-3x" emphasis="minimal"/>
+        </section>
+
+        <section class="suggested-destinations">
+          <h3 class="sf-mb-1x sf-px-1x" data-lang="en">Suggested Destinations</h3>
+          <h3 class="sf-mb-1x sf-px-1x" data-lang="es">Destinos Sugeridos</h3>
+          
+          <!-- English Content -->
+          <div class="destination-columns sf-d-flex sf-justify-between sf-g-34x sf-px-1x" data-lang="en">
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/insurance">Insurance</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/auto">Auto</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/motorcycles">Motorcycles</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance">Sport & Leisure Vehicles</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/home-and-property">Home & Property</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/identity-restoration">Identity Restoration</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/life">Life</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/health">Health</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/disability/long-term-disability">Long-Term Care</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/disability">Disability</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/liability">Liability</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/small-business-solutions/insurance">Small Business Insurance</a></li>
+              </ul>
+            </div>
+
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/finances/banking">Banking</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#checking">Checking & Savings</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/cds">CDs</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/credit-cards">Credit Cards</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#loans">Vehicle Loans</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#home-mortgage-loans">Home Mortgage Loans</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#home-equity">Home Equity</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#bank-rates">Bank Rates</a></li>
+              </ul>
+            </div>
+
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/finances">Finances</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking">Banking</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#loans">Loans</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/education-savings-plans">Education Savings Plans</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/retirement-plans-iras">Retirement & IRAs</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/mutual-funds">Mutual Funds</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/estate-planning">Estate Planning</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/annuities">Annuities</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/life">Life Insurance</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/financial-tools-resources">Financial Tools & Resources</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/small-business-solutions/insurance">Small Business Finances</a></li>
+              </ul>
+            </div>
+
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/claims">Claims</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims">File a Claim</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims?manage-claim">Manage Your Claim</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims/get-roadside-assistance">Get Roadside Assistance</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims">Claims Help</a></li>
+              </ul>
+
+              <div class="customer-care-grouped">
+
+                <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/customer-care">Customer Care</a></h4>
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/about-us">About Us</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/simple-insights">Simple Insights</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/privacy-security">Privacy & Security Center</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/faqs">FAQs</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/disclosures">Disclosures</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/life-events">Life Events</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="column column-customer-care-separate sf-mb-2-5x sf-d-none sf-d-block-md">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/customer-care">Customer Care</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/about-us">About Us</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/simple-insights">Simple Insights</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/privacy-security">Privacy & Security Center</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/faqs">FAQs</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/disclosures">Disclosures</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/life-events">Life Events</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Accordion for mobile - English -->
+          <div class="destination-accordion" data-lang="en">
+            <sf-accordion-group>
+              <sf-accordion heading="Insurance">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/auto">Auto</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/motorcycles">Motorcycles</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance">Sport & Leisure Vehicles</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/home-and-property">Home & Property</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/identity-restoration">Identity Restoration</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/life">Life</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/health">Health</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/disability/long-term-disability">Long-Term Care</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/disability">Disability</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/liability">Liability</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/small-business-solutions/insurance">Small Business Insurance</a></li>
+                </ul>
+              </sf-accordion>
+
+              <sf-accordion heading="Banking">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#checking">Checking & Savings</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/cds">CDs</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/credit-cards">Credit Cards</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#loans">Vehicle Loans</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#home-mortgage-loans">Home Mortgage Loans</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#home-equity">Home Equity</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#bank-rates">Bank Rates</a></li>
+                </ul>
+              </sf-accordion>
+
+              <sf-accordion heading="Finances">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking">Banking</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#loans">Loans</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/education-savings-plans">Education Savings Plans</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/retirement-plans-iras">Retirement & IRAs</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/mutual-funds">Mutual Funds</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/estate-planning">Estate Planning</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/annuities">Annuities</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/life">Life Insurance</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/financial-tools-resources">Financial Tools & Resources</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/small-business-solutions/insurance">Small Business Finances</a></li>
+                </ul>
+              </sf-accordion>
+
+              <sf-accordion heading="Claims">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims">File a Claim</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims?manage-claim">Manage Your Claim</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims/get-roadside-assistance">Get Roadside Assistance</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/claims">Claims Help</a></li>
+                </ul>
+              </sf-accordion>
+
+              <sf-accordion heading="Customer Care">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/about-us">About Us</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/simple-insights">Simple Insights</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/privacy-security">Privacy & Security Center</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/faqs">FAQs</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/disclosures">Disclosures</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/customer-care/life-events">Life Events</a></li>
+                </ul>
+              </sf-accordion>
+            </sf-accordion-group>
+          </div>
+
+          <!-- Spanish Content -->
+          <div class="destination-columns sf-d-flex sf-justify-between sf-g-34x sf-px-1x" data-lang="es">
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://es.statefarm.com/insurance">SEGUROS</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/auto">Autos</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/motocicletas">Motocicletas</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro">Vehículos deportivos y recreativos</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/propiedad-y-vivienda">Vivienda y Propiedad</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/restauracion-de-identidad">Restauración de identidad</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/vida">Vida</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/salud">Salud</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/disability/long-term-disability">Cuidado a largo plazo</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/insurance/disability">Incapacidad</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/responsabilidad-civil">Responsabilidad civil</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/pequenas-empresas">Seguro de pequeñas empresas</a></li>
+              </ul>
+            </div>
+
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/finances/banking">SERVICIOS BANCARIOS</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/checking-accounts">Cuentas de cheques y ahorros</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/cds">Certificados de Depósitos</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking/credit-cards">Tarjetas de crédito</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#loans">Préstamos para vehículos</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#home-mortgage-loans">Préstamos hipotecarios para viviendas</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#home-equity">Préstamos sobre el valor neto de la vivienda</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#bank-rates">Tasas bancarias</a></li>
+              </ul>
+            </div>
+
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://www.statefarm.com/finances">FINANZAS</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking">Servicios bancarios</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/banking#loans">Préstamos</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/education-savings-plans">Ahorros para educación</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/retirement-plans-iras">Jubilación e IRA</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/mutual-funds">Fondos de inversión</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/estate-planning">Planificación del patrimonio</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/annuities">Anualidades</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/vida">Seguro de vida</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/finances/financial-tools-resources">Herramientas y recursos financieros</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/pequenas-empresas">Finanzas de una pequeña empresa</a></li>
+              </ul>
+            </div>
+
+            <div class="column sf-mb-2-5x">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://es.statefarm.com/reclamaciones">RECLAMOS</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/reclamaciones">Presenta un reclamo</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/reclamaciones?manage-claim">Administrar un reclamo</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/reclamaciones/get-roadside-assistance">Obtén asistencia en la carretera</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/reclamaciones">Ayuda para reclamos</a></li>
+              </ul>
+
+              <div class="customer-care-grouped">
+                <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://es.statefarm.com/atencion-al-cliente">ATENCIÓN AL CLIENTE</a></h4>
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/acerca-de-nosotros">Acerca de nosotros</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/simple-insights">Simple Insights</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/privacidad-seguridad">Centro de seguridad y privacidad</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/alertas">Preguntas frecuentes</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/divulgaciones">Divulgaciones</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/sucesos-de-la-vida">Sucesos de la vida</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="column column-customer-care-separate sf-mb-2-5x sf-d-none sf-d-block-md">
+              <h4 class="sf-mb-1x"><a class="sf-font-bold" href="https://es.statefarm.com/atencion-al-cliente">ATENCIÓN AL CLIENTE</a></h4>
+              <ul class="sf-list-none">
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/acerca-de-nosotros">Acerca de nosotros</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/simple-insights">Simple Insights</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/privacidad-seguridad">Centro de seguridad y privacidad</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/alertas">Preguntas frecuentes</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/divulgaciones">Divulgaciones</a></li>
+                <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/atencion-al-cliente/sucesos-de-la-vida">Sucesos de la vida</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Accordion for mobile - Spanish -->
+          <div class="destination-accordion" data-lang="es">
+            <sf-accordion-group>
+              <sf-accordion heading="Seguros">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/auto">Autos</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/motocicletas">Motocicletas</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro">Vehículos deportivos y recreativos</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/propiedad-y-vivienda">Vivienda y Propiedad</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/restauracion-de-identidad">Restauración de identidad</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/vida">Vida</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/salud">Salud</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/cuidado-a-largo-plazo">Cuidado a largo plazo</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/incapacidad">Incapacidad</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/responsabilidad-civil">Responsabilidad civil</a></li>
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://es.statefarm.com/seguro/pequenas-empresas">Seguro de pequeñas empresas</a></li>
+                </ul>
+              </sf-accordion>
+
+              <sf-accordion heading="Servicios Bancarios">
+                <ul class="sf-list-none">
+                  <li><a class="sf-font-semibold sf-txt-color-subtle" href="https://www.statefarm.com/fina

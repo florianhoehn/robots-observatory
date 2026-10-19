@@ -1,0 +1,45 @@
+# Akismet
+
+> Akismet is a spam detection service from Automattic. It checks comments, contact form submissions and other user-generated content against a global spam database and returns whether each one is spam. It's available as an official WordPress plugin and Drupal module, through third-party integrations for many other platforms, and as an HTTP API that any application can call with an Akismet API key.
+
+The API lives at `https://rest.akismet.com`. The spam endpoints (`/1.1/*`) are `POST` requests with `application/x-www-form-urlencoded` parameters, sent with an API key (`api_key`) and the `blog` URL of the calling site. The account endpoints (`/1.2/*`) are `GET` requests with `api_key` in the query string. `comment-check` returns plain text `true` for spam and `false` for ham, and an `X-akismet-pro-tip: discard` header marks blatant spam that can be dropped without review.
+
+## API
+
+- [OpenAPI spec](https://akismet.com/openapi.yaml): Machine-readable OpenAPI 3 description of every endpoint, parameter and response
+- [Getting started](https://akismet.com/developers/getting-started/): Get an API key and make a first request
+- [Key verification](https://akismet.com/developers/detailed-docs/key-verification/): `POST /1.1/verify-key` checks an API key is valid
+- [Comment check](https://akismet.com/developers/detailed-docs/comment-check/): `POST /1.1/comment-check` asks whether a piece of content is spam
+- [Submit spam](https://akismet.com/developers/detailed-docs/submit-spam-missed-spam/): `POST /1.1/submit-spam` reports spam that Akismet missed
+- [Submit ham](https://akismet.com/developers/detailed-docs/submit-ham-false-positives/): `POST /1.1/submit-ham` reports legitimate content that was flagged as spam
+- [Key sites activity](https://akismet.com/developers/detailed-docs/key-sites-activity/): `GET /1.2/key-sites` lists the sites using an API key and their activity
+- [Usage limit](https://akismet.com/developers/detailed-docs/usage-limit/): `GET /1.2/usage-limit` shows API usage against the plan limit
+- [Errors](https://akismet.com/developers/detailed-docs/errors/): Error codes returned in the `X-akismet-alert-code` header
+
+## Integrations
+
+Akismet has an official WordPress plugin and an official Drupal module, both fully supported, built and maintained by the Akismet team. On those platforms, install the plugin or module instead of calling the API directly. For custom PHP applications there's also an official PHP SDK. Third-party integrations are available for many other platforms and languages.
+
+- [WordPress plugin](https://wordpress.org/plugins/akismet/): Official plugin that protects WordPress comments and contact form submissions out of the box
+- [Drupal module](https://www.drupal.org/project/akismet_antispam): Official module that filters Drupal comments, webforms and other user-submitted content with no custom code
+- [PHP SDK](https://github.com/Automattic/akismet-sdk-php): Official PHP client library for the Akismet API
+- [Contact forms](https://akismet.com/support/getting-started/using-akismet-with-your-contact-forms/): Using Akismet with Jetpack, Contact Form 7, Gravity Forms and other form plugins
+- [Plugins and libraries](https://akismet.com/developers/plugins-and-libraries/): The official integrations plus community-built clients for other languages and platforms
+
+## Guides
+
+- [Building your application](https://akismet.com/developers/detailed-docs/building-your-application/): How to integrate Akismet into your own software
+- [Filtering contact form submissions](https://akismet.com/developers/detailed-docs/building-your-application/use-akismet-to-filter-contact-form-submissions/): Using Akismet with contact forms in a custom application
+
+## Plans and keys
+
+- [Pricing](https://akismet.com/pricing/): Plans, including free personal use and paid commercial plans
+- [Getting an API key](https://akismet.com/support/getting-started/api-key/): Where to find or create an Akismet API key
+- [API usage limits](https://akismet.com/support/general/akismet-api-usage-limits/): What happens when a key goes over its plan's limit
+
+## Optional
+
+- [Support](https://akismet.com/support/): Help articles for the WordPress plugin, accounts and billing
+- [Privacy](https://akismet.com/privacy/): How Akismet handles the data it's sent
+- [GDPR](https://akismet.com/gdpr/): Akismet and the GDPR
+- [Contact](https://akismet.com/contact/): Get in touch with the Akismet team

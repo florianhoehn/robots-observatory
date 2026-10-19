@@ -1,0 +1,86 @@
+
+    
+    
+    User-agent: facebookexternalhit
+Disallow: /assets/
+Disallow: /blank/
+Disallow: /components/
+Disallow: /content/
+Disallow: /cookies/
+Disallow: /klantenservice/references/
+Disallow: /order/
+Disallow: /pdf/
+Disallow: /redirects/
+Disallow: /shop/
+Disallow: /stepplan/
+Disallow: /testing/
+Disallow: /ziggo/
+Disallow: /zakelijk/shop/
+Disallow: *?q=
+Disallow: */match-center?
+Disallow: */entertainment-gids?
+Allow: */entertainment-gids?expand=*
+Allow: */entertainment-gids?provider=netflix$
+Allow: */entertainment-gids?provider=skyshowtime$
+Allow: */entertainment-gids?provider=hbo-max$
+Allow: */entertainment-gids?provider=disney+$
+Allow: */entertainment-gids?provider=videoland$
+Allow: */entertainment-gids?provider=apple-tv+$
+Allow: */entertainment-gids?provider=prime-video$
+Allow: */entertainment-gids?provider=canal+$
+Allow: */entertainment-gids?provider=viaplay$
+Allow: */entertainment-gids?provider=npo-start$
+Allow: */entertainment-gids?provider=movies-&amp;-series$
+Allow: */entertainment-gids?prefilter=kijkcadeau$
+Allow: */entertainment-gids?prefilter=tv-tips$
+Allow: */entertainment-gids?prefilter=film$
+Allow: */entertainment-gids?prefilter=serie$
+Allow: */entertainment-gids?prefilter=voordeel$
+
+User-agent: *
+Disallow: /assets/
+Disallow: /blank/
+Disallow: /components/
+Disallow: /content/
+Disallow: /cookies/
+Disallow: /klantenservice/references/
+Disallow: /order/
+Disallow: /pdf/
+Disallow: /redirects/
+Disallow: /shop/
+Disallow: /stepplan/
+Disallow: /testing/
+Disallow: /ziggo/
+Disallow: /zakelijk/shop/
+Disallow: *?q=
+Disallow: */match-center?
+Disallow: */entertainment-gids?
+Allow: */entertainment-gids?provider=netflix$
+Allow: */entertainment-gids?provider=skyshowtime$
+Allow: */entertainment-gids?provider=hbo-max$
+Allow: */entertainment-gids?provider=disney+$
+Allow: */entertainment-gids?provider=videoland$
+Allow: */entertainment-gids?provider=apple-tv+$
+Allow: */entertainment-gids?provider=prime-video$
+Allow: */entertainment-gids?provider=canal+$
+Allow: */entertainment-gids?provider=viaplay$
+Allow: */entertainment-gids?provider=npo-start$
+Allow: */entertainment-gids?provider=movies-&amp;-series$
+Allow: */entertainment-gids?prefilter=kijkcadeau$
+Allow: */entertainment-gids?prefilter=tv-tips$
+Allow: */entertainment-gids?prefilter=film$
+Allow: */entertainment-gids?prefilter=serie$
+Allow: */entertainment-gids?prefilter=voordeel$
+Sitemap: https://www.ziggo.nl/sitemap/alles-in-1.xml
+Sitemap: https://www.ziggo.nl/sitemap/tv-internet.xml
+Sitemap: https://www.ziggo.nl/sitemap/televisie.xml
+Sitemap: https://www.ziggo.nl/sitemap/internet.xml
+Sitemap: https://www.ziggo.nl/sitemap/entertainment.xml
+Sitemap: https://www.ziggo.nl/sitemap/klantenservice.xml
+Sitemap: https://www.ziggo.nl/sitemap/bellen.xml
+Sitemap: https://www.ziggo.nl/sitemap/mobiel.xml
+Sitemap: https://www.ziggo.nl/sitemap/zakelijk.xml
+Sitemap: https://www.ziggo.nl/sitemap/home.xml
+Sitemap: https://www.ziggo.nl/sitemap/overige-paginas.xml
+    
+    

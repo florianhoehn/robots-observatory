@@ -1,0 +1,40 @@
+# WWW2-9872: /wp-admin/, /techdocs/html/ and /rss2/ were Disallowed here, which
+# blocked the crawl that would deindex them — so Google kept them as URL-only
+# index entries indefinitely. They now return 410 Gone from proxy.ts
+# (lib/proxy/gonePathGuard.ts) and must stay crawlable for that signal to land.
+# Do not re-add Disallow lines for them.
+#
+# WWW2-9872 (follow-up): the /medialibrary/ and /product-compare/ trees now
+# return 410 Gone from the same guard. Their Disallow lines are removed for the
+# reason above, and the 223 per-PDF Allow lines under /medialibrary/ went with
+# them — an Allow is meaningless once the whole tree answers 410. /en/us stays
+# Disallowed: it is a live redirect source in bulk-redirects.csv, not a 410.
+User-agent: *
+Disallow: /en/us
+Allow: /en-gb/solutions/industry/primary-education/
+Disallow: /en-gb/
+
+Allow: /search/$
+Disallow: /search/*
+Allow: /zh-cn/search/$
+Disallow: /zh-cn/search/*
+Allow: /fr-fr/search/$
+Disallow: /fr-fr/search/*
+Allow: /de-de/search/$
+Disallow: /de-de/search/*
+Allow: /ja-jp/search/$
+Disallow: /ja-jp/search/*
+Allow: /ko-kr/search/$
+Disallow: /ko-kr/search/*
+Allow: /pr-br/search/$
+Disallow: /pt-br/search/*
+Allow: /es-mx/search/$
+Disallow: /es-mx/search/*
+
+Disallow: /partner-locator/partner-details/
+
+Disallow: /*thank-you/
+
+Disallow: /api/*
+
+Sitemap: https://www.sonicwall.com/sitemap.xml

@@ -1,0 +1,39 @@
+# GlanceAI Fashion MCP Server
+
+> Fashion product discovery, virtual try-on, AI outfit pairing, and wishlist management via the Glance catalog. Exposed over MCP (Streamable HTTP), Google A2A, and AG-UI. Connect an MCP client to https://ember.ailooks.glance.com/mcp.
+
+Discovery tools are public. Try-on, selfie, image, and wishlist tools require OAuth 2.0 (PKCE) — see the Auth section.
+
+## Endpoints
+
+- [MCP Streamable HTTP](https://ember.ailooks.glance.com/mcp): Primary JSON-RPC endpoint (POST + GET), protocol version 2025-06-18
+- [A2A](https://ember.ailooks.glance.com/a2a): Google Agent2Agent endpoint; agent card at https://ember.ailooks.glance.com/.well-known/agent.json
+- [AG-UI SSE](https://ember.ailooks.glance.com/agui): CopilotKit / AG-UI server-sent event stream
+
+## Tools — Discovery (public, no auth)
+
+- [search_fashion_products](https://ember.ailooks.glance.com/mcp): Natural-language fashion search (e.g. "red summer dress under 2000"). Returns a product carousel.
+- [get_product_details](https://ember.ailooks.glance.com/mcp): Full product detail by SKU — price, brand, images, availability.
+- [get_mix_and_match](https://ember.ailooks.glance.com/mcp): Suggest complementary items to build a full outfit around a product.
+- [show_products_carousel](https://ember.ailooks.glance.com/mcp): Render a set of products as a carousel artifact.
+
+## Tools — Virtual Try-On (auth + user selfie required)
+
+- [try_on_product](https://ember.ailooks.glance.com/mcp): Render the user wearing a single product (by SKU) or a full outfit/collection (by collection name).
+- [get_user_looks](https://ember.ailooks.glance.com/mcp): Retrieve the user's saved AI-generated looks.
+
+## Tools — Selfie & Image (auth required)
+
+- [request_user_selfie](https://ember.ailooks.glance.com/mcp): Prompt the user to upload a selfie for try-on.
+- [check_selfie](https://ember.ailooks.glance.com/mcp): Check whether the user already has a usable selfie.
+- [request_context_image](https://ember.ailooks.glance.com/mcp): Present an image upload widget and return a ref_id.
+- [get_selfie](https://ember.ailooks.glance.com/mcp): Fetch the user's stored selfie.
+
+## Tools — Wishlist (auth required)
+
+- [show_wishlist](https://ember.ailooks.glance.com/mcp): Render the user's current wishlist.
+
+## Auth
+
+- [OAuth Authorization Server Metadata](https://ember.ailooks.glance.com/.well-known/oauth-authorization-server): OAuth 2.0 + PKCE discovery (RFC 8414)
+- [OAuth Protected Resource Metadata](https://ember.ailooks.glance.com/.well-known/oauth-protected-resource): Bearer token configuration for the MCP endpoint

@@ -1,0 +1,85 @@
+User-agent: *
+
+# ---- API / action endpoints (no prefix) ----
+Disallow: /Search/
+Disallow: /TransferDomain/
+Disallow: /DomainReservation/
+Disallow: /Location/
+Disallow: /Backorder/
+Disallow: /RegisLanding/
+Disallow: /Campaign/
+Disallow: /CallBack/
+Disallow: /OrderProduct/
+Disallow: /Cart/
+Disallow: /GenHosting/
+Disallow: /Regis/
+
+# ---- /vi/ and /en/ action endpoints (waste budget, 302 redirects) ----
+Disallow: /vi/OrderProduct/
+Disallow: /vi/Cart/
+Disallow: /vi/Backorder/
+Disallow: /vi/GenHosting/
+Disallow: /vi/Regis/
+Disallow: /vi/TransferDomain/
+Disallow: /vi/DomainReservation/
+Disallow: /vi/Campaign/
+Disallow: /en/OrderProduct/
+Disallow: /en/Cart/
+Disallow: /en/Backorder/
+Disallow: /en/GenHosting/
+Disallow: /en/Regis/
+
+# ---- Blog low-value archives ----
+Disallow: /tin-tuc/tag/
+
+# ---- Iframe widget ----
+Disallow: /*/iframe-search-domain
+
+# ---- Facebook share URLs ----
+Disallow: /sharer/
+
+# ==============================================================
+# DUPLICATE CONTENT - explicit param blocks (replaces the /*?* catch-all)
+# ==============================================================
+# Pagination (~400 URLs, canonical to root)
+Disallow: /*?page=
+Disallow: /*&page=
+# Campaign tracking (~250 URLs)
+Disallow: /*?code=
+Disallow: /*&code=
+Disallow: /*?idCampaign=
+Disallow: /*&idCampaign=
+Disallow: /*?sourceemail=
+Disallow: /*&sourceemail=
+# UTM / click IDs
+Disallow: /*?utm_
+Disallow: /*&utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+# WordPress preview / raw post
+Disallow: /*?p=
+Disallow: /*&p=
+Disallow: /*?preview=
+Disallow: /*&preview=
+# WordPress internal search
+Disallow: /*?s=
+# WP attachment pages (~230 auto-generated URLs)
+Disallow: /*?attachment_id=
+Disallow: /*&attachment_id=
+
+# NOTE: do NOT block /tin-tuc/wp-content/uploads/ - it serves real blog images.
+# The ~200 image 404s are broken thumbnails (pattern -N-WxH); fix in WordPress
+# (Broken Link Checker / regenerate thumbnails), not via robots.txt.
+
+# ---- Allow static assets (needed so Google can render & score Core Web Vitals) ----
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Allow: /images/
+Allow: /favicon.ico
+
+# ---- Sitemap ----
+Sitemap: https://tenten.vn/sitemap.xml
+
+# ---- Crawl delay (Bing/Yandex honor it; Google ignores) ----
+Crawl-delay: 1

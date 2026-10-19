@@ -1,0 +1,63 @@
+# wyndhamhotels.com robots.txt
+# Launch file: 7 Oct 2026 until Legacy leaves the path on 29 Oct 2026.
+# Served by Legacy for both platforms. Upload: WHD-15717.
+
+User-agent: Bingbot
+Allow: /bin/
+Allow: /BWSServices/
+
+User-agent: Google-HotelAdsVerifier/2.0
+Allow: /
+
+User-agent: Google-HotelAdsVerifier
+Allow: /
+
+User-agent: AdIdxBot
+Allow: /
+
+User-agent: *
+Disallow: /*test-
+Disallow: /*blueprint
+Disallow: /bin/
+Disallow: /BWSServices/
+Disallow: /Cy6o9WtgNx.txt
+Disallow: /*search-results
+Disallow: /*rcrc
+Disallow: /*rcea
+Disallow: /*join-thanku
+Disallow: /*myedge
+Disallow: /*arise-suites
+
+# SRPs stay blocked until cutover. The cutover file removes these two.
+Disallow: /hotels/
+Disallow: /*hotels/
+
+# Booking flow at root, brand and locale level
+Disallow: /*reservation*/
+
+# AEM content tree and internals. Scoped to /content/wyndham/, never a
+# bare /content/, which would block the sitemap and Legacy PDFs.
+Disallow: /content/wyndham/
+Allow: /content/wyndham/settings/
+Disallow: /*/variations/
+Disallow: /components/
+Disallow: /travel-packages/sso/
+
+# Booking-date and session parameters. Each key is listed twice:
+# ?key= matches it first in the query string, &key= anywhere after.
+# Do not add CID=, iata= or search-filter keys. Those URLs must be
+# crawled so Google reads their canonical or redirect.
+Disallow: /*?checkInDate=
+Disallow: /*&checkInDate=
+Disallow: /*?checkOutDate=
+Disallow: /*&checkOutDate=
+Disallow: /*?checkin_date=
+Disallow: /*&checkin_date=
+Disallow: /*?checkout_date=
+Disallow: /*&checkout_date=
+Disallow: /*?useWRPoints=
+Disallow: /*&useWRPoints=
+Disallow: /*?sessionId=
+Disallow: /*&sessionId=
+
+Sitemap: https://www.wyndhamhotels.com/sitemap.xml

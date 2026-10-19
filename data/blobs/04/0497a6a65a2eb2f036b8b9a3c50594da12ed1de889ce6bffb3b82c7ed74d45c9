@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="es-es">
+<head>
+    <script>dataLayer = [{'error404': true}];</script>
+            <!-- Aviso de consentimiento para cookies de Didomi -->
+        <script type="text/javascript">
+    (function () {
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1]
+                if (!base64Url) return null
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+                const jsonPayload = decodeURIComponent(
+                    Array.prototype.map.call(atob(base64), function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                    }).join('')
+                )
+                return JSON.parse(jsonPayload)
+            } catch (e) {
+                return null
+            }
+        }
+
+        function readUserInfoFromCookie() {
+            const row = document.cookie.split('; ').find(function (entry) {
+                return entry.startsWith('elt-user-tier=')
+            })
+            if (!row) return {userId: '', isPremium: false}
+
+            const rawToken = row.split('=').slice(1).join('=')
+            const token = decodeURIComponent(rawToken || '')
+            const payload = parseJwt(token)
+            if (!payload) return {userId: '', isPremium: false}
+
+            return {
+                userId: payload.uid || '',
+                isPremium: Boolean(payload.is_premium)
+            }
+        }
+
+        const userInfo = readUserInfoFromCookie()
+        window.consentPayUserInfo = userInfo
+        window.consentPayIsPremiumUser = userInfo.isPremium === true
+    })()
+</script>
+
+
+<style>
+    /* Contenedor principal (tarjeta flotante centrada) */
+    #didomi-host .didomi-popup-container {
+        border-radius: 24px !important;
+        border: 3px solid #00AEEF !important;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+        padding: 28px !important;
+        display: flex !important;
+        flex-direction: column !important; /* Habilita ordenación secuencial estricta */
+    }
+
+    /* Logotipo forzado al inicio absoluto de la tarjeta */
+    #didomi-host .didomi-popup-notice-logo {
+        display: block !important;
+        order: 1 !important; /* Orden visual: Primero */
+        margin: 0 auto 20px auto !important;
+        max-width: 220px !important;
+        height: auto !important;
+    }
+
+    /* Bloque de cabecera personalizado inyectado */
+    #didomi-host .cp-custom-header {
+        width: 100% !important;
+        text-align: left !important;
+        margin-bottom: 15px !important;
+        order: 2 !important; /* Orden visual: Segundo (debajo del logo) */
+    }
+
+    #didomi-host .cp-title {
+        color: #00AEEF !important;
+        font-family: system-ui, -apple-system, sans-serif !important;
+        font-size: 26px !important;
+        font-weight: 800 !important;
+        margin: 0 0 10px 0 !important;
+        line-height: 1.2 !important;
+    }
+
+    #didomi-host .cp-subtitle {
+        font-family: system-ui, -apple-system, sans-serif !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #222222 !important;
+        margin: 0 !important;
+        line-height: 1.4 !important;
+    }
+
+    #didomi-host .didomi-popup-notice .didomi-popup-notice-text {
+        max-width: inherit !important;
+        order: 3 !important; /* Orden visual: Tercero (texto descriptivo nativo) */
+    }
+
+    /* Ocultación definitiva del botón nativo "Información y ajustes" */
+    #didomi-host #didomi-notice-learn-more-button {
+        display: none !important;
+    }
+
+    #didomi-host .didomi-exterior-border {
+        border-width: 0 !important;
+    }
+
+    /* ==========================================================================
+   BLOQUEO DE ESCAPES EN SEGUNDA CAPA (PREFERENCIAS Y SOCIOS)
+   ========================================================================== */
+
+    /* Ocultar el botón inferior de 'Rechazar todo' en la gestión de propósitos */
+    #didomi-host .didomi-consent-popup-preferences-reject-all,
+    #didomi-host .didomi-popup-footer-reject-all,
+    #didomi-host button[id='btn-toggle-disagree'] {
+        display: none !important;
+    }
+
+    /* CSS Grid Stack — Distribuye los dos botones paralelos en escritorio */
+    #didomi-host .didomi-popup-notice-buttons,
+    #didomi-host .didomi-components-button-container {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Dos columnas simétricas */
+        gap: 12px !important;
+        width: 100% !important;
+        margin-top: 22px !important;
+        order: 4 !important; /* Posiciona el contenedor de acciones abajo */
+    }
+
+    /* BOTÓN 1 (Izquierda) — Rechazar anuncios sobre fondo blanco */
+    #didomi-host .btn-custom-subscribe {
+        grid-column: 1 !important;
+        order: 1 !important;
+        width: 100% !important;
+        min-height: 48px !important;
+        background-color: #FFFFFF !important; /* Fondo blanco */
+        color: #0046ce !important; /* Texto azul oscuro */
+        border: 1.5px solid #0046ce !important; /* Borde azul oscuro */
+        border-radius: 8px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        transition: background-color 0.2s ease !important;
+        box-shadow: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    #didomi-host .btn-custom-subscribe:hover {
+        background-color: #f0f4ff !important;
+    }
+
+    /* BOTÓN 2 (Derecha) — Aceptar y continuar con color de fondo oscuro */
+    #didomi-host #didomi-notice-agree-button {
+        grid-column: 2 !important;
+        order: 2 !important;
+        width: 100% !important;
+        min-height: 48px !important;
+        background-color: #0046ce !important; /* Fondo azul oscuro sólido */
+        color: #FFFFFF !important; /* Texto blanco */
+        border: none !important;
+        border-radius: 8px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        transition: background-color 0.2s ease !important;
+        box-shadow: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    #didomi-host #didomi-notice-agree-button:hover {
+        background-color: #003399 !important;
+    }
+
+    /* Contenedor de enlaces inferiores alternativos (Login + Ajustes) */
+    #didomi-host .cp-custom-links-container {
+        grid-column: span 2 !important; /* Abarca ambas columnas debajo de los botones */
+        order: 3 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-top: 15px !important;
+        font-family: system-ui, -apple-system, sans-serif !important;
+        font-size: 14px !important;
+        color: #222222 !important;
+    }
+
+    #didomi-host .cp-custom-links-container a {
+        color: #00AEEF !important;
+        text-decoration: underline !important;
+        font-weight: 700 !important;
+    }
+
+    /* Responsive: Colapso en dispositivos móviles (Apilamiento vertical perfecto) */
+    @media (max-width: 600px) {
+        #didomi-host .didomi-popup-notice-buttons,
+        #didomi-host .didomi-components-button-container {
+            display: flex !important; /* Anulamos el Grid problemático en móviles */
+            flex-direction: column !important; /* Apilamos un botón encima del otro */
+        }
+
+        /* En móviles se invierte el orden visual para que Aceptar quede arriba */
+        #didomi-host #didomi-notice-agree-button {
+            order: 1 !important;
+            width: 100% !important;
+        }
+
+        #didomi-host .btn-custom-subscribe {
+            order: 2 !important;
+            width: 100% !important;
+        }
+
+        #didomi-host .cp-custom-links-container {
+            order: 3 !important;
+            width: 100% !important;
+        }
+    }
+</style>
+
+
+<script type="text/javascript">
+    window.didomiConfig = window.didomiConfig || {}
+    window.didomiConfig.languages = {
+        enabled: ['es'],
+        default: 'es'
+    }
+    window.didomiConfig.user = window.didomiConfig.user || {
+        bots: {
+            consentRequired: false,
+            types: ['crawlers', 'performance'],
+            extraUserAgents: [
+                "Mozilla\\/5.0 \\(Windows NT 10.0; Win64; x64; rv:88.0\\) Gecko\\/20100101 Firefox\\/88.0 \\(compatible; MonetoringBot\\/2.1\\)",
+                "Mozilla\\/5.0 \\(compatible; SiteAnalyzerBot\\/5.0; \\+https:\\/\\/www.site-analyzer.com\\/\\)"
+            ]
+        }
+    }
+    window.didomiConfig.cookies = window.didomiConfig.cookies || {}
+    window.didomiConfig.cookies.storageSources = {
+        cookies: true,
+        localStorage: false
+    }
+
+    // Keep notice config object available, but do not disable it globally.
+    // The notice must be rendered to preserve the Didomi flow and token lifecycle.
+    window.didomiConfig.notice = window.didomiConfig.notice || {}
+</script>
+
+
+<script type="text/javascript">
+    (function () {
+        const queue = []
+
+        window.consentPayOrchestrator = {
+            _stub: true,
+            _queue: queue,
+            upgradeAndHideBanner() {
+                return new Promise(function (resolve) {
+                    queue.push({method: 'upgradeAndHideBanner', resolve})
+                })
+            }
+        }
+
+        window.consentOrchestrator = window.consentPayOrchestrator
+
+        window.rcUpgrade = function () {
+            if (window.Didomi && window.Didomi.notice) window.Didomi.notice.hide()
+            return window.consentPayOrchestrator.upgradeAndHideBanner()
+        }
+
+        window.rcLogin = function () {
+            // Only hide the notice visually — do NOT call setUserDisagreeToAll() here
+            // because that would record a permanent consent decision and prevent the
+            // notice from re-appearing for free users after login.
+            if (window.Didomi && window.Didomi.notice) window.Didomi.notice.hide()
+            if (window.consentPayOrchestrator && !window.consentPayOrchestrator._stub) {
+                return window.consentPayOrchestrator.showLoginModal()
+            }
+            return new Promise(function (resolve) {
+                queue.push({method: 'showLoginModal', resolve})
+            })
+        }
+    })()
+</script>
+
+
+<script type="text/javascript">
+    function applyDidomiTransformation() {
+        const host = document.getElementById('didomi-host')
+        if (!host) return
+
+        const popupContainer = host.querySelector('.didomi-popup-container')
+        const btnAgree = host.querySelector('#didomi-notice-agree-button')
+        const btnContainer = host.querySelector('.didomi-popup-notice-buttons, .didomi-components-button-container')
+
+        // Elementos críticos no listos aún — esperar al siguiente ciclo de renderizado
+        if (!popupContainer || !btnAgree || !btnContainer) return
+
+        // Prevenir duplicado de inyección de componentes personalizados
+        if (host.querySelector('.cp-custom-header')) return
+
+        // Preparar cabecera personalizada
+        const headerEl = document.createElement('div')
+        headerEl.className = 'cp-custom-header'
+        headerEl.innerHTML =
+            '<h2 class="cp-title">¿Continuar con publicidad?</h2>' +
+            '<p class="cp-subtitle">Navegar por eltiempo.es con publicidad personalizada, seguimiento y cookies de forma gratuita.</p>'
+
+        // Inyectar la cabecera JUSTO DESPUÉS del logotipo en la estructura DOM
+        const logoEl = popupContainer.querySelector('.didomi-popup-notice-logo')
+        if (logoEl) {
+            logoEl.insertAdjacentElement('afterend', headerEl)
+        } else {
+            popupContainer.insertBefore(headerEl, popupContainer.firstChild)
+        }
+
+        // Inyectar el botón dinámico de suscripción previo al botón nativo de aceptación (para forzar grid-column: 1)
+        const btnSubscribe = document.createElement('button')
+        btnSubscribe.className = 'didomi-components-button btn-custom-subscribe'
+        btnSubscribe.setAttribute('role', 'button')
+        btnSubscribe.innerHTML = "<span>Rechazar anuncios y suscribirse</span>"
+        btnSubscribe.onclick = function (e) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            window.rcUpgrade()
+            return false
+        }
+        btnAgree.insertAdjacentElement('beforebegin', btnSubscribe)
+
+        // Bloque consolidado inferior invertido (Inicio de sesión primero, Ajustes después)
+        const isLoggedIn = document.cookie.split(';').some(c => c.trim().startsWith('elt-user-tier='))
+
+        const loginText = isLoggedIn
+            ? '<div>Para acceder a la Web debe Aceptar las cookies.</div>'
+            : '<div>¿Ya utilizas eltiempo? <a href="#" id="cp-login-trigger">Iniciar sesión</a></div>'
+
+        const linksFooter = document.createElement('div')
+        linksFooter.className = 'cp-custom-links-container'
+        linksFooter.innerHTML =
+            loginText +
+            '<div><a href="#" id="cp-settings-trigger" onclick="if(window.Didomi){Didomi.preferences.show(); return false;}">Información y ajustes</a></div>'
+        btnContainer.appendChild(linksFooter)
+
+        // Vincular handlers específicos post-renderización
+        setTimeout(function () {
+            const loginTrigger = host.querySelector('#cp-login-trigger')
+            if (loginTrigger) {
+                loginTrigger.onclick = function (e) {
+                    e.preventDefault()
+                    e.stopImmediatePropagation()
+                    window.rcLogin()
+                    return false
+                }
+            }
+
+            const settingsTrigger = host.querySelector('#cp-settings-trigger')
+            if (settingsTrigger) {
+                settingsTrigger.onclick = function (e) {
+                    e.preventDefault()
+                    e.stopImmediatePropagation()
+                    if (window.Didomi && window.Didomi.preferences) {
+                        window.Didomi.preferences.show()
+                    }
+                    return false
+                }
+            }
+        }, 50)
+    }
+
+    // Interceptores de eventos del SDK
+    window.didomiEventListeners = window.didomiEventListeners || []
+    window.didomiEventListeners.push({
+        event: 'notice.shown',
+        listener: function () {
+            applyDidomiTransformation()
+
+            // Bucle de control por asincronía del DOM de Didomi
+            const controlLoop = setInterval(function () {
+                applyDidomiTransformation()
+                const host = document.getElementById('didomi-host')
+                if (host && host.querySelector('.cp-custom-header')) clearInterval(controlLoop)
+            }, 50)
+
+            setTimeout(function () {
+                clearInterval(controlLoop)
+            }, 3000)
+        }
+    })
+</script>
+
+<script type="text/javascript" data-description="Didomi Interceptor">
+    window.gdprAppliesGlobally = true;
+
+    document.addEventListener('click', function (e) {
+        const upgradeTarget = e.target.closest('#didomi-notice-premium-upgrade-button, a[href*="rcUpgrade"], a[onclick*="rcUpgrade"]')
+const loginTarget = e.target.closest(
+  '#didomi-notice-premium-login-button, #cp-login-trigger, [data-didomi-action="premium-login"], a[href*="rcLogin"], a[onclick*="rcLogin"], a[href*="/user/login"]'
+)
+
+        if (loginTarget) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            e.stopPropagation()
+            window.rcLogin()
+        } else if (upgradeTarget) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            e.stopPropagation()
+            window.rcUpgrade()
+        }
+    }, true)
+</script>
+
+
+<script type="text/javascript">
+    (function () {
+        function i(e) {
+            if (!window.frames[e]) {
+                if (document.body && document.body.firstChild) {
+                    const t = document.body;
+                    const n = document.createElement("iframe");
+                    n.style.display = "none";
+                    n.name = e;
+                    n.title = e;
+                    t.insertBefore(n, t.firstChild);
+                } else {
+                    setTimeout(function () {
+                        i(e)
+                    }, 5);
+                }
+            }
+        }
+
+        function e(n, o, r, f, s) {
+            function e(e, t, n, i) {
+                if (typeof n !== "function") {
+                    return
+                }
+                if (!window[o]) {
+                    window[o] = []
+                }
+                let a = false;
+                if (s) {
+                    a = s(e, i, n)
+                }
+                if (!a) {
+                    window[o].push({command: e, version: t, callback: n, parameter: i})
+                }
+            }
+
+            e.stub = true;
+            e.stubVersion = 2;
+
+            function t(i) {
+                if (!window[n] || window[n].stub !== true) {
+                    return
+                }
+                if (!i.data) {
+                    return
+                }
+                const a = typeof i.data === "string";
+                let e;
+                try {
+                    e = a ? JSON.parse(i.data) : i.data;
+                } catch (t) {
+                    return;
+                }
+                if (e[r]) {
+                    const o = e[r];
+                    window[n](o.command, o.version, function (e, t) {
+                        const n = {};
+                        n[f] = {returnValue: e, success: t, callId: o.callId};
+                        if (i.source) {
+                            i.source.postMessage(a ? JSON.stringify(n) : n, "*");
+                        }
+                    }, o.parameter);
+                }
+            }
+
+            if (typeof window[n] !== "function") {
+                window[n] = e;
+                if (window.addEventListener) {
+                    window.addEventListener("message", t, false);
+                } else {
+                    window.attachEvent("onmessage", t);
+                }
+            }
+        }
+
+        e("__tcfapi", "__tcfapiBuffer", "__tcfapiCall", "__tcfapiReturn");
+        i("__tcfapiLocator");
+    })();
+</script>
+<script type="text/javascript">
+    (function () {
+        window.__gpp_addFrame = function (e) {
+            if (!window.frames[e]) {
+                if (document.body) {
+                    const t = document.createElement("iframe");
+                    t.style.cssText = "display:none";
+                    t.name = e;
+                    document.body.appendChild(t);
+                } else {
+                    window.setTimeout(window.__gpp_addFrame, 10, e);
+                }
+            }
+        };
+        window.__gpp_stub = function () {
+            const e = arguments;
+            __gpp.queue = __gpp.queue || [];
+            __gpp.events = __gpp.events || [];
+            if (!e.length || (e.length === 1 && e[0] === "queue")) {
+                return __gpp.queue;
+            }
+            if (e.length === 1 && e[0] === "events") {
+                return __gpp.events;
+            }
+            const t = e[0];
+            const p = e.length > 1 ? e[1] : null;
+            const s = e.length > 2 ? e[2] : null;
+            if (t === "ping") {
+                p({
+                    gppVersion: "1.1",
+                    cmpStatus: "stub",
+                    cmpDisplayStatus: "hidden",
+                    signalStatus: "not ready",
+                    supportedAPIs: ["2:tcfeuv2", "5:tcfcav1", "6:uspv1", "7:usnat", "8:usca", "9:usva", "10:usco", "11:usut", "12:usct"],
+                    cmpId: "7",
+                    sectionList: [],
+                    applicableSections: [],
+                    gppString: "",
+                    parsedSections: {}
+                }, true);
+            } else if (t === "addEventListener") {
+                if (!("lastId" in __gpp)) {
+                    __gpp.lastId = 0;
+                }
+                __gpp.lastId++;
+                const n = __gpp.lastId;
+                __gpp.events.push({id: n, callback: p, parameter: s});
+                p({
+                    eventName: "listenerRegistered",
+                    listenerId: n,
+                    data: true,
+                    pingData: {
+                        gppVersion: "1.1",
+                        cmpStatus: "stub",
+                        cmpDisplayStatus: "hidden",
+                        signalStatus: "not ready",
+                        supportedAPIs: ["2:tcfeuv2", "5:tcfcav1", "6:uspv1", "7:usnat", "8:usca", "9:usva", "10:usco", "11:usut", "12:usct"],
+                        cmpId: "7",
+                        sectionList: [],
+                        applicableSections: [],
+                        gppString: "",
+                        parsedSections: {}
+                    }
+                }, true);
+            } else if (t === "removeEventListener") {
+                let a = false;
+                for (let i = 0; i < __gpp.events.length; i++) {
+                    if (__gpp.events[i].id === s) {
+                        __gpp.events.splice(i, 1);
+                        a = true;
+                        break;
+                    }
+                }
+                p({
+                    eventName: "listenerRemoved",
+                    listenerId: s,
+                    data: a,
+                    pingData: {
+                        gppVersion: "1.1",
+                        cmpStatus: "stub",
+                        cmpDisplayStatus: "hidden",
+                        signalStatus: "not ready",
+                        supportedAPIs: ["2:tcfeuv2", "5:tcfcav1", "6:uspv1", "7:usnat", "8:usca", "9:usva", "10:usco", "11:usut", "12:usct"],
+                        cmpId: "7",
+                        sectionList: [],
+                        applicableSections: [],
+                        gppString: "",
+                        parsedSections: {}
+                    }
+                }, true);
+            } else if (t === "hasSection") {
+                p(false, true);
+            } else if (t === "getSection" || t === "getField") {
+                p(null, true);
+            } else {
+                __gpp.queue.push([].slice.apply(e));
+            }
+        };
+        window.__gpp_msghandler = function (s) {
+            let e;
+            const n = typeof s.data === "string";
+            try {
+                e = n ? JSON.parse(s.data) : s.data;
+            } catch (t) {
+                e = null;
+            }
+            if (typeof e === "object" && e !== null && "__gppCall" in e) {
+                const a = e.__gppCall;
+                window.__gpp(a.command, function (e, t) {
+                    const p = {__gppReturn: {returnValue: e, success: t, callId: a.callId}};
+                    s.source.postMessage(n ? JSON.stringify(p) : p, "*");
+                }, "parameter" in a ? a.parameter : null, "version" in a ? a.version : "1.1");
+            }
+        };
+        if (!("__gpp" in window) || typeof window.__gpp !== "function") {
+            window.__gpp = window.__gpp_stub;
+            window.addEventListener("message", window.__gpp_msghandler, false);
+            window.__gpp_addFrame("__gppLocator");
+        }
+    })();
+</script>
+<script type="text/javascript">
+    (function () {
+        (function (e, i, o) {
+            const n = document.createElement("link");
+            n.rel = "preconnect";
+            n.as = "script";
+            const t = document.createElement("link");
+            t.rel = "dns-prefetch";
+            t.as = "script";
+            const r = document.createElement("script");
+            r.id = "spcloader";
+            r.type = "text/javascript";
+            r["async"] = true;
+            r.charset = "utf-8";
+            window.didomiConfig = window.didomiConfig || {};
+            window.didomiConfig.sdkPath = window.didomiConfig.sdkPath || o || "https://sdk.privacy-center.org/";
+            const d = window.didomiConfig.sdkPath;
+            let a = d + e + "/loader.js?target_type=notice&target=" + i;
+            if (window.didomiConfig && window.didomiConfig.user) {
+                const c = window.didomiConfig.user;
+                const s = c.country;
+                const f = c.region;
+                if (s) {
+                    a = a + "&country=" + s;
+                    if (f) {
+                        a = a + "&region=" + f;
+                    }
+                }
+            }
+            n.href = d;
+            t.href = d;
+            r.src = a;
+            const m = document.getElementsByTagName("script")[0];
+            m.parentNode.insertBefore(n, m);
+            m.parentNode.insertBefore(t, m);
+            m.parentNode.insertBefore(r, m);
+        })("c9724c50-1caa-40a9-9c18-ef7c27b8e01b", '3zttaM9Z');
+    })();
+</script>
+
+
+<div id="consentPayOrchestrator" hidden></div>
+        <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K9DJJ6X');
+</script>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>Error 404 | El Tiempo</title>
+    
+    
+    
+            
+        
+    
+    
+    
+    
+
+            <link rel="alternate" href="https://www.eltiempo.es/humans.txt" hreflang="es-es"/>
+            <link rel="alternate" href="https://ca.eltiempo.es/humans.txt" hreflang="ca"/>
+            <link rel="alternate" href="https://en.eltiempo.es/humans.txt" hreflang="en"/>
+            <link rel="alternate" href="https://de.eltiempo.es/humans.txt" hreflang="de"/>
+            <link rel="alternate" href="https://it.eltiempo.es/humans.txt" hreflang="it"/>
+            <link rel="alternate" href="https://fr.eltiempo.es/humans.txt" hreflang="fr"/>
+            <link rel="alternate" href="https://eus.eltiempo.es/humans.txt" hreflang="eu"/>
+            <link rel="alternate" href="https://gal.eltiempo.es/humans.txt" hreflang="gl"/>
+            <link rel="alternate" href="https://www.clima.com/humans.txt" hreflang="es"/>
+            <link rel="alternate" href="https://www.climadobrasil.com.br/humans.txt" hreflang="pt-br"/>
+            <link rel="alternate" href="https://www.otempo.pt/humans.txt" hreflang="pt-pt"/>
+    
+    <link rel="stylesheet preload" href="https://cdn.eltiempo.es/dist/font_faces.fdfecb97cfbed0cf25fee0edc48b7565.css" as="style">
+
+    <style>
+/* '/dist/critical.css' */
+﻿.meteo{speak:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;box-sizing:content-box;display:inline-block;font-family:meteo;font-style:normal;font-variant:normal;font-weight:400;line-height:1}.meteo-cloud-01:before{content:""}.meteo-cloud-02:before{content:""}.meteo-cloud-03:before{content:""}.meteo-cloud-04:before{content:""}.meteo-cloud-05:before{content:""}.meteo-cloud-06:before{content:""}.meteo-drop-00:before{content:""}.meteo-drop-01:before{content:""}.meteo-drop-02:before{content:""}.meteo-drop-03:before{content:""}.meteo-drop-04:before{content:""}.meteo-drop-05:before{content:""}.meteo-drop-06:before{content:""}.meteo-umbrella-01:before{content:""}.meteo-umbrella-02:before{content:""}.meteo-umbrella-03:before{content:""}.meteo-umbrella-04:before{content:""}.meteo-umbrella-05:before{content:""}.meteo-uv-01:before{content:""}.meteo-uv-02:before{content:""}.meteo-uv-03:before{content:""}.meteo-uv-04:before{content:""}.meteo-uv-05:before{content:""}.beach{speak:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;box-sizing:content-box;display:inline-block;font-family:eltiempo-beaches;font-style:normal;font-variant:normal;font-weight:400;line-height:1}.beach-blue-flag:before{content:""}.beach-access:before{content:""}.beach-handicapped:before{content:""}.beach-signal:before{content:""}.beach-rent-hammock:before{content:""}.beach-rent-boat:before{content:""}.beach-rent-umbrella:before{content:""}.beach-width:before{content:""}.beach-parking:before{content:""}.beach-restroom:before{content:""}.beach-bus:before{content:""}.beach-swim:before{content:""}.beach-club-boat:before{content:""}.beach-ground:before{content:""}.beach-direction:before{content:""}.beach-distant:before{content:""}.beach-shower:before{content:""}.beach-drinks:before{content:""}.beach-restaurant:before{content:""}.beach-city:before{content:""}.beach-hospital:before{content:""}.beach-feet-shower:before{content:""}.beach-clean:before{content:""}.beach-length:before{content:""}.beach-nudist:before{content:""}.beach-crowd:before{content:""}.beach-trash-can:before{content:""}.beach-trees:before{content:""}.beach-medical:before{content:""}.beach-phone:before{content:""}.beach-sand:before{content:""}.beach-underwater:before{content:""}.beach-snorkel:before{content:""}.beach-natural-reserve:before{content:""}.esqui{speak:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;box-sizing:content-box;display:inline-block;font-family:eltiempo-esqui;font-style:normal;font-variant:normal;font-weight:400;line-height:1}.esqui-snow-quality:before{content:""}.esqui-snow-height:before{content:""}.esqui-open-kilometers:before{content:""}.esqui-tracks-available:before{content:""}.esqui-ski-lifts:before{content:""}*{margin:0;padding:0}article,aside,audio,canvas,figcaption,figure,figure img,footer,header,hgroup,main,nav,section,video{display:block}a img,fieldset{border:0}body{font-family:Poppins,Trebuchet MS,Helvetica,sans-serif;font-size:14px;line-height:18px}img{-moz-user-select:none;-webkit-user-select:none;user-select:none}.accessible{display:none}button,label{cursor:pointer}button,input,legend,textarea{font-family:Poppins,Trebuchet MS,Helvetica,sans-serif;outline:none}legend{display:block}a,a:active,a:link,a:visited{fill:var(--I_500);color:var(--C_500);text-decoration:none}ol,ul{list-style-type:none}.table{border-collapse:collapse;border-spacing:0;width:100%}.table thead{background-color:var(--S_50);border:1px solid var(--S_50);text-align:left}.table td,.table th{font-weight:400;padding:16px 32px}.table td~td,.table td~th,.table th~td,.table th~th{border-left:1px solid var(--S_50)}.table td{border-bottom:1px solid var(--S_50)}hr{border:none;border-top:1px solid var(--S_100);margin-bottom:16px;margin-top:16px}body{color:var(--I_500);font-family:Poppins,Helvetica Neue,Helvetica,Arial,sans-serif;overflow-x:hidden}#page,body{background-color:var(--S_500)}#page{box-sizing:border-box;margin:0 auto;max-width:100%;width:1200px}@media screen and (min-width:992px){#page{padding-left:32px;padding-right:32px}}.curtain_active .curtain{background:var(--S_100);height:100%;left:0;opacity:.4;position:fixed;top:0;width:100%;z-index:98}.curtain_lightbox_active{overflow:hidden}.curtain_lightbox_active .curtain_lightbox{background:var(--I_500);height:100%;left:0;opacity:.6;position:fixed;top:0;width:100%;z-index:99999}.wrapper{margin:0 auto;padding-bottom:32px;padding-top:16px}@media(max-width:768px){.wrapper{padding-bottom:0;padding-top:8px}}.wrapper .row-content:last-child{margin-bottom:0}@media(min-width:768px){main{margin-bottom:32px}}@media(max-width:768px){main{margin-bottom:24px}}.row{clear:both;display:block}.row:after,.row:before{content:".";display:block;height:0;overflow:hidden}.row:after{clear:both}.row{zoom:1}.col{float:left;margin-left:0}.col_r{float:right}.icon-rotate{animation:icon-rotate .8s linear infinite}.icon-rotate.hide{display:none}@keyframes icon-rotate{0%{transform:rotate(0deg)}to{transform:rotate(359deg)}}.icon_weather,.icon_weather_l,.icon_weather_m,.icon_weather_s,.icon_weather_xl,.icon_weather_xxl{background-repeat:no-repeat;display:block;height:100px;margin:0 auto;width:100px}.icon_weather_s{height:24px;width:24px}.icon_weather_m{height:34px;width:34px}.icon_weather_l{height:42px;widt

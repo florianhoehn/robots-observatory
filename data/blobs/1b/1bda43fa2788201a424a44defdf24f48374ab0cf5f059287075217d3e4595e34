@@ -1,0 +1,12 @@
+User-Agent: *
+Disallow: /search?query=
+Disallow: /denwer-action
+Disallow: /action-6-month-discount
+Disallow: /*payforhosting?account=
+Disallow: /payforhosting
+Disallow: /new-years-holiday-2012-2013
+Disallow: /whois/check/domain
+Disallow: /services/domain?
+Disallow: /oplata
+Host: https://www.hostland.ru
+Sitemap: https://www.hostland.ru/sitemap.xml

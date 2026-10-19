@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="preconnect" href="https://cdnssl.softpedia.com/" />
+<!-- Google tag (gtag.js) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', { 
+	'ad_storage': 'denied',
+	'ad_user_data': 'denied',
+	'ad_personalization': 'denied',
+	'analytics_storage': 'denied',
+	'security_storage': 'granted',
+	'personalization_storage': 'granted',
+	'functionality_storage': 'granted',
+	'wait_for_update': 500
+});
+gtag('js', new Date());
+gtag('config', 'G-49KYDE8P1Z', { 'cookie_domain': 'softpedia.com', 'anonymize_ip': true });  //, 'send_page_view': false });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-49KYDE8P1Z"></script>
+<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+<script type="text/javascript" async=true>
+(function() {
+  var host = window.location.hostname;
+  var element = document.createElement('script');
+  var firstScript = document.getElementsByTagName('script')[0];
+  var url = 'https://cmp.inmobi.com'
+    .concat('/choice/', 'ef319LWA1Q2Gu', '/', host, '/choice.js?tag_version=V3');
+  var uspTries = 0;
+  var uspTriesLimit = 3;
+  element.async = true;
+  element.type = 'text/javascript';
+  element.src = url;
+
+  firstScript.parentNode.insertBefore(element, firstScript);
+
+  function makeStub() {
+    var TCF_LOCATOR_NAME = '__tcfapiLocator';
+    var queue = [];
+    var win = window;
+    var cmpFrame;
+
+    function addFrame() {
+      var doc = win.document;
+      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+      if (!otherCMP) {
+        if (doc.body) {
+          var iframe = doc.createElement('iframe');
+
+          iframe.style.cssText = 'display:none';
+          iframe.name = TCF_LOCATOR_NAME;
+          doc.body.appendChild(iframe);
+        } else {
+          setTimeout(addFrame, 5);
+        }
+      }
+      return !otherCMP;
+    }
+
+    function tcfAPIHandler() {
+      var gdprApplies;
+      var args = arguments;
+
+      if (!args.length) {
+        return queue;
+      } else if (args[0] === 'setGdprApplies') {
+        if (
+          args.length > 3 &&
+          args[2] === 2 &&
+          typeof args[3] === 'boolean'
+        ) {
+          gdprApplies = args[3];
+          if (typeof args[2] === 'function') {
+            args[2]('set', true);
+          }
+        }
+      } else if (args[0] === 'ping') {
+        var retr = {
+          gdprApplies: gdprApplies,
+          cmpLoaded: false,
+          cmpStatus: 'stub'
+        };
+
+        if (typeof args[2] === 'function') {
+          args[2](retr);
+        }
+      } else {
+        if(args[0] === 'init' && typeof args[3] === 'object') {
+          args[3] = Object.assign(args[3], { tag_version: 'V3' });
+        }
+        queue.push(args);
+      }
+    }
+
+    function postMessageEventHandler(event) {
+      var msgIsString = typeof event.data === 'string';
+      var json = {};
+
+      try {
+        if (msgIsString) {
+          json = JSON.parse(event.data);
+        } else {
+          json = event.data;
+        }
+      } catch (ignore) {}
+
+      var payload = json.__tcfapiCall;
+
+      if (payload) {
+        window.__tcfapi(
+          payload.command,
+          payload.version,
+          function(retValue, success) {
+            var returnMsg = {
+              __tcfapiReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: payload.callId
+              }
+            };
+            if (msgIsString) {
+              returnMsg = JSON.stringify(returnMsg);
+            }
+            if (event && event.source && event.source.postMessage) {
+              event.source.postMessage(returnMsg, '*');
+            }
+          },
+          payload.parameter
+        );
+      }
+    }
+
+    while (win) {
+      try {
+        if (win.frames[TCF_LOCATOR_NAME]) {
+          cmpFrame = win;
+          break;
+        }
+      } catch (ignore) {}
+
+      if (win === window.top) {
+        break;
+      }
+      win = win.parent;
+    }
+    if (!cmpFrame) {
+      addFrame();
+      win.__tcfapi = tcfAPIHandler;
+      win.addEventListener('message', postMessageEventHandler, false);
+    }
+  };
+
+  makeStub();
+
+  function makeGppStub() {
+    const CMP_ID = 10;
+    const SUPPORTED_APIS = [
+      '2:tcfeuv2',
+      '6:uspv1',
+      '7:usnatv1',
+      '8:usca',
+      '9:usvav1',
+      '10:uscov1',
+      '11:usutv1',
+      '12:usctv1'
+    ];
+
+    window.__gpp_addFrame = function (n) {
+      if (!window.frames[n]) {
+        if (document.body) {
+          var i = document.createElement("iframe");
+          i.style.cssText = "display:none";
+          i.name = n;
+          document.body.appendChild(i);
+        } else {
+          window.setTimeout(window.__gpp_addFrame, 10, n);
+        }
+      }
+    };
+    window.__gpp_stub = function () {
+      var b = arguments;
+      __gpp.queue = __gpp.queue || [];
+      __gpp.events = __gpp.events || [];
+
+      if (!b.length || (b.length == 1 && b[0] == "queue")) {
+        return __gpp.queue;
+      }
+
+      if (b.length == 1 && b[0] == "events") {
+        return __gpp.events;
+      }
+
+      var cmd = b[0];
+      var clb = b.length > 1 ? b[1] : null;
+      var par = b.length > 2 ? b[2] : null;
+      if (cmd === "ping") {
+        clb(
+          {
+            gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+            cmpStatus: "stub", // possible values: stub, loading, loaded, error
+            cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+            signalStatus: "not ready", // possible values: not ready, ready
+            supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+            cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
+            sectionList: [],
+            applicableSections: [-1],
+            gppString: "",
+            parsedSections: {},
+          },
+          true
+        );
+      } else if (cmd === "addEventListener") {
+        if (!("lastId" in __gpp)) {
+          __gpp.lastId = 0;
+        }
+        __gpp.lastId++;
+        var lnr = __gpp.lastId;
+        __gpp.events.push({
+          id: lnr,
+          callback: clb,
+          parameter: par,
+        });
+        clb(
+          {
+            eventName: "listenerRegistered",
+            listenerId: lnr, // Registered ID of the listener
+            data: true, // positive signal
+            pingData: {
+              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+              cmpStatus: "stub", // possible values: stub, loading, loaded, error
+              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+              signalStatus: "not ready", // possible values: not ready, ready
+              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+              cmpId: CMP_ID, // list of supported APIs
+              sectionList: [],
+              applicableSections: [-1],
+              gppString: "",
+              parsedSections: {},
+            },
+          },
+          true
+        );
+      } else if (cmd === "removeEventListener") {
+        var success = false;
+        for (var i = 0; i < __gpp.events.length; i++) {
+          if (__gpp.events[i].id == par) {
+            __gpp.events.splice(i, 1);
+            success = true;
+            break;
+          }
+        }
+        clb(
+          {
+            eventName: "listenerRemoved",
+            listenerId: par, // Registered ID of the listener
+            data: success, // status info
+            pingData: {
+              gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+              cmpStatus: "stub", // possible values: stub, loading, loaded, error
+              cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+              signalStatus: "not ready", // possible values: not ready, ready
+              supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+              cmpId: CMP_ID, // CMP ID
+              sectionList: [],
+              applicableSections: [-1],
+              gppString: "",
+              parsedSections: {},
+            },
+          },
+          true
+        );
+      } else if (cmd === "hasSection") {
+        clb(false, true);
+      } else if (cmd === "getSection" || cmd === "getField") {
+        clb(null, true);
+      }
+      //queue all other commands
+      else {
+        __gpp.queue.push([].slice.apply(b));
+      }
+    };
+    window.__gpp_msghandler = function (event) {
+      var msgIsString = typeof event.data === "string";
+      try {
+        var json = msgIsString ? JSON.parse(event.data) : event.data;
+      } catch (e) {
+        var json = null;
+      }
+      if (typeof json === "object" && json !== null && "__gppCall" in json) {
+        var i = json.__gppCall;
+        window.__gpp(
+          i.command,
+          function (retValue, success) {
+            var returnMsg = {
+              __gppReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: i.callId,
+              },
+            };
+            event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
+          },
+          "parameter" in i ? i.parameter : null,
+          "version" in i ? i.version : "1.1"
+        );
+      }
+    };
+    if (!("__gpp" in window) || typeof window.__gpp !== "function") {
+      window.__gpp = window.__gpp_stub;
+      window.addEventListener("message", window.__gpp_msghandler, false);
+      window.__gpp_addFrame("__gppLocator");
+    }
+  };
+
+  makeGppStub();
+
+  var uspStubFunction = function() {
+    var arg = arguments;
+    if (typeof window.__uspapi !== uspStubFunction) {
+      setTimeout(function() {
+        if (typeof window.__uspapi !== 'undefined') {
+          window.__uspapi.apply(window.__uspapi, arg);
+        }
+      }, 500);
+    }
+  };
+
+  var checkIfUspIsReady = function() {
+    uspTries++;
+    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+      console.warn('USP is not accessible');
+    } else {
+      clearInterval(uspInterval);
+    }
+  };
+
+  if (typeof window.__uspapi === 'undefined') {
+    window.__uspapi = uspStubFunction;
+    var uspInterval = setInterval(checkIfUspIsReady, 6000);
+  }
+})();
+</script>
+<!-- End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+<style>
+@font-face { 
+	font-display: optional; 
+	font-family: 'museo_sans_cond'; 
+	font-weight: 700;
+	font-style: normal;
+	src: url('https://www.softpedia.com/_fonts/museosanscnd-700-webfont.eot?v=1x199'); 
+	src: url('https://www.softpedia.com/_fonts/museosanscnd-700-webfont.eot?#iefix') format('embedded-opentype'), 
+		url('https://www.softpedia.com/_fonts/museosanscnd-700-webfont.woff2?v=1x199') format('woff2'), 
+		url('https://www.softpedia.com/_fonts/museosanscnd-700-webfont.woff?v=1x199') format('woff'), 
+		url('https://www.softpedia.com/_fonts/museosanscnd-700-webfont.ttf?v=1x199') format('truetype');
+}
+
+@font-face { 
+	font-display: optional; 
+	font-family: 'museo_sans_cond'; 
+	font-weight: 500; 
+	font-style: normal;
+	src: url('https://www.softpedia.com/_fonts/museosanscnd-500-webfont.eot?v=1x199'); 
+	src: url('https://www.softpedia.com/_fonts/museosanscnd-500-webfont.eot?#iefix') format('embedded-opentype'), 
+		url('https://www.softpedia.com/_fonts/museosanscnd-500-webfont.woff2?v=1x199') format('woff2'), 
+		url('https://www.softpedia.com/_fonts/museosanscnd-500-webfont.woff?v=1x199') format('woff'), 
+		url('https://www.softpedia.com/_fonts/museosanscnd-500-webfont.ttf?v=1x199') format('truetype');
+}
+
+@font-face { 
+	font-family: "FontAwesome"; font-weight: normal; font-style: normal; font-display: swap; text-rendering: optimizeLegibility; 
+	src: url('https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.eot?v=1x199'); 
+	src: url('https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), 
+		url('https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.woff2?v=1x199') format('woff2'), 
+		url('https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.woff?v=1x199') format('woff'), 
+		url('https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.ttf?v=1x199') format('truetype');
+}
+
+html, input, select, textarea, option, button, li { font-family: 'museo_sans_cond', Bodoni MT, Didot, Didot LT STD, Hoefler Text, Garamond, Calisto MT, Times New Roman, sans-serif; font-weight: 500; }
+body { min-width: 970px; position:relative; background-color: #fff; color: #000; }
+form, dl, body, p { padding: 0; margin: 0; }
+.mgbot_10 { margin-bottom: 10px !important; }
+.storybox1, .storybox1 .legible, .nv_revby, .legible, .legible li { line-height: 1.5em; font-size: 18px; font-weight: 500; }
+.storybox1 { color:#000000; }
+</style>
+<link crossorigin rel="preload" href="https://www.softpedia.com/_fonts/museosanscnd-700-webfont.woff2?v=1x199" as="font" type="font/woff2">
+<link crossorigin rel="preload" href="https://www.softpedia.com/_fonts/museosanscnd-500-webfont.woff2?v=1x199" as="font" type="font/woff2">
+<link crossorigin rel="preload" href="https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.woff2?v=1x199" as="font" type="font/woff2">
+
+<script>
+var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+window.lghtskipa=1; window.ads_skipped_due_policy=1;
+function GPT_GO() { console.log("GPT_GO(): no ads") }
+</script>
+
+<script>
+window.__scripts_initialized = 0;
+window.__tcfapi('addEventListener', 2, function(tcData,success) {
+	if(window.__scripts_initialized == 0 && success && (tcData.eventStatus === 'tcloaded' || tcData.eventStatus == 'useractioncomplete')) {
+		window.__scripts_initialized = 1; window.__tcfapi('removeEventListener', 2, function (success) { }, tcData.listenerId);		
+		console.log('CMP: done, enabling scripts');
+		GPT_GO();
+	}
+});
+</script>
+
+<title>404 Not Found</title>
+<meta name="robots" content="max-image-preview:large" /><meta name=supported-media content="only screen and (min-width: 640px)">
+<meta name="language" content="english" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=980" /><meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link crossorigin fetchpriority="highest" rel="stylesheet" type="text/css" href="https://cdnssl.softpedia.com/_min/?g=cssbase_2015&amp;vv=5234" /><link rel="icon" type="image/x-icon" href="https://cdnssl.softpedia.com/_img/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="https://cdnssl.softpedia.com/_img/favicon-192x192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://cdnssl.softpedia.com/_img/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdnssl.softpedia.com/_img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdnssl.softpedia.com/_img/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="512x512" href="https://cdnssl.softpedia.com/_img/favicon_512.png">
+<link rel="mask-icon" sizes="any" href="https://cdnssl.softpedia.com/_img/spdfavicon.svg" color="#002873">
+<meta name="theme-color" content="#002873" /><meta name="apple-mobile-web-app-status-bar-style" content="#002873" /><meta name="apple-mobile-web-app-title" content="Softpedia" />
+
+<script>var hp_dwlcounter = 2734719071;</script>
+</head>
+
+<body>
+	<div class="wrapper posrel" id="wrapper">
+		<div class="topbar-hp" data-nosnippet>
+						<div class="menubar-hp">
+				<div class="container_48">
+					<div class="grid_48">
+						<div id="topovl1">&nbsp;</div>
+						<div id="bg-logo-hp"></div>
+						<span id="brand">
+							<a href="https://www.softpedia.com/" class="dspblock" title="Softpedia"><span class="logov" data-src="https://cdnssl.softpedia.com/_img/softpedia_logo.png">SOFTPEDIA&reg;</span></a>
+						</span>
+						<div class="navtopm ">
+														<ul class="lev1 navsect locmenu" role="menubar">
+								<li role="menuitem" ><a class="upcase fw500" href="https://windows.softpedia.com/" title="Windows Software"><i class="fa fa-windows"></i>&nbsp; Windows Apps</a></li>
+								<li role="menuitem" class="mgleft_20"><a class="upcase fw500 mgleft_7" href="https://mac.softpedia.com/"  title="Mac Apps"><i class="fa fa-apple"></i>&nbsp; Mac Apps</a></li>
+								<li role="menuitem" class="mgleft_20"><a class="upcase fw500 mgleft_7" href="https://drivers.softpedia.com/" title="Windows Device Drivers"><i class="fa fa-graphics"></i>&nbsp; Drivers</a></li>
+								<li role="menuitem" class="mgleft_20"><a class="upcase fw500 mgleft_7" href="https://news.softpedia.com/" title="Technology News"><i class="fa fa-newspaper"></i>&nbsp; Reviews</a></li>
+							</ul>
+														<ul class="lev1 navico" id="navicos">
+								<!--<li class="fa fa-heart nosel" data-src="love"></li>-->
+								<a href="/dyn-search.php"><li class="fa fa-search nosel"></li></a>
+								<li class="fa fa-info nosel" data-src="info"></li>
+								<li class="fa fa-user nosel" onclick="showloginovl();"></li>							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+					</div>
+		<div role="main" class="main-hp ">
+			<div class="container_48">
+	<div class="grid_48 pagetop">
+		<h1>
+			ERROR: 404 Not Found
+			<br/>
+			<span class="appver">Sorry, we were unable to find the page you're looking for.</span>
+		</h1>
+	</div>
+
+	<div class="grid_48 sepbrd4">
+	<script async src="https://cse.google.com/cse.js?cx=partner-pub-2364887827571271:j5e0sr-2yss"></script><div class="gcse-search"></div>	</div>
+</div>		</div></div>
+		
+		<div class="clearfix"></div>
+		<div class="footer mgtop_40" id="footer" data-nosnippet>
+			<div class="social">
+				<div class="container_48 posrel">
+					<div class="grid_38"><div class="home-search"><form role="search" action="/dyn-search.php" method="GET"><div class="fa fa-search"></div><input aria-label="Search" type="text" value="Search here..." onkeydown="if(this.value=='Search here...') this.value='';" onclick="if(this.value=='Search here...') this.value='';" onblur="if(this.value=='') this.value='Search here...';" name="search_term" /></form></div></div>
+					<div class="grid_10 mgtop_20 ta_right"><span class="nosel logof">i <i class="fa fa-heart col-red-l"></i> softpedia&reg;</span></div>
+				</div>
+			</div>
+			<div class="copyright_cnt">
+				<div class="container_48 posrel">
+					<div class="copyright f_content grid_48">
+						&copy; 2001-2026 <span itemprop="name">Softpedia</span>.
+						All rights reserved. Softpedia&reg; and the Softpedia&reg; logo are registered trademarks of SoftNews NET SRL						<br/>
+						<a href="https://www.softpedia.com/user/contact.php" rel="nofollow" title="Contact">Contact</a>
+						&nbsp;&bull;
+						<a href="https://www.softpedia.com/user/privacy.shtml" rel="nofollow" title="Privacy Policy">Privacy Policy</a>
+						&nbsp;&bull;
+						<a href="https://www.softpedia.com/user/cookies.shtml" rel="nofollow" title="Cookie Policy">Cookie Policy</a>
+						&nbsp;&bull;
+						EU residents: <a title="Cookie Settings" href="javascript:;" onclick="window.__tcfapi('displayConsentUi', 2, function(){});">Cookie Settings</a>					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		
+<div id="spsbtns"><div id="feedbackb" class="rgbutton" onclick="spsite_feedback('https://www.softpedia.com/.well-known/security.txt');"><div class="rotate90r">feedback <i class="fa fa-info-circle rotate270r"></i></div></div>
+</div>
+<div id="spovl1" class="ovlgrad1 novig"><div class="spovl1box"><div class="spovl1box2">&nbsp;</div></div></div><!-- overlay 1 -->
+<div id="spovl2"><div class="spovl2box"><div class="spovl2box2">&nbsp;</div></div></div><!-- overlay 2 -->
+<div id="spovl3"><div class="spovl3box">&nbsp;</div></div><!-- overlay 3 -->
+
+<script defer crossorigin src="https://cdnssl.softpedia.com/_min/?g=jsbase&amp;jv=4154"></script>
+<script>window.spcsrf="AXvkT35tE2GFBf4L04P749IPbaXo2JHE";</script><script>
+var sp_nsroot=".softpedia.com";
+var sp_xaja_root="https://www.softpedia.com/";
+var pe_section='windows';
+var sp_trkev=1;
+var tm_act='';
+var tm_open=false;
+var tm_evset=false;
+var spjs_social={"pagetitle":"404 Not Found","pageurl":"https:\/\/www.softpedia.com\/.well-known\/security.txt","mediaurl":""};
+var spsocial_pagetitle='404 Not Found';
+var spsocial_pageurl='https://www.softpedia.com/.well-known/security.txt';
+var spsocial_mediaurl="";
+var spjs_cat_id=0;
+var spjs_prog_version="";
+var spjs_prog_tsf=0;
+var spjs_auth_uid=0;
+var spjs_auth={"user":"","name":"","mail":""};
+</script>
+<script defer src="/_min/jsstore.php?l=&amp;f=bGFuZy9FTi5qcw==&amp;jv=4016"></script>
+
+</script>
+
+<script type="application/ld+json">{ "@context": "http://schema.org", "@type": "Organization", "url": "https://www.softpedia.com/", "logo": "https://cdnssl.softpedia.com/_img/rba_sp_hd.png", "name": "Softpedia", "sameAs" : [ "https://www.facebook.com/softpediacom/", "https://twitter.com/Softpedia", "https://www.instagram.com/softpedia/", "https://flipboard.com/@softpedia/softpedia-news-ji14q1huy" ] }</script>
+<script type="application/ld+json">{ "@context": "http://schema.org", "@type": "WebSite", "name": "Softpedia", "url": "https://www.softpedia.com/" }</script>
+
+	
+<script>if(window.interstitialSlot) googletag.cmd.push(function(){ googletag.display(window.interstitialSlot); googletag.pubads().refresh([window.interstitialSlot]); });</script>
+
+<!--FC-->
+<script async src="https://fundingchoicesmessages.google.com/i/pub-2364887827571271?ers=1"></script><script>(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
+<!--END FC-->
+
+</body>
+</html>

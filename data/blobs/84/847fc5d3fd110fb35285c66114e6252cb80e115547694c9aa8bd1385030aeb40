@@ -1,0 +1,811 @@
+
+<!DOCTYPE HTML>
+
+
+
+
+<html lang="en-US">
+
+<head>
+
+
+
+
+
+
+
+
+
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<!-- Meta tags Override for SEO purposes-->
+
+
+
+
+
+  <title>Custom Care &amp; Coverage Just For You | Kaiser Permanente</title>
+
+  
+    <script defer="defer" type="text/javascript" src="https://rum.hlx.page/.rum/@adobe/helix-rum-js@%5E2/dist/rum-standalone.js" data-routing="env=prod,tier=publish,ams=Kaiser Permanente (Walnut)"></script>
+<link rel="canonical" href="https://healthy.kaiserpermanente.org/front-door"/>
+  
+
+
+
+<meta name="webpivotUrl" content=" "/>
+<meta name="disableWPRedirect" content="false"/>
+<meta name="disableNevada"/>
+<meta name="mauiRedirectUrl"/>
+
+<script type="text/javascript">
+
+  let isAuthor = /(?:^|;)\s*cq-authoring-mode\s*=/.test(document.cookie);
+  try {
+    if (!isAuthor && window.top.location.pathname.indexOf('editor.html') > -1) {
+      isAuthor = true;
+    }
+  } catch (e) {
+    // cross-origin top window => genuine external embed on publish, not the AEM author
+  }
+
+  if (isAuthor) {
+    // Skip all redirect/region logic on AEM author
+  } else {
+
+  // Nevada availability guard: runs FIRST, before any other redirect logic (MyChart/WebPivot/MAUI),
+  // so none of those can navigate away before we can render the blocked-region error page in place.
+  // Render the global error page IN PLACE (keep the /nevada URL, no redirect) by fetching a
+  // not-found URL in this region (which returns the branded global error page) and swapping it in.
+  const kpNevadaBlocked = (document.querySelector("meta[name='disableNevada']")?.getAttribute('content') === 'true')
+      && window.location.pathname.includes('/nevada');
+  if (kpNevadaBlocked) {
+    window.__kpNevadaBlocked = true;
+    try { document.documentElement.style.visibility = 'hidden'; } catch (e) { /* noop */ }
+    fetch('/nevada/region-unavailable-' + Date.now(), { credentials: 'same-origin' })
+      .then(function (resp) { return resp.text(); })
+      .then(function (html) { document.open(); document.write(html); document.close(); })
+      .catch(function () { try { document.documentElement.style.visibility = ''; } catch (e) { /* noop */ } });
+  }
+
+  const retrieveCookie = (cookieName) => {
+    let cookie = {};
+    document.cookie.split(';').forEach(function (el) {
+      let [key, value] = el.split('=');
+      cookie[key.trim()] = value;
+    })
+    return cookie[cookieName];
+  }
+
+  const HAWAII = 'HAW';
+  const MAUI_COOKIE = 'MHS';
+  const USR_COOKIE = retrieveCookie("site");
+  const isMauiUser = USR_COOKIE && USR_COOKIE.toUpperCase() === MAUI_COOKIE;
+
+  function removeAllowedPrefixFromUrl(allowedList) {
+    const pathname = window.location.pathname;
+    const lastSlashIndex = pathname.lastIndexOf('/');
+    const lastSegment = pathname.substring(lastSlashIndex + 1);
+    const basePath = pathname.substring(0, lastSlashIndex + 1);
+
+    const matchedPrefix = allowedList.find(a => lastSegment.startsWith(a.toLowerCase() + '-'));
+    if (matchedPrefix) {
+      const cleanSegment = lastSegment.substring(matchedPrefix.toLowerCase().length + 1);
+      const cleanUrl = basePath + cleanSegment;
+      console.log('Kp Nevada final path after redirection', cleanUrl);
+      window.open(cleanUrl, '_self');
+    }
+  }
+
+  function appendNevadaSuffixIfNeeded() {
+    // This runs only on publish (the whole block is skipped on author via the isAuthor guard).
+    const allowedPropertyValues = document.querySelector('[data-allowed-property-values]')?.getAttribute('data-allowed-property-values');
+    const preferredLocation = document.querySelector('[data-preferred-location]')?.getAttribute('data-preferred-location');
+
+    try {
+      const interpolatedSearchTerms = KPDL.interpolate(preferredLocation);
+
+      if (interpolatedSearchTerms && interpolatedSearchTerms.trim() !== '' && allowedPropertyValues) {
+      const allowedList = allowedPropertyValues.split(',').map(v => v.trim().toUpperCase());
+
+        const prefLoc = interpolatedSearchTerms.trim().toUpperCase();
+
+        if (allowedList.includes(prefLoc)) {
+          const pathname = window.location.pathname;
+          const lastSlashIndex = pathname.lastIndexOf('/');
+          const lastSegment = pathname.substring(lastSlashIndex + 1);
+          const prefixStr = interpolatedSearchTerms.trim().toLowerCase() + '-';
+
+          // Skip if prefix is already applied
+          if (lastSegment.startsWith(prefixStr)) return;
+
+          const basePath = pathname.substring(0, lastSlashIndex + 1);
+          const newUrl = basePath + prefixStr + lastSegment;
+          console.log('Kp Nevada final path after redirection', newUrl);
+          window.open(newUrl, '_self');
+
+        } else {
+            removeAllowedPrefixFromUrl(allowedList);
+        }
+      } else {
+        const coverageRegion = getCoverageAreaFromCookies();
+          const pathname = window.location.pathname;
+          const lastSlashIndex = pathname.lastIndexOf('/');
+          const lastSegment = pathname.substring(lastSlashIndex + 1);
+          if (lastSegment.startsWith('nev-')) {
+            const basePath = pathname.substring(0, lastSlashIndex + 1);
+            const cleanSegment = lastSegment.substring(4);
+            const cleanUrl = basePath + cleanSegment;
+            console.log('Kp Nevada: removing nev- prefix, coverageRegion is not NEV. Redirecting to', cleanUrl);
+            window.open(cleanUrl, '_self');
+          }
+      }
+    } catch (e) {
+      console.error("Error processing NEV region cookie or data attributes:", e);
+    }
+  }
+
+  const initMYCRedirect = () => {
+    try {
+      const isSignedOn = /isSignedOn=true/.test(document.cookie);
+      if (isSignedOn) {
+        const isMYCPilotUsr = /myChartPilotUser=true/.test(document.cookie);
+        const mycURLDOM = document.querySelector("meta[name='myc:url']");
+        const mycUrl = mycURLDOM?.getAttribute('content');
+        const mhsUrl = document.querySelector("meta[name='mauiRedirectUrl']")?.getAttribute('content');
+        if (isMYCPilotUsr && mycUrl && (!isMauiUser || !mhsUrl)) {
+          redirectToNewURL(mycUrl);
+        }
+      }
+    } catch (err) {
+      console.log('[initMYCRedirect]: Something went wrong initMYCRedirect', err);
+    }
+  }
+
+  const initMauiRedirect = () => {
+    const mauiRedirectUrl = document
+        .querySelector("meta[name='mauiRedirectUrl']")
+        ?.getAttribute('content')
+        ?.trim();
+
+    if (mauiRedirectUrl) {
+        console.log('[Web Pivot]: MAUI user redirected to: ', mauiRedirectUrl);
+        redirectToNewURL(mauiRedirectUrl);
+    }
+  }
+
+  const initMAUIURL = () => {
+    console.log('[Web Pivot metadata]: Validating Maui redirect eligibility. MAUI_COOKIE:', MAUI_COOKIE);
+    if (isMauiUser) {
+      console.log('[Web Pivot metadata]: Maui user identified.');
+      const isPendingGMW = isGMWPending();
+      const currentRegion = retrieveCookie('ImpSessionRoP');
+      if (!isPendingGMW && currentRegion === HAWAII) {
+          console.log('[Web Pivot metadata]: Redirecting eligible Maui user.');
+          initMauiRedirect();
+      }
+    }
+  }
+
+
+  const initWebPivotRedirect = () => {
+    try {
+      const isSignedOn = /isSignedOn=true/.test(document.cookie);
+      if (!isSignedOn) return;
+
+      const webPivotUser = /webPivotUser=true/.test(document.cookie);
+      if (!webPivotUser) return;
+
+
+      const hostDomain = window.location.origin;
+      const relativeUrl = window.location.href.replace(hostDomain, '');
+
+      const disableWPRedirect = document
+        .querySelector("meta[name='disableWPRedirect']")
+        ?.getAttribute('content') === 'true';
+
+      const webpivotUrl = document
+        .querySelector("meta[name='webpivotUrl']")
+        ?.getAttribute('content')
+        ?.trim();
+
+      const mycUrl = document
+        .querySelector("meta[name='myc:url']")
+        ?.getAttribute('content');
+
+      const isInEpicIframe = window.parent !== window.self;
+      const isMobileWeb = isMobileWebView();
+      const mhsUrl = document.querySelector("meta[name='mauiRedirectUrl']")?.getAttribute('content');
+
+      if (disableWPRedirect) {
+        console.log('[Web Pivot]: Web Pivot DISABLE detected, skipping redirect.');
+        return;
+      }
+
+      if (isMobileWeb) {
+        console.log('[Web Pivot]: Mobile WebView detected, skipping redirect.');
+        return;
+      }
+
+      if (!mycUrl && !webpivotUrl && (!isMauiUser || !mhsUrl)) {
+        if (isInEpicIframe) {
+          setEpicMychartFlag();
+          updateWebPivotContent();
+          return;
+        }
+        const fallbackUrl = '/mc/myc-link?relay=url%3D';
+        const destinationUrl = hostDomain + fallbackUrl + encodeURIComponent(relativeUrl);
+        redirectToNewURL(destinationUrl);
+        return;
+      }
+
+      if (webpivotUrl && (!isMauiUser || !mhsUrl)) {
+        if (isInEpicIframe) {
+          setEpicMychartFlag();
+          updateWebPivotContent();
+          return;
+        }
+        const destinationUrl = hostDomain + webpivotUrl;
+        redirectToNewURL(destinationUrl);
+      }
+
+    } catch (err) {
+      console.error('[Web Pivot]: Error in initWebPivotRedirect', err);
+    }
+  };
+
+  const setEpicMychartFlag = () => {
+    if (!sessionStorage.getItem('isEpicMychartPage')) {
+      sessionStorage.setItem('isEpicMychartPage', 'true');
+    }
+  }
+
+  const isMobileWebView = () => {
+    try {
+      const url = window.location.href;
+      return url.includes('.mobile.html');
+    } catch (e) {
+      console.error('[Web Pivot]: Error while detecting mobile WebView.', e);
+      return false;
+    }
+  };
+
+  const redirectToNewURL = (destUrl) => {
+    if (destUrl != window.location.href) {
+      window.location.href = destUrl;
+    }
+  }
+
+  const hideProxyPicker = () => {
+    try {
+      const proxyPicker = document.querySelector("#proxy-picker-container");
+      if (proxyPicker) {
+        proxyPicker.style.display = 'none';
+      }
+    } catch (e) {
+      console.error('[Web Pivot]: Error while disabling Proxy Picker.', e);
+    }
+  }
+
+  const hideKPHeaderFooter = () => {
+    try {
+      const kpHeader = document.querySelector("#kp-header");
+      const kpFooter = document.querySelector(".gs-footer");
+      const kpGlblFooter = document.querySelector(".kp-global-footer");
+      if (kpHeader) {
+        kpHeader.style.display = 'none';
+      }
+      if (kpFooter) {
+        kpFooter.style.display = 'none';
+      }
+      if (kpGlblFooter) {
+        kpGlblFooter.style.display = 'none';
+      }
+
+      hideP1P2Alerts();
+    } catch (e) {
+      console.error('[Web Pivot]: Error while disabling KP Header/Footer.', e);
+    }
+  }
+  const hideP1P2Alerts = () => {
+    try {
+      const alertHeader = document.querySelector("#alerts-notification-placeholder-id");
+      const bulletinAlerts = document.querySelector(".bulletinAlerts");
+
+      if (alertHeader) {
+        alertHeader.style.display = 'none';
+      }
+      if (bulletinAlerts) {
+        bulletinAlerts.style.display = 'none';
+      }
+    } catch (e) {
+      console.error('[Web Pivot]: Error while hiding P1 and P2 alerts.', e);
+    }
+  }
+
+  function hideIframeAlerts() {
+    try {
+      const taskHubPage = document.querySelector('[data-node-name="task-hub"]');
+      if (!taskHubPage) return;
+
+      const observer = new MutationObserver(() => {
+        const iframe = document.querySelector('#member-info-iframe');
+        if (iframe) {
+
+          iframe.addEventListener('load', () => {
+            try {
+              const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+              const alertHeader = iframeDoc.querySelector('#alerts-notification-placeholder-id');              
+              const backLink = iframeDoc.querySelector('.back-link');
+
+              if (alertHeader) alertHeader.style.display = 'none';
+              if (backLink) backLink.style.display = 'none';              
+            } catch (e) {
+              console.error('Error accessing iframe content:', e);
+            }
+          });
+        }
+
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    } catch (e) {
+      console.error('Error in hideIframeAlerts:', e);
+    }
+  }
+
+  function hideEpicPageAlerts() {
+    const docAlert = document.querySelector('#alerts-notification-placeholder-id');
+    if (docAlert) docAlert.style.display = 'none';
+  }
+
+  const initializeWebPivotPage = () => {
+    try {
+      const isSignedOn = /isSignedOn=true/.test(document.cookie);
+      if (sessionStorage.getItem('isEpicMychartPage') === 'true' && isSignedOn) {
+
+        hideKPHeaderFooter();
+        hideProxyPicker();
+        hideP1P2Alerts();
+        sessionStorage.removeItem('isEpicMychartPage');
+      }
+    } catch (e) {
+      console.error('[Web Pivot]: Error while hiding header, footer & proxypicker in iframe.', e);
+      return false;
+    }
+  };
+
+  const updateWebPivotContent = () => {
+    if (typeof (APF) !== 'undefined') {
+      APF.on("pageready", initializeWebPivotPage);
+    } else {
+      document.addEventListener('DOMContentLoaded', initializeWebPivotPage);
+    }
+  }
+
+  const updatePageURLforNevada = () => {
+    if (typeof (APF) !== 'undefined') {
+      APF.on("pageready", appendNevadaSuffixIfNeeded);
+    } else {
+      document.addEventListener('DOMContentLoaded', appendNevadaSuffixIfNeeded);
+    }
+  }
+
+  const isGMWPending = () => {
+    try {
+      const urlPath = window.location.pathname;
+      const TASKHUB = "/task-hub";
+
+      if (urlPath?.toLowerCase().includes(TASKHUB) || retrieveCookie("isGMWTasksPending")) {
+        console.log("[Web Pivot]:Identified as GMW Page Flow...");
+
+        return true;
+      }
+
+      hideP1P2Alerts();
+
+      return false;
+    } catch (err) {
+      console.error('[Web Pivot]: Error in isGMWPending.', err);
+      return false;
+    }
+  }
+
+  const deleteCookie = (name, path, domain) => {
+
+    if (document.cookie.includes(name)) {
+      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;" +
+        (domain ? "; domain=" + domain : "") +
+        (path ? "; path=" + path : "");
+    } else {
+      console.log("Cookie not found in document.cookie");
+    }
+  }
+
+  const preferredLocationUrl = "/content/dam/kporg/kpfd/kpf/json/preferred-location-rules.json";
+
+  const PREFERRED_LOCATION_FALLBACK = [
+
+    {"latitude":"39.7392358","longitude":"-104.990251","regionCode":"CO","city": "Denver","countryCode":"US","state":"US", "zip":"80202","kpRegion":"COL"},
+    {"latitude":"39.5296329","longitude":"-119.8138027","regionCode":"NV","city": "Reno","countryCode":"US","state":"US", "zip":"89501","kpRegion":"NEV"},
+    {"latitude":"37.33874","longitude":"-121.8852525","regionCode":"CA","city":"San Jose","countryCode":"US","state":"US","zip":"95112","kpRegion":"NCA"},
+    {"latitude":"34.0549076","longitude":"-118.242643","regionCode":"CA","city":"Los Angeles","countryCode":"US","state":"US","zip":"90012","kpRegion":"SCA"},
+    {"latitude":"33.7501275","longitude":"-84.3885209","regionCode":"GA","city":"Atlanta","countryCode":"US","state":"US","zip":"30303","kpRegion":"GGA"},
+    {"latitude":"21.3098845","longitude":"-157.8581401","regionCode":"HI","city":"Honolulu","countryCode":"US","state":"US","zip":"96813","kpRegion":"HAW"},
+    {"latitude":"39.2905023","longitude":"-76.6104072","regionCode":"MD","city":"Baltimore","countryCode":"US","state":"US","zip":"21202","kpRegion":"MID"},
+    {"latitude":"45.515232","longitude":"-122.6783853","regionCode":"OR","city":"Portland","countryCode":"US","state":"US","zip":"97204","kpRegion":"KNW"},
+    {"latitude":"47.6061389","longitude":"-122.3328481","regionCode":"WA","city":"Seattle","countryCode":"US","state":"US","zip":"98104","kpRegion":"WA"}
+
+];
+
+  function getCoverageAreaFromCookies() {
+  const coverageArea = retrieveCookie('cvgrgn') || retrieveCookie('coverageRegion') || '';
+  return coverageArea.trim();
+}
+
+  function fetchAndApplyPreferredLocation(regionValue) {
+    fetch(preferredLocationUrl)
+      .then(response => {
+        if (!response.ok || !(response.headers.get('content-type') || '').includes('json')) {
+          throw new Error('Invalid response');
+        }
+        return response.json();
+      })
+      .then(rules => {
+        applyPreferredLocation(rules, regionValue);
+      })
+      .catch(error => {
+        console.warn('[persistPreferredUserLocation]: Fetch failed, using fallback.', error);
+        applyPreferredLocation(PREFERRED_LOCATION_FALLBACK, regionValue);
+      });
+  }
+
+  const persistPreferredUserLocation = () => {
+    try {
+
+      const regionValue = getCoverageAreaFromCookies();
+      if (!regionValue) return;
+
+      const regionUpper = regionValue.trim().toUpperCase();
+      if (regionUpper !== 'COL' && regionUpper !== 'NEV') {
+        fetch('/content/dam/kporg/front-door/json/akamai-request.json')
+          .then(function (response) {
+            let geoLocationHeader = response.headers.get("X-Geolocation");
+            if (response.ok) {
+              try {
+                response.json().then(function () {
+                  if (geoLocationHeader) {
+                    const parts = parseLocation(geoLocationHeader);
+                    if (parts) {
+                      const akamaiLocation = {
+                        latitude: parts.Latitude,
+                        longitude: parts.Longitude,
+                        regionCode: parts.Region_Code,
+                        city: parts.City,
+                        countryCode: parts.Country_Code,
+                        state: parts.Country_Code,
+                        zip: parts.ZIP,
+                        kpRegion: regionValue.trim().toUpperCase()
+                      };
+                      applyPreferredLocation([akamaiLocation], regionValue);
+                    } else {
+                      fetchAndApplyPreferredLocation(regionValue);
+                    }
+                  } else {
+                    fetchAndApplyPreferredLocation(regionValue);
+                  }
+                });
+              } catch (e) {
+                console.warn('[persistPreferredUserLocation]: Error parsing Akamai response', e);
+                fetchAndApplyPreferredLocation(regionValue);
+              }
+            }else{
+              fetchAndApplyPreferredLocation(regionValue);
+            }
+          })
+          .catch(function (error) {
+            console.warn('[persistPreferredUserLocation]: Akamai fetch failed, using fallback.', error);
+            fetchAndApplyPreferredLocation(regionValue);
+          });
+      } else {
+        fetchAndApplyPreferredLocation(regionValue);
+      }
+      
+    } catch (e) {
+      console.error('[persistPreferredUserLocation]: Error persisting preferred user location', e);
+    }
+  };
+
+  function parseLocation(geoLoc) {
+  try {
+    var geoLocation = geoLoc.split("|");
+    var geoLocObj = {};
+    geoLocation.forEach(function (geoItem) {
+      var geoKeyVal = geoItem.split(":").map((item) => item.trim());
+      geoLocObj[geoKeyVal[0]] = geoKeyVal[1];
+    });
+    return geoLocObj;
+  } catch (error) {
+     captureError({
+                  message: "[GEO-LOC: parseLocation]: !!Error while parsing location",
+                  type: "error",
+                  error: error
+                });
+  }
+}
+
+  const applyPreferredLocation = (mappings, regionValue) => {
+    if (!Array.isArray(mappings) || mappings.length === 0) {
+      console.warn('[applyPreferredLocation]: No mappings available.');
+      return;
+    }
+
+    const regionUpper = regionValue.trim().toUpperCase();
+    if (!regionUpper) {
+      console.warn('[applyPreferredLocation]: regionValue is empty.');
+      return;
+    }
+
+    // Match cookie value (e.g. "COL", "NEV") against kpRegion field
+    const matched = mappings.find(m => {
+      return (m.kpRegion || '').trim().toUpperCase() === regionUpper;
+    });
+    if (!matched) {
+      console.warn('[applyPreferredLocation]: No matching kpRegion found for', regionUpper);
+      return;
+    }
+
+    const latRaw = matched.latitude;
+    const lngRaw = matched.longitude;
+    const lat = (latRaw !== undefined && latRaw !== '' && latRaw !== null) ? Number(latRaw) : null;
+    const lng = (lngRaw !== undefined && lngRaw !== '' && lngRaw !== null) ? Number(lngRaw) : null;
+
+    const preferredUsrLocObj = {
+      City: (matched.city || '').trim(),
+      Country_Code: (matched.countryCode || '').trim(),
+      Latitude: (lat !== null && isFinite(lat)) ? lat : null,
+      Longitude: (lng !== null && isFinite(lng)) ? lng : null,
+      Region_Code: (matched.regionCode || '').trim(),
+      ZIP: (matched.zip || '').trim(),
+      coverageArea: getCoverageAreaFromCookies()
+    };
+
+    try {
+      sessionStorage.setItem('preferredUsrLocObj', JSON.stringify(preferredUsrLocObj));
+    } catch (e) {
+      console.error('[applyPreferredLocation]: Failed to write to sessionStorage.', e);
+    }
+  };
+
+  if (retrieveCookie("isGMWTasksPending") && !document.referrer) {
+    deleteCookie('isGMWTasksPending', "/", ".kaiserpermanente.org");
+  }
+
+  function initPreferredUserLocation() {
+    try {
+      const currentRegion = getCoverageAreaFromCookies().toUpperCase();
+
+      const stored = sessionStorage.getItem('preferredUsrLocObj');
+      if (stored) {
+        const storedObj = JSON.parse(stored);
+        const storedRegion = (storedObj.coverageArea || '').toUpperCase();
+        // Region changed — update preferredUsrLocObj
+        if (currentRegion && storedRegion !== currentRegion) {
+          persistPreferredUserLocation();
+        }
+        // else: same region, keep existing value (user selection preserved)
+      } else {
+        // No stored data — set it
+        persistPreferredUserLocation();
+      }
+    } catch (e) {
+      // Fallback: always persist if something goes wrong
+      persistPreferredUserLocation();
+    }
+  }
+
+  if (!kpNevadaBlocked) {
+    if (!isGMWPending()) {
+      initMAUIURL();
+      initWebPivotRedirect();
+      initMYCRedirect();
+      hideP1P2Alerts();
+    }
+    initPreferredUserLocation();
+  }
+
+  function isSecurePage() {
+    const pathname = window?.location?.pathname || '';
+    if (/isSignedOn=true/.test(document.cookie)) {
+      return true;
+    }
+    return (pathname || '').toLowerCase().includes('/secure/');
+  }
+
+  const pathnameLower = (window.location.pathname || '').toLowerCase();
+  const securePage = isSecurePage();
+  const isNevadaInUrl = pathnameLower.includes('/nevada');
+  const coverageRegionCookie = (retrieveCookie('coverageRegion') || '').trim().toUpperCase();
+  const cvgrgnCookie = (retrieveCookie('cvgrgn') || '').trim().toUpperCase();
+
+  const shouldUpdateNevadaUrl =
+    (!securePage && (isNevadaInUrl || coverageRegionCookie === 'NEV')) ||
+    (securePage && cvgrgnCookie === 'NEV');
+
+  if (shouldUpdateNevadaUrl && !kpNevadaBlocked) {
+    updatePageURLforNevada();
+  }
+
+  window.addEventListener("load", () => {
+    // The AEM author editor.html renders the page inside a content iframe, so a
+    // generic "am I in an iframe" check is true in author and would wrongly hide
+    // the header/footer on every page/template. Exclude the author editor.
+    let inAemEditor = false;
+    try {
+      inAemEditor = window.parent !== window.self &&
+                    /\/editor\.html\//.test(window.parent.location.pathname);
+    } catch (e) { /* cross-origin parent => genuine external embed, not the author editor */ }
+
+    const isInEpicIframe = (window.parent !== window.self) && !inAemEditor;
+    // const isMYCPilotUsr = /myChartPilotUser=true/.test(document.cookie);
+    // const isWebPivotUser = /webPivotUser=true/.test(document.cookie);
+
+    hideIframeAlerts();
+    if (isInEpicIframe) {
+      //|| isMYCPilotUsr || isWebPivotUser) {
+      hideEpicPageAlerts();
+      hideKPHeaderFooter();
+    }
+  });
+
+  } // end of !isAuthor block
+</script>
+<script type="application/json" id="page-properties">
+   {"appendQueryParamsFlag":false,"deferPL":false,"mappedParams":[]}
+</script>
+
+<script type="application/json" id="kpdl-context">
+  {"apis":[]}
+</script>
+
+
+
+<meta name="articletype" content="static"/>
+
+
+
+  <meta name="kp:region" content="National"/>
+
+  <meta name="kp:kp-category" content="About KP"/>
+
+  <meta name="kp:kp-content-taxonomy" content="2.13 Homepage"/>
+
+  <meta name="kp:publication-type" content="page"/>
+
+
+
+
+
+
+
+
+<meta name="seo-properties" content="true"/>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<!-- Adding metatags for article -->
+
+
+
+  <meta name="description" content="Staying healthy is easier with the right support. Visit kp.org to learn how we customize care and coverage just for you."/>
+
+
+
+  <meta name="url" content="https://healthy.kaiserpermanente.org/front-door"/>
+
+
+
+<meta http-equiv="x-dns-prefetch-control" content="on"/>
+
+<link rel="preconnect" href="https://assets.adobedtm.com"/>
+<link rel="preconnect" href="https://cdn.tt.omtrdc.net"/>
+<link rel="dns-prefetch" href="https://assets.adobedtm.com"/>
+<link rel="dns-prefetch" href="https://cdn.tt.omtrdc.net"/>
+<link rel="dns-prefetch" href="https://kaiser.demdex.net"/>
+<link rel="dns-prefetch" href="https://kaiser.tt.omtrdc.net"/>
+<link rel="dns-prefetch" href="https://smetrics.kaiserpermanente.org"/>
+<link rel="dns-prefetch" href="https://statse.webtrendslive.com"/>
+<link rel="dns-prefetch" href="https://s.webtrends.com"/>
+
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Kaiser Permanente"/>
+<meta property="og:url" content="https://healthy.kaiserpermanente.org/front-door"/>
+
+
+
+
+<meta property="og:locale" content="en_US"/>
+<meta property="og:type" content="article"/>
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="@kaiserpermanente"/>
+<meta name="twitter:creator" content="@kaiserpermanente"/>
+
+
+
+
+
+
+<meta property="searchable" content="yes"/>
+<meta name="google" content="nositelinkssearchbox"/>
+<meta name="facebook-domain-verification" content="ur90fre4r3qqke1sgrepku7ou7bpfh"/>
+
+<meta property="apf:enabled"/>
+
+
+<meta data-prompt-enable="true"/>
+
+<meta data-patient-photo-enable="false"/>
+
+
+
+<link rel="icon" href="/etc.clientlibs/settings/wcm/designs/kporg/kp-foundation/clientlib-modules/styleguide/resources/assets/images/favicon-16x16.png" type="image/x-icon"/>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "",
+        "description": "",
+        "url": "https://healthy.kaiserpermanente.org/front-door",
+        "inLanguage": "",
+        "keywords": "",
+        "abstract": "",
+        "image": { 
+            "@type": "ImageObject", 
+            "url": ""
+        },
+        "author": { 
+            "@type": "Organization", 
+            "name": "" 
+        },
+      
+        "sameAs": [
+            "http://facebook.com/kpthrive",
+            "http://twitter.com/kpthrive",
+            "https://www.youtube.com/user/kaiserpermanenteorg",
+            "https://www.pinterest.com/kpthrive",
+            "https://www.instagram.com/kpthrive"
+        ]
+    }
+    </script>  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">var digitalData={page:{pageInfo:{base:"kporg:en:national:front-door"},category:{primaryCategory:"kporg",subCategory1:"kporg:en",subCategory2:"kporg:en:national",subCategory3:"kporg:en:national:front\u002Ddoor",subCategory4:"",subCategory5:""}},user:{profile:{},segment:{}},global:{feature_name:"Personalized health care plans \x26 coverage",guid:""}},jsonConfigs={global:JSON.parse("{\n  \x22googleMapsKey\x22: \x22AIzaSyDZlQemL\u002DMiyVQkK_KhQFu69l1l3yqQg8c\x22,\n  \x22userProfileFeature\x22: \x22all\x22,\n  \x22entitlementsApiUri\x22: \x22\/mycare\/v2.0\/entitlements\x22,\n  \x22apiKey\x22: \x22kprwd19696894446387888128\x22,\n  \x22myChartWebPivotEntitlements\x22: 298,\n  \x22autocompleteUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/care\/api\/sda\/kp\u002Dsearch\u002Dapi\/v1\/api\/kporg\/autocomplete\/v1\x22,\n  \x22auditServiceUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/api\/kpd\/hermes_gate\/v1\/audit\x22,\n  \x22activityEndpoint\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/prompt\u002Dbff\/v1\/activity\x22,\n  \x22careUserApiUri\x22: \x22\/care\/v1.0\/user\x22,\n  \x22apipApiUrl\x22: \x22https:\/\/apip.kaiserpermanente.org\x22,\n  \x22genesysEnv\x22: \x22E2E\x22,\n  \x22promptBFFUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/prompt\u002Dbff\/v1\/promptslist\x22,\n  \x22myChartPilotEntitlements\x22: 297,\n  \x22kpwaHomeUrl\x22: \x22https:\/\/wa\u002Dmember.kaiserpermanente.org\/home\/\x22,\n  \x22apiUrl\x22: \x22https:\/\/healthy.kaiserpermanente.org\x22,\n  \x22proxyApiUri\x22: \x22\/mycare\/v2.0\/proxyinformation\x22,\n  \x22dsDomainUrl\x22: \x22\x22,\n  \x22supportedBrowsers\x22: {\n    \x22required\x22: {\n      \x22e\x22: \u002D10,\n      \x22f\x22: \u002D10,\n      \x22o\x22: \u002D10,\n      \x22s\x22: \u002D10,\n      \x22c\x22: \u002D10\n    },\n    \x22insecure\x22: true,\n    \x22api\x22: 2021.06\n  },\n  \x22profileEndpoint\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/digital\u002Didentity\/di\u002Dbff\u002Dpnpuserprofile\/v2\/profile\x22,\n  \x22componentName\x22: \x22KP Foundation\x22,\n  \x22globalConsentEndpoint\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/prompt\u002Dbff\/v1\/consents{{CONSENT_ID}}\x22,\n  \x22profileUpdateEndpoint\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/prompt\u002Dbff\/v1\/promptinfo\x22,\n  \x22dsTargetApp\x22: \x22\x22,\n  \x22alertsBFFUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/alertsbff\x22,\n  \x22removeTokenApi\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/api\/kpd\/siae\/vicapplication\/v1r\/token\x22,\n  \x22logoutUrl\x22: \x22\/health\/mycare\/logout.wpp\x22,\n  \x22regionSwitchBFFUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/api\/kpd\/iam\/regionswitcher\u002Dservice\/v1\/switch\x22,\n  \x22craProxyCheckUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/kpd\/id\u002Daffm\u002Dservice\/v1\/members\/relationships\/craproxycheck\x22,\n  \x22getSchedulingWorkflowDataApi\x22: \x22Scheduling\/GetSchedulingWorkflowData\x22,\n  \x22pharmacyEntitlementCode\x22: 840,\n  \x22configUrl\x22: \x22\/config\u002Djson\/kp\u002Dfoundation.json\x22,\n  \x22careGapsBFFpcpUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/wppctbff\/v1\/patient\u002Dcare\u002Dteam\/general\x22,\n  \x22userComponentName\x22: \x22User Profile Component\x22,\n  \x22vucGetAdaSessionBFFUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/prod\/mycare\/appointment\u002Dcenter\/apptctr\u002Dcarerecommendation\u002Dsvc\/v1\/getAdaSession?esb\u002Denvlbl\\u003dPROD\x22,\n  \x22eppDocumentsEndpoint\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/digital\u002Didentity\/di\u002Dbff\u002Duserpreferences\/v2\/documents?envlbl\\u003dprod\x22,\n  \x22careGapsBFFserviceUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/bhprvntcaregapsbff\/v1\/caregaps\x22,\n  \x22wrapperUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/api\/kpd\/genesyschat\/v1\/chat\/ChatInbound\x22,\n  \x22botDirectLine\x22: \x22https:\/\/directline.botframework.com\/v3\/directline\/tokens\/refresh\x22,\n  \x22pmsProxyVersionId\x22: 2.2,\n  \x22dsEnvList\x22: \x22\x22,\n  \x22careGapsBFFappName\x22: \x22BH\x22,\n  \x22jsonHash\x22: \x22c6bad29fa85eaaf2a2d658a80b432604de86b757c2a7ce315a0d284661c0483f\x22,\n  \x22createProxyApiUri\x22: \x22\/mycare\/v2.0\/createproxyaccount\x22,\n  \x22proxyNoCacheApiUri\x22: \x22\/mycare\/v2.1\/proxyinformation\x22,\n  \x22getTokenApi\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/api\/kpd\/siae\/vicapplication\/v1r\/token\x22,\n  \x22eventNotificationApiUrl\x22: \x22\/v1\/event\u002Dnotification\/alerts?rxAlerts\\u003dON\x22,\n  \x22memberDataApiUri\x22: \x22\/mycare\/membership\/v1.0\/account\x22,\n  \x22keepAliveComponentName\x22: \x22Keep Alive Component\x22,\n  \x22api.keepalive.timeout\x22: 3000,\n  \x22promptBffConsumerKey\x22: \x22Z5OkZ8UDwKze2sARCiRVDiFmBAodrRmJ\x22,\n  \x22surveyUrl\x22: \x22https:\/\/apims.kaiserpermanente.org\/kp\/mycare\/api\/kpd\/siae\/vicapplication\/v1r\/survey\x22,\n  \x22myChartBackLink\x22: [\n    {\n      \x22key\x22: \x22mychartma\/home\x22,\n      \x22value\x22: \x22Welcome!\x22\n    },\n    {\n      \x22key\x22: \x22mychartma\/visits\x22,\n      \x22value\x22: \x22Appointments and Visits\x22\n    },\n    {\n      \x22key\x22: \x22mychartma\/visits\/visitdetails\x22,\n      \x22value\x22: \x22Appointment Details\x22\n    },\n    {\n      \x22key\x22: \x22mychartma\/healthadvisories\x22,\n      \x22value\x22: \x22Preventive Care\x22\n    },\n    {\n      \x22key\x22: \x22mychartma\/clinical\/careteam\x22,\n      \x22value\x22: \x22Care Team and Recent Providers\x22\n    },\n  

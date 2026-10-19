@@ -1,0 +1,832 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Hostinger",
+    "identifier": "https://hostinger.com",
+    "documentationUrl": "https://developers.hostinger.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:hostinger.com:api:domains",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Domains API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["Domains: Availability", "Domains: Portfolio", "Domains: Forwarding", "Domains: WHOIS"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-domains-mcp",
+        "toolCount": 18
+      },
+      "capabilities": ["check_domain_availability", "purchase_domain"],
+      "capabilityDetails": [
+        {
+          "name": "check_domain_availability",
+          "effect": "read",
+          "note": "Supports an optional with_alternatives flag to return suggested alternative domain names in the same call; not a separate tool."
+        },
+        {
+          "name": "purchase_domain",
+          "effect": "purchase",
+          "requiresConfirmation": true
+        }
+      ],
+      "description": "Checks domain availability across multiple TLDs (optionally returning alternative name suggestions) and supports domain registration and portfolio management through the Hostinger API.",
+      "representativeQueries": [
+        "check if example.com is available to register",
+        "find available domain names similar to my-brand",
+        "register a .com domain through the Hostinger API"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:horizons",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger AI Builder",
+      "kind": "mcp-capability",
+      "type": "application/vnd.npm.package+json",
+      "data": {
+        "package": {
+          "ecosystem": "npm",
+          "name": "@hostinger/mcp"
+        },
+        "binary": "hostinger-horizons-mcp",
+        "toolCount": 2,
+        "distributionUrl": "https://github.com/hostinger/api-mcp-server",
+        "repositoryUrl": "https://github.com/hostinger/api-mcp-server",
+        "deployment": "self-hosted",
+        "transports": ["stdio", "streamable-http"],
+        "note": "OAuth 2.0 PKCE sign-in applies only to stdio transport; streamable-http transport requires a HOSTINGER_API_TOKEN bearer token and does not support OAuth sign-in."
+      },
+      "documentationUrl": "https://www.hostinger.com/ai-builder",
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "capabilities": ["create_website_from_prompt", "get_website_edit_link"],
+      "capabilityDetails": [
+        {
+          "name": "create_website_from_prompt",
+          "effect": "write"
+        },
+        {
+          "name": "get_website_edit_link",
+          "effect": "read",
+          "note": "Returns a link for the user to edit their generated website in the AI Builder interface; does not return a build/status check."
+        }
+      ],
+      "description": "Creates websites and web applications from natural-language prompts through the Hostinger API MCP server, and returns a link to edit the generated project in the AI Builder interface.",
+      "representativeQueries": [
+        "build me a website for a bakery using AI",
+        "create a web app from a text description",
+        "get the edit link for my generated AI Builder project"
+      ],
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:agency-hosting",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Agency Hosting API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": [
+          "Agency Hosting: Websites",
+          "Agency Hosting: Domains",
+          "Agency Hosting: Datacenters",
+          "Agency Hosting: Processes"
+        ]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-agency-hosting-mcp",
+        "toolCount": 12
+      },
+      "capabilities": [
+        "provision_agency_website",
+        "manage_agency_website_domains",
+        "get_agency_website_details",
+        "delete_agency_website"
+      ],
+      "capabilityDetails": [
+        {
+          "name": "provision_agency_website",
+          "effect": "write",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "manage_agency_website_domains",
+          "effect": "write"
+        },
+        {
+          "name": "get_agency_website_details",
+          "effect": "read"
+        },
+        {
+          "name": "delete_agency_website",
+          "effect": "destructive",
+          "requiresConfirmation": true
+        }
+      ],
+      "description": "Provisions and manages websites on Hostinger Agency Plan hosting orders on behalf of agency clients: datacenter selection, website setup and status polling, domain linking/unlinking, archive import, and deletion.",
+      "representativeQueries": [
+        "provision a new website on an agency hosting order",
+        "link a client domain to an agency-hosted website",
+        "check the setup status of a new agency website"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:billing",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Billing API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["Billing: Catalog", "Billing: Payment Methods", "Billing: Subscriptions"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-billing-mcp",
+        "toolCount": 7
+      },
+      "capabilities": ["list_catalog_items", "manage_payment_methods", "list_subscriptions", "manage_auto_renewal"],
+      "capabilityDetails": [
+        {
+          "name": "list_catalog_items",
+          "effect": "read",
+          "note": "Returns available hosting/VPS/domain plans and pricing (in cents); this is the source of plan/pricing data, not the Hosting or VPS APIs."
+        },
+        {
+          "name": "manage_payment_methods",
+          "effect": "write"
+        },
+        {
+          "name": "list_subscriptions",
+          "effect": "read"
+        },
+        {
+          "name": "manage_auto_renewal",
+          "effect": "write"
+        }
+      ],
+      "description": "Retrieves catalog items and pricing for Hostinger services, manages payment methods, and manages subscriptions including auto-renewal settings.",
+      "representativeQueries": [
+        "what hosting plans and prices does Hostinger offer",
+        "list my active Hostinger subscriptions",
+        "disable auto-renewal for a subscription"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:ecommerce",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Ecommerce API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["Ecommerce: Stores", "Ecommerce: Products", "Ecommerce: Sales Channels", "Ecommerce: Shipping"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-ecommerce-mcp",
+        "toolCount": 12
+      },
+      "capabilities": [
+        "create_store",
+        "create_product",
+        "manage_sales_channels",
+        "set_store_shipping",
+        "get_store_metadata",
+        "delete_store"
+      ],
+      "capabilityDetails": [
+        {
+          "name": "create_store",
+          "effect": "write",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "create_product",
+          "effect": "write",
+          "note": "Covers both digital and physical product creation."
+        },
+        {
+          "name": "manage_sales_channels",
+          "effect": "write"
+        },
+        {
+          "name": "set_store_shipping",
+          "effect": "write"
+        },
+        {
+          "name": "get_store_metadata",
+          "effect": "read"
+        },
+        {
+          "name": "delete_store",
+          "effect": "destructive",
+          "requiresConfirmation": true,
+          "note": "Soft-delete; underlying store data is preserved."
+        }
+      ],
+      "description": "Creates and manages Hostinger-hosted online stores: store creation, digital and physical product listings, sales channels (including custom storefronts), shipping configuration, and store readiness metadata.",
+      "representativeQueries": [
+        "create a new online store",
+        "add a physical product to my store",
+        "set up shipping for my ecommerce store"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:reach",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Reach (Email Marketing) API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["Reach: Contacts", "Reach: Segmentation", "Reach: Profiles"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-reach-mcp",
+        "toolCount": 12
+      },
+      "capabilities": ["manage_contacts", "manage_segments", "list_profiles", "get_domain_dns_status"],
+      "capabilityDetails": [
+        {
+          "name": "manage_contacts",
+          "effect": "write",
+          "note": "Includes create and delete; delete is destructive."
+        },
+        {
+          "name": "manage_segments",
+          "effect": "write"
+        },
+        {
+          "name": "list_profiles",
+          "effect": "read"
+        },
+        {
+          "name": "get_domain_dns_status",
+          "effect": "read",
+          "note": "Reports MX/SPF/DKIM/DMARC status for a profile's sending domain."
+        }
+      ],
+      "description": "Manages email marketing contacts, contact groups and segments, sender profiles, and sending-domain DNS/deliverability status (MX, SPF, DKIM, DMARC) for Hostinger Reach.",
+      "representativeQueries": [
+        "add a new contact to my email marketing list",
+        "create a contact segment for engaged subscribers",
+        "check my sending domain's SPF and DKIM status"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:wordpress",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger WordPress Management API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": [
+          "WordPress: Installations",
+          "WordPress: Plugins",
+          "WordPress: Themes",
+          "WordPress: Maintenance",
+          "WordPress: Cache"
+        ]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-wordpress-mcp",
+        "toolCount": 35,
+        "note": "Tool count covers this entry's management capabilities plus WordPress installation, which is also exposed separately via the Hosting entry's install_wordpress capability."
+      },
+      "capabilities": [
+        "list_wordpress_installations",
+        "get_wordpress_core_version",
+        "update_wordpress_core",
+        "manage_wordpress_plugins",
+        "manage_wordpress_themes",
+        "toggle_maintenance_mode",
+        "manage_wordpress_cache"
+      ],
+      "capabilityDetails": [
+        {
+          "name": "list_wordpress_installations",
+          "effect": "read"
+        },
+        {
+          "name": "get_wordpress_core_version",
+          "effect": "read",
+          "note": "Also reports known vulnerabilities affecting the installed version."
+        },
+        {
+          "name": "update_wordpress_core",
+          "effect": "write",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "manage_wordpress_plugins",
+          "effect": "write",
+          "note": "Covers install, activate, deactivate, update, and uninstall."
+        },
+        {
+          "name": "manage_wordpress_themes",
+          "effect": "write",
+          "note": "Covers install, activate, update, and uninstall."
+        },
+        {
+          "name": "toggle_maintenance_mode",
+          "effect": "write"
+        },
+        {
+          "name": "manage_wordpress_cache",
+          "effect": "write",
+          "note": "Covers LiteSpeed Cache and Memcached object cache toggling/purging."
+        }
+      ],
+      "description": "Manages existing WordPress installations on Hostinger hosting beyond initial install: core updates and vulnerability checks, plugin and theme lifecycle management, maintenance mode, and cache (LiteSpeed/Memcached) control.",
+      "representativeQueries": [
+        "update the WordPress core version for my site",
+        "install and activate a WordPress plugin",
+        "turn on maintenance mode for my WordPress site"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:hosting",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Hosting API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["Hosting", "Hosting: Websites", "Hosting: WordPress", "Hosting: Subdomains", "Hosting: Cron Jobs"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-hosting-mcp",
+        "toolCount": 46
+      },
+      "capabilities": ["create_hosting_website", "install_wordpress", "manage_subdomains"],
+      "capabilityDetails": [
+        {
+          "name": "create_hosting_website",
+          "effect": "write",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "install_wordpress",
+          "effect": "write",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "manage_subdomains",
+          "effect": "write"
+        }
+      ],
+      "description": "Provides access to Hostinger hosting products and website-management operations, including website provisioning, WordPress installation, subdomains, cron jobs, and supported application deployments. Plan/pricing listings are served by the separate Billing tool group, not this API.",
+      "representativeQueries": [
+        "what hosting plans does Hostinger offer",
+        "set up a new WordPress website through the API",
+        "provision hosting for a new domain"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:vps",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger VPS API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["VPS", "VPS: Virtual Machines", "VPS: Firewall", "VPS: Snapshots", "VPS: Docker"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-vps-mcp",
+        "toolCount": 62
+      },
+      "capabilities": ["create_vps", "manage_vps_lifecycle", "manage_vps_firewall", "manage_vps_snapshots"],
+      "capabilityDetails": [
+        {
+          "name": "create_vps",
+          "effect": "purchase",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "manage_vps_lifecycle",
+          "effect": "write",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "manage_vps_firewall",
+          "effect": "write"
+        },
+        {
+          "name": "manage_vps_snapshots",
+          "effect": "write"
+        }
+      ],
+      "description": "Manages the VPS lifecycle, including provisioning, start, stop, restart, snapshots, firewall rules, and supported Docker deployment operations.",
+      "representativeQueries": [
+        "spin up a new VPS with Docker",
+        "create a snapshot of my VPS",
+        "list available VPS plans"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:dns",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger DNS API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://developers.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://developers.hostinger.com",
+      "openapi": {
+        "tags": ["DNS: Zone", "DNS: Snapshot"]
+      },
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "mcpPackage": {
+        "ecosystem": "npm",
+        "name": "@hostinger/mcp",
+        "binary": "hostinger-dns-mcp",
+        "toolCount": 8
+      },
+      "capabilities": ["get_dns_records", "update_dns_records", "delete_dns_records", "reset_dns_zone"],
+      "capabilityDetails": [
+        {
+          "name": "get_dns_records",
+          "effect": "read"
+        },
+        {
+          "name": "update_dns_records",
+          "effect": "write"
+        },
+        {
+          "name": "delete_dns_records",
+          "effect": "destructive",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "reset_dns_zone",
+          "effect": "destructive",
+          "requiresConfirmation": true
+        }
+      ],
+      "description": "Manages DNS zones and records for domains, including reading, updating, deleting, validating, resetting, and restoring DNS configurations.",
+      "representativeQueries": [
+        "add a TXT record to my domain's DNS",
+        "get current DNS records for a domain",
+        "reset a domain's DNS zone to its default configuration"
+      ],
+      "sourceVersion": "0.11.7",
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:api:agentic-mail",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger Agentic Mail API",
+      "kind": "openapi",
+      "type": "application/vnd.oai.openapi+json",
+      "url": "https://api.mail.hostinger.com/openapi/openapi.json",
+      "documentationUrl": "https://api.mail.hostinger.com/#description/introduction",
+      "authentication": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "capabilities": ["send_email", "read_mailbox", "manage_mailbox", "manage_webhooks", "manage_allow_block_lists"],
+      "capabilityDetails": [
+        {
+          "name": "send_email",
+          "effect": "external-communication",
+          "requiresConfirmation": true
+        },
+        {
+          "name": "read_mailbox",
+          "effect": "read"
+        },
+        {
+          "name": "manage_mailbox",
+          "effect": "write"
+        },
+        {
+          "name": "manage_webhooks",
+          "effect": "write"
+        },
+        {
+          "name": "manage_allow_block_lists",
+          "effect": "write"
+        }
+      ],
+      "description": "Provides programmatic mailbox access for Hostinger Email, including sending and reading mail, mailbox management, webhooks for mailbox events, and per-mailbox allow and block lists. A separately provisioned MCP server may also be available for eligible mailboxes.",
+      "representativeQueries": [
+        "send an email through the Hostinger Mail API",
+        "get notified through a webhook when a new email arrives",
+        "manage a mailbox's allow and block lists"
+      ],
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    },
+    {
+      "identifier": "urn:air:hostinger.com:server:api-mcp",
+      "trustManifest": {
+        "identity": {
+          "legalName": "Hosting Hostinger",
+          "domain": "hostinger.com",
+          "sameAs": [
+            "https://en.wikipedia.org/wiki/Hostinger",
+            "https://www.wikidata.org/wiki/Q55613975"
+          ]
+        },
+        "attestations": [
+          { "type": "domain-control", "evidence": "https://www.hostinger.com/.well-known/security.txt" },
+          { "type": "customer-reviews", "evidence": "https://www.trustpilot.com/review/www.hostinger.com" }
+        ]
+      },
+      "displayName": "Hostinger API MCP Server",
+      "kind": "mcp-package",
+      "type": "application/vnd.npm.package+json",
+      "data": {
+        "package": {
+          "ecosystem": "npm",
+          "name": "@hostinger/mcp"
+        },
+        "toolCount": 214,
+        "scopedBinaries": {
+          "hostinger-agency-hosting-mcp": 12,
+          "hostinger-billing-mcp": 7,
+          "hostinger-dns-mcp": 8,
+          "hostinger-domains-mcp": 18,
+          "hostinger-ecommerce-mcp": 12,
+          "hostinger-horizons-mcp": 2,
+          "hostinger-hosting-mcp": 46,
+          "hostinger-reach-mcp": 12,
+          "hostinger-vps-mcp": 62,
+          "hostinger-wordpress-mcp": 35
+        },
+        "distributionUrl": "https://github.com/hostinger/api-mcp-server",
+        "repositoryUrl": "https://github.com/hostinger/api-mcp-server",
+        "deployment": "self-hosted",
+        "transports": ["stdio", "streamable-http"],
+        "prerequisites": "Node.js 24 or higher",
+        "note": "OAuth 2.0 PKCE sign-in applies only to stdio transport (interactive, one-time per machine). Streamable-http transport requires HOSTINGER_API_TOKEN and does not support OAuth sign-in; HTTP defaults to localhost only (127.0.0.1:8100) unless explicitly bound to a public host."
+      },
+      "authentication": [
+        {
+          "type": "http",
+          "scheme": "bearer"
+        },
+        {
+          "type": "oauth2",
+          "flow": "authorization-code",
+          "pkce": true,
+          "note": "stdio transport only"
+        }
+      ],
+      "capabilities": [
+        "agency_hosting",
+        "billing",
+        "dns",
+        "domains",
+        "ecommerce",
+        "horizons",
+        "hosting",
+        "reach",
+        "vps",
+        "wordpress"
+      ],
+      "description": "Self-hostable MCP server exposing Hostinger API capabilities for domains, hosting, VPS, DNS, billing, ecommerce, AI Builder, Reach, WordPress, and related products. It can be installed as a package and run through stdio or Streamable HTTP for use by MCP-compatible AI clients.",
+      "representativeQueries": [
+        "find an MCP server for managing Hostinger hosting and domains",
+        "connect an AI agent to Hostinger's API through MCP",
+        "run the Hostinger MCP server locally"
+      ],
+      "catalogEntryVersion": "1.0.0",
+      "status": "active"
+    }
+  ]
+}

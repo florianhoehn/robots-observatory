@@ -1,0 +1,281 @@
+#  =========================
+# SVT robots.txt – governs AI and search access to SVT content
+#
+# SVT's journalism and content is available for public search indexing
+# and real-time retrieval. Use of our content to train AI models is
+# not permitted. This file reflects SVT's commitment to transparency about
+# how our content may and may not be used.
+#  =========================
+
+
+# =========================
+# DEFAULT: Global preferences
+# SVT allows search indexing and real-time retrieval, but not AI training.
+# =========================
+
+User-agent: *
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+
+# =========================
+# ALLOWED: Search engines
+# These crawlers index SVT content so that people can find it via search.
+# =========================
+
+# Microsoft's search engine crawler (Bing, Edge)
+User-agent: Bingbot
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+# Google's primary search crawler
+User-agent: Googlebot
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+
+# =========================
+# ALLOWED: AI retrieval (not training)
+# These crawlers fetch SVT content in real time to answer user questions.
+# They do not use the content to train AI models.
+# =========================
+
+# OpenAI's retrieval bot — used when a user asks ChatGPT to browse the web
+User-agent: ChatGPT-User
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+# OpenAI's search indexing bot for SearchGPT
+User-agent: OAI-SearchBot
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+# Anthropic's retrieval bot — used when Claude fetches pages on a user's behalf
+User-agent: Claude-User
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+# Anthropic's search indexing bot
+User-agent: Claude-SearchBot
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+# Perplexity's crawler — used for real-time AI-powered search responses
+User-agent: PerplexityBot
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+# Mistral AI — retrieval bot used when Le Chat fetches pages on a user's behalf
+User-agent: MistralAI-User
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Allow: /
+
+
+# =========================
+# ALLOWED: Social media preview crawlers
+# These fetch metadata so that SVT links display correctly when shared.
+# =========================
+
+# Meta (Facebook, Instagram) link preview crawler
+User-agent: facebookexternalhit
+Allow: /
+
+# LinkedIn link preview crawler
+User-agent: LinkedInBot
+Allow: /
+
+# X link preview crawler
+User-agent: Twitterbot
+Allow: /
+
+# TikTok link preview crawler — fetches metadata when SVT links are shared on TikTok
+User-agent: TikTokSpider
+Allow: /
+
+
+# =========================
+# DISALLOWED: AI training crawlers
+# These crawlers collect content to train AI language models or other ML systems.
+# SVT does not permit use of our content for this purpose.
+# =========================
+
+# Anthropic — legacy training crawler (deprecated, kept for compatibility)
+User-agent: anthropic-ai
+Disallow: /
+
+# Anthropic — primary training crawler
+User-agent: ClaudeBot
+Disallow: /
+
+# Brave Search - # AI-powered search and training crawler
+User-agent: Bravebot
+Disallow: /
+
+# OpenAI — training crawler for GPT models
+User-agent: GPTBot
+Disallow: /
+
+# Google — crawler for training Gemini and other Google AI products
+User-agent: Google-Extended
+Disallow: /
+
+# Apple — crawler for training Apple Intelligence models
+User-agent: Applebot-Extended
+Disallow: /
+
+# Meta — general external content fetcher used for AI training
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# Meta — content fetcher used for AI data pipelines
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+# Meta — FacebookBot, distinct from facebookexternalhit (link previews)
+User-agent: FacebookBot
+Disallow: /
+
+# Amazon — crawler used to collect training data for Alexa and AWS AI services
+User-agent: Amazonbot
+Disallow: /
+
+# Cohere — AI company crawler for training language models
+User-agent: cohere-ai
+Disallow: /
+
+# Cohere — training data crawler
+User-agent: cohere-training-data-crawler
+Disallow: /
+
+# Diffbot — commercial service that scrapes structured web data for AI training datasets
+User-agent: Diffbot
+Disallow: /
+
+# Allen Institute for AI — academic AI research crawler used to build training corpora
+User-agent: AI2Bot
+Disallow: /
+
+# Allen Institute — crawler for the Dolma open training dataset
+User-agent: AI2Bot-Dolma
+Disallow: /
+
+# Common Crawl — non-profit that builds open web datasets widely used for AI training
+User-agent: CCBot
+Disallow: /
+
+# Baichuan AI — Chinese AI company training crawler
+User-agent: BaiChuanBot
+Disallow: /
+
+# ByteDance (TikTok) — crawler used for AI training data collection
+User-agent: Bytespider
+Disallow: /
+
+# DeepSeek — Chinese AI company training crawler
+User-agent: DeepSeekBot
+Disallow: /
+
+# xAI (Grok) — training and search crawlers for Grok AI
+User-agent: GrokBot
+Disallow: /
+
+User-agent: xAI-Grok
+Disallow: /
+
+User-agent: Grok-DeepSearch
+Disallow: /
+
+# Tansuo — Chinese AI training data crawler
+User-agent: TansuoBot
+Disallow: /
+
+# WeChat — Tencent crawler used for AI data collection
+User-agent: WeChatBot
+Disallow: /
+
+# Yi (01.AI) — Chinese AI company training crawler
+User-agent: Yibot
+Disallow: /
+
+# Zhipu AI — Chinese AI company training crawler
+User-agent: ZhipuAI
+Disallow: /
+
+# 360 Spider — Chinese search and AI company crawler
+User-agent: 360Spider
+Disallow: /
+
+# Sogou — Chinese search engine with AI training data pipeline
+User-agent: Sogoubot
+Disallow: /
+
+# Pangu — Huawei AI model training crawler
+User-agent: PanguBot
+Disallow: /
+
+# Huawei — Petal Search crawler also used for AI data collection
+User-agent: PetalBot
+Disallow: /
+
+# Yandex — Russian search and AI company, additional data collection crawlers
+User-agent: YandexAdditional
+Disallow: /
+
+User-agent: YandexAdditionalBot
+Disallow: /
+
+# Omgili/Webz.io — commercial service collecting web data for AI and analytics
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+# Timpibot — data intelligence crawler used for AI training datasets
+User-agent: Timpibot
+Disallow: /
+
+# Velen — large-scale web crawler used to build AI training corpora
+User-agent: VelenPublicWebCrawler
+Disallow: /
+
+# Webz.io Extended — commercial web data pipeline for AI applications
+User-agent: Webzio-Extended
+Disallow: /
+
+# ImagesiftBot — image data collection crawler for AI vision model training
+User-agent: ImagesiftBot
+Disallow: /
+
+# img2dataset — tool used to mass-download images for AI training datasets
+User-agent: img2dataset
+Disallow: /
+
+# FriendlyCrawler — collects web content for AI training datasets
+User-agent: FriendlyCrawler
+Disallow: /
+
+# ICC-Crawler — data collection crawler used in AI research pipelines
+User-agent: ICC-Crawler
+Disallow: /
+
+# Kangaroo Bot — commercial data harvesting bot
+User-agent: Kangaroo+Bot
+Disallow: /
+
+# SemrushBot OCOB — content scraping variant used for data aggregation
+User-agent: SemrushBot-OCOB
+Disallow: /
+
+# iAsk — AI-powered search engine training crawler
+User-agent: iaskspider/2.0
+Disallow: /
+
+# You.com - search and training crawler
+User-agent: YouBot
+Disallow: /
+
+
+# Start Sitemaps
+Sitemap: https://www.svt.se/sitemap.xml
+# End Sitemaps

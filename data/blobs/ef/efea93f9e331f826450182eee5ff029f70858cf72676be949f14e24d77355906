@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+
+<html lang="en-XX">
+
+<head>
+	<meta charset="UTF-8">
+	<title>404, Page not found!</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,minimal-ui" name="viewport" />
+	<link rel="SHORTCUT ICON" href="//www.trip.com/favicon.ico" type="image/x-icon" />
+	<link rel="ICON" href="//www.trip.com/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//pages.trip.com/404B/css/global-s.css" />
+	<link rel="stylesheet" href="//pages.trip.com/404B/css/error.css" />
+</head>
+<body>
+
+<script type="text/javascript" src="//pages.trip.com/js/v4/header/header-en.js"></script>
+
+<div class="error-contain error-contain-www">
+	<div class="error-inner">
+		<div class="error-txt">
+			<h2 class="error-title">Keep looking, there's a rainbow out there for you.</h2>
+			<p class="error-con-title">We're sorry, page not found!</p>
+			<p class="error-con">Error code: 404</p>
+			<a href="https://www.trip.com/?locale=en-xx" target="_blank" class="error-back">Return to Homepage (<span id="countdown">5</span>s)</a>
+		</div>
+	</div>
+</div>
+<input id="page_id" type="hidden" value="10650016779">
+
+<script type="text/javascript" src="//pages.trip.com/js/v4/footer/footer-en.js"></script>
+
+<script>
+	const UBT_JS = {
+		"TEST": "//webresource.uat.qa.nt.ctripcorp.com/ares2/sysdev/ubt-sdk/*/default/ubt.minl.js",
+		// 国内海外 - 全球CDN加速
+		"PROD": "//static.tripcdn.com/packages/ubt/websdk/*/ubt.minl.js",
+	}
+	const today = new Date();
+	const timestamp = today.getFullYear().toString() + (today.getMonth() + 1) + today.getDate();
+	const Env = window.location.host.indexOf('trip.com') > -1 ? 'PROD' : 'TEST';
+	const UbtJs = UBT_JS[Env] + `?v=${timestamp}`;
+	const script = document.createElement('script');
+	window['$_bf'] = { loaded: true };
+	window["UBT_API"] = window["UBT_API"] || [];
+	window["UBT_ITAG"] = true;
+	window["UBT_API"].push({
+		type: "register",
+		data: {
+			appId: '700005',
+			pageId: "10650016779",
+			business: {},
+			settings: {}
+		},
+		pvId: ''
+	});
+
+	script.src = UbtJs;
+	script.type = 'text/javascript';
+	script.defer = true;
+	document.head.appendChild(script);
+
+	window.addEventListener('DOMContentLoaded', function(){
+			var countdown =  document.getElementById('countdown');
+			var second = parseInt(countdown.innerText);
+			var timer = setInterval(function(){
+					second--;
+					countdown.innerText = second;
+					if (second <= 0){
+							clearInterval(timer);
+							location.href = 'https://www.trip.com?locale=en-xx';
+					}
+			}, 1000);
+	});
+</script>
+</body>
+</html>

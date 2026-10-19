@@ -1,0 +1,53 @@
+User-agent: *
+# dont crawl pagination on article pages
+Disallow: /clanek/*timeline--pageItem=
+# dont crawl the same page with opened gallery
+Disallow: /*mol-gallery--expanded=
+# from gallery in newsfeed
+Disallow: /*mol-gallery--selected=
+# category of photo contests
+Disallow: /*fts--order=alphabetical-desc
+Disallow: /*fts--order=accept-time-desc
+Disallow: /*fts--order=accept-time-asc
+Disallow: /*fts--order=ranking-asc
+Disallow: /*fts--order=ranking-desc
+Disallow: /*fts--order=random
+Disallow: /fts--search
+
+#user verification
+Disallow: /*bankid=
+Disallow: /*mojeid=
+Disallow: /*error=
+Disallow: /*verification-bankid=
+Disallow: /*verification-mojeid=
+Disallow: /*verification-error=
+Disallow: /*sui--source-component=
+
+# Datum program a sport OH
+Disallow: /p/program-vysledky/olympiada/*/*/*-*
+
+# Vysledkovy mix
+Disallow: /p/program-vysledky*?date=*
+Allow: /p/program-vysledky*?date=zitra
+Allow: /p/program-vysledky*?date=vcera
+
+# legacy parameters
+Disallow: /*ribbon--menu=
+Disallow: /*ribbon--search=
+# historical parameters
+Disallow: /diskuse
+# article preview
+Disallow: /*previewToken=
+
+# social profile preview tab
+User-Agent: SeznamSocialBot
+Allow: /
+
+User-agent: AI
+Disallow: /
+
+Sitemap: https://www.sport.cz/sitemaps/sitemap_articles.xml
+Sitemap: https://www.sport.cz/sitemaps/sitemap_news.xml
+Sitemap: https://www.sport.cz/sitemaps/sitemap_sections.xml
+Sitemap: https://online.sport.cz/sitemap/sitemap_onlines.xml
+Sitemap: https://www.sport.cz/sitemaps/sitemap_tags.xml
