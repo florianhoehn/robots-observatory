@@ -191,7 +191,10 @@ print(f"      gaps: {gaps}")
 
 # --- record shape ---------------------------------------------------------
 check("two robots entries", len(rec["robots"]), 2)
-check("robots identical across identities", rec["robots_varies_by_identity"], False)
+check("identical files across identities: no policy variance",
+      rec["policy_varies_by_identity"], False)
+check("and no differential access", rec["access_varies_by_identity"], False)
+check("raw hash diff also false", rec["hash_differs_by_identity"], False)
 check("file_state present", rec["policy"]["file_state"], "present")
 check("GPTBot named", rec["policy"]["ai_tokens_named"], ["GPTBot"])
 check("GPTBot root-disallowed", rec["policy"]["ai_tokens_root_disallowed"], ["GPTBot"])
