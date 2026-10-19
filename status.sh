@@ -52,13 +52,26 @@ if present:
     print(f"\nrobots.txt readable on {len(present):,}; {named:,} name an AI crawler "
           f"({100*named/len(present):.1f}%)")
 
+# A host answering every unknown path with one body has a catch-all, not
+# files. cloudflare.net returns "Invalid key" for five of them.
+def catch_all(r):
+    c = collections.Counter(v.get("sha256") for v in (r.get("wellknown") or {}).values()
+                            if v.get("file_state") == "present" and v.get("sha256"))
+    return {h for h, n in c.items() if n > 1}
+
 wk = collections.Counter()
 seen = collections.Counter()
+bogus = 0
 for r in recs:
+    ca = catch_all(r)
+    if ca:
+        bogus += 1
     for k, v in (r.get("wellknown") or {}).items():
         seen[k] += 1
-        if v.get("file_state") == "present":
+        if v.get("file_state") == "present" and v.get("sha256") not in ca:
             wk[k] += 1
+if bogus:
+    print(f"\n({bogus} host(s) with a catch-all response, discounted)")
 if seen:
     print("\nwell-known files found:")
     for k in sorted(seen, key=lambda k: -wk[k]):

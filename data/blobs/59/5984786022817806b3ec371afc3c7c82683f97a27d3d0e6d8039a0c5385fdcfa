@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>404 - Page Not Found</title>
+  <style>
+    /* Figma 스펙상 모든 텍스트가 weight 400 (제목 17px/본문 13px/푸터 11px)
+       — 400 하나만 로드한다. 워드마크류는 SVG 라 폰트 불필요. */
+    @font-face {
+      font-family: 'One UI Sans GUI';
+      src: url('/assets/fonts/OneUi/OneUISansGUI-400Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      /* 페이지 배경 = 실제 앱의 .bg-book-sys-hc-bg 래퍼가 칠하는 값
+         (Figma Book_Sys/Background). body(#fcfcff)가 아니라 이 값이 화면 배경. */
+      --background: #f1f1f3;           /* Book_Sys/Background (light) */
+      --foreground: #010102;           /* Sys/On Surface Container Highest (light) */
+      --title: #4d4d52;                /* Book_Sys/On Surface Container — 404 제목 (Figma) */
+      --muted: #848487;                /* On Surface Container Lowest — 본문/푸터 (Figma) */
+      --divider: rgba(23, 23, 26, 0.3);
+    }
+    html.dark {
+      --background: #202020;           /* Book_Sys/High contrast/Color1_WindowBG */
+      --foreground: #fcfcff;           /* Color2_WindowText 근사 (near-white) */
+      --title: #fcfcff;                /* 고대비: 제목 최대 대비 */
+      --muted: #a3a3a7;                /* On Surface Container Lowest (dark) */
+      --divider: rgba(252, 252, 255, 0.3);
+    }
+
+    body {
+      font-family: 'One UI Sans GUI', Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header — BaseHeader guest: min-h-[100px], px-6, 브랜드 워드마크 중앙만
+       (햄버거·프로필·백버튼 없음 = about 비로그인 상단바) */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      padding: 0 24px;
+      flex-shrink: 0;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      padding-top: 4px;              /* BaseHeader pt-1 */
+      color: var(--foreground);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    html.dark .brand { color: #ffffff; }   /* dark:text-white */
+    .brand:hover { opacity: 0.8; }
+    /* 실제 헤더 렌더 치수: 브랜드링크 164×30(pt-1), 워드마크 SVG 164×26 fill */
+    .brand svg { width: 164px; height: 26px; display: block; }
+
+    /* Main — 콘텐츠 바디 영역. Breakpoint(Contents body area):
+       0~959dp = width 100% + 좌우 10dp margin / 960+ = width 65.6% 중앙. */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 10px;              /* 0~959: 좌우 10dp */
+    }
+    /* footer 와 공유하는 콘텐츠 바디 컬럼 폭 규칙 */
+    .body-col {
+      width: 100%;                     /* 0~959: 100% (+ main 의 10dp margin) */
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+    /* Figma sub text 는 한 줄(hug). 영어 기준 한 줄 유지하되 긴 로케일은 자연 줄바꿈 */
+    .content { max-width: 640px; text-align: center; }
+    /* Figma main text: On-Surface-Container #4D4D52, 17px, weight 400, normal */
+    .content h1 {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: normal;
+      color: var(--title);
+    }
+    /* Figma sub text: On-Surface-Container-Lowest #848487, 13px, weight 400, normal */
+    .content p {
+      margin-top: 10px;               /* Figma 텍스트 그룹 gap 10px */
+      font-size: 13px;
+      font-weight: 400;
+      line-height: normal;
+      color: var(--muted);
+    }
+
+    /* Footer — Footer.tsx: flex-col items-start gap-5 py-10, mx-auto w-full
+       px-[10px], min-[960px]:w-[65.6%] px-0 */
+    footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 20px;                      /* gap-5 */
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 10px;             /* py-10 px-[10px] */
+      user-select: none;
+    }
+    /* FooterControls: flex items-center justify-between (로케일 제거 → 토글만 우측) */
+    .footer-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+    }
+    /* ThemeToggle inline: size-8 rounded-full, icon h-5 w-5, zinc tones */
+    .contrast-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: none;
+      border-radius: 9999px;
+      color: #71717a;                 /* zinc-500 */
+      cursor: pointer;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .contrast-toggle:hover { transform: scale(1.1); color: #3f3f46; }  /* zinc-700 */
+    .contrast-toggle:active { transform: scale(0.95); }
+    html.dark .contrast-toggle { color: #d4d4d8; }  /* dark:text-zinc-300 */
+    .contrast-toggle svg { width: 20px; height: 20px; }
+    html.dark .contrast-toggle svg { filter: invert(1); }  /* dark:invert */
+
+    /* 브랜드 블록: flex-col items-start gap-2.5 */
+    .footer-brandblock {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;                      /* gap-2.5 */
+      width: 100%;
+    }
+    /* FooterBrand: flex items-center gap-2, text #848487 */
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+    .footer-brand svg { height: 12px; width: auto; }   /* h-3 */
+    .footer-copyright { font-size: 8px; line-height: 1; }
+    /* FooterLegalLinks: flex-wrap items-center gap-x-3 gap-y-1 text-[11px] #848487 */
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: 12px;               /* gap-x-3 */
+      row-gap: 4px;                   /* gap-y-1 */
+      width: 100%;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-links a:hover { text-decoration: underline; }  /* linkClassName */
+    /* FooterDivider: h-2 w-px bg-[#17171a]/30, hidden md:inline */
+    .footer-divider {
+      display: none;
+      height: 8px;
+      width: 1px;
+      background: var(--divider);
+    }
+
+    /* RTL */
+    [dir="rtl"] .footer-controls { justify-content: flex-start; }
+    [dir="rtl"] footer,
+    [dir="rtl"] .footer-brandblock { align-items: flex-end; }
+
+    @media (min-width: 768px) {        /* md:inline */
+      .footer-divider { display: inline-block; }
+    }
+    @media (min-width: 960px) {        /* 960+ : 콘텐츠 바디 65.6% 중앙 */
+      main { padding: 64px 0; }
+      .body-col { width: 65.6%; }
+      footer { width: 65.6%; padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand" aria-label="Samsung Cloud" title="Samsung Cloud">
+      <svg viewBox="0 0 162 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Samsung Cloud"><path d="M5.96033 15.6851C3.19976 15.6851 1.38029 14.5139 0 12.9454L2.59327 10.8959C3.36707 12.2135 4.55913 12.9663 5.93942 12.9663C7.44519 12.9663 8.26081 11.9834 8.26081 10.9168C8.26081 9.62019 6.71322 9.22283 5.08197 8.72091C3.03245 8.07259 0.752884 7.27788 0.752884 4.37091C0.752884 1.92404 2.88606 0 5.81394 0C8.28173 0 9.70384 0.941104 10.9377 2.21683L8.59543 3.99447C7.94711 3.03245 7.04783 2.53053 5.83485 2.53053C4.45457 2.53053 3.70168 3.28341 3.70168 4.26634C3.70168 5.47932 5.16562 5.87668 6.81778 6.42043C8.88822 7.08966 11.2305 8.00985 11.2305 10.9377C11.2305 13.3428 9.30649 15.6851 5.96033 15.6851Z" fill="currentColor"/><path d="M18.4692 15.7269C15.5204 15.7269 12.4461 13.3637 12.4461 9.36922C12.4461 5.31202 15.4158 2.99062 18.511 2.99062C20.1214 2.99062 21.5644 3.65985 22.4427 4.70553V3.24158H25.2661V15.476H22.4427V13.8865C21.5435 15.0159 20.0795 15.7269 18.4692 15.7269ZM18.9293 13.1336C21.0206 13.1336 22.5891 11.4397 22.5891 9.3274C22.5891 7.25697 21.0206 5.56298 18.9293 5.56298C16.8379 5.56298 15.2276 7.21514 15.2276 9.3274C15.2276 11.4606 16.8379 13.1336 18.9293 13.1336Z" fill="currentColor"/><path d="M26.9764 15.476V3.24158H29.7788V4.6637C30.5526 3.63894 31.7656 2.99062 33.2713 2.99062C35.1745 2.99062 36.5129 3.78533 37.2449 5.10288C38.0814 3.82716 39.5245 2.99062 41.2603 2.99062C44.5437 2.99062 46.2377 4.95649 46.2377 8.11442V15.476H43.3516V8.34447C43.3516 6.56682 42.4314 5.4375 40.6956 5.4375C39.1689 5.4375 37.9978 6.50408 37.9978 8.63725V15.476H35.1326V8.26081C35.1326 6.525 34.2543 5.4375 32.5603 5.4375C30.9709 5.4375 29.7997 6.525 29.7997 8.7V15.476H26.9764Z" fill="currentColor"/><path d="M52.45 15.7269C49.773 15.7269 47.9954 14.6812 47.0125 12.7572L49.6266 11.5024C50.2122 12.6317 51.2579 13.28 52.5754 13.28C53.9557 13.28 54.6668 12.5899 54.6668 11.7952C54.6668 10.9168 53.3074 10.7077 51.8016 10.394C49.6894 9.97572 47.5144 9.26466 47.5144 6.71322C47.5144 4.74735 49.3966 2.9488 52.3245 2.96971C54.7504 2.96971 56.3817 3.95264 57.3228 5.50024L54.9177 6.71322C54.4158 5.85577 53.4956 5.31202 52.3245 5.31202C50.986 5.31202 50.3586 5.93942 50.3586 6.62956C50.3586 7.44519 51.3415 7.65432 53.161 8.05168C55.1687 8.46995 57.4692 9.16009 57.4692 11.7324C57.4692 13.4473 55.9425 15.7478 52.45 15.7269Z" fill="currentColor"/><path d="M69.5926 3.24158V15.476H66.7902V14.0748C66.0164 15.0995 64.8243 15.7269 63.2767 15.7269C60.3907 15.7269 58.5712 13.7611 58.5712 10.4986V3.24158H61.4364V10.2058C61.4364 12.088 62.2729 13.28 64.0505 13.28C65.5981 13.28 66.7693 12.088 66.7693 9.9548V3.24158H69.5926Z" fill="currentColor"/><path d="M71.3358 15.476V3.24158H74.1382V4.74735C74.9538 3.68077 76.2295 2.99062 77.798 2.99062C80.8096 2.99062 82.6499 4.95649 82.6499 8.21899V15.476H79.7848V8.51177C79.7848 6.62956 78.8646 5.4375 77.0242 5.4375C75.4139 5.4375 74.1591 6.62956 74.1591 8.76274V15.476H71.3358Z" fill="currentColor"/><path d="M93.9043 15.2668V13.8447C93.0051 14.9949 91.5411 15.7269 89.9099 15.7269C86.9611 15.7269 83.8868 13.3637 83.8868 9.36922C83.8868 5.31202 86.8565 2.99062 89.9517 2.99062C91.562 2.99062 93.0051 3.70168 93.8834 4.81009V3.24158H96.7067V15.1623C96.7067 18.5921 94.5317 21.3945 90.3909 21.3945C87.212 21.3945 85.2462 19.9305 84.1168 17.881L86.6264 16.3543C87.5048 17.9856 88.4877 18.8012 90.4327 18.8012C92.5659 18.8012 93.9043 17.1281 93.9043 15.2668ZM90.37 13.1336C92.4613 13.1336 94.0298 11.4397 94.0298 9.3274C94.0298 7.25697 92.4613 5.56298 90.37 5.56298C88.2786 5.56298 86.6683 7.21514 86.6683 9.3274C86.6683 11.4606 88.2786 13.1336 90.37 13.1336Z" fill="currentColor"/><path d="M110.969 15.6851C106.264 15.6851 103.127 12.1925 103.127 7.84254C103.127 3.28341 106.556 0 110.969 0C113.834 0 116.323 1.50577 117.661 3.78533L115.173 5.37476C114.294 3.78533 112.935 2.8024 110.969 2.8024C108.083 2.8024 105.95 4.99831 105.95 7.84254C105.95 10.624 108.062 12.8409 110.906 12.8409C113.019 12.8409 114.503 11.6279 115.298 9.97572L117.891 11.3351C116.553 13.9284 114.001 15.6851 110.969 15.6851Z" fill="currentColor"/><path d="M118.922 15.476V0H121.766V15.476H118.922Z" fill="currentColor"/><path d="M129.334 15.7269C125.8 15.7269 122.997 12.9036 122.997 9.36922C122.997 5.81394 125.8 2.99062 129.334 2.99062C132.848 2.99062 135.671 5.81394 135.671 9.36922C135.671 12.9036 132.848 15.7269 129.334 15.7269ZM129.334 13.0709C131.321 13.0709 132.889 11.3978 132.889 9.36922C132.889 7.31971 131.321 5.64663 129.334 5.64663C127.306 5.64663 125.779 7.31971 125.779 9.36922C125.779 11.3978 127.306 13.0709 129.334 13.0709Z" fill="currentColor"/><path d="M147.936 3.24158V15.476H145.134V14.0748C144.36 15.0995 143.168 15.7269 141.62 15.7269C138.734 15.7269 136.915 13.7611 136.915 10.4986V3.24158H139.78V10.2058C139.78 12.088 140.617 13.28 142.394 13.28C143.942 13.28 145.113 12.088 145.113 9.9548V3.24158H147.936Z" fill="currentColor"/><path d="M155.203 15.7269C152.254 15.7269 149.18 13.3637 149.18 9.36922C149.18 5.31202 152.15 2.99062 155.245 2.99062C156.834 2.99062 158.277 3.63894 159.156 4.68461V0H162V15.476H159.177V13.8865C158.277 15.0159 156.813 15.7269 155.203 15.7269ZM155.663 13.1336C157.755 13.1336 159.323 11.4397 159.323 9.3274C159.323 7.25697 157.755 5.56298 155.663 5.56298C153.572 5.56298 151.962 7.21514 151.962 9.3274C151.962 11.4606 153.572 13.1336 155.663 13.1336Z" fill="currentColor"/></svg>
+    </a>
+  </header>
+
+  <main>
+    <div class="body-col">
+      <div class="content">
+        <h1 id="title">404: Page not found</h1>
+        <p id="body">That page went for a walk and never returned. Turn back now while you still can.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-controls">
+      <button type="button" class="contrast-toggle" id="contrastToggle" aria-label="Turn on High contrast mode">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" fill="black" stroke="#74EAFD" stroke-width="0.555556"/><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7235 12.0693C16.7235 9.49928 14.6402 7.4165 12.0707 7.4165C9.5013 7.4165 7.41797 9.49928 7.41797 12.0693C7.41797 14.6393 9.5013 16.7221 12.0707 16.7221C14.6402 16.7221 16.7235 14.6393 16.7235 12.0693Z" stroke="#74EAFD" stroke-width="0.833333" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.0707 7.4165C9.5013 7.4165 7.41797 9.49928 7.41797 12.0693C7.41797 14.6393 9.5013 16.7221 12.0707 16.7221V7.4165Z" fill="#74EAFD"/></svg>
+      </button>
+    </div>
+    <div class="footer-brandblock">
+      <div class="footer-brand">
+        <svg viewBox="0 0 78 12" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Samsung"><path d="M74.0556 5.27053V6.90407H75.1985V8.52481C75.2021 8.66964 75.1942 8.82583 75.1694 8.95081C75.124 9.25313 74.8381 9.76787 74.0268 9.76787C73.2204 9.76787 72.9397 9.25313 72.891 8.95081C72.8705 8.82583 72.8618 8.66964 72.8618 8.52481V3.40572C72.8618 3.22465 72.8739 3.02646 72.9122 2.87646C72.9676 2.60362 73.2083 2.06558 74.0208 2.06558C74.8738 2.06558 75.0867 2.63282 75.1355 2.87646C75.1676 3.03783 75.1694 3.3085 75.1694 3.3085V3.9301H77.9777V3.56264C77.9777 3.56264 77.9904 3.1792 77.9563 2.82137C77.7453 0.720264 76.0218 0.0555153 74.0456 0.0555153C72.0658 0.0555153 70.3773 0.726449 70.1313 2.82137C70.1091 3.01294 70.0751 3.35754 70.0751 3.56264V8.27168C70.0751 8.47677 70.0817 8.63555 70.1195 9.01036C70.3028 11.0536 72.0658 11.7779 74.0377 11.7779C76.0218 11.7779 77.7726 11.0536 77.9591 9.01036C77.9921 8.63555 77.9956 8.47677 78 8.27168V5.27053H74.0556ZM54.6924 0.356824H51.8722V8.64289C51.8767 8.78729 51.8722 8.94952 51.8475 9.06846C51.7886 9.34661 51.5539 9.88192 50.7759 9.88192C50.0079 9.88192 49.767 9.34661 49.7126 9.06846C49.6844 8.94952 49.6808 8.78729 49.6844 8.64289V0.356824H46.8651V8.38573C46.8616 8.59269 46.8777 9.01553 46.8899 9.12628C47.0845 11.2185 48.7261 11.8977 50.7759 11.8977C52.8297 11.8977 54.4703 11.2185 54.6684 9.12628C54.684 9.01553 54.7045 8.59269 54.6924 8.38573V0.356824ZM28.7806 0.356824L27.3739 9.11218L25.968 0.356824H21.4189L21.1777 11.5575H23.9646L24.04 1.18869L25.9575 11.5575H28.7851L30.7043 1.18869L30.78 11.5575H33.574L33.3245 0.356824H28.7806ZM11.938 0.356824L9.87242 11.5575H12.8845L14.4411 1.18869L15.9602 11.5575H18.9515L16.8945 0.356824H11.938ZM64.5482 9.37466L61.9222 0.356824H57.7842V11.4407H60.5216L60.3627 2.13433L63.1828 11.4407H67.1514V0.356824H64.3961L64.5482 9.37466ZM39.2281 3.27183C39.1785 3.05063 39.1929 2.81562 39.2185 2.69279C39.2982 2.33424 39.5381 1.94319 40.2291 1.94319C40.8731 1.94319 41.2507 2.34647 41.2507 2.95168V3.63656H43.9998V2.85589C43.9998 0.442543 41.8457 0.063426 40.2862 0.063426C38.322 0.063426 36.718 0.713793 36.425 2.5297C36.3475 3.02388 36.3284 3.46253 36.4516 4.02229C36.9293 6.2865 40.8535 6.94333 41.4231 8.37523C41.5236 8.64648 41.4948 8.99238 41.4435 9.19617C41.3582 9.56882 41.1086 9.94362 40.3688 9.94362C39.675 9.94362 39.2573 9.54293 39.2573 8.93902L39.2564 7.86409H36.2974V8.71854C36.2974 11.1944 38.2281 11.9415 40.3075 11.9415C42.2991 11.9415 43.9439 11.2579 44.2078 9.40486C44.3337 8.44743 44.2388 7.82382 44.1882 7.58895C43.7272 5.26665 39.5447 4.5681 39.2281 3.27183ZM2.96387 3.24436C2.90989 3.01855 2.92249 2.78024 2.95256 2.65598C3.02873 2.29915 3.26999 1.90119 3.97316 1.90119C4.62536 1.90119 5.00937 2.30836 5.00937 2.91845V3.61168H7.79069V2.82482C7.79069 0.388322 5.60372 0 4.02714 0C2.0465 0 0.428115 0.660435 0.132014 2.48943C0.0509725 2.99152 0.0370793 3.43319 0.154202 3.99914C0.637013 6.28908 4.60001 6.95124 5.17661 8.40026C5.28457 8.66964 5.25192 9.01553 5.19837 9.22724C5.10688 9.60377 4.85531 9.98389 4.10933 9.98389C3.41275 9.98389 2.99609 9.5763 2.99609 8.96404L2.99222 7.88624H0V8.7427C0 11.2469 1.95801 12 4.05363 12C6.06835 12 7.72282 11.3104 7.99272 9.43593C8.12688 8.46973 8.02623 7.84093 7.98098 7.60247C7.51034 5.25169 3.28131 4.55544 2.96387 3.24436Z" fill="currentColor"/></svg>
+        <span class="footer-copyright">© 2022 Samsung</span>
+      </div>
+      <div class="footer-links">
+        <a href="#" id="privacyLink" target="_blank" rel="noreferrer">privacy policy</a>
+        <span class="footer-divider"></span>
+        <a href="#" id="termsLink" target="_blank" rel="noreferrer">terms and conditions</a>
+        <span class="footer-divider"></span>
+        <a href="/contact-us" id="contactLink">Contact Us</a>
+        <span class="footer-divider"></span>
+        <a href="/about" id="aboutLink">About Samsung Cloud</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var MESSAGES = {"en":{"title":"404: Page not found","body":"That page went for a walk and never returned. Turn back now while you still can.","contrastOn":"Turn on High contrast mode","contrastOff":"Turn off High contrast mode","privacyPolicy":"Privacy Policy","termsConditions":"Terms & Conditions","aboutSamsung":"About Samsung Cloud","contactUs":"Contact us"},"fr":{"title":"404 : page introuvable","body":"Cette page est introuvable. Revenez en arrière pendant qu'il en est encore temps.","contrastOn":"Activer le mode Contraste élevé","contrastOff":"Désactiver le mode Contraste élevé","privacyPolicy":"Politique confid.","termsConditions":"Conditions utilisation","aboutSamsung":"À propos de Samsung Cloud","contactUs":"Nous contacter"},"pt-PT":{"title":"404: Página não encontrada","body":"Essa página foi dar uma volta e nunca mais voltou. Volte para trás agora enquanto ainda pode.","contrastOn":"Ligar Modo de alto contraste","contrastOff":"Desligar Modo de alto contraste","privacyPolicy":"Política de Privacidade","termsConditions":"Termos e Condições","aboutSamsung":"Acerca da Samsung Cloud","contactUs":"Contacte-nos"},"ar":{"title":"404: لم يتم العثور على الصفحة","body":"يبدو أن هذه الصفحة قررت الاختباء. عُد أدراجك الآن بينما لا يزال بإمكانك القيام بذلك.","contrastOn":"تشغيل وضع التباين العالي","contrastOff":"إيقاف تشغيل وضع التباين العالي","privacyPolicy":"سياسة الخصوصية","termsConditions":"البنود والشروط","aboutSamsung":"حول Samsung Cloud","contactUs":"اتصل بنا"},"zh-CN":{"title":"404：找不到网页","body":"该网页已走失，建议放弃访问。","contrastOn":"启用高对比度模式","contrastOff":"关闭高对比度模式","privacyPolicy":"隐私政策","termsConditions":"条款和条件","aboutSamsung":"关于三星云","contactUs":"联系我们"},"zh-HK":{"title":"404：找不到頁面","body":"該頁面已丟失並再也沒有回來。趁還有機會時立即返回。","contrastOn":"開啟高對比模式","contrastOff":"關閉高對比度模式","privacyPolicy":"私隱政策","termsConditions":"條款及細則","aboutSamsung":"關於三星雲端","contactUs":"聯絡我們"},"id":{"title":"404: Halaman tidak ditemukan","body":"Halamannya pergi jalan-jalan dan tidak pernah kembali. Kembali sekarang selagi masih bisa.","contrastOn":"Aktifkan Mode kontras tinggi","contrastOff":"Nonaktifkan Mode kontras tinggi","privacyPolicy":"Kebijakan Privasi","termsConditions":"Syarat dan Ketentuan","aboutSamsung":"Tentang Samsung Cloud","contactUs":"Hubungi kami"},"ja":{"title":"404: ページが見つかりません","body":"見つからないページです。前のページに戻りましょう。","contrastOn":"[高コントラストモード]をON","contrastOff":"[高コントラストモード]をOFF","privacyPolicy":"プライバシーポリシー","termsConditions":"利用規約","aboutSamsung":"Samsungクラウドについて","contactUs":"お問い合わせ"},"ko":{"title":"404: 페이지를 찾을 수 없습니다","body":"이제 다시 볼 수 없는 페이지입니다. 돌아가 주세요.","contrastOn":"고대비 모드 켜기","contrastOff":"고대비 모드 끄기","privacyPolicy":"개인정보 처리방침","termsConditions":"이용약관","aboutSamsung":"삼성 클라우드 정보","contactUs":"문의하기"},"ms-MY":{"title":"404: Halaman tidak ditemui","body":"Halaman tidak dapat ditemui. Kembali ke halaman sebelumnya.","contrastOn":"Hidupkan Mod kontras tinggi","contrastOff":"Matikan Mod kontras tinggi","privacyPolicy":"Dasar Privasi","termsConditions":"Terma dan Syarat","aboutSamsung":"Mengenai Samsung Cloud","contactUs":"Hubungi kami"},"zh-TW":{"title":"404：找不到頁面","body":"目前找不到該頁面。趁現在趕快掉頭吧。","contrastOn":"開啟高對比模式","contrastOff":"關閉高對比模式","privacyPolicy":"隱私權政策","termsConditions":"條款與條件","aboutSamsung":"關於三星雲端","contactUs":"與我們聯絡"},"th":{"title":"404: ไม่พบหน้า","body":"หน้านี้หายออกไปจากระบบแล้ว กลับไปหน้าเดิมก่อนที่คุณจะย้อนกลับไปไม่ได้","contrastOn":"เปิดโหมดคอนทราสต์สูง","contrastOff":"ปิดโหมดคอนทราสต์สูง","privacyPolicy":"นโยบายความเป็นส่วนตัว","termsConditions":"ข้อตกลงและเงื่อนไข","aboutSamsung":"เกี่ยวกับ Samsung Cloud","contactUs":"ติดต่อเรา"},"vi":{"title":"404: Không tìm thấy trang","body":"Trang đó đã đi dạo và không bao giờ quay trở lại. Quay lại ngay bây giờ trong khi bạn vẫn có thể.","contrastOn":"Bật chế độ Tương phản cao","contrastOff":"Tắt chế độ Tương phản cao","privacyPolicy":"Chính sách bảo mật","termsConditions":"Đ.khoản và Điều kiện","aboutSamsung":"Thông tin Samsung Cloud","contactUs":"Liên hệ chúng tôi"},"ru":{"title":"404: страница не найдена","body":"Эта страница ушла гулять и не вернулась. Лучше перейти назад, пока еще не поздно.","contrastOn":"Включить режим высокой контрастности","contrastOff":"Отключить режим высокой контрастности","privacyPolicy":"Политика конфиденциальности","termsConditions":"Условия использов.","aboutSamsung":"О Samsung Cloud","contactUs":"Свяжитесь с нами"},"de":{"title":"404: Seite nicht gefunden","body":"Diese Seite ist verschwunden und nie wieder aufgetaucht. Kehre um, solange du noch kannst.","contrastOn":"Modus für hohen Kontrast aktivieren","contrastOff":"Modus für hohen Kontrast deaktivieren","privacyPolicy":"Datenschutzrichtlinie","termsConditions":"AGB","aboutSamsung":"Info zu Samsung Cloud","contactUs":"Kontaktiere uns"},"nl":{"title":"404: Pagina niet gevonden","body":"Die pagina bestaat niet meer. Ga terug naar de vorige pagina.","contrastOn":"Hoge contraststand inschakelen","contrastOff":"Hoge contraststand uitschakelen","privacyPolicy":"Privacybeleid","termsConditions":"Algemene voorwaarden","aboutSamsung":"Over Samsung Cloud","contactUs":"Neem contact op"},"hr":{"title":"404: stranica nije pronađena","body":"Ta je stranica otišla u šetnju i nikad se nije vratila. Vratite se dok još možete.","contrastOn":"Uključi Način jakog kontrasta","contrastOff":"Isključi Način jakog kontrasta","privacyPolicy":"Prav. o privatnosti","termsConditions":"Uvjeti i odredbe","aboutSamsung":"O Samsung Cloudu","contactUs":"Obratite nam se"},"bg":{"title":"404: Страницата не е намерена","body":"Тази страница отиде да се разходи и не се завърна. Върнете се сега, докато все още можете.","contrastOn":"Включване на „Режим на висок контраст“","contrastOff":"Изключване на „Режим на висок контраст“","privacyPolicy":"Политика поверит.","termsConditions":"Правила и условия","aboutSamsung":"За Samsung Cloud","contactUs":"Връзка с нас"},"el":{"title":"404: Η σελίδα δεν βρέθηκε","body":"Αυτή η σελίδα πήγε βόλτα και δεν ξαναγύρισε. Πηγαίνετε πίσω τώρα που μπορείτε.","contrastOn":"Ενεργοποίηση λειτουργίας υψηλής αντίθεσης","contrastOff":"Απενεργοποίηση λειτουργίας υψηλής αντίθεσης","privacyPolicy":"Πολιτική απορρήτου","termsConditions":"Όροι και Προϋποθ.","aboutSamsung":"Πληροφ. για το Samsung Cloud","contactUs":"Επικοινωνία"},"cs":{"title":"404: Stránka nebyla nalezena","body":"Stránka šla na procházku a už se nevrátila. Vraťte se zpět, dokud můžete.","contrastOn":"Zapnout režim Vysoký kontrast","contrastOff":"Vypnout režim Vysoký kontrast","privacyPolicy":"Zás. ochr. os. údajů","termsConditions":"Smluvní podmínky","aboutSamsung":"O aplikaci Samsung Cloud","contactUs":"Kontaktujte nás"},"da":{"title":"404: Siden blev ikke fundet","body":"Denne side gik sig en tur og vendte aldrig tilbage. Vend om nu, mens du stadig kan.","contrastOn":"Aktiver tilstanden Høj kontrast","contrastOff":"Deaktiver tilstanden Høj kontrast","privacyPolicy":"Fortrolighedspolitik","termsConditions":"Vilkår & betingelser","aboutSamsung":"Om Samsung Cloud","contactUs":"Kontakt os"},"et":{"title":"404: lehte ei leitud","body":"See lehekülg läks jalutama ega tulnudki enam tagasi. Pöörake ümber, kuni veel on võimalus.","contrastOn":"Lülita kõrge kontrastsuse režiim sisse","contrastOff":"Lülita kõrge kontrastsuse režiim välja","privacyPolicy":"Privaatsusavald.","termsConditions":"Tingimused","aboutSamsung":"Samsung Cloudi teave","contactUs":"Võtke meiega ühend."},"fi":{"title":"404: Sivua ei löydy","body":"Sivu on mennyt. Käänny takaisin, kun vielä voit.","contrastOn":"Ota suuren kontrastin tila käyttöön","contrastOff":"Poista suuren kontrastin tila käytöstä","privacyPolicy":"Tietosuojakäytäntö","termsConditions":"Käyttöehdot","aboutSamsung":"Tietoja Samsung Cloudista","contactUs":"Ota meihin yhteyttä"},"mk-MK":{"title":"404: страницата не е најдена","body":"Таа страница отиде да се прошета и никогаш не се врати. Вратете се сега, додека сѐ уште можете.","contrastOn":"Вклучи Режим на голем контраст","contrastOff":"Исклучи Режим на голем контраст","privacyPolicy":"Полиса за приватност","termsConditions":"Одредби и услови","aboutSamsung":"За Samsung Cloud","contactUs":"Контактирајте со нас"},"hu":{"title":"404: Az oldal nem található","body":"Az oldal leugrott a boltba, és nem jött haza többé. Forduljon vissza, amíg még lehet.","contrastOn":"Nagy kontrasztú üzemmód bekapcsolása","contrastOff":"Nagy kontrasztú üzemmód kikapcsolása","privacyPolicy":"Adatvédelmi nyilatk.","termsConditions":"Használati feltételek","aboutSamsung":"A Samsung Cloud névjegye","contactUs":"Kapcsolat"},"ga":{"title":"404: Ní bhfuarthas an leathanach","body":"Chuaigh an leathanach sin amach ag spaisteoireacht ach níor tháinig sé ar ais riamh. Cas ar ais anois agus an deis fós agat.","contrastOn":"Cas air Mód ardchodarsnachta","contrastOff":"Cas as Mód ardchodarsnachta","privacyPolicy":"Beartas Príobháide","termsConditions":"Téarmaí & Coinníoll.","aboutSamsung":"Eolas faoi Samsung Cloud","contactUs":"Déan teagmháil linn"},"it":{"title":"404: Pagina non trovata","body":"Quella pagina non è più disponibile. Tornate indietro.","contrastOn":"Attiva Modalità a contrasto elevato","contrastOff":"Disattiva Modalità a contrasto elevato","privacyPolicy":"Informativa privacy","termsConditions":"Termini e condizioni","aboutSamsung":"Informazioni su Samsung Cloud","contactUs":"Contattaci"},"kk-KZ":{"title":"404: Бет табылмады","body":"Сол бет өтіп кетті және ешқашан қайтарылмайды. Мүмкін болған кезде қазір қайта қосыңыз.","contrastOn":"Жоғары контраст режимін қосу","contrastOff":"Жоғары контраст режимін өшіру","privacyPolicy":"Құпиялылық саясаты","termsConditions":"Талаптар мен шарттар","aboutSamsung":"Samsung Cloud туралы","contactUs":"Бізге хабарласыңыз"},"lv":{"title":"404: lapa nav atrasta","body":"Šī lapa devās pastaigā un neatgriezās. Dodieties atpakaļ, kamēr vēl varat.","contrastOn":"Ieslēgt augsta kontrasta režīmu","contrastOff":"Izslēgt augsta kontrasta režīmu","privacyPolicy":"Konfidenc. politika","termsConditions":"Noteikumi un nosac.","aboutSamsung":"Par Samsung Cloud","contactUs":"Sazinieties ar mums"},"lt":{"title":"404: puslapis nerastas","body":"Puslapis kažkur dingo ir nebeatsirado. Sugrįžk, kol dar gali.","contrastOn":"Įjungti didelio kontrasto režimą","contrastOff":"Išjungti didelio kontrasto režimą","privacyPolicy":"Privatumo politika","termsConditions":"Nuostatos ir sąlygos","aboutSamsung":"Apie „Samsung Cloud“","contactUs":"Susisiekite su mumis"},"ro":{"title":"404: Pagina a fost găsită","body":"Această pagină a fost plecată puțin și nu s-a mai întors. Întoarceți-vă cât mai puteți.","contrastOn":"Pornire Mod Contrast înalt","contrastOff":"Oprire Mod Contrast înalt","privacyPolicy":"Politică de confid.","termsConditions":"Termeni și condiții","aboutSamsung":"Despre Samsung Cloud","contactUs":"Contactați-ne"},"sr":{"title":"404: Stranica nije pronađena","body":"Ta stranica je otišla u šetnju i nije se vratila. Vratite se sada, dok još možete.","contrastOn":"Uključi režim Visoki kontrast","contrastOff":"Isključi režim Visoki kontrast","privacyPolicy":"Politika privatnosti","termsConditions":"Uslovi i odredbe","aboutSamsung":"O Samsung Cloud-u","contactUs":"Kontaktirajte nas"},"nb":{"title":"404: Fant ikke siden","body":"Siden gikk en tur og kom aldri tilbake. Gå tilbake mens du fortsatt kan.","contrastOn":"Slå på Høy kontrast-modus","contrastOff":"Slå av Høy kontrast-modus","privacyPolicy":"Personvernerklæring","termsConditions":"Vilkår og betingelser","aboutSamsung":"Om Samsung Cloud","contactUs":"Kontakt oss"},"pl":{"title":"404: nie znaleziono strony","body":"Ta strona poszła na spacer i nigdy nie wróciła. Cofnij się teraz, dopóki możesz.","contrastOn":"Włącz Tryb dużego kontrastu","contrastOff":"Wyłącz Tryb dużego kontrastu","privacyPolicy":"Polityka prywatności","termsConditions":"Zasady i warunki","aboutSamsung":"Samsung Cloud — informacje","contactUs":"Kontakt z nami"},"sk":{"title":"404: stránka sa nenašla","body":"Táto stránka išla na prechádzku a nikdy sa nevrátila. Teraz sa vráťte späť, kým ešte môžete.","contrastOn":"Zapnúť režim vysokého kontrastu","contrastOff":"Vypnúť režim vysokého kontrastu","privacyPolicy":"Zásady ochrany údajov","termsConditions":"Podmienky a požiad.","aboutSamsung":"Samsung Cloud – informácie","contactUs":"Kontaktujte nás"},"sl":{"title":"404: strani ni mogoče najti","body":"Ta stran je šla na sprehod in se ni vrnila. Obrnite se, dokler se še lahko.","contrastOn":"Vklopi visokokontrastni način","contrastOff":"Izklopi visokokontrastni način","privacyPolicy":"Prav. o zasebnosti","termsConditions":"Določila in pogoji","aboutSamsung":"Več o storitvi Samsung Cloud","contactUs":"Stik z nami"},"es-ES":{"title":"404: Página no encontrada","body":"La página se fue a dar una vuelta y nunca volvió. Vuelve atrás ahora mientras puedas.","contrastOn":"Activar el modo Contraste alto","contrastOff":"Desactivar el modo Contraste alto","privacyPolicy":"Política de privacidad","termsConditions":"Términos y condiciones","aboutSamsung":"Acerca de Samsung Cloud","contactUs":"Contáctanos"},"sv":{"title":"404: Sidan hittades inte","body":"Sidan försvann och kom inte tillbaka. Gå tillbaka nu medan du kan.","contrastOn":"Slå på Högkontrastläge","contrastOff":"Stäng av Högkontrastläge","privacyPolicy":"Sekretesspolicy","termsConditions":"Villkor","aboutSamsung":"Om Samsung Cloud","contactUs":"Kontakta oss"},"tr":{"title":"404: Sayfa bulunamadı","body":"Bu sayfa gezmeye çıkıp bir daha geri dönmedi. Kaçabiliyorken kaçın.","contrastOn":"Yüksek kontrast modunu aç","contrastOff":"Yüksek kontrast modunu kapat","privacyPolicy":"Gizlilik İlkesi","termsConditions":"Hüküm ve Koşullar","aboutSamsung":"Samsung Cloud hakkında","contactUs":"Bize ulaşın"},"uk":{"title":"Помилка 404: сторінку не знайдено","body":"Ця сторінка пішла на прогулянку й не повернулася. Повертайте назад, поки можете.","contrastOn":"Увімкнути режим високої контрастності","contrastOff":"Вимкнути режим високої контрастності","privacyPolicy":"Політика конфіденційності","termsConditions":"Умови та положення","aboutSamsung":"Про Samsung Cloud","contactUs":"Зв’яжіться з нами"},"en-GB":{"title":"404: Page not found","body":"That page went for a walk and never returned. Turn back now while you still can.","contrastOn":"Turn on High contrast mode","contrastOff":"Turn off High contrast mode","privacyPolicy":"Privacy Policy","termsConditions":"Terms & Conditions","aboutSamsung":"About Samsung Cloud","contactUs":"Contact us"},"uz-UZ":{"title":"404: Sahifa topilmadi","body":"Bu sahifa ketdi va endi qaytmaydi. Hali imkoni borida qaytarib oling.","contrastOn":"Yuqori kontrast rejimini yoqish","contrastOff":"Yuqori kontrast rejimini o‘chirish","privacyPolicy":"Maxfiylik siyosati","termsConditions":"Talab va shartlar","aboutSamsung":"Samsung Cloud haqida","contactUs":"Bog‘lanish"},"pt-BR":{"title":"404: Página não encontrada","body":"Essa página saiu para passear e nunca mais voltou. Volte atrás enquanto você ainda pode.","contrastOn":"Ativar o Modo de alto contraste","contrastOff":"Desativar o Modo de alto contraste","privacyPolicy":"Política Privacidade"

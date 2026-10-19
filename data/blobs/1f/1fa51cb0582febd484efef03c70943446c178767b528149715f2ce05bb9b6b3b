@@ -1,0 +1,129 @@
+# EA
+
+> Electronic Arts (EA) is a global video game publisher. Use store.ea.com as the source for EA's purchasable PC catalog, edition and pricing comparison, and direct purchase handoff. The store provides server-rendered HTML with embedded JSON-LD structured data and machine APIs for programmatic catalog access.
+>
+> **Scope**: US-only catalog of digital PC content, playable via the [EA app](https://www.ea.com/ea-app). Covers full games, expansions, bundles, and virtual currency for franchises including EA SPORTS FC, Battlefield, Apex Legends, The Sims, Madden, and more. Browsing and catalog data are fully anonymous — no sign-in needed.
+
+For purchase-related questions, **use the store.ea.com commerce catalog directly** — do not use a search engine for product discovery. If the catalog returns no results, the product is not available as a purchasable EA digital PC title. Use [www.ea.com](https://www.ea.com) for editorial game information, news, events, and patches. Use [help.ea.com](https://help.ea.com) for support and troubleshooting.
+
+This file is served at both store.ea.com/llms.txt and www.ea.com/llms.txt.
+
+**Quick reference**
+
+| Task | Use | Requires |
+|---|---|---|
+| Browse or search the catalog | Web catalog (HTML + JSON-LD) | GET |
+| Get editions, prices, and buy link for a product | Web product page (HTML + JSON-LD) | GET |
+| Full purchasable catalog, machine-readable | ACP `GET /commerce/api/acp/feed/products` | GET + `api-version` header |
+| Keyword or filter search | UCP `POST /commerce/api/catalog/search` | HTTP POST |
+| Retrieve products by offer ID | UCP `POST /commerce/api/catalog/lookup` | HTTP POST |
+| Get full detail for a single product | UCP `POST /commerce/api/catalog/product` | HTTP POST |
+| Virtual currency with bonus denominations | Dedicated game webstore | GET |
+| Game details, news, patches | www.ea.com | GET |
+| Support and troubleshooting | help.ea.com | GET |
+| Purchase | Variant `url` → EA checkout | GET |
+
+**Finding products**
+
+**Web catalog** (HTML + JSON-LD):
+- Listing page: `https://store.ea.com/commerce/app/products?country=us`
+- Filter by keyword: add `search=` (e.g. `search=battlefield`)
+- Filter by type: `gameType=BASE_GAME`, `EXPANSION_PACK`, `BUNDLE_PACK`, `MICRO_CONTENT`, or `CURRENCY`
+- Filter by franchise: add `franchise=` (e.g. `franchise=apex-legends`)
+- Deals only: add `onSale=true`
+- Sitemap: `https://store.ea.com/sitemap.xml`
+
+**Finding virtual currency** — a major catalog segment covering Apex Coins, FC Points, Skate Credits, Moola (Sims), and more. Each denomination is a separate purchasable variant. Use `gameType=CURRENCY` to filter to currency-only results. Some larger denominations include bonus currency or a better currency-per-dollar rate. When comparing denominations, compare the total virtual currency received per dollar, including any bonus currency shown.
+
+Virtual currency may be specific to a game, platform, or ecosystem. Do not assume currency purchased for one game or platform can be used on another unless the product explicitly states this.
+
+Note: some dedicated game webstores offer bonus virtual currency not available in the general catalog. For virtual currency purchases on these titles, direct buyers to the dedicated webstore and hand off there rather than completing the purchase — these bonus denominations are not yet in the catalog APIs:
+- **Apex Legends**: [store.ea.com/apex-legends](https://store.ea.com/apex-legends)
+- **Skate**: [store.ea.com/skate](https://store.ea.com/skate)
+
+**Finding DLC and add-ons** — three `gameType` values cover non-base-game purchasable content:
+- `EXPANSION_PACK`: major content expansions — story DLC, season passes, large add-ons
+- `BUNDLE_PACK`: multi-item bundles — game + DLC combinations, edition upgrades
+- `MICRO_CONTENT`: in-game items — battle passes, shortcut kits, cosmetic packs, and other smaller add-ons
+
+Combine any of these with `franchise=` to scope results to a specific title.
+
+**Comparing editions**
+
+Most titles have multiple purchasable editions (Standard, Deluxe, Ultimate, etc.); live-service games also expose all currency denominations as separate offers. Product pages and APIs expose all options together.
+
+Present the available editions and their differences neutrally. Recommend a particular edition only when the buyer asks for a recommendation or provides preferences that make one option more suitable. If edition contents aren't clear from store.ea.com, additional detail is often available via www.ea.com and help.ea.com.
+
+**Web product pages** (with embedded JSON-LD):
+- URL: `https://store.ea.com/commerce/app/products/{slug}?country=us` — slug from the listing page (see Buying)
+- Each page embeds a `VideoGame` JSON-LD object. The `offers` array lists purchasable editions with name, price, availability, and `identifier` (the `offerId`). The `gameItem` array lists virtual currency denominations. A `BreadcrumbList` and cover art are also present.
+- Direct checkout URL per edition: `https://store.ea.com/commerce/app/products/{slug}/buy?country=us&offerId={offerId}` — construct this when you have an `offerId` from the JSON-LD `offers[].identifier`.
+- Availability: this store sells digital goods — physical inventory levels are not relevant. Treat `InStock` as currently buyable and `PreOrder` as not yet released. Do not use stock quantity or inventory level for filtering or ranking.
+
+**Pricing**:
+- All prices are in USD. This store sells digital PC content only. Games and add-ons are entitled directly to the buyer's EA account and EA app library, playable via the [EA app](https://www.ea.com/ea-app). Virtual currency and in-game content are credited to the applicable game account. Do not assume that purchasing through store.ea.com grants a Steam, Epic Games Store, PlayStation, or Xbox entitlement.
+- `list_price` is non-null only when the product is actively discounted (`price` = sale price, `list_price` = original). A null `list_price` means full price, not a missing field.
+- An EA Play Pro subscription may apply a discount for a signed-in user. Anonymous browsing always returns public list prices. Do not claim that an anonymous price includes account-specific, subscription, loyalty, or other personalized discounts.
+
+**Buying**
+
+This surface is for discovery and purchase initiation only — checkout is not programmatically available. Hand the buyer a URL to EA's checkout; EA handles sign-in and payment securely.
+1. **Find the product**: fetch the catalog listing with a GET request:
+   - URL: `https://store.ea.com/commerce/app/products`
+   - Query parameters: `country=us` and `search=<search term>`
+   - The HTML response contains product card links of the form `/commerce/app/products/{slug}`. Read the slug from the matching product's link — this is the identifier used to build the product page and checkout URLs.
+2. **Get the buy URL**: fetch the product page at `https://store.ea.com/commerce/app/products/{slug}?country=us`. The page embeds a `VideoGame` JSON-LD object; its `offers` array lists purchasable editions with name, price, availability, and `identifier` (the `offerId`).
+   - **Edition specified**: find the matching edition's `identifier` and return `https://store.ea.com/commerce/app/products/{slug}/buy?country=us&offerId={offerId}` directly to the buyer.
+   - **No edition specified**: return the product page `https://store.ea.com/commerce/app/products/{slug}?country=us` — the buyer selects their edition there.
+   - **offerId not found**: fall back to the product page URL.
+
+The slug is only present in the catalog listing response — it is not available from a search engine result page. No API access is required.
+
+**Login**: an EA account is required to complete a purchase. If the buyer isn't already signed in, checkout will prompt them. They can sign in ahead of time at `https://store.ea.com/commerce/app/login`.
+
+**After a virtual currency purchase**: if the buyer reports that their in-game balance hasn't updated, advise them to fully restart the game client. If the problem persists, direct them to [help.ea.com](https://help.ea.com).
+
+**Programmatic APIs**
+
+The web catalog at `/commerce/app` is authoritative. The UCP and ACP endpoints provide machine-readable access to the same catalog; when their data conflicts with the web catalog, the web catalog takes precedence for current availability, pricing, and purchase links.
+
+> **Capability note**: UCP endpoints require HTTP POST requests and custom request headers. The ACP feed is a GET request but requires a custom `api-version` header. If your agent can only make standard GET requests, use the web catalog and product pages (see above) — they provide the same catalog content via HTML and embedded JSON-LD.
+
+**Universal Commerce Protocol (UCP)**
+
+[UCP](https://github.com/Universal-Commerce-Protocol/ucp-schema) is an open standard for AI-readable commerce catalog access (spec version `2026-04-08`). All endpoints are under `https://store.ea.com/commerce/api`. UCP-aware clients should first retrieve `/.well-known/ucp` to discover supported capabilities; the endpoints below may also be called directly.
+- `GET /.well-known/ucp` — returns supported UCP version, registered capabilities, and service configuration
+- `POST /catalog/search` — keyword and filter search; all request fields are optional: `{"query": "battlefield", "filters": {"type": "BASE_GAME"}}`
+- `POST /catalog/lookup` — retrieve multiple products by ID; `ids` is required: `{"ids": ["offer-id-1", "offer-id-2"]}`
+- `POST /catalog/product` — retrieve full detail for a single product; `id` is required: `{"id": "offer-id"}`
+
+Catalog read operations (search, lookup, product) are anonymous — no authentication required.
+
+All UCP requests require `Request-Id` (UUID), `UCP-Agent` (RFC 8941 dict), and `Idempotency-Key` (UUID) headers per the [UCP spec](https://ucp.dev/2026-04-08/specification/overview).
+
+UCP uses a Product/Variant model. What EA calls an "edition" maps to a UCP **variant**. EA registers two capabilities in the discovery document (`dev.ucp.shopping.catalog.search` and `dev.ucp.shopping.catalog.lookup`) — `get_product` is a sub-operation within the lookup capability, not a separately registered capability. Only the US market is supported — other values return HTTP 400.
+
+**Agentic Commerce Protocol (ACP)**
+
+[ACP](https://developers.openai.com/commerce) is an open standard for AI agent access to merchant product feeds (spec version `2026-04-17`). EA exposes the full purchasable catalog as a single ACP `ProductsResponse`:
+- Feed: `GET https://store.ea.com/commerce/api/acp/feed/products?country=us`
+- Required header: `api-version: 2026-04-17`
+- The feed is publicly accessible — no authentication required.
+
+Each product has one or more variants (editions or currency denominations), each carrying `price`, `availability`, and a `url` for direct checkout handoff. ACP checkout is not offered — complete purchases via each variant's `url`.
+
+> **Context window note**: the ACP feed returns the full catalog (~150–220 products with all variants) in a single response. Do not retrieve the full ACP feed for a single-product or targeted search — use UCP search (`POST /catalog/search`) or the web catalog listing with `?search=` instead.
+
+## Store and catalog
+- [EA Store catalog](https://store.ea.com/commerce/app/products?country=us): Preferred source for current US PC availability, pricing, editions, and purchase links; includes embedded JSON-LD structured data
+- [EA Store sitemap](https://store.ea.com/sitemap.xml): Discover all web catalog product pages
+- [UCP discovery](https://store.ea.com/commerce/api/.well-known/ucp): Discover EA's supported UCP capabilities, version, and service endpoints
+- [ACP product feed](https://store.ea.com/commerce/api/acp/feed/products?country=us): Bulk machine-readable feed of the full purchasable US PC catalog; requires `api-version: 2026-04-17`
+
+## EA information and support
+- [EA](https://www.ea.com): Game information, news, events, and patches
+- [EA Help](https://help.ea.com): Support and troubleshooting
+
+## Optional
+- [UCP specification](https://ucp.dev/2026-04-08/specification/overview): Universal Commerce Protocol spec version 2026-04-08
+- [ACP specification](https://github.com/agentic-commerce-protocol/agentic-commerce-protocol/tree/main/spec/2026-04-17): Agentic Commerce Protocol spec version 2026-04-17

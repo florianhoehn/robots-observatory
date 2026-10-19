@@ -56,7 +56,13 @@ PANEL_ID = "panel-01"
 
 # --- conduct limits. Changing any of these changes the ethical argument in
 # --- CONDUCT.md, so they live here in one place and are recorded per run.
-CONCURRENT_HOSTS = 10
+# 30, not 10. Measured throughput was 38% of theoretical because a host that
+# times out on every path holds a worker for minutes, and ~9% of a 16k panel
+# does something like that. This governs how many DIFFERENT hosts are read at
+# once and never how fast any one of them is asked -- the 1.5s per-host gap is
+# the politeness guarantee and is untouched. At 10 the run needed 21 hours; at
+# 30 it needs about 7.
+CONCURRENT_HOSTS = 30
 ERROR_BUDGET = 0.05
 # Share of a panel that may be unresolvable at run start before the run is
 # refused. The guard exists to catch SYSTEMATIC loss -- a filtering resolver
@@ -847,6 +853,33 @@ def cmd_resolve(args) -> None:
         sys.exit(1)
 
 
+def catch_all_shas(rec: dict) -> set:
+    """Hashes a host returns for more than one distinct well-known path.
+
+    A host that answers every unknown path with the same body is not
+    publishing those files; it has a catch-all. cloudflare.net returns
+    "Invalid key" for agent-card.json, ai-catalog.json, agent.json, gpc.json
+    and tdmrep.json alike -- eleven bytes, one hash, five apparent adoptions.
+
+    Computed at derivation rather than collection, so it applies to data
+    already gathered and can be revised without re-crawling. Distinct real
+    policy files never share a body.
+    """
+    seen: dict[str, int] = {}
+    for v in (rec.get("wellknown") or {}).values():
+        if v.get("file_state") == "present" and v.get("sha256"):
+            seen[v["sha256"]] = seen.get(v["sha256"], 0) + 1
+    return {sha for sha, n in seen.items() if n > 1}
+
+
+def wk_present(rec: dict, key: str) -> bool:
+    """Did this host really publish this well-known file?"""
+    v = (rec.get("wellknown") or {}).get(key, {})
+    if v.get("file_state") != "present":
+        return False
+    return v.get("sha256") not in catch_all_shas(rec)
+
+
 def _policy_varies(r: dict) -> bool:
     return robots_parse.policy_varies(r.get("robots", []), len(IDENTITIES))
 
@@ -1012,7 +1045,7 @@ def cmd_derive(args) -> None:
             e["names_ai"] += 1
         if pol(r, "wildcard_root_disallowed"):
             e["wildcard_block"] += 1
-        if r.get("wellknown", {}).get("llms_txt", {}).get("file_state") == "present":
+        if wk_present(r, "llms_txt"):
             e["llms_txt"] += 1
 
     findings = {
@@ -1032,8 +1065,7 @@ def cmd_derive(args) -> None:
             tokens.items(), key=lambda kv: -kv[1]["named"]
         )[:20]),
         "wellknown": {
-            k: share(lambda r, k=k:
-                     r.get("wellknown", {}).get(k, {}).get("file_state") == "present")
+            k: share(lambda r, k=k: wk_present(r, k))
             for k in WELLKNOWN
             # only report a path this run actually requested
             if any(k in r.get("wellknown", {}) for r in recs)
@@ -1052,6 +1084,9 @@ def cmd_derive(args) -> None:
                            if e.get("sha256")}) > 1),
         "soft_404": share(lambda r: pol(r, "file_state") == "soft_404"),
         "dns_failure": share(lambda r: pol(r, "file_state") == "dns_failure"),
+        # Hosts answering every unknown well-known path with one body. Counted
+        # so the correction is visible rather than silently applied.
+        "catch_all_responses": share(lambda r: bool(catch_all_shas(r))),
         "opted_out_via_robots": share(
             lambda r: bool(r.get("opted_out_via_robots"))
         ),
@@ -1084,9 +1119,9 @@ def cmd_derive(args) -> None:
                 "|".join(pol(r, "ai_tokens_root_disallowed", []) or []),
                 pol(r, "wildcard_root_disallowed"), pol(r, "would_disallow_us"),
                 "|".join(pol(r, "rsl_license_refs", []) or []),
-                wk.get("llms_txt", {}).get("file_state"),
-                wk.get("ai_txt", {}).get("file_state"),
-                wk.get("tdmrep", {}).get("file_state"),
+                "present" if wk_present(r, "llms_txt") else wk.get("llms_txt", {}).get("file_state"),
+                "present" if wk_present(r, "ai_txt") else wk.get("ai_txt", {}).get("file_state"),
+                "present" if wk_present(r, "tdmrep") else wk.get("tdmrep", {}).get("file_state"),
                 r.get("robots_varies_by_identity"),
             ])
 

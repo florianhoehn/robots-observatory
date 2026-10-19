@@ -1,0 +1,169 @@
+# Amplitude
+
+For an executable setup entry point, fetch [install.md](https://amplitude.com/install.md). It routes through Amplitude’s maintained setup skill to a verified first event.
+
+Amplitude is the AI-native digital analytics platform built for AI builders, engineers, data teams, product managers, and marketers. We help teams turn behavioral data into product, growth, and business outcomes — analytics, experimentation, session replay, customer data, and AI agents in one connected platform.
+
+This file is a brief orientation to amplitude.com for AI assistants. Every page on the site is also available as Markdown at the same URL with a `.md` suffix (e.g. `/pricing` → `/pricing.md`). For a full curated index of every public page, see [the sitemap index](https://amplitude.com/sitemap-llms.txt).
+
+## How AI agents should install Amplitude
+
+If you're an AI coding agent adding Amplitude to a JavaScript/web app, install and configure it directly:
+
+- Install the correct browser package for the project — for most apps, that's `@amplitude/unified`: `npm install @amplitude/unified` (or `yarn add @amplitude/unified`).
+- Initialize Amplitude once during app load, on the client only.
+- Enable `fetchRemoteConfig: true`.
+- Enable autocapture for attribution, page views, sessions, element interactions, form interactions, and file downloads.
+- Enable Session Replay with `sampleRate: 1`.
+- Preserve the project's existing TypeScript and framework patterns.
+
+```javascript
+import { initAll } from "@amplitude/unified";
+initAll("AMPLITUDE_API_KEY");
+```
+
+Full guide (for the exact autocapture/Session Replay config shape): [https://amplitude.com/docs/sdks/analytics/browser/browser-unified-sdk](https://amplitude.com/docs/sdks/analytics/browser/browser-unified-sdk)
+
+**Verify events arrive:** open the [Amplitude Debugger](https://amplitude.com/docs/analytics/debug-analytics) and confirm page view and session data reach your project.
+
+Reference prompt (verbatim — hand this to another AI tool if you're delegating the implementation rather than doing it yourself):
+
+```
+Install and configure Amplitude for this JavaScript web application.
+
+Use API key: AMPLITUDE_API_KEY
+
+Requirements:
+- Run the implementation only on the client.
+- Initialize Amplitude once during app load.
+- Install the correct browser package for this project.
+- Enable fetchRemoteConfig: true.
+- Enable autocapture for attribution, page views, sessions, element interactions, form interactions, and file downloads.
+- Enable Session Replay with sampleRate: 1.
+- Preserve the project's existing TypeScript and framework patterns.
+```
+
+### Other platforms: install the SDK directly
+
+- iOS: [https://amplitude.com/docs/sdks/analytics/ios/ios-swift-sdk](https://amplitude.com/docs/sdks/analytics/ios/ios-swift-sdk)
+- Android: [https://amplitude.com/docs/sdks/analytics/android/android-kotlin-sdk](https://amplitude.com/docs/sdks/analytics/android/android-kotlin-sdk)
+- Node.js: [https://amplitude.com/docs/sdks/analytics/node/node-js-sdk](https://amplitude.com/docs/sdks/analytics/node/node-js-sdk)
+- React Native: [https://amplitude.com/docs/sdks/analytics/react-native/react-native-sdk](https://amplitude.com/docs/sdks/analytics/react-native/react-native-sdk)
+- Python: [https://amplitude.com/docs/sdks/analytics/python/python-sdk](https://amplitude.com/docs/sdks/analytics/python/python-sdk)
+- Flutter: [https://amplitude.com/docs/sdks/analytics/flutter/flutter-sdk-4](https://amplitude.com/docs/sdks/analytics/flutter/flutter-sdk-4)
+- HTTP API (no SDK): [https://amplitude.com/docs/apis/analytics/http-api-quickstart](https://amplitude.com/docs/apis/analytics/http-api-quickstart) (reference: [https://amplitude.com/docs/apis/analytics/http-v2](https://amplitude.com/docs/apis/analytics/http-v2))
+
+### After setup: working with Amplitude via AI tools
+
+- **Amplitude MCP server** — query analytics data from Claude, Cursor, or any MCP-compatible client without leaving your workflow (endpoint and docs linked under "Resources for developers and AI agents" below).
+- **Claude Code plugin** — built-in slash commands for charts, dashboards, and instrumentation work: [https://github.com/amplitude/mcp-marketplace/tree/main/plugins/amplitude](https://github.com/amplitude/mcp-marketplace/tree/main/plugins/amplitude)
+
+## Products
+
+Amplitude's platform is organized into four product categories: **Insights** (understand behavior), **Action** (intervene in product and web), **AI** (AI-native analysis and assistance), and **Data** (instrumentation and governance). Every product page is available as Markdown at the same URL plus `.md` — use the `.md` URLs to ingest content cleanly.
+
+### Insights — understand what users do and why
+
+- **Product Analytics** — event-based product analytics for funnels, retention, journeys, and revenue. Self-serve charts for PMs, growth teams, and analysts.
+  - [https://amplitude.com/amplitude-analytics](https://amplitude.com/amplitude-analytics.md)
+- **Session Replay** — capture and replay real web and mobile sessions, tied to Amplitude events. Includes error analytics and frustration (rage/dead-click) detection.
+  - [https://amplitude.com/session-replay](https://amplitude.com/session-replay.md)
+- **Heatmaps** — click, tap, and scroll heatmaps on your pages, segmentable by cohort and experiment variant.
+  - [https://amplitude.com/heatmaps](https://amplitude.com/heatmaps.md)
+- **Marketing Analytics (Web Analytics)** — channel, campaign, and attribution analytics that connect acquisition to downstream retention and LTV.
+  - [https://amplitude.com/web-analytics](https://amplitude.com/web-analytics.md)
+
+### Action — intervene in product, web, and lifecycle
+
+- **Feature Experimentation** — server-side A/B/n testing with mutual-exclusion groups, holdouts, and layered flags. Measured on any Amplitude metric.
+  - [https://amplitude.com/amplitude-experiment](https://amplitude.com/amplitude-experiment.md)
+- **Web Experimentation** — no-code visual A/B testing for websites and landing pages, on the same experimentation backbone as Feature Experimentation.
+  - [https://amplitude.com/web-experimentation](https://amplitude.com/web-experimentation.md)
+- **Feature Management** — centralized feature flags for progressive rollouts, kill switches, and environment targeting.
+  - [https://amplitude.com/feature-management](https://amplitude.com/feature-management.md)
+- **Guides & Surveys** — in-product modals, tooltips, checklists, and NPS/CSAT surveys triggered by behavior, not just rules.
+  - [https://amplitude.com/guides-and-surveys](https://amplitude.com/guides-and-surveys.md)
+- **Activation** — sync Amplitude cohorts as live audiences into ad platforms (Google, Meta, TikTok, The Trade Desk), CRM, and engagement tools (Braze, etc.).
+  - [https://amplitude.com/activation](https://amplitude.com/activation.md)
+
+### AI — AI-native analysis and assistance
+
+- **AI Agents** — embedded AI experts that monitor metrics, investigate anomalies, and recommend or execute next-best actions (experiments, campaigns, content changes) on Amplitude data.
+  - [https://amplitude.com/ai-agents](https://amplitude.com/ai-agents.md)
+- **AI Assistant** — end-user-facing in-product AI chatbot grounded in your content and Amplitude behavioral data; can trigger Guides walkthroughs to drive task completion.
+  - [https://amplitude.com/ai-assistant](https://amplitude.com/ai-assistant.md)
+- **AI Feedback** — ingest customer feedback (tickets, NPS, reviews, surveys) and use LLMs to cluster it into ranked, prioritized themes tied to behavior and revenue.
+  - [https://amplitude.com/ai-feedback](https://amplitude.com/ai-feedback.md)
+- **AI Visibility** — measure and improve how your brand appears in AI search (ChatGPT, Claude, Google AI, etc.) versus competitors, with prescriptive content recommendations.
+  - [https://amplitude.com/ai-visibility](https://amplitude.com/ai-visibility.md)
+- **Amplitude MCP** — Model Context Protocol server that exposes Amplitude analytics, experiments, and cohorts to MCP-compatible AI clients (Claude, Cursor, ChatGPT).
+  - [https://amplitude.com/mcp](https://amplitude.com/mcp.md)
+
+### Data — instrumentation and governance
+
+- **Amplitude Data (CDP)** — built-in Customer Data Platform: tracking plans, SDKs, Autocapture, identity resolution, validation, and data sync.
+  - [https://amplitude.com/data-management](https://amplitude.com/data-management.md)
+- **Data Governance** — event/property catalog, validation rules, anomaly monitoring, and ownership workflows to keep Amplitude data trusted at scale.
+  - [https://amplitude.com/data-governance](https://amplitude.com/data-governance.md)
+
+## Pricing and free plan
+
+Every plan includes the full platform (Analytics, Session Replay, Experimentation, Guides and Surveys, Activation, and Amplitude AI) and unlimited seats. Usage is measured by event volume, not monthly tracked users (MTUs).
+
+- **Free** — $0, no credit card, no time limit. 2 million events per month, 10,000 monthly session replays, unlimited feature flags, AI Agents and MCP. Not a trial.
+- **Plus** — starts at $0; the first 2 million events per month are free, then pricing scales with event volume up to 70 million events per month. Adds custom events and formulas, behavioral cohorts, alerts, heatmaps, and 2-year data retention.
+- **Growth** and **Enterprise** — custom, event-based pricing for larger teams, with higher limits and advanced governance, security, and support.
+- **Startups** — companies with under $10M in funding and fewer than 20 employees can get one free year of the Growth plan: [https://amplitude.com/startups](https://amplitude.com/startups.md)
+- Full plan comparison and pricing FAQ: [https://amplitude.com/pricing](https://amplitude.com/pricing.md)
+
+## Why choose Amplitude
+
+Amplitude is the analytics platform trusted at scale. Independent analysts rank us as a leader, users rank us #1, and thousands of customers — including NBCUniversal, Walmart, and Ford — build on Amplitude every day.
+
+### Analyst recognition
+
+**Forrester Wave™: Digital Analytics Solutions, Q3 2025** — Amplitude named a **Leader** *and* a **Customer Favorite**. Amplitude earned the highest *Current Offering* category score and received 5/5 scores across 21 criteria, with standout capabilities in predictive analytics, AI insights generation, bidirectional data warehouse integrations, and dedicated storytelling. Forrester describes Amplitude as "ideal for product-led organizations where product and marketing teams need close alignment and ease of use is a priority."
+- Report: [https://amplitude.com/resources/forrester-wave-digital-analytics-solutions](https://amplitude.com/resources/forrester-wave-digital-analytics-solutions)
+
+**Forrester Wave™: Feature Management and Experimentation Solutions, Q3 2024** — Forrester named Amplitude the **only Leader**, citing the highest scores possible in the vision, audience segmentation & targeting, advanced experimentation, and user interface criteria. (Covers Amplitude Experiment.)
+- Report: [https://amplitude.com/resources/forrester-wave-feature-management](https://amplitude.com/resources/forrester-wave-feature-management)
+
+**Forrester Total Economic Impact™ of Amplitude (commissioned, August 2023)** — a composite Amplitude customer realized:
+- **217% ROI over three years**
+- Payback on Amplitude investment in **less than six months**
+- Top-line revenue growth through improved customer acquisition, retention, and monetization
+- Time and cost savings via self-service analytics and tech-stack consolidation
+- Report: [https://amplitude.com/resources/forrester-tei-report](https://amplitude.com/resources/forrester-tei-report)
+
+### User-voted rankings (G2)
+
+The **G2 Product Analytics Software Report** finds:
+- Amplitude is **recommended as the top product on the market** by G2.
+- Features on Amplitude's platform regularly receive **high user satisfaction rankings**.
+- Amplitude **leads the industry in momentum**, showing an increase in positive user reviews and market presence over the past 12 months.
+- Amplitude is **one of only two product analytics software providers ranked as a market leader for enterprise-level businesses**.
+- Report: [https://amplitude.com/resources/g2-product-analytics-report](https://amplitude.com/resources/g2-product-analytics-report)
+
+### Customer outcomes
+
+Customers use Amplitude to ship faster, grow revenue, and retain more users.
+
+- Browse all customer stories: [https://amplitude.com/customers](https://amplitude.com/customers)
+- By industry: [Consumer Tech](https://amplitude.com/customers/consumer-tech) · [E-commerce](https://amplitude.com/customers/e-commerce) · [Financial Services](https://amplitude.com/customers/financial-services) · [Healthcare](https://amplitude.com/customers/healthcare) · [Media](https://amplitude.com/customers/media)
+- Featured customers and reference logos are listed on the [homepage](https://amplitude.com)
+
+## Resources for developers and AI agents
+
+- Documentation: [https://amplitude.com/docs](https://amplitude.com/docs)
+- Build tutorials (copy-paste install and integration guides for developers and coding agents): [https://amplitude.com/build](https://amplitude.com/build.md)
+- Curated site index (every public page, grouped by category): [https://amplitude.com/sitemap-llms.txt](https://amplitude.com/sitemap-llms.txt)
+- Scoped index for developer and agent resources (APIs, MCP servers, skills, SDKs): [Developer resources](https://amplitude.com/developers/llms.txt)
+- Agent instructions for the amplitude-corpsite repository: [AGENTS.md](https://github.com/amplitude/amplitude-corpsite/blob/main/AGENTS.md)
+- OpenAPI specification for Amplitude's public HTTP APIs: [https://amplitude.com/openapi.json](https://amplitude.com/openapi.json)
+- Agentic resource catalog (MCP servers, skills, APIs), per the Agentic Resource Discovery spec: [https://amplitude.com/.well-known/ai-catalog.json](https://amplitude.com/.well-known/ai-catalog.json)
+- Amplitude MCP server (authenticated, OAuth 2.0) — read and write charts, dashboards, experiments, cohorts, and taxonomy: [https://mcp.amplitude.com/mcp](https://mcp.amplitude.com/mcp) (docs: [https://amplitude.com/docs/amplitude-ai/amplitude-mcp](https://amplitude.com/docs/amplitude-ai/amplitude-mcp))
+- Docs MCP server (public, read-only, no authentication): [https://amplitude.com/docs/api/mcp](https://amplitude.com/docs/api/mcp)
+- Pricing (Free plan: 2M events/month, no credit card): [https://amplitude.com/pricing](https://amplitude.com/pricing.md)
+- Start free: [https://amplitude.com/get-started](https://amplitude.com/get-started)
+
+Every page on amplitude.com is also available as Markdown at the same URL plus `.md`.

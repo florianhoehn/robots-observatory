@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        const orderedRedirectMapping = [
+            {path: '/region/aachen/', host: 'https://aachen.t-online.de'},
+            {path: '/region/berlin/', host: 'https://berlin.t-online.de'},
+            {path: '/region/bielefeld/', host: 'https://bielefeld.t-online.de'},
+            {path: '/region/braunschweig/', host: 'https://braunschweig.t-online.de'},
+            {path: '/region/bremen/', host: 'https://bremen.t-online.de'},
+            {path: '/region/bochum/', host: 'https://bochum.t-online.de'},
+            {path: '/region/bonn/', host: 'https://bonn.t-online.de'},
+            {path: '/region/dortmund/', host: 'https://dortmund.t-online.de'},
+            {path: '/region/dresden/', host: 'https://dresden.t-online.de'},
+            {path: '/region/duesseldorf/', host: 'https://duesseldorf.t-online.de'},
+            {path: '/region/duisburg/', host: 'https://duisburg.t-online.de'},
+            {path: '/region/essen/', host: 'https://essen.t-online.de'},
+            {path: '/region/frankfurt-am-main/', host: 'https://frankfurt.t-online.de'},
+            {path: '/region/hamburg/', host: 'https://hamburg.t-online.de'},
+            {path: '/region/hannover/', host: 'https://hannover.t-online.de'},
+            {path: '/region/koeln/', host: 'https://koeln.t-online.de'},
+            {path: '/region/leipzig/', host: 'https://leipzig.t-online.de'},
+            {path: '/region/muenchen/', host: 'https://muenchen.t-online.de'},
+            {path: '/region/muenster/', host: 'https://muenster.t-online.de'},
+            {path: '/region/nuernberg/', host: 'https://nuernberg.t-online.de'},
+            {path: '/region/stuttgart/', host: 'https://stuttgart.t-online.de'},
+            {path: '/region/wuppertal/', host: 'https://wuppertal.t-online.de'},
+
+            // Add more paths and tenant URLs as needed
+            {path: '/', host: 'https://www.t-online.de'}, // Fallback
+        ];
+
+        function tenantRedirect() {
+            const currentPathname = window.location.pathname;
+            const isNotIframe = window.location === window.parent.location;
+            for (const entry of orderedRedirectMapping) {
+                console.log('currentPathname', window.location.pathname);
+                console.log('entry', entry);
+                const redirectUrl = entry['host'] + currentPathname;
+                if (currentPathname.startsWith(entry['path']) && isNotIframe && window.location.href !== redirectUrl && entry['path'] !== '/') {
+                    window.location.href = redirectUrl;
+                    return;
+                }
+            }
+            // prevent meta refresh in iframe i.e. embedded content
+            window.stop(); // prevent meta refresh
+        }
+
+        function fallbackRedirect() {
+            const isNotIframe = window.location === window.parent.location;
+            if (isNotIframe) {
+                for (const entry of orderedRedirectMapping) {
+                    if (window.location.href.startsWith(entry['host'])) {
+                        window.location.href = entry['host'] + entry['path'];
+                        return;
+                    }
+                }
+            } else {
+                // prevent meta refresh in iframe i.e. embedded content
+                window.stop();
+            }
+        }
+
+        setTimeout(() => {
+            tenantRedirect();
+        }, 4200);
+        setTimeout(() => {
+            fallbackRedirect();
+        }, 5000);
+    </script>
+    <meta http-equiv="refresh" content="6;url=/">
+    <meta charset="utf-8"/>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: url('/s/paper/_next/static/fonts/Roboto-Regular-176f8f5bd5f02b3abfcf894955d7e919.woff2') format('woff2');
+            font-display: fallback;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            src: url('/s/paper/_next/static/fonts/Roboto-Bold-c18ee39fb002ad58b6dc595476f88fef.woff2') format('woff2');
+            font-display: fallback;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: url('/s/paper/_next/static/fonts/Roboto-Light-37a7069dc30fc663c8781220e5669d25.woff2') format('woff2');
+            font-display: fallback;
+        }
+
+        *, ::after, ::before {
+            box-sizing: border-box
+        }
+
+        blockquote, body, dd, dl, figure, h1, h2, h3, h4, p {
+            margin: 0
+        }
+
+        ol[role=list], ul[role=list] {
+            list-style: none
+        }
+
+        html:focus-within {
+            scroll-behavior: smooth
+        }
+
+        body {
+            min-height: 100vh;
+            text-rendering: optimizelegibility;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5
+        }
+
+        a:not([class]) {
+            text-decoration-skip-ink: auto
+        }
+
+        img, picture {
+            max-width: 100%;
+            display: block
+        }
+
+        button, input, select, textarea {
+            font: inherit
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html:focus-within {
+                scroll-behavior: auto
+            }
+
+            *, ::after, ::before {
+                animation-duration: 0s !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0s !important;
+                scroll-behavior: auto !important
+            }
+        }
+
+        html {
+            font-family: Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #F7F9FC;
+            color: #474C59;
+        }
+    </style>
+    <title>Seite nicht gefunden - News &amp; E-Mail bei t-online.de | Politik, Sport, Unterhaltung &amp;
+        Ratgeber</title>
+
+    <style>
+        .main {
+            padding: 16px 24px;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            display: flex;
+        }
+
+        @media only screen and (min-width: 768px) {
+            .main {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+        }
+
+        .logo {
+            display: block;
+            width: 100px;
+            height: 19px;
+        }
+
+        @media only screen and (min-width: 768px) {
+            .logo {
+                width: 185px;
+                height: 36px;
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 520px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .error-image {
+            display: block;
+            width: 200px;
+            height: 200px;
+            padding-bottom: 24px;
+        }
+
+        .title {
+            color: #171B26;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1.2;
+            max-width: 360px;
+            padding-bottom: 8px;
+        }
+
+        .message {
+            font-size: 16px;
+            line-height: 1.7;
+            padding-bottom: 24px;
+        }
+
+        .link {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            transition-property: all;
+            transition-duration: 0.2s;
+            transition-timing-function: ease-in-out;
+            border: 1px solid #E20074;
+            border-radius: 4px;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            line-height: 1.6;
+            text-transform: uppercase;
+            white-space: nowrap;
+            text-decoration: unset;
+            background-color: #E20074;
+            color: #FFFFFF;
+        }
+
+        @media only screen and (min-width: 768px) {
+            .link {
+                min-width: 300px;
+            }
+        }
+
+        .link:hover, .link:active {
+            border-color: #171B26;
+            background-color: #171B26;
+            cursor: pointer;
+        }
+
+        .link-center-spacer {
+            width: 20px;
+        }
+
+        .arrow {
+            display: block;
+            width: 20px;
+            height: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<main class="main">
+    <i class="logo">
+
+        <svg fill="none" viewBox="0 0 162 32">
+            <path
+                    d="M0 13.75V9.71h3.512v-1.4l4.455-5.785h2.168V9.71h4.267v4.04h-4.267v10.238c0 1.316.142 2.181.425 2.594.298.413.911.62 1.838.62.519 0 1.108-.107 1.768-.321v4.614a20.154 20.154 0 0 1-3.983.413c-.77 0-1.501-.054-2.192-.16-2.028-.322-3.34-1.256-3.937-2.801a7.436 7.436 0 0 1-.448-1.837c-.063-.597-.094-1.714-.094-3.351V13.75zm23.961 3.942v3.87H15.11v-3.87zM38.09 9.044c1.572 0 2.986.222 4.243.666 2.483.888 4.337 2.441 5.563 4.66.943 1.714 1.414 3.81 1.414 6.29 0 3.535-1.116 6.359-3.347 8.47-2.027 1.913-4.66 2.87-7.896 2.87-3.442 0-6.191-1.071-8.25-3.214-2.027-2.097-3.04-4.859-3.04-8.287 0-3.351.982-6.052 2.946-8.103 2.137-2.234 4.926-3.352 8.367-3.352zm-.282 4.523c-.676 0-1.273.16-1.792.482-1.744 1.056-2.616 3.206-2.616 6.45 0 1.056.102 2.066.306 3.03.267 1.21.778 2.173 1.532 2.893.755.704 1.635 1.056 2.64 1.056a3.59 3.59 0 0 0 1.745-.437c1.775-.964 2.663-3.114 2.663-6.45 0-1.025-.094-1.997-.283-2.915-.251-1.255-.762-2.25-1.532-2.985-.754-.75-1.642-1.124-2.663-1.124zm14.519 17.767V9.71h6.67v1.997c1.556-1.775 3.615-2.663 6.176-2.663 2.97 0 5.139.964 6.506 2.893.848 1.193 1.273 3.06 1.273 5.6v13.797h-6.624V18.548c0-1.5-.173-2.556-.518-3.168-.55-.964-1.454-1.446-2.71-1.446-1.635 0-2.822.773-3.56 2.318-.393.796-.59 2.273-.59 4.43v10.652zm25.857 0V0h6.624v31.334zM90.606 6.267V0h7.024v6.267zm.189 25.067V9.71h6.623v21.624zm12.115 0V9.71h6.671v1.997c1.555-1.775 3.614-2.663 6.175-2.663 2.97 0 5.139.964 6.506 2.893.848 1.193 1.273 3.06 1.273 5.6v13.797h-6.624V18.548c0-1.5-.173-2.556-.518-3.168-.55-.964-1.454-1.446-2.711-1.446-1.634 0-2.821.773-3.559 2.318-.393.796-.589 2.273-.589 4.43v10.652zm45.374-9.251h-14.755c.188 3.719 1.579 5.578 4.172 5.578 1.587 0 2.71-.765 3.37-2.295h6.647c-.314 1.147-.895 2.219-1.744 3.213-1.917 2.28-4.643 3.42-8.179 3.42-3.378 0-6.073-.986-8.085-2.96-2.121-2.097-3.182-4.898-3.182-8.402 0-3.245.967-5.946 2.899-8.103 2.075-2.327 4.77-3.49 8.085-3.49 2.64 0 4.879.773 6.718 2.319 1.336 1.132 2.326 2.548 2.97 4.247.644 1.683 1.005 3.84 1.084 6.473zm-7-3.856c-.095-.995-.291-1.837-.59-2.525-.675-1.561-1.752-2.342-3.229-2.342-.707 0-1.328.199-1.862.597-1.163.826-1.846 2.25-2.051 4.27z"
+                    fill="#171b26"/>
+            <path d="M153.29 23.499h8.046v7.835h-8.046z" fill="#e20074"/>
+        </svg>
+
+    </i>
+    <div class="content">
+
+        <i class="error-image">
+
+            <svg fill="none" viewBox="0 0 117 103">
+                <ellipse cx="58.5" cy="94" rx="29" ry="4" fill="#E5E8F2"/>
+                <rect opacity=".6" x="47.1" y="17.6" width="44.3" height="58.6" rx="3.4" transform="rotate(4 47 17.6)"
+                      fill="#DDE1ED"/>
+                <path
+                        d="m81.8 36.8-.3 31-6-3.4-5.9 3.2-5.2-3.2-6 3.2-6.1-3.2-5.5 3.5-6-3.5-5 2.6V27.4l2.6-3.5h30.7l11 10 1.7 3zM41 70.2l-5.8 3.7v5.2l.9 1.4 2.3 2.6h38.7l3-1.4 1.1-1.8.3-6.3-6-3.4-5.3 3.4-6-3.4-5.6 3.4-6.3-3.4-5.5 3.7-5.8-3.7z"
+                        fill="#F7F9FC"/>
+                <path
+                        d="M81.5 67.9V37.7c0-1.2-.5-2.4-1.4-3.3l-9.4-9c-.9-.7-2-1.2-3.2-1.2H39.8c-2.5 0-4.6 2-4.6 4.6v39m46.3 5.8v4.6c0 2.6-2 4.6-4.6 4.6h-37c-2.6 0-4.7-2-4.7-4.6v-4.6"
+                        stroke="#BEC3D4"/>
+                <path d="M67.6 25.4v8c0 2.5 2 4.6 4.6 4.6h8.1" stroke="#BEC3D4"/>
+                <circle cx="50.5" cy="44.6" fill="#BEC3D4" r="1.4"/>
+                <circle cx="66.2" cy="44.6" fill="#BEC3D4" r="1.4"/>
+                <path
+                        d="M50.5 54.7s2.4-3.5 7.9-3.5c5.4 0 7.8 3.5 7.8 3.5m-31 13.2 5.5-3.3h.6l5.2 3.1h.6l5.2-3c.2-.2.4-.2.6 0l5.2 3h.5l5.2-3c.2-.2.5-.2.6 0l5.2 3h.6l5.2-3c.2-.2.4-.2.6 0l5.5 3.2m-46.3 5.7 5.5-3.2c.2-.2.4-.2.6 0l5.2 3c.2.2.4.2.6 0l5.2-3c.2-.2.4-.2.6 0l5.2 3c.1.2.4.2.5 0l5.2-3c.2-.2.5-.2.6 0l5.2 3c.2.2.4.2.6 0l5.2-3c.2-.2.4-.2.6 0l5.5 3.2"
+                        stroke="#BEC3D4"/>
+                <circle cx="18.3" cy="8.1" r="2.6" stroke="#BEC3D4"/>
+                <circle cx="99.6" cy="77.4" r="2.3" stroke="#BEC3D4"/>
+                <path
+                        d="M8.8 51.5v2.3m0 3.4v2.3m4-4h-2.3m-3.5 0H4.9M98.4 8.4V11m0 4v2.6M103 13h-2.6m-3.9 0h-2.7M109 63.6v1.8m0 2.6v2m3.2-3.3h-1.8m-2.7 0H106"
+                        stroke="#BEC3D4"/>
+            </svg>
+        </i>
+
+        <h2 class="title">Die Seite konnte nicht gefunden werden.</h2>
+        <p class="message">Es gibt ein Problem mit unseren Daten. Wir arbeiten mit Hochdruck daran das schnell zu
+            beheben.</p>
+        <a class="link" href="/"><span class="link-center-spacer"></span>zur Startseite<i class="arrow">
+
+            <svg fill="none" viewBox="0 0 64 64">
+                <path d="M2 34h60M42 14l20 20-20 20" stroke="#fff" stroke-width="2" stroke-miterlimit="10"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </i></a></div>
+</main>
+</body>
+</html>

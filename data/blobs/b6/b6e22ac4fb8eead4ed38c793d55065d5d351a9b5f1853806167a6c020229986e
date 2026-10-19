@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html
+  class="MktRoot"
+  lang="en-US"
+  data-js-controller="Page"
+  data-page-id="Not found"
+  data-page-title="Page not found"
+  data-loading
+>
+  <head>
+    <script>window.__capturedErrors = [];
+window.onerror = function (message, url, line, column, error) { __capturedErrors.push(error); };
+window.onunhandledrejection = function(evt) { __capturedErrors.push(evt.reason); }
+</script>
+<meta
+  name="sentry-config"
+  data-js-dsn=""
+  data-js-release="c3e5c6408957a58759252ed2f5b640a3508f8e60"
+  data-js-environment="production"
+  data-js-project="mkt"
+>
+
+    <meta name="edge-experiment-treatments" content="">
+<meta name="experiment-treatments" content="">
+<meta name="experiment-token" content="">
+    
+
+    <script>(() => {
+  const getExperimentsContent = () =>
+    document.querySelector('meta[name="edge-experiment-treatments"]')
+      ?.content ||
+    document.querySelector('meta[name="experiment-treatments"]')?.content;
+
+  const buildAssignedRules = (experimentId, variantId) => {
+    const expClass = CSS.escape(experimentId);
+    const varClass = CSS.escape(variantId);
+    return [
+      `.${expClass}.${varClass}.client-variant-wrapper { display: unset; }`,
+      `.${expClass}.control.client-variant-wrapper { display: none; }`,
+    ];
+  };
+
+  const generateClientSideExperimentsStyle = () => {
+    const baseRules = [
+      '.client-variant-wrapper { display: none; }',
+      '.control.client-variant-wrapper { display: unset; }',
+    ];
+
+    const experimentsContent = getExperimentsContent();
+
+    if (!experimentsContent) {
+      return baseRules.join('\n');
+    }
+
+    const assignedRules = experimentsContent
+      .split(',')
+      .map((entry) => {
+        const [experimentId, variantId, , , , renderSide] = entry.split('.');
+        return {experimentId, variantId, renderSide};
+      })
+      .filter((exp) => exp.renderSide === 'c' && exp.variantId !== 'control')
+      .flatMap((exp) => buildAssignedRules(exp.experimentId, exp.variantId));
+
+    return [...baseRules, ...assignedRules].join('\n');
+  };
+
+  const style = document.createElement('style');
+  style.id = 'experiments-style';
+  style.textContent = generateClientSideExperimentsStyle();
+  document.head.appendChild(style);
+
+  document.currentScript?.remove();
+})();
+</script>
+
+    
+    
+
+    <meta name="request-country" content="">
+
+    <script type="application/json" id="AnalyticsConfigurationJSON" >{"GTM_ID":"GTM-WK8882T","GTM_FRAME_URL":"https://b.stripecdn.com/stripethirdparty-srv/assets/","enableKeepalive":true,"environment":"production"}</script>
+
+    <template id="source-attribution-loader">
+  <script defer
+    src="https://b.stripecdn.com/mkt-statics-srv/assets/imt-983cdf9119e35cde6997326eb51806b1.js"
+    data-store_url="https://b.stripecdn.com/mkt-statics-srv/assets/store-936f0d847a16164e7f6b15d74659c4a9.html">
+  </script>
+</template>
+
+    <meta charset='utf-8' />
+    
+    <meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover' />
+
+    
+      <link rel="icon" type="image/svg+xml" href="https://images.ctfassets.net/fzn2n1nzq965/1hgcBNd12BfT9VLgbId7By/01d91920114b124fb4cf6d448f9f06eb/favicon.svg" />
+<link rel="icon" type="image/png" href="https://images.ctfassets.net/fzn2n1nzq965/4vVgZi0ZMoEzOhkcv7EVwK/8cce6fdcf2733b2ec8e99548908847ed/favicon.png?w=96&amp;h=96" sizes="96x96" />
+<link rel="shortcut icon" href="https://assets.ctfassets.net/fzn2n1nzq965/nu0iR4KqmkdJ52fgRts09/c3a10df318e7ffb1f516073daadea625/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="https://images.ctfassets.net/fzn2n1nzq965/4vVgZi0ZMoEzOhkcv7EVwK/8cce6fdcf2733b2ec8e99548908847ed/favicon.png?w=180&amp;h=180" />
+    
+    
+    
+    <meta name="description" content="">
+    
+
+    
+      <link rel="canonical" href="https://stripe.com/">
+<link rel="alternate" href="https://stripe.com/" hreflang="x-default">
+<link rel="alternate" href="https://stripe.com/" hreflang="en-US">
+<link rel="alternate" href="https://stripe.com/es-us" hreflang="es-US">
+<link rel="alternate" href="https://stripe.com/zh-us" hreflang="zh-US">
+<link rel="alternate" href="https://stripe.com/ae" hreflang="en-AE">
+<link rel="alternate" href="https://stripe.com/at" hreflang="de-AT">
+<link rel="alternate" href="https://stripe.com/en-at" hreflang="en-AT">
+<link rel="alternate" href="https://stripe.com/au" hreflang="en-AU">
+<link rel="alternate" href="https://stripe.com/nl-be" hreflang="nl-BE">
+<link rel="alternate" href="https://stripe.com/fr-be" hreflang="fr-BE">
+<link rel="alternate" href="https://stripe.com/de-be" hreflang="de-BE">
+<link rel="alternate" href="https://stripe.com/en-be" hreflang="en-BE">
+<link rel="alternate" href="https://stripe.com/en-bg" hreflang="en-BG">
+<link rel="alternate" href="https://stripe.com/br" hreflang="pt-BR">
+<link rel="alternate" href="https://stripe.com/en-br" hreflang="en-BR">
+<link rel="alternate" href="https://stripe.com/en-ca" hreflang="en-CA">
+<link rel="alternate" href="https://stripe.com/fr-ca" hreflang="fr-CA">
+<link rel="alternate" href="https://stripe.com/de-ch" hreflang="de-CH">
+<link rel="alternate" href="https://stripe.com/fr-ch" hreflang="fr-CH">
+<link rel="alternate" href="https://stripe.com/it-ch" hreflang="it-CH">
+<link rel="alternate" href="https://stripe.com/en-ch" hreflang="en-CH">
+<link rel="alternate" href="https://stripe.com/cn" hreflang="zh-CN">
+<link rel="alternate" href="https://stripe.com/en-cn" hreflang="en-CN">
+<link rel="alternate" href="https://stripe.com/en-cy" hreflang="en-CY">
+<link rel="alternate" href="https://stripe.com/en-cz" hreflang="en-CZ">
+<link rel="alternate" href="https://stripe.com/de" hreflang="de-DE">
+<link rel="alternate" href="https://stripe.com/en-de" hreflang="en-DE">
+<link rel="alternate" href="https://stripe.com/en-dk" hreflang="en-DK">
+<link rel="alternate" href="https://stripe.com/en-ee" hreflang="en-EE">
+<link rel="alternate" href="https://stripe.com/es" hreflang="es-ES">
+<link rel="alternate" href="https://stripe.com/en-es" hreflang="en-ES">
+<link rel="alternate" href="https://stripe.com/en-fi" hreflang="en-FI">
+<link rel="alternate" href="https://stripe.com/sv-fi" hreflang="sv-FI">
+<link rel="alternate" href="https://stripe.com/fr" hreflang="fr-FR">
+<link rel="alternate" href="https://stripe.com/en-fr" hreflang="en-FR">
+<link rel="alternate" href="https://stripe.com/gb" hreflang="en-GB">
+<link rel="alternate" href="https://stripe.com/en-gi" hreflang="en-GI">
+<link rel="alternate" href="https://stripe.com/en-gr" hreflang="en-GR">
+<link rel="alternate" href="https://stripe.com/en-hk" hreflang="en-HK">
+<link rel="alternate" href="https://stripe.com/zh-hk" hreflang="zh-HK">
+<link rel="alternate" href="https://stripe.com/en-hr" hreflang="en-HR">
+<link rel="alternate" href="https://stripe.com/it-hr" hreflang="it-HR">
+<link rel="alternate" href="https://stripe.com/en-hu" hreflang="en-HU">
+<link rel="alternate" href="https://stripe.com/ie" hreflang="en-IE">
+<link rel="alternate" href="https://stripe.com/in" hreflang="en-IN">
+<link rel="alternate" href="https://stripe.com/it" hreflang="it-IT">
+<link rel="alternate" href="https://stripe.com/en-it" hreflang="en-IT">
+<link rel="alternate" href="https://stripe.com/jp" hreflang="ja-JP">
+<link rel="alternate" href="https://stripe.com/en-jp" hreflang="en-JP">
+<link rel="alternate" href="https://stripe.com/de-li" hreflang="de-LI">
+<link rel="alternate" href="https://stripe.com/en-li" hreflang="en-LI">
+<link rel="alternate" href="https://stripe.com/en-lt" hreflang="en-LT">
+<link rel="alternate" href="https://stripe.com/fr-lu" hreflang="fr-LU">
+<link rel="alternate" href="https://stripe.com/de-lu" hreflang="de-LU">
+<link rel="alternate" href="https://stripe.com/en-lu" hreflang="en-LU">
+<link rel="alternate" href="https://stripe.com/en-lv" hreflang="en-LV">
+<link rel="alternate" href="https://stripe.com/en-my" hreflang="en-MY">
+<link rel="alternate" href="https://stripe.com/zh-my" hreflang="zh-MY">
+<link rel="alternate" href="https://stripe.com/en-mt" hreflang="en-MT">
+<link rel="alternate" href="https://stripe.com/mx" hreflang="es-MX">
+<link rel="alternate" href="https://stripe.com/en-mx" hreflang="en-MX">
+<link rel="alternate" href="https://stripe.com/nl" hreflang="nl-NL">
+<link rel="alternate" href="https://stripe.com/en-nl" hreflang="en-NL">
+<link rel="alternate" href="https://stripe.com/en-no" hreflang="en-NO">
+<link rel="alternate" href="https://stripe.com/nz" hreflang="en-NZ">
+<link rel="alternate" href="https://stripe.com/en-pl" hreflang="en-PL">
+<link rel="alternate" href="https://stripe.com/pt-pt" hreflang="pt-PT">
+<link rel="alternate" href="https://stripe.com/en-pt" hreflang="en-PT">
+<link rel="alternate" href="https://stripe.com/en-ro" hreflang="en-RO">
+<link rel="alternate" href="https://stripe.com/se" hreflang="sv-SE">
+<link rel="alternate" href="https://stripe.com/en-se" hreflang="en-SE">
+<link rel="alternate" href="https://stripe.com/en-sg" hreflang="en-SG">
+<link rel="alternate" href="https://stripe.com/zh-sg" hreflang="zh-SG">
+<link rel="alternate" href="https://stripe.com/en-si" hreflang="en-SI">
+<link rel="alternate" href="https://stripe.com/it-si" hreflang="it-SI">
+<link rel="alternate" href="https://stripe.com/en-sk" hreflang="en-SK">
+<link rel="alternate" href="https://stripe.com/th" hreflang="th-TH">
+<link rel="alternate" href="https://stripe.com/en-th" hreflang="en-TH">
+<link rel="alternate" href="https://stripe.com/br" hreflang="pt">
+<link rel="alternate" href="https://stripe.com/nl" hreflang="nl">
+<link rel="alternate" href="https://stripe.com/" hreflang="en">
+<link rel="alternate" href="https://stripe.com/fr" hreflang="fr">
+<link rel="alternate" href="https://stripe.com/de" hreflang="de">
+<link rel="alternate" href="https://stripe.com/it" hreflang="it">
+<link rel="alternate" href="https://stripe.com/jp" hreflang="ja">
+<link rel="alternate" href="https://stripe.com/zh-sg" hreflang="zh">
+<link rel="alternate" href="https://stripe.com/es" hreflang="es">
+<link rel="alternate" href="https://stripe.com/se" hreflang="sv">
+<link rel="alternate" href="https://stripe.com/th" hreflang="th">
+
+    
+
+    <title>Page not found</title>
+
+    
+    <meta name="format-detection" content="telephone=no">
+    
+    
+
+    
+
+    
+    
+    
+    
+
+    
+      <template data-js-controller="NotificationCenterLoader">
+  <div
+  class="NotificationCenter theme--Light flavor--Chroma accent--Slate"
+  data-js-controller="NotificationCenter"
+  data-js-notification-path="/notifications"
+>
+  <div class="NotificationCenter__backdrop" data-js-target="NotificationCenter.backdrop"></div>
+  <div class="NotificationCenter__list" data-js-target="NotificationCenter.list">
+    
+    
+
+    <div
+      class="NotificationCenter__chatSlot"
+      data-js-target="NotificationCenter.chatSlot"
+      data-universal-chat-slot
+      data-layout="empty"
+    >
+      <template data-js-controller="UniversalChatInitializer">
+  <div class="UniversalChatCtaCard__container UniversalChatCtaCard__container--fixed" data-universal-chat-cta-card>
+  <div class="UniversalChatCtaCard__collapsible">
+    <div class="UniversalChatCtaCard__card" data-universal-chat-faces-card>
+      <div class="UniversalChatCtaCard__gap">
+        <div
+  class="
+    Card
+    
+    
+    
+    Card--shadowMedium
+    
+    
+    
+    Notification__card UniversalChatCtaCard
+  "
+  
+  
+  
+  
+  
+  
+>
+  <div class="Notification__content">
+            <div class="UniversalChatCtaCard__header">
+              <div class="UniversalChatCtaCard__avatars">
+                <img
+                  class="UniversalChatCtaCard__avatar UniversalChatCtaCard__avatar--1"
+                  data-universal-chat-avatar-1
+                  src=""
+                  alt=""
+                  width="34"
+                  height="34"
+                />
+                <img
+                  class="UniversalChatCtaCard__avatar UniversalChatCtaCard__avatar--2"
+                  data-universal-chat-avatar-2
+                  src=""
+                  alt=""
+                  width="38"
+                  height="38"
+                />
+              </div>
+
+              <div class="UniversalChatCtaCard__availability">
+                <span class="UniversalChatCtaCard__dot" aria-hidden="true"></span>
+                <span class="UniversalChatCtaCard__agentCount">
+                  <span data-universal-chat-agent-count>8</span>&nbsp;sales reps available
+                </span>
+              </div>
+            </div>
+
+            <p class="UniversalChatCtaCard__subtitle">We're here to discuss your business needs.</p>
+          </div>
+
+          <button
+            class="Notification__closeButton"
+            data-universal-chat-cta-card-close
+            type="button"
+            aria-label="Dismiss chat"
+          >
+            <svg width="20px" height="20px" aria-hidden="true">
+              <path fill="var(--closeButtonFill)" fill-rule="evenodd" d="M10 0a10 10 0 1 1 0 20 10 10 0 0 1 0-20zM7.17 5.76a1 1 0 0 0-1.41 1.41L8.59 10l-2.83 2.83a1 1 0 0 0 1.41 1.41L10 11.41l2.83 2.83a1 1 0 0 0 1.41-1.41L11.41 10l2.83-2.83a1 1 0 1 0-1.41-1.41L10 8.59z" />
+            </svg>
+          </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    class="UniversalChatCtaCard__cta"
+    data-universal-chat-cta-card-open
+    data-testid="chat-button"
+    type="button"
+    aria-label="Chat now with sales"
+  >
+    Chat now<span class="UniversalChatCtaCard__ctaSuffix" aria-hidden="true">&nbsp;with sales</span>
+  </button>
+</div>
+
+  <iframe data-universal-chat-iframe title="Chat Widget" src="https://support-conversations.stripe.com/widget?entrypoint=dot_com&audience=dot_com" style="position: fixed; right: 24px; bottom: 0px; left: auto; z-index: 2147483639; width: 390px; max-height: 708px; overflow: hidden; background-color: rgb(230, 235, 241); border: 0px; border-radius: 8px 8px 0 0; box-shadow: rgba(0, 0, 0, 0.05) 0px 12px 15px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.08) 0px 5px 9px; transition: 0.2s ease-in-out; transform: translate(0, 100%); height: calc(-40px + 100svh); opacity: 0;"></iframe>
+
+  <div data-universal-chat-unseen-messages-count-div style="display: none; visibility: hidden; position: fixed; right: 11px; bottom: 33px; z-index: 2147483640; height: 24px; width: 24px; color: #ffffff; background-color: #635bff; border-radius: 50%; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 500; padding-bottom: 2px;"></div>
+</template>
+    </div>
+  </div>
+
+  <template data-js-target="NotificationCenter.template">
+    <div
+  class="Notification"
+  data-js-controller="Notification"
+  data-js-target-list="NotificationCenter.notifications"
+  data-js-id=""
+>
+  <div
+  class="
+    Card
+    
+    
+    
+    Card--shadowMedium
+    
+    
+    
+    Notification__card
+  "
+  
+  
+  
+  
+  
+  
+>
+  <div class="Notification__content"></div>
+    <button class="Notification__closeButton" data-js-target="Notification.closeButton" aria-label="Close"><svg width="20px" height="20px"><path fill="var(--closeButtonFill)" fill-rule="evenodd" d="M10 0a10 10 0 1 1 0 20 10 10 0 0 1 0-20zM7.17 5.76a1 1 0 0 0-1.41 1.41L8.59 10l-2.83 2.83a1 1 0 0 0 1.41 1.41L10 11.41l2.83 2.83a1 1 0 0 0 1.41-1.41L11.41 10l2.83-2.83a1 1 0 1 0-1.41-1.41L10 8.59z" /></svg></button>
+</div>
+</div>
+  </template>
+</div>
+</template>
+    
+
+    
+
+    <meta data-js-controller="ScrollDepthTracker"></meta>
+    
+    
+      <meta data-js-controller="MonitorWebVitals"></meta>
+    
+
+    
+    <link rel="preconnect" href="https://q.stripe.com" crossorigin>
+<link rel="dns-prefetch" href="https://q.stripe.com">
+    <link rel="preconnect" href="https://images.ctfassets.net" crossorigin>
+<link rel="dns-prefetch" href="https://images.ctfassets.net">
+    <link rel="preconnect" href="https://assets.ctfassets.net" crossorigin>
+<link rel="dns-prefetch" href="https://assets.ctfassets.net">
+    
+      
+    
+    
+      
+    
+    <script>new MutationObserver(e=>{for(const d of e)if(d.addedNodes)for(const e of d.addedNodes)e instanceof HTMLLinkElement&&void 0!==e.dataset.jsLazyStyle&&e.addEventListener("load",function(){this.media="all"})}).observe(document.head,{childList:!0}),document.addEventListener("DOMContentLoaded",()=>{for(const e of document.querySelectorAll("link[data-js-lazy-style]"))"all"!==e.media&&(e.media="all")});
+</script>
+    <link rel="preconnect" href="https://b.stripecdn.com" crossorigin>
+<link rel="dns-prefetch" href="https://b.stripecdn.com">
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-NotFoundPage-d36e8b692ba3128a6d18.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedSiteHeader-55cfe057216c8dcba5a8.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Guides-f00064c54f795e59f164.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-UserLogo-0ee93be3bfc013809430.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedNavMenuItem-38f190c6dcf74e9bd8be.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Link-d2d3aeca535307db3b84.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-SiteHeaderNav-99bb2ece9c274641625a.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-DashboardLoginLink-d47e31a71efdf427fcef.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-CtaButton-b06ef0cc0329843d44e7.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-HoverArrow-b6270c66306d9a48d4e8.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-NavCtaButton-fca8b86f24b35f916280.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedMenuButton-17b7e32e0a33774d11e7.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedMobileMenu-ff3cdf92b58f686543dd.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedMobileMenuNavItem-dac29770151d9471c8bc.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-ProductsCallout-6c749515872bf7e874af.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedProductsNavMobile-e89c01befe1811282d82.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedNavItem-5958ea0993262183a378.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedHoverArrow-f5e83d4778b263bc0f5f.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-SessionsBanner-14b8bd769d5af67a8c6c.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Picture-df4ab1fa79ea16808fb0.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-VariantSiteMobileMenuSection-26e421b5c5fd3299c959.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedNavigationMenu-d84ec639469a5cdbcf36.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedProductsNav-cb0cbdc0559b96348d77.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-SiteMenuSection-428b7524fe5f8f7e18a8.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedDevelopersNav-0890525fd5cca6fdb219.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Copy-1d1c3373b0854daf173b.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-StripeSet-423109ad4bf57a2a011c.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Stripe-b3679504f08482f96a0d.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Section-b4cc97dde2285e8f3b5b.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Icon-646136cd9e336d8c18d7.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-AnimatedIcon-0b7478e1f9234aae8838.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Card-fc1ed003191984345ba9.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-GearsIcon-b70d78eb2e161c6ab80e.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-ColumnLayout-86727a6ab99d7e86820f.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-SiteFooterSection-801324a67f6b0168e107.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-GlobalizationPicker-cb59e0de1d5c3aeaa184.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Flag-4ff2f9bcdf4404265882.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-LocaleControl-09ce62c550a15bb456e5.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-List-f0dd86d0ff490fdd7e75.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-CopyTitle-c641e014b3946628bc95.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-SiteFooterSectionSupportLinkList-US-bf39e598e6b8dad8c615.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Container-860b10efccb93695b381.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-UniversalChatCtaCard-d7c08b0cd6f07dcb3ad3.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Notification-7c2b1bba3ab10095bc15.css">
+            
+
+            <link rel="preload" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1/f965fdf4.woff2" as="font" crossorigin>
+          
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-fonts-79c606a1251d238d4708.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-global-a1d767cfda29b3e223c8.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-White-e97cfe352f6402a27dd4.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Light-b8ef30ce6bd4667ef9f4.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Dark-7c177d402d3875fa8e4c.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-SemiDark-c360011f6a51855455a7.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Transparent-bdd8e13604d56721da9e.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Hub-ff0110a4dd95a71fe24e.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Legacy-ffa4f24cd3ca18798c6a.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-LegacyLight-c4964a08822288e5ca89.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-LegacyDark-d19fb27941422687f6e0.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Chroma-87787f8a17a7694cc56b.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-CottonCandy-34902095724678b38c34.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-LemonLime-13ff3a38b624e377a552.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Overcast-81fe349430811fb7e7a0.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Perennial-854f0de6b75daa0af865.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Pomegranate-41bf31c2ab13e3303495.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Slate-bc2bc8abf6c1a4bdaaf9.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Sunburst-a883cb3d33b1332bbc9a.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Sunset-852ef64feef5cc52c82c.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Tropical-4894817f3839a23051cc.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Twilight-4cf03cc2b6b49192800f.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Wintergreen-2a184b526d0f98be2716.css">
+            
+
+              <link rel="stylesheet" href="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Layout-2fe3591ea951e6ccab8e.css">
+            
+
+        <script type="application/json" data-js-script-registry>
+          [{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedSiteHeader-RNYO5U4P.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-DashboardLoginLink-AEJSHHU5.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedMobileMenu-O6FMZTVA.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-RefreshedProductsNavGroup-O7OL7V2V.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-StripeSet-W7RHA7ZO.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-PricingIcon-HQ3KSDVJ.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-GearsIcon-OCH6GK62.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-LocaleControl-HLGL2S35.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-Page-MAM7ONIS.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-Sentry-IABPFTSH.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-EnforceSameSiteLaxOnCookies-5NDXH4YF.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-LoaderScript-HXJSQDZ6.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-Loader-RZKPD5CW.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-Container-XLLZLWAI.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-UniversalChatInitializer-3YEWCHMH.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-Notification-KAEPMKPP.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-ScrollDepthTracker-6LCBTIPC.js"},{"critical":true,"path":"https://b.stripecdn.com/mkt-statics-srv/assets/v1-MonitorWebVitals-AXJUWECY.js"}]
+        </script>
+      
+
+        <script type="module" src="https://b.stripecdn.com/mkt-statics-srv/assets/v1-Bootstrapper-WGX55HQW.js"></script>
+      
+
+  </head>
+  <body
+    class="
+      MktBody
+      theme--Light
+      flavor--Chroma
+      accent--Blurple
+      
+    "
+    
+    
+  >
+    <div id="MktContent">
+      <header
+  class="
+    SiteHeader
+    SiteHeader--noTransitions
+    SiteHeader--refreshed
+    SiteHeader--hasContactSales
+    
+    
+    
+    theme--Light
+    flavor--Chroma
+    accent--Blurple
+    
+    SiteHeader--hasGuides
+    "
+  data-menu-state="closed"
+  data-js-controller="SiteHeader"
+>
+  <div class="SiteHeader__overlay" data-js-target="SiteHeader.overlayEl"></div>
+  <div class="SiteHeader__stickyContainer" data-js-target="SiteHeader.stickyContainerEl">
+    <div class="SiteHeader__stickyShadow" data-js-target="SiteHeader.stickyShadowEl"></div>
+    
+    <div class="SiteHeader__guidesContainer">
+      <div
+  class='
+    Guides
+    SiteHeader__guides
+  '
+  aria-hidden='true'
+>
+  <div class='Guides__container'>
+    <div class='Guides__guide'></div>
+    <div class='Guides__guide'></div>
+    <div class='Guides__guide'></div>
+    <div class='Guides__guide'></div>
+    <div class='Guides__guide'></div>
+  </div>
+</div>
+    </div>
+    
+    <div class="SiteHeader__container" data-js-target="SiteHeader.headerContainerEl">
+      <div class="SiteHeader__navContainer">
+        <h1 class="SiteHeader__logo">
+          <a href="/"
+            class="SiteHeader__logoLink"
+            data-js-controller="AnalyticsButton"
+            data-analytics-category="Navigation"
+            data-analytics-action="Clicked"
+            data-analytics-label="Stripe Logo"
+            data-testid="header-stripe-logo"
+          >
+            <svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" width="60" height="25" class="UserLogo variant-- "><title>Stripe logo</title><path fill="var(--userLogoColor, #0A2540)" d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5 0 .4-.04 1.26-.06 1.48zm-5.92-5.62c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM40.95 20.3c-1.44 0-2.32-.6-2.9-1.04l-.02 4.63-4.12.87V5.57h3.76l.08 1.02a4.7 4.7 0 0 1 3.23-1.29c2.9 0 5.62 2.6 5.62 7.4 0 5.23-2.7 7.6-5.65 7.6zM40 8.95c-.95 0-1.54.34-1.97.81l.02 6.12c.4.44.98.78 1.95.78 1.52 0 2.54-1.65 2.54-3.87 0-2.15-1.04-3.84-2.54-3.84zM28.24 5.57h4.13v14.44h-4.13V5.57zm0-4.7L32.37 0v3.36l-4.13.88V.88zm-4.32 9.35v9.79H19.8V5.57h3.7l.12 1.22c1-1.77 3.07-1.41 3.62-1.22v3.79c-.52-.17-2.29-.43-3.32.86zm-8.55 4.72c0 2.43 2.6 1.68 3.12 1.46v3.36c-.55.3-1.54.54-2.89.54a4.15 4.15 0 0 1-4.27-4.24l.01-13.17 4.02-.86v3.54h3.14V9.1h-3.13v5.85zm-4.91.7c0 2.97-2.31 4.66-5.73 4.66a11.2 11.2 0 0 1-4.46-.93v-3.93c1.38.75 3.1 1.31 4.46 1.31.92 0 1.53-.24 1.53-1C6.26 13.77 0 14.51 0 9.95 0 7.04 2.28 5.3 5.62 5.3c1.36 0 2.72.2 4.09.75v3.88a9.23 9.23 0 0 0-4.1-1.06c-.86 0-1.44.25-1.44.9 0 1.85 6.29.97 6.29 5.88z" fill-rule="evenodd"/></svg>
+          </a>
+        </h1>
+
+        
+          <div class="SiteHeader__headerNav" data-js-target="SiteHeader.headerNavEl">
+            <nav class='SiteHeaderNav'>
+  <ul class='SiteHeaderNav__list'>
+    <li class='
+  SiteHeaderNavItem
+  SiteHeaderNavItem--refreshed
+  
+  
+'>
+  
+    <button
+      class="
+        SiteHeaderNavItem__link
+        SiteHeaderNavItem__link--hasCaret
+      "
+      aria-haspopup="true"
+      aria-expanded="false"
+      data-js-target-list="SiteHeader.dropdownTriggers"
+      data-testid="header-products-nav-item"
+    >
+      
+        <span class="SiteHeaderNavItem__linkText">Products</span>
+          <span class="SiteHeaderNavItem__linkCaretContainer">
+            <svg width="7" height="7" fill="none" xmlns="http://www.w3.org/2000/svg" class="SiteHeaderNavItem__linkCaret SiteHeaderNavItem__linkCaret--left">
+              <path d="M4.381 5.619 5 6.237 6.237 5l-.618-.619L4.38 5.62Zm-4-4 4 4L5.62 4.38l-4-4L.38 1.62Z" fill="currentColor"/>
+            </svg>
+            <svg width="7" height="7" fill="none" xmlns="http://www.w3.org/2000/svg" class="SiteHeaderNavItem__linkCaret SiteHeaderNavItem__linkCaret--right">
+              <path d="M2.619 5.619 2 6.237.763 5l.618-.619L2.62 5.62Zm4-4-4 4L1.38 4.38l4-4L6.62 1.62Z
