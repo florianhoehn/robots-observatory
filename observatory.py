@@ -54,6 +54,7 @@ PANEL_ID = "panel-01"
 # --- conduct limits. Changing any of these changes the ethical argument in
 # --- CONDUCT.md, so they live here in one place and are recorded per run.
 CONCURRENT_HOSTS = 6
+ERROR_BUDGET = 0.05
 HOST_GAP_S = 1.5
 MAX_REDIRECTS = 5
 READ_CAP_BYTES = 512 * 1024
@@ -309,8 +310,18 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
             rec["errors"].append(f"robots/{ident}: {got['error']}")
         rec["robots"].append(entry)
 
+    # Three separate questions, which a single hash comparison conflates. The
+    # raw comparison said 11% of the panel varies its policy by requester; of
+    # those, 94% were two error pages or two consent pages whose bytes differ
+    # because of an embedded nonce. Reported as one number it is simply wrong.
     hashes = {e["identity"]: e["sha256"] for e in rec["robots"] if e["sha256"]}
-    rec["robots_varies_by_identity"] = len(set(hashes.values())) > 1
+    n_ident = len(IDENTITIES)
+    rec["policy_varies_by_identity"] = robots_parse.policy_varies(
+        rec["robots"], n_ident)
+    rec["access_varies_by_identity"] = robots_parse.access_varies(
+        rec["robots"], n_ident)
+    # Diagnostic only. Includes cosmetic differences; never a finding.
+    rec["hash_differs_by_identity"] = len(set(hashes.values())) > 1
 
     # Parse the honest identity's copy -- that is the policy as declared to a
     # crawler that says what it is.
@@ -487,6 +498,78 @@ def cmd_freeze(args) -> None:
           f"{hashlib.sha256(panel.read_bytes()).hexdigest()[:16]}...", file=sys.stderr)
 
 
+def retry_failed(run_dir: Path, panel: list[dict], watchlist: list[str],
+                 run_id: str, vantage: str, write_text: bool,
+                 pause_s: float = 30.0) -> dict:
+    """Re-probe hosts whose first pass errored, once, after a pause.
+
+    A transient timeout recorded as a policy fact is a wrong answer, so a host
+    that fails gets one more attempt before its failure is treated as data.
+    Hosts that fail twice are genuinely unreachable from this vantage, which is
+    itself a finding -- a TLS handshake refused from a UK residential IP is a
+    fact about reachability, not a measurement error.
+    """
+    recs_path = run_dir / "records.jsonl"
+    recs = [json.loads(ln) for ln in
+            recs_path.read_text(encoding="utf-8").splitlines() if ln]
+    by_host = {r["host"]: r for r in recs}
+    failed = sorted(h for h, r in by_host.items() if r["errors"])
+    if not failed:
+        return {"attempted": 0, "recovered": 0, "still_failing": []}
+
+    print(f"retry pass: {len(failed)} host(s), pausing {pause_s:.0f}s first",
+          file=sys.stderr)
+    time.sleep(pause_s)
+    rows = {r["host"]: r for r in panel}
+    recovered = []
+    with ThreadPoolExecutor(CONCURRENT_HOSTS) as pool:
+        futs = {pool.submit(probe_host, rows[h], watchlist, run_id, vantage,
+                            write_text): h for h in failed if h in rows}
+        for fut in as_completed(futs):
+            rec = fut.result()
+            rec["retried"] = True
+            if not rec["errors"]:
+                recovered.append(rec["host"])
+            by_host[rec["host"]] = rec
+
+    with recs_path.open("w", encoding="utf-8") as fh:
+        for h in sorted(by_host):
+            fh.write(json.dumps(by_host[h], sort_keys=True) + "\n")
+    still = sorted(h for h, r in by_host.items() if r["errors"])
+    print(f"  recovered {len(recovered)} of {len(failed)}; "
+          f"{len(still)} still failing", file=sys.stderr)
+    return {"attempted": len(failed), "recovered": sorted(recovered),
+            "still_failing": still}
+
+
+def cmd_retry(args) -> None:
+    """Run the retry pass against the latest run and rewrite its metadata."""
+    runs = sorted(d for d in RUNS.iterdir()
+                  if d.is_dir() and (d / "run-meta.json").exists()
+                  and d.name != "dry-run")
+    if not runs:
+        sys.exit("no run to retry")
+    run_dir = runs[-1]
+    meta = json.loads((run_dir / "run-meta.json").read_text())
+    panel = load_panel()
+    res = retry_failed(run_dir, panel, load_watchlist(), meta["run_id"],
+                       meta["vantage"], True, pause_s=args.pause)
+
+    recs = [json.loads(ln) for ln in
+            (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines() if ln]
+    ok = sum(1 for r in recs if not r["errors"])
+    err_rate = (len(recs) - ok) / len(recs) if recs else 0.0
+    reasons = [f"error_rate_{err_rate:.3f}"] if err_rate > ERROR_BUDGET else []
+    meta.update(hosts_ok=ok, error_rate=round(err_rate, 4),
+                retry_pass=res,
+                status="degraded" if reasons else "complete",
+                degraded_reasons=reasons)
+    (run_dir / "run-meta.json").write_text(
+        json.dumps(meta, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    print(f"\n{meta['status']}: {ok}/{len(recs)} clean "
+          f"({err_rate:.1%} error rate)", file=sys.stderr)
+
+
 def cmd_run(args) -> None:
     panel = load_panel()
     optout, optout_hash = load_optout()
@@ -559,7 +642,7 @@ def cmd_run(args) -> None:
     attempted = len(panel)
     err_rate = 0.0 if not attempted else (attempted - ok) / attempted
     reasons = []
-    if err_rate > 0.05:
+    if err_rate > ERROR_BUDGET:
         reasons.append(f"error_rate_{err_rate:.3f}")
     if unresolvable:
         reasons.append(f"unresolvable_panel_hosts_{len(unresolvable)}")
@@ -628,6 +711,14 @@ def cmd_resolve(args) -> None:
         sys.exit(1)
 
 
+def _policy_varies(r: dict) -> bool:
+    return robots_parse.policy_varies(r.get("robots", []), len(IDENTITIES))
+
+
+def _access_varies(r: dict) -> bool:
+    return robots_parse.access_varies(r.get("robots", []), len(IDENTITIES))
+
+
 def cmd_derive(args) -> None:
     runs = sorted(d for d in RUNS.iterdir()
                   if d.is_dir() and (d / "records.jsonl").exists()
@@ -690,9 +781,17 @@ def cmd_derive(args) -> None:
             for k in WELLKNOWN
         },
         "rsl_license_refs": share(lambda r: bool(pol(r, "rsl_license_refs"))),
-        "robots_varies_by_identity": share(
-            lambda r: bool(r.get("robots_varies_by_identity"))
-        ),
+        # The headline comparison, defined narrowly on purpose: both
+        # identities received a real policy file and the files differ.
+        "policy_varies_by_identity": share(_policy_varies),
+        # One identity got the file and the other did not. Differential
+        # access, not differential policy -- a separate finding.
+        "access_varies_by_identity": share(_access_varies),
+        # Raw hash difference. Diagnostic only: dominated by error and consent
+        # pages carrying nonces. Not a finding, kept so the gap is visible.
+        "hash_differs_by_identity": share(
+            lambda r: len({e["sha256"] for e in r.get("robots", [])
+                           if e.get("sha256")}) > 1),
         "soft_404": share(lambda r: pol(r, "file_state") == "soft_404"),
         "dns_failure": share(lambda r: pol(r, "file_state") == "dns_failure"),
         "opted_out_via_robots": share(
@@ -764,6 +863,10 @@ def main() -> None:
 
     v = sub.add_parser("resolve", help="check every panel host resolves (offline of the hosts)")
     v.set_defaults(func=cmd_resolve)
+
+    t = sub.add_parser("retry", help="re-probe failed hosts in the latest run")
+    t.add_argument("--pause", type=float, default=30.0)
+    t.set_defaults(func=cmd_retry)
 
     d = sub.add_parser("derive", help="compute findings from the latest run")
     d.set_defaults(func=cmd_derive)

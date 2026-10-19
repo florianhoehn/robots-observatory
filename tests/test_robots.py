@@ -167,6 +167,31 @@ check("summarise: watchlist order is stable, not file order",
       rp.summarise(fixture("plain.txt"), ["CCBot", "GPTBot"], US)["ai_tokens_named"],
       ["CCBot", "GPTBot"])
 
+# --- trap: a hash difference is not a policy difference --------------------
+# The raw comparison said 11% of the panel serves different policy by
+# requester. Of those, 94% were two error pages or two consent pages whose
+# bytes differ because of an embedded nonce. As one number it is just wrong.
+def rec(bot_state, br_state, bot_h="a", br_h="b"):
+    return [{"identity": "honest_bot", "file_state": bot_state, "sha256": bot_h},
+            {"identity": "browser_control", "file_state": br_state, "sha256": br_h}]
+
+check("both present, different content = policy varies",
+      rp.policy_varies(rec("present", "present"), 2), True)
+check("both present, same content = no variance",
+      rp.policy_varies(rec("present", "present", "a", "a"), 2), False)
+check("two different error pages are NOT policy variance",
+      rp.policy_varies(rec("blocked_403", "blocked_403"), 2), False)
+check("two different consent pages are NOT policy variance",
+      rp.policy_varies(rec("redirected_away", "redirected_away"), 2), False)
+check("one blocked, one not = access varies, not policy",
+      (rp.policy_varies(rec("present", "blocked_403"), 2),
+       rp.access_varies(rec("present", "blocked_403"), 2)), (False, True))
+check("both blocked = neither measure fires",
+      (rp.policy_varies(rec("blocked_403", "blocked_403"), 2),
+       rp.access_varies(rec("blocked_403", "blocked_403"), 2)), (False, False))
+check("both present = access does not vary",
+      rp.access_varies(rec("present", "present"), 2), False)
+
 print()
 if failures:
     print(f"{len(failures)} FAILED\n")

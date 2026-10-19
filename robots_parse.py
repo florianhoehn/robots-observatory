@@ -316,3 +316,35 @@ def summarise(text: str, watchlist: list[str], us: str) -> dict:
         "directive_lines": r.directive_lines,
         "would_disallow_us": path_disallowed(r.group_for(us)),
     }
+
+
+# --- identity comparison ---------------------------------------------------
+# Three separate questions that a single hash comparison conflates. The raw
+# comparison said 11% of a 463-host panel serves different policy depending on
+# who asks; of those, 94% were two error pages or two consent pages whose bytes
+# differ only because of an embedded nonce. Reported as one number it is wrong,
+# so the measures are defined separately and narrowly.
+
+def present_hashes(robots: list[dict]) -> dict[str, str]:
+    """identity -> content hash, for the identities that got a real file."""
+    return {e["identity"]: e["sha256"] for e in robots
+            if e.get("file_state") == "present"}
+
+
+def policy_varies(robots: list[dict], n_identities: int) -> bool:
+    """Every identity got a real policy file, and the files differ.
+
+    The narrow, defensible version of "does this host serve different policy
+    depending on who asks".
+    """
+    p = present_hashes(robots)
+    return len(p) == n_identities and len(set(p.values())) > 1
+
+
+def access_varies(robots: list[dict], n_identities: int) -> bool:
+    """Some identities got the file and some did not.
+
+    Differential access rather than differential policy -- a real finding, and
+    a different one.
+    """
+    return 0 < len(present_hashes(robots)) < n_identities
