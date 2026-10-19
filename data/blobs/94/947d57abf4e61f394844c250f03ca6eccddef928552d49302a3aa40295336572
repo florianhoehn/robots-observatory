@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="ru"><head><meta name="generator" content="Gatsby 5.16.1"/><meta charSet="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/><meta name="google-site-verification" content="hyw6FsptIVSnj5zG9wczqHJh104hFJ7dUTIfIQf5n-Y"/><meta name="yandex-verification" content="f999a7610f3824f5"/><meta name="description" content="Страница не найдена - Эвотор" data-gatsby-head="true"/><meta property="og:title" content="Страница не найдена - Эвотор" data-gatsby-head="true"/><meta property="og:description" content="Страница не найдена - Эвотор" data-gatsby-head="true"/><meta property="og:url" content="https://evotor.ru/404/" data-gatsby-head="true"/><meta property="og:type" content="website" data-gatsby-head="true"/><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><link rel="sitemap" type="application/xml" href="/sitemap-index.xml"/><link rel="icon" href="/favicon-32x32.png?v=f631089f2cef3859e08902e8287cb30a" type="image/png"/><link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=f631089f2cef3859e08902e8287cb30a"/><link rel="preconnect dns-prefetch" href="https://mc.yandex.ru"/><script type="text/javascript" src="/index_static/jquery.min.js" id="jquery-core-js"></script><script type="text/javascript" src="/index_static/jquery-migrate.min.js" id="jquery-migrate-js"></script><script type="text/html" id="tmpl-partners-template-mobile">
+<# var currentCity=data.city; data.forEach(function(item,index) { #>
+<!-- <# item_json = JSON.stringify(item) #> -->
+<# if(currentCity !==item.options.city && currentCity !=='partnersNear' ) { #>
+<!--            <div id="title-partners-near"><h3>Партнеры рядом</h3></div>-->
+<# currentCity='partnersNear' ; } #>
+<# if (item.options.title) { #>
+<# if (currentCity==='partnersNear' ) { #>
+<div class="partner partner-near" <# if (index> 4) { #> style="display:none" <# } #> data-partner_id="{{item.options.partner_ID}}"
+    data-partner_title="{{item.options.title}}" data-partner_city="{{item.options.city}}">
+        <# } else { #>
+<div class="partner" <# if (index> 4) { #> style="display:none" <# } #> data-partner_id="{{item.options.partner_ID}}"
+    data-partner_title="{{item.options.title}}"
+    data-partner_city="{{item.options.city}}">
+        <# } #>
+<div class="partner__header <# if ( item.options.address ) { #> js-partner_balloon <# } #>" <# if ( typeof item.geometry.coordinates !=0 ) { #>
+data-coordinates1="{{item.geometry.coordinates[0]}}"
+    <# } #>
+<# if ( typeof item.geometry.coordinates !=0 ) { #>
+data-coordinates2="{{item.geometry.coordinates[1]}}"
+    <# } #>>
+<# if ( item.options.logo ) { #>
+<div class="partner__logo-wrapper">
+    <img class="partner__logo" src="{{item.options.logo}}" alt="{{item.options.title}}" title="{{item.options.title}}">
+    </div>
+    <# } #>
+<div class="partner__info">
+    <div class="partner__images pim">
+    <# var count=0; if (items[i].options.saas_active || items[i].options.saas_premium) { count ++; #>
+        <img src="/images/svg/image-premium-new.svg" alt="Saas-партнёр" title="Saas-партнёр">
+    <# else if (item.options.tag.indexOf('partner_sale') !=-1 || item.options.tag.indexOf('partner_rent') !=-1) { if (item.options.premium) { count ++; #>
+        <img src="/images/svg/image-partner.svg" alt="partners" title="partners">
+    <# } else if ((item.options.filters.indexOf('partners') !=-1 || items[i].options.saas_basic) && count < 3) { count ++; #>
+        <img src="/images/svg/image-partner.svg" alt="partners" title="partners">
+    <# }
+
+<# } if (item.options.tag.indexOf('partner_service') !=-1) { if (item.options.filters.indexOf('certified_for_5i') !=-1 && count < 3) { count ++; #>
+<img src="/images/svg/ack.svg" alt="Сертифицированы на ремонт терминалов с эквайрингом" title="Сертифицированы на ремонт терминалов с эквайрингом">
+    <# } if (item.options.filters.indexOf('modernization_5line') !=-1 && count < 3) { count ++; #>
+<img src="/images/svg/st5.svg" alt="modernization_5line" title="modernization_5line">
+    <# } if (item.options.filters.indexOf('authorized_center') !=-1 && count < 3) { count ++; #>
+<img src="/images/svg/image-authorized_center.svg" alt="authorized_center" title="authorized_center">
+    <# } if (item.options.filters.indexOf('premium_service') !=-1 && count < 3) { count ++; #>
+<img src="/images/svg/image-premium_service.svg" alt="premium_service" title="premium_service">
+    <# } if (item.options.filters.indexOf('visit') !=-1 && count < 3) { count ++; #>
+<img src="/images/svg/visit.svg" alt="visit" title="visit">
+    <# } #>
+</div>
+    <span class="partner__name">{{item.options.title}}</span>
+    <# if ( item.options.premium ) { #>
+    <div class="partner__status">
+        Премиум-партнёр
+        </div>
+        <# } #>
+    </div>
+
+    <div class="partner__prev">
+        <ul class="partner-contacts partner__contacts">
+            <# if ( item.options.address ) { #>
+        <li class="partner-contacts__item">
+            <span>{{item.options.address}}</span>
+            </li>
+            <# } #>
+        </ul>
+    </div>
+</div>
+    <div class="partner__body">
+        <ul class="partner-contacts partner__contacts">
+            <# if ( item.options.address ) { #>
+        <li class="partner-contacts__item partner-contacts__item--icon">
+            <div>
+            <svg class="svg-sprite-icon icon-map-dot partner-contacts__icon">
+            <use xlink:href="/images/svg/symbol/sprite.svg#map-dot"></use>
+            </svg>
+            </div>
+            <span class="partner-contacts__item--label">Адрес:</span>
+            <span>{{item.options.address}}</span>
+            </li>
+            <# } #>
+            <# if ( item.options.phone ) { #>
+        <li class="partner-contacts__item partner-contacts__item--icon partner-phone">
+            <div>
+            <svg class="svg-sprite-icon icon-phone partner-contacts__icon">
+            <use xlink:href="/images/svg/symbol/sprite.svg#phone-new"></use>
+            </svg>
+            </div>
+            <span class="partner-contacts__item--label">Номер телефона:</span>
+            <span><a class="link hidden-phone" href="tel:{{item.options.phone}}">{{item.options.phone}}</a></span>
+            </li>
+            <# } #>
+            <# if ( item.options.servicePhone) { #>
+        <li class="partner-contacts__item partner-contacts__item--icon service-phone" style="display: none;">
+            <div>
+            <svg class="svg-sprite-icon icon-phone partner-contacts__icon">
+            <use xlink:href="/images/svg/symbol/sprite.svg#phone-new"></use>
+            </svg>
+            </div>
+            <span class="partner-contacts__item--label">Номер телефона:</span>
+            <span><a class="link hidden-phone" href="tel:{{item.options.servicePhone}}">{{item.options.servicePhone}}</a></span>
+            </li>
+            <# } #>
+            <# if ( item.options.site ) { #>
+        <li class="partner-contacts__item partner-contacts__item--icon">
+            <div>
+            <svg class="svg-sprite-icon icon-phone partner-contacts__icon">
+            <use xlink:href="/images/svg/symbol/sprite.svg#site"></use>
+            </svg>
+            </div>
+            <span class="partner-contacts__item--label">Официальный сайт:</span>
+            <br/>
+            <span><a class="link" href="{{item.options.site}}">Перейти на сайт</a></span>
+            </li>
+            <# } #>
+            <# if ( item.options.email ) { #>
+        <li class="partner-contacts__item partner-contacts__item--icon">
+            <svg class="svg-sprite-icon icon-phone partner-contacts__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18L2.01 6C2.01 4.9 2.9 4 4 4ZM12.53 12.67L19.6 8.25C19.85 8.09 20 7.82 20 7.53C20 6.86 19.27 6.46 18.7 6.81L12 11L5.3 6.81C4.73 6.46 4 6.86 4 7.53C4 7.82 4.15 8.09 4.4 8.25L11.47 12.67C11.79 12.87 12.21 12.87 12.53 12.67Z" fill="#F05023" />
+            </svg>
+            <span class="partner-contacts__item--label">Email:</span>
+            <a class="link" href="mailto:{{item.options.email}}">{{item.options.email}}</a>
+            </li>
+            <# } #>
+        </ul>
+        <div class="partner__btn">
+            <# if ( item.options.site ) { #>
+        <a class="btn btn--pointer btn--text-upper" href="{{item.options.site}}" target="_blank">на сайт партнера</a>
+            <# } #>
+        </div>
+        <div class="partner__block partner-block">
+            <div class="partner-block__header">
+                <div class="title title--size-m partner-block__name">Другие точки партнёра
+                </div>
+            </div>
+            <div class="partner-block__body js-partners">
+            </div>
+        </div>
+    </div>
+</div>
+
+    <# }; #>
+<# }); #></script><script type="text/html" id="tmpl-partners-template">
+<# var currentCity=data.city, currentType=data.currentType, items=data.items, countShownItems=data.countShownItems; #>
+<# for (var i=0; i < items.length; i ++) { #>
+    <# if (! (data.isMobile && i> countShownItems - 1)) { #>
+        <# if(currentCity !==items[i].options.city && currentCity !=='partnersNear' ) { #>
+            <div id="title-partners-near">
+                <h3>Партнеры рядом</h3>
+            </div>
+        <# currentCity='partnersNear' ; } #>
+
+        <# if (items[i].options.title) { #>
+            <# if (currentCity==='partnersNear' ) { #>
+                <div class="partner partner-near" data-partner_id="{{items[i].options.partner_ID}}" data-partner_title="{{items[i].options.title}}" data-partner_city="{{items[i].options.city}}">
+            <# } else { #>
+                <div class="partner" data-partner_id="{{items[i].options.partner_ID}}" data-partner_title="{{items[i].options.title}}" data-partner_city="{{items[i].options.city}}">
+            <# } #>
+
+            <div class="partner__header <# if ( items[i].options.address ) { #> js-partner_balloon <# } #>" <# if ( typeof items[i].geometry.coordinates !=0 ) { #>
+                data-coordinates1="{{items[i].geometry.coordinates[0]}}"
+            <# } #>
+
+            <# if ( typeof items[i].geometry.coordinates !=0 ) { #>
+                data-coordinates2="{{items[i].geometry.coordinates[1]}}"
+            <# } #>>
+
+            <# if ( items[i].options.logo ) { #>
+                <div class="partner__logo-wrapper">
+                    <img class="partner__logo" src="{{items[i].options.logo}}" alt="{{items[i].options.title}}">
+                </div>
+            <# } #>
+
+            <div class="partner__info">
+                <div class="partner__images">
+                    <# var count=0; if (items[i].options.distributor) { count ++; #>
+                        <div class="partner__images_icon">
+                            <img src="/images/svg/distributor.svg" alt="">
+                            <div class="pi-icon-popup">Премиум сервис</div>
+                        </div>
+                        <# } if (items[i].options.saas_active || items[i].options.saas_premium) { count ++; #>
+                            <div class="partner__images_icon">
+                                <img src="/images/svg/image-premium-new.svg" alt="Saas-партнёр">
+                                <div class="pi-icon-popup">Saas-партнёр</div>
+                            </div>
+                        <# } else if ((currentType=='partner_sale' || currentType=='partner_rent' ) && (items[i].options.tag.indexOf('partner_sale') !=-1 || items[i].options.tag.indexOf('partner_rent') !=-1)) { if (items[i].options.premium) { count ++; #>
+                            <div class="partner__images_icon">
+                                <img src="/images/svg/image-partner.svg" alt="partners">
+                                <div class="pi-icon-popup">Партнёр</div>
+                            </div>
+                        <# } else if (items[i].options.filters.indexOf('partners') !=-1 || items[i].options.saas_basic && count < 3) { count ++; #>
+                            <div class="partner__images_icon">
+                                <img src="/images/svg/image-partner.svg" alt="partners">
+                                <div class="pi-icon-popup">Партнёр</div>
+                            </div>
+                        <# } #>
+
+                <# } if (currentType=='partner_service' && items[i].options.tag.indexOf('partner_service') !=-1) { if (items[i].options.filters.indexOf('certified_for_5i') !=-1 && count < 3) { count ++; #>
+                        <div class="partner__images_icon">
+                            <img src="/images/svg/ack.svg" alt="certified_for_maintenance">
+                            <div class="pi-icon-popup">Сертифицированы на ремонт терминалов с эквайрингом</div>
+                        </div>
+                    <# } if (items[i].options.filters.indexOf('modernization_5line') !=-1 && count < 3) { count ++; #>
+                        <div class="partner__images_icon">
+                            <img src="/images/svg/st5.svg" alt="modernization_5line">
+                            <div class="pi-icon-popup">Модернизация 5 line</div>
+                        </div>
+                    <# } if (items[i].options.filters.indexOf('authorized_center') !=-1 && count < 3) { count ++; #>
+                        <div class="partner__images_icon">
+                            <img src="/images/svg/image-authorized_center.svg" alt="authorized_center">
+                            <div class="pi-icon-popup">Авторизованный центр</div>
+                        </div>
+                    <# } if (items[i].options.filters.indexOf('premium_service') !=-1 && count < 3) { count ++; #>
+                        <div class="partner__images_icon">
+                            <img src="/images/svg/image-premium_service.svg" alt="premium_service">
+                            <div class="pi-icon-popup">Премиум сервис</div>
+                        </div>
+                    <# } if (items[i].options.filters.indexOf('visit') !=-1 && count < 3) { count ++; #>
+                        <div class="partner__images_icon">
+                            <img src="/images/svg/visit.svg" alt="visit">
+                            <div class="pi-icon-popup">
+                            Данный сервисный центр осуществляет выезд, для получения подробной информации о выезде
+                            и его стоимости, пожалуйста, позвоните по телефону сервиса.
+                            </div>
+                        </div>
+                    <# } #>
+                <# } #>
+            </div>
+                <span class="partner__name">{{items[i].options.title}}</span>
+
+                <!-- <# if ( items[i].options.premium && (currentType == 'partner_sale' || currentType == 'partner_rent')) { #>
+                    <div class="partner__status">Премиум-партнёр</div>
+                <# } #> -->
+
+            </div>
+
+            <div class="partner__prev">
+                <ul class="partner-contacts partner__contacts">
+                    <# if ( items[i].options.address ) { #>
+                        <li class="partner-contacts__item">
+                            <span>{{items[i].options.address}}</span>
+                        </li>
+                    <# } #>
+                </ul>
+            </div>
+
+            </div>
+                <div class="partner__body">
+                    <ul class="partner-contacts partner__contacts">
+                        <# if ( items[i].options.address ) { #>
+                            <li class="partner-contacts__item partner-contacts__item--icon">
+                                <div>
+                                    <svg class="svg-sprite-icon icon-map-dot partner-contacts__icon">
+                                        <use xlink:href="/images/svg/symbol/sprite.svg#map-dot"></use>
+                                    </svg>
+                                </div>
+                                <span class="partner-contacts__item--label">Адрес:</span>
+                                <br/>
+                                <span>{{items[i].options.address}}</span>
+                            </li>
+                        <# } #>
+
+                        <# if (currentType=='partner_service' && items[i].options.servicePhone) { #>
+                            <li class="partner-contacts__item partner-contacts__item--icon service-phone-field">
+                                <div>
+                                    <svg class="svg-sprite-icon icon-phone partner-contacts__icon">
+                                        <use xlink:href="/images/svg/symbol/sprite.svg#phone-new"></use>
+                                    </svg>
+                                </div>
+                                <span class="partner-contacts__item--label">Номер телефона:</span>
+                                <# var phones=items[i].options.servicePhone.split(','); phones.forEach(function(phone, ind) { #>
+                                    <span><a class="link phone-link" href="tel:{{phone}}">{{phone}}</a></span>
+                                <# if (ind < phones.length - 1) { #>, <# } #>
+                                <# }); #>
+                            </li>
+                        <# } else if (items[i].options.phone) { #>
+
+                            <li class="partner-contacts__item partner-contacts__item--icon phone-field">
+                                <div>
+                                    <svg class="svg-sprite-icon icon-phone partner-contacts__icon">
+                                        <use xlink:href="/images/svg/symbol/sprite.svg#phone-new"></use>
+                                    </svg>
+                                </div>
+                                <span class="partner-contacts__item--label">Номер телефона:</span>
+                                <br/>
+                                <span><a class="link phone-link" href="tel:{{items[i].options.phone}}">{{items[i].options.phone}}</a></span>
+                            </li>
+                        <# } #>
+                        <# if (items[i].options.site) { #>
+                            <li class="partner-contacts__item partner-contacts__item--icon site-field">
+                                <div>
+                                    <svg class="svg-sprite-icon icon-phone partner-contacts__icon">
+                                        <use xlink:href="/images/svg/symbol/sprite.svg#site"></use>
+                                    </svg>
+                                </div>
+                                <span class="partner-contacts__item--label">Официальный сайт:</span>
+                                <br/>
+                                <span><a class="link site-link" href="{{items[i].options.site}}" target="_blank">Перейти на сайт</a></span>
+                            </li>
+                        <# } #>
+                        <# if ( items[i].options.email ) { #>
+                            <li class="partner-contacts__item partner-contacts__item--icon email-field">
+                                <svg class="svg-sprite-icon icon-phone partner-contacts__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18L2.01 6C2.01 4.9 2.9 4 4 4ZM12.53 12.67L19.6 8.25C19.85 8.09 20 7.82 20 7.53C20 6.86 19.27 6.46 18.7 6.81L12 11L5.3 6.81C4.73 6.46 4 6.86 4 7.53C4 7.82 4.15 8.09 4.4 8.25L11.47 12.67C11.79 12.87 12.21 12.87 12.53 12.67Z" fill="#F05023" />
+                                </svg>
+                                <span class="partner-contacts__item--label">Email:</span>
+                                <br/>
+                                <a class="link" href="mailto:{{items[i].options.email}}">{{items[i].options.email}}</a>
+                            </li>
+                        <# } #>
+                        <# if (currentType=='partner_service' && items[i].options.serviceMaintenanceLink) { #>
+                            <a href="{{items[i].options.serviceMaintenanceLink}}" class="btn map-modal-service-btn maintenance-lnk-field" target="_blank">Сервисное
+                                обслуживание</a>
+                        <# } #>
+                    </ul>
+                    <!-- <div class="partner__btn">
+                            <# if ( items[i].options.site ) { #>
+                                <a class="btn btn--pointer btn--text-upper" href="{{items[i].options.site}}"
+                                    target="_blank">на сайт партнера</a>
+                            <# } #>
+                    </div> -->
+                    <!-- <div class="partner__block partner-block">
+                            <div class="partner-block__header">
+                                <div class="title title--size-m partner-block__name">Другие точки партнёра</div>
+                            </div>
+                            <div class="partner-block__body js-partners"></div>
+                        </div> -->
+                </div>
+            </div>
+            <# }; #>
+    <# } #>
+<# } #>
+</script><style>
+        .unique-custom-table {
+            width: 100%;
+            border-collapse: collapse !important;
+            font-family: Arial, sans-serif;
+        }
+
+            .unique-custom-table thead {
+            background-color: #f2f2f2;
+        }
+
+            .unique-custom-table thead th {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-weight: bold;
+        }
+
+            .unique-custom-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+            .unique-custom-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+            .unique-custom-table tbody td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+            .unique-custom-table tbody tr:last-child td {
+            border-bottom: 2px solid #4dd1a2;
+        }
+
+            .unique-custom-table th, .unique-custom-table td {
+            text-align: left;
+        }
+
+            @media screen and (max-width: 600px) {
+            .unique-custom-table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+            .unique-custom-table {
+            width: 100%;
+            display: block;
+        }
+            .unique-custom-table th, .unique-custom-table td {
+            white-space: nowrap;
+        }
+        }
+        </style><script src="/index_static/swiper-bundle.min.js"></script><title data-gatsby-head="true">Страница не найдена - Эвотор</title><link rel="canonical" href="https://evotor.ru/404/" data-gatsby-head="true"/></head><body class="body theme-evotor"><div id="page-preloader" style="position:fixed;inset:0;z-index:999999;background:#ffffff;display:flex;align-items:center;justify-content:center;transition:opacity 0.4s ease;pointer-events:none"><div class="lookbets-preloader"><div class="lookbets-preloader-svg"><img src="/images/loookbets-preloader.svg" alt="Загрузка..." style="max-width:60px;max-height:60px"/></div></div></div><script>
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+  ym(38756435, "init", {
+      defer: true,
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:true,
+      trackHash:undefined
+  });
+</script><noscript><div><img src="https://mc.yandex.ru/watch/38756435" style="position:absolute;left:-9999px" alt=""/></div></noscript><div id="___gatsby" class="wrapper"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="error404 body theme-evotor"><header class="header js-header-site"><div class="container container-fit-box cfb2"><div class="header__main"><div class="sandwich header__sandwich" data-target-id="mobile-nav" data-target-class-toggle="is-active"><div class="sandwich__line sandwich__line--top"></div><div class="sandwich__line sandwich__line--middle"></div><div class="sandwich__line sandwich__line--bottom"></div></div><div class="mobile-nav__back"><svg class="svg-sprite-icon icon-arrow-left mobile-nav__back-icon"><use href="/images/sprite.svg#arrow-left"></use></svg></div><a class="logo" href="/"><img class="logo__img" src="/static/6e7b783459cf07051e370089992045b9/logo_0ae83da655.svg" alt="Эвотор" title="Эвотор"/></a><div class="woo__header-cart-icon"><a class="menu-item cart-contents" href="/cart/"><div class="woo__header-cart-icon_icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 18C5.9 18 5.01 18.9 5.01 20C5.01 21.1 5.9 22 7 22C8.1 22 9 21.1 9 20C9 18.9 8.1 18 7 18ZM1 3C1 3.55 1.45 4 2 4H3L6.6 11.59L5.25 14.03C4.52 15.37 5.48 17 7 17H18C18.55 17 19 16.55 19 16C19 15.45 18.55 15 18 15H7L8.1 13H15.55C16.3 13 16.96 12.59 17.3 11.97L20.88 5.48C21.25 4.82 20.77 4 20.01 4H5.21L4.54 2.57C4.38 2.22 4.02 2 3.64 2H2C1.45 2 1 2.45 1 3ZM17 18C15.9 18 15.01 18.9 15.01 20C15.01 21.1 15.9 22 17 22C18.1 22 19 21.1 19 20C19 18.9 18.1 18 17 18Z" fill="#91B1B8"></path></svg></div></a></div><div class="header-cabinet header__cabinet"><a class="btn btn--text-upper header-cabinet__desktop" href="https://market.evotor.ru/store/auth/login" target="_blank"><span class="btn__text">Личный кабинет</span></a><a class="header-cabinet__mobile" href="https://market.evotor.ru/store/auth/login" target="_blank"><svg class="svg-sprite-icon icon-profile header-cabinet__icon"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10zm6.536-6.319A7.498 7.498 0 0 1 10 17.5a7.498 7.498 0 0 1-6.536-3.819A9.96 9.96 0 0 1 10 11.25a9.96 9.96 0 0 1 6.536 2.431zM12.5 7.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" fill="#91B1B8"></path></svg></a></div></div><div class="mobile-nav" id="mobile-nav"><div class="mobile-nav__block"><ul id="menu-glavnoe-menyu-1" class="mobile-nav__list mobile-nav__list--main"><li class="mobile-nav__item"><div class="mobile-subnav__header"><span class="mobile-nav__toggle">Оборудование</span></div><ul class="mobile-subnav__list"><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-6/">Эвотор 6<span class="price"><span class="woocommerce-Price-amount amount"><bdi>29900<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Онлайн-касса 3в1 со встроенным пин-падом и сканером. Рекомендовано для ТС ПИоТ</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-5i/">Эвотор 5i<span class="price"><span class="woocommerce-Price-amount amount"><bdi>26900<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-5-st/">Эвотор 5 ST<span class="price"><span class="woocommerce-Price-amount amount"><bdi>24900<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Мобильное решение</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-7-3/">Эвотор 7.3<span class="price"><span class="woocommerce-Price-amount amount"><bdi>35900<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Работа без подзарядки до 14 часов. Рекомендовано д ля ТС ПИоТ</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-10/">Эвотор 10<span class="price"><span class="woocommerce-Price-amount amount"><bdi>39900<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Онлайн-касса с широким экраном. Рекомендовано для ТС ПИоТ</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/power-st/">Power-СТ<span class="price"><span class="woocommerce-Price-amount amount"><bdi>45000<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Самый мощный смарт-терминал Эвотор. Рекомендовано для ТС ПИоТ. Нет в наличии</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/power-pos-base/">Power-POS<span class="price"><span class="woocommerce-Price-amount amount"><bdi>81590<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>POS-система по выгодной цене</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/power-fr/">Power-ФР<span class="price"><span class="woocommerce-Price-amount amount"><bdi>45000<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Фискальный регистратор, который общается с клиентами</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-6-lite/">Эвотор 6 lite<span class="price"><span class="woocommerce-Price-amount amount"><bdi>19900<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Эвотор 6 lite — облегчённая версия онлайн-кассы «Эвотор 6» без встроенного эквайринга</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" href="/product/evotor-6-lite-ekvairing/">Эвотор 6 lite с эквайрингом<span class="price"><span class="woocommerce-Price-amount amount"><bdi>25890<span class="woocommerce-Price-currencySymbol"> ₽</span></bdi></span></span></a><span class="menu-desc"><p>Эвотор 6 lite — облегчённая версия онлайн-кассы «Эвотор 6» со встроенным эквайрингом</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" target="_blank" href="https://retail.evotor.ru/kso">Касса самообслуживания</a><span class="menu-desc"><p>Конфигурация под любой тип бизнеса</p></span></li><li class="mobile-subnav__item"><a class="mobile-subnav__link  with-desc" target="" href="/terminal/pin-pady-s-ekvajringom/">Пинпады</a><span class="menu-desc"><p>Умный пла

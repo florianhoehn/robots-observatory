@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html id="404Template_1-0" class="comp 404Template static-html html mntl-html" data-ab="99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99" data-mm-transactional-resource-version="3.2.31" data-mm-ads-resource-version="2.2.147" data-ddm-standard-video="true" data-mm-video-resource-version="3.0.44" data-mantle-resource-version="4.2.340" data-mm-digital-issues-resource-version="3.0.18" lang="en" data-tracking-container="true" data-resource-version="4.250.0" data-instyle-resource-version="4.250.0"><!--
+<globe-environment environment="k8s-prod" application="instyle" dataCenter="us-east-1"/>
+-->
+<head class="loc head">
+<script type="text/javascript">
+(function () {
+'use strict';
+var COOKIE_NAME = 'OTGPPConsent';
+try {
+function getCookie(name) {
+try {
+if (typeof document === 'undefined' || !document.cookie) { return ''; }
+var re = new RegExp('(?:^|;\\s*)' + name.replace(/[.*+?^\x24{}()|[\]\\]/g, '\\$&') + '=([^;]*)');
+var match = document.cookie.match(re);
+if (!match) { return ''; }
+return decodeURIComponent(match[1]);
+} catch (e) {
+return '';
+}
+}
+function parseApplicableSectionsFromGppString(gppString) {
+if (!gppString || typeof gppString !== 'string') {
+return null;
+}
+var trimmed = gppString.replace(/^[ \t\r\n\f\v]+|[ \t\r\n\f\v]+$/g, '');
+if (!trimmed) {
+return null;
+}
+var headerEnc = trimmed.indexOf('~') === -1 ? trimmed : trimmed.split('~')[0];
+if (!headerEnc) {
+return null;
+}
+function headerCharValue(ch) {
+if (ch >= 'A' && ch <= 'Z') {
+return ch.charCodeAt(0) - 65;
+}
+if (ch >= 'a' && ch <= 'z') {
+return ch.charCodeAt(0) - 71;
+}
+if (ch >= '0' && ch <= '9') {
+return ch.charCodeAt(0) + 4;
+}
+if (ch === '+' || ch === '-') {
+return 62;
+}
+if (ch === '/' || ch === '_') {
+return 63;
+}
+return -1;
+}
+var bits = [];
+var ci;
+for (ci = 0; ci < headerEnc.length; ci++) {
+var v = headerCharValue(headerEnc.charAt(ci));
+if (v === -1) {
+return null;
+}
+var b;
+for (b = 32; b >= 1; b >>= 1) {
+bits.push((v & b) ? 1 : 0);
+}
+}
+var pos = 0;
+function readBits(n) {
+if (pos + n > bits.length) {
+throw new Error('eof');
+}
+var acc = 0;
+var i;
+for (i = 0; i < n; i++) {
+acc = (acc << 1) | bits[pos++];
+}
+return acc;
+}
+function readFibonacciInt() {
+var codeword = [];
+while (true) {
+codeword.push(readBits(1));
+var len = codeword.length;
+if (len >= 2 && codeword[len - 2] === 1 && codeword[len - 1] === 1) {
+codeword.pop();
+break;
+}
+if (len > 48) {
+throw new Error('fib');
+}
+}
+var weights = [1, 2];
+while (weights.length < codeword.length) {
+var wl = weights.length;
+weights.push(weights[wl - 1] + weights[wl - 2]);
+}
+var sum = 0;
+var j;
+for (j = 0; j < codeword.length; j++) {
+if (codeword[j] === 1) {
+sum += weights[j];
+}
+}
+return sum;
+}
+try {
+var MAX_APPLICABLE_IDS = 256;
+var MAX_GROUP_SPAN = 255;
+var type = readBits(6);
+if (type !== 3) {
+return null;
+}
+readBits(6);
+var itemCount = readBits(12);
+if (itemCount < 0 || itemCount > 64) {
+return null;
+}
+var lastId = 0;
+var out = [];
+var idx;
+for (idx = 0; idx < itemCount; idx++) {
+var isGroup = readBits(1) === 1;
+if (!isGroup) {
+var delta = readFibonacciInt();
+var sid = lastId + delta;
+if (out.length >= MAX_APPLICABLE_IDS) {
+return null;
+}
+out.push(sid);
+lastId = sid;
+} else {
+var startOff = readFibonacciInt();
+var span = readFibonacciInt();
+var startId = lastId + startOff;
+var encodedEndId = startId + span;
+if (!Number.isFinite(startId) || !Number.isFinite(encodedEndId) || encodedEndId < startId) {
+return null;
+}
+var spanUse = span > MAX_GROUP_SPAN ? MAX_GROUP_SPAN : span;
+var endId = startId + spanUse;
+var rangeLen = endId - startId + 1;
+if (out.length + rangeLen > MAX_APPLICABLE_IDS) {
+return null;
+}
+var s;
+for (s = startId; s <= endId; s++) {
+out.push(s);
+}
+lastId = encodedEndId;
+}
+}
+return out;
+} catch (e2) {
+return null;
+}
+}
+(()=>{var a=(e=>(e.CPRA="usca",e.CCPA="usca",e.CDPA="usva",e.OREGON="usor",e.USNATIONAL="usnat",e.COLORADO="usco",e.FLORIDA="usfl",e.CTDPA="usct",e.MONTANA="usmt",e.TEXAS="ustx",e.DELAWARE="usde",e.IOWA="usia",e.NEBRASKA="usne",e.TENNESSEE="ustn",e.NEWJERSEY="usnj",e.NEWHAMPSHIRE="usnh",e.UCPA="usut",e.VIRGINIA="usva",e.IAB2V2="tcfeuv2",e))(a||{}),o=(e=>(e[e.CPRA=8]="CPRA",e[e.CCPA=8]="CCPA",e[e.CDPA=9]="CDPA",e[e.OREGON=15]="OREGON",e[e.USNATIONAL=7]="USNATIONAL",e[e.COLORADO=10]="COLORADO",e[e.FLORIDA=13]="FLORIDA",e[e.MONTANA=14]="MONTANA",e[e.TEXAS=16]="TEXAS",e[e.DELAWARE=17]="DELAWARE",e[e.IOWA=18]="IOWA",e[e.NEBRASKA=19]="NEBRASKA",e[e.NEWHAMPSHIRE=20]="NEWHAMPSHIRE",e[e.NEWJERSEY=21]="NEWJERSEY",e[e.TENNESSEE=22]="TENNESSEE",e[e.UCPA=11]="UCPA",e[e.VIRGINIA=9]="VIRGINIA",e[e.CTDPA=12]="CTDPA",e[e.IAB2V2=2]="IAB2V2",e))(o||{});var v=()=>{let u=[],t={};return Object.keys(o).forEach(s=>{let n={};n[s]=o[s],t=Object.assign(n,t)}),Object.keys(a).map(s=>({name:s,value:a[s]})).forEach(s=>{let n=`${t[s.name]}:${s.value}`;u.push(n)}),u.filter((s,n)=>u.indexOf(s)===n)};var E=class{constructor(){this.LOCATOR_NAME="__gppLocator";this.win=window;this.customInit="";this.init=()=>{(!this.win.__gpp||typeof this.win.__gpp!="function")&&(this.win.__gpp=this.executeGppApi,window.addEventListener("message",this.messageHandler,!1),this.addFrame(this.LOCATOR_NAME))};this.removeGppApi=()=>{delete this.win.__gpp;let t=document.querySelectorAll(`iframe[name=${this.LOCATOR_NAME}]`)[0];t&&t.parentElement.removeChild(t)};this.executeGppApi=(...t)=>{var i;let r=(i=this.win)==null?void 0:i.__gpp;if(r.queue=r.queue||[],r.events=r.events||[],!t.length||t.length===1&&t[0]==="queue")return r.queue;if(t.length===1&&t[0]==="events")return r.events;let s=t[0],n=t.length>1?t[1]:null,p=t.length>2?t[2]:null;switch(s){case"ping":return this.getPingRequest(n);case"addEventListener":return this.addEventListener(n,p);case"removeEventListener":return this.removeEventListener(p);default:this.addToQueue(s,n,p);return}};this.getPingRequest=t=>{let r={gppVersion:1.1,cmpStatus:"stub",cmpDisplayStatus:"hidden",signalStatus:"not ready",supportedAPIs:v(),currentAPI:"",cmpId:Number.parseInt("28"),sectionList:[],applicableSections:[0],gppString:"",parsedSections:{}};return t&&t(r,!0),r};this.addFrame=t=>{let r=this.win.document,s=Boolean(this.win.frames[t]);if(!s)if(r.body){let n=r.createElement("iframe");n.style.cssText="display:none",n.name=t,n.setAttribute("title","GPP Locator"),r.body.appendChild(n)}else setTimeout(()=>{this.addFrame(t)},5);return!s};this.addEventListener=(t,r)=>{let s=this.win.__gpp;return s.events=s.events||[],s!=null&&s.lastId||(s.lastId=0),s.lastId++,s.events.push({id:s.lastId,callback:t,parameter:r}),{eventName:"listenerRegistered",listenerId:s.lastId,data:!0,pingData:this.getPingRequest()}};this.removeEventListener=t=>{let r=!1,s=this.win.__gpp;return s.events=s.events||[],s.events=s.events.filter(n=>n.id.toString()===t.toString()?(r=!0,!1):!0),{eventName:"listenerRemoved",listenerId:t,data:r,pingData:this.getPingRequest()}};this.addToQueue=(t,r,s)=>{let n=this.win.__gpp;n.queue=n.queue||[],n.queue.push([t,r,s])};this.messageHandler=t=>{let r=typeof t.data=="string",s;try{s=r?JSON.parse(t.data):t.data}catch(n){s=null}if(s&&s.__gppCall){let n=s.__gppCall,p=this.win.__gpp;p(n.command,function(i,g){let c={__gppReturn:{returnValue:i,success:g,callId:n.callId}};t&&t.source&&t.source.postMessage&&t.source.postMessage(r?JSON.stringify(c):c,t.origin||"*")},n.parameter)}};this.customInit||this.init()}},L=new E;})();
+var originalGpp = window.__gpp;
+if (typeof originalGpp === 'function') {
+window.__gpp = function (cmd, callback) {
+if (cmd === 'ping' && typeof callback === 'function') {
+var cookieVal = getCookie(COOKIE_NAME);
+var otScriptLoaded = typeof window.__mntlOtSdkScriptLoaded !== 'undefined' && window.__mntlOtSdkScriptLoaded;
+if (!otScriptLoaded && cookieVal && cookieVal.length > 0) {
+var sections = parseApplicableSectionsFromGppString(cookieVal);
+if (sections && sections.length) {
+originalGpp('ping', function (pingData) {
+pingData.gppString = cookieVal;
+pingData.applicableSections = sections;
+pingData.sectionList = sections.slice();
+pingData.cmpStatus = 'stub';
+pingData.signalStatus = 'ready';
+callback(pingData, true);
+});
+return;
+}
+}
+}
+return originalGpp.apply(window, arguments);
+};
+if (originalGpp.queue) window.__gpp.queue = originalGpp.queue;
+if (originalGpp.events) window.__gpp.events = originalGpp.events;
+}
+} catch (err) {
+if (typeof console !== 'undefined' && typeof console.error === 'function') {
+console.error('[Mntl.CMP GPP] Stub init failed', err);
+}
+}
+})();var OneTrustTCFStub=function(e){"use strict";var t=function(){var r=this;this.LOCATOR_NAME="__tcfapiLocator",this.win=window,this.init=function(){for(;r.win;){try{if(r.win.frames[r.LOCATOR_NAME]){r.cmpFrame=r.win;break}}catch(e){}if(r.win===window.top)break;r.win=r.win.parent}r.cmpFrame||(r.addFrame(),r.win.__tcfapi=r.executeTcfApi,r.win.receiveOTMessage=r.receiveIabMessage,(r.win.attachEvent||r.win.addEventListener)("message",r.win.receiveOTMessage,!1))},this.addFrame=function(){var e,t=r.win.document,i=!!r.win.frames[r.LOCATOR_NAME];return i||(t.body?((e=t.createElement("iframe")).style.cssText="display:none",e.name=r.LOCATOR_NAME,e.setAttribute("title","TCF Locator"),t.body.appendChild(e)):setTimeout(r.addFrame,5)),!i},this.receiveIabMessage=function(i){var a,e,t,n="string"==typeof i.data,s={};try{s=n?JSON.parse(i.data):i.data}catch(e){}s&&s.__tcfapiCall&&(s=s.__tcfapiCall,a=s.callId,e=s.command,t=s.parameter,s=s.version,r.executeTcfApi(e,t,function(e,t){e={__tcfapiReturn:{returnValue:e,success:t,callId:a}};i&&i.source&&i.source.postMessage&&i.source.postMessage(n?JSON.stringify(e):e,"*")},s))},this.executeTcfApi=function(){for(var e,t,i,a,n=[],s=0;s<arguments.length;s++)n[s]=arguments[s];if(!n.length)return r.win.__tcfapi.a||[];"setGdprApplies"===n[0]?3<n.length&&2===parseInt(n[1],10)&&"boolean"==typeof n[3]&&(r.gdprApplies=n[3],"function"==typeof n[2])&&n[2]("set",!0):(e=n[0],t=n[1],a=n[3],"function"==typeof(i=n[2])&&e&&("ping"===e?r.getPingReq(i,r.gdprApplies):r.addToQ(e,t,i,a)))},this.addToQ=function(e,t,i,a){var n=r.win.__tcfapi;n.a=n.a||[],n.a.push([e,t,i,a])},this.getPingReq=function(e,t){e({gdprApplies:t=void 0===t?void 0:t,cmpLoaded:!1,cmpStatus:"stub",apiVersion:"2.0"})},this.init()},i=new t;return e.TCF=t,e.tcfStub=i,e}({});</script>
+<link rel="preconnect" href="//c.amazon-adsystem.com">
+<link rel="preconnect" href="//securepubads.g.doubleclick.net">
+<link rel="dnsprefetch" href="//www.google-analytics.com">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="max-image-preview:large, noarchive" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://www.instyle.com/404" />
+<title>Page Not Found</title>
+<meta name="emailvertical" content="INSTYLE" />
+<!-- Pinterest Pins -->
+<meta property="article:section" content="instyle" />
+<!-- Facebook Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="InStyle" />
+<meta property="og:url" content="https://www.instyle.com/404" />
+<meta property="og:image" content="https://www.instyle.com/thmb/6Rp7EznRNZgNiuJNdsHcGsg2k7k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/social-default-07ebc6a096844b4db956ae49b444a7fc.png" />
+<meta property="article:author" content="https://www.facebook.com/InStyle" />
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@InStyle" />
+<meta name="twitter:image" content="https://www.instyle.com/thmb/6Rp7EznRNZgNiuJNdsHcGsg2k7k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/social-default-07ebc6a096844b4db956ae49b444a7fc.png" />
+<link rel="alternate" type="application/rss+xml" href="https://feeds-api.people.inc/v1/rss/google/8e4da836-f458-4776-856b-0a481d6dc617">
+<link type="text/css" rel="stylesheet" data-glb-css="top" href="/static/4.250.0/cache/eNqVk11yhCAMxy9Uhz7sDfraS2QhYqYYHIK77e0L6FgdKeM-OOTrF-IfUBIhklYjcHSotIjKEXxT5wSNYLGbHGgcvDMYakUjBjIErIgNfm8VJQXEJ8SPk2fkKOpJxmJaByQ7xI8B2OInSUTGUA02elnn7-ASBabAsJ_2at25LcODbMp5VnMkR_GnS6G93YB7H8akLkLQQ5edvd3gRhTJwt-BsxJH99qwy4-VWf_Ma2g_Oyc6IHLBj-61FuI1gSt4uV-bWzuROldh_j303vuYdFqWxqHX69pilNpFiM18CXXEX3JwruHGRwMydDPTA4OsslSjjYbpYTpv16W1MT7FYcwzrsgp0hD2Ffq895LopnTHRd3eb_nrtOf05OMvdOzLuQ.min.css"></link>
+<style type="text/css">
+#onetrust-banner-sdk .onetrust-vendors-list-handler{cursor:pointer;color:#1f96db;font-size:inherit;font-weight:bold;text-decoration:none;margin-left:5px;white-space:normal;word-wrap:break-word;text-align:left}#onetrust-banner-sdk .onetrust-vendors-list-handler:hover{color:#1f96db}#onetrust-banner-sdk:focus{outline:2px solid #000;outline-offset:-2px}#onetrust-banner-sdk a:focus{outline:2px solid #000}#onetrust-banner-sdk #onetrust-accept-btn-handler,#onetrust-banner-sdk #onetrust-reject-all-handler,#onetrust-banner-sdk #onetrust-pc-btn-handler{outline-offset:1px}#onetrust-banner-sdk.ot-bnr-w-logo .ot-bnr-logo{height:64px;width:64px}#onetrust-banner-sdk #onetrust-policy svg,#onetrust-banner-sdk .banner-option svg{height:13px;width:13px;margin-left:1px}#onetrust-banner-sdk #onetrust-policy svg.ot-ext-lnk,#onetrust-banner-sdk .banner-option svg.ot-ext-lnk{vertical-align:middle}#onetrust-banner-sdk .ot-tcf2-vendor-count.ot-text-bold{font-weight:bold}#onetrust-banner-sdk .ot-button-order-0{order:0}#onetrust-banner-sdk .ot-button-order-1{order:1}#onetrust-banner-sdk .ot-button-order-2{order:2}#onetrust-banner-sdk #onetrust-close-btn-container svg{height:10px;width:10px;pointer-events:none}#onetrust-banner-sdk .ot-close-icon,#onetrust-pc-sdk .ot-close-icon,#ot-sync-ntfy .ot-close-icon{background-size:contain;background-repeat:no-repeat;background-position:center;height:12px;width:12px}#onetrust-banner-sdk .powered-by-logo,#onetrust-banner-sdk .ot-pc-footer-logo a,#onetrust-pc-sdk .powered-by-logo,#onetrust-pc-sdk .ot-pc-footer-logo a,#ot-sync-ntfy .powered-by-logo,#ot-sync-ntfy .ot-pc-footer-logo a{background-size:contain;background-repeat:no-repeat;background-position:center;height:25px;width:152px;display:block;text-decoration:none;font-size:.75em}#onetrust-banner-sdk .powered-by-logo:hover,#onetrust-banner-sdk .ot-pc-footer-logo a:hover,#onetrust-pc-sdk .powered-by-logo:hover,#onetrust-pc-sdk .ot-pc-footer-logo a:hover,#ot-sync-ntfy .powered-by-logo:hover,#ot-sync-ntfy .ot-pc-footer-logo a:hover{color:#565656}#onetrust-banner-sdk h3 *,#onetrust-banner-sdk h4 *,#onetrust-banner-sdk h6 *,#onetrust-banner-sdk button *,#onetrust-banner-sdk a[data-parent-id] *,#onetrust-banner-sdk p[role=heading] *,#onetrust-pc-sdk h3 *,#onetrust-pc-sdk h4 *,#onetrust-pc-sdk h6 *,#onetrust-pc-sdk button *,#onetrust-pc-sdk a[data-parent-id] *,#onetrust-pc-sdk p[role=heading] *,#ot-sync-ntfy h3 *,#ot-sync-ntfy h4 *,#ot-sync-ntfy h6 *,#ot-sync-ntfy button *,#ot-sync-ntfy a[data-parent-id] *,#ot-sync-ntfy p[role=heading] *{font-size:inherit;font-weight:inherit;color:inherit}#onetrust-banner-sdk .ot-hide,#onetrust-pc-sdk .ot-hide,#ot-sync-ntfy .ot-hide{display:none !important}#onetrust-banner-sdk button.ot-link-btn:hover,#onetrust-pc-sdk button.ot-link-btn:hover,#ot-sync-ntfy button.ot-link-btn:hover{text-decoration:underline;opacity:1}#onetrust-pc-sdk .ot-sdk-row .ot-sdk-column{padding:0}#onetrust-pc-sdk .ot-sdk-container{padding-right:0}#onetrust-pc-sdk .ot-sdk-row{flex-direction:initial;width:100%}#onetrust-pc-sdk [type=checkbox]:checked,#onetrust-pc-sdk [type=checkbox]:not(:checked){pointer-events:initial}#onetrust-pc-sdk [type=checkbox]:disabled+label::before,#onetrust-pc-sdk [type=checkbox]:disabled+label:after,#onetrust-pc-sdk [type=checkbox]:disabled+label,#onetrust-pc-sdk [type=checkbox][aria-disabled=true]+label::before,#onetrust-pc-sdk [type=checkbox][aria-disabled=true]+label:after,#onetrust-pc-sdk [type=checkbox][aria-disabled=true]+label{pointer-events:none;opacity:.8}#onetrust-pc-sdk #vendor-list-content{transform:translate3d(0, 0, 0)}#onetrust-pc-sdk li input[type=checkbox]{z-index:1}#onetrust-pc-sdk li .ot-checkbox label{z-index:2}#onetrust-pc-sdk li .ot-checkbox input[type=checkbox]{height:auto;width:auto}#onetrust-pc-sdk li .host-title a,#onetrust-pc-sdk li .ot-host-name a,#onetrust-pc-sdk li .accordion-text,#onetrust-pc-sdk li .ot-acc-txt{z-index:2;position:relative}#onetrust-pc-sdk input{margin:3px .1ex}#onetrust-pc-sdk .pc-logo,#onetrust-pc-sdk .ot-pc-logo{height:60px;width:180px;background-position:center;background-size:contain;background-repeat:no-repeat;display:inline-flex;justify-content:center;align-items:center}#onetrust-pc-sdk .pc-logo img,#onetrust-pc-sdk .ot-pc-logo img{max-height:100%;max-width:100%}#onetrust-pc-sdk .pc-logo svg,#onetrust-pc-sdk .ot-pc-logo svg{height:60px;width:180px}#onetrust-pc-sdk #close-pc-btn-handler>svg{margin:auto;display:block;height:12px;width:12px}#onetrust-pc-sdk #ot-pc-desc svg,#onetrust-pc-sdk .ot-desc-cntr svg,#onetrust-pc-sdk .ot-cat-grp svg{height:13px;width:13px;margin-left:-7px;vertical-align:middle;margin-right:5px}#onetrust-pc-sdk #ot-pc-desc svg.ot-ext-lnk{margin-right:8px}#onetrust-pc-sdk #ot-pc-desc .ot-userid-desc svg.ot-ext-lnk{margin-left:3px;margin-right:8px}#onetrust-pc-sdk .ot-host-hdr>a{display:inline-block}#onetrust-pc-sdk input[aria-disabled=true],#onetrust-banner-sdk input[aria-disabled=true]{pointer-events:none;opacity:.6}#onetrust-pc-sdk input[aria-disabled=true]+label,#onetrust-banner-sdk input[aria-disabled=true]+label{pointer-events:none;opacity:.6;cursor:not-allowed}#onetrust-pc-sdk .screen-reader-only,#onetrust-pc-sdk .ot-scrn-rdr,.ot-sdk-cookie-policy .screen-reader-only,.ot-sdk-cookie-policy .ot-scrn-rdr{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}#onetrust-pc-sdk.ot-fade-in,.onetrust-pc-dark-filter.ot-fade-in,#onetrust-banner-sdk.ot-fade-in,.ot-confirm-dialog-overlay.ot-fade-in{animation-name:onetrust-fade-in;animation-duration:400ms;animation-timing-function:ease-in-out}#onetrust-pc-sdk.ot-hide{display:none !important}.onetrust-pc-dark-filter.ot-hide{display:none !important}#ot-sdk-btn.ot-sdk-show-settings,#ot-sdk-btn.optanon-show-settings{color:#fff;background-color:#468254;height:auto;white-space:normal;word-wrap:break-word;padding:.8em 2em;font-size:.8em;line-height:1.2;cursor:pointer;-moz-transition:.1s ease;-o-transition:.1s ease;-webkit-transition:1s ease;transition:.1s ease}#ot-sdk-btn.ot-sdk-show-settings:hover,#ot-sdk-btn.optanon-show-settings:hover{color:#fff;background-color:#2c6415}#ot-sdk-btn.ot-sdk-show-settings:active,#ot-sdk-btn.optanon-show-settings:active{color:#fff;background-color:#2c6415;border:1px solid rgba(162,192,169,.5)}.onetrust-pc-dark-filter{background:rgba(0,0,0,.5);z-index:2147483646;width:100%;height:100%;overflow:hidden;position:fixed;top:0;bottom:0;left:0}@keyframes onetrust-fade-in{0%{opacity:0}100%{opacity:1}}.ot-cookie-label{text-decoration:underline}@media only screen and (min-width: 426px)and (max-width: 896px)and (orientation: landscape){#onetrust-pc-sdk p{font-size:.75em}}#onetrust-banner-sdk .banner-option-input:focus+label{outline:1px solid #000;outline-style:auto}.category-vendors-list-handler+a:focus,.category-vendors-list-handler+a:focus-visible{outline:2px solid #000}#onetrust-pc-sdk .ot-userid-title{margin-top:10px}#onetrust-pc-sdk .ot-userid-title>span,#onetrust-pc-sdk .ot-userid-timestamp>span{font-weight:700}#onetrust-pc-sdk .ot-userid-desc{font-style:italic}#onetrust-pc-sdk .ot-host-desc a{pointer-events:initial}#onetrust-pc-sdk .ot-ven-hdr>p a{position:relative;z-index:2;pointer-events:initial}#onetrust-pc-sdk .ot-vnd-serv .ot-vnd-item .ot-vnd-info a,#onetrust-pc-sdk .ot-vs-list .ot-vnd-item .ot-vnd-info a{margin-right:8px}#onetrust-pc-sdk .ot-vnd-item svg.ot-ext-lnk{align-self:center}#onetrust-pc-sdk .ot-pc-footer-logo svg,#onetrust-pc-sdk .ot-pc-footer-logo img{width:136px;height:16px}#onetrust-pc-sdk .ot-pur-vdr-count{font-weight:400;font-size:.8em;padding-top:3px;display:block}#onetrust-pc-sdk p[role=heading] .ot-pur-vdr-count{font-weight:400 !important;font-size:.8em !important}#onetrust-banner-sdk #onetrust-policy .ot-optout-signal,#onetrust-pc-sdk #ot-pc-content .ot-optout-signal{border:1px solid #32ae88;border-radius:3px;padding:5px;margin-bottom:10px;background-color:#f9fffa;font-size:.85rem;line-height:2}#onetrust-banner-sdk #onetrust-policy .ot-optout-signal .ot-optout-icon,#onetrust-pc-sdk #ot-pc-content .ot-optout-signal .ot-optout-icon{display:inline;margin-right:5px}#onetrust-banner-sdk #onetrust-policy .ot-optout-signal svg,#onetrust-pc-sdk #ot-pc-content .ot-optout-signal svg{height:20px;width:30px}#onetrust-banner-sdk #onetrust-policy .ot-optout-signal svg.ot-source-sprite,#onetrust-pc-sdk #ot-pc-content .ot-optout-signal svg.ot-source-sprite{position:relative;bottom:-3px}#onetrust-banner-sdk #onetrust-policy .ot-optout-signal svg:not(.ot-source-sprite),#onetrust-pc-sdk #ot-pc-content .ot-optout-signal svg:not(.ot-source-sprite){transform:scale(0.5)}#onetrust-banner-sdk #onetrust-policy .ot-optout-signal svg:not(.ot-source-sprite) path,#onetrust-pc-sdk #ot-pc-content .ot-optout-signal svg:not(.ot-source-sprite) path{fill:#32ae88}#onetrust-consent-sdk .ot-general-modal{overflow:hidden;position:fixed;margin:0 auto;top:50%;left:50%;width:40%;padding:1.5rem;max-width:575px;min-width:575px;z-index:2147483647;border-radius:2.5px;transform:translate(-50%, -50%)}#onetrust-consent-sdk .ot-signature-health-group{margin-top:1rem;padding-left:1.25rem;padding-right:1.25rem;margin-bottom:.625rem;width:calc(100% - 2.5rem)}#onetrust-consent-sdk .ot-signature-health-group .ot-signature-health-form{gap:.5rem}#onetrust-consent-sdk .ot-signature-health .ot-signature-health-form{width:70%;gap:.35rem}#onetrust-consent-sdk .ot-signature-health .ot-signature-input{height:38px;padding:6px 10px;background-color:#fff;border:1px solid #d1d1d1;border-radius:4px;box-shadow:none;box-sizing:border-box}#onetrust-consent-sdk .ot-signature-health .ot-signature-subtitle{font-size:1.125rem}#onetrust-consent-sdk .ot-signature-health .ot-signature-group-title{font-size:1.25rem;font-weight:bold}#onetrust-consent-sdk .ot-signature-health,#onetrust-consent-sdk .ot-signature-health-group{display:flex;flex-direction:column;gap:1rem}#onetrust-consent-sdk .ot-signature-health .ot-signature-cont,#onetrust-consent-sdk .ot-signature-health-group .ot-signature-cont{display:flex;flex-direction:column;gap:.25rem}#onetrust-consent-sdk .ot-signature-health .ot-signature-paragraph,#onetrust-consent-sdk .ot-signature-health-group .ot-signature-paragraph{margin:0;line-height:20px;font-size:max(14px,.875rem)}#onetrust-consent-sdk .ot-signature-health .ot-health-signature-error,#onetrust-consent-sdk .ot-signature-health-group .ot-health-signature-error{color:#4d4d4d;font-size:min(12px,.75rem)}#onetrust-consent-sdk .ot-signature-health .ot-signature-buttons-cont,#onetrust-consent-sdk .ot-signature-health-group .ot-signature-buttons-cont{margin-top:max(.75rem,2%);gap:1rem;display:flex;justify-content:flex-end}#onetrust-consent-sdk .ot-signature-health .ot-signature-button,#onetrust-consent-sdk .ot-signature-health-group .ot-signature-button{flex:1;height:auto;color:#fff;cursor:pointer;line-height:1.2;min-width:125px;font-weight:600;font-size:.813em;border-radius:2px;padding:12px 10px;white-space:normal;word-wrap:break-word;word-break:break-word;background-color:#68b631;border:2px solid #68b631}#onetrust-consent-sdk .ot-signature-health .ot-signature-button.reject,#onetrust-consent-sdk .ot-signature-health-group .ot-signature-button.reject{background-color:#fff}#onetrust-consent-sdk .ot-input-field-cont{display:flex;flex-direction:column;gap:.5rem}#onetrust-consent-sdk .ot-input-field-cont .ot-signature-input{width:65%}#onetrust-consent-sdk .ot-signature-health-form{display:flex;flex-direction:column}#onetrust-consent-sdk .ot-signature-health-form .ot-signature-label{margin-bottom:0;line-height:20px;font-size:max(14px,.875rem)}#onetrust-consent-sdk #onetrust-sprite-svg{display:none}@media only screen and (max-width: 600px){#onetrust-consent-sdk .ot-general-modal{min-width:100%}#onetrust-consent-sdk .ot-signature-health .ot-signature-health-form{width:100%}#onetrust-consent-sdk .ot-input-field-cont .ot-signature-input{width:100%}}#onetrust-banner-sdk,#onetrust-pc-sdk,#ot-sdk-cookie-policy,#ot-sync-ntfy{font-size:16px}#onetrust-banner-sdk *,#onetrust-banner-sdk ::after,#onetrust-banner-sdk ::before,#onetrust-pc-sdk *,#onetrust-pc-sdk ::after,#onetrust-pc-sdk ::before,#ot-sdk-cookie-policy *,#ot-sdk-cookie-policy ::after,#ot-sdk-cookie-policy ::before,#ot-sync-ntfy *,#ot-sync-ntfy ::after,#ot-sync-ntfy ::before{-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}#onetrust-banner-sdk div,#onetrust-banner-sdk span,#onetrust-banner-sdk h1,#onetrust-banner-sdk h2,#onetrust-banner-sdk h3,#onetrust-banner-sdk h4,#onetrust-banner-sdk h5,#onetrust-banner-sdk h6,#onetrust-banner-sdk p,#onetrust-banner-sdk img,#onetrust-banner-sdk svg,#onetrust-banner-sdk button,#onetrust-banner-sdk section,#onetrust-banner-sdk a,#onetrust-banner-sdk label,#onetrust-banner-sdk input,#onetrust-banner-sdk ul,#onetrust-banner-sdk li,#onetrust-banner-sdk nav,#onetrust-banner-sdk table,#onetrust-banner-sdk thead,#onetrust-banner-sdk tr,#onetrust-banner-sdk td,#onetrust-banner-sdk tbody,#onetrust-banner-sdk .ot-main-content,#onetrust-banner-sdk .ot-toggle,#onetrust-banner-sdk #ot-content,#onetrust-banner-sdk #ot-pc-content,#onetrust-banner-sdk .checkbox,#onetrust-pc-sdk div,#onetrust-pc-sdk span,#onetrust-pc-sdk h1,#onetrust-pc-sdk h2,#onetrust-pc-sdk h3,#onetrust-pc-sdk h4,#onetrust-pc-sdk h5,#onetrust-pc-sdk h6,#onetrust-pc-sdk p,#onetrust-pc-sdk img,#onetrust-pc-sdk svg,#onetrust-pc-sdk button,#onetrust-pc-sdk section,#onetrust-pc-sdk a,#onetrust-pc-sdk label,#onetrust-pc-sdk input,#onetrust-pc-sdk ul,#onetrust-pc-sdk li,#onetrust-pc-sdk nav,#onetrust-pc-sdk table,#onetrust-pc-sdk thead,#onetrust-pc-sdk tr,#onetrust-pc-sdk td,#onetrust-pc-sdk tbody,#onetrust-pc-sdk .ot-main-content,#onetrust-pc-sdk .ot-toggle,#onetrust-pc-sdk #ot-content,#onetrust-pc-sdk #ot-pc-content,#onetrust-pc-sdk .checkbox,#ot-sdk-cookie-policy div,#ot-sdk-cookie-policy span,#ot-sdk-cookie-policy h1,#ot-sdk-cookie-policy h2,#ot-sdk-cookie-policy h3,#ot-sdk-cookie-policy h4,#ot-sdk-cookie-policy h5,#ot-sdk-cookie-policy h6,#ot-sdk-cookie-policy p,#ot-sdk-cookie-policy img,#ot-sdk-cookie-policy svg,#ot-sdk-cookie-policy button,#ot-sdk-cookie-policy section,#ot-sdk-cookie-policy a,#ot-sdk-cookie-policy label,#ot-sdk-cookie-policy input,#ot-sdk-cookie-policy ul,#ot-sdk-cookie-policy li,#ot-sdk-cookie-policy nav,#ot-sdk-cookie-policy table,#ot-sdk-cookie-policy thead,#ot-sdk-cookie-policy tr,#ot-sdk-cookie-policy td,#ot-sdk-cookie-policy tbody,#ot-sdk-cookie-policy .ot-main-content,#ot-sdk-cookie-policy .ot-toggle,#ot-sdk-cookie-policy #ot-content,#ot-sdk-cookie-policy #ot-pc-content,#ot-sdk-cookie-policy .checkbox,#ot-sync-ntfy div,#ot-sync-ntfy span,#ot-sync-ntfy h1,#ot-sync-ntfy h2,#ot-sync-ntfy h3,#ot-sync-ntfy h4,#ot-sync-ntfy h5,#ot-sync-ntfy h6,#ot-sync-ntfy p,#ot-sync-ntfy img,#ot-sync-ntfy svg,#ot-sync-ntfy button,#ot-sync-ntfy section,#ot-sync-ntfy a,#ot-sync-ntfy label,#ot-sync-ntfy input,#ot-sync-ntfy ul,#ot-sync-ntfy li,#ot-sync-ntfy nav,#ot-sync-ntfy table,#ot-sync-ntfy thead,#ot-sync-ntfy tr,#ot-sync-ntfy td,#ot-sync-ntfy tbody,#ot-sync-ntfy .ot-main-content,#ot-sync-ntfy .ot-toggle,#ot-sync-ntfy #ot-content,#ot-sync-ntfy #ot-pc-content,#ot-sync-ntfy .checkbox{font-family:inherit;font-weight:normal;-webkit-font-smoothing:auto;letter-spacing:normal;line-height:normal;padding:0;margin:0;height:auto;min-height:0;max-height:none;width:auto;min-width:0;max-width:none;border-radius:0;border:none;clear:none;float:none;position:static;bottom:auto;left:auto;right:auto;top:auto;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;white-space:normal;background:none;overflow:visible;vertical-align:baseline;visibility:visible;z-index:auto;box-shadow:none}#onetrust-banner-sdk img,#onetrust-pc-sdk img,#ot-sdk-cookie-policy img,#ot-sync-ntfy img{overflow:hidden !important}#onetrust-banner-sdk label:before,#onetrust-banner-sdk label:after,#onetrust-banner-sdk .checkbox:after,#onetrust-banner-sdk .checkbox:before,#onetrust-pc-sdk label:before,#onetrust-pc-sdk label:after,#onetrust-pc-sdk .checkbox:after,#onetrust-pc-sdk .checkbox:before,#ot-sdk-cookie-policy label:before,#ot-sdk-cookie-policy label:after,#ot-sdk-cookie-policy .checkbox:after,#ot-sdk-cookie-policy .checkbox:before,#ot-sync-ntfy label:before,#ot-sync-ntfy label:after,#ot-sync-ntfy .checkbox:after,#ot-sync-ntfy .checkbox:before{content:"";content:none}#onetrust-banner-sdk .ot-sdk-container,#onetrust-pc-sdk .ot-sdk-container,#ot-sdk-cookie-policy .ot-sdk-container{position:relative;width:100%;max-width:100%;margin:0 auto;padding:0 20px;box-sizing:border-box}#onetrust-banner-sdk .ot-sdk-column,#onetrust-banner-sdk .ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-column,#onetrust-pc-sdk .ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-column,#ot-sdk-cookie-policy .ot-sdk-columns{width:100%;float:left;box-sizing:border-box;padding:0;display:initial}@media(min-width: 400px){#onetrust-banner-sdk .ot-sdk-container,#onetrust-pc-sdk .ot-sdk-container,#ot-sdk-cookie-policy .ot-sdk-container{width:90%;padding:0}}@media(min-width: 550px){#onetrust-banner-sdk .ot-sdk-container,#onetrust-pc-sdk .ot-sdk-container,#ot-sdk-cookie-policy .ot-sdk-container{width:100%}#onetrust-banner-sdk .ot-sdk-column,#onetrust-banner-sdk .ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-column,#onetrust-pc-sdk .ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-column,#ot-sdk-cookie-policy .ot-sdk-columns{margin-left:4%}#onetrust-banner-sdk .ot-sdk-column:first-child,#onetrust-banner-sdk .ot-sdk-columns:first-child,#onetrust-pc-sdk .ot-sdk-column:first-child,#onetrust-pc-sdk .ot-sdk-columns:first-child,#ot-sdk-cookie-policy .ot-sdk-column:first-child,#ot-sdk-cookie-policy .ot-sdk-columns:first-child{margin-left:0}#onetrust-banner-sdk .ot-sdk-two.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-two.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-two.ot-sdk-columns{width:13.3333333333%}#onetrust-banner-sdk .ot-sdk-three.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-three.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-three.ot-sdk-columns{width:22%}#onetrust-banner-sdk .ot-sdk-four.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-four.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-four.ot-sdk-columns{width:30.6666666667%}#onetrust-banner-sdk .ot-sdk-eight.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-eight.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-eight.ot-sdk-columns{width:65.3333333333%}#onetrust-banner-sdk .ot-sdk-nine.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-nine.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-nine.ot-sdk-columns{width:74%}#onetrust-banner-sdk .ot-sdk-ten.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-ten.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-ten.ot-sdk-columns{width:82.6666666667%}#onetrust-banner-sdk .ot-sdk-eleven.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-eleven.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-eleven.ot-sdk-columns{width:91.3333333333%}#onetrust-banner-sdk .ot-sdk-twelve.ot-sdk-columns,#onetrust-pc-sdk .ot-sdk-twelve.ot-sdk-columns,#ot-sdk-cookie-policy .ot-sdk-twelve.ot-sdk-columns{width:100%;margin-left:0}}#onetrust-banner-sdk h1,#onetrust-banner-sdk h2,#onetrust-banner-sdk h3,#onetrust-banner-sdk h4,#onetrust-banner-sdk h5,#onetrust-banner-sdk h6,#onetrust-banner-sdk p[role=heading],#onetrust-pc-sdk h1,#onetrust-pc-sdk h2,#onetrust-pc-sdk h3,#onetrust-pc-sdk h4,#onetrust-pc-sdk h5,#onetrust-pc-sdk h6,#onetrust-pc-sdk p[role=heading],#ot-sdk-cookie-policy h1,#ot-sdk-cookie-policy h2,#ot-sdk-cookie-policy h3,#ot-sdk-cookie-policy h4,#ot-sdk-cookie-policy h5,#ot-sdk-cookie-policy h6,#ot-sdk-cookie-policy p[role=heading]{margin-top:0;font-weight:600;font-family:inherit}#onetrust-banner-sdk h1,#onetrust-pc-sdk h1,#ot-sdk-cookie-policy h1{font-size:1.5rem;line-height:1.2}#onetrust-banner-sdk h2,#onetrust-pc-sdk h2,#ot-sdk-cookie-policy h2{font-size:1.5rem;line-height:1.25}#onetrust-banner-sdk h3,#onetrust-pc-sdk h3,#ot-sdk-cookie-policy h3{font-size:1.5rem;line-height:1.3}#onetrust-banner-sdk h4,#onetrust-pc-sdk h4,#ot-sdk-cookie-policy h4{font-size:1.5rem;line-height:1.35}#onetrust-banner-sdk h5,#onetrust-pc-sdk h5,#ot-sdk-cookie-policy h5{font-size:1.5rem;line-height:1.5}#onetrust-banner-sdk h6,#onetrust-pc-sdk h6,#ot-sdk-cookie-policy h6{font-size:1.5rem;line-height:1.6}@media(min-width: 550px){#onetrust-banner-sdk h1,#onetrust-pc-sdk h1,#ot-sdk-cookie-policy h1{font-size:1.5rem}#onetrust-banner-sdk h2,#onetrust-pc-sdk h2,#ot-sdk-cookie-policy h2{font-size:1.5rem}#onetrust-banner-sdk h3,#onetrust-pc-sdk h3,#ot-sdk-cookie-policy h3{font-size:1.5rem}#onetrust-banner-sdk h4,#onetrust-pc-sdk h4,#ot-sdk-cookie-policy 

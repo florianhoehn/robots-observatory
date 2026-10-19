@@ -1,0 +1,135 @@
+# User-agent: * applies to all search engines
+User-agent: *
+
+# Global Allow
+Allow: /
+
+# Block Technical Parameters (Prevents duplicate content)
+Disallow: /*?theme=
+Disallow: /*?mode=
+Disallow: /?inviteCode=
+Disallow: /*?inviteCode=
+
+# Disallow Private User Areas (Desktop)
+Disallow: /user
+
+# 不要再加 Disallow: /api/：這是 SPA，/api/ 是頁面內容的來源不是後台路徑。
+# 實測擋掉後 Googlebot 渲染首頁少抓 77 支 API，索引到的 DOM 從 218 張圖（161 張 alt 是
+# 遊戲名）掉到 9 張，Slot/Casino/Sport/Arcade 這些分類詞整組消失。要避免 JSON 被收錄
+# 請在 API 回應加 X-Robots-Tag: noindex（Cloudflare 或後端），那不會擋住渲染。
+
+# Disallow Private User Areas (Mobile /m/)
+Disallow: /m/user
+Disallow: /m/temp-freeze
+Disallow: /m/safe-question-login
+Disallow: /m/retrive-password-by-safe-question
+
+# Disallow login-walled activity pages
+# RequireAuth 包住的路由及 AUTH_ROUTES，新增活動頁時兩邊要一起加。
+Disallow: /2invite-friends
+Disallow: /acewin
+Disallow: /check-7-days
+Disallow: /christmas
+Disallow: /christmas2025
+Disallow: /common-reserve
+Disallow: /consume-extra-rebate
+Disallow: /daily-ranking
+Disallow: /daily-rebate
+Disallow: /daily-special
+Disallow: /easter
+Disallow: /fire-it-up
+Disallow: /first-deposit-challenge
+Disallow: /gold-mining
+Disallow: /hoops
+Disallow: /jackpot-activity
+Disallow: /joint-challenge
+Disallow: /knockout
+Disallow: /lucky-chest
+Disallow: /newcomer-deposit
+Disallow: /okgames-bac-league-s1
+Disallow: /old-user-recall
+Disallow: /omniplay-treasure
+Disallow: /op-challenge
+Disallow: /playscape
+Disallow: /pumpkin-smash
+Disallow: /series-master
+Disallow: /slot-tour
+Disallow: /summer2
+Disallow: /tournament
+Disallow: /va-game-reserve
+Disallow: /vp-game-reserve
+Disallow: /weekly-card
+Disallow: /x-bomb-collab
+Disallow: /year-end
+
+# 同一批活動頁的 H5 路徑
+Disallow: /m/2invite-friends
+Disallow: /m/acewin
+Disallow: /m/check-7-days
+Disallow: /m/christmas
+Disallow: /m/christmas2025
+Disallow: /m/common-reserve
+Disallow: /m/consume-extra-rebate
+Disallow: /m/daily-ranking
+Disallow: /m/daily-rebate
+Disallow: /m/daily-special
+Disallow: /m/easter
+Disallow: /m/fire-it-up
+Disallow: /m/first-deposit-challenge
+Disallow: /m/gold-mining
+Disallow: /m/hoops
+Disallow: /m/jackpot-activity
+Disallow: /m/joint-challenge
+Disallow: /m/knockout
+Disallow: /m/lucky-chest
+Disallow: /m/newcomer-deposit
+Disallow: /m/okgames-bac-league-s1
+Disallow: /m/old-user-recall
+Disallow: /m/omniplay-treasure
+Disallow: /m/op-challenge
+Disallow: /m/playscape
+Disallow: /m/pumpkin-smash
+Disallow: /m/series-master
+Disallow: /m/slot-tour
+Disallow: /m/summer2
+Disallow: /m/tournament
+Disallow: /m/va-game-reserve
+Disallow: /m/vp-game-reserve
+Disallow: /m/weekly-card
+Disallow: /m/x-bomb-collab
+Disallow: /m/year-end
+
+# iframe 內容頁：活動頁 <iframe> 的來源，沒有 header/導覽、單獨開沒有意義
+Disallow: /webview/
+
+# 內部功能頁：登入後才有意義，或只是別處的入口，讓 Google 爬只是浪費配額。
+#
+# 注意：這裡只列「路由還在、但不該被索引」的頁面。已經移除路由的頁面
+# （/msg、/sport-bet-info、/inviteFriends/inviteCode）刻意不列 —— 它們現在會落到
+# 404 頁並送出 noindex，擋在 robots 反而會讓 Google 爬不進去、看不到那個 noindex，
+# 結果繼續留在索引裡。
+Disallow: /notice
+Disallow: /favorite
+Disallow: /complete-user-info
+Disallow: /static-iframe
+Disallow: /third-party-game-recently
+Disallow: /third-party-game-second-page
+Disallow: /casino-bet-info
+Disallow: /sport-assembly-detail
+
+# 同一批的 H5 路徑
+Disallow: /m/notice
+Disallow: /m/favorite
+Disallow: /m/complete-user-info
+Disallow: /m/static-iframe
+Disallow: /m/third-party-game-recently
+Disallow: /m/third-party-game-second-page
+Disallow: /m/casino-bet-info
+Disallow: /m/sport-assembly-detail
+
+# Block Crawlers from indexing internal search result pages
+Disallow: /*?search=
+Disallow: /*?index=
+
+# Sitemap Reference
+Sitemap: https://www.okbet.com/sitemap.xml

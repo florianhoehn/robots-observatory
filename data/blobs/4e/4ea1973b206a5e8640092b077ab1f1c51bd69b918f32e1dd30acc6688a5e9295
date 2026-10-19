@@ -1,0 +1,8 @@
+User-agent: *           	# Todos los crawlers
+Disallow: /cgi-bin/             # Evitar scripts
+Disallow: /buscar/              # Evitar buscador
+Disallow: /Test/               	# 
+Disallow: /Admin/               # 
+Disallow: /testin/             # 
+
+

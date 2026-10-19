@@ -1,0 +1,162 @@
+# ================================================================
+# Robots.txt for https://www.loaded.com
+# Purpose: Allow Googlebot and other major crawlers to access all
+# core pages, while blocking system/internal paths, Magento boilerplate
+# URLs, and faceted/parameterized URLs that cause crawl bloat.
+# ================================================================
+
+User-agent: *
+User-agent: Googlebot
+User-agent: Googlebot-image
+
+# ================================================================
+# 1. System / internal folders (not useful for indexing)
+# ================================================================
+Disallow: /404/
+Disallow: /app/
+Disallow: /bin/
+Disallow: /dev/
+Disallow: /errors/
+Disallow: /lib/
+Disallow: /node_modules/
+Disallow: /patches/
+Disallow: /pkginfo/
+Disallow: /report/
+Disallow: /setup/
+Disallow: /update/
+Disallow: /var/
+Disallow: /vendor/
+Disallow: */page_cache/block/esi/blocks/
+Disallow: */listAjax/*
+
+# ================================================================
+# 2. Magento boilerplate / non-SEO friendly URLs
+# ================================================================
+Disallow: /index.php/
+Disallow: /catalog/product_compare/
+Disallow: /catalog/category/view/
+Disallow: /catalog/product/view/
+Disallow: /catalogsearch/
+Disallow: /checkout/
+Disallow: /control/
+Disallow: /contacts/
+Disallow: /customer/
+Disallow: /customize/
+Disallow: /newsletter/
+Disallow: /poll/
+Disallow: /sendfriend/
+Disallow: /tag/
+Disallow: /wishlist/
+Disallow: /catalog/product/gallery/
+Disallow: /affiliate-terms/
+Disallow: /terms-conditions
+Disallow: /stores/store/redirect/
+Disallow: /productalert/
+Disallow: /directory/currency/
+Disallow: /*?genres=
+
+# ================================================================
+# 2.5. Magento Multistore
+# ================================================================
+Disallow: /*/stores/store/redirect/
+Disallow: /*/index.php/
+Disallow: /*/catalog/product_compare/
+Disallow: /*/catalog/category/view/
+Disallow: /*/catalog/product/view/
+Disallow: /*/catalogsearch/
+Disallow: /*/checkout/
+Disallow: /*/control/
+Disallow: /*/contacts/
+Disallow: /*/customer/
+Disallow: /*/customize/
+Disallow: /*/newsletter/
+Disallow: /*/poll/
+Disallow: /*/sendfriend/
+Disallow: /*/tag/
+Disallow: /*/wishlist/
+Disallow: /*/catalog/product/gallery/
+Disallow: /*/affiliate-terms/
+Disallow: /*/terms-conditions
+Disallow: /*/stores/store/redirect/
+Disallow: /*/productalert/
+Disallow: /*/directory/currency/
+
+# ================================================================
+# 3. Query parameters (explicit blocks to prevent crawl bloat)
+# These rules ensure only base URLs are crawled and indexed.
+# ================================================================
+
+# Search queries
+Disallow: /*?q=
+Disallow: /*&q=
+
+# Sorting / navigation params
+Disallow: /*?arrow=
+Disallow: /*&arrow=
+Disallow: /*?limit=
+Disallow: /*&limit=
+Disallow: /*?dir=
+Disallow: /*&dir=
+
+# Faceted navigation params
+Disallow: /*?platforms
+Disallow: /*&platforms
+Disallow: /*?region
+Disallow: /*&region
+Disallow: /*?primary_genre
+Disallow: /*&primary_genre
+Disallow: /*?franchise
+Disallow: /*&franchise
+Disallow: /*?price
+Disallow: /*&price
+Disallow: /*?language
+Disallow: /*&language
+
+# Marketing & tracking params
+Disallow: /*?SID=
+Disallow: /*&SID=
+# Disallow: /*?mw_aref=
+# Disallow: /*&mw_aref=
+Disallow: /*?fb_action_ids=
+Disallow: /*&fb_action_ids=
+Disallow: *?amp*
+Disallow: *&amp*
+
+# ================================================================
+# 4. File types and dumps (not indexable content)
+# ================================================================
+Disallow: /*.php$
+Disallow: /*.CVS
+Disallow: /*.Zip$
+Disallow: /*.Svn$
+Disallow: /*.Idea$
+Disallow: /*.Sql$
+Disallow: /*.Tgz$
+
+# ================================================================
+# 5. Miscellaneous extras
+# ================================================================
+Disallow: /directory/currency*
+Disallow: %3Futm*
+Disallow: pc/l/*
+Disallow: /download*
+Disallow: /terms-conditions-new
+
+# ================================================================
+# 6. XML Sitemaps (clean URLs provided here for discovery)
+# ================================================================
+Sitemap: https://www.loaded.com/media/google_sitemap_en_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_de_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_fr_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_es_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_pt_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_it_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_nl_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_cn_index.xml
+Sitemap: https://www.loaded.com/media/google_sitemap_pl_index.xml
+
+# ================================================================
+# 7. Specific crawler overrides
+# ================================================================
+User-agent: ia_archiver
+Disallow: /terms-conditions

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+<meta charset="utf-8">
+<!--
+	This website is powered by TYPO3 - inspiring people to share!
+	TYPO3 is a free open source Content Management Framework initially created by Kasper Skaarhoj and licensed under GNU/GPL.
+	TYPO3 is copyright 1998-2019 of Kasper Skaarhoj. Extensions are copyright of their respective owners.
+	Information and contribution at https://typo3.org/
+-->
+<meta name="generator" content="TYPO3 CMS">
+<meta name="apple-mobile-web-app-capable" content="no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="twitter:site" content="@GouvQc">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i%7CRoboto:400,400i,500,500i,700,700i,900,900i%7CLato:400,400i,500,500i,700,700i,900,900i%7CMerriweather:300,300i,400,400i,700,700i,900" media="all">
+	<style>
+		*{margin:0;padding:0;}
+		/*************************** Balises de bases **************************/
+		html, body {-webkit-overflow-scrolling: touch;}
+		body{
+			background-color:#fff;
+			height:100%; /* Ne pas le mettre sur HTML : entre en conflit avec les ancres */
+			color:#223654;
+			font-family: 'Open Sans', sans-serif;
+			font-weight:400;
+		}
+		body p, body ol, body ul, body dl{font-size: 1rem;}
+		h1, h2, h3, h4, h5, h6 {
+			font-weight: 600;
+			font-style: normal;
+			font-family: Roboto, sans-serif;
+			color:#223654;
+		}
+		h1 {
+			font-size: 3rem;
+			font-weight: bold;
+			line-height: 3.5rem;
+			margin-top: 4.5rem;
+			margin-bottom: 2rem;
+		}
+		h2 {
+			font-size: 2.25rem; /*1.875rem;*/
+			font-weight: bold;
+			margin-bottom: 1rem;
+			margin-top: 4.5rem;
+			line-height: 2.5rem;
+		}
+		h3 {
+			font-size: 1.8rem;
+			font-weight: 500;
+			margin-top: 2.7rem;
+		}
+		button,a {cursor: pointer;}
+		ol, ul { padding: 0 0 0.5rem 2rem; }
+		li ol, li ul { padding-bottom: 0 ; }
+		a {
+			color:#095797;
+			text-decoration: underline;
+		}
+		a:hover, a:focus{
+			color:#3374cc;
+			text-decoration: none;
+		}
+		p {
+			margin-bottom:1.5rem;
+			margin-top: 0;
+			line-height: 1.6rem;
+		}
+		figure { margin: 0 0 0.5rem; }
+		figure.image img {
+			max-width:100%;
+			height: auto;
+			width: auto;
+		}
+		hr { border-top-color: #223654; }
+		/*************************** SVG **************************/
+		.cls-0{fill:#1d1d1b;}
+		.cls-1{fill:#223653;}
+		.cls-2{fill:#fff;}
+		.cls-2-fill{fill-rule:evenodd;}
+		.cls-3{fill:#f09686;}
+		.cls-4{fill:#0062ae;}
+		.cls-5-fill{fill:none;}
+		/*************************** Accessibilité **************************/
+		.visuallyHidden,
+		.ui-helper-hidden-accessible,
+		#tx-solr-search-form-pi-results button span{
+			border: 0;
+			clip: rect(0 0 0 0);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+		}
+		a.passerContenu:focus{
+			clip: rect(auto, auto, auto, auto);
+			height: inherit;
+			margin: inherit;
+			overflow: inherit;
+			position: static;
+			width: inherit;
+			color:#fff;
+			font-size:1rem;
+		}
+
+		/************************** PIV **************************/
+		.piv {
+			background-color: #095797;
+			color:#fff;
+		}
+		.piv a { color:#fff; }
+		.container_piv {
+			padding-bottom: 0;
+			padding-top: 0;
+		}
+		#pivImage{
+			height: 4.5rem;
+			width: 12.5rem;
+		}
+		.piv .decalageGauche{ margin-left:-15px;}
+		.listePiv{
+			list-style: none;
+			padding: 0 0 0 0.5rem;
+			margin: 0;
+		}
+		.listePiv a:link{
+			font-weight: normal;
+			text-decoration:none;
+			font-size: 0.875rem;
+			-webkit-font-smoothing : antialiased;
+		}
+		.listePiv a:hover,
+		.listePiv a:focus {
+			text-decoration:underline;
+			color:#fff;
+		}
+		/* fil d'Ariane */
+		.filAriane {
+			background-color: transparent;
+			display:block;
+			list-style:none;
+			font-size: 0.8rem;
+		}
+		.filAriane a, .filAriane .curitem,.filAriane a:hover, .filAriane a:focus, .filAriane a:visited { color:#223654; }
+		.filAriane a{
+			font-weight: 300;
+			text-decoration: none;
+		}
+		.filAriane a:hover, .filAriane a:focus { text-decoration: underline; }
+		.filAriane li{
+			display:inline;
+			margin-right: 0.5rem;
+		}
+		.filAriane-item+.filAriane-item::before { font-weight: normal; }
+		.filAriane .curitem a { font-weight: 600; }
+		.filAriane-item+.filAriane-item::before { font-weight: normal; }
+		/*******/
+		h1:after, .zoneContenu h2:after{
+			content:"";
+			display:block;
+			margin:0;
+			width: 3rem;
+			padding-top: 0.5rem;
+		}
+		/*************************** Contenu **************************/
+		/*** Général ***/
+		h2.titreBorder{
+			border-bottom: 1px solid #223654;
+			margin-bottom: 1.5rem;
+		}
+		.linkExtImg {
+			height: 11px;
+			width: 11px;
+			margin-bottom: 0.1rem;
+		}
+		.linkExtImgTitre {
+			max-height: 15px;
+			max-width: 15px;
+		}
+		h1.pageTitre:after, .zoneContenu h2:after { border-bottom: 4px solid #e58271; }
+		#main{
+			background-color:#fff;
+			-moz-osx-font-smoothing : grayscale;
+			-webkit-font-smoothing : antialiased;
+		}
+
+		/*** Contenu ***/
+		#main ul{ list-style: disc; }
+		#main li{ margin: 1rem 0; }
+		#main .displayNone { display: none !important; }
+		#main .displayBlock { display: block !important; }
+		#main .displayFlex { display: flex !important; }
+		/*Rendre les tableaux mobile*/
+		.tableauOverflow{ overflow-x:auto;}
+		/*************************** Pied de page **************************/
+		.texteAgrandi {
+			font-size: 1.875rem;
+			font-weight: 500;
+		}
+		.piv_bas {
+			width: 100%;
+			padding-top:2rem;
+		}
+		.piv_bas a {
+			text-decoration: none;
+			line-height: 0.8rem;
+			white-space: nowrap;
+			font-size: 0.875rem;
+		}
+		#pivImagePrint{display: none;}
+		.piv_bas a:hover,.piv_bas a:focus { text-decoration: underline; }
+		.piv_bas ul { margin-bottom:0; }
+		.piv_bas ul li {
+			display: inline-block;
+			padding: 5px 15px;
+			text-align: center;
+		}
+		.iconesHorizontal{ align-items: center; }
+		.iconesHorizontal li svg{
+			width: 34px;
+			height: 34px;
+		}
+		#logoFooter {
+			height: 35px;
+			width: 174px;
+		}
+		/*************************** Format de devices **************************/
+		/*** Small devices (landscape phones, 576px and less) ***/
+		@media (max-width: 576px){
+			.showTablet{display:none;}
+		}
+		/*** Small devices (landscape phones, 576px and up) ***/
+		@media (min-width: 576px) {
+			.mobile ul { padding-left:15px; }
+			.mobile { margin-bottom: 20px; }
+			.hr_bottom, .hr_top { display: none; }
+			.showTablet{display:block;}
+			.hideTablet{display:none;}
+		}
+		/*** Medium devices (tablets, 768px and less) ***/
+		@media (min-width: 767px) {
+			.hideDesktop{display:none;}
+		}
+		/*** Medium devices (tablets, 768px and less) ***/
+		@media (max-width: 767px) {
+			h1 {
+				font-size: 2.25rem;
+    		line-height: 2.625rem;
+				padding-top: 0.5rem;
+			}
+			h2 {
+				font-size: 1.75rem;
+				margin: 1.5rem 0 0.7rem 0;
+				line-height: 2rem;
+			}
+			.mobile_piv {border-bottom: 5px solid #095797;}
+			.zoneContenu .col-lg-8 div:first-child div,
+			.zoneContenu .col-lg-8 div:last-child div {
+				border: none;
+			}
+			.menuGeneral .col-12:after {width: 100%;}
+			.hideMobile {display: none;}
+			#main .mobileOnly {display: block;}
+			.col-md-12 h2 {padding-right: 0;}
+		}
+		/*** Large devices (desktops, 992px and less) ***/
+		@media (max-width: 991px) {
+			.piv_bas ul {text-align: center;}
+		}
+		@media (max-width: 992px) {
+			#main .espaceUneColonne { margin-right: 2rem; }
+			/* Force columns images to go over the text in mobile to keep the text column large enough to read */
+			.ce-textpic.ce-left .ce-gallery { float: none; }
+			.ce-right .ce-gallery { float: none;}
+			.ce-intext.ce-right .ce-gallery { margin-left: 0; }
+		}
+		/*** Large devices (desktops, 992px and up) ***/
+		@media (min-width: 992px) {
+			#main .espaceUneColonne { margin-right: 4rem; }
+		}
+		/*** Extra large devices (large desktops, 1200px and up) ***/
+		@media (min-width: 1200px) {
+			.sansBorder h2{ padding-right:0; }
+			#main .espaceUneColonne { margin-right: 5rem; }
+		}
+		/* Ajustements particuliers pour le responsive */
+		@media (max-width: 767px) {
+			#main .espaceUneColonne { margin-right: 0; }
+		}
+		@media (max-width: 409px) {
+			.btn{ white-space:inherit; }
+		}
+		@media (max-width: 403px) {
+			.piv #pivImage{max-width: 8rem;}
+			.container_piv{
+				padding-top:0;
+				padding-left:0;
+			}
+			.piv .listePiv li{
+				margin-bottom: -0.2rem;
+				margin-top: -0.2rem;
+			}
+			.piv .col-8.justify-content-end{padding-right: 0;}
+			ul { padding-left: 1.2rem; }
+		}
+		/********* Impression ********/
+		@media print {
+			/* CSS Document */
+			*{
+				margin:0;
+				padding:0;
+			}
+			@page {
+				size: auto;   /* auto is the initial value */
+				/* this affects the margin in the printer settings */
+				margin: 10mm 10mm 10mm 10mm;
+			}
+			body {
+				/* this affects the margin on the content before sending to printer */
+				margin: 0px;
+			}
+			html, body {
+				overflow-x: visible;
+				overflow-y: visible;
+				height: 100%;
+			}
+			.filAriane,
+			.piv_bas ul,
+			.menuSousPagesAncres,
+			h1:after,
+			.piv img:first-child ,
+			.accordion-toggle,
+			.texteVersVideo:before,
+			.frame-texteVersVideo:before,
+			.zoneBeta,
+			.frame-type-menu_section,
+			.menuGeneral,
+			.formBasPage,
+			.btn-primary,
+			.lienBouton,
+			.listePiv,
+			#recherchePiv,
+			#recherchePiv:target,
+			#flecheHaut{
+				display : none;
+			}
+			body{
+				background-color:#ffffff;
+				color:#223654;
+				font-family: 'Open Sans', sans-serif;
+			}
+			body p, body ol, body ul, body dl{font-size: 1.3rem;}
+			.piv, .btn-primary {background-color:#ffffff;}
+			.piv {display: block;}
+			h1, h2, h3, h4, h5, h6 {
+				font-weight: 600;
+				font-style: normal;
+				font-family: 'Libre Franklin', sans-serif;
+				page-break-inside: avoid;
+			}
+			h1 {
+				font-size: 2.25rem;
+				font-weight: bold;
+			}
+			h2 {
+				font-size: 2.25rem;
+				font-weight: 500;
+				border-bottom:1px solid #e6e4e4;
+				padding-bottom: 0.5rem;
+				margin-bottom: 1.2rem;
+			}
+			h3 {font-size: 1.35rem;}
+			ol, ul{padding: 0 0 1rem 2rem;}
+			a {
+				color:#4d7af0;
+				text-decoration: underline;
+			}
+			p, h2, h3 {
+				orphans: 3;
+				widows: 3;
+			}
+			p{margin-bottom:1rem;}
+			figure {margin: 0 0 0.5rem;}
+			h1{margin-top:2rem;}
+			#pivImagePrint{display:block;}
+			/* Largeur colonne */
+			div[class^="col-"] {
+				flex: 0 0 100%;
+				max-width: 100%;
+			}
+			.piv_bas{text-align: center;}
+			.piv_bas a,
+			.piv_bas a:visited {
+				color:#223654;
+				text-decoration: none;
+			}
+			/* Ajuster l'impression dans FF - bogue display:flex */
+			.row, .contenuFlex {display: block;}
+			/****** Ajout contenu des liens *******/
+			a[href]:after {content: " (" attr(href) ")";}
+			abbr[title]:after {content: " (" attr(title) ")";}
+			a[href^="#"]:after,
+			a[href^="javascript:"]:after,
+			a[href^="/"]:after{
+				content: "";
+			}
+			.piv_bas a[href]:after, .piv a[href]:after {content: "";}
+		}
+	</style>
+<meta name="dc.description" content="Liste des services en ligne du gouvernement du Québec pour toute question concernant les études à l'étranger." /><meta name="google-site-verification" content="jPFRzVXjiRN4IY3KxNVfvEnDXeLPy6V7WVm7Xc1Ao0Q" /><meta name="msvalidate.01" content="227484923738C2C47E0BD34049F13422" /><title>Gouvernement du Québec : Erreur 403</title><meta name="description" content="Nouveau site officiel du gouvernement du Québec. Site évolutif et conçu en fonction des besoins des utilisateurs."><link rel="canonical" href="https://www.quebec.ca/" /><meta property="og:type" content="website" /><meta property="og:title" content="Étudier à l'étranger" /><meta property="og:description" content="Liste des services en ligne du gouvernement du Québec pour toute question concernant les études à l'étranger." /><meta property="og:url" content="https://www.quebec.ca/education/etudier-a-letranger/" /><meta property="og:site_name" content="" /><meta property="og:image" content="https://www.quebec.ca/typo3temp/assets/_processed_/e/4/csm_opengraph-facebook_9f3c155239.png" /><meta name="twitter:card" content="summary" /><meta name="twitter:title" content="Étudier à l'étranger" /><meta name="twitter:description" content="Liste des services en ligne du gouvernement du Québec pour toute question concernant les études à l'étranger." /><meta name="twitter:image" content="https://www.quebec.ca/typo3temp/assets/_processed_/b/7/csm_twitter-cards_501b427c76.png" />
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="dns-prefetch" href="https://cdn-contenu.quebec.ca">
+</head>
+
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TRWV88D" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	<div role="banner">
+		<div class="container-fluid piv">
+			<div class="container">
+				<div class="row">
+					<div class="col-4 d-flex align-items-center">
+						<a href="#main" class="visuallyHidden passerContenu" tabindex="1">Passer au contenu</a>
+					</div>
+				</div>
+				<div class="row" id="entetePiv">
+					<div class="col-4 d-flex align-items-center container_piv" lang="fr">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.64 168.93" id="pivImagePrint" aria-labelledby="gouvQuebecPrint" role="img"><title id="gouvQuebecPrint">Gouvernement du Québec.</title><g id="Calque_5" data-name="Calque 5"><g id="Signature-5"><path class="cls-0" d="M173.25,109.4V70.62H173c-1.38,1.27-6.48,1.37-8.64,1.37h-3.75v.31c4.33,2.66,3.74,6.59,3.74,11.48v16.41c0,8.2-8.06,14-14.56,14-8.56,0-12.11-6.08-12.11-15.89V70.62h-.3C136,71.89,130.85,72,128.68,72H125v.32c4.33,2.65,3.74,6.58,3.74,11.47v16.36c0,15,6.49,22.08,18.1,22.08,6.89,0,14-2.44,17.51-8.28V121H177v-.32C172.66,118.25,173.25,114.3,173.25,109.4Z"/><path class="cls-0" d="M192.91,88.66c1.18-6.66,6.1-10.89,12.7-10.89,7.09,0,11.62,3.49,12.7,10.89Zm35.74,6.19c.39-13.69-8.77-24-22.15-24-14.67,0-24.61,10.64-24.61,25.4s11.51,26.2,28.25,26.2a33.25,33.25,0,0,0,13.58-2.63l4.93-10h-.3a24.65,24.65,0,0,1-16.15,5.67c-11.12,0-19.49-7.59-19.68-20.64Z"/><path class="cls-0" d="M236.46,48.09c2.35,0,7.16-.15,8.62-1.58h.29v67.17a30.29,30.29,0,0,0,8.12,1.26c10.75,0,16.92-7.52,16.92-18,0-10.28-4.79-18.23-14.67-18.23A15.91,15.91,0,0,0,247.52,81l5.28-9a19.53,19.53,0,0,1,6.95-1.17c11.15,0,20.63,9.68,20.63,24.2,0,16.63-11.25,27.39-29,27.39-6.65,0-13-1.18-17.85-1.92v-.33c3.25-1.49,3-5,3-8.51V62.84c0-4.91.59-11.77-3.64-14.43v-.32Z"/><path class="cls-0" d="M297.86,88.66C299,82,304,77.77,310.56,77.77c7.09,0,11.61,3.49,12.7,10.89Zm35.73,6.19c.4-13.69-8.76-24-22.15-24-14.66,0-24.6,10.64-24.6,25.4s11.51,26.2,28.24,26.2a33.26,33.26,0,0,0,13.59-2.63l4.92-10h-.29a24.65,24.65,0,0,1-16.15,5.67c-11.12,0-19.49-7.59-19.69-20.64Z"/><path class="cls-0" d="M377.62,83h-.29c-2.86-3.52-7.59-5.23-12-5.23-9.55,0-16.43,7.25-16.43,17.37,0,12.25,9.54,20.35,20.47,20.35a24.18,24.18,0,0,0,14.37-5.22h.3l-5.12,10.06a34.51,34.51,0,0,1-13,2.1c-15.15,0-27-10.67-27-24.52,0-18.33,13.22-27.08,28.09-27.08a45.37,45.37,0,0,1,10.63,1.26Z"/><path class="cls-0 cls-2-fill" d="M216.36,62V51.38c-6.45,2.89-12.44,8.3-16.44,13.56v4.15C209.5,62.64,216.36,62.34,216.36,62Z"/><path class="cls-0" d="M84.46,115.11c-14.87,0-25.21-16.77-25.21-31,0-.14,0-1.46,0-1.6.18-13.8,9.12-26.75,24.71-26.75,16.4,0,24.86,15.52,25,30.23V87.5C109,103.17,99.23,115.11,84.46,115.11Zm51,16.3c-11,1.79-21.53-1.67-32.74-14.49,10.83-5.44,17.53-19,17.53-31.55V83.8c-.2-21.52-16.37-35.73-35.64-35.73S48.18,62.86,48,84.55V86c0,21.1,15.66,36.77,34.85,36.77A34.32,34.32,0,0,0,91,121.71c12.57,11.78,23.78,16.8,33.46,15.63,4.59-.55,9.45-2.38,12.36-6.16Z"/><rect class="cls-4" x="401.62" y="48.1" width="48.02" height="29.43"/><path class="cls-2 cls-2-fill" d="M425.63,49.64a32.42,32.42,0,0,1-2.45,3.24,5.76,5.76,0,0,0-.54,6,26.46,26.46,0,0,1,1.69,4.56,14.2,14.2,0,0,1,.21,4.41h-1.32c0-3.25-1-6.31-3.47-7.66A4,4,0,0,0,413.93,65c.58,1.82,1.6,2.43,1.89,2.43a3.05,3.05,0,0,1,1-3,2.75,2.75,0,0,1,3.84.77,6.14,6.14,0,0,1,.85,2.6H419v1.85h5A2.5,2.5,0,0,1,421.13,72s.34,2,2.89,1a3.74,3.74,0,0,0,1.61,3.23h0A3.76,3.76,0,0,0,427.25,73c2.55,1.07,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.37h5V67.81h-2.51a6.23,6.23,0,0,1,.86-2.6,2.74,2.74,0,0,1,3.83-.77,3,3,0,0,1,1,3c.29,0,1.31-.61,1.9-2.43a4.05,4.05,0,0,0-5.83-4.89c-2.45,1.35-3.46,4.41-3.46,7.66h-1.33a14.2,14.2,0,0,1,.21-4.41,26.46,26.46,0,0,1,1.69-4.56,5.78,5.78,0,0,0-.53-6A34.9,34.9,0,0,1,425.63,49.64Z"/><rect class="cls-4" x="463.63" y="48.1" width="48.03" height="29.43"/><path class="cls-2 cls-2-fill" d="M487.64,49.64a33.79,33.79,0,0,1-2.47,3.24,5.78,5.78,0,0,0-.53,6,25.77,25.77,0,0,1,1.7,4.56,14.57,14.57,0,0,1,.21,4.41h-1.33c0-3.25-1-6.31-3.47-7.66A4,4,0,0,0,475.94,65c.57,1.82,1.59,2.43,1.88,2.43a3.07,3.07,0,0,1,1-3,2.74,2.74,0,0,1,3.83.77,6.23,6.23,0,0,1,.86,2.6H481v1.85h5A2.49,2.49,0,0,1,483.13,72s.34,2,2.88,1a3.75,3.75,0,0,0,1.63,3.23h0A3.77,3.77,0,0,0,489.25,73c2.55,1.07,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.37h5V67.81h-2.51a6.4,6.4,0,0,1,.86-2.6,2.75,2.75,0,0,1,3.84-.77,3.1,3.1,0,0,1,1,3c.28,0,1.3-.61,1.86-2.43a4,4,0,0,0-5.81-4.89c-2.45,1.35-3.46,4.41-3.46,7.66h-1.33a14.39,14.39,0,0,1,.22-4.41,24.17,24.17,0,0,1,1.69-4.56,5.8,5.8,0,0,0-.54-6A32.42,32.42,0,0,1,487.64,49.64Z"/><rect class="cls-4" x="401.62" y="91.55" width="48.02" height="29.42"/><path class="cls-2 cls-2-fill" d="M425.63,93.09a32.71,32.71,0,0,1-2.45,3.23,5.76,5.76,0,0,0-.54,6,26.46,26.46,0,0,1,1.69,4.56,14.2,14.2,0,0,1,.21,4.41h-1.32c0-3.24-1-6.31-3.47-7.66a4,4,0,0,0-5.82,4.89c.58,1.82,1.6,2.44,1.89,2.44a3.07,3.07,0,0,1,1-3,2.76,2.76,0,0,1,3.84.76,6.2,6.2,0,0,1,.85,2.61H419v1.85h5a2.5,2.5,0,0,1-2.89,2.36s.34,2.05,2.89,1a3.77,3.77,0,0,0,1.61,3.25h0a3.79,3.79,0,0,0,1.62-3.25c2.55,1.08,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.36h5v-1.85h-2.51a6.29,6.29,0,0,1,.86-2.61,2.75,2.75,0,0,1,3.83-.76,3.06,3.06,0,0,1,1,3c.29,0,1.31-.62,1.9-2.44a4.05,4.05,0,0,0-5.83-4.89c-2.45,1.35-3.46,4.42-3.46,7.66h-1.33a14.2,14.2,0,0,1,.21-4.41,26.46,26.46,0,0,1,1.69-4.56,5.77,5.77,0,0,0-.53-6A35.24,35.24,0,0,1,425.63,93.09Z"/><rect class="cls-4" x="463.63" y="91.55" width="48.03" height="29.42"/><path class="cls-2 cls-2-fill" d="M487.64,93.09a34.12,34.12,0,0,1-2.47,3.23,5.77,5.77,0,0,0-.53,6,25.77,25.77,0,0,1,1.7,4.56,14.57,14.57,0,0,1,.21,4.41h-1.33c0-3.24-1-6.31-3.47-7.66a4,4,0,0,0-5.81,4.89c.57,1.82,1.59,2.44,1.88,2.44a3.08,3.08,0,0,1,1-3,2.75,2.75,0,0,1,3.83.76,6.29,6.29,0,0,1,.86,2.61H481v1.85h5a2.49,2.49,0,0,1-2.88,2.36s.34,2.05,2.88,1a3.79,3.79,0,0,0,1.63,3.25h0a3.8,3.8,0,0,0,1.61-3.25c2.55,1.08,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.36h5v-1.85h-2.51a6.47,6.47,0,0,1,.86-2.61,2.77,2.77,0,0,1,3.84-.76,3.12,3.12,0,0,1,1,3c.28,0,1.3-.62,1.86-2.44a4,4,0,0,0-5.81-4.89c-2.45,1.35-3.46,4.42-3.46,7.66h-1.33a14.39,14.39,0,0,1,.22-4.41,24.17,24.17,0,0,1,1.69-4.56,5.8,5.8,0,0,0-.54-6A32.71,32.71,0,0,1,487.64,93.09Z"/><rect class="cls-5-fill" width="559.64" height="168.93"/></g></g></svg>
+						<a tabindex="5" href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 463.55 91" id="pivImage" aria-labelledby="signatureQuebecPiv" role="img"><title id="signatureQuebecPiv">Logo du gouvernement du Québec.</title><g id="Calque_2-1" data-name="Calque 2"><g id="Signature"><path class="cls-2" d="M125.22,62.89V24.11h-.29c-1.38,1.27-6.48,1.37-8.64,1.37h-3.75v.31c4.33,2.66,3.74,6.59,3.74,11.48V53.68c0,8.21-8.06,14-14.56,14-8.56,0-12.11-6.08-12.11-15.89V24.11h-.3c-1.38,1.27-6.51,1.37-8.67,1.37H76.94v.32c4.33,2.66,3.74,6.58,3.74,11.47V53.63c0,15,6.49,22.08,18.1,22.08,6.89,0,14-2.44,17.51-8.28v7.08H129v-.32C124.63,71.74,125.22,67.79,125.22,62.89Z"/><path class="cls-2" d="M144.88,42.15c1.18-6.66,6.1-10.89,12.7-10.89,7.09,0,11.61,3.49,12.7,10.89Zm35.74,6.18c.39-13.68-8.77-24-22.16-24-14.66,0-24.6,10.64-24.6,25.4s11.51,26.21,28.25,26.21a33.26,33.26,0,0,0,13.58-2.64l4.93-10h-.3A24.65,24.65,0,0,1,164.17,69c-11.12,0-19.49-7.59-19.68-20.65Z"/><path class="cls-2" d="M188.42,1.58c2.36,0,7.17-.15,8.63-1.58h.29V67.17a30.3,30.3,0,0,0,8.12,1.27c10.75,0,16.92-7.53,16.92-18,0-10.28-4.8-18.23-14.67-18.23a15.91,15.91,0,0,0-8.22,2.33l5.28-9a19.53,19.53,0,0,1,6.95-1.17c11.15,0,20.63,9.68,20.63,24.2,0,16.63-11.25,27.39-29,27.39-6.65,0-13-1.18-17.85-1.92v-.33c3.25-1.49,3-5,3-8.51V16.33c0-4.91.59-11.77-3.64-14.43V1.58Z"/><path class="cls-2" d="M249.83,42.15c1.18-6.66,6.1-10.89,12.7-10.89,7.09,0,11.61,3.49,12.7,10.89Zm35.73,6.18c.4-13.68-8.76-24-22.15-24-14.66,0-24.6,10.64-24.6,25.4s11.51,26.21,28.24,26.21a33.27,33.27,0,0,0,13.59-2.64l4.92-10h-.29A24.65,24.65,0,0,1,269.12,69c-11.12,0-19.49-7.59-19.69-20.65Z"/><path class="cls-2" d="M329.59,36.49h-.3c-2.85-3.52-7.58-5.23-12-5.23-9.55,0-16.43,7.25-16.43,17.37,0,12.25,9.54,20.35,20.47,20.35a24.18,24.18,0,0,0,14.37-5.22h.3l-5.12,10.06a34.32,34.32,0,0,1-13,2.11c-15.15,0-27-10.68-27-24.53,0-18.32,13.22-27.08,28.09-27.08a45.37,45.37,0,0,1,10.63,1.26Z"/><path class="cls-2 cls-2-fill" d="M168.33,15.53V4.87c-6.45,2.89-12.44,8.3-16.44,13.56v4.15C161.47,16.13,168.33,15.83,168.33,15.53Z"/><path class="cls-2" d="M36.43,68.6c-14.87,0-25.21-16.77-25.21-31,0-.14,0-1.46,0-1.6.18-13.8,9.12-26.75,24.71-26.75,16.4,0,24.86,15.52,25,30.23V41C60.94,56.66,51.2,68.6,36.43,68.6ZM87.38,84.9c-11,1.79-21.53-1.66-32.74-14.49,10.83-5.44,17.53-19,17.53-31.55V37.29C72,15.77,55.8,1.56,36.53,1.56S.15,16.35,0,38V39.5C0,60.6,15.66,76.27,34.85,76.27a34.32,34.32,0,0,0,8.08-1.07C55.5,87,66.71,92,76.39,90.83c4.59-.55,9.45-2.38,12.36-6.16Z"/><path class="cls-2" d="M375.65,27.17c-3,.95-3-1.75-3-1.75,2.68.47,2.94-1.78,2.94-1.78h-5.35V21.12h2.54s-.43-3.36-2.92-3.36c-2.29,0-2.61,2.54-2.19,3.59-1.15.2-2.83-1.79-2.83-4.13a4.45,4.45,0,0,1,4.45-4.57c3.37,0,5.89,3.89,5.89,8.47h1a15.1,15.1,0,0,0-.24-4.22c-.72-3.17-2.3-5-2.33-7.19-.06-3.73,2.19-4.33,4-7.59,1.8,3.26,4.05,3.86,4,7.59,0,2.15-1.61,4-2.34,7.19a14.89,14.89,0,0,0-.23,4.22h1c0-4.58,2.53-8.47,5.9-8.47a4.45,4.45,0,0,1,4.45,4.57c0,2.34-1.68,4.33-2.83,4.13.42-1.05.1-3.59-2.2-3.59-2.48,0-2.91,3.36-2.91,3.36H385v2.52h-5.34s.26,2.25,2.94,1.78c0,0,0,2.7-3.05,1.75,0,0-.12,2.41-1.93,3.28C375.77,29.58,375.65,27.17,375.65,27.17ZM401.57,1.59h-48V31h48Z"/><path class="cls-2" d="M437.63,27.17c-3,.95-3.05-1.75-3.05-1.75,2.67.47,2.94-1.78,2.94-1.78h-5.34V21.12h2.53s-.43-3.36-2.92-3.36c-2.29,0-2.61,2.54-2.19,3.59-1.15.2-2.83-1.79-2.83-4.13a4.45,4.45,0,0,1,4.45-4.57c3.37,0,5.9,3.89,5.9,8.47h1a14.89,14.89,0,0,0-.23-4.22c-.73-3.17-2.3-5-2.34-7.19-.06-3.73,2.19-4.33,4-7.59,1.79,3.26,4.05,3.86,4,7.59,0,2.15-1.6,4-2.32,7.19a15.31,15.31,0,0,0-.25,4.22h1c0-4.58,2.52-8.47,5.89-8.47a4.45,4.45,0,0,1,4.45,4.57c0,2.34-1.68,4.33-2.83,4.13.42-1.05.1-3.59-2.19-3.59-2.49,0-2.92,3.36-2.92,3.36h2.53v2.52H441.6s.26,2.25,2.94,1.78c0,0,0,2.7-3.05,1.75,0,0-.12,2.41-1.93,3.28C437.75,29.58,437.63,27.17,437.63,27.17ZM463.55,1.59h-48V31h48Z"/><path class="cls-2" d="M375.65,70.63c-3,1-3-1.75-3-1.75,2.68.48,2.94-1.78,2.94-1.78h-5.35V64.58h2.54s-.43-3.36-2.92-3.36c-2.29,0-2.61,2.54-2.19,3.6-1.15.19-2.83-1.8-2.83-4.14a4.45,4.45,0,0,1,4.45-4.57c3.37,0,5.89,3.89,5.89,8.47h1a15.1,15.1,0,0,0-.24-4.22c-.72-3.16-2.3-5-2.33-7.18-.06-3.74,2.19-4.34,4-7.6,1.8,3.26,4.05,3.86,4,7.6,0,2.14-1.61,4-2.34,7.18a14.89,14.89,0,0,0-.23,4.22h1c0-4.58,2.53-8.47,5.9-8.47a4.45,4.45,0,0,1,4.45,4.57c0,2.34-1.68,4.33-2.83,4.14.42-1.06.1-3.6-2.2-3.6-2.48,0-2.91,3.36-2.91,3.36H385V67.1h-5.34s.26,2.26,2.94,1.78c0,0,0,2.7-3.05,1.75,0,0-.12,2.41-1.93,3.28C375.77,73,375.65,70.63,375.65,70.63Zm25.92-25.57h-48v29.4h48Z"/><path class="cls-2" d="M437.63,70.63c-3,1-3.05-1.75-3.05-1.75,2.67.48,2.94-1.78,2.94-1.78h-5.34V64.58h2.53s-.43-3.36-2.92-3.36c-2.29,0-2.61,2.54-2.19,3.6-1.15.19-2.83-1.8-2.83-4.14a4.45,4.45,0,0,1,4.45-4.57c3.37,0,5.9,3.89,5.9,8.47h1a14.89,14.89,0,0,0-.23-4.22c-.73-3.16-2.3-5-2.34-7.18-.06-3.74,2.19-4.34,4-7.6,1.79,3.26,4.05,3.86,4,7.6,0,2.14-1.6,4-2.32,7.18a15.31,15.31,0,0,0-.25,4.22h1c0-4.58,2.52-8.47,5.89-8.47a4.45,4.45,0,0,1,4.45,4.57c0,2.34-1.68,4.33-2.83,4.14.42-1.06.1-3.6-2.19-3.6-2.49,0-2.92,3.36-2.92,3.36h2.53V67.1H441.6s.26,2.26,2.94,1.78c0,0,0,2.7-3.05,1.75,0,0-.12,2.41-1.93,3.28C437.75,73,437.63,70.63,437.63,70.63Zm25.92-25.57h-48v29.4h48Z"/></g></g></svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="container-fluid"> -->
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-md-8">
+						<h1 id="titreNo1" class="d-block pageTitre">Accès refusé</h1>
+					</div>
+				</div>
+			</div>
+		<!-- </div> -->
+	</div>
+	<div id="main" >
+		<!-- <div class="container-fluid"> -->
+            <div class="container">
+				<div class="row">
+					<div class="col-12 col-md-7 espaceUneColonne "  role="main"  >
+						<p>Désolé! Vous n’avez pas l’autorisation de visualiser cette page.</p>
+						<h3>Ce que vous pouvez faire</h3>
+						<ul>
+							<li>Retourner à la <a href="https://www.quebec.ca/">page d’accueil</a>.</li>
+							<li>Consulter le <a href="https://www.quebec.ca/plan-du-site/">plan du site</a>.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		<!-- </div> -->
+	</div>
+
+	 <!-- footer -->
+	<div class="container-fluid piv_bas" role="contentinfo">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 d-flex align-items-center justify-content-center" lang="fr">
+					<a href="https://quebec.ca">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.64 168.93" id="logoFooter" aria-labelledby="gouvQuebecFooter" role="img"><title id="gouvQuebecFooter">Gouvernement du Québec.</title><g id="Calque_2-13" data-name="Calque 2"><g id="Signature-2"><path class="cls-0" d="M173.25,109.4V70.62H173c-1.38,1.27-6.48,1.37-8.64,1.37h-3.75v.31c4.33,2.66,3.74,6.59,3.74,11.48v16.41c0,8.2-8.06,14-14.56,14-8.56,0-12.11-6.08-12.11-15.89V70.62h-.3C136,71.89,130.85,72,128.68,72H125v.32c4.33,2.65,3.74,6.58,3.74,11.47v16.36c0,15,6.49,22.08,18.1,22.08,6.89,0,14-2.44,17.51-8.28V121H177v-.32C172.66,118.25,173.25,114.3,173.25,109.4Z"/><path class="cls-0" d="M192.91,88.66c1.18-6.66,6.1-10.89,12.7-10.89,7.09,0,11.62,3.49,12.7,10.89Zm35.74,6.19c.39-13.69-8.77-24-22.15-24-14.67,0-24.61,10.64-24.61,25.4s11.51,26.2,28.25,26.2a33.25,33.25,0,0,0,13.58-2.63l4.93-10h-.3a24.65,24.65,0,0,1-16.15,5.67c-11.12,0-19.49-7.59-19.68-20.64Z"/><path class="cls-0" d="M236.46,48.09c2.35,0,7.16-.15,8.62-1.58h.29v67.17a30.29,30.29,0,0,0,8.12,1.26c10.75,0,16.92-7.52,16.92-18,0-10.28-4.79-18.23-14.67-18.23A15.91,15.91,0,0,0,247.52,81l5.28-9a19.53,19.53,0,0,1,6.95-1.17c11.15,0,20.63,9.68,20.63,24.2,0,16.63-11.25,27.39-29,27.39-6.65,0-13-1.18-17.85-1.92v-.33c3.25-1.49,3-5,3-8.51V62.84c0-4.91.59-11.77-3.64-14.43v-.32Z"/><path class="cls-0" d="M297.86,88.66C299,82,304,77.77,310.56,77.77c7.09,0,11.61,3.49,12.7,10.89Zm35.73,6.19c.4-13.69-8.76-24-22.15-24-14.66,0-24.6,10.64-24.6,25.4s11.51,26.2,28.24,26.2a33.26,33.26,0,0,0,13.59-2.63l4.92-10h-.29a24.65,24.65,0,0,1-16.15,5.67c-11.12,0-19.49-7.59-19.69-20.64Z"/><path class="cls-0" d="M377.62,83h-.29c-2.86-3.52-7.59-5.23-12-5.23-9.55,0-16.43,7.25-16.43,17.37,0,12.25,9.54,20.35,20.47,20.35a24.18,24.18,0,0,0,14.37-5.22h.3l-5.12,10.06a34.51,34.51,0,0,1-13,2.1c-15.15,0-27-10.67-27-24.52,0-18.33,13.22-27.08,28.09-27.08a45.37,45.37,0,0,1,10.63,1.26Z"/><path class="cls-0 cls-2-fill" d="M216.36,62V51.38c-6.45,2.89-12.44,8.3-16.44,13.56v4.15C209.5,62.64,216.36,62.34,216.36,62Z"/><path class="cls-0" d="M84.46,115.11c-14.87,0-25.21-16.77-25.21-31,0-.14,0-1.46,0-1.6.18-13.8,9.12-26.75,24.71-26.75,16.4,0,24.86,15.52,25,30.23V87.5C109,103.17,99.23,115.11,84.46,115.11Zm51,16.3c-11,1.79-21.53-1.67-32.74-14.49,10.83-5.44,17.53-19,17.53-31.55V83.8c-.2-21.52-16.37-35.73-35.64-35.73S48.18,62.86,48,84.55V86c0,21.1,15.66,36.77,34.85,36.77A34.32,34.32,0,0,0,91,121.71c12.57,11.78,23.78,16.8,33.46,15.63,4.59-.55,9.45-2.38,12.36-6.16Z"/><rect class="cls-4" x="401.62" y="48.1" width="48.02" height="29.43"/><path class="cls-2 cls-2-fill" d="M425.63,49.64a32.42,32.42,0,0,1-2.45,3.24,5.76,5.76,0,0,0-.54,6,26.46,26.46,0,0,1,1.69,4.56,14.2,14.2,0,0,1,.21,4.41h-1.32c0-3.25-1-6.31-3.47-7.66A4,4,0,0,0,413.93,65c.58,1.82,1.6,2.43,1.89,2.43a3.05,3.05,0,0,1,1-3,2.75,2.75,0,0,1,3.84.77,6.14,6.14,0,0,1,.85,2.6H419v1.85h5A2.5,2.5,0,0,1,421.13,72s.34,2,2.89,1a3.74,3.74,0,0,0,1.61,3.23h0A3.76,3.76,0,0,0,427.25,73c2.55,1.07,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.37h5V67.81h-2.51a6.23,6.23,0,0,1,.86-2.6,2.74,2.74,0,0,1,3.83-.77,3,3,0,0,1,1,3c.29,0,1.31-.61,1.9-2.43a4.05,4.05,0,0,0-5.83-4.89c-2.45,1.35-3.46,4.41-3.46,7.66h-1.33a14.2,14.2,0,0,1,.21-4.41,26.46,26.46,0,0,1,1.69-4.56,5.78,5.78,0,0,0-.53-6A34.9,34.9,0,0,1,425.63,49.64Z"/><rect class="cls-4" x="463.63" y="48.1" width="48.03" height="29.43"/><path class="cls-2 cls-2-fill" d="M487.64,49.64a33.79,33.79,0,0,1-2.47,3.24,5.78,5.78,0,0,0-.53,6,25.77,25.77,0,0,1,1.7,4.56,14.57,14.57,0,0,1,.21,4.41h-1.33c0-3.25-1-6.31-3.47-7.66A4,4,0,0,0,475.94,65c.57,1.82,1.59,2.43,1.88,2.43a3.07,3.07,0,0,1,1-3,2.74,2.74,0,0,1,3.83.77,6.23,6.23,0,0,1,.86,2.6H481v1.85h5A2.49,2.49,0,0,1,483.13,72s.34,2,2.88,1a3.75,3.75,0,0,0,1.63,3.23h0A3.77,3.77,0,0,0,489.25,73c2.55,1.07,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.37h5V67.81h-2.51a6.4,6.4,0,0,1,.86-2.6,2.75,2.75,0,0,1,3.84-.77,3.1,3.1,0,0,1,1,3c.28,0,1.3-.61,1.86-2.43a4,4,0,0,0-5.81-4.89c-2.45,1.35-3.46,4.41-3.46,7.66h-1.33a14.39,14.39,0,0,1,.22-4.41,24.17,24.17,0,0,1,1.69-4.56,5.8,5.8,0,0,0-.54-6A32.42,32.42,0,0,1,487.64,49.64Z"/><rect class="cls-4" x="401.62" y="91.55" width="48.02" height="29.42"/><path class="cls-2 cls-2-fill" d="M425.63,93.09a32.71,32.71,0,0,1-2.45,3.23,5.76,5.76,0,0,0-.54,6,26.46,26.46,0,0,1,1.69,4.56,14.2,14.2,0,0,1,.21,4.41h-1.32c0-3.24-1-6.31-3.47-7.66a4,4,0,0,0-5.82,4.89c.58,1.82,1.6,2.44,1.89,2.44a3.07,3.07,0,0,1,1-3,2.76,2.76,0,0,1,3.84.76,6.2,6.2,0,0,1,.85,2.61H419v1.85h5a2.5,2.5,0,0,1-2.89,2.36s.34,2.05,2.89,1a3.77,3.77,0,0,0,1.61,3.25h0a3.79,3.79,0,0,0,1.62-3.25c2.55,1.08,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.36h5v-1.85h-2.51a6.29,6.29,0,0,1,.86-2.61,2.75,2.75,0,0,1,3.83-.76,3.06,3.06,0,0,1,1,3c.29,0,1.31-.62,1.9-2.44a4.05,4.05,0,0,0-5.83-4.89c-2.45,1.35-3.46,4.42-3.46,7.66h-1.33a14.2,14.2,0,0,1,.21-4.41,26.46,26.46,0,0,1,1.69-4.56,5.77,5.77,0,0,0-.53-6A35.24,35.24,0,0,1,425.63,93.09Z"/><rect class="cls-4" x="463.63" y="91.55" width="48.03" height="29.42"/><path class="cls-2 cls-2-fill" d="M487.64,93.09a34.12,34.12,0,0,1-2.47,3.23,5.77,5.77,0,0,0-.53,6,25.77,25.77,0,0,1,1.7,4.56,14.57,14.57,0,0,1,.21,4.41h-1.33c0-3.24-1-6.31-3.47-7.66a4,4,0,0,0-5.81,4.89c.57,1.82,1.59,2.44,1.88,2.44a3.08,3.08,0,0,1,1-3,2.75,2.75,0,0,1,3.83.76,6.29,6.29,0,0,1,.86,2.61H481v1.85h5a2.49,2.49,0,0,1-2.88,2.36s.34,2.05,2.88,1a3.79,3.79,0,0,0,1.63,3.25h0a3.8,3.8,0,0,0,1.61-3.25c2.55,1.08,2.89-1,2.89-1a2.5,2.5,0,0,1-2.89-2.36h5v-1.85h-2.51a6.47,6.47,0,0,1,.86-2.61,2.77,2.77,0,0,1,3.84-.76,3.12,3.12,0,0,1,1,3c.28,0,1.3-.62,1.86-2.44a4,4,0,0,0-5.81-4.89c-2.45,1.35-3.46,4.42-3.46,7.66h-1.33a14.39,14.39,0,0,1,.22-4.41,24.17,24.17,0,0,1,1.69-4.56,5.8,5.8,0,0,0-.54-6A32.71,32.71,0,0,1,487.64,93.09Z"/><rect class="cls-5-fill" width="559.64" height="168.93"/></g></g></svg>
+					</a>
+				</div>
+				<div class="col-12 d-flex align-items-center justify-content-center"><p><a href="http://www.droitauteur.gouv.qc.ca/copyright.php" target="_self">© Gouvernement du Québec, &nbsp;<script>
+                    var dt = new Date();
+                    document.write(dt.getFullYear());
+				</script></a></p></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+	<script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script>
+	<script src="https://www.quebec.ca/typo3conf/ext/gabarit_pgu/Resources/Public/JavaScript/Libs/jquery-3.7.0.min.js"></script>
+	<script src="https://www.quebec.ca/typo3conf/ext/gabarit_pgu/Resources/Public/JavaScript/Libs/jquery-ui-1.13.2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	/*TS_inlineJS*/
+	/* Google Tag Manager */
+			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-TRWV88D');
+			/* End Google Tag Manager */
+	/*]]>*/
+	</script>
+</body>
+</html>

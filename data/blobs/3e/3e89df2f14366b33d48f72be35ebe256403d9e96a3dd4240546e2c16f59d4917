@@ -1,0 +1,277 @@
+#
+# robots.txt
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: http://example.com/site/robots.txt
+#
+# For more information about the robots.txt standard, see:
+# http://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+# CSS, JS, Images
+Allow: /core/*.css$
+Allow: /core/*.css?
+Allow: /core/*.js$
+Allow: /core/*.js?
+Allow: /core/*.avif
+Allow: /core/*.gif
+Allow: /core/*.jpg
+Allow: /core/*.jpeg
+Allow: /core/*.png
+Allow: /core/*.svg
+Allow: /core/*.webp
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.avif
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profiles/*.png
+Allow: /profiles/*.svg
+Allow: /profiles/*.webp
+# Directories
+Disallow: /core/
+Disallow: /profiles/
+# Files
+Disallow: /README.md
+Disallow: /composer/Metapackage/README.txt
+Disallow: /composer/Plugin/ProjectMessage/README.md
+Disallow: /composer/Plugin/Scaffold/README.md
+Disallow: /composer/Plugin/VendorHardening/README.txt
+Disallow: /composer/Template/README.txt
+Disallow: /modules/README.txt
+Disallow: /sites/README.txt
+Disallow: /themes/README.txt
+# Paths (clean URLs)
+Disallow: /admin/
+Disallow: /comment/reply/
+Disallow: /filter/tips
+Disallow: /node/add/
+Disallow: /search/
+Disallow: /search?
+Disallow: /user/register
+Disallow: /user/password
+Disallow: /user/login
+Disallow: /user/logout
+Disallow: /media/oembed
+Disallow: /*/media/oembed
+# Paths (no clean URLs)
+Disallow: /index.php/admin/
+Disallow: /index.php/comment/reply/
+Disallow: /index.php/filter/tips
+Disallow: /index.php/node/add/
+Disallow: /index.php/search/
+Disallow: /index.php/search?
+Disallow: /index.php/user/password
+Disallow: /index.php/user/register
+Disallow: /index.php/user/login
+Disallow: /index.php/user/logout
+Disallow: /index.php/media/oembed
+Disallow: /index.php/*/media/oembed
+
+# ============================================================
+# robots.txt — Indexing allowed; AI browsing/retrieval allowed;
+# AI training/embedding crawlers restricted (where respected).
+# Drupal 11 + Cloudflare compatible
+# ============================================================
+
+# --- Sitemaps ---
+Sitemap: https://www.adl.org/sitemap.xml
+
+# ------------------------------------------------------------
+# DEFAULT: allow public content to be crawled/indexed
+# ------------------------------------------------------------
+User-agent: *
+Allow: /
+
+# Explicitly allow public files (reports, PDFs, media)
+Allow: /sites/default/files/
+
+# ------------------------------------------------------------
+# DRUPAL CORE/PROFILES: allow assets, disallow directories
+# ------------------------------------------------------------
+Allow: /core/*.css$
+Allow: /core/*.css?
+Allow: /core/*.js$
+Allow: /core/*.js?
+Allow: /core/*.gif
+Allow: /core/*.jpg
+Allow: /core/*.jpeg
+Allow: /core/*.png
+Allow: /core/*.svg
+
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profiles/*.png
+Allow: /profiles/*.svg
+
+Disallow: /core/
+Disallow: /profiles/
+
+# ------------------------------------------------------------
+# NON-PUBLIC / LOW-VALUE DRUPAL ROUTES (crawl hygiene)
+# ------------------------------------------------------------
+Disallow: /admin/
+Disallow: /user/login
+Disallow: /user/logout
+Disallow: /user/password
+Disallow: /user/register
+Disallow: /node/add/
+Disallow: /comment/reply/
+Disallow: /filter/tips
+Disallow: /media/oembed
+Disallow: /*/media/oembed
+
+# No-clean-URL equivalents (if any still exist)
+Disallow: /index.php/admin/
+Disallow: /index.php/user/login
+Disallow: /index.php/user/logout
+Disallow: /index.php/user/password
+Disallow: /index.php/user/register
+Disallow: /index.php/node/add/
+Disallow: /index.php/comment/reply/
+Disallow: /index.php/filter/tips
+Disallow: /index.php/media/oembed
+Disallow: /index.php/*/media/oembed
+
+# ------------------------------------------------------------
+# INTERNAL SITE SEARCH (avoid indexing; reduce crawl traps)
+# NOTE: Best practice is also meta robots "noindex,follow" in Drupal.
+# ------------------------------------------------------------
+Disallow: /search/
+Disallow: /global-search
+Disallow: /global-search?*
+Disallow: /es/global-search
+Disallow: /resources/search/research-analysis
+
+# Optional parameter crawl traps (enable only if these exist at scale)
+# Disallow: /*?page=
+# Disallow: /*&page=
+# Disallow: /*?sort=
+# Disallow: /*&sort=
+# Disallow: /*?filter=
+# Disallow: /*&filter=
+
+# ------------------------------------------------------------
+# MAJOR SEARCH ENGINES (explicitly allowed)
+# ------------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# ------------------------------------------------------------
+# AI BROWSING / RETRIEVAL (ALLOWED per your request)
+# ------------------------------------------------------------
+# ChatGPT browsing / retrieval
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity browsing
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: PerplexityBot/1.0
+Allow: /
+
+# Claude web browsing
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Gemini / Google AI retrieval is not consistently separable by UA.
+# We allow normal Googlebot above (search). Any additional Google UAs
+# used for retrieval are not standardized across products.
+
+# ------------------------------------------------------------
+# AI TRAINING / EMBEDDING CRAWLERS (DISALLOWED)
+# ------------------------------------------------------------
+# OpenAI training crawler
+User-agent: GPTBot
+Disallow: /
+
+# Google training/“extended” (used for some AI features)
+User-agent: Google-Extended
+Disallow: /
+
+# Apple’s extended crawling for training
+User-agent: Applebot-Extended
+Disallow: /
+
+# Meta external agents (often used for AI ingestion)
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+User-agent: meta-externalfetcher
+Disallow: /
+
+# Common AI/data aggregators
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+# ------------------------------------------------------------
+# OPTIONAL: aggressive scanners (block if they cause load/noise)
+# ------------------------------------------------------------
+User-agent: AliyunSecBot
+Disallow: /
+
+# ------------------------------------------------------------
+# SOCIAL PREVIEW BOTS (safe / desirable)
+# ------------------------------------------------------------
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /

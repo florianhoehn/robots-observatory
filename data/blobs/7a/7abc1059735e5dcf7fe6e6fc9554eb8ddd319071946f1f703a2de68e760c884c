@@ -1,0 +1,25 @@
+User-agent: *
+Disallow: /users/sign_in/
+Disallow: /users/sign_up/
+# Block NSFW images by filename pattern
+Disallow: /*nsfw_*
+# Block NSFW images by query parameter (backward compatibility)
+Disallow: /*nsfw_image=true
+Disallow: /*?nsfw_image=true
+# Block URLs with profile_slug parameter
+Disallow: /*?profile_slug=*
+# Block image generation with query parameters
+Disallow: /generate-image?*
+Disallow: /generate-image/characters?*
+# Block internal Turbo Stream fragment endpoints (not meaningful HTML pages)
+Disallow: /home/profiles
+Disallow: /auth/modal
+Disallow: /cache/
+# Block character creation loading pages (302 for unauthenticated crawlers)
+Disallow: /characters_v2/*/loading
+# Block private UUID-based conversation pages (302 for unauthenticated crawlers)
+Disallow: /conversations/*-*-*-*-*
+Sitemap: https://candy.ai/sitemap.xml
+Sitemap: https://candy.ai/sitemap-en.xml
+Sitemap: https://candy.ai/sitemap-fr.xml
+Sitemap: https://candy.ai/sitemap-de.xml

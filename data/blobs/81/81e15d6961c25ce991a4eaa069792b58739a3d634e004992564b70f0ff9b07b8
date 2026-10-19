@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Нет такой страницы</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css"/>
+<link rel="stylesheet" href="/old/style.css" type="text/css"/>
+<link rel="shortcut icon" href="/img/promo/favicon.ico">
+<script> 
+var tl = new Array(
+    "Того, что вы запрашиваете, не существует.",
+    "URL не правильный.",
+    "Я даже попробовал поглядеть рядом.",
+    "Нет ничего похожего.",
+    "А случайно не напутали с http://3d-galleru.ru",
+    "Как жаль, что нет...",
+    "Послушайте, я всего лишь скромный веб-сервер.",
+    "Я ничего не знаю. Я не видел такую страницу.",
+    "И не слышал ничего про нее. У меня даже нет ушей, чтобы слышать.",
+    "Я действительно не знаю, какую страницу вы хотите от меня.",
+    "Я же не могу догадаться.",
+    "Ну когда вы уйдете?",
+    "Тут ничего нет.",
+    "Честно.",
+    "Я сейчас буду горько плакать...",
+    "Перестаньте смеяться над бедным веб-сервером!",
+    "Ну не виноват я, что странички нет.",
+    "Это все Admin",
+    "По крайней мере, аккаунт с таким именем.",
+    "Ой, как мне плохо...",
+    "Вы все еще тут?",
+    "О, а у меня идея!",
+    "Попробую у соседей поспрашивать",
+    "Здорово, да?",
+    "Я тут у соседних серверов поспрашивал.",
+    "Такого URL у них тоже нет.",
+    "Поверьте мне!",
+    "Мне очень жаль.",
+    "Я знаю, моя работа - отдавать вам запрашиваемые страницы.",
+    "И я по мере сил стараюсь выполнять свою работу хорошо.",
+    "У меня хорошие администраторы.",
+    "Поверьте мне на слово!",
+    "А знаете что, а у меня тут есть другие страницы.",
+    "Не интересуетесь поздравлениями?",
+    "Жаль.",
+    "Может быть, картинки?",
+    "Жаль. Очень жаль.",
+    "Ой, подождите, мне тут подсказывают...",
+    "А вы не пробовали идти с титульной страницы?",
+    "Пробовали?",
+    "Жаль. Тогда напишите письмо создателю.",
+    "Он его прочтет.",
+    "Ой, ко мне кто-то еще пришел.",
+    "Извините, я вас оставлю на секундочку...",
+    "Ой, меня перезагружают.",
+    "Прощайте!",
+    ""
+);
+var speed = 40, index = 0, contents, row;
+text_pos = 0;
+var str_length = tl[0].length;
+
+function type_text() {
+    contents = '';
+    
+	row = Math.max(0, index - 7);
+    
+	while (row < index) contents += tl[row++] + '\r\n';
+    
+	document.querySelector("#content textarea").value = contents + tl[index].substring(0, text_pos) + "_";
+    
+	if (text_pos++ == str_length) {
+        text_pos = 0;
+        index++;
+        if (index != tl.length) {
+            str_length = tl[index].length;
+            setTimeout("type_text()", 1500);
+        }
+    } else
+        setTimeout("type_text()", speed);
+}
+</script> 
+</head>
+<body>
+    <div id="wrapper">
+		<div class="top-block"><div class="top-title"></div></div>
+		<div id="top-line"><div class="top-menu mobile-hidden"><a href="/">3D галерея</a><a href="/archive/">Архив открыток</a><a href="/wishes/">Календарь праздников</a><a href="/pozdrav/">Стихи и пожелания</a><a href="/s-dnem-rozhdeniya-1/">Генератор открыток</a><a href="https://voice.3d-galleru.ru" target="_blank">Голосовые</a><a href="/interest/">Интересное</a><a href="/news/">Что нового?</a></div><div id="menu-btn">Menu</div><div class="mobile-hidden" id="top-line-promo" style="display:none"><a href="https://chrome.google.com/webstore/detail/lkgdbimigeeehofgaacanklgmfkilglm" target="_blank" id="extension-link"><img src="/extentions/img/30x30.png">расширение для вашего браузера</a><a href="/voice-cards/" target="_blank" style="display:none"><img src="/extentions/img/voice-cards.png">Аудио поздравления</a></div></div>
+        <!--end menu-->
+        <div id="content" style="text-align:center; height:500px;">
+            <h2>Нет тут такой страницы! Ошибка 404!</h2>
+            <form>
+                <textarea wrap="soft" disabled="true" style="width:500px; max-width:95%; height:245px; background: #fff;"></textarea>
+            </form>
+            <br>
+            <br> Страницы которую вы ищете здесь нет, лучше перейдите <a href="/">на главную!</a>
+            <br>
+            <br> Если вы считаете, что здесь какая-то ошибка, то напишите на мыло - <a href="/contact-form/">E-MAIL</a>
+        </div>
+        <!--end content-->
+        <div id="footer">
+            <p>Copyright © 2011-2015 Amdoit | Designed by <a href="">Amdoit</a></p>
+        </div>
+    </div>
+    <!--end wrapper-->
+    <script>
+        type_text();
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /cgi/
+Disallow: /public/status
+Disallow: /web/search
+Disallow: /search
+Disallow: /keyword-search
+Disallow: /web/tag
+Disallow: /amp/video/embed/
+Disallow: /cdn-cgi/
+Disallow: /staticasset/
+Sitemap: https://www.skynewsarabia.com/sitemaps/sitemap.xml

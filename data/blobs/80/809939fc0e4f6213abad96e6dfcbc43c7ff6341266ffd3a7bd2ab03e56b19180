@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <title>Bot protection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  <link rel="shortcut icon" href="https://static-cache.ua.uaprom.net/favicon.ico"/>
+  <script>
+    function reCaptchaCallback(response) {
+      if (response === document.querySelector(".g-recaptcha-response").value) {
+        document.forms["uaprom-form"].submit();
+      }
+    }
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js?hl=ru" async
+          defer></script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    html, body {
+      height: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    body {
+      display: block;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 400;
+      background: #f0f2f5;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      -webkit-font-smoothing: subpixel-antialiased;
+    }
+
+    .h1 {
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .item {
+      min-width: 0;
+      max-width: 500px;
+      padding: 25px 25px 100px 25px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="item">
+    <h1 class="h1">Bot protection</h1>
+    <p style="margin-bottom: 15px;">
+      You are seeing this because your IP was the source of too many requests.
+    </p>
+    <form name="uaprom-form" action="/_ips/check_captcha" method="POST">
+      <div class="g-recaptcha" data-sitekey="6LdbfxIUAAAAAN6WYJWiCT4Vd65-0lP1tTOUKZ48"
+           data-callback="reCaptchaCallback"></div>
+      <br/>
+      <input type="hidden" value="aHR0cDovL2JpZ2wudWEvLndlbGwta25vd24vZ3BjLmpzb25CSRzKLYs65InNZg77dN7LJXZM3lda17M9lcnsNmeSEA==" name="url" />
+    </form>
+    <img src="/_ips/captcha.gif" style="display: none;" alt="captcha" />
+  </div>
+</div>
+</body>

@@ -1,0 +1,232 @@
+#
+# robots.txt
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: http://example.com/site/robots.txt
+#
+# For more information about the robots.txt standard, see:
+# http://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Crawl-delay: 10
+# CSS, JS, Images
+Allow: /misc/*.css$
+Allow: /misc/*.css?
+Allow: /misc/*.js$
+Allow: /misc/*.js?
+Allow: /misc/*.gif
+Allow: /misc/*.jpg
+Allow: /misc/*.jpeg
+Allow: /misc/*.png
+Allow: /modules/*.css$
+Allow: /modules/*.css?
+Allow: /modules/*.js$
+Allow: /modules/*.js?
+Allow: /modules/*.gif
+Allow: /modules/*.jpg
+Allow: /modules/*.jpeg
+Allow: /modules/*.png
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profiles/*.png
+Allow: /themes/*.css$
+Allow: /themes/*.css?
+Allow: /themes/*.js$
+Allow: /themes/*.js?
+Allow: /themes/*.gif
+Allow: /themes/*.jpg
+Allow: /themes/*.jpeg
+Allow: /themes/*.png
+# Directories
+Disallow: /includes/
+Disallow: /misc/
+Disallow: /modules/
+Disallow: /profiles/
+Disallow: /scripts/
+Disallow: /themes/
+# Files
+Disallow: /CHANGELOG.txt
+Disallow: /cron.php
+Disallow: /INSTALL.mysql.txt
+Disallow: /INSTALL.pgsql.txt
+Disallow: /INSTALL.sqlite.txt
+Disallow: /install.php
+Disallow: /INSTALL.txt
+Disallow: /LICENSE.txt
+Disallow: /MAINTAINERS.txt
+Disallow: /update.php
+Disallow: /UPGRADE.txt
+Disallow: /xmlrpc.php
+# RH, 06.30.21: these are files likely bad bots are requesting
+Disallow: /wp-login.php
+Disallow: ^.*\/wp-includes\/wlwmanifest.xml
+# Paths (clean URLs)
+Disallow: /admin/
+Disallow: /comment/reply/
+Disallow: /filter/tips/
+Disallow: /node/add/
+Disallow: /search/
+Disallow: /user/register/
+Disallow: /user/password/
+Disallow: /user/login/
+Disallow: /user/logout/
+# RH, 06.30.21: these are files likely bad bots are requesting
+Disallow: /wp-json/wp/v2/users/1
+# Paths (no clean URLs)
+Disallow: /?q=admin/
+Disallow: /?q=comment/reply/
+Disallow: /?q=filter/tips/
+Disallow: /?q=node/add/
+Disallow: /?q=search/
+Disallow: /?q=user/password/
+Disallow: /?q=user/register/
+Disallow: /?q=user/login/
+Disallow: /?q=user/logout/
+
+# RH, 07.01.21: Views has URL parameters from exposed filters (Archives and Publications Search views); https://www.drupal.org/node/345620
+# Disallow all URL variables except for page
+Disallow: /*?
+Allow: /*?page=
+Disallow: /*?page=*&*
+Disallow: /*?page=0*
+
+# RH, 04.30.24: archives search URLs being crawled can kill the sites, espeically with multiple facets. It might be how bots discover Archives items, so allow single faceted browse and search URLs but block all after (/resources/search/domain/anthropology is allowed but not /resources/search/domain/anthropology/contributor/maranz-david-e). If bots find Archives items by crawling the site, then this should allow all items to be found via browse URLs and search URLs. If there continue to be issues, we can consider blocking all. Note that /*/resources/search is for multilingual URLs
+# Disallow: /resources/browse/*
+# Disallow: /resources/search/*
+# RH, 02.04.26: Tighten up the level of search parameters allowed
+# Disallow: /resources/search/*/*/*
+# Disallow: /*/resources/search/*/*/*
+Disallow: /resources/publications/search/*/*
+Disallow: /resources/search/*/*
+Disallow: /*/resources/search/*/*
+
+#Block bots
+User-agent: A6-Indexer
+Disallow: /
+
+User-agent: AlphaSeoBot
+Disallow: /
+
+User-agent: AlphaSeoBot-SA
+Disallow: /
+
+# RDH, 08.19.19: I really don't want to block Applebot, but for now, I am. It is crawling us too much
+User-agent: Applebot
+Disallow: /
+
+User-agent: AspiegelBot
+Disallow: /
+
+User-agent: barkrowler
+Disallow: /
+
+# RDH, 05.13.20: I really don't want to block bing, but for now, I am. It is also already in htaccess rules
+User-agent: bingbot/2.0
+Disallow: /
+
+User-agent: Blackboard Safeassign
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: crawler4j
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# RDH, 06.30.21: Very temporary to get some relief.
+# User-Agent: Googlebot
+# Disallow: /
+
+User-agent: Gigabot
+Disallow: /
+
+User-agent: LieBaoFast
+Disallow: /
+
+User-agent: MauiBot
+Disallow:/
+
+User-agent: MauiBot (crawler.feedback+wc@gmail.com) 
+Disallow: /
+
+User-agent: MegaIndex.ru/2.0
+Disallow: /
+
+User-agent: MqqBrowser
+Disallow:/
+
+User-agent: Nimbostratus-Bot/v1.3.2
+Disallow: /
+
+User-agent: Qwant-news
+Disallow: /
+
+User-agent: Qwantify
+Disallow: /
+
+User-agent: Seekport Crawler
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: SemrushBot-SA
+Disallow: / 
+
+User-agent: SeznamBot
+Disallow: /
+
+User-agent: SputnikBot/2.3
+Disallow:/
+
+User-agent: The Knowledge AI 
+Disallow:/
+
+User-agent: Timpibot/0.8
+Disallow: /
+
+User-agent: TinyTestBot
+Disallow: /
+
+# RDH, 03/11/22:
+# Comment this out for JOT, who applied for a Crossref Similiarty Check account with TurnitIn;
+# User-agent: TurnitinBot
+# Disallow: /
+
+User-agent: UCBrowser
+Disallow: / 
+
+User-agent: yacybot
+Disallow: / 
+
+User-agent: YandexBot
+Disallow: / 
+
+User-agent: YandexBot/3.0
+Disallow: / 
+
+User-agent: Yeti
+Disallow: / 
+
+User-agent: YisouSpider
+Disallow: / 

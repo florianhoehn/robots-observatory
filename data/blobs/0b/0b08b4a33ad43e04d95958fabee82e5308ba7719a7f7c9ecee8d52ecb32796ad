@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl-NL" class="is-error-page fjs-no-temptations js-no-ads fjs-no-ads is-trouw"> <head>  <meta charset="utf-8"> <meta http-equiv="x-ua-compatible" content="ie=edge"> <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">  <meta property="al:ios:url" content="trouw-fb-applink://trouw.nl/humans.txt"> <meta property="al:ios:app_store_id" content="418881043"> <meta property="al:ios:app_name" content="Trouw"> <meta property="al:android:url" content="tr-fb-applink://trouw/humans.txt"> <meta property="al:android:app_name" content="Trouw"> <meta property="al:android:package" content="be.persgroep.android.news.mobiletr"> <meta property="al:web:url" content="https://www.trouw.nl/humans.txt">     <script> if (
+        document.cookie.indexOf('enableSentry_v1=true') !== -1 && // akamai lottery is sampling
+        document.cookie.indexOf('sel_tcf20_marketing=1') !== -1 // marketing consent
+    ) {
+        const mainScript = () => {
+            return new Promise(function(resolve, reject) {
+                const script = document.createElement('script')
+                script.crossOrigin = 'anonymous'
+                script.integrity = 'sha384-4Wr4V/uREn/Xw4C/neUC3VQsBQUZjXZqsv/rtoiol5dvcyPNoevLf0F0MjhqVdmp'
+                script.src = 'https://browser.sentry-cdn.com/7.73.0/bundle.tracing.replay.min.js'
+                script.async = false;
+                script.onload = () => {
+                    resolve();
+                };
+                script.onerror = () => {
+                    reject('sentry first script failed');
+                };
+                document.head.insertAdjacentElement("afterbegin", script);
+            });
+        };
+        const httpClientScript = () => {
+            return new Promise(function(resolve, reject) {
+                const script = document.createElement('script')
+                script.crossOrigin = 'anonymous'
+                script.integrity = 'sha384-CDvRVWw/2VM7gMy1gzaZYWWzMPENFdPmlj7lvqPTqm0mQ3VHCI2DqeaXuZkZQcmu'
+                script.src = 'https://browser.sentry-cdn.com/7.73.0/httpclient.min.js'
+                script.async = false;
+                script.onload = () => {
+                    resolve();
+                };
+                script.onerror = () => {
+                    reject('sentry second script failed');
+                };
+                document.head.insertAdjacentElement('afterbegin', script);
+            });
+        };
+
+
+        Promise.all([mainScript(),httpClientScript()]).then(function() {
+            Sentry.init({
+                dsn: 'https://78a23422bc27431fb8218e546800bcb1@o1289016.ingest.sentry.io/4504649415327744',
+                integrations: [
+                    new Sentry.BrowserTracing(),
+                    new Sentry.Replay({
+                        blockAllMedia: false,
+                    }),
+                    new Sentry.Integrations.HttpClient()
+                ],
+                sendDefaultPii: false,
+                release: "vk-go-web",
+                environment: window.location.hostname.replace('www.', ''),
+                // The sample rate is decided by Akamai cookie, so the sentry sample rate (0-1) should be set to 1 to allow all traffic.
+                tracesSampleRate: 1,
+                replaysSessionSampleRate: 1,
+                failedRequestStatusCodes: [400, 599]
+            })
+        }).catch((script)=> {
+            console.log(script, 'failed to load!');
+        });
+    } </script>      <title>Trouw | Nieuws en Verdieping 404</title>  <meta name="description" content="Het laatste nieuws met duiding van redacteuren, achtergronden, columns, opinie, wetenschap, en recensies van kunst &amp;amp; cultuur door Trouw.">    <meta property="og:type" content="website"> <meta property="og:site_name" content="Trouw"> <meta property="og:locale" content="nl_NL"> <meta property="og:title" content="Trouw | Nieuws en Verdieping"> <meta property="og:description" content="Het laatste nieuws met duiding van redacteuren, achtergronden, columns, opinie, wetenschap, en recensies van kunst &amp;amp; cultuur door Trouw."> <meta property="og:image" content="https://www.trouw.nl/sel-static/shared/images/trouw-logo.png">    <link rel="preconnect" href="https://myprivacy.dpgmedia.net"> <link rel="preconnect" href="https://login-static.dpgmedia.net"> <link rel="preconnect" href="https://advertising-cdn.dpgmedia.cloud"> <link rel="preconnect" href="https://www.googletagmanager.com"> <link rel="dns-prefetch" href="https://myprivacy.dpgmedia.net"> <link rel="dns-prefetch" href="https://login-static.dpgmedia.net"> <link rel="dns-prefetch" href="https://advertising-cdn.dpgmedia.cloud"> <link rel="dns-prefetch" href="https://www.googletagmanager.com"> <script> window.APP = {
+        config: {
+            connection: {},
+            dfp: JSON.parse(null),
+            sessionCookieName: "VK_SESSION",
+            cookieDomain: "trouw.nl",
+            baseUrl: "https:\/\/www.trouw.nl",
+            interDomainSsoBannerConfig: "NL-Newspaper",
+            interDomainSsoEnabled: true,
+            siteName: "Trouw",
+            pipBaseUrl: "https:\/\/login2.trouw.nl",
+            brandName: "trouw",
+        },
+        helpers: {
+            waitUntilTrue: function waitUntilTrue(fn, successCb, errorCb, delayBetweenIterations, maxIterations, _currIteration) {
+                if (!_currIteration) {
+                    setTimeout(function () {
+                        window.APP.helpers.waitUntilTrue(fn, successCb, errorCb, delayBetweenIterations, maxIterations, 1)
+                    }, 0);
+                    return;
+                }
+
+                if (fn()) {
+                    if (typeof successCb === 'function') {
+                        successCb();
+                    }
+                } else if (_currIteration < maxIterations) {
+                    setTimeout(function () {
+                        window.APP.helpers.waitUntilTrue(fn, successCb, errorCb, delayBetweenIterations, maxIterations, _currIteration + 1)
+                    }, delayBetweenIterations);
+                } else {
+                    if (typeof errorCb === 'function') {
+                        errorCb();
+                    }
+                }
+            },
+            debounce: function(func, wait) {
+                let timeout;
+
+                return function executedFunction() {
+                    const context = this,
+                        args = arguments;
+
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() {
+                        timeout = null;
+                        func.apply(context, args);
+                    }, wait);
+                };
+            },
+            runWhenInBreakpoint: function(breakpoints, fn) {
+                function _getActiveBreakpoint() {
+                    if (1320 <= window.innerWidth) {
+                        return 'xlarge';
+                    }
+
+                    if (960 <= window.innerWidth) {
+                        return 'large';
+                    }
+
+                    if (640 <= window.innerWidth) {
+                        return 'medium';
+                    }
+
+                    return 'small';
+                }
+
+                const onResize = window.APP.helpers.debounce(function() {
+                    if (breakpoints[_getActiveBreakpoint()]) {
+                        fn();
+                    }
+                    window.removeEventListener('resize', onResize);
+                }, 100);
+
+                if (breakpoints[_getActiveBreakpoint()]) {
+                    fn();
+                } else {
+                    window.addEventListener('resize', onResize);
+                }
+            }
+        },
+        modules: {
+            advertising: {
+                initialized: false,
+                adSlots: null,
+                paywallContentId: null,
+                isAdvertorialArticle: false,
+            },
+            temptation: {
+                executed: false,
+                showPaywall: false
+            }
+        },
+        supported: {
+            idleCallback: "requestIdleCallback" in window
+        }
+    };
+
+    window.dataLayer = [JSON.parse("{\"screen_info\":{\"page_type\":\"other\",\"page_brand_name\":\"Trouw\",\"page_platform_type\":\"website\",\"page_identifier\":\"live_feed\"}}")]; </script>   <script type="text/javascript">window.lightningjs||function(l){function e(e,n){var i,u,p,t,r,a;return n&&(n+=(/\?/.test(n)?"&":"?")+"lv=1"),l[e]||(i=window,u=document,p=e,t=u.location.protocol,r="load",a=0,function(){l[p]=function(){var e=arguments,n=this,o=++a,t=n&&n!=i&&n.id||0;function d(){return d.id=o,l[p].apply(d,arguments)}return(s.s=s.s||[]).push([o,t,e]),d.then=function(e,n,t){var i=s.fh[o]=s.fh[o]||[],r=s.eh[o]=s.eh[o]||[],a=s.ph[o]=s.ph[o]||[];return e&&i.push(e),n&&r.push(n),t&&a.push(t),d},d};var s=l[p]._={};function e(){s.P(r),s.w=1,l[p]("_load")}s.fh={},s.eh={},s.ph={},s.l=n?n.replace(/^\/\//,("https:"==t?t:"http:")+"//"):n,s.p={0:+new Date},s.P=function(e){s.p[e]=new Date-s.p[0]},s.w&&e(),i.addEventListener?i.addEventListener(r,e,!1):i.attachEvent("onload",e);var h=function(){function n(){return["<!DOCTYPE ",i,"><",i,"><head></head><",e,"><",t,' src="',s.l,'"></',t,"></",e,"></",i,">"].join("")}var e="body",t="script",i="html",r=u[e];if(!r)return setTimeout(h,100);s.P(1);var a,o=u.createElement("div"),d=o.appendChild(u.createElement("div")),l=u.createElement("iframe");o.style.display="none",r.insertBefore(o,r.firstChild).id="lightningjs-"+p,l.frameBorder="0",l.id="lightningjs-frame-"+p,/MSIE[ ]+6/.test(navigator.userAgent)&&(l.src="javascript:false"),l.allowTransparency="true",d.appendChild(l);try{l.contentWindow.document.open()}catch(n){s.domain=u.domain,a="javascript:var d=document.open();d.domain='"+u.domain+"';",l.src=a+"void(0);"}try{var c=l.contentWindow.document;c.write(n()),c.close()}catch(e){l.src=a+'d.write("'+n().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}s.P(2)};s.l&&h()}()),l[e].lv="1",l[e]}var n=window.lightningjs=e("lightningjs");n.require=e,n.modules=l}({}),window.usabilla_live=lightningjs.require("usabilla_live","//w.usabilla.com/3db5dd07689f.js"),window.usabilla_live("hide")</script>  <script>window._privacy=window._privacy||[]</script>  <link rel="stylesheet" href="https://www.trouw.nl/sel-static/shared-assets/css/trouw-typography-8.css">  <link rel="stylesheet" href="/static/main-6a26fd94e4.css">        <script async src="https://login-static.dpgmedia.net/ssosession/main.js"></script>  <script>window.dataLayer=window.dataLayer||[],window.dataLayer.push({"gtm.start":(new Date).getTime(),event:"gtm.js"})</script> <script src="https://t.trouw.nl/gtm.js?id=GTM-MNR2SVJ" async="async"></script>   <script type="text/javascript"> window.cmpProperties = {
+            privacyManagerId: 148844,
+            baseUrl: 'https://www.trouw.nl',
+            cmpCname: 'https://cmp.trouw.nl',
+            featureFlags: {
+                unified: true
+            }
+        } </script>   <script async type="text/javascript" src="https://myprivacy-static.dpgmedia.net/consent.js"></script>    <script> function showPrivacyModal() {
+            window._privacy.openModal();
+        }
+
+        window.APP.helpers.waitUntilTrue(
+                function() {
+                    return  window._privacy &&
+                            window.APP &&
+                            window.APP.helpers &&
+                            window.APP.helpers.setCookie &&
+                            window.APP.helpers.getCookie &&
+                            window.APP.helpers.expireCookie
+                },
+                function() {
+                    const SEL_MARKETING_CONSENT_COOKIE_NAME = 'sel_tcf20_marketing';
+                    const updateMarketingConsentCookie = function() {
+                        window._privacy.push([
+                            'marketing',
+                            function marketingConsentIsGiven() {
+                                window.APP.helpers.setCookie(SEL_MARKETING_CONSENT_COOKIE_NAME, '1', 365);
+                                document.dispatchEvent(new Event('marketingConsentGiven'));
+                            },
+                            function marketingConsentIsRevoked() {
+                                window.APP.helpers.setCookie(SEL_MARKETING_CONSENT_COOKIE_NAME, '0', 365);
+                                document.dispatchEvent(new Event('marketingConsentRevoked'));
+                            }
+                        ]);
+                    }
+
+                    window._privacy.push([
+                        'consentupdated',
+                        updateMarketingConsentCookie
+                    ]);
+
+                    if (!window.APP.helpers.getCookie(SEL_MARKETING_CONSENT_COOKIE_NAME)) {
+                        updateMarketingConsentCookie();
+                    }
+                },
+                function () { },
+                100, 300
+        ); </script>   <script> window.APP.helpers.waitUntilTrue(
+            function () {
+                return Boolean(window.temptation && window.temptation.init && window.APP.loginHelpers);
+            },
+            function () {
+                window.temptation.init(null,
+                    false,
+                    null);
+            },
+            function () {
+                window.APP.modules.temptation.executed = true;
+                console.error('Could not init paywall');
+            },
+            100,
+            100
+        ); </script>  <script src="/static/main.bundle-6fbdc876c9.js" defer="defer"></script>  <link rel="canonical" href="https://www.trouw.nl/humans.txt"> <link rel="apple-touch-icon-precomposed" sizes="192x192" href="/static/apple-touch-icon-192x192.png"> <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/static/apple-touch-icon-180x180.png"> <link rel="apple-touch-icon-precomposed" sizes="167x167" href="/static/apple-touch-icon-167x167.png"> <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/static/apple-touch-icon-152x152.png"> <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/apple-touch-icon-144x144.png"> <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/static/apple-touch-icon-128x128.png"> <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/static/apple-touch-icon-120x120.png"> <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/apple-touch-icon-114x114.png"> <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/static/apple-touch-icon-76x76.png"> <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/apple-touch-icon-72x72.png"> <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/static/apple-touch-icon-60x60.png"> <link rel="icon" type="image/png" href="/static/favicon-196x196.png" sizes="196x196"> <link rel="icon" type="image/png" href="/static/favicon-128x128.png" sizes="128x128"> <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96"> <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32"> <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16">    </head> <body>   <svg style="display:none"> <symbol fill="none" id="pluslabel">       </symbol> </svg>     <header class="header  has--no-title ">  <div class="header__brand-wrapper">    <a class="brand-link" href="/">   <svg class="brand-svg logo-variant-1" viewBox="0 0 163 40" xmlns="http://www.w3.org/2000/svg"> <g fill="#005693" fill-rule="evenodd"> <path d="M30.755.774L29.176 8.15h-9.635l-6.477 30.819H2.885l6.478-30.82H0L1.524.775h29.23"/> <path d="M44.455 18.878c-1.75-.493-3.174-.766-4.269-.766-4.488 0-6.403 2.79-7.717 8.703l-2.627 12.153h-9.851l5.746-28.247h8.921l-1.04 5.146c2.737-3.942 5.474-5.802 9.305-5.802 1.204 0 2.408.218 3.722.602l-2.19 8.21M61.904 16.57c-3.895 0-7.465 4.3-7.465 10.364 0 3.749 2.218 6.395 5.355 6.395 3.895 0 7.303-4.3 7.303-10.365 0-3.969-2.11-6.395-5.193-6.395zm14.983 6.835C76.887 33.11 69.963 40 58.874 40c-8.925 0-14.28-5.017-14.28-12.956 0-10.144 6.707-16.98 17.85-16.98 9.034 0 14.443 5.072 14.443 13.341zM91.534 10.58L88.61 24.73c-.217.988-.325 1.92-.325 2.797 0 2.742 1.3 4.223 3.685 4.223 3.52 0 6.23-3.126 7.53-9.268l2.49-11.901h9.753l-5.96 28.19H97.06l1.084-4.772c-3.143 3.62-6.718 5.485-10.618 5.485-5.743 0-9.101-3.51-9.101-9.818 0-1.865.325-4.497 1.028-7.842l2.33-11.243h9.751M122.377 10.58l.273 13.642c0 .663 0 3.148-.055 7.455.82-2.706 1.966-5.025 2.95-7.069l6.659-14.027h11.523l.327 14.359v6.737c.656-2.319 1.637-4.749 2.84-7.345l6.387-13.751H163l-14.796 28.387h-11.14l-.49-12.758a169.14 169.14 0 0 1-.109-5.357c0-1.104 0-2.21.053-3.313-1.2 3.092-2.074 5.19-2.62 6.35l-7.044 15.078h-11.411l-2.676-28.387h9.61"/> </g> </svg>  </a>   </div>  <div class="header__buttons"> <div class="header__buttons-wrapper"> <a class="header__menu-search fjs-search" data-gtm="header / search" href="/search">  <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"> <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="1.1" transform="translate(2 2)"> <circle cx="8" cy="7.7" r="7.2"/> <path stroke-linecap="round" d="m13 13 6 6"/> </g> </svg>  </a> <a aria-controls="menu" aria-expanded="false" class="header__menu-hamburger header-menuitem--user fjs-user-menu" data-category="menu" data-gtm="header / menu" data-menu-trigger="right" data-text="service" data-type="header_menu" href="#menu">  <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" fill-rule="evenodd"> <path fill="currentColor" d="M15.86 7.88a4.56 4.56 0 1 1-9.12 0 4.56 4.56 0 0 1 9.12 0Zm-.9 0a3.65 3.65 0 1 1-7.3 0 3.65 3.65 0 0 1 7.3 0Zm-5.48 5.48a5.93 5.93 0 0 0-5.93 5.93v2.28a.46.46 0 0 0 .91 0v-2.28a5.02 5.02 0 0 1 5.02-5.02h3.65a5.02 5.02 0 0 1 5.01 5.02v2.28a.46.46 0 0 0 .91 0v-2.28a5.93 5.93 0 0 0-5.92-5.93H9.48Z"/> <g class="badge badge--warning" fill-rule="nonzero"> <path class="bg" fill="#EB8610" d="M22.25 6.06a4.56 4.56 0 1 1-9.13 0 4.56 4.56 0 0 1 9.13 0Z"/> <path fill="#FFF" d="m19.12 3.91-1.43 1.43-1.44-1.43-.71.72 1.43 1.43-1.43 1.43.71.72 1.44-1.43 1.43 1.43.72-.72-1.44-1.43 1.44-1.43z"/> </g> <g class="badge badge--success" fill-rule="nonzero"> <path class="bg" fill="#299E47" d="M17.67 1.5a4.62 4.62 0 1 0 0 9.23 4.62 4.62 0 0 0 0-9.23Z"/> <path fill="#FFF" d="m17.19 8.15-1.73-1.68.71-.71 1.02.96 2.17-2.22.72.71z"/> </g> </svg>  </a></div> </div> </header>   <main class="error"> <h1> We kunnen de pagina die u zoekt niet weergeven </h1> <img src="/static/error.jpg"> </main>  <div class="app-bottom">   <nav class="app-bottom-navigation fjs-app-bottom-navigation"> <ul class="app-bottom-navigation__item-list"> <li class="app-bottom-navigation__item" data-gtm="navigation / live" data-category="menu" data-type="bottom_menu" data-text="live"> <a class="app-bottom-navigation__link" href="/"> <svg class="app-bottom-navigation__item-icon app-bottom-navigation__item-icon--start" width="22" height="22" xmlns="http://www.w3.org/2000/svg"> <g fill="none" fill-rule="evenodd"> <path fill="none" d="M0 0h22v22H0z"/> <path fill="currentColor" d="M19.214 2l-.73 3.475h-4.453L11.038 20H6.333L9.327 5.475H5L5.704 2h13.51"/> </g> </svg>  <span class="app-bottom-navigation__link-text">Voorpagina</span> </a> </li> <li class="app-bottom-navigation__item" data-gtm="navigation / edition" data-category="menu" data-type="bottom_menu" data-text="editie"> <a class="app-bottom-navigation__link" href="/krant/digitaal/vandaag"> <svg class="app-bottom-navigation__item-icon" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="nonzero" d="M23.5 9h2a.5.5 0 01.5.5v7a2.503 2.503 0 01-2.5 2.5h-21A2.503 2.503 0 010 16.5V.5A.5.5 0 01.5 0h21a.5.5 0 01.5.5v16a1.5 1.5 0 003 0V10h-1.5a.5.5 0 010-1zM1 16.5c0 .828.672 1.5 1.5 1.5h19.001A2.486 2.486 0 0121 16.5V1H1v15.5z" fill="currentColor"/> <path fill-rule="nonzero" d="M10.5 13h-7a.5.5 0 01-.5-.5v-3a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v3a.5.5 0 01-.5.5zm-.5-3H4v2h6v-2z" fill="currentColor"/> <path d="M3.596 4h14.808a.5.5 0 000-1H3.596a.5.5 0 000 1zM3.596 7h14.808a.5.5 0 000-1H3.596a.5.5 0 000 1zM18.505 9H13.5a.5.5 0 000 1h5.005a.5.5 0 000-1zM18.404 13a.5.5 0 000-1H13.5a.5.5 0 000 1h4.904zM18.5 15h-15a.5.5 0 000 1h15a.5.5 0 000-1z" fill="currentColor"/> </svg> <span class="app-bottom-navigation__link-text">Krant</span> </a> </li>   <li class="app-bottom-navigation__item" data-gtm="navigation / best gelezen" data-category="menu" data-type="bottom_menu" data-text="best gelezen"> <a class="app-bottom-navigation__link" href="/best-gelezen"> <svg class="app-bottom-navigation__item-icon" width="22" height="22" xmlns="http://www.w3.org/2000/svg"> <g fill="none" fill-rule="evenodd"> <path fill="none" d="M0 0h22v22H0z"/> <path d="M20.617 4.063a.5.5 0 00-.371-.141H16.02a.5.5 0 100 1h3.044l-6.9 6.964-3.675-1.908a.5.5 0 00-.584.09l-7 7a.5.5 0 10.707.707l6.741-6.741 3.677 1.909a.5.5 0 00.586-.092l7.143-7.213v3.026a.5.5 0 101 0V4.437a.5.5 0 00-.142-.374z" fill-rule="nonzero" fill="currentColor"/> </g> </svg> <span class="app-bottom-navigation__link-text">Best gelezen</span> </a> </li>  <li class="app-bottom-navigation__item" data-gtm="navigation / luister" data-category="menu" data-type="bottom_menu" data-text="luister"> <a class="app-bottom-navigation__link" href="/luister"> <svg class="app-bottom-navigation__item-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M12 3C15.0418 3 17.1807 3.95026 18.5586 5.36914C19.9296 6.78095 20.4999 8.60837 20.5 10.2822V16.5C20.5 18.7091 18.7091 20.5 16.5 20.5H16C15.1716 20.5 14.5 19.8284 14.5 19V13C14.5 12.1716 15.1716 11.5 16 11.5H16.5C17.695 11.5 18.767 12.0246 19.5 12.8555V10.2822C19.4999 8.82587 19.0029 7.26211 17.8408 6.06543C16.6854 4.87582 14.8245 4 12 4C9.17548 4 7.31465 4.87582 6.15918 6.06543C4.99707 7.26211 4.50009 8.82587 4.5 10.2822V12.8555C5.23296 12.0246 6.30496 11.5 7.5 11.5H8C8.82843 11.5 9.5 12.1716 9.5 13V19C9.5 19.8284 8.82843 20.5 8 20.5H7.5C5.29086 20.5 3.5 18.7091 3.5 16.5V10.2822C3.50009 8.60837 4.07039 6.78095 5.44141 5.36914C6.8193 3.95026 8.95817 3 12 3ZM7.5 12.5C5.84315 12.5 4.5 13.8431 4.5 15.5V16.5C4.5 18.1569 5.84315 19.5 7.5 19.5H8C8.27614 19.5 8.5 19.2761 8.5 19V13C8.5 12.7239 8.27614 12.5 8 12.5H7.5ZM16 12.5C15.7239 12.5 15.5 12.7239 15.5 13V19C15.5 19.2761 15.7239 19.5 16 19.5H16.5C18.1569 19.5 19.5 18.1569 19.5 16.5V15.5C19.5 13.8431 18.1569 12.5 16.5 12.5H16Z" fill="currentColor"/> </svg> <span class="app-bottom-navigation__link-text">Luister</span> </a> </li>  <li class="app-bottom-navigation__item" data-gtm="navigation / sections" data-category="menu" data-type="bottom_menu" data-text="rubrieken"> <button class="app-bottom-navigation__link fjs-app-menu-left-trigger" data-menu-trigger="left"> <svg class="app-bottom-navigation__item-icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg"> <path d="M16.5 12h-10a.5.5 0 0 1 0-1h10a.5.5 0 0 1 0 1ZM3.5 12h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 0 1ZM22.528 16H6.472a.46.46 0 0 1-.334-.146A.515.515 0 0 1 6 15.5c0-.133.05-.26.138-.354A.46.46 0 0 1 6.472 15h16.056a.46.46 0 0 1 .334.146.516.516 0 0 1 .138.354c0 .133-.05.26-.138.354a.46.46 0 0 1-.334.146ZM3.5 16h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 0 1ZM20.5 8h-14a.5.5 0 1 1 0-1h14a.5.5 0 0 1 0 1ZM3.5 8h-2a.5.5 0 1 1 0-1h2a.5.5 0 1 1 0 1ZM18.5 4h-12a.5.5 0 1 1 0-1h12a.5.5 0 0 1 0 1ZM3.5 4h-2a.5.5 0 1 1 0-1h2a.5.5 0 1 1 0 1ZM18.5 20h-12a.5.5 0 0 1 0-1h12a.5.5 0 0 1 0 1ZM3.5 20h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 0 1Z" fill="currentColor"/> </svg> <span class="app-bottom-navigation__link-text">Rubrieken</span> </button> </li> </ul> </nav>  </div>  <div aria-hidden="true" class="app-overlay js-is-hidden fjs-app-overlay"></div>  <aside id="menu" class="app-menu app-menu--right fjs-app-menu" data-menu="right" aria-modal="false" role="dialog"> <header class="menu-header"> <button class="menu-close fjs-close-menu" aria-label="sluiten"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="close-icon"> <path fill="none" stroke="#000" stroke-linecap="round" d="m21.5 2.5-19 19m19 0-19-19"/> </svg> </button>  <h2 class="menu-title">Instellingen</h2> </header>   <ul class="menu-list">     <div data-temptation-position="MENU_ITEM" class="menu-list__item menu-list__item--border" data-test="position-menu-item"></div>     <li class="menu-list__item js-is-hidden fjs-show-logged-in"> <a class="menu-list__item-link" href="https://mijnomgeving.trouw.nl/account" data-gtm="menu / Mijn account / text" data-category="menu" data-type="service" data-text="mijn account" aria-expanded="false" target="_blank" rel="noopener noreferrer">  <div class="menu-list__item-svg-wrapper">  <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" fill-rule="evenodd"> <path fill="currentColor" d="M15.86 7.88a4.56 4.56 0 1 1-9.12 0 4.56 4.56 0 0 1 9.12 0Zm-.9 0a3.65 3.65 0 1 1-7.3 0 3.65 3.65 0 0 1 7.3 0Zm-5.48 5.48a5.93 5.93 0 0 0-5.93 5.93v2.28a.46.46 0 0 0 .91 0v-2.28a5.02 5.02 0 0 1 5.02-5.02h3.65a5.02 5.02 0 0 1 5.01 5.02v2.28a.46.46 0 0 0 .91 0v-2.28a5.93 5.93 0 0 0-5.92-5.93H9.48Z"/> <g class="badge badge--warning" fill-rule="nonzero"> <path class="bg" fill="#EB8610" d="M22.25 6.06a4.56 4.56 0 1 1-9.13 0 4.56 4.56 0 0 1 9.13 0Z"/> <path fill="#FFF" d="m19.12 3.91-1.43 1.43-1.44-1.43-.71.72 1.43 1.43-1.43 1.43.71.72 1.44-1.43 1.43 1.43.72-.72-1.44-1.43 1.44-1.43z"/> </g> <g class="badge badge--success" fill-rule="nonzero"> <path class="bg" fill="#299E47" d="M17.67 1.5a4.62 4.62 0 1 0 0 9.23 4.62 4.62 0 0 0 0-9.23Z"/> <path fill="#FFF" d="m17.19 8.15-1.73-1.68.71-.71 1.02.96 2.17-2.22.72.71z"/> </g> </svg>  </div>  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Mijn account</h4>  <p class="menu-item__subtext"></p> </div>  <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M18.0147 5.5H9.01467C8.73852 5.5 8.51467 5.72386 8.51467 6C8.51467 6.27614 8.73852 6.5 9.01467 6.5H16.8077L5.66167 17.646C5.52651 17.7702 5.47029 17.9585 5.51522 18.1365C5.56016 18.3145 5.69902 18.4536 5.87694 18.4987C6.05487 18.5439 6.24325 18.488 6.36767 18.353L17.5147 7.207V15C17.5147 15.2761 17.7385 15.5 18.0147 15.5C18.2908 15.5 18.5147 15.2761 18.5147 15V6C18.5147 5.72386 18.2908 5.5 18.0147 5.5Z" fill="black"/> </svg> </div>  </a> </li>     <li class="menu-list__item fjs-hide-logged-in"> <a class="menu-list__item-link" href="/login?dpg_source=tr&amp;dpg_campaign=stdc_tr&amp;dpg_medium=menu&amp;redirect_url=https://www.trouw.nl" data-gtm="menu / Inloggen / text" data-category="menu" data-type="service" data-text="inloggen" aria-expanded="false">  <div class="menu-list__item-svg-wrapper">  <svg class="user-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" fill-rule="evenodd"> <path fill="currentColor" d="M15.86 7.88a4.56 4.56 0 1 1-9.12 0 4.56 4.56 0 0 1 9.12 0Zm-.9 0a3.65 3.65 0 1 1-7.3 0 3.65 3.65 0 0 1 7.3 0Zm-5.48 5.48a5.93 5.93 0 0 0-5.93 5.93v2.28a.46.46 0 0 0 .91 0v-2.28a5.02 5.02 0 0 1 5.02-5.02h3.65a5.02 5.02 0 0 1 5.01 5.02v2.28a.46.46 0 0 0 .91 0v-2.28a5.93 5.93 0 0 0-5.92-5.93H9.48Z"/> <g class="badge badge--warning" fill-rule="nonzero"> <path class="bg" fill="#EB8610" d="M22.25 6.06a4.56 4.56 0 1 1-9.13 0 4.56 4.56 0 0 1 9.13 0Z"/> <path fill="#FFF" d="m19.12 3.91-1.43 1.43-1.44-1.43-.71.72 1.43 1.43-1.43 1.43.71.72 1.44-1.43 1.43 1.43.72-.72-1.44-1.43 1.44-1.43z"/> </g> <g class="badge badge--success" fill-rule="nonzero"> <path class="bg" fill="#299E47" d="M17.67 1.5a4.62 4.62 0 1 0 0 9.23 4.62 4.62 0 0 0 0-9.23Z"/> <path fill="#FFF" d="m17.19 8.15-1.73-1.68.71-.71 1.02.96 2.17-2.22.72.71z"/> </g> </svg>  </div>  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Inloggen</h4>  <p class="menu-item__subtext">U bent niet ingelogd</p> </div>   <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M9.49991 18.9939C9.29771 18.9938 9.11544 18.872 9.03807 18.6852C8.9607 18.4984 9.00345 18.2834 9.14641 18.1404L14.7929 12.4939L9.14641 6.84736C8.95692 6.65117 8.95963 6.33931 9.1525 6.14645C9.34537 5.95358 9.65722 5.95087 9.85341 6.14036L15.8534 12.1404C16.0486 12.3356 16.0486 12.6521 15.8534 12.8474L9.85341 18.8474C9.75978 18.9413 9.63255 18.994 9.49991 18.9939V18.9939Z" fill="black"/> </svg> </div> </a> </li>     <li class="menu-list__item js-is-hidden fjs-show-logged-in"> <a class="menu-list__item-link" href="https://mijnomgeving.trouw.nl/abonnementen" data-gtm="menu / Mijn abonnement(en) / text" data-category="menu" data-type="service" data-text="mijn abonnement(en)" aria-expanded="false">  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Mijn abonnement(en)</h4>   </div>   <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M9.49991 18.9939C9.29771 18.9938 9.11544 18.872 9.03807 18.6852C8.9607 18.4984 9.00345 18.2834 9.14641 18.1404L14.7929 12.4939L9.14641 6.84736C8.95692 6.65117 8.95963 6.33931 9.1525 6.14645C9.34537 5.95358 9.65722 5.95087 9.85341 6.14036L15.8534 12.1404C16.0486 12.3356 16.0486 12.6521 15.8534 12.8474L9.85341 18.8474C9.75978 18.9413 9.63255 18.994 9.49991 18.9939V18.9939Z" fill="black"/> </svg> </div> </a> </li>    </ul>   <h3 class="menu-list-title">Service</h3> <ul class="menu-list">   <li class="menu-list__item"> <a class="menu-list__item-link" href="https://mijnomgeving.trouw.nl" data-gtm="menu / Klantenservice / text" data-category="menu" data-type="service" data-text="klantenservice" aria-expanded="false" target="_blank" rel="noopener noreferrer">  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Klantenservice</h4>  <p class="menu-item__subtext">Antwoord op al uw vragen</p> </div>  <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M18.0147 5.5H9.01467C8.73852 5.5 8.51467 5.72386 8.51467 6C8.51467 6.27614 8.73852 6.5 9.01467 6.5H16.8077L5.66167 17.646C5.52651 17.7702 5.47029 17.9585 5.51522 18.1365C5.56016 18.3145 5.69902 18.4536 5.87694 18.4987C6.05487 18.5439 6.24325 18.488 6.36767 18.353L17.5147 7.207V15C17.5147 15.2761 17.7385 15.5 18.0147 15.5C18.2908 15.5 18.5147 15.2761 18.5147 15V6C18.5147 5.72386 18.2908 5.5 18.0147 5.5Z" fill="black"/> </svg> </div>  </a> </li>     <li class="menu-list__item"> <a class="menu-list__item-link" href="https://mijnomgeving.trouw.nl" data-gtm="menu / Bezorging / text" data-category="menu" data-type="service" data-text="bezorging" aria-expanded="false" target="_blank" rel="noopener noreferrer">  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Bezorging</h4>  <p class="menu-item__subtext">Updates, wijzigingen en klachten</p> </div>  <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M18.0147 5.5H9.01467C8.73852 5.5 8.51467 5.72386 8.51467 6C8.51467 6.27614 8.73852 6.5 9.01467 6.5H16.8077L5.66167 17.646C5.52651 17.7702 5.47029 17.9585 5.51522 18.1365C5.56016 18.3145 5.69902 18.4536 5.87694 18.4987C6.05487 18.5439 6.24325 18.488 6.36767 18.353L17.5147 7.207V15C17.5147 15.2761 17.7385 15.5 18.0147 15.5C18.2908 15.5 18.5147 15.2761 18.5147 15V6C18.5147 5.72386 18.2908 5.5 18.0147 5.5Z" fill="black"/> </svg> </div>  </a> </li>    </ul>   <h3 class="menu-list-title">Personaliseren</h3> <ul class="menu-list">   <li class="menu-list__item"> <a class="menu-list__item-link" href="/meldingen" data-gtm="menu / Meldingen / text" data-category="menu" data-type="service" data-text="meldingen" aria-expanded="false">  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Meldingen</h4>   </div>   <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M9.49991 18.9939C9.29771 18.9938 9.11544 18.872 9.03807 18.6852C8.9607 18.4984 9.00345 18.2834 9.14641 18.1404L14.7929 12.4939L9.14641 6.84736C8.95692 6.65117 8.95963 6.33931 9.1525 6.14645C9.34537 5.95358 9.65722 5.95087 9.85341 6.14036L15.8534 12.1404C16.0486 12.3356 16.0486 12.6521 15.8534 12.8474L9.85341 18.8474C9.75978 18.9413 9.63255 18.994 9.49991 18.9939V18.9939Z" fill="black"/> </svg> </div> </a> </li>     <li class="menu-list__item fjs-hide-logged-in"> <a class="menu-list__item-link" href="/nieuwsbrief" data-gtm="menu / Nieuwsbrieven / text" data-category="menu" data-type="service" data-text="nieuwsbrieven" aria-expanded="false">  <div class="menu-item__text-wrapper"> <h4 class="menu-item__title">Nieuwsbrieven</h4>   </div>   <div class="menu-item__icon-wrapper"> <svg class="menu-item__icon"> <path d="M9.49991 18.9939C9.29771 18.9938 9.11544 18.872 9.03807 18.6852C8.9607 18.4984 9.00345 18.2834 9.14641 18.1404L14.7929 12.4939L9.14641 6.84736C8.95692 6.65117 8.95963 6.33931 9.1525 6.14645C9.34537 5.95358 9.65722 5.95087 9.85341 6.14036L15.8534 12.1404C16.0486 12.3356 

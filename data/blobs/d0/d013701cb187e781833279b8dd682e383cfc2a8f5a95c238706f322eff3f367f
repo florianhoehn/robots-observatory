@@ -1,0 +1,110 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<html>
+<head>
+    <meta name="robots" content="noindex">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Pearltrees</title>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn-web-static.pearltrees.com/v2static/css/unavailable/unavailable.css?20261015-17h01-40483">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,300&amp;subset=latin">
+
+    <meta name="viewport"
+          content="width=device-width; initial-scale=1.0; target-densitydpi=device-dpi; user-scalable=false; initial-scale=1.0; user-scalable=no; minimum-scale=1.0; maximum-scale=1.0;">
+
+</head>
+
+<body>
+<div id="background-container"></div>
+<div id="message-container">
+    Sorry, this page is unavailable<pre style="font-size: 60%;">Date: 2026-10-19 22:23:03.825
+HTTP code: 404
+IP: CallerIp [remoteIp=10.0.1.1, forwardedIp=82.39.15.43, wafIp=null]
+URI: /.well-known/ai-catalog.json
+</pre>
+</div>
+
+<img id="dindon01" class="dindon" onclick="javascript:play()"
+     src="https://cdn-web-static.pearltrees.com/v2static/asset/unavailable/overloaded01.png?20261015-17h01-40483">
+<img id="dindon02" class="dindon" onclick="javascript:play()"
+     src="https://cdn-web-static.pearltrees.com/v2static/asset/unavailable/overloaded02.png?20261015-17h01-40483"
+     style="display: none;">
+<img id="dindon03" class="dindon" onclick="javascript:play()"
+     src="https://cdn-web-static.pearltrees.com/v2static/asset/unavailable/overloaded03.png?20261015-17h01-40483"
+     style="display: none;">
+
+
+
+
+<!-- Google Analytics -->
+<script async src='https://www.googletagmanager.com/gtag/js?id=G-R616EBR1HF'></script>
+<script type='text/javascript'>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){
+		dataLayer.push(arguments);
+	}
+	// Don't send stats if page loads with nostats param
+	var shouldSendPageView = self.location.href.indexOf("nostats=1") == -1;
+	gtag('js', new Date());
+	gtag('config', 'G-R616EBR1HF', {
+		'send_page_view': shouldSendPageView
+	});
+</script>
+<!-- End Google Analytics Code -->
+
+
+<script type="text/javascript">
+    var img01, img02, img03, images;
+    img01 = document.getElementById('dindon01');
+    img02 = document.getElementById('dindon02');
+    img03 = document.getElementById('dindon03');
+    images = [img01, img02, img03];
+
+    var audio = document.createElement("audio");
+    audio.src = "https://cdn-web-static.pearltrees.com/images/alternate/dindon.wav?20261015-17h01-40483";
+
+    var playTimeout;
+    var playInterval;
+
+    var isPlaying = false;
+
+    function playSound() {
+        try {
+            audio.play();
+        } catch (err) {
+        }
+    }
+
+    function playImg() {
+        var k = 1;
+        playInterval = setInterval(function() {
+            k++;
+            img01.style.display = "none";
+            img02.style.display = "none";
+            img03.style.display = "none";
+            images[k % 3].style.display = "block";
+        }, 200);
+        playTimeout = setTimeout(function() {
+            clearInterval(playInterval)
+        }, 2400);
+    }
+
+    function play() {
+        if (isPlaying) {
+            playSound();
+            return;
+        }
+        isPlaying = true;
+        playImg();
+        playSound();
+        setTimeout(function() {
+            isPlaying = false;
+        }, 2400);
+    }
+</script>
+</body>
+</html>

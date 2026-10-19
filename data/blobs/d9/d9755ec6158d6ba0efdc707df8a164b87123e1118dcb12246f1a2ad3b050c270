@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verboden toegang - HEMA</title>
+  <style>
+    @font-face {
+      font-family: 'HurmeHEMA';
+      src: url('/_platform/assets/maintenance/assets/HurmeHEMA-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'HurmeHEMA';
+      src: url('/_platform/assets/maintenance/assets/HurmeHEMA-SemiBold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'HurmeHEMA';
+      src: url('/_platform/assets/maintenance/assets/HurmeHEMA-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'HurmeHEMA', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #ffffff;
+      color: #1b1b1b;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ===== Layout container (sfcc-layout) ===== */
+
+    .layout {
+      max-width: 1280px;
+      margin-inline: auto;
+      width: auto;
+      padding-inline: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .layout {
+        padding-inline: 32px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .layout {
+        padding-inline: 48px;
+      }
+    }
+
+    /* ===== Header ===== */
+
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      z-index: 100;
+    }
+
+    /* Top links bar */
+    .top-links {
+      display: none;
+      padding: 0 0 12px;
+      border-bottom: 1px solid #f5f5f5;
+      width: 100%;
+    }
+
+    .top-links ul {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .top-links li {
+      margin-right: 24px;
+    }
+
+    .top-links li:nth-child(4) {
+      margin-right: auto;
+    }
+
+    .top-links li:last-child {
+      margin-right: 0;
+    }
+
+    .top-links a {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 16px;
+      color: #323232;
+      text-decoration: none;
+      position: relative;
+      display: block;
+    }
+
+    .top-links a::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background: #323232;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .top-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* Main nav row */
+    .nav-main {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0;
+      position: relative;
+    }
+
+    .nav-logo {
+      display: block;
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .nav-logo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    /* Categories button */
+    .nav-categories-btn {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'HurmeHEMA', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1b1b1b;
+      margin-left: 16px;
+    }
+
+    .nav-categories-btn svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .nav-categories-btn .chevron {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Search bar */
+    .nav-search {
+      display: none;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+      height: 44px;
+      padding: 0 24px;
+      padding-right: 48px;
+      background-color: #efefef;
+      border-radius: 100px;
+      position: relative;
+      margin-left: 8px;
+      transition: background-color 0.2s ease;
+    }
+
+    .nav-search:hover {
+      background-color: #dfdfdf;
+    }
+
+    .nav-search span {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      color: #767676;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav-search svg {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      color: #323232;
+    }
+
+    /* Mobile search */
+    .nav-search-mobile {
+      display: block;
+      height: 44px;
+      margin-top: 2px;
+      margin-right: 8px;
+      margin-bottom: 12px;
+    }
+
+    .nav-search-mobile a {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 0 24px;
+      padding-right: 48px;
+      background-color: #efefef;
+      border-radius: 100px;
+      position: relative;
+    }
+
+    .nav-search-mobile a:hover {
+      background-color: #dfdfdf;
+    }
+
+    .nav-search-mobile span {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      color: #767676;
+    }
+
+    .nav-search-mobile svg {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      color: #323232;
+    }
+
+    /* Header actions */
+    .nav-actions {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      gap: 16px;
+      justify-content: flex-end;
+    }
+
+    .nav-action-link {
+      display: flex;
+      align-items: center;
+      padding: 4px 12px 4px 8px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+
+    .nav-action-link:hover {
+      background-color: #f5f5f5;
+    }
+
+    .nav-action-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+    }
+
+    .nav-action-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-action-label {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+      display: none;
+    }
+
+    .nav-icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+    }
+
+    .nav-icon-btn:hover {
+      background-color: #f5f5f5;
+    }
+
+    .nav-icon-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-wishlist {
+      display: none;
+    }
+
+    /* Hamburger (mobile only) */
+    .nav-hamburger-mobile {
+      display: flex;
+      align-items: center;
+      align-self: center;
+    }
+
+    .nav-hamburger-mobile a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .nav-hamburger-mobile svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* ===== Responsive: md (768px+) ===== */
+
+    @media (min-width: 768px) {
+      .nav-main {
+        gap: 24px;
+        padding: 12px 0;
+      }
+
+      .nav-search {
+        display: flex;
+        margin-left: 8px;
+        margin-right: 20px;
+      }
+
+      .nav-search-mobile {
+        display: none;
+      }
+
+      .nav-actions {
+        flex: initial;
+      }
+
+      .nav-action-label {
+        display: inline;
+      }
+
+      .nav-wishlist {
+        display: flex;
+      }
+    }
+
+    /* ===== Responsive: lg (1025px+) ===== */
+
+    @media (min-width: 1025px) {
+      .top-links {
+        display: block;
+      }
+
+      .nav-logo {
+        width: 56px;
+        height: 56px;
+      }
+
+      .nav-categories-btn {
+        display: flex;
+        margin-left: 16px;
+      }
+
+      .nav-search {
+        margin-left: 20px;
+        margin-right: 0;
+      }
+
+      .nav-hamburger-mobile {
+        display: none;
+      }
+    }
+
+    /* ===== Main Content ===== */
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 24px 64px;
+      width: 100%;
+    }
+
+    .error-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: 768px;
+      width: 100%;
+    }
+
+    .error-image {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .error-text {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .error-text h1 {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .error-text p {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #1b1b1b;
+    }
+
+    .error-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 310px;
+      max-width: 456px;
+      height: 56px;
+      min-height: 56px;
+      padding: 0 24px;
+      background-color: #1b1b1b;
+      color: #ffffff;
+      font-family: 'HurmeHEMA', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .error-button:hover {
+      background-color: #333333;
+    }
+
+    .error-button:focus-visible {
+      outline: 2px solid #1b1b1b;
+      outline-offset: 2px;
+    }
+
+    /* ===== Footer ===== */
+
+    .footer-links {
+      padding: 16px 0;
+    }
+
+    .footer-links-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .footer-links-section h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1b1b1b;
+    }
+
+    .footer-links-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links-section li {
+      margin-bottom: 4px;
+    }
+
+    .footer-links-section a {
+      font-size: 14px;
+      font-weight: 400;
+      color: #1b1b1b;
+    }
+
+    .footer-links-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* Logo + Legal links row */
+    .footer-legal {
+      padding: 24px 0;
+    }
+
+    .footer-legal-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .footer-legal .footer-logo {
+      flex-shrink: 0;
+    }
+
+    .footer-legal .footer-logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 2px;
+    }
+
+    .footer-legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 32px;
+      position: relative;
+    }
+
+    .footer-legal-links a {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 16px;
+      color: #1b1b1b;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 4px;
+      transition: text-decoration-color 0.3s;
+      position: relative;
+    }
+
+    .footer-legal-links a:hover {
+      text-decoration-color: currentColor;
+    }
+
+    /* Vertical separators between legal links */
+    .footer-legal-links a:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 16px;
+      right: -17px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #d4d4d4;
+    }
+
+    /* Contact details */
+    .footer-contact {
+      padding: 0 0 32px;
+      text-align: left;
+    }
+
+    .footer-contact ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-contact li {
+      font-size: 12px;
+      line-height: 16px;
+      color: #616161;
+    }
+
+    @media (min-width: 768px) {
+      .footer-links {
+        padding: 24px 0;
+      }
+
+      .footer-links-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .footer-links-section h4 {
+        margin-bottom: 12px;
+      }
+
+      .footer-legal {
+        padding: 32px 0;
+      }
+
+      .footer-contact {
+        text-align: center;
+        padding: 0 32px 32px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .footer-legal-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 56px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #e5e5e5;
+      }
+
+      .footer-contact {
+        padding: 24px 48px 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 24px 20px 48px;
+      }
+
+      .error-text h1 {
+        font-size: 28px;
+      }
+
+      .error-button {
+        width: 100%;
+        max-width: 310px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="layout" style="padding-top: 12px;">
+      <!-- Top links (desktop only) -->
+      <nav class="top-links" aria-label="Snelkoppelingen">
+        <ul>
+          <li><a href="https://foto.hema.nl/">fotoservice</a></li>
+          <li><a href="https://tickets.hema.nl/">tickets &amp; deals</a></li>
+          <li><a href="https://www.hema.nl/i/app">HEMA app</a></li>
+          <li><a href="https://www.hema.nl/inspiratie">inspiratie</a></li>
+          <li><a href="https://www.hema.nl/winkel-zoeken">winkels</a></li>
+          <li><a href="https://www.hema.nl/pas">klantenpas</a></li>
+          <li><a href="https://www.hema.nl/klantenservice">klantenservice</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main navigation row -->
+      <div class="nav-main">
+        <a class="nav-logo" href="https://www.hema.nl" aria-label="HEMA homepage">
+          <img src="/_platform/assets/maintenance/assets/logo.svg" alt="HEMA" />
+        </a>
+
+        <!-- Categories button (desktop) -->
+        <a class="nav-categories-btn" href="https://www.hema.nl" aria-label="Categorieën">
+          <!-- HDS Hamburger icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M3 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1"
+              clip-rule="evenodd" />
+          </svg>
+          <span>categorieën</span>
+          <!-- HDS ChevronDownLarge -->
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+            aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M4.335 7.763a1.143 1.143 0 0 1 1.616 0L12 13.813l6.049-6.05a1.143 1.143 0 0 1 1.616 1.617l-6.857 6.857a1.143 1.143 0 0 1-1.616 0L4.335 9.38a1.143 1.143 0 0 1 0-1.617"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+
+        <!-- Search bar (tablet/desktop) -->
+        <a class="nav-search" href="https://www.hema.nl" aria-label="Zoeken">
+          <span>waar ben je naar op zoek?</span>
+          <!-- HDS Search icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M17.169 15.77A7.917 7.917 0 0 0 5.319 5.318a7.915 7.915 0 0 0 10.45 11.85l3.542 3.542a.99.99 0 0 0 1.4-1.4zm-2.056-9.052a5.937 5.937 0 1 1-8.396 8.395 5.937 5.937 0 0 1 8.396-8.395"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+
+        <!-- Action buttons -->
+        <div class="nav-actions">
+          <!-- Login -->
+          <a class="nav-action-link" href="https://www.hema.nl/mijn-hema/account" aria-label="Inloggen">
+            <span class="nav-action-icon">
+              <!-- HDS ProfileOutline -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M16.761 11.652a6 6 0 1 0-9.522 0C5.274 13.082 4 15.235 4 17.13 4 20.309 8.052 22 12.47 22S20 20.309 20 17.13c0-1.895-1.274-4.048-3.239-5.478m-1.346 1.282A5.97 5.97 0 0 1 12 14a5.97 5.97 0 0 1-3.415-1.066 7 7 0 0 0-1.04.819c-1.206 1.143-1.767 2.456-1.767 3.378 0 .624.359 1.334 1.604 1.986 1.244.651 3.064 1.044 5.089 1.044 2.027 0 3.555-.394 4.51-.983.879-.542 1.241-1.203 1.241-2.047 0-.922-.561-2.235-1.767-3.379a7 7 0 0 0-1.04-.818M16 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+            <span class="nav-action-label">inloggen</span>
+          </a>
+          <!-- Wishlist -->
+          <a class="nav-icon-btn nav-wishlist" href="https://www.hema.nl/wishlist" aria-label="Favorieten">
+            <!-- HDS FavouriteOutline -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M12 4.648c-2.353-2.273-6.01-2.195-8.273.234-2.302 2.47-2.303 6.447-.001 8.918l.001.001L9.32 19.85l.003.003A3.55 3.55 0 0 0 11.963 21a3.55 3.55 0 0 0 2.641-1.146l5.669-6.052c2.303-2.47 2.303-6.449 0-8.92-2.264-2.429-5.92-2.507-8.273-.234m-1.233 1.598c-1.548-1.661-4.029-1.661-5.577 0-1.587 1.703-1.587 4.489 0 6.191l.003.003 5.593 6.05h.001c.331.355.75.515 1.163.51h.028c.41.006.831-.154 1.164-.511l5.668-6.05v-.002c1.587-1.702 1.586-4.489 0-6.191-1.548-1.661-4.029-1.661-5.577 0l-.005.006-1.235 1.304-1.225-1.309z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+          <!-- Basket -->
+          <a class="nav-icon-btn" href="https://www.hema.nl/cart" aria-label="Winkelmandje">
+            <!-- HDS BasketOutline -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M9.359 2.067a1 1 0 0 1 .574 1.292l-1.785 4.64h7.703l-1.785-4.64a1 1 0 1 1 1.867-.718l2 5.2q.03.079.047.159h2.23c1.02 0 1.937.842 1.772 1.987L20.49 20.299c-.147 1.017-1.079 1.7-2.024 1.7H5.534c-.945 0-1.877-.691-2.023-1.7L2.019 9.987C1.853 8.84 2.757 8 3.79 8h2.23q.016-.08.047-.159l2-5.2a1 1 0 0 1 1.292-.574m-3.874 17.91L4.04 10H19.96l-1.444 9.979a.1.1 0 0 1-.029.016l-.02.005H5.534q0 .001-.016-.004a.1.1 0 0 1-.032-.018z"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Hamburger (mobile/tablet only) -->
+        <div class="nav-hamburger-mobile">
+          <a href="https://www.hema.nl" aria-label="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M3 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1"
+                clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile search bar -->
+      <div class="nav-search-mobile">
+        <a href="https://www.hema.nl" aria-label="Zoeken">
+          <span>waar ben je naar op zoek?</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M17.169 15.77A7.917 7.917 0 0 0 5.319 5.318a7.915 7.915 0 0 0 10.45 11.85l3.542 3.542a.99.99 0 0 0 1.4-1.4zm-2.056-9.052a5.937 5.937 0 1 1-8.396 8.395 5.937 5.937 0 0 1 8.396-8.395"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <div class="error-content">
+      <img class="error-image" src="/_platform/assets/maintenance/assets/error-404.png" alt="Takkie de teckel kijkt zoekend rond met vraagtekens"
+        fetchpriority="high" />
+
+      <div class="error-text">
+        <h1>hè, daar hoor je niet te zijn</h1>
+        <p>Deze pagina is voor jou niet beschikbaar. Maar er is genoeg leuks te ontdekken.</p>
+      </div>
+
+      <a class="error-button" href="https://www.hema.nl">verder shoppen</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <div class="layout">
+        <div class="footer-links-grid">
+          <div class="footer-links-section">
+            <h4>populaire categorieën</h4>
+            <ul>
+              <li><a href="https://www.hema.nl/dames/dameskleding">dameskleding</a></li>
+              <li><a href="https://www.hema.nl/kind/kinderkleding">kinderkleding</a></li>
+              <li><a href="https://www.hema.nl/baby/babykleding">babykleding</a></li>
+              <li><a href="https://www.hema.nl/wonen-slapen/slapen">beddengoed</a></li>
+              <li><a href="https://www.hema.nl/wonen-slapen/wonen">woonaccessoires</a></li>
+              <li><a href="https://www.hema.nl/wonen-slapen/badkamer/handdoeken">handdoeken</a></li>
+              <li><a href="https://www.hema.nl/wonen-slapen/raamdecoratie">raamdecoratie</a></li>
+              <li><a href="https://www.hema.nl/speelgoed-hobby">speelgoed</a></li>
+              <li><a href="https://www.hema.nl/eten-drinken/gebak">gebak</a></li>
+              <li><a href="https://www.hema.nl/eten-drinken/koffie">koffie</a></li>
+            </ul>
+          </div>
+          <div class="footer-links-section">
+            <h4>meer voor HEMA fans</h4>
+            <ul>
+              <li><a href="https://www.hema.nl/i/app">HEMA app</a></li>
+              <li><a href="https://www.hema.nl/pas">HEMA pas</a></li>
+              <li><a href="https://www.hema.nl/folder">lees onze folders</a></li>
+              <li><a href="https://www.hema.nl/whatsapp">folder via whatsapp ontvangen</a></li>
+              <li><a href="https://www.hema.nl/social-media">HEMA op social media</a></li>
+              <li><a href="https://www.hema.nl/design">HEMA herontwerpwedstrijd</a></li>
+              <li><a href="https://foto.hema.nl/">HEMA fotoservice</a></li>
+              <li><a href="https://cadeaukaart.hema.nl/">HEMA cadeaukaarten</a></li>
+              <li><a href="https://tickets.hema.nl/">HEMA tickets</a></li>
+              <li><a href="https://verzekerdbijhema.nl/">HEMA verzekeringen</a></li>
+            </ul>
+          </div>
+          <div class="footer-links-section">
+            <h4>over HEMA</h4>
+            <ul>
+              <li><a href="https://corporate.hema.com/">over ons bedrijf</a></li>
+              <li><a href="https://jobs.hema.com/nl">werken bij HEMA</a></li>
+              <li><a href="https://www.hema.nl/goed-idee">duurzaamheid</a></li>
+              <li><a href="https://corporate.hema.com/nieuws">nieuws en pers</a></li>
+              <li><a href="https://www.hema.nl/geschiedenis">HEMA geschiedenis</a></li>
+              <li><a href="https://zakelijkhema.nl/">HEMA zakelijk</a></li>
+              <li><a href="https://www.hema.nl/klantenservice">klantenservice</a></li>
+              <li><a href="https://www.hema.nl/klantenservice/actievoorwaarden">actievoorwaarden</a></li>
+              <li><a href="https://www.hema.nl/klantenservice/hema-cadeaukaarten/saldo-opvragen">saldo cadeaukaart
+                  opvragen</a></li>
+              <li><a href="https://www.hema.nl/i/affiliate">partnerships</a></li>
+              <li><a href="https://www.hema.nl/i/retail-media">retail media</a></li>
+            </ul>
+          </div>
+          <div class="footer-links-section">
+            <h4>internationaal</h4>
+            <ul>
+              <li><a href="https://www.hema.com/nl-be">HEMA België</a></li>
+              <li><a href="https://www.hema.com/de-de">HEMA Duitsland</a></li>
+              <li><a href="https://www.hema.com/fr-fr">HEMA Frankrijk</a></li>
+              <li><a href="https://www.facebook.com/HEMA.austria/">HEMA Oostenrijk</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <div class="layout">
+        <div class="footer-legal-inner">
+          <a class="footer-logo" href="https://www.hema.nl" aria-label="HEMA">
+            <img src="/_platform/assets/maintenance/assets/logo.svg" alt="HEMA" />
+          </a>
+          <div class="footer-legal-links">
+            <a href="https://www.hema.nl/privacy-statement">privacy statement</a>
+            <a href="https://www.hema.nl/disclaimer">disclaimer</a>
+            <a href="https://security.hema.nl/nl/">security</a>
+            <a href="https://www.hema.nl/klantenservice/digitale-toegankelijkheidsverklaring">toegankelijkheid</a>
+            <a href="https://www.hema.nl/algemene-voorwaarden">algemene voorwaarden</a>
+            <a href="https://www.hema.nl/cookies">cookies</a>
+            <a href="https://www.hema.nl/nix-18">nix 18 <img src="/_platform/assets/maintenance/assets/nix18.svg" alt="Nix 18"
+                style="height: 16px; width: auto; margin-left: 8px; display: inline-block; vertical-align: middle;" /></a>
+            <a href="https://www.thuiswinkel.org/leden/hema/certificaat">thuiswinkel waarborg <img
+                src="/_platform/assets/maintenance/assets/thuiswinkel-waarborg.svg" alt="Thuiswinkel Waarborg"
+                style="height: 16px; width: auto; margin-left: 8px; display: inline-block; vertical-align: middle;" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-contact">
+      <div class="layout">
+        <ul>
+          <li>HEMA B.V., NDSM-straat 10, 1033 SB Amsterdam</li>
+          <li>KvK-nummer: 34215639</li>
+          <li>IBAN: HEMA NL67INGB0651607663</li>
+          <li>Btw-identificatienummer: NL814217412B01</li>
+          <li>E-mailadres klantenservice: hemaklantenservice@hema.nl</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

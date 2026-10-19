@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en-US" class="nojs">
+<head>
+	<style>
+    .osano-cm-widget {
+        display: none;
+    }
+</style>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer[0] = {}; // rj datalayer.
+    function gtag() { window.dataLayer.push(arguments); }
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'personalization_storage': 'denied',
+        'functionality_storage': 'granted',
+        'security_storage': 'granted',
+        'wait_for_update': 500,
+    });
+    gtag("set", "ads_data_redaction", true);
+</script>
+<script>
+    var pbjs = pbjs || {};
+    pbjs.que = pbjs.que || [];
+    pbjs.que.push(function () {
+        pbjs.setConfig({
+            consentManagement: {
+                gdpr: {
+                    cmpApi: 'iab', // Use IAB TCF API
+                    timeout: 3000,  // Wait up to 3s for user response
+                    allowAuctionWithoutConsent: false, // Suppress auctions if no consent
+                    defaultGdprScope: true, // Enforce GDPR globally if unsure
+                },
+                usp: {
+                    cmpApi: 'iab', // Use IAB CCPA/CPRA interface
+                    timeout: 1000, // Wait up to 1s for US privacy string
+                    allowAuctionWithoutConsent: false, // Suppress auctions if no consent
+                },
+                gpp: {
+                    cmpApi: 'iab', // IAB GPP API for US state-level laws and others
+                    timeout: 3000,  // Wait up to 3s for user response
+                    allowAuctionWithoutConsent: false, // Suppress auctions if no consent
+                }
+            }
+        });
+    });
+</script>
+
+<script src="https://cmp.osano.com/lHFYjdHC7m/0330e02a-add0-459d-b255-bf8ace1f3c7c/osano.js"></script>
+
+<script>
+    window.rjConsentHandler = {
+        handleAllConsents: function () {
+            console.log('Osano - RJ HandleAllConsents');
+            const consent = window.Osano.cm.getConsent();
+            window.rjConsentHandler.marketingConsent.handle(consent);
+            window.rjConsentHandler.analyticsConsent.handle(consent);
+        },
+        deletePlaceholders: function (selector) {
+            const elementsToDelete = document.querySelectorAll(selector);
+            elementsToDelete.forEach(element => {
+                element.remove();
+            });
+        },
+        createPlaceholder: function (text, className) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'rj-consent-placeholder ' + className;
+            placeholder.innerHTML = `
+            <div>
+                <p>${text}</p>
+                <button onclick="window.Osano.cm.showDrawer()">Manage Privacy Settings</button>
+            </div>
+            `;
+            return placeholder;
+        },
+        marketingConsent: {
+            delete: function () {
+                window.rjConsentHandler.deletePlaceholders('.rj-consent-placeholder-marketing');
+            },
+            handle: function (consent) {
+                console.log('Osano - Marketing Consent: ', consent.MARKETING);
+                if (consent.MARKETING !== "ACCEPT") {
+                    // window.rjConsentHandler.marketingConsent.stn(consent);
+                    window.rjConsentHandler.marketingConsent.trinityAudio(consent);
+                }
+
+            },
+            stn: function (consent) {
+                // const blockedElems = document.querySelectorAll('script[type="osano/blocked"][data-type="s2nScript"]');
+                const blockedElems = document.querySelectorAll('.s2nPlayer');
+                const text = `
+                    Your privacy settings have blocked this video. To access, please adjust your cookie preferences.
+                    <br>Please provide consent for <b>Targeted Advertising</b> to view this content.
+                `;
+                blockedElems.forEach(elem => {
+                    const placeholder = window.rjConsentHandler.createPlaceholder(text, 'rj-consent-placeholder-marketing');
+                    elem.insertAdjacentElement("beforebegin", placeholder);
+                });
+            },
+            trinityAudio: function (consent) {
+                const blockedElems = document.querySelectorAll('#most-view-audio');
+                const text = `
+                    Your privacy settings have blocked this audio. To access, please adjust your cookie preferences.
+                    <br>Please provide consent for <b>Targeted Advertising</b> to view this content.
+                `;
+                blockedElems.forEach(elem => {
+                    const placeholder = window.rjConsentHandler.createPlaceholder(text, 'rj-consent-placeholder-marketing');
+                    elem.insertAdjacentElement("beforebegin", placeholder);
+                });
+            },
+        },
+        analyticsConsent: {
+            delete: function () {
+                window.rjConsentHandler.deletePlaceholders('.rj-consent-placeholder-analytics');
+            },
+            handle: function (consent) {
+                console.log('Osano - Analytics Consent: ', consent.ANALYTICS);
+                if (consent.ANALYTICS !== "ACCEPT") {
+                    // Most read.
+                    window.rjConsentHandler.analyticsConsent.mostRead(consent);
+                }
+            },
+            mostRead: function () {
+                const blockedElems = document.querySelectorAll('.rj-most-view .field-story, #recommend-marfeel');
+                const text = `
+                    Your privacy settings have blocked this content. To access, please adjust your cookie preferences.
+                    <br>Please provide consent for <b>Analytics</b> to view this content.
+                `;
+                blockedElems.forEach(elem => {
+                    const placeholder = window.rjConsentHandler.createPlaceholder(text, 'rj-consent-placeholder-analytics');
+                    elem.insertAdjacentElement("beforebegin", placeholder);
+                });
+            },
+        },
+    };
+
+    window.Osano.cm.addEventListener('osano-cm-initialized', () => {
+        console.log('Osano - Initialized', 'Jurisdiction: ' + window.Osano.cm.jurisdiction);
+        const jurisdiction = window.Osano.cm.jurisdiction;
+        if (
+            jurisdiction &&
+            jurisdiction.startsWith('us-') &&
+            ![
+                'us-ca', 'us-co', 'us-ct', 'us-de', 'us-ia',
+                'us-mn', 'us-mt', 'us-ne', 'us-nh', 'us-nj',
+                'us-or', 'us-tn', 'us-tx', 'us-ut', 'us-va'
+            ].includes(jurisdiction)
+        ) {
+            const observer = new MutationObserver((mutations, obs) => {
+                const message = document.querySelector('.osano-cm-content__message.osano-cm-message');
+                if (message) {
+                    message.textContent = "This website uses cookies and similar tracking technologies and collects information about you and your visit. You may manage your cookie preferences by clicking the “Manage Preferences” button below.";
+                    obs.disconnect();
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+        window.rjConsentHandler.handleAllConsents();
+
+    });
+    window.Osano.cm.addEventListener('osano-cm-script-blocked', function (item) {
+        console.log('Osano - Script blocked: ', item);
+    });
+    window.Osano.cm.addEventListener('osano-cm-cookie-blocked', function (item) {
+        console.log('Osano - Cookie blocked: ', item);
+    });
+    window.Osano.cm.addEventListener('osano-cm-analytics', function () {
+        console.log('Osano - Consent granted for analytics. Delete analytics placeholders.');
+        window.rjConsentHandler.analyticsConsent.delete();
+    });
+    window.Osano.cm.addEventListener('osano-cm-marketing', function () {
+        console.log('Osano - Consent granted for marketing. Delete marketing placeholders.');
+        window.rjConsentHandler.marketingConsent.delete();
+    });
+</script>
+<style>
+    .rj-consent-placeholder {
+        margin-top: 15px;
+        padding: 15px;
+        background: #f9f9f9;
+        border: 1px dashed #bbb;
+        text-align: center;
+        font-size: 13px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .rj-consent-placeholder button {
+        margin-top: 10px;
+        padding: 3px 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        color: #fff;
+        background-color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+</style>
+
+<!-- opsco tag -->
+<script async src="https://clientside-collector-614357087518.us-central1.run.app/tag.js" data-net="104590658" data-endpoint="https://clientside-collector-614357087518.us-central1.run.app/e" data-sample="1" data-pv="1" data-pcat="1" data-scrl="1"></script>	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="preload" href="https://fonts.googleapis.com/css?family=Merriweather:400,700,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet';" />
+	<link rel="preload" href="https://use.typekit.net/msl8qnj.css" as="style" onload="this.onload=null;this.rel='stylesheet';">
+	<link rel="preload" href="https://www.reviewjournal.com/wp-content/themes/rjth2019/library/font-awesome-4.7.0/css/font-awesome.min.css" as="style" onload="this.onload=null;this.rel='stylesheet';" />
+	<!-- intersection-observer.min.js already available in most browser -->
+
+			<!-- BEGIN metadata tag -->
+		<script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"WebPage","publisher":{"@type":"Organization","name":"Las Vegas Review-Journal","logo":{"@type":"ImageObject","url":"https:\/\/www.reviewjournal.com\/wp-content\/uploads\/2020\/07\/rj_logo_black2.png?w=400","width":400,"height":59}},"url":"https:\/\/www.reviewjournal.com","headline":"Las Vegas Review-Journal"}</script>
+		<!-- END metadata tag -->
+					<script type="text/javascript">
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer[0] = {"rj_page_type":"home","metrics":{"pageType":"homepage"}};
+			function rj_gtag() {
+				if (!arguments || 'event' !== arguments[0] || !arguments[2] || !arguments[2].event_category || !arguments[2].event_action || !arguments[2].event_label) {
+					return;
+				}
+
+				let data = arguments[2];
+				window.dataLayer.push({
+					'event': 'GAEvent',
+					'category': data.event_category,
+					'action': data.event_action,
+					'label': data.event_label
+				});
+			}
+		</script>
+		<!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+					new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+				j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+				'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-WJQX3C');</script>
+		<!-- End Google Tag Manager -->
+		<script id="sophi-init">
+    console.log('sophi-init');
+    window.sophi = window.sophi || {};
+    sophi.demeter = { actions: [] };
+    window.demeter = window.demeter || async function () {
+        var resolve, reject;
+        const s = new Promise((res, rej) => {
+            resolve = res, reject = rej;
+        });
+        sophi.demeter.actions.push([arguments, resolve, reject]);
+        return s;
+    };
+
+    var addSophiScriptToPage = function ({ isConsented = false }) {
+        const hostId = '1659958469';
+        const script = document.createElement('script');
+        script.id = 'sophi-loader';
+        script.async = true;
+        script.src = `https://cdn.sophi.io/assets/demeter/1/stable/${hostId}.js?isConsented=${isConsented}`;
+        script.onload = function () {
+            console.log('sophi_script_is_loaded');
+            var event_sophi_is_load = new CustomEvent('sophi_is_loaded');
+            document.dispatchEvent(event_sophi_is_load);
+        };
+        document.head.appendChild(script);
+        console.log('sophi-load-script:'+script.src);
+    };
+
+    var consentProvider = async function () {
+        if (window.Osano && window.Osano.cm) {
+            const consent = window.Osano.cm.getConsent().ANALYTICS;
+            console.log('sophi_consent_osano', consent);
+            return consent === "ACCEPT";
+        }
+        console.log('sophi_consent_no_osano');
+        return false;
+    }
+
+    consentProvider().then(consentStatus => {
+        console.log('sophi_consent_provider', consentStatus);
+        if (consentStatus === undefined) {
+            addSophiScriptToPage({ isConsented: false });
+        } else if (consentStatus == true) {
+            addSophiScriptToPage({ isConsented: true });
+        } else {
+            addSophiScriptToPage({ isConsented: false });
+        }
+    }).catch(err => {
+        console.error('sophi_consent_provider_error', err);
+        addSophiScriptToPage({ isConsented: false });
+    });
+</script>
+
+<script>
+let sophi_page_info = sophi_get_page_info();
+console.log('sophi_page_info_v4.1', sophi_page_info);
+
+window.rj_visitor_type = 'anonymous';
+if ( localStorage && localStorage.getItem('rj_visitor_type') ) {
+    window.rj_visitor_type = localStorage.getItem('rj_visitor_type');
+}
+
+window.rj_sophi_decision_wall = '';
+
+function check_sophi_is_loaded() {
+    return new Promise(resolve => {
+        document.addEventListener('sophi_is_loaded', function handler(e) {
+            document.removeEventListener('sophi_is_loaded', handler);
+            resolve(true);
+        });
+    });
+}
+
+function check_rj_event_wallhit() {
+    return new Promise(resolve => {
+        document.addEventListener('rj_event_wallhit', function handler(e) {
+            document.removeEventListener('rj_event_wallhit', handler);
+            resolve(true);
+        });
+    });
+}
+
+//let promise_check_visitor_type = check_visitor_type();
+let promise_check_sophi_is_loaded = check_sophi_is_loaded();
+let promise_check_rj_event_wallhit = check_rj_event_wallhit();
+
+async function sophi_page_view() {
+    let promise_results = await Promise.all([promise_check_sophi_is_loaded]); //promise_check_visitor_type, 
+    let sophiData = window.sophi.dataLayer;
+   
+    let event_data = {
+        event: 'sophi_page_view',
+        visitor_type: window.rj_visitor_type, //All events
+        page_section: sophi_page_info.section, //Top-level section the content belongs to // pageviews
+        sophi_page_type: sophi_page_info.page_type, //All events
+        sophi_experiments_code: sophiData.experimentsCode, //All events
+        sophi_inputs: sophiData.inputs, //wall_hits and pageviews
+        sophi_context: sophiData.context, //wall_hits and pageviews
+        sophi_trace: sophiData.trace, //wall_hits and pageviews
+        sophi_decision_source: sophiData.decisionSource //wall_hits and pageviews,
+    };
+    window.dataLayer.push(event_data);
+    console.log('sophi_page_view', event_data);
+
+    demeter('pageview', {
+        args: { article: sophi_page_info.isArticle, section: sophi_page_info.section }
+    });
+    console.log('sophi_demeter_pageview', sophi_page_info.section);
+
+
+    //subscription event
+    let q_str = new URLSearchParams(window.location.search);
+    let buy_subscription = q_str.get('buy_subscription');
+    if ( '1' === buy_subscription ) {
+        let subs_event_data = {
+            event: 'subscription',
+            visitor_type: window.rj_visitor_type, 
+            sophi_page_type: sophi_page_info.page_type,
+            sophi_experiments_code: sophiData.experimentsCode, 
+            sophi_inputs: sophiData.inputs, 
+            sophi_context: sophiData.context, 
+            sophi_trace: sophiData.trace, 
+            sophi_decision_source: sophiData.decisionSource,
+            subscription_type: 'monthly', 
+            subscription_status: 'active'
+        };
+        window.dataLayer.push(subs_event_data);
+        console.log('sophi_subscription', subs_event_data);
+    }
+
+
+    // Retrieve the AB test context from Sophi.
+    let assignedGroup = sophiData.assignedGroup; //variant, control
+    console.log('sophi_assignedGroup', assignedGroup, window.rj_visitor_type); 
+
+    if ( window.rj_visitor_type != 'subscriber'
+        && typeof(window.dataLayer[0]) === 'object' 
+        && typeof(window.dataLayer[0].metrics) === 'object'
+        && window.dataLayer[0].metrics.pageType === 'article' ) { 
+        
+        let meta_rj_paywall = document.querySelector('meta[name="rj:paywall"]'); 
+        let meta_rj_paywall_val = meta_rj_paywall ? meta_rj_paywall.getAttribute('content') : 'private'; //free, private, premium
+        console.log('sophi_meta_rj_paywall', meta_rj_paywall_val);
+        if ( meta_rj_paywall_val === 'premium' ) {
+            window.rj_sophi_decision_wall = 'yes';
+        }
+
+        if ( meta_rj_paywall_val === 'private' && assignedGroup === 'variant' ) {
+            try {
+                //let decision = await demeter('getDecision');
+                let decision = await demeter('getDecision', { 
+                    args: { visitor: window.rj_visitor_type }, // 'anonymous' or 'registered' 
+                });
+                
+                console.log('sophi_decision', decision);
+                if (decision.outcome.wallVisibility === 'always') {
+                    //myWallExperienceSystem.showWall(decision.outcome.wallType); // 'regwall' or 'paywall'
+                    //Engage does not have the function to show paywall, David told to store the Sophi responses within the window object.
+                    window.rj_sophi_decision_wall = 'yes';
+                } else {
+                    window.rj_sophi_decision_wall = 'no';
+                }
+            } catch (err) {
+                console.error('sophi_decision_error', err);
+            }
+        }
+    }
+
+}
+
+async function sophi_wallhit() {
+    let promise_results = await Promise.all([promise_check_sophi_is_loaded, promise_check_rj_event_wallhit]); //promise_check_visitor_type, 
+    let sophiData = window.sophi.dataLayer;
+    
+    let event_data = {
+        event: 'wallhit',
+        visitor_type: window.rj_visitor_type, 
+        sophi_page_type: sophi_page_info.page_type, 
+        sophi_experiments_code: sophiData.experimentsCode,
+        sophi_inputs: sophiData.inputs, 
+        sophi_context: sophiData.context,
+        sophi_trace: sophiData.trace,
+        sophi_decision_source: sophiData.decisionSource,
+        wall_type: 'paywall'
+    };
+    window.dataLayer.push(event_data);
+    console.log('sophi_wallhit', event_data);
+
+    demeter('wall', {
+        args: { wallType: 'paywall', section: sophi_page_info.section }
+    });
+    console.log('sophi_demeter_wall', sophi_page_info.section);
+
+}
+
+async function sophi_exec() {
+    await sophi_page_view();
+    await sophi_wallhit();
+}
+
+sophi_exec();
+
+function sophi_get_page_info() {
+    let resp = {
+        isArticle: false,
+        section: 'unknown',
+        page_type: 'unknown' //should be article, section, account, subscription
+    };
+
+    if (typeof(window.dataLayer[0]) !== 'object' || typeof(window.dataLayer[0].metrics) !== 'object') {
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'homepage') {
+        resp.section = 'homepage';
+        resp.page_type = 'homepage';
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'section') {
+        if ( window.dataLayer[0].metrics['hl-category'] ) { 
+            resp.section = window.dataLayer[0].metrics['hl-category']; //resp.section = window.dataLayer[0].metrics.hierarchy;
+        }
+        resp.page_type = 'section';
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'article') {
+        resp.isArticle = true;
+        if ( window.dataLayer[0].metrics['hl-category'] ) {
+            resp.section = window.dataLayer[0].metrics['hl-category']; //resp.section = window.dataLayer[0].metrics.hierarchy;
+        }
+        resp.page_type = 'article';
+        return resp;
+    }
+
+    let path = window.location.pathname;
+    path = path.replace(/^\/+|\/+$/g, '');
+    path = path.replace(/\//g, ' | ');
+
+    if (window.dataLayer[0].metrics.pageType === 'video') {
+        resp.section = 'videos'; //path; //videos | slug
+        resp.page_type = 'video';
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'page') {
+        resp.section = 'page'; // 'page | '+path;
+        resp.page_type = 'page';
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'tag') {
+        /*
+        resp.section = path;
+        if ( window.dataLayer[0].metrics.name ) {
+            resp.section = 'tag | '+window.dataLayer[0].metrics.name;
+        }
+        */
+        resp.section = 'tag';
+        resp.page_type = 'section';
+        return resp;
+    }
+
+    if (path === 'pc') {
+        resp.section = 'sponsored_category';
+        resp.page_type = 'section';
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'taxonomy' && window.dataLayer[0].metrics.taxonomy_type && window.dataLayer[0].metrics['hl-category']) {
+        resp.section = window.dataLayer[0].metrics.taxonomy_type + ' | ' + window.dataLayer[0].metrics['hl-category']; //rj_author | Adam Hill, sponsored_category | Business
+        resp.page_type = 'section';
+        return resp;
+    }
+
+    if (window.dataLayer[0].metrics.pageType === 'article.sponsored') {
+        //resp.isArticle = true; //not sure if we need to set as article
+        if ( window.dataLayer[0].metrics['hl-category'] ) {
+            resp.section = 'sponsored_category | '+ window.dataLayer[0].metrics['hl-category']; //window.dataLayer[0].metrics.hierarchy 
+        }
+        resp.page_type = 'section';
+        return resp;
+    }
+
+    /*
+    if (window.dataLayer[0].metrics.pageType) {
+        resp.section = window.dataLayer[0].metrics.pageType + ' | '+path;
+        return resp;
+    }
+    */
+
+    return resp;
+
+}
+</script>
+		<title>Las Vegas News | Breaking News & Headlines | Las Vegas Review-Journal</title>
+<meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//www.reviewjournal.com' />
+<link rel='dns-prefetch' href='//securepubads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//media.reviewjournal.com' />
+<link rel='dns-prefetch' href='//v0.wordpress.com' />
+<link rel="alternate" type="application/rss+xml" title="Las Vegas Review-Journal &raquo; Feed" href="https://www.reviewjournal.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Las Vegas Review-Journal &raquo; Comments Feed" href="https://www.reviewjournal.com/comments/feed/" />
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<link rel='stylesheet' id='all-css-2' href='https://www.reviewjournal.com/wp-content/themes/rjth2019/css/front_page.min.css?m=1792088508g' type='text/css' media='all' />
+
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:where(body) { margin: 0; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: calc(0.667em + 2px);padding-right: calc(1.333em + 2px);padding-bottom: calc(0.667em + 2px);padding-left: calc(1.333em + 2px);text-decoration: none;text-transform: inherit;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{fo

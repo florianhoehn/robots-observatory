@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>404 — Page not found</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --card: #11172a;
+      --fg: #e6e9ef;
+      --muted: #a8b3cf;
+      --accent: #2ea0ff;
+      --accent-contrast: #001a2b;
+      --outline: #3a486b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+    }
+    @media (prefers-color-scheme: light) {
+      :root{
+        --bg: #f7f9fc;
+        --card: #ffffff;
+        --fg: #0f172a;
+        --muted: #475569;
+        --accent: #2563eb;
+        --accent-contrast: #eff6ff;
+        --outline: #cbd5e1;
+        --shadow: 0 10px 24px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.06);
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(46,160,255,.15), transparent 50%),
+                  radial-gradient(800px 600px at 90% 70%, rgba(37,99,235,.18), transparent 50%),
+                  var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    main{
+      width: 100%;
+      max-width: 860px;
+      background: var(--card);
+      border: 1px solid var(--outline);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 5vw, 40px);
+      position: relative;
+    }
+    .grid{ display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(16px, 3vw, 40px); }
+    @media (max-width: 860px){ .grid{ grid-template-columns: 1fr; } }
+    .badge{ display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); border:1px solid var(--outline); padding:6px 10px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.02)); }
+    h1{ margin:10px 0 12px; font-size:clamp(28px,4vw,38px); line-height:1.15; }
+    p{ margin:0 0 12px; color:var(--muted); }
+    .big404{ font-size:clamp(72px,16vw,140px); font-weight:800; letter-spacing:.03em; line-height:.9; background:linear-gradient(180deg,var(--fg) 10%, var(--muted) 100%); -webkit-background-clip:text; background-clip:text; color:transparent; margin:0; }
+    .actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+    .btn{ appearance:none; border:1px solid transparent; background:var(--accent); color:var(--accent-contrast); padding:12px 16px; border-radius:12px; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:10px; box-shadow:0 8px 20px rgba(37,99,235,.25); transition:transform .08s ease, box-shadow .2s ease, background .2s ease; }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 12px 24px rgba(37,99,235,.3); }
+    .btn.secondary{ background:transparent; color:var(--fg); border-color:var(--outline); box-shadow:none; }
+    .btn.secondary:hover{ background:rgba(255,255,255,.04); }
+    form{ margin-top:14px; display:grid; grid-template-columns: 1fr auto; gap:10px; }
+    input[type="search"]{ border:1px solid var(--outline); background:transparent; color:var(--fg); padding:12px 14px; border-radius:12px; font-size:16px; width:100%; }
+    input::placeholder{ color: color-mix(in srgb, var(--muted), transparent 10%); }
+    input:focus{ outline: 3px solid color-mix(in oklab, var(--accent), white 35%); outline-offset:2px; }
+    .meta{ margin-top:18px; font-size:13px; color:var(--muted); }
+    .art{ align-self:center; display:grid; place-items:center; }
+    .illustration{ width:100%; max-width:360px; height:auto; filter: drop-shadow(0 30px 30px rgba(0,0,0,.35)); }
+    footer{ margin-top:20px; font-size:12px; color:var(--muted); text-align:center; }
+    code { background: rgba(148,163,184,.16); padding: 2px 6px; border-radius: 6px; }
+    .visually-hidden { position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  </style>
+</head>
+<body>
+  <main role="main" aria-label="404 page">
+    <div class="grid">
+      <section>
+        <span class="badge" aria-hidden="true">Error <strong>404</strong> • Not Found</span>
+        <h1>We couldn't find that page.</h1>
+        <p>The link might be broken, or the page may have been moved or deleted.</p>
+
+        <div class="actions">
+          <a class="btn" href="/" aria-label="Go to homepage">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9.5V21h14V9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Go home
+          </a>
+          <button class="btn secondary" type="button" onclick="goBack()" aria-label="Go back">Go back</button>
+          <a class="btn secondary" href="mailto:webmaster@uwi.edu?subject=Broken link report" aria-label="Report this issue">Report issue</a>
+        </div>
+
+        <!-- MERGED: existing UWI search behavior -->
+        <form onsubmit="return SearchSite()" role="search" aria-label="UWI site search">
+          <label class="visually-hidden" for="uwi_search">Search this site</label>
+          <input type="search" name="uwi_search" id="uwi_search" placeholder="Type here to search">
+          <!-- Preserve hidden fields in case your endpoint reads them -->
+          <input type="hidden" id="cx" name="cx" value="003777353491698791387:zecshmz5n5a">
+          <input type="hidden" id="cof" name="cof" value="FORID:9">
+          <button class="btn" type="submit">Search</button>
+        </form>
+
+        <div class="meta" aria-live="polite">
+          <div>Requested URL: <code id="requested-url">/</code></div>
+          <div>Timestamp: <code id="ref">—</code></div>
+        </div>
+      </section>
+
+      <div class="art" aria-hidden="true">
+        <svg class="illustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" role="img" aria-label="Astronaut floating among stars">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="currentColor" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="currentColor" stop-opacity=".05"/>
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="280" height="280" rx="28" fill="url(#g1)" stroke="currentColor" opacity=".2"/>
+          <g stroke="currentColor" stroke-width="2" fill="none">
+            <circle cx="200" cy="110" r="44" opacity=".5"/>
+            <circle cx="100" cy="190" r="32" opacity=".35"/>
+            <path d="M67 82c6-6 17-6 23 0s6 17 0 23-17 6-23 0-6-17 0-23Z" opacity=".4"/>
+            <path d="M147 240c-18-12-22-37-10-55 12-18 37-22 55-10 6 4 11 9 14 15" opacity=".5"/>
+          </g>
+          <g transform="translate(160 150)">
+            <circle cx="0" cy="0" r="26" fill="none" stroke="currentColor" stroke-width="3"/>
+            <rect x="-18" y="18" width="36" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="3"/>
+            <path d="M-18 28h36" stroke="currentColor" stroke-width="3"/>
+            <circle cx="-8" cy="-4" r="4" fill="currentColor"/>
+            <circle cx="8" cy="-4" r="4" fill="currentColor"/>
+          </g>
+          <text x="150" y="275" font-family="ui-sans-serif, system-ui" font-size="26" text-anchor="middle" fill="currentColor" opacity=".3">404</text>
+        </svg>
+      </div>
+    </div>
+
+    <footer>
+     
+    </footer>
+  </main>
+
+  <script>
+    // Existing UWI search behavior (enhanced with encodeURIComponent and HTTPS by default)
+    const SEARCH_BASE = "https://www.uwi.edu/searchresults.php?q="; // change to http if your environment requires
+    function SearchSite(){
+      var el = document.getElementById('uwi_search');
+      var q = el ? el.value : "";
+      if(!q || !q.trim()){ el && el.focus(); return false; }
+      window.location = SEARCH_BASE + encodeURIComponent(q.trim());
+      return false; // prevent form navigation
+    }
+    // No-op placeholders (in case legacy handlers are referenced somewhere)
+    function clearText(){}
+    function initSearch(){}
+
+    // Meta fill-ins
+    (function(){
+      var urlEl = document.getElementById('requested-url');
+      var refEl = document.getElementById('ref');
+      try{ urlEl.textContent = window.location.pathname + window.location.search; }catch(e){}
+      refEl.textContent = new Date().toISOString();
+    }());
+
+    function goBack(){ if (history.length > 1) { history.back(); } else { window.location.href = "/"; } }
+  </script>
+</body>
+</html>

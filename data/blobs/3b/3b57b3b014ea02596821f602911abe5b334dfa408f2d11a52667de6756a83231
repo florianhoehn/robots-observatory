@@ -1,0 +1,20 @@
+# robots.txt for wordunscrambler.net
+#
+# The Sitemap line below is the whole point of this file. Google discovers every
+# sitemap through the index, so no Search Console submission is needed - which
+# matters because GSC was accepting sitemap submissions without ever listing
+# them (reproduced on two properties, one holding zero sitemaps, 2026-09-03).
+#
+# The site served a 404 here until 2026-09-04. A missing robots.txt does not
+# block crawling - Google treats a 404 as "crawl everything" - but it left the
+# broken Search Console UI as the ONLY channel telling Google about a sitemap.
+#
+# *** Never add a Disallow for /unscramble/ *** - ~1.78M impressions per 28 days.
+# Deliberately no Disallow rules at all: robots.txt is world-readable, so naming
+# a private path here advertises it rather than protecting it. Block anything
+# genuinely sensitive at the server instead.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.wordunscrambler.net/sitemaps/sitemap-index.xml

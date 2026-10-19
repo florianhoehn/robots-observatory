@@ -1,0 +1,275 @@
+<!doctype html>
+            <html lang="pt" data-reactroot=""><head><script>
+        const isDark = localStorage.getItem('dark-mode')==='active';
+        if(isDark){
+          document.documentElement.classList.add('dark-mode');
+        }
+        </script><script id="didomi" type="text/javascript">window.gdprAppliesGlobally=true;(function() {
+  function a(e) {
+    if(!window.frames[e]) {
+      if(document.body&&document.body.firstChild) {
+        var t=document.body;var n=document.createElement("iframe");
+        n.style.display="none";
+        n.name=e;
+        n.title=e;
+        t.insertBefore(n,t.firstChild)
+      }
+      else {
+        setTimeout(function() {
+          a(e)
+        },5)
+      }
+    }
+  }
+  function e(n,r,o,c,s) {
+    function e(e,t,n,a) {
+      if(typeof n!=="function") {
+        return
+      }
+      if(!window[r]) {
+        window[r]=[]
+      }
+      var i=false;if(s) {
+        i=s(e,t,n)
+      }
+      if(!i) {
+        window[r].push({
+          command:e,parameter:t,callback:n,version:a}
+          )
+      }
+    }
+    e.stub=true;
+    function t(a) {
+      if(!window[n]||window[n].stub!==true){
+        return
+      }
+      if(!a.data){
+        return
+      }
+      var i=typeof a.data==="string";
+      var e;try{
+        e=i?JSON.parse(a.data):a.data
+      }
+      catch(t){
+        return
+      }
+      if(e[o]){
+        var r=e[o];window[n](r.command,r.parameter,function(e,t){
+          var n={};n[c]={
+            returnValue:e,success:t,callId:r.callId
+          };
+          a.source.postMessage(i?JSON.stringify(n):n,"*")
+        },r.version)
+      }
+    }
+    if(typeof window[n]!=="function"){
+      window[n]=e;
+      if(window.addEventListener){
+        window.addEventListener("message",t,false)
+      }
+      else{
+        window.attachEvent("onmessage",t)
+      }
+    }
+  }
+  e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");
+    a("__tcfapiLocator");
+    (function(e){
+      var t=document.createElement("script");
+      t.id="spcloader";
+      t.type="text/javascript";
+      t.async=true;
+      t.src="https://sdk.privacy-center.org/"+e+"/loader.js?target="+document.location.hostname;
+      t.charset="utf-8";
+      var n=document.getElementsByTagName("script")[0];
+      n.parentNode.insertBefore(t,n)
+    })
+    ("69f6f376-a0e5-4426-a60f-e66e903394da")
+  })();</script><script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script><script src="https://cdn.id5-sync.com/api/1.0/id5-api.js"></script><script>
+      window.ID5EspConfig = {partnerId: 1827};
+      ID5.init({partnerId: 1827});
+  </script><script data-testid="google-ad-manager-script">  
+    window.googletag = window.googletag || { cmd: [] };
+    
+    function initGoogleAdManagerGlobalVariables() {
+      window.gsVariablesAdsGoogle = window.gsVariablesAdsGoogle || {};
+      window.gsVariablesAdsGoogle.variables = window.gsVariablesAdsGoogle.variables || {};
+
+      const makeReactive = (initialValue) => {
+        let value = initialValue;
+        return {
+          get: () => value,
+          set: (v) => {
+            value = v;
+            return value;
+          }
+        };
+      };
+
+      window.gsVariablesAdsGoogle.variables.networkCode = makeReactive('');
+      window.gsVariablesAdsGoogle.variables.refreshTimer = makeReactive(null);
+      window.gsVariablesAdsGoogle.variables.lazyLoadConfig = makeReactive(undefined);
+      window.gsVariablesAdsGoogle.variables.isLazyLoadEnabled = makeReactive(false);
+      window.gsVariablesAdsGoogle.variables.adNameCount = new Map();
+      window.gsVariablesAdsGoogle.variables.isUserActive = makeReactive(true);
+    };
+     
+    function setConfig(googletag, config) {
+        if (config.networkCode) window.gsVariablesAdsGoogle?.variables?.networkCode?.set(config?.networkCode)
+        if (config.collapseEmptyDivs) googletag.pubads().collapseEmptyDivs();
+        if (config.enableSingleRequest) googletag.pubads().enableSingleRequest();
+        if (config.disableInitialLoad) googletag.pubads().disableInitialLoad();
+        
+        window.gsVariablesAdsGoogle.variables.lazyLoadConfig.set(config.lazyLoadConfig)
+        if (config.lazyLoadConfig && !config.disableInitialLoad) {
+          googletag.pubads().enableLazyLoad(config.lazyLoadConfig);
+          window.gsVariablesAdsGoogle?.variables?.isLazyLoadEnabled?.set(true)
+        }
+    }
+
+    function setTargeting(googletag, target = []) {
+      target.forEach(([key, value]) => {
+        googletag.pubads().setTargeting(key, value);
+      });
+    }
+
+    function setEvents(googletag, config = {}) {
+       if (config.eventSlotOnload) {
+        googletag.pubads().addEventListener('slotOnload', (event) => {
+          config.eventSlotOnload(event)
+        })
+      }
+
+      if (config.eventSlotVisibilityChanged) {
+        googletag.pubads().addEventListener('slotVisibilityChanged', (event) => {
+          config.eventSlotVisibilityChanged(event)
+        })
+      }
+
+      if (config.eventImpressionViewable) {
+        googletag.pubads().addEventListener('impressionViewable', (event) => {
+          config.eventImpressionViewable(event)
+        })
+      }
+
+      if (config.eventSlotRenderEnded) {
+        googletag.pubads().addEventListener('slotRenderEnded', (event) => {
+          config.eventSlotRenderEnded(event)
+        })
+      }
+
+      if (config.eventSlotRequested) {
+        googletag.pubads().addEventListener('slotRequested', (event) => {
+          config.eventSlotRequested(event)
+        })
+      }
+
+      if (config.eventSlotResponseReceived) {
+        googletag.pubads().addEventListener('slotResponseReceived', (event) => {
+          config.eventSlotResponseReceived(event)
+        })
+      }
+    }
+    
+    function setupUserActivityListener() {
+      let inactivityTimer;
+      
+      document.addEventListener('mousemove', resetInactivity)
+      document.addEventListener('keypress', resetInactivity)
+      document.addEventListener('mousedown', resetInactivity)
+      document.addEventListener('touchstart', resetInactivity)
+      document.addEventListener('scroll', resetInactivity)
+    
+      function resetInactivity () {
+        clearTimeout(inactivityTimer)
+        window.gsVariablesAdsGoogle.variables.isUserActive.set(true)
+    
+        inactivityTimer = setTimeout(() => {
+          window.gsVariablesAdsGoogle.variables.isUserActive.set(false)
+        }, 90000)
+      }
+    }
+    
+    function configureAds(config) {
+      initGoogleAdManagerGlobalVariables();
+      setupUserActivityListener();
+      googletag.cmd.push(() => {
+        setTargeting(googletag, config.target);
+        setEvents(googletag, config);
+        setConfig(googletag, config);
+        googletag.enableServices();
+      });
+    }
+
+
+    function buildTargeting() {
+      const userLocalStorage = JSON.parse(localStorage.getItem('gs-usr'))
+
+      function getUserStatus() {
+        let userStatus = 'anonymous'
+        if (userLocalStorage?.isLogged) {
+            userStatus = 'loggedin'
+        }
+        return userStatus
+      }
+
+      function isSubscriberForBrand (brand) {
+        const subscriptions = userLocalStorage?.user?.subscriptions
+
+        if (!subscriptions || subscriptions.length === 0) {
+          return 'false'
+        }
+
+        if (subscriptions.includes(brand)) {
+          return 'true'
+        }
+
+        return 'false'
+      }
+
+      return [
+        ['url', 'undefined'],
+        ['cat', '/.well-known/ai-catalog.json'],
+        ['categoria', ''],
+        ['userStatus', getUserStatus()],
+        ['subscriber_expresso', isSubscriberForBrand('expresso')],
+        ['subscriber_sicnot', isSubscriberForBrand('sicnot')],
+        ['subscriber_opto', isSubscriberForBrand('opto')],
+        ['semanario', 'false'],
+        ['nytcontent', 'false']
+      ]
+    }
+
+    configureAds({
+      target: buildTargeting(),
+      collapseEmptyDivs: true,
+      networkCode: "23102241760",
+      disableInitialLoad: true,
+      enableSingleRequest: true,
+      lazyLoadConfig: {
+        fetchMarginPercent: 50,
+        renderMarginPercent: 25,
+        mobileScaling: 1.5
+      }
+    });
+  </script><script>
+          window.ddjskey = '700FC9E253B8BCFDC7596F167F2032';
+          window.ddoptions = {};
+        </script><script src="https://statics.impresa.pt/datadome/tags.js" async=""></script><meta name="apple-mobile-web-app-title" content="Expresso | Liberdade para pensar"/><title>Expresso - Expresso | Liberdade para pensar</title><meta name="description" content="O Expresso tem opinião, notícias de política, economia, mundo, cultura e última hora. Há podcasts, música na Blitz, desporto na Tribuna e jogos"/><meta property="article:content_tier" content="free"/><meta property="impresa:country_code" content="GB"/><meta name="amp-consent-blocking" content="amp-ad"/><meta name="twitter:title" content="Expresso"/><meta name="twitter:url" content="https://expresso.pt/.well-known/ai-catalog.json"/><meta name="twitter:description" content="O Expresso tem opinião, notícias de política, economia, mundo, cultura e última hora. Há podcasts, música na Blitz, desporto na Tribuna e jogos"/><meta name="twitter:image" content="https://images.impresa.pt/expresso/2019-04-29-Logo-expresso/1.91x1?wm=true&amp;outputFormat=jpeg"/><meta name="twitter:card" content="summary_large_image"/><meta property="og:title" content="Expresso"/><meta property="og:url" content="https://expresso.pt/.well-known/ai-catalog.json"/><meta property="og:description" content="O Expresso tem opinião, notícias de política, economia, mundo, cultura e última hora. Há podcasts, música na Blitz, desporto na Tribuna e jogos"/><meta property="og:image" content="https://images.impresa.pt/expresso/2019-04-29-Logo-expresso/1.91x1?wm=true&amp;outputFormat=jpeg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:type" content="website"/><meta property="fb:app_id" content="524549921674290"/><meta property="fb:pages" content="43218682948"/><meta name="robots" content="unavailable_after: 2021-01-01"/><meta name="robots" content="all, max-image-preview:large"/><link rel="alternate" type="application/rss+xml" href="https://rss.impresa.pt/feed/latest/expresso.rss?type=ARTICLE,VIDEO,GALLERY,STREAM,PLAYLIST,EVENT,NEWSLETTER&amp;limit=20&amp;pubsubhub=true"/><script data-schema="Organization" type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"Expresso","url":"https://expresso.pt","logo":"https://images.impresa.pt/expresso/2019-04-29-Logo-expresso","sameAs":[]}</script><script data-schema="WebPage" type="application/ld+json">{"@context":"http://schema.org","@type":"WebSite","name":"Expresso","url":"https://expresso.pt","potentialAction":{"@type":"SearchAction","target":"https://expresso.pt/pesquisa/?q={search_term}","query-input":"required name=search_term"}}</script><link rel="preconnect" href="https://statics.impresa.pt/"/><link rel="preconnect" href="https://images.impresa.pt/"/><link rel="preconnect" href="https://sdistribution.impresa.pt"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta charSet="utf-8"/><link rel="icon" href="/assets/favicon.ico"/><link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16"/><link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32"/><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/><link rel="manifest" href="/assets/site.webmanifest"/><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#000000"/><meta name="msapplication-config" content="/assets/browserconfig.xml"/><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="/assets/mstile-150x150.png"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/expresso/active/styles/fonts/BlackerProDis-Rg.woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/expresso/active/styles/fonts/BlackerProDis-ExBd.woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/expresso/active/styles/fonts/Firme-Book.woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/expresso/active/styles/fonts/BlackerProCondDis-Bd.woff2" as="font"/><link rel="stylesheet" href="https://statics.impresa.pt/generic-site-assets/expresso/active/styles/styles.css"/><link rel="stylesheet" href="https://statics.impresa.pt/generic-site-assets/expresso-premium-blocker/active/styles/main.css"/><script id="impresa-sso" src="https://api.impresa.pt/sso/js/impresa-sso.min.js" defer=""></script><script src="/api/gs/js/client.cd2102a1.js" defer=""></script><link rel="stylesheet" href="/api/gs/css/client.d5b11e13.css"/><script>
+            window.__STATICS_HOST__ = "https://statics.impresa.pt/";
+            window.__FAPI_EXTERNAL_HOST__ = "https://api.impresa.pt/";
+            window.__PAYWALL_HOST__ = "https://pagamento.impresa.pt/";
+            window.__ANALYTICS__ = "true";
+            window.__ADS__ = "true";
+            window.__GS_ADS_REFRESH__ = "true";
+            window.__PREVIEW__ = "true";
+            window.__GOOGLE_SHOWCASE_ENABLED__ = "true";
+            window.__GS_ENVIRONMENT__ = "production";
+            window.__GS_LIVESTREAM_HYPERLINK_PAIRS__ = {"https://popup.live.impresa.pt/out/v1/3cc2998191024d369a901e9b4f56621b/sicnot_vertical.m3u8": "faa4badc-e197-48ee-9943-3fd8b98134a9", "https://sicnot.live.impresa.pt/sicnot540p.m3u8": "f63ec4f6-43cb-45c8-9e8d-8f07fc6f076b"};
+            window.__GS_VERIFF_CLIENT_KEY__ = "7acb3bc1-661f-442b-9fad-33d7c7222fd0";
+            window.__GS_SWG__ = "true";
+            window.__GS_SWG_SUBSCRIPTION_LINKING__ = "true";
+            window.__GS_DARK_MODE__ = "brand";
+            window.__GS_AI_SUMMARY__ = "false";
+            window.__GS_RANKING_ESCOLAS_BASE_URL__ = "https://sicnoticias.pt/ranking-das-escolas-iframe";
+          </script><script id="gs-init-info">window.__INITIAL_DATA__ = {"componentId":"b00c3ca0-9757-4a7d-8d42-a1c0d707e0d4","type":"Layout","nodes":[{"componentId":"9565a3f8-5927-4288-9723-60b06ada804b","type":"Container","name":"row","properties":{"classNames":"brands-wrapper"},"nodes":[{"componentId":"9d5acfc8-5730-4e5b-a28a-9e2040b93dcf","type":"BrandsBar","properties":{"classNames":"brands"},"data":{"contents":[{"componentId":"0a61a21e-0f43-45ad-a67c-a5e0d045fd2d","type":"LINK","title":"Expresso","link":"https:\u002F\u002Fexpresso.pt\u002F"},{"componentId":"82db23c2-aba6-4d83-aa88-ce18fe2fe90d","type":"LINK","title":"Tribuna","link":"https:\u002F\u002Ftribunaexpresso.pt\u002F"},{"componentId":"5d47e857-2853-4950-9bbb-85d857c668b6","type":"LINK","title":"Blitz","link":"https:\u002F\u002Fblitz.pt\u002F"},{"componentId":"92cd8276-7579-4ec4-a56e-c78312aefb90","type":"LINK","title":"Boa Cama Boa Mesa","link":"https:\u002F\u002Fboacamaboamesa.expresso.pt\u002F"},{"componentId":"97901237-11bf-4b4d-ba86-fa3b2fce38db","type":"LINK","title":"Emprego","link":"http:\u002F\u002Fexpressoemprego.pt\u002F"},{"componentId":"ccb5c56f-7571-4013-926a-52bf93918f6a","type":"LINK","title":"Expressinho","link":"https:\u002F\u002Fexpresso.pt\u002Fexpressinho\u002F"},{"componentId":"5b9e3484-3efa-497d-a48d-cdd04a05df18","type":"LINK","title":"O Mirante","link":"https:\u002F\u002Fomirante.pt\u002F"}]}}]},{"componentId":"f6d9d520-6814-41cd-b083-9e6bd0afdb77","type":"Container","nodes":[{"componentId":"8c5eb405-7a82-4a60-b94b-f4350fd0afd6","type":"BsuRoot","name":"row"},{"componentId":"1d05f3d0-a39b-45a3-b02d-b2b68e95a25f","type":"GrantWatch","properties":{"conditions":["PREMIUM","PAID"],"relation":"ALL"},"denied":[{"componentId":"65237cd5-7691-4b56-9637-fb9fe867d5ee","type":"GoogleAdManagerBatch","properties":{"ads":[{"adUnit":"pushdown","name":"pushdown_container"},{"adUnit":"pushdown","name":"floorad-container","size":"floorad"},{"adUnit":"interstitial","name":"interstitial_container","useCustomOutOfPageFormat":true}]}},{"componentId":"ceb47fe2-c969-4e08-a8d4-7ca09c3e3dcd","type":"AdContainer","properties":{"classNames":"sas-pushdown","adType":"adserver","adUnit":"pushdown","name":"pushdown_container","loadedInBatch":true,"refreshEnabled":false}},{"componentId":"b3c4ead8-b730-4fa3-b1fe-0ff7b9c84473","type":"AdContainer","properties":{"adType":"adserver","classNames":"gam-floorad","adUnit":"pushdown","name":"floorad-container","size":"floorad","loadHidden":true,"loadedInBatch":true,"refreshEnabled":false}},{"componentId":"057fbfbf-05d1-4997-a177-3e2e16415455","type":"AdContainer","properties":{"adType":"adserver","classNames":"gam-interstitial","adUnit":"interstitial","name":"interstitial_container","useCustomOutOfPageFormat":true,"loadHidden":true,"loadedInBatch":true,"refreshEnabled":false}}]}]},{"componentId":"1e92332b-1068-4019-b77e-324a9bc2c9d4","type":"Header","properties":{"uncollapseOnScrollUp":true,"collapseTolerance":580},"nodes":[{"componentId":"a0049367-ce42-4dcb-9873-6eeecd73d102","type":"Container","name":"row","properties":{"classNames":"main-header-container"},"nodes":[{"componentId":"c5cc9243-c255-4aa6-be87-19990ec6b79a","type":"Container","properties":{"classNames":"left-container"},"nodes":[{"componentId":"ddd3d125-90af-4eda-953f-5adc1a8722c8","type":"Hamburguer","nodes":[{"componentId":"079bf5aa-5964-40a3-88b8-00629f47c38d","type":"Search","properties":{"placeholder":"temas, artigos, autores...","classNames":"sidenav-search","path":"\u002Fprocura"}},{"componentId":"88dbe8c3-896d-457e-a6b4-100eafc0b346","type":"NavBar","properties":{"classNames":"sidenav-menu menu-assinante"},"data":[{"children":[],"code":"expresso\u002Fgestao-do-site.menu-lateral\u002Fmenu-assinante","contents":[{"authors":[],"code":"18516753","contentDomain":"expresso","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2021-09-09-Exclusivos-cb43edb4","hyperlinkType":"category","lastModifiedDate":"2026-02-03T09:20:38.049Z","link":"\u002Fexclusivos","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"preTitle":"","publishedDate":"2021-09-09T14:07:09.019Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Exclusivos","type":"LINK","uuid":"74478962-3820-4bfa-88b6-33dd5b35fd2b","positionInList":1},{"authors":[],"code":"18516754","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2021-09-09-Semanario-6f49b277","hyperlinkType":"externalUrl","lastModifiedDate":"2024-02-01T23:15:47.254Z","link":"https:\u002F\u002Fexpresso.pt\u002Fsemanario\u002Fprimeiro\u002F","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"publishedDate":"2021-09-09T14:07:39.203Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Semanário","type":"LINK","uuid":"e72ae09b-dfbd-415e-a710-fb4751d09175","positionInList":2},{"authors":[],"code":"18548180","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2020-04-20-Blitz-0c663466","hyperlinkType":"externalUrl","lastModifiedDate":"2025-09-15T18:35:49.415Z","link":"\u002Fblitz","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"publishedDate":"2020-04-20T13:54:46.679Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"_blank","title":"Blitz","type":"LINK","uuid":"66cd663d-177c-4962-94dd-7c310402271f","positionInList":3},{"authors":[],"code":"18516962","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2021-09-09-Tribuna-f0cb09d1","hyperlinkType":"externalUrl","lastModifiedDate":"2026-03-03T18:37:44.979Z","link":"https:\u002F\u002Ftribuna.expresso.pt\u002F","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"publishedDate":"2021-09-09T14:17:32.293Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"_blank","title":"Tribuna","type":"LINK","uuid":"9f43f075-a9bd-46b4-a316-b0bb679b7c7e","positionInList":4},{"authors":[],"code":"18548173","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2020-04-20-Boa-Cama-Boa-Mesa-bb2c9c4c","hyperlinkType":"externalUrl","lastModifiedDate":"2022-03-03T23:34:44.778Z","link":"\u002Fboa-cama-boa-mesa","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"publishedDate":"2020-04-20T13:54:46.679Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"_blank","title":"Boa Cama Boa Mesa","type":"LINK","uuid":"d804e607-ea88-416b-9d43-8817c579e5a6","positionInList":5},{"authors":[],"code":"28941898","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2026-05-20-multimedia-ec2a0de8","hyperlinkType":"externalUrl","lastModifiedDate":"2026-05-20T11:02:42.376Z","link":"http:\u002F\u002Fexpresso.pt\u002Fmultimedia","mainCategory":{"code":"expresso","description":"No Expresso leia opinião, economia, política, cultura, lifestyle, cinema, desporto, última hora. Veja fotografias e vídeos.","link":"\u002Fexpresso","name":"Expresso","path":"\u002Fexpresso","subCategories":[]},"publishedDate":"2026-05-20T11:02:42.325Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"target":"_blank","title":"Multimédia","type":"LINK","uuid":"e00118f3-3a2e-4675-81a6-7e29e9ea60d2","positionInList":6},{"authors":[],"code":"19149079","contentDomain":"expresso","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2022-03-16-newsletters-166605a5","hyperlinkType":"category","lastModifiedDate":"2026-09-16T09:31:07.358Z","link":"\u002Fnewsletters","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"preTitle":"","publishedDate":"2022-03-16T11:27:37.100Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Newsletters","type":"LINK","uuid":"31a44b19-f645-48d3-96e9-51f67f265715","positionInList":7}],"creationDate":"2021-09-09T14:11:02.971Z","lastModifiedDate":"2026-05-20T11:03:06.174Z","name":"Menu Assinante","style":""}],"dataSource":{"componentId":"e912d353-b6c5-4035-894a-aa3739f3985a","type":"featured","lists":["expresso\u002Fgestao-do-site.menu-lateral\u002Fmenu-assinante"],"contentTypes":["LINK"]}},{"componentId":"58cde4df-711c-45ed-867c-84d876f135fb","type":"NavBar","properties":{"classNames":"sidenav-menu"},"data":[{"children":[],"code":"expresso\u002Fgestao-do-site\u002Fheader-menu","contents":[{"authors":[],"code":"18516909","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2021-09-09-Ultimas-45fed08e","hyperlinkType":"externalUrl","lastModifiedDate":"2021-09-09T14:14:56.379Z","link":"\u002Fultimas","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"pictureOrientation":"horizontal","preTitle":"","publishedDate":"2021-09-09T14:14:56.379Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Últimas","type":"LINK","uuid":"aa1741ee-ff2b-40d9-a1e0-58c5a2fbdf1b","positionInList":1},{"authors":[],"code":"16308920","contentDomain":"expresso","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2020-04-20-Opiniao","hyperlinkType":"category","lastModifiedDate":"2020-04-20T13:56:51.600Z","link":"\u002Fopiniao","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2020-04-20T13:54:46.679Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Opinião","type":"LINK","uuid":"d646e562-0e16-4dfb-a752-7ea6eb557576","positionInList":2},{"authors":[],"code":"18548167","contentDomain":"expresso","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2020-04-20-Politica-b2072fa8","hyperlinkType":"category","lastModifiedDate":"2021-09-17T10:35:29.601Z","link":"\u002Fpolitica","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2020-04-20T13:54:46.679Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Política","type":"LINK","uuid":"52d71dd1-eaf7-4c5f-ac1d-94c2a0da9a82","positionInList":3},{"authors":[],"code":"26133562","contentDomain":"expresso","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2025-05-07-economia-f96c6831","hyperlinkType":"category","lastModifiedDate":"2025-05-07T14:13:18.817Z","link":"\u002Feconomia","mainCategory":{"code":"gestao-do-site","link":"\u002Fgestao-do-site","name":"Gestão do Site","path":"\u002Fgestao-do-site","subCategories":[]},"pictureOrientation":"horizontal","preTitle":"linka","publishedDate":"2025-05-07T14:13:13.565Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Economia","type":"LINK","uuid":"3e7a711a-1346-4547-b055-46e9b8f8a181","positionInList":4},{"authors":[],"code":"27599678","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2025-11-25-imobiliario-f4410b22","hyperlinkType":"externalUrl","lastModifiedDate":"2025-11-25T13:05:29.239Z","link":"https:\u002F\u002Fexpresso.pt\u002Feconomia\u002Feconomia_imobiliario","mainCategory":{"code":"ex.sections\u002F25621","description":"Informação sobre mercado imobiliário, habitação, construção, investimento e políticas públicas de habitação.","link":"\u002Feconomia\u002Feconomia_imobiliario","name":"Imobiliário","path":"\u002Feconomia\u002Feconomia_imobiliario","subCategories":[]},"pictureOrientation":"horizontal","preTitle":"","publishedDate":"2025-11-25T13:02:54.743Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"Imobiliário","type":"LINK","uuid":"b73b16c0-6f96-41dc-be58-2c4d54ff75db","positionInList":5},{"authors":[],"code":"23186828","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2024-02-02-revista-b7c654dc","hyperlinkType":"externalUrl","lastModifiedDate":"2026-02-17T16:28:04.074Z","link":"https:\u002F\u002Fexpresso.pt\u002Fsemanario\u002Frevista-e","mainCategory":{"code":"semanario.revista-e","link":"\u002Fsemanario\u002Frevista-e","name":"Revista E","path":"\u002Fsemanario\u002Frevista-e","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2024-02-02T11:29:35.432Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"_top","title":"Revista","type":"LINK","uuid":"c6ff96f9-d84e-42b2-a1be-355c7a19c7cf","positionInList":6},{"authors":[],"code":"28807128","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2026-04-30-internacional-cecdc979","hyperlinkType":"externalUrl","lastModifiedDate":"2026-04-30T08:33:57.188Z","link":"https:\u002F\u002Fexpresso.pt\u002Finternacional","mainCategory":{"code":"ex.sections\u002F25629","description":"Notícias internacionais sobre política global, conflitos, economia mundial, diplomacia e acontecimentos internacionais.","link":"\u002Finternacional","name":"Internacional","path":"\u002Finternacional","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2026-04-30T08:33:20.886Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"target":"_blank","title":"Internacional","type":"LINK","uuid":"791a1317-244c-4cea-9b6d-419a75efc0f6","positionInList":7},{"authors":[],"code":"28807171","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2026-04-30-sociedade-be9512f8","hyperlinkType":"externalUrl","lastModifiedDate":"2026-04-30T08:34:30.808Z","link":"https:\u002F\u002Fexpresso.pt\u002Fsociedade","mainCategory":{"code":"ex.sections\u002F25194","description":"Notícias sobre sociedade em Portugal, incluindo saúde, educação, justiça, segurança, demografia, tecnologia e temas sociais.","link":"\u002Fsociedade","name":"Sociedade","path":"\u002Fsociedade","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2026-04-30T08:34:30.772Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"title":"Sociedade","type":"LINK","uuid":"f97c9027-f0b6-4a5f-85b0-47b54712b051","positionInList":8},{"authors":[],"code":"29261726","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2026-07-06-geracao-e-f65e9472","hyperlinkType":"externalUrl","lastModifiedDate":"2026-07-06T14:39:40.975Z","link":"https:\u002F\u002Fexpresso.pt\u002Fgeracao-e","mainCategory":{"code":"geracao-e","description":"Explicadores, dicas e notícias que impactam a tua vida. A Geração E é o guia para quem vive os desafios dos 20 e 30","link":"\u002Fgeracao-e","name":"Geração E","path":"\u002Fgeracao-e","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2026-07-06T14:39:40.936Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"target":"_blank","title":"Geração E","type":"LINK","uuid":"764e30cc-f7a7-468e-aa7b-7a2beeeaf7fb","positionInList":9},{"authors":[],"code":"18548180","contents":[],"domain":{"code":"expresso","hostname":"expresso.pt","id":"a058e364-9089-4cbf-99d5-557148e82b4a","name":"Expresso"},"domainCode":"expresso","friendlyURI":"2020-04-20-Blitz-0c663466","hyperlinkType":"externalUrl","lastModifiedDate":"2025-09-15T18:35:49.415Z","link":"\u002Fblitz","mainCategory":{"code":"gestao-do-site.menu-lateral","link":"\u002Fgestao-do-site\u002Fmenu-lateral","name":"Menu Lateral","path":"\u002Fgestao-do-site\u002Fmenu-lateral","subCategories":[]},"pictureOrientation":"horizontal","publishedDate":"2020-04-20T13:54:46.679Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"status":"","target":"_blank","title":"Blitz","type":"LINK","uuid":"66cd663d-177c-4962-94dd-7c310402271f","posi

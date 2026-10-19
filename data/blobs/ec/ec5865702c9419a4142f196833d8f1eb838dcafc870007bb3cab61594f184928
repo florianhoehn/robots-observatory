@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>猎聘:LiePin.com</title>
+  <!-- 使360浏览器 默认启用极速内核 -->
+  <meta name="renderer" content="webkit">
+  <link rel="icon" href="//concat.lietou-static.com/fe-www-pc/v6/static/images/favicon.ico" type="image/x-icon"/>
+  <!--[if lte IE 9]>
+  <script src="//concat.lietou-static.com/fe-c-pc/v6/static/js/html5shiv.js"></script>
+  <script src="//concat.lietou-static.com/fe-c-pc/v6/static/js/unpack_files/console-polyfill.js"></script>
+  <![endif]-->
+
+  <style>
+    html, body, .error-main-container{
+      height: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+    
+    body{
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5715;
+      color: rgba(0,0,0,.85);
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+      font-variant: tabular-nums;
+      font-feature-settings: "tnum";
+      background: #FAF9F9;
+    }
+
+    .common-footer-wrap{
+      background: none !important;
+    }
+
+    .common-footer-content{
+      display: none !important;
+    }
+
+    .common-footer-wrap hr{
+      display: none !important;
+    }
+    
+    .error-main-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error-main-container p{
+      margin: 0;
+    }
+
+    .error-image-box{
+      width: 360px;
+      flex-shrink: 0;
+    }
+
+    .error-image-box img{
+      width: 100%;
+    }
+
+    .error-desc-box{
+      flex-shrink: 0;
+    }
+
+    .error-desc-box .title{
+      font-size: 24px;
+      line-height: 33px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .error-desc-box .subtitle{
+      padding: 12px 0;
+      font-size: 20px;
+      line-height: 28px;
+      color: #666;
+    }
+
+    .error-desc-box .time-desc{
+      padding-bottom: 29px;
+      font-size: 16px;
+      line-height: 22px;
+      color: #999;
+    }
+
+    .error-desc-box .time-desc span{
+      color: #FF6400;
+    }
+
+    .error-desc-box .btn{
+      height: 40px;
+      line-height: 40px;
+      padding: 0 28px;
+      border-radius: 32px;
+      font-size: 16px;
+      text-align: center;
+      border: none;
+      box-shadow: none;
+      cursor: pointer;
+      color: #fff;
+      background: #FF6400;
+    }
+
+    #error-h5, #error-pc{
+      display: none;
+    }
+
+    /* pc */
+    @media screen and (min-width: 751px) {
+      #error-pc{
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+
+      .error-desc-box{
+        padding-left: 80px;
+      }
+    }
+
+    /* h5 */
+    @media screen and (max-width: 750px) {
+      #error-h5{
+        display: block;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+
+      .error-main-container{
+        flex-direction: column;
+        padding-bottom: 190px;
+      }
+
+      .error-image-box{
+        width: 180px;
+        height: 180px;
+      }
+
+      .error-desc-box{
+        padding-top: 18px;
+        text-align: center;
+      }
+
+      .error-desc-box .title{
+        font-size: 16px;
+        line-height: 25px;
+      }
+
+      .error-desc-box .subtitle{
+        padding: 6px 0;
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .error-desc-box .time-desc{
+        padding-bottom: 32px;
+        font-size: 12px;
+        line-height: 17px;
+      }
+
+      body .common-footer-wrap{
+        padding-bottom: 20px;
+      }
+
+      .common-footer-container{
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-main-container">
+    <div class="error-image-box">
+      <img src="https://download.lietou-static.com/img/613afe4a6f2fa77ca053090c03u.png" alt="" />
+    </div>
+
+    <div class="error-desc-box">
+      <p class="title">我们找遍了所有地方</p>
+      <p class="subtitle">此页面似乎不存在</p>
+      <p class="time-desc"><span>4s</span>后将进入猎聘首页</p>
+      <a href="https://www.liepin.com/" title="猎聘">
+        <button class="btn">返回首页</button>
+      </a>
+    </div>
+  </div>
+  
+  <div id="error-h5">
+    <script src="https://concat.lietou-static.com/fe-footer-pc/v6/footer-h5.js"></script>
+  </div>
+  <div id="error-pc">
+    <script src="https://concat.lietou-static.com/fe-footer-pc/v6/footer-pc.js"></script>
+  </div>
+
+  <script>
+    const $time = document.querySelector('p.time-desc span');
+
+    let seconds = 4;
+    const timer = setInterval(() => {
+      seconds -= 1;
+      $time.textContent = seconds + 's';
+      
+      if (!seconds) {
+        clearInterval(timer);
+        window.location.href = 'https://www.liepin.com/';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

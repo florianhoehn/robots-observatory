@@ -1,0 +1,585 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+    <head>
+        
+  <script>
+		var firstidCurrentUrlParams = new URL(window.location).searchParams;		
+		var firstidConsoleLog = (firstidCurrentUrlParams.get("debug")!=null);
+				
+		function GetCookie4FirstId(t){for(var n=t+"=",r=document.cookie.split(";"),e=0;e<r.length;e++){for(var i=r[e];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(n))return i.substring(n.length,i.length)}return null}
+		function SetCookie4FirstId(t,v){document.cookie = t+"="+v+"; domain=libramemoria.com";}
+		function DeleteCookie4FirstId(t){document.cookie = t+"=; domain=libramemoria.com; expires=Thu, 01 Jan 1970 00:00:00 UTC";}
+		function Log4Firstid(t){if (firstidConsoleLog)console.log(t); }
+
+
+		function DeleteFirstIdInDataLayer()
+		{
+			Log4Firstid('delete firstId info in datalayer');
+
+			if (dataLayer[0].firstid)
+				delete dataLayer[0].firstid;		
+		}
+
+
+		function SetFirstIdInDataLayer()
+		{					
+			var firstId = GetCookie4FirstId("firstid");
+			var consentTrackingPub = GetCookie4FirstId("consentTrackingPub");
+
+			if (firstId !=null)
+			{
+				if (firstId!="DOWN" && firstId!="NO_TRACKING")
+				{
+					dataLayer[0]["firstid"]=firstId;
+					dataLayer[0]["firstidStatus"]="UP";
+				}
+				else
+				{
+					if (firstId=="DOWN")
+					{
+						dataLayer[0]["firstidStatus"]="DOWN";
+					}
+					else
+					{
+						dataLayer[0]["firstidStatus"]="NO_TRACKING";
+					}					
+				}
+			}
+			else
+			{
+				if (consentTrackingPub !=null)
+				{
+					dataLayer[0]["firstidStatus"]="NEW";
+				}
+				else
+				{
+					dataLayer[0]["firstidStatus"]="OFF";
+				}											
+			}			
+		}
+
+		function SetCookieConsentPub4FirstId()
+		{
+			CheckCMPOnInit();
+			CheckCMPOnEvent();		
+		}
+
+		function CheckCMPOnEvent()
+		{
+			window.didomiEventListeners = window.didomiEventListeners || [];
+			window.didomiEventListeners.push({
+			event: 'consent.changed',
+			listener: function (context) {
+				Log4Firstid('before firstId check CMP event');
+				CheckCMPOnInit();
+				Log4Firstid('after firstId check CMP event');							
+				}
+			});			
+		}
+		function CheckCMPOnInit()
+		{		
+			window.didomiOnReady = window.didomiOnReady || [];
+			window.didomiOnReady.push(function (Didomi) {
+				Log4Firstid('before firstId check CMP init');
+				if (Didomi.getUserConsentStatusForPurpose(Didomi.Purposes.SelectPersonalizedAds))
+				{
+					Log4Firstid('Didomi.Purposes.SelectPersonalizedAds = true');
+					SetCookie4FirstId("consentTrackingPub","1");			
+				}
+				else
+				{
+					DeleteCookie4FirstId("consentTrackingPub");
+					DeleteCookie4FirstId("firstid");
+					DeleteFirstIdInDataLayer();
+				}
+
+				SetFirstIdInDataLayer();
+
+				Log4Firstid('Didomi objet :');
+				Log4Firstid(Didomi);
+				Log4Firstid('after firstId check CMP init');
+			});		
+					
+		}
+
+		function FirstIdLogic()
+		{
+			Log4Firstid('start firstId script');
+
+			var firstId = GetCookie4FirstId("firstid");
+			var consentTrackingPub = GetCookie4FirstId("consentTrackingPub");
+														
+			Log4Firstid('firstId = ' + firstId);
+			Log4Firstid('consentTrackingPub = ' + consentTrackingPub);
+
+			if (firstId == null && consentTrackingPub!= null)
+				window.location.replace("/firstid/");
+
+			Log4Firstid('end firstId script');				
+		}
+
+		FirstIdLogic();
+
+</script>
+
+  	<script>
+		function getCookie(t){for(var n=t+"=",r=document.cookie.split(";"),e=0;e<r.length;e++){for(var i=r[e];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(n))return i.substring(n.length,i.length)}return null}
+		function getCookieXCONNECT(){var e=getCookie(".XCONNECT");if(e==null)return getCookie("IdSes");else return e;}
+		function getCookieXCONNECTForEnv(t){var i=getCookieXCONNECT();if(null!==i){var r,e=i.split("&");for(r=0;r<e.length;r+=1)if(e[r].split("=")[0]===t)return e[r].split("=")[1]}return""}
+		function IsConnected(n){return""!==getCookieXCONNECTForEnv(n)}
+		function IsAnomymousConnected(){return null!==getCookie(".PRF")}
+		function RedirectDomain(e,c,i){window.location.replace(e.replace(c,i))}
+					function SwitchAuthDomain(n,i,o){(IsConnected(o)||IsAnomymousConnected())&&RedirectDomain(window.location.href,n,i)}
+			SwitchAuthDomain('www.libramemoria.com', 'c.libramemoria.com', '2');
+			</script>
+
+	<meta charset="UTF-8">
+	<meta name="language" content="FR-fr" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<meta property="og:title" content="Page introuvable" />
+		<meta name="twitter:title" content="Page introuvable" />
+		<meta property="og:url" content="https://www.libramemoria.com/ai.txt" />
+		<meta name="twitter:site" content="" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+	<link rel="canonical" href="https://www.libramemoria.com/ai.txt" />
+
+	<title>Page introuvable</title> 
+
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+
+	<script>
+	    var bufferScript = [], head = {}; head.ready = function (f) { bufferScript.push(f) }; var bufferLoad = []; head.load = function (f) { bufferLoad.push(f) };	    
+		var typePattern = ""; 
+		var typePatternHtml5 = ""; 
+		var viewPortWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	    if (viewPortWidth < 481) (typePattern = "mobile", typePatternHtml5 = "data-mobile"); else if (viewPortWidth < 1025) (typePattern = "tablet", typePatternHtml5 = "data-tablet");	  
+		var needRecalculationOfViewport = false; 
+	</script>
+
+	        <script>var galleryDivId = 'pub-dfp-g1';</script>
+    
+            <script>var inread1DivId = 'pub-dfp-i1';</script>
+    
+            <script>var inread1WrapperId = 'wrapper_pub-dfp-i1';</script>
+    
+	
+		
+
+ 
+
+    
+    
+                	
+	
+		
+	<!--[if lt IE 9]>
+		<script src="https://cdn-files.prsmedia.fr/files/fr/javascript/plugins/css3-mediaqueries.js"></script>
+	<![endif]-->
+
+	<!-- POUR SORTIR -->
+					
+	
+    
+    
+        
+	
+             <script>!function(e,o,n,t,i){function a(t,e,n,i){if("function"==typeof n){window[o]||(window[o]=[]);var a=!1;a||window[o].push({command:t,version:e,callback:n,parameter:i})}}function d(i){if(window[e]&&!0===window[e].stub&&i.data){var t,a="string"==typeof i.data;try{t=a?JSON.parse(i.data):i.data}catch(t){return}if(t[n]){var o=t[n];window[e](o.command,o.version,function(t,e){var n={};n.__tcfapiReturn={returnValue:t,success:e,callId:o.callId},i.source&&i.source.postMessage(a?JSON.stringify(n):n,"*")},o.parameter)}}}a.stub=!0,a.stubVersion=2,"function"!=typeof window[e]&&(window[e]=a,window.addEventListener?window.addEventListener("message",d,!1):window.attachEvent("onmessage",d))}("__tcfapi","__tcfapiBuffer","__tcfapiCall"),function t(e){if(!window.frames[e])if(document.body&&document.body.firstChild){var n=document.body,i=document.createElement("iframe");i.style.display="none",i.name=e,i.title=e,n.insertBefore(i,n.firstChild)}else setTimeout(function(){t(e)},5)}("__tcfapiLocator")</script><script>var eventDidomiLoadFailedHasOccurred=!1;function triggerCustomEventDidomi(e){const o=new CustomEvent(e);document.dispatchEvent(o)}new Promise(((e,o)=>{var i=document.createElement("script");i.id="spcloader",i.type="text/javascript",i.async=!0,i.charset="utf-8",i.fetchPriority="high";var r="https://sdk.privacy-center.org/ca08d6ad-65e3-410b-943d-97d9e2081851/loader.js?target="+document.location.hostname;if(window.didomiConfig&&window.didomiConfig.user){var d=window.didomiConfig.user,t=d.country,n=d.region;t&&(r=r+"&country="+t,n&&(r=r+"&region="+n))}i.src=r,i.onload=()=>{e()},i.onerror=e=>{triggerCustomEventDidomi("didomiScriptFailed"),eventDidomiLoadFailedHasOccurred=!0,o()},document.head.appendChild(i)})).catch((e=>{console.debug("Erreur lors du chargement du script Didomi, passage en mode dégradé :",e)}));</script>
+    
+
+    <script>var consentModuleEnabled = true;</script>      
+
+    <script>var consentModuleFreeHtmlEnabled = true;</script>      
+
+	<script>
+		window.ORDONNANCEUR = {
+			familiesOrder: ["core", "firstparty", "business", "tracking", "advertising", "taboola", "outbrain", "others"],
+			nameOrder: [],
+			purposes: { // Gestion global 
+				/*"advert": 'ads',
+				"business": "business-xyxyxyx",
+				"analytics": "analytics-xyxyxyx"*/
+			},
+			vendors: {  // Gestion global 
+				// 'tracking' : 'microsoft-analytics'
+			},
+			queue: [],
+			delay : 100,
+			withLog :  0 ,
+			backoffWaitingTime :  20000 ,
+		};
+	</script>
+
+	                                                                                        
+        
+
+        <link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/min/fr/css/plugins.B4CCDF284B0E17B1A1A21048AEB66F96.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/helpers.A8C0DF60EF721B36EBE8790D8160B1F2.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/gridSystem.48B3609BA9B5E2754FFBCA0E750F20DB.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/landingPage.09489C42E4AF425BDA94835EE4392094.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/jquery-ui-1.10.3.custom.91BA301737037F478E60D06C3052336F.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/carrousel.0CA0F629EA36C0E2D04B20C0EEBE4535.min.css' media="print" onload="this.media='all'" /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/chocolat.D74DA398B2AF3001F6AC7C643E5E8B63.min.css' media="print" onload="this.media='all'" /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/splide.F6A86E8018FC1F6AE254B339ACBD1CDD.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/style.6302D85BC92934E24F4FC2B8E140F2FF.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/connexion.4AC9D14BCA29C2E05B24EFC48EFB00F5.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/weather.9295ACC69DDF2620728F15AFC8AE087E.min.css' /><link rel='stylesheet' type='text/css' href='https://cdn-files.prsmedia.fr/files/LIB/min/fr/css/story.F77A1200471A198B8D1CA5C744DFD7D4.min.css' />		<script>
+  dataLayer = [{
+    'dimension10' : 'Non',
+    'dimension11' : 'Non',
+      'SegA' : 'null',
+    'SegCP' : 'null',
+    'SegG' : 'null',
+      'dimension33' : navigator.userAgent
+  }];
+</script><script type="text/javascript">
+    //Google Tag Manager
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WZC5BB5S');
+    //End Google Tag Manager
+</script>     
+
+                                            
+    </head>
+    <body class="FreeHtmlComponent ">
+		<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZC5BB5S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+                <style type="text/css">     
+section.trouver .recherches_wrapper p.affiner_publication-plus, section.trouver .recherches_wrapper p.affiner_publication-moins { float: right; width: auto !important; margin-top: 10px; }
+
+.objet_commemoratif.penseeIllustree .corps {padding-bottom: 10px;}
+
+
+</style>        <!-- Load Facebook SDK for JavaScript -->
+          <div id="fb-root"></div>
+          <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        
+        
+        <header>
+            <div class="header-top noMobileHeader">
+                <div class="bloc_logo">
+                    <a class="logo UA-trackEvent" href="/" data-UAval1="clic-navigation" data-UAval2="clic-haut-de-page" data-UAval3="clic-logo-libra-memoria"><span class="ei_sronly">Accueil Libra Memoria</span></a>
+                </div>
+                <div class="headerTopRight ">
+                    <div>
+                            		<a class="nav_account clientArea" href="/e-services/Login">
+			<span class="ico_lim" data-icon="connexion"></span>
+			<span class="userLabel connect">Se connecter</span>
+		</a>
+	
+<div class="GPRF_NextWeb modal" >
+    <div class="modalContent" style="height: auto;">
+        <span class="modalClose icon_close after" title="Fermer"></span>
+                    <div class="title">
+                Création de compte 
+            </div>
+        	    <noscript>
+		    <div class="alert--info"><ul><li>Activer JavaScript dans votre navigateur pour accéder à l'inscription sur notre site</li></ul></div>
+	    </noscript>
+
+		
+
+
+
+
+
+		<form method="post" enctype="multipart/form-data" id="submitCreateProfile">
+            <input id="PooolFlag" type="hidden" name="PooolFlag" value="" />
+
+            <fieldset id="infoAdress">
+                <div class="field civilite">
+                    <label class="oblig labelCheckbox">Civilité</label>
+                    <div class="checkboxDiv">
+                        <input type="radio" name="radioCivil" id="radioMme" value="Mme" />
+                        <label for="radioMme">Madame</label>
+                        <input type="radio" name="radioCivil" id="radioM" value="M" />
+                        <label for="radioM">Monsieur</label>
+                        <input type="radio" name="radioCivil" id="radioSte" value="Ste" />
+                        <label for="radioSte">Société</label>
+                    </div>
+                </div>
+                <div class="field" id="siretRow" style='display: none'>
+                    <label for="ctl00_txtLegalEntity_Siret" class="labelField">Siret</label>
+                    <input type="text" id="ctl00_txtLegalEntity_Siret" name="ctl00_txtLegalEntity_Siret" value="" class="inputField" />
+                </div>
+
+                <div class="field">
+                    <label id="LastNameLabel" for="ctl00_txtNom" class="labelField oblig"><span id="SpanLastNameLabel">Nom</span></label>
+                    <input type="text" id="ctl00_txtNom" name="ctl00_txtNom" value="" class="inputField" />
+                </div>
+
+                <div class="field">
+                    <label id="FirstNameLabel" for="ctl00_txtPrenom" class="labelField oblig"><span id="SpanFirstNameLabel">Prénom</span></label>
+                    <input type="text" id="ctl00_txtPrenom" name="ctl00_txtPrenom" value="" class="inputField" />
+                </div>
+
+                <div >
+                    
+
+
+
+
+
+
+
+<div class="field">
+    <label id="txtId" for="login" class="labelField oblig">Adresse e-mail</label>
+    <input type="text" id="ctl00_txtEmailCreate" name="ctl00_txtEmail" value="" class="inputField" />
+</div>
+
+<div class="field mdp">
+    <label id="txtMdp" for="password" class="labelField oblig">Mot de passe</label>
+    <input type="password" id="ctl00_txtMdpCreate" name="ctl00_txtMdp" value="" class="inputField" />
+    <span id="showPassword" class="icon before icon_eye" title="afficher le mot-de-passe"></span>
+    <div id="divPasswordMessages" class="no-min-height"></div>
+</div>
+                </div>
+                
+                                <div class="formActions">
+                                                                        <div class="checkboxContainer">
+                            <input type="checkbox" value="true" class="checkbox" id="chkOS" name="ctl00_chkOS" />
+                                                                    <label for="chkOS">
+                                        Je souhaite recevoir les offres et les exclusivités du Groupe <span classtabindex="0" class="tooltip-v2" >EBRA</span> et j'accepte qu'EBRA analyse l'ouverture et les clics effectués dans ses courriels afin de mesurer et d'optimiser ses campagnes, ainsi que pour personnaliser mes sollicitations.
+                                    </label>
+                                                            </div>
+                        
+                                                    <div class="checkboxContainer">
+                                <input type="checkbox" value="true" class="checkbox" id="chkOSP" name="ctl00_chkOSP" />
+                                                                    <label for="chkOSP">
+                                        Je souhaite recevoir les offres des partenaires du Groupe <span class="tooltip-v2" tabindex="0" >EBRA</span> et j'accepte qu'EBRA et ces partenaires analysent l'ouverture et les clics effectués dans ses courriels afin de mesurer et d'optimiser ses campagnes, ainsi que pour personnaliser mes sollicitations.
+                                    </label>
+                                                            </div>
+                                            
+                    <div class="checkboxContainer">
+                        <input type="Checkbox" name="ctl00_chkCGU" class="checkbox" id="ctl00_chkCGU"  />
+                        <label for="ctl00_chkCGU">
+                            J'ai lu et accepté les <a href="javascript:void(0);" class="displayCGU">Conditions générales d'utilisation</a>
+                        </label>
+                    </div>
+                </div>
+
+                                <p class="hpUser">
+                Si vous voyez ce champ, ne le remplissez pas <input type="text" name="hpUsername" id="hpUsername" value="" />
+                </p>
+                <div class="blocButtons">
+                    
+
+    <input type= "text" name="SendMail" id="SendMailsubmitCreateProfile" value="" style="display: none;"/>
+    <script>
+      var captchaInputForJsonResponse = captchaInputForJsonResponse || [];
+      if (!captchaInputForJsonResponse.includes("SendMail")) {         captchaInputForJsonResponse.push("SendMail");
+      }
+    </script>
+
+                                <div id="GFWKCAPTCHACheckDIVsubmitCreateProfile"></div>  
+        <input id="GFWKCAPTCHACheckINPUTsubmitCreateProfile" type="submit" value="Je m'inscris" class=" SubmitButton bt_neutral large" name="submitAccount" 
+                                      />
+        <input type="hidden" value="Je m'inscris" name="submitAccount"/>    
+        <script type="text/javascript"> 
+        
+                var captchaInputForJsonResponse = captchaInputForJsonResponse || [];
+        if (!captchaInputForJsonResponse.includes("g-recaptcha-response")) {             captchaInputForJsonResponse.push("g-recaptcha-response");
+        }
+
+                  var formIdsubmitCreateProfile0 = "submitCreateProfile"
+                var onSubmitReCaptchasubmitCreateProfile0 = function(token) {
+          $("#"+formIdsubmitCreateProfile0).submit();
+          grecaptcha.reset(widgetIdsubmitCreateProfile0);
+        };
+
+        var widgetIdsubmitCreateProfile0;
+        var OnloadCallbackReCaptchasubmitCreateProfile0 = function() {           widgetIdsubmitCreateProfile0 = grecaptcha.render('GFWKCAPTCHACheckDIVsubmitCreateProfile', {
+            'sitekey' : '6Lfx280UAAAAAFdTKAyfbnO1KnwiPQ0FneN0-leP',
+            'badge' : ' bottomright ',
+            'size' : 'invisible',
+            'callback' : onSubmitReCaptchasubmitCreateProfile0,
+          });   
+          RecaptchaPluginIsImplementedsubmitCreateProfile0 = true;
+        };
+        
+        function onload(){
+          var element = document.getElementById('GFWKCAPTCHACheckINPUTsubmitCreateProfile');
+          element.onclick = validate;
+        }
+
+        if (typeof RecaptchaPluginIsImplementedsubmitCreateProfile0 === 'undefined') {
+          var RecaptchaInitAsBeenFiredsubmitCreateProfile0 = false;// Permet d'éviter la dupplication d'init render
+          var RecaptchaPluginIsImplementedsubmitCreateProfile0 = false;
+        } 
+        var AllInputFromFormsubmitCreateProfile0 = document.querySelectorAll("form[id="+formIdsubmitCreateProfile0+"] input");
+
+        function RecaptchaOnFocussubmitCreateProfile0() {
+          if (!RecaptchaPluginIsImplementedsubmitCreateProfile0) {                
+            var head = document.head || document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');    
+            script.type = 'text/javascript';
+            script.src = 'https://www.recaptcha.net/recaptcha/api.js?onload=OnloadCallbackReCaptchasubmitCreateProfile0&render=explicit'; 
+            script.async = 'true';
+            head.appendChild(script);  
+          }
+        };
+        
+        (AllInputFromFormsubmitCreateProfile0).forEach(function(element) {   
+            element.addEventListener('focus', RecaptchaOnFocussubmitCreateProfile0, false);  // Peut-être rempalacer par fill si autocomplétation du formulaire (Detecting Browser Autofill)
+        });
+
+        onload();
+
+        function validate(event) {
+            event.preventDefault();
+
+            $("#" + formIdsubmitCreateProfile0).validate();
+            var isFormValid = $("#" + formIdsubmitCreateProfile0).valid();
+            if (isFormValid) {
+              RecaptchaOnFocussubmitCreateProfile0();
+              if(RecaptchaInitAsBeenFiredsubmitCreateProfile0 === false && RecaptchaPluginIsImplementedsubmitCreateProfile0 === false){
+                var interval = setInterval(function(){
+                  if(RecaptchaPluginIsImplementedsubmitCreateProfile0 === true && RecaptchaInitAsBeenFiredsubmitCreateProfile0 === false){                      
+                      RecaptchaInitAsBeenFiredsubmitCreateProfile0 = true;     
+                      grecaptcha.execute(widgetIdsubmitCreateProfile0); 
+                      clearInterval(interval);
+                  }
+                }, 100);
+              }    
+              else if (RecaptchaPluginIsImplementedsubmitCreateProfile0 === true && RecaptchaInitAsBeenFiredsubmitCreateProfile0 === false) {
+                grecaptcha.execute(widgetIdsubmitCreateProfile0); 
+              }   
+            }
+        }           
+
+        </script>       
+                
+            
+              
+
+
+<style type="text/css">
+  .noteReCaptcha {
+    line-height: 3rem;
+    font-size: 1.1rem;
+    color: gray;
+  }
+</style>
+
+                </div>
+            </fieldset>
+
+        </form>
+
+        
+                                                                                        
+        <div class="mentions-legales-abo">
+            <p>Libramemoria, en tant que responsable de traitement, recueille dans ce formulaire des informations qui sont enregistrées dans un fichier informatisé par son Service Relations Clients, la finalité étant d’assurer la création et la gestion de votre compte, ainsi que des abonnements et autres services souscrits. Si vous y avez consenti, ces données peuvent également être utilisées pour l’envoi de newsletters et/ou d’offres promotionnelles par Libramemoria, les sociétés qui lui sont affiliées et/ou ses partenaires commerciaux. Vous pouvez exercer en permanence vos droits d’accès, rectification, effacement, limitation, opposition, retirer votre consentement et/ou pour toute question relative au traitement de vos données à caractère personnel en contactant <a href="mailto:contact@libramemoria.com">contact@libramemoria.com</a> ou consulter les liens suivants : <a href="/protection-des-donnees">Protection des données</a>, <a href="/espace-client/cgu">CGU du site</a> et <a href="/contact">Contact</a>. Le Délégué à la Protection des Données personnelles (<a href="mailto:dpo@ebra.fr">dpo@ebra.fr</a>) est en copie de toute demande relative à vos informations personnelles.</p>
+        </div>
+
+        		    <a class="link_connect icon_arrowMenu right after clear" title="Connectez-vous">Vous êtes déjà inscrit ? Connectez-vous</a>
+            </div>
+</div>
+                        <a href="/publier-un-avis-deces" class="btn-other btn noMobile">Publier un avis</a>
+                    </div>
+                </div>
+            </div>
+            <nav role="navigation" class="noMobileHeader header-bottom">
+                <div class="bloc_logo">
+                    <a class="logo UA-trackEvent" href="/" data-UAval1="clic-navigation" data-UAval2="clic-haut-de-page" data-UAval3="clic-logo-libra-memoria"><span class="ei_sronly">Accueil Libra Memoria</span></a>                    
+                </div>
+                <div class="navMain">
+                    <ul class="nav_model02 typed nav_niv1 container " >
+    <li class="itemLevel1 hasChilds avisDeces"  data-id="menuHtypedChild1" " >
+       <p  class="AT-trackEvent navigation item_level1" data-ATtype="click" data-ATval1="Navigation" data-ATval2="menu horizontal" data-ATval3="Lien sur Consulter un avis de décès" role="menuitem" aria-haspopup="true" aria-expanded="true" tabindex="0">Consulter un avis de décès <span class="ico_lim ico_nav" data-icon="haut"></span><span class="ei_sronly">gestion du menu ouvert ou ferm�</span></p>
+      </li>
+    <li class="itemLevel1  "  >
+       <a href="/pompes-funebres"  class="AT-trackEvent navigation item_level1" data-ATtype="click" data-ATval1="Navigation" data-ATval2="menu horizontal" data-ATval3="Lien sur Annuaire Pompes Funèbres" role="menuitem" aria-haspopup="true" aria-expanded="true" tabindex="0">Annuaire Pompes Funèbres </a>
+      </li>
+    <li class="itemLevel1 hasChilds guidesConseils"  data-id="menuHtypedChild3" " >
+       <p  class="AT-trackEvent navigation item_level1" data-ATtype="click" data-ATval1="Navigation" data-ATval2="menu horizontal" data-ATval3="Lien sur Guides et conseils" role="menuitem" aria-haspopup="true" aria-expanded="true" tabindex="0">Guides et conseils <span class="ico_lim ico_nav" data-icon="haut"></span><span class="ei_sronly">gestion du menu ouvert ou ferm�</span></p>
+      </li>
+    <li class="itemLevel1  articles"  >
+       <a href="/infos"  class="AT-trackEvent navigation item_level1" data-ATtype="click" data-ATval1="Navigation" data-ATval2="menu horizontal" data-ATval3="Lien sur Informations" role="menuitem" aria-haspopup="true" aria-expanded="true" tabindex="0">Informations </a>
+      </li>
+    <li class="itemLevel1  decesCelebres"  >
+       <a href="/deces-celebres"  class="AT-trackEvent navigation item_level1" data-ATtype="click" data-ATval1="Navigation" data-ATval2="menu horizontal" data-ATval3="Lien sur Décès célèbres" role="menuitem" aria-haspopup="true" aria-expanded="true" tabindex="0">Décès célèbres </a>
+      </li>
+    <li class="itemLevel1 hasChilds services"  data-id="menuHtypedChild6" " >
+       <p  class="AT-trackEvent navigation item_level1" data-ATtype="click" data-ATval1="Navigation" data-ATval2="menu horizontal" data-ATval3="Lien sur Services" role="menuitem" aria-haspopup="true" aria-expanded="true" tabindex="0">Services <span class="ico_lim ico_nav" data-icon="haut"></span><span class="ei_sronly">gestion du menu ouvert ou ferm�</span></p>
+      </li>
+  
+</ul>
+
+              <div id="menuHtypedChild1" class="nav_niv2 typed avisDeces">
+          <div class="container">
+                          <div class="headerStat">
+                <div class="mod GANO_infoCountAnnounce">
+    <div class="modContent">
+        <div class="stat-top">
+            <div class="first">
+            <p><span>34 253 972</span> avis de décès en ligne</p>
+            </div>
+                        <a href="/avis" class="btn btn-1 UA-trackEvent" data-UAval1="clic-barre-de-droite" data-UAval2="clic-module-statistiques" data-UAval3="clic-lien-deces-du-jour">Voir tous les avis</a>
+        </div>
+    </div>
+   
+</div>
+ <div class="alertContent">
+        <div class="title">
+            <p>Alertes avis de décès</p>
+        </div>
+        <p>Soyez prévenu de la publication d’un avis de décès sur votre commune ou sur un nom de famille en particulier.</p>
+        <a href="/etre-alerte-des-deces" class="btn btn-2">S'inscrire dès 15€/an</a>
+    </div>              </div>
+                                    <ul class="nav_niv2-ul">
+                                              <li class="itemLevel2 avisDeces-title nav-title">
+                                    <p class="titleLevel2">Avis par journal</p>
+                                                      <ul class="nav_niv3">
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/l-alsace" class="linkLevel3">L'Alsace</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/le-bien-public" class="linkLevel3">Le Bien Public</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/le-dauphine-libere" class="linkLevel3">Le Dauphiné Libéré</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/les-dernieres-nouvelles-d-alsace" class="linkLevel3">Les DNA</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/l-est-republicain" class="linkLevel3">L'Est Républicain</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/le-journal-de-la-haute-marne" class="linkLevel3">Le Journal de la Haute-Marne</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/le-journal-de-saone-et-loire" class="linkLevel3">Le Journal de Saône et Loire</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/le-progres" class="linkLevel3">Le Progrès</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/le-republicain-lorrain" class="linkLevel3">Le Républicain Lorrain</a>
+                                          </li>
+                                        <li class="itemLevel3 ">
+                                            <a href="/avis/vosges-matin/" class="linkLevel3">Vosges Matin</a>
+                                          </li>
+                                        <li class="itemLevel3 liste-par-journal">
+                                            <a href="/liste-des-avis-de-deces-par-journal" class="linkLevel3">Voir la liste des journaux</a>
+                                          </li>
+                                      </ul>
+                                  </li>
+                                      </ul>
+       
+        </div>
+      </div>
+                                    <div id="menuHtypedChild3" class="nav_niv2 typed guidesConseils">
+          <div class="container">
+                                    <ul class="nav_niv2-ul">
+                                              <li class="itemLevel2 guidesConseils-title nav-title">
+                                    <p class="titleLevel2">Faire face à un décès</p>
+                                                      <ul class="nav_niv3">
+                                        <li class="itemLevel3 ">
+          

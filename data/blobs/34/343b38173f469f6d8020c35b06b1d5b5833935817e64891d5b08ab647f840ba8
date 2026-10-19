@@ -1,0 +1,25 @@
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+# Block aggressive AI scrapers from hammering full catalog lists
+User-agent: Bytespider
+Disallow: /llms-full.txt
+Disallow: /llms.txt
+
+User-agent: CCBot
+Disallow: /llms-full.txt
+
+# Throttle polite AI crawlers to prevent CPU spikes
+User-agent: GPTBot
+Crawl-delay: 10
+Disallow: /wp-content/uploads/sgo-cache/
+
+User-agent: ClaudeBot
+Crawl-delay: 10
+Disallow: /wp-content/uploads/sgo-cache/
+
+User-agent: PerplexityBot
+Crawl-delay: 10
+
+Sitemap: https://afthemes.com/sitemap_index.xml

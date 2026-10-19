@@ -1,0 +1,49 @@
+# Policy: deny model-training crawlers; permit search indexing, AI search,
+# user-driven fetches/search. Permitted bots inherit "*". Assigning a bot
+# its own group would loosen its access unless the rules for "*" are repeated.
+# This file is advisory; enforce at the CDN/WAF if a denial must actually hold.
+
+# Advise bots on what to crawl.
+Sitemap: https://pbskids.org/sitemap.xml
+
+# ----------------------------------------------------------------------------------
+# General bot/crawler rules. Applies to all bots not explicitly denied access below.
+# For an idea on which AIs have access, here is a list of known bots as of 9/11/26:
+#
+#   AI search indexers:
+#     OAI-SearchBot         ChatGPT search index
+#     Claude-SearchBot      Claude search index
+#     PerplexityBot         Perplexity index
+#     Applebot              Siri and Spotlight
+#
+#   User-initiated live fetchers (a person asked; the assistant retrieves):
+#     ChatGPT-User
+#     Claude-User
+#     Perplexity-User
+#     Meta-ExternalFetcher
+#
+#   Bots that serve responses and search indexing:
+#     Amazonbot
+#
+# ----------------------------------------------------------------------------------
+User-agent: *
+Disallow: /_next/
+Disallow: /puma/
+Disallow: /test-data/
+
+# ----------------------------------------------------------------------------------
+# DENY training crawlers and opt-out tokens. Google-Extended and Applebot-Extended
+# only affect Gemini / Apple Intelligence training, not Search, Siri, or Spotlight.
+# ----------------------------------------------------------------------------------
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: meta-externalagent
+User-agent: Bytespider
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: Omgilibot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Disallow: /

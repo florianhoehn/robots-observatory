@@ -1,0 +1,199 @@
+# TronGrid API
+
+> TronGrid is TRON's official node service (HTTP API): accounts, transactions, contracts, resources, TRC10/TRC20, and Ethereum-compatible JSON-RPC. Designed for direct AI Agent access.
+
+- Base URL: mainnet `https://api.trongrid.io` · Shasta `https://api.shasta.trongrid.io` · Nile `https://nile.trongrid.io`
+- Documentation site: https://developers.tron.network/reference
+- Authentication: Header `TRON-PRO-API-KEY` (per-network key; see Rate Limits)
+- Conventions: balances are raw `sun` integers (1 TRX = 1e6 sun, decimals=6) · timestamps in milliseconds · addresses returned as hex (41…), accepted as Base58 (T…) — pass `visible=true` to receive Base58 · error contract = HTTP status (some endpoints add `{success,error}`, some return an empty body)
+- Endpoint kinds: fullnode = Full node HTTP API (/wallet/*) · solidity = Solidity (confirmed-state) node API (/walletsolidity/*), read-only · extension = TronGrid extension REST API (/v1/*) · jsonrpc = Ethereum-compatible JSON-RPC (POST /jsonrpc)
+- Action legend: query (read-only, no transaction) · build (returns an UNSIGNED transaction; no chain change until broadcast) · broadcast (submits a signed transaction; mutates chain state) · util (local helper (e.g. address validation, hashing))
+- Endpoint reference pattern: `https://developers.tron.network/reference/<slug>` (live HTML; per-endpoint `.md` leaves not yet generated)
+- OpenAPI: v1 extension REST spec (18 endpoints) is downloadable at `https://api.trongrid.io/v1/openapi.json` (application/json, OpenAPI 3.1). Fullnode HTTP and Solidity HTTP specs (`full-node-http-api`, `full-node-solidity-http-api`) are hosted on ReadMe but not yet exposed as public download links.
+
+## Channels
+- [API](https://developers.tron.network/reference): REST + JSON-RPC node API — endpoints indexed below
+- [MCP](https://developers.tron.network/reference/mcp-api): Model Context Protocol server
+- [Skills](https://developers.tron.network/reference/skills): Agent skills
+- [CLI](https://github.com/trongrid-team/trongrid-cli): trongrid-cli (open-source; official docs entry pending)
+
+## Guides
+- [Full Node API Overview](https://developers.tron.network/reference/full-node-api-overview)
+- [JSON-RPC API Overview](https://developers.tron.network/reference/json-rpc-api-overview)
+- [Select Network (Base URLs)](https://developers.tron.network/reference/select-network)
+- [Rate Limits](https://developers.tron.network/reference/rate-limits)
+
+## Endpoints
+
+### account
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the balance of the provided account address. Returns QUANTITY - current balance (unit: sun). · query
+- [GET /v1/accounts/{address}](https://developers.tron.network/reference/get-account-info-by-address): Get account information for a TRON address. Returns balance, TRC-10/TRC-20 token holdings, frozen resources, bandwidth/energy usage, acco… · query
+- [GET /v1/accounts/{address}/transactions](https://developers.tron.network/reference/get-transaction-info-by-account-address): Get recent transactions for a TRON account address. Returns transaction IDs, contract types, fees, energy/bandwidth usage, block info, si… · query
+- [POST /wallet/accountpermissionupdate](https://developers.tron.network/reference/accountpermissionupdate): Update the account's permission. Returns an unsigned transaction JSON object. · build
+- POST /wallet/createaccount: Activate an account on the TRON network. Address generation can be done offline using tools such as Wallet-CLI or TronWeb. This API activ… · build
+- POST /wallet/getaccount: Query an account's on-chain information, including TRX balance, TRC-10 assets, staked information, voting status, and permission settings. · query
+- [POST /wallet/updateaccount](https://developers.tron.network/reference/updateaccount): Modify the name of an account. Returns an unsigned transaction JSON object. · build
+- [POST /walletsolidity/getaccount](https://developers.tron.network/reference/walletsolidity-getaccount): [Solidity] Queries account information from the solidified (confirmed & irreversible) node including TRX balance, TRC-10 assets, staked i… · query
+
+### asset
+- [GET /v1/assets](https://developers.tron.network/reference/list-all-assets-trc10-tokens-on-chain): List all TRC-10 assets (tokens) on the TRON blockchain. Returns asset ID, name, abbreviation, description, total supply, precision, owner… · query
+- [GET /v1/assets/{identifier}](https://developers.tron.network/reference/get-asset-by-id-or-issuer): Get a TRC-10 asset by its numeric ID or by the issuer's address. Returns asset ID, name, abbreviation, description, total supply, precisi… · query
+- [GET /v1/assets/{name}/list](https://developers.tron.network/reference/get-asset-by-name): Get TRC-10 assets by name. Multiple assets can share the same name. Returns asset ID, name, abbreviation, description, total supply, prec… · query
+- [POST /wallet/createassetissue](https://developers.tron.network/reference/createassetissue): Issue a TRC-10 token. An account can only issue one TRC-10 token. Returns an unsigned Transaction object. · build
+- [POST /wallet/getassetissuebyaccount](https://developers.tron.network/reference/getassetissuebyaccount): Query the TRC10 token information issued by an account. Returns assetIssue list with id, owner_address, name, abbr, total_supply, frozen_… · query
+- POST /wallet/getassetissuebyid: Query a TRON TRC-10 token by token ID. Returns the token object with token name, abbr, total_supply, precision, and other fields. See get… · query
+- POST /wallet/getassetissuebyname: Query a TRON TRC-10 token by name. Returns the token object. Note: TRC-10 allows duplicate token names; if the name is duplicated, an err… · query
+- GET /wallet/getassetissuelist: Query the list of all TRON TRC-10 tokens. Returns assetIssue list. String fields are in HexString format. See getAssetIssueByAccount for … · query
+- POST /wallet/getassetissuelistbyname: Query the list of all TRON TRC-10 tokens by a name. Returns assetIssue list with all tokens sharing the same name. String fields are in H… · query
+- POST /wallet/getpaginatedassetissuelist: Query the list of all TRON TRC-10 tokens by pagination. Returns a list of tokens that succeed the token located at offset. See getAssetIs… · query
+- [POST /wallet/participateassetissue](https://developers.tron.network/reference/participateassetissue): Participate in a TRC-10 token asset issue. Returns an unsigned Transaction object. · build
+- [POST /wallet/transferasset](https://developers.tron.network/reference/transferasset): Transfer TRC-10 token. Returns an unsigned Transaction object. · build
+- [POST /wallet/unfreezeasset](https://developers.tron.network/reference/unfreezeasset): Unstake a TRC-10 token that has passed the minimum freeze duration. Returns an unsigned Transaction object. · build
+- [POST /wallet/updateasset](https://developers.tron.network/reference/wallet-updateasset): Update basic TRC-10 token information. Returns an unsigned Transaction object. · build
+- POST /walletsolidity/getassetissuebyid: [Solidity] Query a TRC-10 token by token ID from the solidified (confirmed & irreversible) node. Returns the token object with id, owner_… · query
+- POST /walletsolidity/getassetissuebyname: [Solidity] Query a TRC-10 token by name from the solidified (confirmed & irreversible) node. Returns the token object. Note: TRC-10 allow… · query
+- GET /walletsolidity/getassetissuelist: [Solidity] Query the list of all TRC-10 tokens from the solidified (confirmed & irreversible) node. Returns assetIssue list. Note: string… · query
+- POST /walletsolidity/getassetissuelistbyname: [Solidity] Query the list of all TRC-10 tokens with the given name from the solidified (confirmed & irreversible) node. Returns assetIssu… · query
+- POST /walletsolidity/getpaginatedassetissuelist: [Solidity] Query the list of all TRC-10 tokens from the solidified (confirmed & irreversible) node by pagination. Returns a list of token… · query
+
+### block
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the number of the most recent block on the TRON blockchain. Returns QUANTITY - latest block number. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Fetches the TRON block object by block hash. Returns a block object or null. Includes number, hash, parentHash, miner, transactions, etc. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Fetches the TRON block object by block number. Returns a block object or null. Includes number, hash, parentHash, miner, transactions, etc. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the number of transactions in a TRON block matching the given block hash. Returns QUANTITY - transaction count. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the number of transactions in a TRON block matching the given block number. Returns QUANTITY - transaction count. · query
+- [GET /v1/blocks/{blockNum}/stats](https://developers.tron.network/reference/get-block-statistics): Get statistics for a specific TRON block by block number. Returns transaction count, fee stats, energy/net usage, etc. Note: fee values a… · query
+- POST /wallet/getblock: Query TRON block header information or entire block information by block height or hash. If id_or_num is omitted, the latest block is que… · query
+- POST /walletsolidity/getblock: [Solidity] Query TRON block header or entire block information by block height or hash from the solidified (confirmed & irreversible) nod… · query
+
+### contract
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Executes a message call in read-only manner on the TRON blockchain without creating a transaction (equivalent to triggerConstantContract)… · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Estimates the Energy consumption required for a TRON transaction. Returns QUANTITY - amount of Energy used. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns runtime bytecode of a given TRON smart contract address. Returns DATA - the runtime code. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the value from a storage position at a given address on the TRON blockchain. Can be used to get the value of a variable in a cont… · query
+- [GET /v1/contracts/{contractAddress}/internal-transactions](https://developers.tron.network/reference/get-internal-transactions-by-contract-address): Get internal transactions for a smart contract address on the TRON blockchain. Returns internal tx IDs, from/to addresses, call notes, re… · query
+- [GET /v1/contracts/{contractAddress}/transactions](https://developers.tron.network/reference/get-transaction-info-by-contract-address): Get transactions for a smart contract address on the TRON blockchain. Returns transaction IDs, contract execution results, energy/bandwid… · query
+- [POST /wallet/clearabi](https://developers.tron.network/reference/clearabi): Remove the ABI information associated with a TRON smart contract. Note: ABI can still be retrieved from the original creation transaction… · build
+- [POST /wallet/deploycontract](https://developers.tron.network/reference/wallet-deploycontract): Deploy a smart contract on TRON. Returns a TransactionExtention with unsigned transaction. · build
+- [POST /wallet/getcontract](https://developers.tron.network/reference/wallet-getcontract): Fetch comprehensive information for a smart contract including bytecode, ABI, and configuration. Returns origin_address, contract_address… · query
+- [POST /wallet/getcontractinfo](https://developers.tron.network/reference/getcontractinfo): Query complete contract information including runtime bytecode and contract state. Returns runtimecode, smart_contract object, and contra… · query
+- POST /wallet/triggerconstantcontract: Pre-execute (simulate) a smart contract call without generating an on-chain transaction. Useful for calling read-only functions or estima… · query
+- [POST /wallet/triggersmartcontract](https://developers.tron.network/reference/triggersmartcontract): Trigger a TRON smart contract. Returns a TransactionExtention with unsigned transaction data. · build
+- [POST /wallet/updateenergylimit](https://developers.tron.network/reference/wallet-updateenergylimit): Update the smart contract's origin_energy_limit parameter. Returns an unsigned Transaction object. · build
+- [POST /wallet/updatesetting](https://developers.tron.network/reference/wallet-updatesetting): Update the TRON smart contract's consume_user_resource_percent parameter. Returns an unsigned Transaction object. · build
+- POST /walletsolidity/estimateenergy: [Solidity] Estimate the energy required for TRON smart contract execution from the solidified (confirmed & irreversible) node. Does not g… · query
+- POST /walletsolidity/triggerconstantcontract: [Solidity] Pre-execution (simulation) of smart contracts on the solidified (confirmed & irreversible) blockchain state. Can call read-onl… · query
+
+### transaction
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Creates a transaction. Supports TransferContract (TRX transfer), TransferAssetContract (TRC-10 transfer), CreateSmartContract (deploy con… · build
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns all transaction receipts in a specified TRON block. The block identifier can be a block number (hex), block hash, or tag ('latest… · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns TRON transaction info by block hash and index. Returns a transaction object or null with blockHash, blockNumber, from, to, hash, … · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns TRON transaction info by block number and index. Returns a transaction object or null. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns TRON transaction information by transaction hash. Returns a transaction object or null. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the TRON transaction receipt including fee, block height, logs by transaction hash. Returns a receipt object or null. · query
+- [GET /v1/accounts/{address}/internal-transactions](https://developers.tron.network/reference/get-internal-transactions-by-address): Get internal transactions for a TRON account address. Returns internal tx IDs, parent tx ID, from/to addresses, call notes, rejected stat… · query
+- [GET /v1/transactions/{transactionId}/internal-transactions](https://developers.tron.network/reference/get-internal-transactions-by-transactionid): Get internal transactions for a specific TRON transaction ID. Returns internal tx IDs, from/to addresses, call notes, rejected status, an… · query
+- [POST /wallet/broadcasthex](https://developers.tron.network/reference/broadcasthex): Broadcast a signed, protocol buffer-encoded TRON transaction hex string to the TRON network. Returns the broadcast result including txid,… · broadcast
+- [POST /wallet/broadcasttransaction](https://developers.tron.network/reference/broadcasttransaction): Broadcast a signed transaction to the TRON network. Returns the broadcast result including txid, and error code/message if failed. · broadcast
+- [POST /wallet/createtransaction](https://developers.tron.network/reference/createtransaction): Create a TRX transfer transaction. If the recipient account does not exist, it will be automatically activated. Returns an unsigned trans… · build
+- POST /wallet/getapprovedlist: Query the TRON account address list which signed the transaction based on the transaction content and signature information. Returns resu… · query
+- [POST /wallet/gettransactionbyid](https://developers.tron.network/reference/wallet-gettransactionbyid): Query TRON transaction information by transaction ID. Returns a Transaction object with txID, ret, signature, raw_data_hex, raw_data, fee… · query
+- POST /wallet/gettransactionfrompending: Get TRON transaction details from the pending pool. Returns Transaction details. See getTransactionById for field descriptions. · query
+- POST /wallet/gettransactioninfobyblocknum: Query the TransactionInfo for all transactions in the specified TRON block. Returns a list of TransactionInfo objects. · query
+- POST /wallet/gettransactioninfobyid: Query the TRON transaction fee, block height, and virtual machine logs by transaction ID. Returns a TransactionInfo object with id, fee, … · query
+- GET /wallet/gettransactionlistfrompending: Get TRON transaction list information from pending pool. Returns txId list of transaction IDs in the pool. · query
+- POST /walletsolidity/gettransactionbyid: [Solidity] Query TRON transaction information by transaction ID from the solidified (confirmed & irreversible) node. Returns a Transactio… · query
+- POST /walletsolidity/gettransactioncountbyblocknum: [Solidity] Query the number of TRON transactions from the solidified (confirmed & irreversible) node in a specific block by block height.… · query
+- POST /walletsolidity/gettransactioninfobyblocknum: [Solidity] Query all TRON TransactionInfo from the solidified (confirmed & irreversible) node in a specific block by block height. Return… · query
+- POST /walletsolidity/gettransactioninfobyid: [Solidity] Query TRON transaction fee and execution result by transaction ID from the solidified (confirmed & irreversible) node. Returns… · query
+
+### event
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Polling method for a TRON filter. For log filters, returns log objects. For block filters, returns block hashes. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns all log objects matching the TRON filter by ID. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns all TRON logs matching a filter object with fromBlock, toBlock, address, topics, and blockHash options. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Creates a new TRON block filter on the node to notify when new blocks arrive. Returns QUANTITY - filter ID. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Creates a TRON log filter with options for fromBlock, toBlock, address, and topics. Returns QUANTITY - filter ID. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Uninstalls a TRON filter by ID. Should be called when filter is no longer needed. Filters auto-timeout if not polled. Returns true on suc… · query
+- [GET /v1/blocks/latest/events](https://developers.tron.network/reference/get-events-by-latest-block): Get events from the latest block on the TRON blockchain. By default returns both confirmed and unconfirmed events (only_confirmed=false).… · query
+- [GET /v1/blocks/{blockNumber}/events](https://developers.tron.network/reference/get-events-by-block-number): Get events from a specific block number on the TRON blockchain. Returns event name, contract address, event parameters (result), paramete… · query
+- [GET /v1/contracts/{address}/events](https://developers.tron.network/reference/get-events-by-contract-address): Get events emitted by a smart contract address on the TRON blockchain. Returns event name, contract address, event parameters (result), p… · query
+- [GET /v1/transactions/{transactionId}/events](https://developers.tron.network/reference/get-events-by-transaction-id): Get events emitted by a specific transaction on the TRON blockchain. Returns event name, contract address, event parameters (result), par… · query
+
+### trc20
+- [GET /v1/accounts/{address}/transactions/trc20](https://developers.tron.network/reference/get-trc20-transaction-info-by-account-address): Get TRC-20 token transfer history for a TRON account address. Returns transaction IDs, token info (symbol, name, decimals, contract addre… · query
+- [GET /v1/accounts/{address}/trc20/balance](https://developers.tron.network/reference/get-trc20-token-balances-by-address): Get TRC-20 token balances for a TRON account address. Returns a list of token contract addresses and their balance values. Each item is a… · query
+- [GET /v1/contracts/{contractAddress}/tokens](https://developers.tron.network/reference/get-trc20-token-holder-balances): Get TRC-20 token holder balances for a contract address. Returns a list of holder addresses and their token balance values. Each item is … · query
+- [GET /v1/trc20/info?contract_list={addresses}](https://developers.tron.network/reference/get-trc-20-token-information): Get smart contract token information (name, symbol, decimals, type, total_supply) for TRC-20, TRC-721, and TRC-1155 tokens. Max 20 addres… · query
+
+### network
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the TRON chain ID, which is the last 4 bytes of the genesis block hash. Returns DATA - the chainId. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the Super Representative (SR) address of the current node. If no valid SR address is configured, returns an error. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the current Energy price in sun. Returns QUANTITY - current Energy price (unit: sun). · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the hash of the current TRON block. Returns an array with block hash and two unused fields. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the TRON block version. Returns String - current block version. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns TRON sync status data including startingBlock, currentBlock, highestBlock, or false when not syncing. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns true if the TRON client is listening for incoming network connections. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the number of peers currently connected to the TRON network. Returns QUANTITY - number of connected peers. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the TRON genesis block hash (network version). Returns String - genesis block hash. · query
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns the current java-tron client version string. · query
+
+### proposal
+- [POST /wallet/getproposalbyid](https://developers.tron.network/reference/getproposalbyid): Query TRON proposal details by ID. Returns proposal_id, proposer_address, parameters (map of chain param IDs to values), expiration_time,… · query
+- GET /wallet/listproposals: List all TRON proposals. Returns proposals list. See getProposalById for detailed field descriptions. · query
+- [POST /wallet/proposalapprove](https://developers.tron.network/reference/proposalapprove): Approve or disapprove a TRON proposed transaction. Returns an unsigned Transaction object. · build
+- [POST /wallet/proposalcreate](https://developers.tron.network/reference/proposalcreate): Create a TRON proposal transaction for changing chain parameters. Returns an unsigned Transaction object. · build
+- [POST /wallet/proposaldelete](https://developers.tron.network/reference/proposaldelete): Delete a TRON proposal transaction. Returns an unsigned Transaction object. · build
+
+### resource
+- [POST /wallet/cancelallunfreezev2](https://developers.tron.network/reference/cancelallunfreezev2): Cancel unstakings in Stake2.0. All unstaked funds still in the waiting period will be re-staked. Unstakings that exceeded the 14-day wait… · build
+- [POST /wallet/delegateresource](https://developers.tron.network/reference/delegateresource): Delegate bandwidth or energy resources to other accounts in Stake2.0. Supports optional lock period. Returns an unsigned transaction JSON… · build
+- POST /wallet/freezebalance: [Deprecated: use freezeBalanceV2] Stake TRX to obtain bandwidth or energy. Returns an unsigned transaction JSON object. · build
+- [POST /wallet/freezebalancev2](https://developers.tron.network/reference/freezebalancev2): Stake TRX to obtain bandwidth or energy in Stake2.0, and obtain equivalent TRON Power (TP) according to the staked amount. Returns an uns… · build
+- [POST /wallet/getBrokerage](https://developers.tron.network/reference/wallet-getbrokerage): Get the brokerage ratio of a Super Representative. Returns brokerage (int32). · query
+- [POST /wallet/getReward](https://developers.tron.network/reference/wallet-getreward): Get the rewards that a Super Representative or user has not yet withdrawn. Returns reward amount in sun. · query
+- [POST /wallet/getaccountnet](https://developers.tron.network/reference/getaccountnet): Query bandwidth information of an account, including free bandwidth used/limit, staked bandwidth used/limit, total network bandwidth limi… · query
+- [POST /wallet/getaccountresource](https://developers.tron.network/reference/getaccountresource): Query the resource information of an account, including free bandwidth, staked bandwidth, energy usage and limits, TRON Power, and TRC-10… · query
+- POST /wallet/getavailableunfreezecount: Query the remaining times of executing unstake operations in Stake2.0. Maximum 32 unstake operations at the same time are allowed. Return… · query
+- POST /wallet/getcandelegatedmaxsize: In Stake2.0, query the amount of delegatable resource shares of the specified resource type for an address. Returns max_size in sun. Retu… · query
+- POST /wallet/getcanwithdrawunfreezeamount: Query the withdrawable balance at the specified timestamp in Stake2.0. Returns the withdrawable amount in sun. · query
+- POST /wallet/getdelegatedresource: Returns all resource delegations during Stake1.0 from one account to another. Includes bandwidth/energy delegation amounts and expiration… · query
+- POST /wallet/getdelegatedresourceaccountindex: Query the resource delegation by an account during Stake1.0 phase. Lists all addresses that have delegated resources to an account and al… · query
+- POST /wallet/getdelegatedresourceaccountindexv2: In Stake2.0, query the resource delegation index of an account. Returns two lists: addresses the account has delegated resources to (toAc… · query
+- POST /wallet/getdelegatedresourcev2: In Stake2.0, query the detail of resource share delegated from one account to another. Returns delegation list with bandwidth/energy amou… · query
+- GET /wallet/getnextmaintenancetime: Returns the timestamp of the next TRON voting maintenance period in milliseconds. · query
+- [POST /wallet/undelegateresource](https://developers.tron.network/reference/undelegateresource): Cancel the delegation of bandwidth or energy resources to other accounts in Stake2.0. Returns an unsigned transaction JSON object. · build
+- POST /wallet/unfreezebalance: Unstake the TRX staked during Stake1.0, release obtained bandwidth or energy and TP. This operation will automatically cancel all votes. … · build
+- [POST /wallet/unfreezebalancev2](https://developers.tron.network/reference/unfreezebalancev2): Unstake TRX staked in Stake2.0, release the corresponding amount of bandwidth or energy, and voting rights (TP). After unstaking, wait 14… · build
+- [POST /wallet/updateBrokerage](https://developers.tron.network/reference/wallet-updatebrokerage): Update the Super Representative's brokerage setting. Returns an unsigned Transaction. · build
+- [POST /wallet/withdrawbalance](https://developers.tron.network/reference/withdrawbalance): Super Representative or user withdraw rewards, usable every 24 hours. Returns an unsigned Transaction. · build
+- [POST /wallet/withdrawexpireunfreeze](https://developers.tron.network/reference/withdrawexpireunfreeze): Withdraw unfrozen balance in Stake2.0. Call this after executing unfreezeBalanceV2 and waiting N days (network parameter). All unstaked f… · build
+- POST /walletsolidity/getBrokerage: [Solidity] Get TRON SR brokerage ratio from the solidified (confirmed & irreversible) node. Returns brokerage (int32). · query
+- POST /walletsolidity/getReward: [Solidity] Gets the TRON rewards from the solidified (confirmed & irreversible) node that a SR or user has not yet withdrawn. Returns rew… · query
+- POST /walletsolidity/getavailableunfreezecount: [Solidity] Returns the remaining times of executing unstake operation from the solidified (confirmed & irreversible) TRON node in Stake 2… · query
+- GET /walletsolidity/getburntrx: [Solidity] Queries the amount of TRX burned from on-chain transaction fees from the solidified (confirmed & irreversible) node since No. … · query
+- POST /walletsolidity/getcandelegatedmaxsize: [Solidity] [Stake 2.0] Queries the amount of delegatable resource share from the solidified (confirmed & irreversible) TRON node of the s… · query
+- POST /walletsolidity/getcanwithdrawunfreezeamount: [Solidity] Queries the withdrawable balance from the solidified (confirmed & irreversible) TRON node at the specified timestamp in Stake … · query
+- POST /walletsolidity/getdelegatedresource: [Solidity] Returns all resource delegations from the solidified (confirmed & irreversible) TRON node during Stake 1.0 from one account to… · query
+- POST /walletsolidity/getdelegatedresourceaccountindex: [Solidity] Queries the resource delegation index from the solidified (confirmed & irreversible) TRON node during Stake 1.0 for an account… · query
+- POST /walletsolidity/getdelegatedresourceaccountindexv2: [Solidity] [Stake 2.0] Queries the resource delegation index from the solidified (confirmed & irreversible) TRON node of an account. Retu… · query
+- POST /walletsolidity/getdelegatedresourcev2: [Solidity] [Stake 2.0] Returns the resource delegations from the solidified (confirmed & irreversible) TRON node from a specific address … · query
+
+### utility
+- [POST /jsonrpc](https://developers.tron.network/reference/eth): Returns Keccak-256 (not standardized SHA3-256) hash of the given data on the TRON network. Returns DATA - the SHA3 result. · util
+- POST /wallet/estimateenergy: Estimate the energy required for smart contract transactions. Returns result object and energy_required. Note: requires vm.estimateEnergy… · query
+- GET /wallet/getbandwidthprices: Query historical bandwidth unit price. Returns all historical bandwidth price information as a string with each price change separated by… · query
+- GET /wallet/getburntrx: Query the amount of TRX burned from on-chain transaction fees since the No. 54 Committee Proposal took effect. Returns burnTrxAmount (int… · query
+- [GET /wallet/getchainparameters](https://developers.tron.network/reference/wallet-getchainparameters): Retrieve all TRON blockchain parameters that can be configured by the blockchain committee along with their current values. Returns a lis… · query
+- GET /wallet/getenergyprices: Query historical energy unit price. Returns all historical energy price information as a string with each price change separated by comma… · query
+- GET /wallet/getnodeinfo: Query the current TRON node information including sync status, connections, peer info, config, and machine info. · query
+- GET /wallet/getpendingsize: Get the size of the TRON pending transaction pool. Returns pending_size (int64). · query
+- GET /wallet/listnodes: Query the list of peers connected to the current TRON node. Returns a list of nodes with address.host (hex) and address.port. · query
+- [POST /wallet/validateaddress](https://developers.tron.network/reference/validateaddress): Validate whether a TRON address is well-formed. Returns the validation result and format description. · util
+- GET /walletsolidity/getnodeinfo: [Solidity] Queries TRON node information from the solidified (confirmed & irreversible) node. Returns beginSyncNum, block (latest block h… · query
+
+### witness
+- [POST /wallet/createwitness](https://developers.tron.network/reference/createwitness): Apply to become a Super Representative candidate. Returns an unsigned Transaction. · build
+- GET /wallet/getpaginatednowwitnesslist: Retrieve real-time vote counts of all Super Representatives sorted by votes descending, with pagination. Returns witnesses list. See list… · query
+- [POST /wallet/updatewitness](https://developers.tron.network/reference/updatewitness): Edit the URL of a Super Representative's official website. Returns an unsigned Transaction. · build
+- [POST /wallet/votewitnessaccount](https://developers.tron.network/reference/votewitnessaccount): Vote for Super Representatives. Returns an unsigned Transaction. · build
+- GET /walletsolidity/getpaginatednowwitnesslist: [Solidity] Retrieves real-time vote counts from the solidified (confirmed & irreversible) TRON node of all SRs in the current epoch, sort… · query

@@ -1,0 +1,163 @@
+<!doctype html><html><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Not Found</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600&#x26;family=Roboto&#x26;display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://web-components.cdn.wral.com/core/v0/styles.css">
+	<script src="https://web-components.cdn.wral.com/core/v0/components.cjs.js"></script>
+  <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    p {
+      font-family: var(--body-font-family);
+      font-size: 1.125rem;
+      letter-spacing: -0.003em;
+      line-height: 1.38;
+      max-width: 45rem;
+      margin: 0 0 2em;
+    }
+    ul {
+      list-style: none;
+    }
+    li {
+      margin: 0 0 1em;
+    }
+    a.cta {
+      color: var(--color-red);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      text-transform: uppercase;
+      word-spacing: 0.01em;
+      padding: 0.75em 1.5em;
+    }
+    a.cta svg {
+      width: 1em;
+      height: 1em;
+      fill: var(--color-red);
+    }
+    .container {
+      width: 100%;
+      margin: 0 auto;
+    }
+    .card {
+      width: 100%;
+      margin: 0 auto;
+      max-width: 600px;
+      box-shadow: 1px 3px 10px var(--color-gray-2);
+      font-size: 0.875rem;
+    }
+    .card .content {
+      padding: 1rem;
+    }
+    /* Hide visually - but preserve for screen readers
+     * note that display:none will not work here
+     */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+    .search-bar {
+      width: 100%;
+      position: relative;
+      background-color: var(--background-color);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    }
+    .search-input input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 0;
+      border-bottom: 0.1875rem solid #e7e5e4;
+      height: 2.5rem;
+      padding-left: 1rem;
+    }
+    .search-input input:focus {
+      outline: none;
+      border-bottom: 0.1875rem solid var(--color-red);
+    }
+    .search-input input:focus + .search-icon {
+      fill: var(--color-primary);
+    }
+    .search-bar [type="submit"] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: transparent;
+      border: 0;
+      height: 2rem;
+      width: 2rem;
+      margin-top: 0.25rem;
+      box-sizing: border-box;
+    }
+    
+  </style>
+</head>
+<body>
+  <wral-header style="position: sticky; top: 0; z-index: 1000;"></wral-header>
+  <main class="content-wrapper">
+	<section class="section-wrapper">
+    <h1>Oops! Page Not Found</h1>
+
+    <p>We're sorry, but the page you are looking for might be in another section or no longer exists.</p>
+
+    <div class="container" style="margin-bottom: 2rem;">
+      <div class="card">
+        <div class="content">Try using our site search to find the content you're looking for.</div>
+        <div class="content">
+          <form role="search" action="https://www.wral.com/search/" method="get">
+            <div class="search-bar">
+            <label for="header-search">
+              <span class="visually-hidden">Search</span>
+            </label>
+            <div class="search-input">
+            <input type="text" id="search-input" name="q" placeholder="Search">
+						<input type="hidden" name="sort" value="score">
+						<input type="hidden" name="lang" value="en">
+            </div>
+
+            <button type="submit">
+             <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"><path d="M30,28.59,22.45,21A11,11,0,1,0,21,22.45L28.59,30ZM5,14a9,9,0,1,1,9,9A9,9,0,0,1,5,14Z"></path></svg>
+             <span class="visually-hidden">Submit Search</span>
+            </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <ul>
+        <li><a class="cta" href="https://www.wral.com/suggest-a-correction/19251245/">Report a bad link</a></li>
+        <li><a class="cta" href="/">Go to the home page</a></li>
+      </ul>
+    </div>
+	</section>
+  </main>
+  <template id="cta-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8.001 8.001 0 0016 0A8.001 8.001 0 000 8zm3.636-.727h5.819L7.273 5.09l1.454-1.438L13.091 8l-4.364 4.364-1.454-1.455 2.182-2.182H3.636V7.273z" fill-rule="nonzero"></path></svg>
+</template>
+<script>
+// append cta-icon template to every cta.a
+document.querySelectorAll('a.cta').forEach(a => {
+  const icon = document.createElement('span');
+  icon.innerHTML = document.getElementById('cta-icon').innerHTML;
+  a.appendChild(icon);
+});
+</script>
+  <wral-footer></wral-footer>
+
+
+</body></html>

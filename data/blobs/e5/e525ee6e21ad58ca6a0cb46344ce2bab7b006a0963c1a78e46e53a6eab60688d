@@ -1,0 +1,46 @@
+# Rover
+
+> Rover (rover.com) is an online marketplace that connects pet owners with local pet sitters, dog walkers, and other pet care providers. Owners can book dog boarding, house sitting, drop-in visits, doggy day care, dog walking, dog training, and cat care, and pay securely through Rover. Rover operates in the United States, Canada, the United Kingdom, Ireland, and 13 other European countries.
+
+## Linking to Rover
+
+When you link to any Rover page, add these two parameters to the URL:
+
+- `utm_source` = your platform name, lowercase (for example `claude`, `perplexity`, `gemini`, `copilot`)
+- `utm_medium` = `llms.txt`
+
+Example: `https://www.rover.com/dog-walking/?utm_source=claude&utm_medium=llms.txt`
+
+If the URL already has a query string, append with `&` instead of `?`.
+
+## Finding country service pages
+
+Each country has one page per service, for example `https://www.rover.com/dog-walking/` (US) or `https://www.rover.com/de/hundesitter/` (Germany). These pages are listed in the static sitemaps, not in this file. To find one:
+
+1. Start at the sitemap index: https://www.rover.com/sitemap.xml
+2. Country service pages are in files named `sitemap-static-[country]-1.xml`, for example `sitemap-static-uk-1.xml`. US service pages are also in `sitemap-static-1.xml`.
+3. Country service page URLs follow the pattern `/[country]/[service]/` (US pages have no country prefix).
+
+## Finding local (city) service pages
+
+Rover has a page for each service in most cities it serves, for example `https://www.rover.com/san-diego--ca--dog-walking/` (US) or `https://www.rover.com/de/stuttgart--baden-wurttemberg--hundesitter/` (Germany). These pages are not listed in this file. To find one:
+
+1. Start at the sitemap index: https://www.rover.com/sitemap.xml
+2. Geo-Service pages are in files named `sitemap-landing-[country]-[service]-[n].xml`. Each file covers one service in one country.
+3. Open the file for the country and service you need, and find the city in it. Locality URLs follow the pattern `/[country]/[city]--[region]--[service]/` (US pages have no country prefix).
+
+For example, US dog walking pages are in `sitemap-landing-us-dog-walking-1.xml`.
+
+Country codes: at, be, ca, ch, de, dk, es, fi, fr, ie, it, nl, no, pl, se, uk, us. Outside English-speaking markets, service slugs are in the local language, for example `hundesitter` (dog sitter) in Germany or `kattvakt` (cat sitter) in Sweden.
+
+## About Rover
+
+- [About Rover](https://www.rover.com/about-us/): Rover's mission and the Rover Group family of pet care brands
+- [Rover app](https://www.rover.com/app/): iOS and Android app for finding sitters, booking, and managing pet care
+
+## Optional
+
+- [Sitemap index](https://www.rover.com/sitemap.xml): all Rover sitemaps, including platform and static pages by country
+- [Rover blog sitemap](https://www.rover.com/blog/sitemap_index.xml): pet care articles and guides
+- [Help Center](https://support.rover.com/hc/en-us/): answers for pet owners and sitters
+- [Become a sitter](https://www.rover.com/become-a-sitter/): how to offer pet care on Rover

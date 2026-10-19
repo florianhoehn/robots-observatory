@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:layout="http://www.springframework.org/schema/security">
+<head>
+  
+    
+    <script>
+        (function () {
+            var webMeasurementId = "G-1Z7L98G6BK";
+            var appMeasurementId = "G-4MCRJMX7YL";
+            var STORAGE_KEY = 'ga4VerifiedSessionId';
+            var LOCK_NAME = 'ga4VerifiedSessionLoginStatus';
+            var POLL_INTERVAL_MS = 100;
+            var POLL_TIMEOUT_MS = 1000;
+
+            // 同名Cookieが複数存在する場合、ドメイン指定を誤った削除処理により別ドメインスコープで
+            // 値がdeletedのダミーCookieが残っていることがある。それを除いて1件に絞れる場合のみ値を返す。
+            function readSingleCookieValue(name) {
+                var pattern = new RegExp('(?:^|; )' + name + '=([^;]*)', 'g');
+                var values = [];
+                var match;
+                while ((match = pattern.exec(document.cookie)) !== null) {
+                    var value = decodeURIComponent(match[1]);
+                    if (value !== 'deleted') {
+                        values.push(value);
+                    }
+                }
+                return values.length === 1 ? values[0] : null;
+            }
+
+            function extractSessionId(cookieValue) {
+                if (!cookieValue) return null;
+                var match = cookieValue.match(/\.s(\d+)(?:\$|$)/);
+                return match ? match[1] : null;
+            }
+
+            function readPreviousSessionId() {
+                try {
+                    return window.localStorage.getItem(STORAGE_KEY);
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function storeSessionId(sessionId) {
+                try {
+                    window.localStorage.setItem(STORAGE_KEY, sessionId);
+                } catch (e) {
+                    // localStorageが使えない場合(プライベートブラウジング等)は次回以降も検知できないだけで、既存挙動には影響しない
+                }
+            }
+
+            // asoview-ui(Java)側のAsoviewAppUtil.isApp()と同じ判定基準。
+            function isAsoviewApp() {
+                var userAgent = window.navigator.userAgent;
+                return typeof userAgent === 'string'
+                    && (userAgent.indexOf('AppRequest/ios') !== -1 || userAgent.indexOf('AppRequest/android') !== -1);
+            }
+
+            function pushVerifiedSessionLoginStatus(isLoggedIn, memberNumber) {
+                var event = { event: 'verified_session_login_status' };
+                if (isLoggedIn === true || isLoggedIn === false) {
+                    event.is_logged_in = isLoggedIn;
+                }
+                if (isAsoviewApp()) {
+                    event.platform = 'APP';
+                }
+                if (typeof memberNumber === 'number') {
+                    event.member_number = memberNumber;
+                }
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push(event);
+            }
+
+            function checkNewSession() {
+                // アプリのWebViewではWeb用の土台タグが載らずWeb用Cookieが作られないため、アプリ用の測定IDを見る。
+                var measurementId = isAsoviewApp() ? appMeasurementId : webMeasurementId;
+                if (!measurementId) return;
+
+                var currentSessionId = extractSessionId(readSingleCookieValue('_ga_' + measurementId.replace('G-', '')));
+                if (!currentSessionId) return;
+
+                var previousSessionId = readPreviousSessionId();
+                if (previousSessionId !== null && previousSessionId !== currentSessionId) {
+                    fetch('/api/google-analytics/login-status', { credentials: 'same-origin' })
+                        .then(function (response) { return response.json(); })
+                        .then(function (data) { pushVerifiedSessionLoginStatus(data.isLoggedIn, data.memberNumber); })
+                        .catch(function () { pushVerifiedSessionLoginStatus(undefined, undefined); });
+                }
+                storeSessionId(currentSessionId);
+            }
+
+            function runCheckNewSessionWithLock() {
+                try {
+                    if (window.navigator && window.navigator.locks && typeof window.navigator.locks.request === 'function') {
+                        window.navigator.locks.request(LOCK_NAME, function () {
+                            try {
+                                checkNewSession();
+                            } catch (e) {
+                                // 予期せぬエラーは握りつぶし、既存のページ表示・計測に影響を与えない
+                            }
+                        });
+                    } else {
+                        checkNewSession();
+                    }
+                } catch (e) {
+                    // 予期せぬエラーは握りつぶし、既存のページ表示・計測に影響を与えない
+                }
+            }
+
+            var pollElapsedMs = 0;
+            var pollId = setInterval(function () {
+                pollElapsedMs += POLL_INTERVAL_MS;
+                runCheckNewSessionWithLock();
+                if (pollElapsedMs >= POLL_TIMEOUT_MS) {
+                    clearInterval(pollId);
+                }
+            }, POLL_INTERVAL_MS);
+
+            if (document.readyState === 'complete') {
+                runCheckNewSessionWithLock();
+            } else {
+                window.addEventListener('load', runCheckNewSessionWithLock);
+            }
+        })();
+    </script>
+
+
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T86K2F');</script>
+    <!-- End Google Tag Manager -->
+    
+    
+    <script defer src="/js/googleAnalyticsMgr-02fec7256a63884ad1a3b044a34964d9.js"></script>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>お探しのページが見つかりません。 | アソビュー！'</title>
+  <meta name="google-site-verification" content="kGT5Z3YEQgCdfMeof3F-n85KpuKpsG97WPv0o24LQqs"/>
+  <meta name="description"
+        content="【最安値保証】レジャー・遊び・体験 スポットを検索・予約できる、日本最大級のレジャー総合情報サイト。 旅行先での遊び や、週末の おでかけ 先をお探しなら「アソビュー！」にお任せ。ラフティング や パラグライダー 、 SUP 、 MTB など多数のプラン掲載。"/>
+  <meta name="keywords" content="レジャー,遊び,体験,おでかけ"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="shortcut icon"
+        href="//image.asoview-media.com/image/production/fundamentals/logo/favicon.ico"/>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/pc/error/404/style.min-c78eeccf1fd4723a91a72bfd536afeba.css">
+  <link rel="preload" href="/js/pc/runtime.03c4a689.js" as="script"><script defer="defer" type="text/javascript" src="/js/pc/runtime.03c4a689.js"></script><link rel="preload" href="/js/pc/vendors-auto.3755b18d.chunk.js" as="script"><script defer="defer" type="text/javascript" src="/js/pc/vendors-auto.3755b18d.chunk.js"></script>
+  <script defer src="/js/pc/error-404-9c1a8051793cc0e05be53287fcd9d320.js"></script>
+</head>
+<body>
+  
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T86K2F"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    
+
+  <div id="page-header" class="page-header"></div>
+  <div id="error-404"></div>
+
+  <footer class='page-footer'>
+  <small class='page-footer__copyright page-footer__copyright--gray'>copyright(c) All rights reserved ASOVIEW
+    Inc.</small>
+</footer>
+
+<script type="text/javascript">
+  var ASOVIEW_DATASOURCE={
+    images: {
+      sea: [
+        {
+          "leisureUrl": "/leisure/24/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/15/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea02.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0175/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea03_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/15/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea04.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1016/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea05.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1016/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea06.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/7/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea07.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0042/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea08.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1001/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea09.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1001/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea10.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0341/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea11_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/12/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea12.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/11/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea13.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/15/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea14.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1010/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea15.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/12/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea16.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/12/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea17.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0039/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea18.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0039/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea19.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0038/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea20.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0048/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea21.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0038/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea22.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0175/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea23_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0038/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea24.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/11/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea25.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0365/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea26.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0088/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea27_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1016/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea28.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0368/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea29.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1238/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/sea/2x/sea30.jpg"
+        }
+      ],
+      "mountain": [
+        {
+          "leisureUrl": "/leisure/act1035/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0107/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain02.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0036/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain03_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0126/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain04_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0126/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain05_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0116/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain06.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0022/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain07.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0022/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain08.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0006/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain09.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/26/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain10.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/26/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain11.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/26/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain12.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0061/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain13.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0126/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain14_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0023/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain15.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0126/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain16_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/41/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain17.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0033/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain18.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0085/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain19.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/39/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain20_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/78/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain21_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/34/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain22_01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/34/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain23.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/39/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain24.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/34/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain25.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/34/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain26.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/39/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain27.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/39/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain28.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/6/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain29.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0022/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/mountain/2x/mountain30.jpg"
+        }
+      ],
+      "town": [
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town01.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town02.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town03.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1132/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town04.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town05.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town06.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town07.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1093/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town08.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1230/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town09.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0238/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town10.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1164/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town11.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0118/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town12.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0118/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town13.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0118/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town14.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0180/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town15.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1129/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town16.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0314/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town17.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1163/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town18.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1163/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town19.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1163/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town20.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1163/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town21.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0397/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town22.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0397/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town23.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0178//",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town24.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0178/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town25.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0399/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town26.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0399/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town27.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act0118/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town28.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1116/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town29.jpg"
+        },
+        {
+          "leisureUrl": "/leisure/act1116/",
+          "imagePath": "https://image.asoview-media.com/image/production/error/town/2x/town30.jpg"
+        }
+      ]
+    }
+  }
+</script>
+
+</body>
+</html>

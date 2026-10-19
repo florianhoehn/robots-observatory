@@ -1,0 +1,18 @@
+User-agent: *
+Host: storeland.ru
+Disallow: /user
+Disallow: /search
+Disallow: /cart
+Disallow: /shop
+Disallow: /order
+Disallow: /news
+Disallow: /page
+Disallow: /goods
+Disallow: /catalog
+Disallow: /compare
+Disallow: /favorites
+Disallow: /web/upload/news
+Disallow: /web/upload/sitefiles
+Disallow: */new
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&nostat&from&p&partner&key&q&mod_id /
+Sitemap: https://storeland.ru/web_frontend/sitemap.xml

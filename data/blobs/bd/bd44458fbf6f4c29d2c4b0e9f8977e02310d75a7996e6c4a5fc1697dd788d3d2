@@ -1,0 +1,86 @@
+<%@ page errorPage="ErrorPage.jsp" %>
+<%@ page extends="com.netdorm.servlet.JspBaseApp" %>
+<%@ page import="net.netdorm.util.ToolKit, com.netdorm.common.*" %>
+<%
+boolean bLogin = isLogon(session);
+boolean bIncluded = request.getAttribute("javax.servlet.include.request_uri") != null;
+
+String sNewSite = checkSite(request, response);
+if (sNewSite != null) {
+    if (bIncluded && sNewSite.startsWith("/")) {
+        request.getRequestDispatcher(sNewSite).include(request, response);
+    }
+    else if (!bIncluded) {
+        if (sNewSite.startsWith("/")) {
+            request.getRequestDispatcher(sNewSite).forward(request, response);
+        }
+        else {
+            response.sendRedirect(sNewSite);
+        }
+    }
+    return;
+}
+
+boolean bMobile = isMobile(request);
+String sSitePage = getSitePage(request, response);
+if (sSitePage.length() > 0) {
+    if (bIncluded) {
+        request.getRequestDispatcher(sSitePage).include(request, response);
+    }
+    else {
+        request.getRequestDispatcher(sSitePage).forward(request, response);
+    }
+    return;
+}
+
+//-- SECURITY (2026-08-22): validate the ?p= sub-page path before it is used as
+//-- a jsp:include target. Returns null for anything that is not a safe internal
+//-- .jsp path, so the existing "no p" fallback below renders the default page.
+//-- Fixes the reported reflected XSS (a bogus ?p= raised FileNotFoundException
+//-- whose message was echoed back raw by ErrorPage.jsp) and blocks arbitrary
+//-- path includes. See ToolKit.safeIncludePath().
+String sPage = ToolKit.safeIncludePath(request.getParameter("p"));
+if (sPage == null) {
+    // No sub-page requested — show new home page
+    if (bIncluded) {
+        request.getRequestDispatcher("/newhome/index.jsp").include(request, response);
+    }
+    else {
+        request.getRequestDispatcher("/newhome/index.jsp").forward(request, response);
+    }
+    return;
+}
+
+// p parameter is set (e.g. cmd=userhome) — use existing layout to host sub-pages
+if (bLogin && ToolKit.checkNull(sPage).indexOf("login.jsp") >= 0) {
+    sPage = "/users/user_index.jsp?body=/source/u-home.jsp";
+}
+%>
+<script src="/site/js/checkmobile.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script src="/stylesheet/5235e63bfa.js" crossorigin="anonymous"></script>
+<%@include file="/inc/headers.jsp" %>
+<body leftmargin="0" rightmargin="0" topmargin="0" bgcolor="#ffffff">
+<%@include file="/inc/system-status.jsp"%>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+  <tr>
+    <td colspan=3 bgcolor="#fff">
+      <%@include file="/ihome/top-bar.jsp"%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" align=center valign="top">
+      <jsp:include flush="true" page="<%=sPage%>" />
+    </td>
+  </tr>
+</table>
+<jsp:include flush="false" page="/inc/copyright.jsp" />
+<%
+if (!bLogin) {
+    printLog("dnsexit", request, response);
+    sourceCheck(request, response);
+}
+%>
+<jsp:include page="/inc/scroll-top.jsp" flush="true"></jsp:include>
+</body>
+</html>

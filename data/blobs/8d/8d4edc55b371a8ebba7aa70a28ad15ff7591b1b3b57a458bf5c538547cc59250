@@ -1,0 +1,66 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "ActiveCampaign",
+    "identifier": "did:web:activecampaign.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:activecampaign.com:server:activecampaign-mcp",
+      "displayName": "ActiveCampaign Remote MCP Server",
+      "type": "application/mcp-server-card+json",
+      "url": "https://www.activecampaign.com/.well-known/mcp/server-card.json",
+      "description": "Remote MCP server for managing an ActiveCampaign account: contacts, lists, tags, campaigns, automations, deals, pipelines, accounts, and custom fields. Requires a per-user Remote MCP URL obtained from the ActiveCampaign app.",
+      "representativeQueries": [
+        "add this person as a contact in ActiveCampaign",
+        "tag every contact who opened the last campaign",
+        "create a deal in my sales pipeline",
+        "enroll this contact in the onboarding automation",
+        "which automations is this contact in"
+      ],
+      "capabilities": [
+        "contact-management",
+        "list-and-tag-management",
+        "email-campaign-management",
+        "marketing-automation",
+        "crm-and-deals",
+        "custom-fields",
+        "account-management"
+      ],
+      "tags": ["crm", "marketing-automation", "email", "sales", "mcp"],
+      "version": "1.0.0",
+      "updatedAt": "2026-09-16T00:00:00Z"
+    },
+    {
+      "identifier": "urn:air:activecampaign.com:agent:activecampaign",
+      "displayName": "ActiveCampaign Agent Card",
+      "type": "application/json",
+      "url": "https://www.activecampaign.com/.well-known/agent-card.json",
+      "description": "Capability description for ActiveCampaign as an agent-callable platform. Enumerates the skills the platform exposes and points to the MCP server that implements them.",
+      "representativeQueries": [
+        "what can ActiveCampaign do for me",
+        "can an agent manage my ActiveCampaign campaigns",
+        "what ActiveCampaign skills are available to agents"
+      ],
+      "tags": ["crm", "marketing-automation", "agent-card"],
+      "version": "1.0.0",
+      "updatedAt": "2026-09-16T00:00:00Z"
+    },
+    {
+      "identifier": "urn:air:activecampaign.com:skill:activecampaign-api",
+      "displayName": "ActiveCampaign API Skill",
+      "type": "text/markdown",
+      "url": "https://www.activecampaign.com/.well-known/agent-skills/activecampaign-api/SKILL.md",
+      "description": "Agent Skill covering ActiveCampaign REST API v3 authentication, the account-specific base URL, pagination, error handling, and safe-write practices for production marketing data.",
+      "representativeQueries": [
+        "how do I authenticate to the ActiveCampaign API",
+        "what is the ActiveCampaign API base URL",
+        "how do I paginate ActiveCampaign list endpoints",
+        "why am I getting a 401 from ActiveCampaign"
+      ],
+      "tags": ["api", "authentication", "documentation", "agent-skill"],
+      "version": "1.0.0",
+      "updatedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

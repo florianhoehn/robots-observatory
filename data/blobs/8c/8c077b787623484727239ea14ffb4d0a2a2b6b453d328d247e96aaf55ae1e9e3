@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<link rel="icon" href="https://image.yes24.com/sysimage/mobileN/icon/icon_n.png">
+<title>페이지를 찾을 수 없습니다. - 예스24</title>
+<link rel="stylesheet" type="text/css" href="https://image.yes24.com/sysimage/yesUI/mobile/comN/elem.css?v=230308">
+<link rel="stylesheet" type="text/css" href="https://image.yes24.com/sysimage/YesUI/mobile/layout/error.css?v=230308">
+<script>
+	var userAgent = navigator.userAgent.toLowerCase(); // 사용자 브라우저 정보
+	var isMobile = /iphone|ipod|android|blackberry|bb\d+|meego/.test(userAgent); // 모바일 디바이스 판별
+
+	function GetRedirectUrl() {
+        if (isMobile) {
+            location.href = 'https://m.yes24.com'; // 모바일
+        } else {
+            location.href = 'https://www.yes24.com'; // PC
+        }
+	}
+
+	function GetErrorReport() {
+        if (isMobile) {
+            location.href = 'https://m.yes24.com/MyPage/RegisterAdvice?type=m'; // 모바일
+        } else {
+            location.href = 'https://www.yes24.com/Mall/Help/CS/Apply'; // PC
+        }
+	}
+</script>
+</head>
+<body>
+
+<div class="yesErrorWrap">
+	<div class="yesError">
+		<div class="yesError_logo"><img src="https://image.yes24.com/sysimage/mv3/com/logo_error_s.svg" border="0" alt="YES24.COM"></div>
+		<div class="yesError_msg">
+			<div class="msg_tit">
+				페이지를 찾을 수 없습니다.
+			</div>
+			<div class="msg_txt">
+				현재 페이지 주소(URL)가<br/>
+				정확한지 다시 한번 확인 해 주시기 바랍니다.
+			</div>
+			<div class="msg_btn">
+				<a href="javascript:void(0);" class="btn_c l_size btn_act03" onclick="GetErrorReport();"><em class="txt">오류 신고</em></a>
+				<a href="javascript:void(0);" class="btn_c l_size btn_act02" onclick="GetRedirectUrl();"><em class="txt">예스24 메인</em></a>
+			</div>
+		</div>
+		<div class="yesError_foot">
+			<p class="foot_txt"><strong>고객센터 <a href="tel:1544-3800">1544-3800</a></strong></p>
+			<p class="foot_copy">Copyright ⓒ YES24. All rights Reserved.</p>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

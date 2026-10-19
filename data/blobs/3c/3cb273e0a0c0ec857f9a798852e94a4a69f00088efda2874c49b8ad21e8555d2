@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+<script >
+window.getCookie = function () {
+    const nameEQ = name + "=";
+    const cookies = document.cookie.split(';');
+    
+    for(let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.indexOf(nameEQ) === 0) {
+            return cookie.substring(nameEQ.length, cookie.length);
+        }
+    }
+    return null;
+}
+</script>
+<style>
+/* Promoted - SiteSpect Stylings */
+
+/* Promoted - Temp Fix for Category Slider Button Styling */
+
+ .c-pwa-tile-grid-tile .c-pwa-swatches-slider .c-pwa-scroll-slider__button--next,.c-pwa-tile-grid-tile .c-pwa-swatches-slider .c-pwa-scroll-slider__button--previous {
+        height: 100%;
+}
+/* Promoted - 2Up w/ Minimal Spacing - November 13, 2024 */
+@media (max-width: 767px) {
+     .c-pwa-tile-grid {
+        grid-column-gap: 5px !important;
+    }
+     .c-pwa-tile-grid .o-pwa-product-visual-badge {
+        left: 0px !important;
+        top: 0px !important;
+    }
+     .c-pwa-tile-tiles {
+            margin-left: -20px;
+            margin-right: -20px;
+        }
+     .c-pwa-tile-grid .c-pwa-product-text-badge,  .c-pwa-tile-grid .c-pwa-product-swatch__color-count,  .c-pwa-tile-grid .c-pwa-product-price, .c-pwa-tile-grid .o-pwa-product-tile__heading, .c-pwa-tile-grid .c-pwa-product-swatch__swatches {
+        padding-left: 10px !important;
+    }
+    .c-pwa-tile-view-outer {
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+}
+/* End Promoted - 2Up w/ Minimal Spacing - November 13, 2024 */
+/* Promoted - FP Filter Icon + Round Corners - November 8, 2024 */
+.c-pwa-tile-taxonomy  .c-pwa-left-nav__heading-small .o-pwa-button-mobile-inline-navigation, .c-pwa-tile-taxonomy .c-pwa-tile-facets-outer .o-pwa-button-mobile-inline-navigation {
+  border-radius: 5px;
+}
+
+.c-pwa-tile-taxonomy .u-pwa-extra-small--5 .c-pwa-tile-facets-outer .o-pwa-button-mobile-inline-navigation::before {
+    background-image: url('/__ssobj/static/filter.svg');
+    content: '';
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+}
+/* End Promoted - FP Filter Icon + Round Corners - November 8, 2024 */
+/* Promoted - FW PDP Image - November 8, 2024 */
+@media (max-width: 767px) {
+    .c-pwa-product-image-viewer-outer {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    .c-pwa-image-viewer__slider:after {
+        width: 0px;
+    }
+}
+/* End Promoted - FW PDP Image - November 8, 2024 */
+/* Start Promoted - Adjust Promo Countdown - November 06, 2025 */
+.c-pwa-live-text-banner-inner p:not([class]) {
+    padding: 0 15px;
+    font: 1.2rem / 1.7 var(--font-body);
+    letter-spacing: .03rem;
+    vertical-align: middle;
+    color: inherit;
+    font-weight: bold;
+}
+@media screen and (min-width: 768px) {
+    .c-pwa-live-text-banner-inner p:not([class]) {
+        display: inline;
+    }
+}
+/* End Promoted - Adjust Promo Countdown - November 06, 2025 */
+
+/* Promoted - Sticky ATB Addl CSS - September 25, 2025 */
+@media screen and (max-width: 767px) {
+    .c-pwa-app:has(.c-pwa-sticky-primary-action.is-visible) .o-pwa-notifications {
+        bottom: 100px;
+    }
+    .c-pwa-app:has(.c-pwa-sticky-primary-action.is-visible) .c-pwa-back-to-top {
+        bottom: 100px !important;
+    }
+   footer > div.c-pwa-legal.pdp {
+        padding-bottom: 80px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .c-pwa-app:has(.c-pwa-sticky-primary-action.is-visible):has(.c-pwa-social-proof) .c-pwa-back-to-top {
+        bottom: 175px;
+    }
+}
+</style>
+<script  type="text/javascript" data-sitespect="true">window.__sscf=window.__sscf||{};</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_8771496  = function() {
+if (window && window.OneTrust){
+    window.OneTrust.initializeCookiePolicyHtml();
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_11083264_11216483 = function() {
+var fieldsets = document.querySelectorAll('.c-pwa-sku-selection__size:not(.ss-applied-size-guide)');
+for (var i = 0; i < fieldsets.length; i++) {
+    var fs = fieldsets[i];
+    if (!fs.querySelector('legend.c-pwa-legend')) continue;
+    if (!fs.querySelector('.c-pwa-radio-boxes__item')) continue;
+    var form = fs.closest('form') || fs.parentElement;
+    if (form && form.querySelector('.c-pwa-size-fit-guide')) return true;
+}
+return false;
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_11052324  = function() {
+(function () {
+  'use strict';
+
+    //START CUSTOM TRIGGER RULES
+  
+    // Defensive guard - define class name to add and selector targeted by variation
+    var MARKER = "ss-monetate-style-number-applied";
+    var el = document.querySelector("body");
+    // Defensive guard in case the trigger and script ever race
+    if (!el || el.classList.contains(MARKER)) {
+        return;
+    }
+    // Set the marker first so a re-evaluation mid-run can't double-apply
+    el.classList.add(MARKER);
+    
+    //END CUSTOM TRIGGER RULES
+
+  // ---- Re-execution guard ----
+  // If already initialized on this page load, just re-stamp and exit.
+  if (window.__urbnStampTilesInit) {
+    if (typeof window.__urbnStampTiles === 'function') {
+      try { window.__urbnStampTiles(); } catch (e) {}
+    }
+    return;
+  }
+  window.__urbnStampTilesInit = true;
+
+  // ---- Shared config ----
+  var TILE_SEL   = '.c-pwa-tile-grid-tile';
+  var LINK_SEL   = 'a.o-pwa-product-tile__link[href*="/shop/"]';
+  var ATTR_STYLE = 'data-style-number';
+  var ATTR_SLUG  = 'data-product-slug';
+
+  var OBSERVER_DEBOUNCE_MS = 120;
+  var NAV_RESTAMP_MS       = 400;
+
+  // ---- Tile stamping (category + search) ----
+  function tileRecords() {
+    var app = window.urbn && window.urbn.app;
+    var pinia = app && ((app.$store && app.$store.$pinia) || app.$pinia);
+    var state = pinia && pinia.state && pinia.state.value;
+    if (!state) return [];
+    var out = [];
+    ['category', 'search'].forEach(function (key) {
+      var pages = state[key] && state[key].pages;
+      if (!pages) return;
+      Object.keys(pages).forEach(function (p) {
+        var t = pages[p] && pages[p].wrapper && pages[p].wrapper.tiles;
+        if (t && t.length) { for (var i = 0; i < t.length; i++) out.push(t[i]); }
+      });
+    });
+    return out;
+  }
+
+  function slugFromHref(href) {
+    if (!href) return '';
+    var m = /\/shop\/([^/?#]+)/.exec(href);
+    return m ? m[1].toLowerCase() : '';
+  }
+
+  function buildMap(recs) {
+    var map = {};
+    for (var i = 0; i < recs.length; i++) {
+      var p = (recs[i] && recs[i].product) || {};
+      var slug = p.productSlug ? String(p.productSlug).toLowerCase() : '';
+      var style = p.styleNumber ? String(p.styleNumber) : '';
+      if (slug && style && !map[slug]) map[slug] = style;
+    }
+    return map;
+  }
+
+  function stamp() {
+    var recs = tileRecords();
+    if (!recs.length) return false;
+    var map = buildMap(recs);
+    var tiles = document.querySelectorAll(TILE_SEL);
+    for (var i = 0; i < tiles.length; i++) {
+      var tile = tiles[i];
+      if (tile.getAttribute(ATTR_STYLE)) continue;
+      var link = tile.querySelector(LINK_SEL);
+      if (!link) continue;
+      var slug = slugFromHref(link.getAttribute('href'));
+      var style = slug && map[slug];
+      if (!style) continue;
+      tile.setAttribute(ATTR_STYLE, style);
+      tile.setAttribute(ATTR_SLUG, slug);
+    }
+    return true;
+  }
+
+  function safeStamp() {
+    try { return stamp(); } catch (e) { return false; }
+  }
+
+  // ---- SPA navigation + DOM watcher (installed once per page load) ----
+  function watch() {
+    if (window.__urbnStampTilesWatching) return;
+    window.__urbnStampTilesWatching = true;
+
+    var pending = null;
+    function queue() {
+      if (pending) return;
+      pending = setTimeout(function () { pending = null; safeStamp(); }, OBSERVER_DEBOUNCE_MS);
+    }
+    if (window.MutationObserver && document.body) {
+      new MutationObserver(queue).observe(document.body, { childList: true, subtree: true });
+    }
+    window.addEventListener('popstate', function () {
+      setTimeout(safeStamp, NAV_RESTAMP_MS);
+    });
+  }
+
+  window.__urbnStampTiles = safeStamp;
+
+  // ---- Initial settle ----
+  var tries = 0;
+  (function settle() {
+    var stamped = safeStamp();
+    if (stamped || ++tries > 40) { watch(); return; }
+    setTimeout(settle, 150);
+  })();
+})();
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_9366121_8717539 = function() {
+if (window.location.pathname.includes("/cart") && window.urbn && window.urbn.vendor && window.urbn.vendor.site_currency == "USD") {
+  if (window.urbn.vendor.site_region == "AU" || window.urbn.vendor.site_region == "CA" || window.urbn.vendor.site_region == "NZ") {
+     return true;
+  }
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_11052324_11215333 = function() {
+var el = document.querySelector("body");
+return !!el && !el.classList.contains("ss-monetate-style-number-applied");
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_9366121  = function() {
+try {
+    if (!this.classList.contains("usdreport")) {
+        this.classList.add("usdreport");
+    }
+    if (!document.querySelector(".ss-au-can-cart-copy")) {
+        const cssString = `.c-pwa-cart-order-summary__actions.usdreport::after {
+            content: "The order summary above is reflected in USD, and your order will be transacted in USD.";
+            font-family: 'Karla';
+            font-size: 11px;
+            margin-bottom: 10px;
+            line-height: 14px;
+        }`;
+        const styleElement = document.createElement('style');
+        styleElement.textContent = cssString;
+        styleElement.classList.add("ss-au-can-cart-copy");
+        document.head.appendChild(styleElement);
+    }
+} catch(e) {
+    console.log("SiteSpect Cart USD Promo Error: ", e);
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_9366124  = function() {
+setTimeout(() => {
+    this.href = "javascript: void(0)";
+    this.addEventListener('click', () => {
+        event.preventDefault();
+        if (QSI) {
+            QSI.API.load();
+            QSI.API.run();
+            QSI.reg['SI_6zAl8aqwdBVjYoe'].popup();
+        }
+    });
+}, 500)
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_9374790_8730917 = function() {
+const elm = document.querySelector(".c-pwa-product-info-badges");
+const prodHeading = document.querySelector('.s-pwa-product-info-heading');
+if(elm && prodHeading && !elm.getAttribute('ss-tax-duty-flag') && window.urbn && window.urbn.vendor && window.urbn.vendor.customer_language){
+  return true;
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_10941435_11215354 = function() {
+var el = document.querySelector("main");
+if (!el) return false;
+if (el.classList.contains("ss-applied-pdp-legal")) return false;
+// Keep matching until the lazy-loaded footer actually exists
+return !!document.querySelector("footer > div.c-pwa-legal");
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_9366124_8717542 = function() {
+if (window.location.pathname.includes("/order-tracking") && !window.location.pathname.includes("/france/") && document.querySelector("#order-tracking .c-pwa-link-item-component") && document.querySelector("#order-tracking .c-pwa-link-item-component").href !== "javascript: void(0)") {
+  return true;
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_9374790  = function() {
+try {
+    const elm = document.querySelector(".c-pwa-product-info-badges");
+    const prodHeading = document.querySelector('.s-pwa-product-info-heading');
+    if(elm && prodHeading && !elm.getAttribute('ss-tax-duty-flag') && window.urbn && window.urbn.vendor && window.urbn.vendor.customer_language){
+        let badgeDiv = document.createElement('div');
+        let badgePtag = document.createElement('p');
+        let lang = window.urbn.vendor.customer_language;
+        if(document.querySelectorAll(".c-pwa-product-text-badge").length > 0) badgeDiv.style.marginBottom = "10px";
+        badgePtag.classList.add("c-pwa-product-text-badge");
+        if (lang == 'en-GB') {
+            badgePtag.innerText = "Taxes and duties included";
+        }
+        else if (lang == 'fr-FR') {
+            badgePtag.innerText = "Tous les frais & taxes sont inclus";
+        }
+        else if (lang == 'de-DE') {
+            badgePtag.innerText = "Inklusive Steuern & Zollgebühren";
+        }
+        else if (lang == 'es-ES') {
+            badgePtag.innerText = "Se incluyen todos los impuestos y tasas";
+        }
+        else if (lang == 'it-IT') {
+            badgePtag.innerText = "Tasse tutte incluse";
+        }
+        badgePtag.style.color = "#3e8725";
+        badgeDiv.appendChild(badgePtag);
+        if (document.querySelectorAll(".c-pwa-product-text-badge").length === 0) {elm.appendChild(badgeDiv)}
+        else {elm.insertBefore(badgeDiv, elm.firstChild)}
+        /*
+            If there is no badges the content divider is under the product info section instead so need to check if the
+            badge doesn't have the divider class and if so remove from the product info and add to the badge info section.
+         */
+        if(!elm.classList.contains("c-pwa-product-info-post-meta--last") && prodHeading.classList.contains("c-pwa-product-info-post-meta--last")){
+            elm.classList.add("c-pwa-product-info-post-meta--last");
+            prodHeading.classList.remove("c-pwa-product-info-post-meta--last");
+        }
+        elm.setAttribute('ss-tax-duty-flag', "true");
+    }
+} catch (e) {
+    // console.log(e)
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_10941435  = function() {
+//START CUSTOM TRIGGER RULES
+
+    // Defensive guard - define class name to add and selector targeted by variation
+    var MARKER = "ss-applied-pdp-legal";
+    var el = document.querySelector("main");
+    var legalFooter = document.querySelector("footer > div.c-pwa-legal");
+    // Bail if main is missing, marker already set, OR footer hasn't lazy-loaded yet
+    if (!el || el.classList.contains(MARKER) || !legalFooter) {
+        return;
+    }
+    // Set the marker first so a re-evaluation mid-run can't double-apply
+    el.classList.add(MARKER);
+
+    //END CUSTOM TRIGGER RULES
+
+if (window.location.pathname.includes('/shop/')) {
+  legalFooter.classList.add('pdp');
+}
+if (!window.location.pathname.includes('/shop/') && legalFooter.classList.contains("pdp")) {
+  legalFooter.classList.remove('pdp');
+}
+}
+</script>
+<script  type="text/javascript" data-sitespect="true">
+window.__sscf.cf_11083264  = function() {
+(function () {
+    var WRAPPER_CLASS = 'ss-size-legend-wrapper';
+    var MOVED_LINK_CLASS = 'ss-moved-size-guide';
+    var SETUP_MARKER = 'ss-applied-size-guide';
+    var LEGEND_ID_PREFIX = 'ss-size-legend-';
+    var GLOBAL_KEY = '__ssSizeGuideMove';
+    var RIGHT_ALIGNMENT_OFFSET = 3;
+    var MOBILE_BREAKPOINT = 768; // px — anything at or below this is "mobile"
+
+    // [ADDED] Idempotency guard: if SiteSpect executes this script again
+    // (SPA nav, marker stripped by Vue re-render, quick shop, etc.), do not
+    // stack observers/listeners — just schedule another pass.
+    if (window[GLOBAL_KEY]) {
+        window[GLOBAL_KEY].run();
+        return;
+    }
+
+    var legendIdCounter = 0;
+    var debounceTimer = null;
+    var resizeTimer = null;
+
+    function isMobile() {
+        return window.innerWidth <= MOBILE_BREAKPOINT;
+    }
+
+    // Move wrapper children back in place, then remove the wrapper.
+    // Never remove the wrapper with its children inside (that detached the legend).
+    function unwrap(wrapper) {
+        var parent = wrapper.parentNode;
+        if (!parent) return;
+        while (wrapper.firstChild) {
+            parent.insertBefore(wrapper.firstChild, wrapper);
+        }
+        parent.removeChild(wrapper);
+    }
+
+    function findLinks(form) {
+        var links = form.querySelectorAll('.c-pwa-size-fit-guide');
+        var moved = null;
+        var fresh = null;
+        for (var i = 0; i < links.length; i++) {
+            if (links[i].classList.contains(MOVED_LINK_CLASS)) {
+                if (!moved) moved = links[i];
+            } else if (!fresh) {
+                fresh = links[i];
+            }
+        }
+        return { moved: moved, fresh: fresh };
+    }
+
+    function moveSizeGuide(sizeFieldset) {
+        if (!sizeFieldset) return;
+
+        var legend = sizeFieldset.querySelector('legend.c-pwa-legend');
+        if (!legend) return;
+
+        var form = sizeFieldset.closest('form') || sizeFieldset.parentElement;
+        if (!form) return;
+
+        var wrapper = sizeFieldset.querySelector('.' + WRAPPER_CLASS);
+        var found = findLinks(form);
+
+        // Vue re-rendered the link in its original location: drop the stale moved copy
+        if (found.fresh && found.moved) {
+            if (found.moved.parentNode) found.moved.parentNode.removeChild(found.moved);
+            found.moved = null;
+        }
+
+        var link = found.fresh || found.moved;
+
+        // [ADDED] Nothing to move — restore original structure if a wrapper was left behind
+        if (!link) {
+            if (wrapper) unwrap(wrapper);
+            sizeFieldset.classList.remove(SETUP_MARKER);
+            return;
+        }
+
+        // Reuse an existing wrapper instead of destroying it
+        if (!wrapper) {
+            wrapper = document.createElement('div');
+            wrapper.className = WRAPPER_CLASS;
+            wrapper.style.display = 'flex';
+            wrapper.style.justifyContent = 'space-between';
+            wrapper.style.alignItems = 'baseline';
+        }
+
+        // Ensure wrapper sits where the legend is and holds the legend first
+        if (legend.parentNode !== wrapper) {
+            legend.parentNode.insertBefore(wrapper, legend);
+            wrapper.insertBefore(legend, wrapper.firstChild);
+        }
+
+        if (link.parentNode !== wrapper) {
+            link.classList.add(MOVED_LINK_CLASS);
+            link.style.margin = '0';
+            wrapper.appendChild(link);
+        }
+
+        var sizeGuideModule = form.querySelector('.c-pwa-size-guide-module');
+        if (sizeGuideModule && sizeGuideModule.style.display !== 'none') {
+            sizeGuideModule.style.display = 'none';
+        }
+
+        // [ADDED] Legend is no longer a direct fieldset child, so restore the
+        // group's accessible name explicitly. Leaves a valid existing value alone.
+        if (!legend.id) legend.id = LEGEND_ID_PREFIX + (++legendIdCounter);
+        var labelledBy = sizeFieldset.getAttribute('aria-labelledby');
+        if (!labelledBy || !document.getElementById(labelledBy)) {
+            sizeFieldset.setAttribute('aria-labelledby', legend.id);
+        }
+
+        // Re-applied every pass so a Vue class patch can't strand the fieldset
+        sizeFieldset.classList.add(SETUP_MARKER);
+
+        syncWrapperWidth(sizeFieldset);
+    }
+
+    function syncWrapperWidth(sizeFieldset) {
+        var wrapper = sizeFieldset.querySelector('.' + WRAPPER_CLASS);
+        if (!wrapper) return;
+
+        // On mobile, span the full fieldset width (Size Guide pins to far right)
+        if (isMobile()) {
+            wrapper.style.width = '100%';
+            wrapper.style.maxWidth = '100%';
+            return;
+        }
+
+        // On desktop, align to the end of the first row of size buttons
+        var sizeList = sizeFieldset.querySelector('.c-pwa-radio-boxes__list');
+        if (!sizeList) return;
+
+        var items = sizeList.querySelectorAll('.c-pwa-radio-boxes__item');
+        if (!items.length) return;
+
+        var firstItem = items[0];
+        var firstRect = firstItem.getBoundingClientRect();
+
+        if (!firstRect.width) return;
+
+        var rowTolerance = 2;
+        var lastItemInRow = firstItem;
+
+        for (var i = 1; i < items.length; i++) {
+            var itemRect = items[i].getBoundingClientRect();
+            if (Math.abs(itemRect.top - firstRect.top) <= rowTolerance) {
+                lastItemInRow = items[i];
+            } else {
+                break;
+            }
+        }
+
+        var lastRect = lastItemInRow.getBoundingClientRect();
+        var contentWidth = lastRect.right - firstRect.left;
+
+        wrapper.style.width = (contentWidth - RIGHT_ALIGNMENT_OFFSET) + 'px';
+        wrapper.style.maxWidth = '100%';
+
+        // Edge case: if the Size Guide link text wrapped inside that width,
+        // expand the wrapper to the fieldset edge so the link gets one line.
+        var link = wrapper.querySelector('.' + MOVED_LINK_CLASS);
+        if (!link) return;
+        var linkButton = link.querySelector('button') || link;
+
+        var cs = getComputedStyle(linkButton);
+        var lineHeight = parseFloat(cs.lineHeight);
+        if (!lineHeight || isNaN(lineHeight)) {
+            lineHeight = parseFloat(cs.fontSize) * 1.4;
+        }
+        var oneLineMax = lineHeight
+            + parseFloat(cs.paddingTop)
+            + parseFloat(cs.paddingBottom)
+            + 4; // slop for sub-pixel rendering
+
+        if (linkButton.offsetHeight > oneLineMax) {
+            wrapper.style.width = sizeFieldset.getBoundingClientRect().width + 'px';
+        }
+    }
+
+    function init() {
+        var sizeFieldsets = document.querySelectorAll('.c-pwa-sku-selection__size');
+        for (var i = 0; i < sizeFieldsets.length; i++) {
+            moveSizeGuide(sizeFieldsets[i]);
+        }
+    }
+
+    function debouncedInit() {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(init, 50);
+    }
+
+    var observer = new MutationObserver(function (mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+            var m = mutations[i];
+            var target = m.target;
+
+            // Changes inside an existing SKU form (closest() includes the node itself)
+            if (target.nodeType === 1 && target.closest('.c-pwa-sku-selection__form')) {
+                debouncedInit();
+                return;
+            }
+
+            // [ADDED] Newly inserted forms (PDP nav, quick shop) — target is above the form
+            var added = m.addedNodes;
+            for (var j = 0; j < added.length; j++) {
+                var node = added[j];
+                if (node.nodeType === 1 && (
+                    node.classList.contains('c-pwa-sku-selection__size') ||
+                    node.getElementsByClassName('c-pwa-sku-selection__size').length
+                )) {
+                    debouncedInit();
+                    return;
+                }
+            }
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    window.addEventListener('urbn-spa-ready', debouncedInit);
+
+    window.addEventListener('resize', function () {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(init, 100);
+    });
+
+    window[GLOBAL_KEY] = { run: debouncedInit, observer: observer };
+
+    debouncedInit();
+})();
+}
+</script>
+
+</head>
+<body>
+<script class="__ss_csf_data"   type="text/javascript" data-sitespect="true">!function(){var s={"control_sv_cv_rp_only":true,"trackdatavariations":[],"timestamps":{"9366121":"1731083711","9366124":"1789502971","11075252":"1788970879","8771496":"1789502901","11052324":"1791563553","9374790":"1731423860","11083264":"1792094549","10941435":"1791566996"},"variations":[{"id":"9374790","css":{},"csf_apply_once":"0","criteria":[{"Type":"Path","ID":"8730829","Next":1,"path_criterion":"^(/(uk|france)/shop/)|(/(uk|france)/fpmovement/shop/)","Pre":null,"PageCategory_ID":null,"GroupNumber":"2"},{"GroupNumber":"3","script_criterion":function() {return window.__sscf && window.__sscf.cf_9374790_8730917 && window.__sscf.cf_9374790_8730917.apply(this)},"PageCategory_ID":null,"Pre":0,"ID":"8730917","Next":null,"Type":"Custom"}],"attributes":{},"IsMonetateTrackData":false,"selector":".c-pwa-product-container","campaign_id":"0","custom":function() {return window.__sscf && window.__sscf.cf_9374790 && window.__sscf.cf_9374790.apply(this);}},{"attributes":{},"IsMonetateTrackData":false,"selector":"#app > div.js-pwa-breakpoints > div.o-pwa-main.o-pwa-view > main","campaign_id":"0","custom":function() {return window.__sscf && window.__sscf.cf_8771496 && window.__sscf.cf_8771496.apply(this);},"id":"8771496","css":{},"criteria":[{"GroupNumber":"3","PageCategory_ID":null,"path_criterion":"/cookies","Pre":null,"ID":"8001036","Next":null,"Type":"Path"}],"csf_apply_once":"0"},{"id":"10941435","criteria":[{"Next":null,"ID":"11215354","Type":"Custom","script_criterion":function() {return window.__sscf && window.__sscf.cf_10941435_11215354 && window.__sscf.cf_10941435_11215354.apply(this)},"GroupNumber":"2","Pre":null,"PageCategory_ID":null}],"csf_apply_once":"0","css":{},"attributes":{},"IsMonetateTrackData":false,"selector":"main","campaign_id":"0","custom":function() {return window.__sscf && window.__sscf.cf_10941435 && window.__sscf.cf_10941435.apply(this);}},{"custom":null,"selector":".c-pwa-image-viewer__zoom-icon","attributes":{},"IsMonetateTrackData":false,"campaign_id":"0","csf_apply_once":"0","criteria":[{"Pre":null,"path_criterion":"/shop","PageCategory_ID":null,"GroupNumber":"1","Type":"Path","Next":null,"ID":"11172095"}],"css":{"display":"none"},"id":"11075252"},{"attributes":{},"selector":".c-pwa-sku-selection__size:not(.ss-applied-size-guide)","IsMonetateTrackData":false,"campaign_id":"0","custom":function() {return window.__sscf && window.__sscf.cf_11083264 && window.__sscf.cf_11083264.apply(this);},"id":"11083264","css":{},"csf_apply_once":"0","criteria":[{"ID":"11179300","Next":1,"Type":"Path","GroupNumber":"1","path_criterion":"/shop/","Pre":null,"PageCategory_ID":null},{"Pre":0,"PageCategory_ID":null,"script_criterion":function() {return window.__sscf && window.__sscf.cf_11083264_11216483 && window.__sscf.cf_11083264_11216483.apply(this)},"GroupNumber":"2","Type":"Custom","Next":null,"ID":"11216483"}]},{"custom":function() {return window.__sscf && window.__sscf.cf_9366121 && window.__sscf.cf_9366121.apply(this);},"attributes":{},"IsMonetateTrackData":false,"campaign_id":"0","selector":".c-pwa-cart-order-summary__actions","csf_apply_once":"0","criteria":[{"Next":null,"ID":"8717539","Type":"Custom","script_criterion":function() {return window.__sscf && window.__sscf.cf_9366121_8717539 && window.__sscf.cf_9366121_8717539.apply(this)},"GroupNumber":"1","Pre":null,"PageCategory_ID":null}],"css":{},"id":"9366121"},{"attributes":{},"selector":"#order-tracking .c-pwa-link-item-component","IsMonetateTrackData":false,"campaign_id":"0","custom":function() {return window.__sscf && window.__sscf.cf_9366124 && window.__sscf.cf_9366124.apply(this);},"id":"9366124","csf_apply_once":"0","criteria":[{"Pre":null,"PageCategory_ID":null,"script_criterion":function() {return window.__sscf && window.__sscf.cf_9366124_8717542 && window.__sscf.cf_9366124_8717542.apply(this)},"GroupNumber":"1","Type":"Custom","Next":null,"ID":"8717542"}],"css":{}},{"id":"11052324","css":{},"criteria":[{"script_criterion":function() {return window.__sscf && window.__sscf.cf_11052324_11215333 && window.__sscf.cf_11052324_11215333.apply(this)},"GroupNumber":"1","Pre":null,"PageCategory_ID":null,"Next":null,"ID":"11215333","Type":"Custom"}],"csf_apply_once":"0","attributes":{},"IsMonetateTrackData":false,"campaign_id":"0","selector":"body","custom":function() {return window.__sscf && window.__sscf.cf_11052324 && window.__sscf.cf_11052324.apply(this);}}],"metrics":[]};if(window.SS&&SS.Require){SS.Require(function(){if(window.ss_dom_var){window.ss_dom_var.setVariations(s);if(window.ss_dom_var.setMetrics){window.ss_dom_var.setMetrics(s);}}else{window.__ss_variations=s;}});}else{if(window.ss_dom_var){window.ss_dom_var.setVariations(s);if(window.ss_dom_var.setMetrics){window.ss_dom_var.setMetrics(s);}}else{window.__ss_variations=s;}}if(s.control_sv_cv_rp_only){window.__ss_control=true;}}();</script>
+<pre>Cannot GET /.well-known/ai-catalog.json</pre>
+<!-- SS Validation test -->
+</body>
+</html>

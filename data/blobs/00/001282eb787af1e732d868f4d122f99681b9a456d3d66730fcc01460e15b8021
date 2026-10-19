@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Доступ ограничен — 403</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #F4F7FA;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: 'Inter', 'Roboto', Helvetica, Arial, sans-serif;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 920px;
+      text-align: center;
+    }
+
+    .logo {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 90px;
+      height: 28px;
+    }
+
+    .code {
+      font-size: 64px;
+      font-weight: 500;
+      color: #2A2A2A;
+      line-height: 1;
+      margin: 0 0 8px;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 20px;
+      line-height: 24px;
+      margin: 0 0 16px;
+      color: #2A2A2A;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-size: 20px;
+      line-height: 24px;
+      color: #2A2A2A;
+      font-weight: 500;
+      margin: 0 0 24px;
+    }
+
+    .description {
+      width: 100%;
+      max-width: 648px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #525252;
+      line-height: 16px;
+      margin: 0 auto 24px;
+    }
+
+    .help {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+      position: relative;
+      padding: 20px 26px;
+      background: #D3E8FA;
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto 60px;
+      border-radius: 8px;
+    }
+
+    .help::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background-color: #006DF0;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .help p {
+      font-size: 16px;
+      line-height: 20px;
+      color: #2A2A2A;
+      font-weight: 500;
+      margin: 0 0 8px;
+    }
+
+    .tips {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 16px;
+      color: #525252;
+      font-weight: 400;
+      margin: 0;
+      padding: 0;
+      list-style-position: inside;
+    }
+
+    .report-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .report-list li {
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 24px;
+      margin: 0;
+    }
+
+    .report-list li p:first-of-type {
+      font-size: 16px;
+      line-height: 20px;
+      color: #2A2A2A;
+      font-weight: 500;
+    }
+
+    .report-list li p {
+      font-size: 14px;
+      line-height: 16px;
+      color: #525252;
+      font-weight: 400;
+      margin: 0;
+      text-align: start;
+    }
+
+    .report-list .report p:first-of-type {
+      margin: 0 0 8px;
+    }
+
+    .report-list .contact p:first-of-type {
+      margin: 0 0 24px;
+    }
+
+    .report-list .contact{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .report-list .contact a {
+      display: block;
+      font-size: 20px;
+      line-height: 24px;
+      color: #006DF0;
+      text-decoration: underline;
+      font-weight: 500;
+      text-align: start;
+    }
+
+    .report {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+
+    .report p {
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--color-muted);
+    }
+
+    .copy-btn {
+      margin-top: 24px;
+      padding: 12px 50px;
+      width: 100%;
+      border: 0;
+      border-radius: 8px;
+      background: #006DF0;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 20px;
+      cursor: pointer;
+    }
+
+    @media screen and (min-width: 768px) {
+      body {
+        padding: 60px;
+      }
+
+      .logo {
+        left: 60px;
+      }
+
+      h1 {
+        font-size: 28px;
+        line-height: 32px;
+        letter-spacing: -0.28px;
+        margin-bottom: 24px;
+      }
+
+      h2 {
+        font-size: 28px;
+        line-height: 32px;
+        letter-spacing: -0.28px;
+        margin-bottom: 32px;
+      }
+
+      .code {
+        font-size: 100px;
+        margin-bottom: 16px;
+        letter-spacing: -2px;
+      }
+
+      .description {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .help {
+        padding: 24px;
+        margin-bottom: 80px;
+      }
+
+      .help p {
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .help ol {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .report-list {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .report-list li p:first-of-type {
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .report-list li p {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .report-list .contact a {
+        font-size: 24px;
+        line-height: 28px;
+        letter-spacing: -0.24px;
+      }
+
+      .copy-btn {
+        margin-top: 32px;
+      }
+    }
+
+    @media screen and (min-width: 1400px) {
+      body {
+        padding: 52px;
+      }
+
+      .logo {
+        left: 52px
+      }
+    }
+
+    @media screen and (min-width: 1400px) {
+      .code {
+        font-size: 128px;
+        letter-spacing: -2.56px;
+      }
+
+      .logo {
+        left: 104px;
+      }
+    }
+  </style>
+<link id="css-theme" rel="stylesheet" type="text/css" href="/css-theme_9e2ac8652bbe832a8612942f041be8a46fe4382e.css">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..500;1,14..32,400..500&display=swap"
+  rel="stylesheet"
+/>
+<script id="scripts" type="text/javascript" src="/scripts_f75e09879106a600a7b3fcea01688c1778fa8f11.js"></script>
+<meta name="referrer" content="same-origin" />
+<link rel="icon" sizes="16x16" type="image/png" href=/assets/favicon_16.png />
+<link rel="icon" sizes="32x32" type="image/png" href=/assets/favicon_32.png />
+<link rel="icon" sizes="any" type="image/svg+xml" href=/assets/favicon.svg />
+<meta name="application-name" content="БКС Чат"><meta name="apple-mobile-web-app-title" content="БКС Чат">
+<meta http-equiv="content-language" content=""><meta name="language" content="">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta name="msvalidate.01" content="">
+<meta name="google-site-verification" content="">
+<meta property="fb:app_id" content="">
+<base href="/">
+</head>
+<body>
+
+<noscript style="color: white; text-align:center">
+	You need to enable JavaScript to run this app.
+</noscript>
+<div id="react-root">
+	<div class="page-loading" role="alert" aria-busy="true" aria-live="polite" aria-label="loading">
+		<div class="loading__animation">
+			<div class="loading__animation__bounce"></div>
+			<div class="loading__animation__bounce"></div>
+			<div class="loading__animation__bounce"></div>
+		</div>
+	</div>
+</div>
+
+  <div class="wrap">
+
+    <svg width="88" height="28" viewBox="0 0 88 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo">
+      <path d="M72.1516 20.492C72.992 21.336 73.985 21.9999 75.1306 22.4863C76.2761 22.9728 77.5501 23.2281 78.9231 23.2335C79.9402 23.2335 80.9331 23.0803 81.8753 22.7471C82.8174 22.438 83.6819 22.0052 84.4714 21.4166C85.2369 20.8548 85.898 20.1641 86.4573 19.3712C87.0167 18.581 87.4236 17.7102 87.6778 16.7399H83.6819C83.5052 17.1995 83.2509 17.6081 82.9191 17.9655C82.5872 18.323 82.2071 18.6294 81.7735 18.8606C81.3399 19.1159 80.9091 19.3202 80.4246 19.4492C79.9402 19.5755 79.4316 19.6535 78.9231 19.6535C78.0586 19.6535 77.269 19.5003 76.5812 19.1939C75.8666 18.9143 75.2563 18.5058 74.7478 17.9682C74.2392 17.4307 73.8592 16.8179 73.5782 16.1271C73.2998 15.439 73.1714 14.6704 73.1714 13.8533C73.1714 13.0362 73.2972 12.2702 73.5782 11.5795C73.8565 10.8887 74.2392 10.2759 74.7478 9.73834C75.259 9.20079 75.8692 8.79228 76.5812 8.48587C77.269 8.20366 78.0586 8.05043 78.9231 8.05043C79.4316 8.05043 79.9402 8.12569 80.4246 8.2547C80.9091 8.38102 81.3399 8.58532 81.7735 8.81646C82.2071 9.0718 82.5872 9.37818 82.9191 9.73565C83.2483 10.0931 83.5026 10.5017 83.6819 10.9613H87.6778C87.4236 9.991 87.0167 9.09601 86.4573 8.30313C85.898 7.51024 85.2342 6.84634 84.4714 6.25773C83.6819 5.6933 82.8174 5.26059 81.8753 4.92731C80.9331 4.6209 79.9402 4.46771 78.9231 4.46771C77.5474 4.46771 76.2761 4.69615 75.1306 5.18263C73.985 5.66911 72.992 6.33296 72.1516 7.17691C71.3112 8.02086 70.6501 9.01805 70.1657 10.1684C69.6839 11.3188 69.4538 12.5444 69.4538 13.8479C69.4538 15.1515 69.6812 16.3771 70.1657 17.5274C70.6501 18.6778 71.3112 19.648 72.1516 20.492Z" fill="#006DF0"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M48.7575 13.1345C48.2231 12.647 47.5632 12.2646 46.8258 11.9818C46.0643 11.7017 45.2521 11.5724 44.3624 11.5697H39.1978V8.29192H48.9606V4.75824H35.4893V22.9436H44.3624C45.2494 22.9436 46.0643 22.7901 46.8258 22.5073C47.5632 22.2272 48.2231 21.8421 48.7575 21.3303C49.2919 20.8428 49.7221 20.2288 50.0534 19.5366C50.358 18.8471 50.5102 18.1037 50.5102 17.258C50.5102 16.4123 50.358 15.6447 50.0534 14.9525C49.7221 14.2603 49.2919 13.6463 48.7575 13.1345ZM44.3116 14.9794C45.0998 14.9794 45.7331 15.1842 46.2167 15.5693C46.7003 15.9518 46.9273 16.5147 46.9273 17.258C46.9273 18.0014 46.7003 18.5373 46.2167 18.9225C45.7331 19.3076 45.0998 19.5123 44.3116 19.5123H39.1978V14.9794H44.3116Z" fill="#006DF0"/>
+      <path d="M57.4322 22.9436H53.8797V4.75824H57.4322V12.4666L63.7509 4.75824H68.1676L60.9607 13.4927L69.6709 22.9436H65.0323L57.4322 14.6967V22.9436Z" fill="#006DF0"/>
+      <path d="M14.0164 27.9997C21.7575 27.9997 28.0329 21.7318 28.0329 13.9999C28.0329 6.26795 21.7575 0 14.0164 0C6.27537 0 0 6.26795 0 13.9999C0 21.7318 6.27537 27.9997 14.0164 27.9997Z" fill="url(#paint0_linear_3363_993)"/>
+      <path d="M14.0164 27.9997C21.7575 27.9997 28.0329 21.7318 28.0329 13.9999C28.0329 6.26795 21.7575 0 14.0164 0C6.27537 0 0 6.26795 0 13.9999C0 21.7318 6.27537 27.9997 14.0164 27.9997Z" fill="url(#paint1_linear_3363_993)"/>
+      <path d="M6.35812 2.39059C1.69817 6.62443 2.20389 14.2527 7.48908 19.427C12.7724 24.6012 20.8326 25.3654 25.4944 21.1297C26.0226 20.6498 26.4844 20.1264 26.8805 19.568C27.6219 17.8615 28.0329 15.9786 28.0329 13.9999C28.0329 6.26795 21.7575 0 14.0165 0C11.411 0 8.97155 0.710065 6.88155 1.94702C6.70274 2.08824 6.52816 2.23609 6.35812 2.39059Z" fill="url(#paint2_radial_3363_993)"/>
+      <path d="M7.30991 2.38975C5.10433 5.74487 7.6729 10.9588 13.0477 14.0324C18.4225 17.1078 24.5657 16.8796 26.7731 13.5226C27.3965 12.5746 27.639 11.4785 27.545 10.3243C25.9287 4.37539 20.4842 0 14.0166 0C12.0634 0 10.2035 0.399039 8.51419 1.11995C8.03844 1.47615 7.63212 1.8996 7.30991 2.38975Z" fill="url(#paint3_linear_3363_993)"/>
+      <defs>
+      <linearGradient id="paint0_linear_3363_993" x1="13.666" y1="27.6497" x2="13.8711" y2="1.60187" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E66E6"/>
+      <stop offset="0.479167" stop-color="#8CB4F2"/>
+      <stop offset="1" stop-color="#F1F7FE"/>
+      </linearGradient>
+      <linearGradient id="paint1_linear_3363_993" x1="25.9304" y1="20.2998" x2="11.2259" y2="9.08315" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4D87EA"/>
+      <stop offset="1" stop-color="#7EAAF0" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="paint2_radial_3363_993" cx="0" cy="0" r="1" gradientTransform="matrix(-29.7216 -15.1566 17.0363 -68.4766 30.6179 17.2933)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.103242" stop-color="#4382EF"/>
+      <stop offset="0.459935" stop-color="#7EAAF0"/>
+      <stop offset="0.630708" stop-color="#B2CDF6"/>
+      <stop offset="0.794216" stop-color="#F0F6FD"/>
+      </radialGradient>
+      <linearGradient id="paint3_linear_3363_993" x1="26.254" y1="4.89289" x2="6.30846" y2="7.70644" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9CBFF4"/>
+      <stop offset="0.476252" stop-color="#CCE0FD"/>
+      <stop offset="0.770833" stop-color="#E9F2FE"/>
+      <stop offset="1" stop-color="#F1F7FE"/>
+      </linearGradient>
+      </defs>
+    </svg>
+    <div class="code">403</div>
+
+    <h1>Доступ временно ограничен</h1>
+
+    <p class="description">
+      Мы заметили, что ваш запрос похож на автоматический, либо вы заходите на сайт через VPN или прокси. Поэтому доступ к странице временно ограничен.
+    </p>
+
+    <div class="help">
+      <p>Попробуйте сделать следующее:</p>
+
+      <ol class="tips">
+        <li>Отключите VPN, прокси, AdBlock или другие похожие расширения</li>
+        <li>Обновите страницу</li>
+        <li>Если не помогло — откройте сайт в другом браузере или в режиме инкогнито</li>
+      </ol>
+    </div>
+
+    <h2>Доступ так и не появился?</h2>
+
+    <ul class="report-list">
+      <li class="report">
+        <p>1. Скопируйте отчёт и отправьте его в поддержку:</p>
+        <p id="ORIGIN-ID"></p>
+        <p id="REQUEST-DATE">Время: 2026-10-19 21:37:31 +0000</p>
+        <p id="REQUEST-IP">Ваш IP: 82.39.15.43</p>
+        <p id="REQUEST-ID">ID запроса: VbnY6nfuX8c1</p>
+        <p><button type="button" class="copy-btn" onclick="copy()">Скопировать отчёт</button></p>
+      </li>
+      <li class="contact">
+        <p>2. При обращении приложите скопированный отчёт ID запроса — это поможет быстрее снять ограничения</p>
+        <div>
+          <a href="tel:88001005544">8&nbsp;800&nbsp;100-55-44</a>
+          <a href="mailto:hd@bcs.ru" class="mail">hd@bcs.ru</a>
+        </div>
+    </li>
+  </ul>
+
+  <script>
+    function copy() {
+      document.oncopy = function (e) {
+        const t = {
+          report: {
+            datetime: document.getElementById("REQUEST-DATE").innerHTML,
+            ip: document.getElementById("REQUEST-IP").innerHTML,
+            id: document.getElementById("REQUEST-ID").innerHTML
+          }
+        };
+        e.clipboardData.setData("text", JSON.stringify(t));
+        e.preventDefault();
+      };
+      document.execCommand("copy");
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const origin = window.location.protocol + "//" + window.location.host;
+      document.getElementById("ORIGIN-ID").innerHTML = "Блокировка на сайте: " + origin;
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+# Mentimeter
+
+> Mentimeter is an audience engagement platform. This origin serves public marketing and content pages.
+
+Use this origin for public marketing/content discovery only. Do not use this origin for authenticated app, dashboard, voting, checkout, or private API workflows. Read and respect [robots.txt](https://www.mentimeter.com/robots.txt) before fetching public content pages, and honor page-level indexing controls. Mentimeter does not currently publish a general webhook API or a remote MCP transport.
+
+## When to use Mentimeter
+
+- [Discover public Mentimeter marketing content](https://www.mentimeter.com/sitemap_index.xml): Use Mentimeter when you need public product, education, or feature pages. Start here, then follow the sitemap and content API links.
+- [List Mentimeter content page metadata](https://www.mentimeter.com/contentful-api/pages?category=story&locale=en-US&limit=100&skip=0): Call GET /contentful-api/pages with category=story or category=uncategorized. Do not call the endpoint without a category query parameter.
+- [Retrieve Mentimeter page Markdown with WebMCP](https://www.mentimeter.com/webmcp-content-tools.js): After loading a public Mentimeter page in a WebMCP-capable browser, call mentimeter.content.getCurrentPage, mentimeter.content.getPage, or mentimeter.content.listPages.
+- [Provision Mentimeter workspace members with SCIM](https://developer.mentimeter.com/): Use the Mentimeter SCIM API when an identity provider must create, update, list, deactivate, or remove workspace members or groups.
+- [Look up Mentimeter OAuth issuer metadata](https://www.mentimeter.com/auth/.well-known/oauth-authorization-server): Use Mentimeter OAuth authorization-server discovery when an integration needs OAuth issuer metadata.
+- [Look up Mentimeter OpenID configuration](https://www.mentimeter.com/auth/.well-known/openid-configuration): Use Mentimeter OpenID Connect discovery when an integration needs JWKS, userinfo, or id_token validation.
+
+## Agent Discovery
+
+- [Robots and indexing policy](https://www.mentimeter.com/robots.txt): Crawl and indexing guidance for public content.
+- [Sitemap index](https://www.mentimeter.com/sitemap_index.xml): Crawlable public content URLs.
+- [ARD capability catalog](https://www.mentimeter.com/.well-known/ai-catalog.json): Agentic Resource Discovery manifest for MCP, skills, and APIs.
+- [API catalog](https://www.mentimeter.com/.well-known/api-catalog): Public discovery endpoints and metadata surfaces.
+- [Content OpenAPI description](https://www.mentimeter.com/.well-known/openapi/content-api.json): Machine-readable schema for the public content API.
+- [Agent Skills index](https://www.mentimeter.com/.well-known/agent-skills/index.json): Discoverable Mentimeter agent skills.
+- [Content discovery skill](https://www.mentimeter.com/.well-known/agent-skills/discover-mentimeter-content/SKILL.md): Instructions for discovering public Mentimeter content.
+- [MCP Server Card](https://www.mentimeter.com/.well-known/mcp/server-card.json): Metadata for the browser WebMCP content tools.
+- [WebMCP bootstrap script](https://www.mentimeter.com/webmcp-content-tools.js): Registers read-only browser tools when WebMCP is supported: mentimeter.content.getCurrentPage, mentimeter.content.getPage, mentimeter.content.listPages.
+- [auth.md](https://www.mentimeter.com/auth.md): Agent authentication discovery guidance for this origin.
+- [OAuth Protected Resource Metadata](https://www.mentimeter.com/.well-known/oauth-protected-resource): Points scanners at Mentimeter's OAuth issuer; this origin is discovery-only, not a token-accepting API.
+- [OpenID configuration](https://www.mentimeter.com/.well-known/openid-configuration): Scanner convenience copy of OpenID Connect discovery (`issuer` remains `https://auth.mentimeter.com`).
+- [OAuth authorization server metadata](https://www.mentimeter.com/.well-known/oauth-authorization-server): Scanner convenience copy of OAuth 2.0 authorization server discovery (`issuer` remains `https://auth.mentimeter.com`).
+
+## Public Content API
+
+- [Public page metadata endpoint](https://www.mentimeter.com/api/markdown-pages): List public Markdown snapshot page metadata. Valid page categories: story, template, uncategorized. Do not call the endpoint without a category query parameter.
+- [Public page metadata example](https://www.mentimeter.com/api/markdown-pages?category=story&locale=en-US&limit=100&skip=0): Example request for a supported page category.
+- [Public page metadata example](https://www.mentimeter.com/api/markdown-pages?category=template&locale=en-US&limit=100&skip=0): Example request for a supported page category.
+- [Public page metadata example](https://www.mentimeter.com/api/markdown-pages?category=uncategorized&locale=en-US&limit=100&skip=0): Example request for a supported page category.
+
+## Related Surfaces
+
+- [Public API docs](https://developer.mentimeter.com/): Developer documentation for Mentimeter public APIs.
+- [Mentimeter developer resources](https://developer.mentimeter.com/llms.txt): When-to-use guidance and links for Mentimeter public APIs.
+- [Public API OpenAPI document](https://developer.mentimeter.com/openapi.json): Machine-readable schema for public APIs.
+- [Issuer-hosted OpenID configuration](https://auth.mentimeter.com/.well-known/openid-configuration): Canonical issuer-colocated discovery (RFC 8414).
+- [Issuer-hosted OAuth authorization server metadata](https://auth.mentimeter.com/.well-known/oauth-authorization-server): Canonical issuer-colocated OAuth metadata (RFC 8414).
+- [OAuth issuer metadata (auth app)](https://www.mentimeter.com/auth/.well-known/oauth-authorization-server): Parallel copy under the `/auth` microfrontend path; keep in sync with auth and identity builders.
+- [OpenID configuration (auth app)](https://www.mentimeter.com/auth/.well-known/openid-configuration): Parallel OpenID Connect metadata under the `/auth` microfrontend path.

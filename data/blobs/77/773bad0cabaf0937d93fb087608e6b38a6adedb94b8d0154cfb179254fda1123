@@ -1,0 +1,524 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth" data-enable-clarip-tracking="true"> <head><meta charset="utf-8"><script>(function () {
+  var baselineKey = Symbol.for("@legalzoom-iq/partnerships/one800-consent-baselines-v1");
+  var changedKey = Symbol.for("@legalzoom-iq/tracking/consent-baseline-changed-documents-v1");
+  var observersKey = Symbol.for("@legalzoom-iq/tracking/consent-baseline-observers-v1");
+  var invalidatedKey = Symbol.for("@legalzoom-iq/tracking/consent-baseline-invalidated-documents-v1");
+  var invalidatedEvent = "legalzoom:consent-baseline-invalidated";
+  var currentDocument = document;
+  var readRegistry = function (key, Constructor) {
+    var descriptor = Object.getOwnPropertyDescriptor(globalThis, key);
+    if (descriptor) {
+      if (!Object.prototype.hasOwnProperty.call(descriptor, 'value') || !(descriptor.value instanceof Constructor)) return null;
+      return descriptor.value;
+    }
+    var registry = new Constructor();
+    Object.defineProperty(globalThis, key, {
+      value: registry,
+      writable: false,
+      configurable: false,
+      enumerable: false
+    });
+    return registry;
+  };
+  var baselines;
+  var changedDocuments;
+  var observers;
+  var invalidatedDocuments;
+  try {
+    baselines = readRegistry(baselineKey, WeakMap);
+    changedDocuments = readRegistry(changedKey, WeakSet);
+    observers = readRegistry(observersKey, WeakMap);
+    invalidatedDocuments = readRegistry(invalidatedKey, WeakSet);
+  } catch (_registryError) {
+    return;
+  }
+  var dispatchInvalidated = function () {
+    if (!invalidatedDocuments) return;
+    try {
+      if (WeakSet.prototype.has.call(invalidatedDocuments, currentDocument)) return;
+      WeakSet.prototype.add.call(invalidatedDocuments, currentDocument);
+    } catch (_invalidatedRegistryError) {
+      return;
+    }
+    try {
+      if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') return;
+      window.dispatchEvent(new Event(invalidatedEvent));
+    } catch (_dispatchError) {}
+  };
+  if (!baselines || !changedDocuments || !observers || !invalidatedDocuments) {
+    try {
+      if (baselines) WeakMap.prototype.set.call(baselines, currentDocument, null);
+    } catch (_baselineError) {}
+    dispatchInvalidated();
+    return;
+  }
+  var readCookie = function (cookie, name) {
+    var prefix = name + '=';
+    var parts = cookie.split(';');
+    var value = null;
+    for (var index = 0; index < parts.length; index += 1) {
+      var entry = parts[index].trim();
+      if (entry.indexOf(prefix) !== 0) continue;
+      var nextValue = entry.slice(prefix.length);
+      if (value === null) value = nextValue;
+      else if (nextValue !== value) return undefined;
+    }
+    return value;
+  };
+  var countCookie = function (cookie, name) {
+    var prefix = name + '=';
+    var parts = cookie.split(';');
+    var count = 0;
+    for (var index = 0; index < parts.length; index += 1) {
+      if (parts[index].trim().indexOf(prefix) === 0) count += 1;
+    }
+    return count;
+  };
+  var normalizeClarip = function (value) {
+    if (value === undefined) return undefined;
+    if (value === '' || value === null) return null;
+    return value.slice(-2) === ',4' ? value.slice(0, -2) : value;
+  };
+  var normalizeOptIn = function (value) {
+    if (value === null || value === undefined) return value;
+    try {
+      var fields = Array.from(new URLSearchParams(value).entries());
+      var groupsValue = null;
+      var groupsCount = 0;
+      var sourceCount = 0;
+      for (var fieldIndex = 0; fieldIndex < fields.length; fieldIndex += 1) {
+        var field = fields[fieldIndex];
+        if (field[0] === 'groups') {
+          groupsCount += 1;
+          groupsValue = field[1];
+        } else if (field[0] === 'source' && field[1] === 'clarip') {
+          sourceCount += 1;
+        } else {
+          return value;
+        }
+      }
+      if (groupsCount !== 1 || !groupsValue || sourceCount > 1 || fields.length !== groupsCount + sourceCount) return value;
+      var pairs = groupsValue.split(',');
+      if (pairs[0] !== 'C0001:1') return value;
+      var accepted = { C0001: true, C0002: true, C0003: true, C0004: true, C0005: true, BG99: true };
+      var seen = {};
+      for (var pairIndex = 0; pairIndex < pairs.length; pairIndex += 1) {
+        var parts = pairs[pairIndex].split(':');
+        var category = parts[0];
+        if (
+          parts.length !== 2 ||
+          !Object.prototype.hasOwnProperty.call(accepted, category) ||
+          (parts[1] !== '0' && parts[1] !== '1') ||
+          Object.prototype.hasOwnProperty.call(seen, category)
+        ) return value;
+        seen[category] = true;
+      }
+      if (
+        sourceCount === 1 &&
+        (pairs.length !== 4 || !seen.C0001 || !seen.C0002 || !seen.C0003 || !seen.C0004)
+      ) return value;
+      var normalized = new URLSearchParams();
+      normalized.set('groups', groupsValue);
+      return normalized.toString();
+    } catch (_normalizationError) {
+      return value;
+    }
+  };
+  var baseline;
+  try {
+    if (WeakMap.prototype.has.call(baselines, currentDocument)) {
+      var storedBaseline = WeakMap.prototype.get.call(baselines, currentDocument);
+      if (storedBaseline === null) {
+        dispatchInvalidated();
+        return;
+      }
+      if (!storedBaseline || typeof storedBaseline !== 'object' || !Object.isFrozen(storedBaseline)) throw new Error('Invalid consent baseline');
+      var storedClaripConsent = Object.getOwnPropertyDescriptor(storedBaseline, 'claripConsent');
+      var storedClaripConsentCount = Object.getOwnPropertyDescriptor(storedBaseline, 'claripConsentCount');
+      var storedOptInConsent = Object.getOwnPropertyDescriptor(storedBaseline, 'optInConsent');
+      var storedOptInConsentCount = Object.getOwnPropertyDescriptor(storedBaseline, 'optInConsentCount');
+      if (
+        !storedClaripConsent ||
+        !Object.prototype.hasOwnProperty.call(storedClaripConsent, 'value') ||
+        !storedOptInConsent ||
+        !Object.prototype.hasOwnProperty.call(storedOptInConsent, 'value') ||
+        (storedClaripConsent.value !== null && typeof storedClaripConsent.value !== 'string') ||
+        (storedOptInConsent.value !== null && typeof storedOptInConsent.value !== 'string') ||
+        (storedClaripConsentCount &&
+          (!Object.prototype.hasOwnProperty.call(storedClaripConsentCount, 'value') ||
+            (storedClaripConsentCount.value !== undefined &&
+              (!Number.isSafeInteger(storedClaripConsentCount.value) ||
+                storedClaripConsentCount.value < 0)))) ||
+        (storedOptInConsentCount &&
+          (!Object.prototype.hasOwnProperty.call(storedOptInConsentCount, 'value') ||
+            (storedOptInConsentCount.value !== undefined &&
+              (!Number.isSafeInteger(storedOptInConsentCount.value) ||
+                storedOptInConsentCount.value < 0))))
+      ) throw new Error('Invalid consent baseline');
+      baseline = Object.freeze({
+        claripConsent: normalizeClarip(storedClaripConsent.value),
+        claripConsentCount: storedClaripConsentCount && storedClaripConsentCount.value,
+        optInConsent: normalizeOptIn(storedOptInConsent.value),
+        optInConsentCount: storedOptInConsentCount && storedOptInConsentCount.value
+      });
+    } else {
+      var cookie = currentDocument.cookie;
+      var claripConsent = readCookie(cookie, "legalzoom_clarip_cookie");
+      var optInConsent = readCookie(cookie, "OptInConsent");
+      if (claripConsent === undefined || optInConsent === undefined) throw new Error('Ambiguous consent cookie');
+      baseline = Object.freeze({
+        claripConsent: normalizeClarip(claripConsent),
+        claripConsentCount: countCookie(cookie, "legalzoom_clarip_cookie"),
+        optInConsent: normalizeOptIn(optInConsent),
+        optInConsentCount: countCookie(cookie, "OptInConsent")
+      });
+    }
+    WeakMap.prototype.set.call(baselines, currentDocument, baseline);
+  } catch (_captureError) {
+    try {
+      WeakMap.prototype.set.call(baselines, currentDocument, null);
+    } catch (_baselineError) {}
+    dispatchInvalidated();
+    return;
+  }
+  try {
+    if (WeakSet.prototype.has.call(changedDocuments, currentDocument)) {
+      dispatchInvalidated();
+      return;
+    }
+    if (WeakMap.prototype.has.call(observers, currentDocument)) {
+      if (typeof WeakMap.prototype.get.call(observers, currentDocument) === 'function') return;
+      WeakMap.prototype.set.call(baselines, currentDocument, null);
+      dispatchInvalidated();
+      return;
+    }
+  } catch (_existingStateError) {
+    try {
+      WeakMap.prototype.set.call(baselines, currentDocument, null);
+    } catch (_baselineError) {}
+    dispatchInvalidated();
+    return;
+  }
+  if (typeof window === 'undefined') return;
+
+  var stopped = false;
+  var stopObserver = function () {};
+  var stop = function () {
+    if (stopped) return;
+    stopped = true;
+    try {
+      stopObserver();
+    } catch (_stopError) {}
+    try {
+      WeakMap.prototype.delete.call(observers, currentDocument);
+    } catch (_observerError) {}
+  };
+  var markUnavailable = function () {
+    try {
+      WeakMap.prototype.set.call(baselines, currentDocument, null);
+    } catch (_baselineError) {}
+    stop();
+    dispatchInvalidated();
+  };
+  var markChanged = function () {
+    try {
+      WeakSet.prototype.add.call(changedDocuments, currentDocument);
+    } catch (_changedError) {
+      markUnavailable();
+      return;
+    }
+    stop();
+    dispatchInvalidated();
+  };
+  var observeCurrentCookie = function () {
+    try {
+      var currentCookie = currentDocument.cookie;
+      var currentClaripConsent = readCookie(currentCookie, "legalzoom_clarip_cookie");
+      var currentOptInConsent = readCookie(currentCookie, "OptInConsent");
+      if (currentClaripConsent === undefined || currentOptInConsent === undefined) {
+        markUnavailable();
+        return;
+      }
+      if (
+        normalizeClarip(currentClaripConsent) !== baseline.claripConsent ||
+        normalizeOptIn(currentOptInConsent) !== baseline.optInConsent
+      ) {
+        markChanged();
+      }
+    } catch (_readError) {
+      markUnavailable();
+    }
+  };
+  var remainingCookieCounts = {};
+  remainingCookieCounts["legalzoom_clarip_cookie"] = baseline.claripConsentCount;
+  remainingCookieCounts["OptInConsent"] = baseline.optInConsentCount;
+  var deletedCookieIdentities = {};
+  var cookieIdentity = function (record) {
+    return [
+      record.name,
+      typeof record.domain === 'string' ? record.domain : '',
+      typeof record.path === 'string' ? record.path : '',
+      record.partitioned === true ? '1' : '0'
+    ].join('\n');
+  };
+  var observeCookieStoreEvent = function (event) {
+    try {
+      var changed = Array.isArray(event && event.changed) ? event.changed : [];
+      var deleted = Array.isArray(event && event.deleted) ? event.deleted : [];
+      var inspect = function (record, deletedRecord) {
+        if (!record || typeof record.name !== 'string') return;
+        if (record.name !== "legalzoom_clarip_cookie" && record.name !== "OptInConsent") return;
+        var value = deletedRecord ? null : record.value;
+        if (!deletedRecord && typeof value !== 'string') {
+          markUnavailable();
+          return;
+        }
+        var isClaripRecord = record.name === "legalzoom_clarip_cookie";
+        var baselineValue = isClaripRecord ? baseline.claripConsent : baseline.optInConsent;
+        var normalizedValue = isClaripRecord ? normalizeClarip(value) : normalizeOptIn(value);
+        if (deletedRecord && baselineValue !== null) {
+          var remainingCount = remainingCookieCounts[record.name];
+          if (typeof remainingCount === 'number' && remainingCount > 1) {
+            remainingCookieCounts[record.name] = remainingCount - 1;
+            var deletedIdentity = cookieIdentity(record);
+            deletedCookieIdentities[deletedIdentity] = (deletedCookieIdentities[deletedIdentity] || 0) + 1;
+            return;
+          }
+        }
+        if (normalizedValue !== baselineValue) {
+          markChanged();
+          return;
+        }
+        if (!deletedRecord) {
+          var changedIdentity = cookieIdentity(record);
+          var deletedIdentityCount = deletedCookieIdentities[changedIdentity] || 0;
+          if (deletedIdentityCount > 0 && typeof remainingCookieCounts[record.name] === 'number') {
+            remainingCookieCounts[record.name] += 1;
+            deletedCookieIdentities[changedIdentity] = deletedIdentityCount - 1;
+          }
+        }
+      };
+      for (var changedIndex = 0; changedIndex < changed.length && !stopped; changedIndex += 1) {
+        inspect(changed[changedIndex], false);
+      }
+      for (var deletedIndex = 0; deletedIndex < deleted.length && !stopped; deletedIndex += 1) {
+        inspect(deleted[deletedIndex], true);
+      }
+      if (!stopped && (changed.length > 0 || deleted.length > 0)) observeCurrentCookie();
+    } catch (_eventError) {
+      markUnavailable();
+    }
+  };
+
+  var observerInstalled = false;
+  var cookieStore;
+  var addCookieStoreListener;
+  var removeCookieStoreListener;
+  try {
+    cookieStore = globalThis.cookieStore;
+    if (cookieStore) {
+      addCookieStoreListener = cookieStore.addEventListener;
+      removeCookieStoreListener = cookieStore.removeEventListener;
+    }
+  } catch (_cookieStoreAccessError) {
+    markUnavailable();
+    return;
+  }
+  if (
+    cookieStore &&
+    typeof addCookieStoreListener === 'function' &&
+    typeof removeCookieStoreListener === 'function'
+  ) {
+    try {
+      addCookieStoreListener.call(cookieStore, 'change', observeCookieStoreEvent);
+      stopObserver = function () {
+        removeCookieStoreListener.call(cookieStore, 'change', observeCookieStoreEvent);
+      };
+      observerInstalled = true;
+    } catch (_cookieStoreError) {}
+  }
+  if (!observerInstalled) {
+    var setIntervalFunction;
+    var clearIntervalFunction;
+    try {
+      setIntervalFunction = globalThis.setInterval;
+      clearIntervalFunction = globalThis.clearInterval;
+    } catch (_timerAccessError) {
+      markUnavailable();
+      return;
+    }
+    if (typeof setIntervalFunction !== 'function' || typeof clearIntervalFunction !== 'function') {
+      markUnavailable();
+      return;
+    }
+    try {
+      var pollId = setIntervalFunction.call(globalThis, observeCurrentCookie, 1000);
+      stopObserver = function () {
+        clearIntervalFunction.call(globalThis, pollId);
+      };
+      observerInstalled = true;
+    } catch (_pollError) {
+      markUnavailable();
+      return;
+    }
+  }
+  try {
+    WeakMap.prototype.set.call(observers, currentDocument, stop);
+  } catch (_observerError) {
+    markUnavailable();
+  }
+})();</script><link rel="preconnect" href="https://proxy.legalzoom.com" crossorigin><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="REVISIT-AFTER" content="1 DAYS"><meta name="RATING" content="GENERAL"><meta name="RESOURCE-TYPE" content="DOCUMENT"><meta name="theme-color" content="#f45a27"><meta name="msapplication-navbutton-color" content="#f45a27"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f45a27"><meta name="viewport" content="width=device-width, initial-scale=1"><script>window.ENABLE_COOKIE_BANNER_V2=true;</script><title>404 - Page not found | LegalZoom</title><link rel="canonical" href="https://www.legalzoom.com/.well-known/ai-catalog.json"><meta name="generator" content="Astro (0.0.0)"><meta name="description" content><meta property="og:title" content="404 - Page not found | LegalZoom"><meta property="og:type" content="company"><meta property="og:url" content="https://www.legalzoom.com/.well-known/ai-catalog.json"><meta property="og:image" content="https://www.legalzoom.com/resources/img/lzr/global/legalzoom-20-og.png"><meta property="og:site_name" content="LegalZoom"><meta property="og:description" content><meta property="fb:app_id" content="209555242433298"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@legalzoom"><meta name="twitter:title" content="404 - Page not found | LegalZoom"><meta name="twitter:description" content><meta name="twitter:image" content="https://www.legalzoom.com/resources/img/lzr/global/legalzoom-20-og.png"><meta name="twitter:image:alt" content="LegalZoom"><meta name="robots" content="noindex, nofollow"><link rel="stylesheet" type="text/css" href="https://proxy.legalzoom.com/clarip/legalzoom/donotsell/assets/css/donotsell-extended.min.css"><script>var globalDnsDeployment = false;
+var claripHost = 'legalzoom.clarip.com';
+var claripCdnHost = 'cdn.clarip.com';
+var clientName = 'legalzoom';
+var clientIdentifier = 'aee64249635ab74b2b50';</script><script src="https://proxy.legalzoom.com/clarip/legalzoom/donotsell/assets/js/donotsell-block.min.js"></script><link rel="stylesheet" type="text/css" href="https://proxy.legalzoom.com/clarip/legalzoom/cookieconsent/assets/css/cookieconsent.min.css"><script src="https://proxy.legalzoom.com/clarip/legalzoom/cookieconsent/assets/js/cookieconsent.min.js"></script><script>var claripCdnHost = 'cdn.clarip.com';
+var claripClientName = 'legalzoom';
+var claripCookieConsentHost = 'legalzoom.clarip.com';
+var claripCookieManagerIdentifier = 'af89fca01820cf0a8988';</script><script defer src="https://proxy.legalzoom.com/clarip/legalzoom/cookieconsent/assets/js/clarip-cookie-manager.min.js"></script><script>window.PUBLIC_INTERCOM_CHAT_ENABLED=true;</script><script>
+(function() {
+	try {
+		const urlParams = new URLSearchParams(window.location.search);
+		const utmMedium = urlParams.get('utm_medium');
+		if (utmMedium) {
+			sessionStorage.setItem('utm_medium', utmMedium);
+		}
+	} catch (e) {
+		return;
+	}
+})();
+</script><script>window.ENV={"ENV":"prod","PUBLIC_BASE_API_URL":"https://www.legalzoom.com","PUBLIC_BASE_URL":"https://www.legalzoom.com","PUBLIC_GIT_COMMIT":null,"PUBLIC_BUILDER_KEY":"c543375419b34ced8a551fab246ac1bc","PUBLIC_SEGMENT_WRITE_KEY":"uGpr5fBajNf1LJ0MobrpCgaocfNubdEB","PUBLIC_LZ_PROXY_URL":"proxy.legalzoom.com","PUBLIC_DATADOG_APP_ID":"87457c7d-851b-4c83-9a36-509df16bb157","PUBLIC_DATADOG_APP_NAME":"growth-astro","PUBLIC_DATADOG_ENV":"p","PUBLIC_DATADOG_TOKEN":"pubbb970e683e50e0ecfa293d7ce302d1a9","PUBLIC_TEALIUM_CONFIG_ENVIRONMENT":"prod","PUBLIC_SEARCH_HOST_URL":"https://site-search.apigw.legalzoom.com/","PUBLIC_SEARCH_KEY":"yuop-X-5ykLs-_B9Vnzarj1ZOG6-e0wrnyAgMKJbzpY","PUBLIC_TRUSTPILOT_BUSINESS_ID":"581e7fdf0000ff0005971a54","PUBLIC_LAUNCHDARKLY_CLIENT_ID":"66b6ebfdc20556103503d692","PUBLIC_VIRTUAL_MAIL_GOOGLE_MAPS_KEY":"AIzaSyC_WNapcjUB29P2ZG671-MDdPUNTw-8cnY","PUBLIC_TEMPLATE_STORE_ASSETS_BASE_URL":"https://d32fvfyxdj999u.cloudfront.net","version":"8d3ae93b57d53e174d0a7db0e34869baa2e6b2bf"}</script><script type="text/javascript">(function installSegmentOptInConsentPlugin() {
+  // Keep these validation rules in sync with
+  // utils/cookie-category/opt-in-consent.ts. This must be a classic inline
+  // script so the plugin is queued before Segment's automatic Page Viewed.
+  const denied = {
+    C0001: true,
+    C0002: false,
+    C0003: false,
+    C0004: false,
+  };
+  const coreGroups = ['C0001', 'C0002', 'C0003', 'C0004'];
+  const knownGroups = new Set(['C0001', 'C0002', 'C0003', 'C0004', 'C0005', 'BG99']);
+
+  function deniedResult() {
+    return { preferences: { ...denied }, suppliedGroups: new Set() };
+  }
+
+  function readCookie() {
+    const prefix = 'OptInConsent=';
+    const matches = document.cookie
+      .split(';')
+      .map((entry) => entry.trim())
+      .filter((entry) => entry.startsWith(prefix));
+    return matches.length === 1 ? matches[0].slice(prefix.length) : null;
+  }
+
+  function readPreferences() {
+    const raw = readCookie();
+    if (!raw) return deniedResult();
+
+    let groups;
+    try {
+      groups = new URLSearchParams(raw).get('groups');
+    } catch {
+      return deniedResult();
+    }
+    if (!groups) return deniedResult();
+
+    const pairs = groups.split(',');
+    if (pairs[0] !== 'C0001:1') return deniedResult();
+
+    const preferences = { ...denied };
+    const seen = new Set();
+    for (const pair of pairs) {
+      const parts = pair.split(':');
+      const [group, granted] = parts;
+      if (
+        parts.length !== 2 ||
+        !knownGroups.has(group) ||
+        (granted !== '0' && granted !== '1') ||
+        seen.has(group)
+      ) {
+        return deniedResult();
+      }
+      seen.add(group);
+      preferences[group] = granted === '1';
+    }
+    return { preferences, suppliedGroups: seen };
+  }
+
+  // OptInConsent refreshes on an edge round-trip, not immediately when the
+  // Clarip banner changes its raw cookie. Privacy approval of that opt-out lag
+  // is required before enableClaripTracking is ramped.
+  const applyConsent = (context) => {
+    if (context && context.event) {
+      const result = readPreferences();
+      const categoryPreferences = {};
+      for (const group of coreGroups) {
+        categoryPreferences[group] = result.preferences[group];
+      }
+      // C0005 marks an explicit legacy bridge, whose analytics contract is
+      // C0005 even when C0002 is also present. Native C1-C4 shapes use C0002.
+      const analyticsGranted = result.suppliedGroups.has('C0005')
+        ? result.preferences.C0005
+        : result.preferences.C0002 === true;
+      if (!context.event.context) context.event.context = {};
+      context.event.context.consent = {
+        categoryPreferences,
+        google: {
+          ad_storage: categoryPreferences.C0004 ? 'granted' : 'denied',
+          analytics_storage: analyticsGranted ? 'granted' : 'denied',
+        },
+      };
+    }
+    return context;
+  };
+  const plugin = {
+    name: 'Clarip OptInConsent',
+    version: '1.0.0',
+    type: 'enrichment',
+    isLoaded: () => true,
+    load: () => Promise.resolve(),
+    page: applyConsent,
+    track: applyConsent,
+    identify: applyConsent,
+    group: applyConsent,
+  };
+
+  const analytics = (window.analytics = window.analytics || []);
+  if (typeof analytics.register === 'function') {
+    analytics.register(plugin);
+  } else {
+    analytics.push(['register', plugin]);
+  }
+})();
+</script><script data-id="segment-stub">
+                !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window.analytics.initialized)return window.analytics[e].apply(window.analytics,arguments);var i=Array.prototype.slice.call(arguments);i.unshift(e);analytics.push(i);return analytics}};for(var i=0;i<analytics.methods.length;i++){var key=analytics.methods[i];analytics[key]=analytics.factory(key)}analytics.load=function(key,i){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://proxy.legalzoom.com/segments-cdn/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=i};analytics._writeKey="eMmwGqrekNezCSjcJRIyCvFi7DnL0GSe";;analytics.SNIPPET_VERSION="4.16.1";
+                  
+                }}();
+              </script><!-- <Links /> starts --><!-- in Margo: globalNavbarUrl --><link rel="icon" href="https://legalzoomcdn.net/growth/favicon.ico"><!-- <Links /> ends --> <link rel="preload" href="https://legalzoomcdn.net/growth/_astro/work-sans-latin-wght-normal.CkJCGd27.woff2" as="font" type="font/woff2" crossorigin>  <style>@font-face{font-family:Work Sans;font-style:normal;font-display:swap;font-weight:100 900;src:url(https://legalzoomcdn.net/growth/_astro/work-sans-vietnamese-wght-normal.Dus3v61A.woff2) format("woff2-variations");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Work Sans;font-style:normal;font-display:swap;font-weight:100 900;src:url(https://legalzoomcdn.net/growth/_astro/work-sans-latin-ext-wght-normal.rMXoD2xN.woff2) format("woff2-variations");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Work Sans;font-style:normal;font-display:swap;font-weight:100 900;src:url(https://legalzoomcdn.net/growth/_astro/work-sans-latin-wght-normal.CkJCGd27.woff2) format("woff2-variations");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+details[data-astro-cid-5blmo7yk]{margin:0;padding:0}details[data-astro-cid-5blmo7yk] summary[data-astro-cid-5blmo7yk]{font-family:Arial,sans-serif;font-size:.84rem;border-top:solid 2px #767676;border-left:solid 2px #767676;border-right:2px #777171;border-bottom:2px #777171;border-style:outset;background-color:gray;color:#fff;cursor:pointer;list-style:none;margin:0;padding:0;display:inline-block;padding-inline:6px;padding-block:1px;user-select:none}details[data-astro-cid-5blmo7yk] summary[data-astro-cid-5blmo7yk]:active{border-top:2px solid #777171;border-left:2px solid #777171;border-right:solid 2px #767676;border-bottom:solid 2px #767676;border-style:inset}details[data-astro-cid-5blmo7yk] summary[data-astro-cid-5blmo7yk]::-webkit-details-marker{display:none}
+</style><link rel="stylesheet" href="https://legalzoomcdn.net/growth/_astro/tailwind.CKit3gVr.css"></head> <body> <script>
+  (function(h,o,u,n,d) {
+     h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
+     // Defer the 51KB agent past the LCP window: it is a long-task source on
+     // mobile and buffers vitals/resource entries, so nothing measured is lost.
+     // The onReady queue above still accepts callers before the script lands.
+     function load(){var s=o.createElement(u);s.async=1;s.src=n;var f=o.getElementsByTagName(u)[0];f.parentNode.insertBefore(s,f)}
+     if ('requestIdleCallback' in window) window.requestIdleCallback(load,{timeout:3000}); else setTimeout(load,1)
+  })(window,document,'script','https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js','DD_RUM')
+  window.DD_RUM.onReady(function() {
+    window.DD_RUM.init({
+      clientToken: 'pubbb970e683e50e0ecfa293d7ce302d1a9',
+      applicationId: '87457c7d-851b-4c83-9a36-509df16bb157',
+      site: 'datadoghq.com',
+      service: 'growth-astro',
+      env: 'p',
+      version: '8d3ae93b57d53e174d0a7db0e34869baa2e6b2bf',
+      sessionReplaySampleRate: 10,
+      trackResources: true,
+      trackLongTasks: true,
+      trackUserInteractions: true,
+      defaultPrivacyLevel: 'mask-user-input'
+    });
+  })
+  </script>     <article>    <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value=="object"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};"requestIdleCallback"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event("astro:idle"));})();</script><script>(()=>{var g=Object.defineProperty;var w=(c,s,d)=>s in c?g(c,s,{enumerable:!0,configurable:!0,writable:!0,value:d}):c[s]=d;var l=(c,s,d)=>w(c,typeof s!="symbol"?s+"":s,d);var E=new Set(["__proto__","constructor","prototype"]);{let c={0:t=>y(t),1:t=>d(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(d(t)),5:t=>new Set(d(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},s=t=>{let[p,e]=t;return p in c?c[p](e):void 0},d=t=>t.map(s),y=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([p,e])=>[p,s(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,"Component");l(this,"hydrator");l(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let n=this.querySelectorAll("astro-slot"),r={},i=this.querySelectorAll("template[data-astro-template]");for(let o of i){let a=o.closest(this.tagName);a!=null&&a.isSameNode(this)&&(r[o.getAttribute("data-astro-template")||"default"]=o.innerHTML,o.remove())}for(let o of n){let a=o.closest(this.tagName);a!=null&&a.isSameNode(this)&&(r[o.getAttribute("name")||"default"]=o.innerHTML)}let u;try{u=this.hasAttribute("props")?y(JSON.parse(this.getAttribute("props"))):{}}catch(o){let a=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(a+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${a}`,this.getAttribute("props"),o),o}let h;await this.hydrator(this)(this.Component,u,r,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});l(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),n.disconnect(),this.childrenConnectedCallback()},n=new MutationObserver(()=>{var r;((r=this.lastChild)==null?void 0:r.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});n.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}getRetryImportUrl(e){let n=new URL(e,document.baseURI),r=`astro-retry=${Date.now()}`,i=n.hash.replace(/^#/,"");return n.hash=i?`${i}&${r}`:r,n.toString()}async importWithRetry(e){try{return await import(e)}catch(n){return await new Promise(r=>setTimeout(r,1e3)),import(this.getRetryImportUrl(e))}}handleHydrationError(e){let n=this.getAttribute("component-url"),r=new CustomEvent("astro:hydration-error",{cancelable:!0,bubbles:!0,composed:!0,detail:{error:e,componentUrl:n}});this.dispatchEvent(r)&&console.error(`[astro-island] Error hydrating ${n}`,e)}async start(){let e=JSON.parse(this.getAttribute("opts")),n=this.getAttribute("client");if(Astro[n]===void 0){window.addEventListener(`astro:${n}`,()=>this.start(),{once:!0});return}try{await Astro[n](async()=>{let r=this.getAttribute("renderer-url");try{let[i,{default:u}]=await Promise.all([this.importWithRetry(this.getAttribute("component-url")),r?this.importWithRetry(r):Promise.resolve({default:()=>()=>{}})]),h=this.getAttribute("component-export")||"default";if(h.includes(".")){this.Component=i;for(let m of h.split(".")){if(E.has(m)||!this.Component||typeof this.Component!="object"&&typeof this.Component!="function"||!Object.hasOwn(this.Component,m))throw new Error(`Invalid component export path: ${h}`);this.Component=this.Component[m]}}else{if(E.has(h))throw new Error(`Invalid component export path: ${h}`);this.Component=i[h]}return this.hydrator=u,this.hydrate}catch(i){return this.handleHydrationError(i),()=>{}}},e,this)}catch(r){this.handleHydrationError(r)}}attributeChangedCallback(){this.hydrate()}}l(f,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",f)}})();</script><script>window._$HY||(e=>{let t=e=>e&&e.hasAttribute&&(e.hasAttribute("data-hk")?e:t(e.host&&e.host.nodeType?e.host:e.parentNode));["click", "input"].forEach((o=>document.addEventListener(o,(o=>{if(!e.events)return;let s=t(o.composedPath&&o.composedPath()[0]||o.target);s&&!e.completed.has(s)&&e.events.push([s,o])}))))})(_$HY={events:[],completed:new WeakSet,r:{},fe(){}});</script><!--xs--><astro-island uid="2i4jGr" data-solid-render-id="s1" component-url="https://legalzoomcdn.net/growth/_astro/index.CgDBFc-o.js" component-export="Header" renderer-url="https://legalzoomcdn.net/growth/_astro/client.qBm8SJSD.js" props="{&quot;featureFlags&quot;:[0,{&quot;articleCenterRenameInGlobalNavbar&quot;:[0,true],&quot;enableEpPlanCheck&quot;:[0,true],&quot;enablePiCalculatorNav&quot;:[0,true],&quot;enableFrontdoorGlobalNav&quot;:[0,true]}],&quot;phoneNumber&quot;:[0,&quot;8883790854&quot;],&quot;hideEin&quot;:[0,false],&quot;i

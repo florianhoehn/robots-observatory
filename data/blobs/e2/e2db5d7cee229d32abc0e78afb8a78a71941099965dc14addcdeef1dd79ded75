@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<style type="text/css">
+body { margin: 0; font-family: "Arial"; }
+.logo { width: 100%; float: left; text-align: center; }
+p.logo-img { margin-bottom: 75px; }
+.info-footer { position: fixed; bottom: 0px; text-align: center; width: 100%; float: left; }
+.mensagem { text-align: center; width: 100%; float: left; }
+p.txt-mensagem { font-size: 1em; color: #4c4c4c; line-height: 1.6em; }
+.contactos { width: 100%; max-width: 360px; margin: auto; }
+.numeroP, .numeroE { width: 40%; float: left; padding: 15px; }
+p.txt-titulo { font-size: 1.2em; color: #0071ce; font-weight: 700; border-bottom: 2px solid #0071ce; }
+p.numero { font-size: 1.1em; color: #4c4c4c; font-weight: 700; }
+a.go {
+background-image: url('/ak_resources/images/back.png');
+background-position: 0 0;
+background-repeat: no-repeat;
+display: block;
+height: 47px;
+margin: 0 auto;
+overflow: visible;
+position: relative;
+text-indent: -99999px;
+width: 47px;
+}
+a.go:hover {
+background: rgba(0, 0, 0, 0) url('/ak_resources/images/back.png') repeat scroll 0 47px;
+cursor: pointer;
+display: block;
+}
+@media (max-width: 1004px) {
+.numeroP, .numeroE { width: 90%; float: none; margin: auto; max-width: 400px; }
+.contactos { width: 90%; max-width: none; }
+img { width: 90%; max-width: 350px; }
+p.txt-mensagem { padding: 10px; }
+p.logo-img { padding-left: 25px; padding-right: 25px; }
+}
+@media (max-width: 600px) {
+.info-footer { position: relative; }
+p.logo-img { margin-bottom: 5px; }
+p.txt-mensagem { padding: 0px 10px 0 10px; }
+.numeroP, .numeroE { padding: 0px; }
+}
+.copyable {
+cursor: pointer;
+color: #0071ce;
+text-decoration: underline;
+}
+#copy-msg {
+color: #0071ce;
+font-size: 0.9em;
+margin-top: 10px;
+transition: opacity 0.3s ease;
+}
+</style>
+<title>Ocorreu um erro!</title>
+</head>
+<body>
+<div class="logo">
+<p class="logo-img"><img src="/ak_resources/images/cgd.png" alt="CGD"></p>
+</div>
+
+<div class="mensagem">
+<p class="txt-mensagem">
+Ocorreu um erro. Por favor, reporte este problema indicando o seguinte suporte ID de erro
+<strong id="error-id" class="copyable"> 0.a3ed655f.1792447517.e95847c</strong> e o IP
+<strong id="client-ip" class="copyable">82.39.15.43</strong><br>
+</p>
+<p class="txt-mensagem">
+<span id="copy-msg"></span>
+</p>
+<p class="txt-mensagem">
+Se pretender entrar em contacto connosco, ligue p.f. um dos seguintes números:
+</p>
+
+<div class="contactos">
+<div class="numeroP">
+<p class="txt-titulo">Particulares</p>
+<p class="numero">21 790 07 90<br><span style="color:#777; font-size:0.8em;"><em>24h/dia</em></span></p>
+</div>
+<div class="numeroE">
+<p class="txt-titulo">Empresas</p>
+<p class="numero">21 790 07 91<br><span style="color:#777; font-size:0.8em;"><em>8 às 22h</em></span></p>
+</div>
+</div>
+
+<div style="clear: both;"></div>
+<p>As nossas desculpas pelo incómodo causado. Tentaremos ser breves.</p>
+</div>
+
+<div id="HPlink" style="width:100%; text-align:center; float:left;">
+<p>Voltar à homepage</p>
+<a class="go" title="Ir para a homepage do site" href="/">Homepage</a>
+</div>
+
+<footer>
+<div class="info-footer">
+<p class="txt-copy">© <span id="year"></span> Caixa Geral de Depósitos</p>
+</div>
+</footer>
+
+<script>
+// Define automaticamente o ano atual
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Função para copiar texto
+function copyToClipboard(text) {
+navigator.clipboard.writeText(text).then(function () {
+const msg = document.getElementById('copy-msg');
+msg.textContent = 'Informação copiada para o clipboard!';
+msg.style.opacity = 1;
+
+setTimeout(() => {
+msg.textContent = '';
+}, 3000);
+}, function () {
+const msg = document.getElementById('copy-msg');
+msg.textContent = 'Erro ao copiar para o clipboard.';
+msg.style.color = 'red';
+
+setTimeout(() => {
+msg.textContent = '';
+msg.style.color = '#0071ce'; // volta à cor original
+}, 3000);
+});
+}
+
+// Eventos de clique no ID e IP
+document.getElementById('error-id').addEventListener('click', function () {
+const errorId = document.getElementById('error-id').textContent.trim();
+const ip = document.getElementById('client-ip').textContent.trim();
+copyToClipboard(`ID de erro: ${errorId}\nIP: ${ip}`);
+});
+
+document.getElementById('client-ip').addEventListener('click', function () {
+const errorId = document.getElementById('error-id').textContent.trim();
+const ip = document.getElementById('client-ip').textContent.trim();
+copyToClipboard(`ID de erro: ${errorId}\nIP: ${ip}`);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# ============================================================
+# robots.txt - www.libraccio.it
+# Le direttive valgono per i crawler che le rispettano (Google, Bing).
+# I bot malevoli/impersonatori NON le rispettano: quelli si bloccano all'edge (Akamai).
+# ============================================================
+
+User-agent: *
+
+# --- Ricerca interna (/src/?FT=...): URL combinatori infiniti, zero valore SEO ---
+Disallow: /src/
+Disallow: /src
+
+# --- Aree non pubbliche / funzionali ---
+Disallow: /checkout/*
+Disallow: /Checkout/*
+Disallow: /acquisto-libri-usati/*
+Disallow: /ebook/acquista/*
+Disallow: /libri-universitari-usati-nuovi?*
+Disallow: /uc/ProductList.aspx*
+
+# --- Pagina prodotto .aspx: il catalogo SEO usa gli URL puliti /libro e /ebook ---
+Disallow: /scheda.aspx
+Disallow: /*scheda.aspx
+
+# --- Parametri di tracking campagne (zero valore SEO) ---
+Disallow: /*?gclid=
+Disallow: /*&gclid=
+Disallow: /*?gad
+Disallow: /*&gad
+Disallow: /*?utm_
+Disallow: /*&utm_
+Disallow: /*?fbclid=
+Disallow: /*&fbclid=
+
+# --- Parametri filtri ---
+Disallow: /*?EX= 
+Disallow: /*&EX=
+
+# --- Pagine .aspx funzionali non utili alla SEO ---
+Disallow: /top100.aspx
+Disallow: /assistenza-clienti.aspx
+Disallow: /Biblioteche/
+Disallow: /giftcard/
+
+Sitemap: https://www.libraccio.it/sitemap/ssl/sitemapindex.xml

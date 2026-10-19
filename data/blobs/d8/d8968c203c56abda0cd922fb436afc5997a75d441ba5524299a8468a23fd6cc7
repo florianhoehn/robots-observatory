@@ -1,0 +1,34 @@
+User-agent: *
+Allow: /
+Disallow: /*template=printart*
+Disallow: /*template=artzen*
+Disallow: /*template=loadcomments*
+Disallow: /*template=artstatus*
+Disallow: /*template=testontheart*
+Disallow: /*template=slider*
+Disallow: /szukaj/*
+Disallow: /section/advanced-search*
+Disallow: /GBC*
+# Dead requests found in Google Search Console
+Disallow: /*template=infinityscroll*
+Disallow: /*template=getParagraphToLiveMamut*
+Disallow: /*template=getParagraph*
+# We don't want to index our scripts
+Disallow: /*name=*.php5*
+Disallow: /*name=*.js*
+Disallow: /*/JavaScript:*
+# We don't want to index preview pages
+Disallow: /content/preview/*
+# We don't want to index pages without meaningfull content
+Disallow: /brak_autora
+# We don't want to index advert preview pages
+Disallow: /*lpurl=*
+# We don't want to index technical url's
+Disallow: /*lopenr=*
+Disallow: /cdn-cgi/*
+Disallow: /ht_biznes/*
+Disallow: /404
+Disallow: /przemysl-spozywczy/art39005721-*
+
+Sitemap: https://www.rp.pl/sitemaps/sitemap.xml
+Sitemap: https://www.rp.pl/sitemaps/news-sitemap.xml

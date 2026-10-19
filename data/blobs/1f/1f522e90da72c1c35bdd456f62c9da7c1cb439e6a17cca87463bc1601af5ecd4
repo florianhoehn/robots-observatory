@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVer</title>
+    <link rel="stylesheet" href="/_s/error.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="main">
+        <div class="tver-logo"><img src="/_s/img/tver-logo.png" alt="TVer logo"></div>
+        <div class="status-text">404 Not Found</div>
+        <div class="message font-m">アクセスしたURLは削除、変更されたか、現在利用できない可能性があります。</div>
+        <div class="font-m"><span id="count"></span><span>秒後に tver.jp に移動します。</span></div>
+      </div>
+      <div class="footer-push"></div>
+      <div class="footer">
+        <div class="font-m">&copy; TVer INC.</div>
+      </div>
+    </div>
+    <script>
+      var count = 3;
+      document.addEventListener("DOMContentLoaded", function() {
+          var $count = document.getElementById("count");
+          $count.textContent = "" + count;
+          setInterval(function() {
+              if (--count <= 0){
+                  location.replace("/");
+              }
+              $count.textContent = "" + Math.max(0, count);
+          }, 1000);
+      });
+    </script>
+  </body>
+</html>

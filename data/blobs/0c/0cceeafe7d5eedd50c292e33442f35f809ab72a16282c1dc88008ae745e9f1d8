@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="lv" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="lv" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="lv"> <!--<![endif]-->  
+<head>
+<title>Lapa nav atrasta (404) - nra.lv</title>
+<meta charset="utf-8"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://core.dimatter.ai" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-itunes-app" content="app-id=1182159948" />
+<meta http-equiv="origin-trial" content="AlVV9AkgA6BCVADey30MIP7XWsLIsLSIVM5k0yTmDK0spkTKs1OXo0htF7h4DgOAxRj/PUmY/fsaCsVq88Kc2w8AAABweyJvcmlnaW4iOiJodHRwczovL25yYS5sdjo0NDMiLCJmZWF0dXJlIjoiVW5yZXN0cmljdGVkU2hhcmVkQXJyYXlCdWZmZXIiLCJleHBpcnkiOjE3MDk4NTU5OTksImlzU3ViZG9tYWluIjp0cnVlfQ==" />
+<link rel="icon" href="/favicon.ico">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap"></noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<script>var lazyCSS = [];</script>
+<link rel="stylesheet" href="/a/b/default.409baafe.css" /><script>lazyCSS.push('/a/b/default_lazy.90596d0e.css');</script>
+<link rel="stylesheet" href="/a/b/default_site_nra.16042e86.css" /><link rel="canonical" href="https://nra.lv/.well-known/agent.json">
+<script>
+var nra = {
+	eventUrl: '/api/event',
+	imgDomain: 'https://zinas.nra.lv/',
+	userUrl: '/api/secure/user/get',
+	device: 'desktop',
+	adsUseDima: true,
+	support: {
+		apiUrl: '/support/block/',
+		enabled: '1',
+		show: '0',
+	},
+};
+var nraLazyAds = nraLazyAds || {};
+nraLazyAds.cmd = nraLazyAds.cmd || [];
+var diTargetings = [];
+</script>
+<script>
+window.nraConsent = window.nraConsent || {};
+window.nraConsent.cmd = window.nraConsent.cmd || [];
+window.nraConsent.ready = window.nraConsent.ready || false;
+window.nraConsent.data = window.nraConsent.data || null;
+
+window.nraConsent.isGranted = function(status) {
+	return status === true || status === 1 || status === 3 || status === 4;
+};
+
+window.nraConsent.hasPurpose = function(consentData, purposeId) {
+	var consents = consentData && consentData.purpose && consentData.purpose.consents;
+	return !!(consents && consents[purposeId]);
+};
+
+window.nraConsent.hasAdPersonalization = function(consentData) {
+	if (!consentData) {
+		return false;
+	}
+	if (consentData.adPersonalizationPurposeConsentStatus !== undefined && consentData.adPersonalizationPurposeConsentStatus !== null) {
+		return window.nraConsent.isGranted(consentData.adPersonalizationPurposeConsentStatus);
+	}
+	return window.nraConsent.hasPurpose(consentData, 3) && window.nraConsent.hasPurpose(consentData, 4);
+};
+
+window.nraConsent.applyGtag = function(consentData) {
+	if (typeof window.gtag !== 'function' || !consentData) {
+		return;
+	}
+	var granted = window.nraConsent.isGranted;
+	window.gtag('consent', 'update', {
+		'ad_storage': granted(consentData.adStoragePurposeConsentStatus) || window.nraConsent.hasPurpose(consentData, 1) ? 'granted' : 'denied',
+		'ad_user_data': granted(consentData.adUserDataPurposeConsentStatus) || (window.nraConsent.hasPurpose(consentData, 1) && window.nraConsent.hasPurpose(consentData, 7)) ? 'granted' : 'denied',
+		'ad_personalization': window.nraConsent.hasAdPersonalization(consentData) ? 'granted' : 'denied',
+		'analytics_storage': granted(consentData.analyticsStoragePurposeConsentStatus) || window.nraConsent.hasPurpose(consentData, 1) || window.nraConsent.hasPurpose(consentData, 8) ? 'granted' : 'denied',
+	});
+};
+
+window.nraConsent.runCmd = function(fn, consentData) {
+	try {
+		fn(consentData);
+	} catch (e) {
+		console.error('nraConsent.cmd callback failed', e);
+	}
+};
+
+window.nraConsent.onConsent = function(consentData) {
+	if (!consentData) {
+		return;
+	}
+	window.nraConsent.data = consentData;
+	window.nraConsent.ready = true;
+	window.nraConsent.applyGtag(consentData);
+	var queued = window.nraConsent.cmd.splice(0, window.nraConsent.cmd.length);
+	for (var i = 0; i < queued.length; i++) {
+		window.nraConsent.runCmd(queued[i], consentData);
+	}
+};
+
+(function(cmd) {
+	var nativePush = cmd.push;
+	cmd.push = function() {
+		for (var i = 0; i < arguments.length; i++) {
+			var fn = arguments[i];
+			if (typeof fn !== 'function') {
+				continue;
+			}
+			if (window.nraConsent.ready) {
+				window.nraConsent.runCmd(fn, window.nraConsent.data);
+			} else {
+				nativePush.call(cmd, fn);
+			}
+		}
+		return cmd.length;
+	};
+})(window.nraConsent.cmd);
+
+window.googlefc = window.googlefc || {};
+googlefc.callbackQueue = googlefc.callbackQueue || [];
+googlefc.callbackQueue.push({
+	CONSENT_DATA_READY: function() {
+		if (typeof googlefc.getGoogleConsentModeValues !== 'function') {
+			return;
+		}
+		window.nraConsent.onConsent(googlefc.getGoogleConsentModeValues());
+	}
+});
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'wait_for_update': 500,
+  });
+
+  window.nraConsent.cmd.push(function(consentData) {
+    window.nraConsent.applyGtag(consentData);
+  });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LTMBW853YH"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LTMBW853YH');
+</script><script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      	appId: "0083dd2f-fe8e-44e1-9657-6e68acd252ea",
+		requiresUserPrivacyConsent: true,
+		// promptOptions: {
+		//	slidedown: {
+		//		enabled: false // Don't auto-prompt
+		//	}
+		// }
+    });
+  });
+
+  window.nraConsent.cmd.push(function(consentData) {
+		OneSignalDeferred.push(async function(OneSignal) {
+			await OneSignal.setConsentGiven(true);
+			// setTimeout(function() {
+			// 	OneSignal.Slidedown.promptPush();
+			// }, 5000);
+		});
+  });
+</script>
+
+</head>
+<body class="site-nra">
+
+<header class="site-header site-header-nra">
+		<div class="h-el-menu h-menu-with-popup">
+		<a href="#" class="h-el-menu-btn h-icon-btn h-menu-popup-btn" id="header_menu_btn" title="Rādīt izvēlni" aria-label="Rādīt izvēlni">
+			<span class="material-symbols-outlined">menu</span>
+		</a>
+		<nav class="h-el-menu-popup h-popup" id="header_popup_menu">
+			<div class="popup-bl popup-bl-date">
+				<h4 class="t">Otrdiena, 20.oktobris</h4>
+				<a href="/varda-dienas/sodien/" class="names mt-1" aria-label="Vārda dienas šodien"><span>Vārda dienas šodien:</span> <b>Leonīda, Leonīds</b></a>
+			</div>
+			<div class="popup-bl popup-bl-settings">
+				<div class="title">
+					<span class="material-symbols-outlined">settings</span>
+					<h4 class="t">Uzstādījumi</h4>
+				</div>
+								<div class="settings-sel-line mt-2 font-size-bl">
+					<label for="font_size_btn">Burtu lielums:</label>
+					<a href="#" class="btn-font-size" id="font_size_btn" title="Lasi ērtāk - maini fonta izmēru" role="button" aria-label="Maini fonta izmēru">
+						<span aria-label="Mazs burtu izmērs">A</span>
+						<span aria-label="Vidējs burtu izmērs">A</span>
+						<span aria-label="Lielāks burtu izmērs">A</span>
+					</a>
+				</div>
+			</div>
+			<div class="popup-bl popup-bl-subscribe">
+				<a href="#" class="btn-subscribe" title="Parakstīties notifikācijām" aria-label="Parakstīties notifikācijām" id="subscribe_notifs_btn">
+					<span class="material-symbols-outlined icon">notifications</span>
+					<span>Parakstīties notifikācijām</span>
+				</a>
+			</div>
+			<div class="popup-bl popup-bl-sections">
+				<ul class="no-list">										<li><a href="/latvija/">Latvijā</a></li>
+																			<li><a href="/latvija/riga/">Rīgā</a></li>
+																			<li><a href="/latvija/regionos/">Reģionos</a></li>
+																			<li><a href="/politika/">Politika</a></li>
+																			<li><a href="/ekonomika/">Ekonomika</a></li>
+																			<li><a href="/latvija/izglitiba-karjera/">Izglītība</a></li>
+																			<li><a href="/latvija/kriminalzinas/">Kriminālziņas</a></li>
+																			<li><a href="/veseliba/">Veselība</a></li>
+																			<li><a href="/pasaule/">Pasaulē</a></li>
+																			<li><a href="/sports/">Sports</a></li>
+																			<li><a href="/izklaide/">Izklaide</a></li>
+																			<li><a href="/horoskopi/">Horoskopi</a></li>
+																			<li><a href="/viedokli/lasitaju/">Lasītāju viedoklis</a></li>
+																			<li><a href="/arhivs/">Arhīvs</a></li>
+									</ul>
+			</div>
+						<div class="popup-bl popup-bl-search">
+				<form action="/meklet/" method="GET" class="site-search-form">
+					<div class="field">
+						<input type="text" name="q" placeholder="Meklēt..." />
+						<button type="submit"><span class="material-symbols-outlined">search</span></button>
+					</div>
+				</form>
+			</div>
+			<div class="popup-bl popup-bl-sites">
+				<ul class="no-list">
+					<li><a href="/dzivesstils/" class="btn-dzivesstils-new"><img data-src="/a/b/images/logo/dzivesstils.png" alt="nra.lv Dzīvesstils" class="img lazy" /></a></li>
+										<li><a href="/neatkariga/" class="btn-neatkariga"><img data-src="/a/b/images/logo/neatkariga.png" alt="Neatkarīgā" class="img lazy" /></a></li>
+										<li><a href="/tautaruna/" class="btn-tr"><img data-src="/a/b/images/logo/tr.png" alt="Tauta Runā" class="img lazy" /></a></li>
+					<li><a href="/lifehacks/" class="btn-lifehacks"><img data-src="/a/b/images/logo/lifehacks.png" alt="LifeHacks.lv" class="img lazy" /></a></li>
+				</ul>
+			</div>
+			<div class="popup-bl popup-bl-info-items">
+				<ul class="">
+					<li><a href="/info/par-nralv/">Par nra.lv</a></li>
+					<li><a href="/info/reklama/">Reklāma</a></li>
+										<li><a href="/info/privatuma-politika/">Privātuma politika</a></li>
+					<li><a href="/info/lietosanas-noteikumi/">Lietošanas noteikumi</a></li>
+					<li><a href="/info/autortiesibas/">Autortiesības</a></li>
+					<li><a href="/info/etikas-kodekss/">Ētikas kodekss</a></li>
+					<li><a href="/info/vakances/">Vakances</a></li>
+					<li class="bold"><a href="/info/kontakti/">Kontakti</a></li>
+				</ul>
+			</div>
+			<div class="popup-bl popup-bl-follow">
+				<ul class="no-list">
+					<li><a href="mailto:info@nra.lv" class="nicon soc-email"></a></li>
+					<li><a href="https://www.facebook.com/nralv/" rel="nofollow" class="nicon soc-fb"></a></li>
+					<li><a href="https://x.com/nralv/" rel="nofollow" class="nicon soc-x"></a></li>
+					<li><a href="https://www.instagram.com/nra.lv/" rel="nofollow" class="nicon soc-in"></a></li>
+										<li><a href="https://t.me/neatkariga" rel="nofollow" class="nicon soc-te"></a></li>
+					<li><a href="https://www.youtube.com/@nra-lv" rel="nofollow" class="nicon soc-yt"></a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="h-el-logo">
+    <a href="/" title="nra.lv sākumlapa" aria-label="nra.lv sākumlapa">
+                <svg id="nralv_logo_svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.5 116.1"><defs><style>.cls-1,.cls-2,.cls-3{stroke-width:0px;}.cls-2{fill:#c82027;}.cls-3{fill:#fff;}</style></defs><rect class="cls-3" y="0" width="115.6" height="116.1"/><path class="cls-2" d="M115.7,0c0,38.5,0,76.9,0,115.4,0,.2,0,.5,0,.7-.4,0-.7,0-1.1,0-38.2,0-76.4,0-114.6,0V0c38.6,0,77.1,0,115.7,0ZM24.6,31c1,23,.4,45.9.6,68.8h21.4v-1.2c0-3.3,0-6.6,0-10,0-9.4,0-18.7,0-28.1,0-3.2.6-6.1,2.5-8.7,2.9-4,6.8-5.5,11.6-4.7,4.5.8,6.7,4,7.8,8.2.6,2.3.7,4.7.7,7.1,0,12,0,24.1,0,36.1,0,.4-.1.9.1,1.3h21.3c0-.3,0-.6,0-.9,0-13.4,0-26.7,0-40.1,0-3.7-.4-7.3-1.3-10.9-2.8-10.8-10-17.2-20.1-18.2-9.8-1-18,2.2-24.1,10.1-.2.3-.3.7-.8.6-.3-3.1-.7-6.3-1-9.4h-18.6Z"/><path fill="currentColor" class="cls-1" d="M390.5,31.7c-1.4,3.2-2.5,6.6-3.8,9.9-7.2,19.2-14.3,38.5-21.5,57.7-.1.3-.2.7-.5,1h-21.4c-8.4-22.9-16.7-45.8-25.1-68.8h23.3c.6,2,1.2,4,1.8,6,2.9,9.9,5.8,19.9,8.6,29.8,1.2,4.1,2,8.2,2.8,12.3,0,.1,0,.3.3.5,1-3.2,1.5-6.5,2.3-9.7.8-3.2,1.6-6.5,2.5-9.7.9-3.3,1.8-6.5,2.7-9.8.9-3.2,1.8-6.4,2.7-9.7.9-3.3,1.8-6.5,2.7-9.9h22.6v.2Z"/><path fill="currentColor" class="cls-1" d="M214.3,54.2c.4-5-2.6-8.1-7.6-9.1-5.3-1.1-10.5-.3-15.6,1.1-2.9.8-5.7,1.9-8.5,3.5-1.3-4.6-2.6-9.1-3.9-13.6,1.9-1.2,3.9-2,6-2.7,8.5-2.9,17.3-3.9,26.3-3.1,3.4.3,6.7,1.1,9.8,2.4,7.8,3.3,12.3,9.4,14.1,17.5.7,3,1,6.1,1,9.3,0,6.1,0,12.2,0,18.3,0,7.5-.2,14.9,1,22.4h-19.3c-.4-2.3-.9-4.6-1.3-6.9-.6,0-.8.5-1.1.7-3.8,4.1-8.5,6.3-13.8,7.2-4.9.8-9.8.7-14.5-1.2-7.4-3.1-11.9-8.6-12.9-16.6-1.3-10.4,3.4-18.9,12.5-23.7,4.6-2.4,9.6-3.8,14.8-4.6,4.3-.7,8.6-.9,13.1-.9ZM215,67.7c-2.2-.1-4.3,0-6.3.2-3,.3-6,.9-8.7,2.4-3.6,1.9-5.3,4.9-5.1,9,.2,3.6,2.4,6.3,5.9,7.1,2.6.6,5.2.4,7.6-.8,3.7-1.8,6.3-4.6,6.6-8.9.2-3,0-6,0-9Z"/><path fill="currentColor" class="cls-1" d="M308.3,100.2h-21.3V.3h21.3v99.9Z"/><path fill="currentColor" class="cls-1" d="M125.9,31.5h18.4c.2,4.2.5,8.4.7,12.6.8.2.7-.4.9-.7,1.1-2.6,2.5-5,4.4-7.1,5-5.3,11.2-7.1,18.3-6v20.1c-2.4-.5-4.8-.7-7.3-.5-6.1.4-11.3,3.7-13,10-.5,1.8-.6,3.6-.6,5.5,0,11.2,0,22.3,0,33.5v1.4h-21.3c-.3-22.9.4-45.8-.6-68.7Z"/><path fill="currentColor" class="cls-1" d="M273.9,90c-.1,4.1-2.1,8.3-7.2,10.6-6.9,3.1-15.7.1-17.7-8.6-1.3-5.8.9-12.4,6.5-15.1,7.6-3.6,18.4,0,18.4,13Z"/></svg>    </a>
+</div>
+<div class="h-el-names">
+    <span class="d h-el-item" aria-label="Datums">Otrdiena, 20.oktobris</span>
+    <a href="/varda-dienas/sodien/" class="n h-el-item" aria-label="Vārda dienas šodien"><span class="material-symbols-outlined">redeem</span> Leonīda, Leonīds</a>
+</div>
+<div class="h-el-weather">
+    <div class="weather-nav-bl">
+	<a href='/laika-prognoze/riga/' class="h-el-weather-btn" title="Laika apstākļi Rīgā" aria-label="Laika apstākļi Rīgā">
+		<span class="place">Rīgā</span>
+		<span class="wico"><i class="wi wi-cloudy"></i></span>
+		<span class="t">+6&deg;</span>
+	</a>
+</div></div>	<div class="h-el-search-form">
+		<form action="/meklet/" method="GET" class="search-form" autocomplete="off">
+			<input type="text" name="q" placeholder="Meklēt..." />
+			<button type="submit"><span class="material-symbols-outlined">search</span></button>
+		</form>
+	</div>
+	<a href="/meklet/" class="h-el-search h-icon-btn" title="Meklēt" aria-label="Meklēt">
+		<span class="material-symbols-outlined">search</span>
+	</a>
+	<div class="h-el-profile h-menu-with-popup" id="header_profile_widget">
+		<div class="h-el-profile-item profile-auth d-none">
+			<a href="/profils/" class="h-icon-btn h-menu-popup-btn" id="header_profile_btn" title="Profils" aria-label="Profils">
+				<span class="material-symbols-outlined">account_circle</span>
+			</a>
+			<nav class="h-el-profile-popup h-popup" id="header_popup_profile">
+				<ul class="no-list text-right">
+					<li><a href="/profils/">Profils</a></li>
+					<li><a href="/profils/uzstadijumi/">Iestatījumi</a></li>
+					<li><a href="/profils/iziet/">Iziet</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="h-el-profile-item profile-guest">
+			<a href="/profils/pieteikties/" class="h-icon-btn" title="Autorizēties" aria-label="Autorizēties">
+				<span class="material-symbols-outlined">login</span>
+			</a>
+		</div>
+	</div>
+	<div class="h-el-mainnav-bar">
+		<nav class="main-nav">
+    <ul class="no-list">        <li class="item-main-nav-neatkariga">
+            <a href="/neatkariga/" class="btn-main-nav-neatkariga">Neatkarīgā</a>
+        </li>
+            <li class="item-main-nav-dzivesstils">
+            <a href="/dzivesstils/" class="btn-main-nav-dzivesstils">Dzīvesstils</a>
+        </li>
+            <li class="item-main-nav-tautaruna">
+            <a href="/tautaruna/" class="btn-main-nav-tautaruna">TautaRunā</a>
+        </li>
+            <li class="item-main-nav-lifehacks">
+            <a href="/lifehacks/" class="btn-main-nav-lifehacks">LifeHacks</a>
+        </li>
+            <li class="item-main-nav-sports">
+            <a href="/sports/" class="btn-main-nav-sports">Sports</a>
+        </li>
+            <li class="item-main-nav-tv">
+            <a href="/tv/" class="btn-main-nav-tv"><img data-src="/a/b/images/logo/nratv.png" alt="nra.lv/TV" class="img lazy" /><i class="live-pulse-icon"></i></a>
+        </li>
+                </ul>
+</nav>	</div>
+</header>
+
+<div class="side-pads-d running-items-block" id="running_items_block" data-url="/api/scroller/list?v=250210_1329" style="display:none;">
+    <div class="items-wrap">
+        <ul class="no-list"><li>&nbsp;</li></ul>
+    </div>
+</div>
+<div class='wrap'>
+	
+	<h1 class="page-title side-margins-d mt-d">Lapa nav atrasta</h1>
+
+	<div class="side-pads-d mt-d">
+		<p>Diemžēl šī lapa nav atrasta. Varbūt tā ir pārvietota vai dzēsta.</p>
+	</div>
+
+</div>
+
+<footer class="mt-d">
+	<div class="f-cols wrap clearfix">
+
+		<div class="col side-pads-d">
+			<a href="/" class="logo" title="nra.lv sākumlapa" aria-label="nra.lv sākumlapa">
+								<svg id="nralv_logo_svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.5 116.1"><defs><style>.cls-1,.cls-2,.cls-3{stroke-width:0px;}.cls-2{fill:#c82027;}.cls-3{fill:#fff;}</style></defs><rect class="cls-3" y="0" width="115.6" height="116.1"/><path class="cls-2" d="M115.7,0c0,38.5,0,76.9,0,115.4,0,.2,0,.5,0,.7-.4,0-.7,0-1.1,0-38.2,0-76.4,0-114.6,0V0c38.6,0,77.1,0,115.7,0ZM24.6,31c1,23,.4,45.9.6,68.8h21.4v-1.2c0-3.3,0-6.6,0-10,0-9.4,0-18.7,0-28.1,0-3.2.6-6.1,2.5-8.7,2.9-4,6.8-5.5,11.6-4.7,4.5.8,6.7,4,7.8,8.2.6,2.3.7,4.7.7,7.1,0,12,0,24.1,0,36.1,0,.4-.1.9.1,1.3h21.3c0-.3,0-.6,0-.9,0-13.4,0-26.7,0-40.1,0-3.7-.4-7.3-1.3-10.9-2.8-10.8-10-17.2-20.1-18.2-9.8-1-18,2.2-24.1,10.1-.2.3-.3.7-.8.6-.3-3.1-.7-6.3-1-9.4h-18.6Z"/><path fill="currentColor" class="cls-1" d="M390.5,31.7c-1.4,3.2-2.5,6.6-3.8,9.9-7.2,19.2-14.3,38.5-21.5,57.7-.1.3-.2.7-.5,1h-21.4c-8.4-22.9-16.7-45.8-25.1-68.8h23.3c.6,2,1.2,4,1.8,6,2.9,9.9,5.8,19.9,8.6,29.8,1.2,4.1,2,8.2,2.8,12.3,0,.1,0,.3.3.5,1-3.2,1.5-6.5,2.3-9.7.8-3.2,1.6-6.5,2.5-9.7.9-3.3,1.8-6.5,2.7-9.8.9-3.2,1.8-6.4,2.7-9.7.9-3.3,1.8-6.5,2.7-9.9h22.6v.2Z"/><path fill="currentColor" class="cls-1" d="M214.3,54.2c.4-5-2.6-8.1-7.6-9.1-5.3-1.1-10.5-.3-15.6,1.1-2.9.8-5.7,1.9-8.5,3.5-1.3-4.6-2.6-9.1-3.9-13.6,1.9-1.2,3.9-2,6-2.7,8.5-2.9,17.3-3.9,26.3-3.1,3.4.3,6.7,1.1,9.8,2.4,7.8,3.3,12.3,9.4,14.1,17.5.7,3,1,6.1,1,9.3,0,6.1,0,12.2,0,18.3,0,7.5-.2,14.9,1,22.4h-19.3c-.4-2.3-.9-4.6-1.3-6.9-.6,0-.8.5-1.1.7-3.8,4.1-8.5,6.3-13.8,7.2-4.9.8-9.8.7-14.5-1.2-7.4-3.1-11.9-8.6-12.9-16.6-1.3-10.4,3.4-18.9,12.5-23.7,4.6-2.4,9.6-3.8,14.8-4.6,4.3-.7,8.6-.9,13.1-.9ZM215,67.7c-2.2-.1-4.3,0-6.3.2-3,.3-6,.9-8.7,2.4-3.6,1.9-5.3,4.9-5.1,9,.2,3.6,2.4,6.3,5.9,7.1,2.6.6,5.2.4,7.6-.8,3.7-1.8,6.3-4.6,6.6-8.9.2-3,0-6,0-9Z"/><path fill="currentColor" class="cls-1" d="M308.3,100.2h-21.3V.3h21.3v99.9Z"/><path fill="currentColor" class="cls-1" d="M125.9,31.5h18.4c.2,4.2.5,8.4.7,12.6.8.2.7-.4.9-.7,1.1-2.6,2.5-5,4.4-7.1,5-5.3,11.2-7.1,18.3-6v20.1c-2.4-.5-4.8-.7-7.3-.5-6.1.4-11.3,3.7-13,10-.5,1.8-.6,3.6-.6,5.5,0,11.2,0,22.3,0,33.5v1.4h-21.3c-.3-22.9.4-45.8-.6-68.7Z"/><path fill="currentColor" class="cls-1" d="M273.9,90c-.1,4.1-2.1,8.3-7.2,10.6-6.9,3.1-15.7.1-17.7-8.6-1.3-5.8.9-12.4,6.5-15.1,7.6-3.6,18.4,0,18.4,13Z"/></svg>			</a>
+			<div class="msg mt-d">
+				<p><b>Mēs strādājam, lai Jūs zinātu svarīgo, aktuālo un interesanto!</b></p>
+				<p>Portāla pārliecība ir tajā, ka nav mazsvarīgu lietu – lasītājs ir ne vien jāinformē, jābrīdina un jāizglīto, bet arī jādod brīdis atelpai no dienas saspringtajiem darbiem.</p>
+			</div>
+			<div class="follow mt-d">
+				<p>Sazinies ar mums:</p>
+				<ul class="no-list mt-2">
+					<li><a href="mailto:info@nra.lv" class="nicon soc-email"></a></li>
+					<li><a href="https://www.facebook.com/nralv/" rel="nofollow" class="nicon soc-fb"></a></li>
+					<li><a href="https://x.com/nralv/" rel="nofollow" class="nicon soc-x"></a></li>
+					<li><a href="https://www.instagram.com/nra.lv/" rel="nofollow" class="nicon soc-in"></a></li>
+										<li><a href="https://t.me/neatkariga" rel="nofollow" class="nicon soc-te"></a></li>
+					<li><a href="https://www.youtube.com/@nra-lv" rel="nofollow" class="nicon soc-yt"></a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+	<div class="f-cpy mt-d">
+		<div class="wrap side-pads-d">
+			<nav class="info">
+				<ul class="no-list clearfix">
+					<li><a href="/info/par-nralv/">Par nra.lv</a></li>
+					<li><a href="/info/reklama/">Reklāma</a></li>
+					<li><a href="/info/misija/">Misija</a></li>
+										<li><a href="/info/privatuma-politika/">Privātuma politika</a></li>
+					<li><a href="/info/lietosanas-noteikumi/">Lietošanas noteikumi</a></li>
+					<li><a href="/info/autortiesibas/">Autortiesības</a></li>
+					<li><a href="/info/etikas-kodekss/">Ētikas kodekss</a></li>
+					<li><a href="/info/vakances/">Vakances</a></li>
+					<li><a href="/info/kontakti/">Kontakti</a></li>
+				</ul>
+			</nav>
+			<div class="cpy mt-d">
+				Visas tiesības aizsargātas &copy; nra.lv, 2026
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script src="/a/b/runtime.0dd2745c.js" async></script><script src="/a/b/default.e52f0022.js" async></script><script src="/a/b/default_site_nra.ce8c35e8.js" async></script>
+<script>
+(function(w,d,i){
+	function c(d,n) { let ck = {};
+	d.cookie.split(';').forEach(function(el) { let [k,v] = el.split('=');
+	ck[k.trim()] = v; }); return ck[n]; }
+	w.hj=w.hj||function(){(w.hj.q=w.hj.q||[]).push(arguments)};
+	w._hjS={l:w.location.href,r:d.referrer,u:c(d,'_ga')};
+	if (d.images) { let im = new Image(); im.src = i+encodeURIComponent(btoa(JSON.stringify(w._hjS))); }
+})(window,document,'https://nra.ilaipa.lv/nra.png?v=');
+</script>
+
+</body>
+</html>

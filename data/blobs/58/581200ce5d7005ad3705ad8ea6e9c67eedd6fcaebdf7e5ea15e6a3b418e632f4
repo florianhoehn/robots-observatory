@@ -1,0 +1,146 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rollbar - Error</title>
+  
+  
+    <style id="antiClickjack">body{display:none !important;}</style>
+    <noscript>
+      <style>body{display:inherit !important;}</style>
+    </noscript>
+    <script type="text/javascript">
+      (function() {
+        var r = document.referrer;
+        if (self === top || (r && r.match('^https?://app.vwo.com'))) {
+          var antiClickjack = document.getElementById("antiClickjack");
+          antiClickjack.parentNode.removeChild(antiClickjack);
+        } else {
+          top.location = self.location;
+        }
+      })();
+    </script>
+
+  <link rel="stylesheet" href="//cdn.rollbar.com/static/assets/homepage/css/main.css?ts=1792439705v11">
+</head>
+<body>
+
+<div class="pricing-top-marquee">
+  <div class="pricing-hero-section errorpages-hero-section">
+    <div class="container">
+      <div id="alerts" class="homepage-alerts">
+        
+
+      </div>
+      
+    <h1>Access not allowed</h1>
+  <p>Sorry, you don't have access to view this page.</p>
+
+    </div>
+  </div><!-- end .pricing-hero-section -->
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container errorpages-description-container">
+</div>
+
+
+
+
+<script src="//cdn.rollbar.com/static/assets/combined/homepage.js?ts=1792439705v11"></script>
+
+  
+  <script type="text/javascript">
+    $(document.body).append($('<form class="bottom-logout-form" id="logout-form" method="POST" action="/logout/"></form>'));
+    $(document.body).on("click", ".logout-link", function(e) {
+      var $form = $("#logout-form");
+      var url = $(e.target).attr("href");
+      e.preventDefault();
+      $form.attr("action", url);
+      $form.append($("<input type='hidden' name='csrf_token' value='cb72eeddfef1f54f9fcfb44816da836d4da9a375|8d67ba535764520110a875c0b4b52b26d926ab01'></input>"));
+      $form.submit();
+    });
+  </script>
+
+
+
+  <script type="text/javascript">
+    function setCSRFToken(csrfToken) {
+      $(document).on('submit', 'form', function() {
+        var formMethod = $(this).attr('method');
+
+        if (!csrfSafeMethod(formMethod)) {
+          $(this).append('<input name="csrf_token" type="hidden" value="' + csrfToken + '" />');
+        }
+      });
+      // from https://docs.djangoproject.com/en/1.6/ref/contrib/csrf/
+      csrfSafeMethod = function(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/i.test(method));
+      };
+      sameOrigin = function(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+          (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+          // or any other URL that isn't scheme relative or absolute i.e relative.
+          !(/^(\/\/|http:|https:).*/.test(url));
+      };
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (csrfToken && !csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+            xhr.setRequestHeader("X-CSRFToken", csrfToken);
+          }
+        }
+      });
+    }
+
+    setCSRFToken("1009ba7cdcecbeb553ab1d8723278a8f1080360c|561ceef2757919fbdcccdc0f814822c4840f3e78");
+  </script>
+
+
+  
+  
+<!-- BREACH attack prevention
+wGnb40Lv0n6QZdxnkEP7eQgZ3hn85MrOjd4t5JTVxCd3E6WL9V9ZARnJI74uT9KjXnWi4G1wdmS3NM9f
+HTrCr1eXAvnBgJzxVLJ5n0I3hKxh+vg7/YnGKUB78+H2tmYort+jUdYodBqkD5pdtDPg3Snt7wuNnKKA
+PZckpJ0OovVwtPngqoK94DlXLuajf2lwiuHq+IdLB27jWfzRatm0NYTujDlsg5b+Hfg0JKYoCQL10F19
+LwuX48a4v0sC0WqK30PMDz8Y1aHyHg63dqVbnctqMd2hDHNWL4xsfEARzUtbQcI5s60D7qR2hF56m9ZF
+tn7vsOQAqTVLH8xaKN0XP8B8FDmQIvV3K79BJPlDhR8vQnNeRew4skaYmaXErdLZ2Li3/gBpksiRdbzO
+tMooHKJcWE01aVwiUqjSaZCaDOznARNgPJBAvi1NkfbD0WbBg6zEpcMfBpX8AzwamDT1zofi6lnliDWQ
+MCUXsC+BP0MCLxQmWXqG17ABDH4KRVXysPNM4hAT9oKo5Vvpp5GkGeSq5/VJKbcyU6nRWEqLWq/00o5j
+vCvqRqC/lDizWqkMjjkWnbML3e2bM8tAJgzqA+taaQSSugMaSMZYUlbHZiFW8MX+qDwnOlPFfsaxEYCP
+PmuosMaa9ARMRiRqDpFxHrJzYn+dd10pYyVri7kNDPOrQ8/S65tOw19tcl86OFuLblD6gtc245OyJKiV
+pAwnrbtSXQPNAc25FQCBuXHwlUS0etNs5N+COhXU7Y9cK3blwV3cR3DxRkAMmzrsUVVJSAtIQt7KB0Er
+tivzRTiQxu7FtXC1n4GP/FSqkF0QYYpKwpMnoKrC3AMLx/QjHqqf/fMACHn4ue/LkDWxTbE3tPd57iPc
+6t1yOvxQDtN0GpBtegJa/GWw1bmLAg6QXIKFkH9bAI7vlQmAy0cpa1Rwc2ZpzNcpED1qQSat/w/4zAsR
+MhgCXOc/PdvsY4uj9pzAaTfqME85ukoTAOEtRnzmdg7StXJTFMW9uvkqM481YWVXW+y1BnQ9TAs3no91
+g2II4gdF1hYKUJjo2j5+77gkIOvuYvD7w/n2AhTIt4px/peR3foQ566sdHrkRT5B/lwseSoTUShF+Z99
+HrO06djCmGMnBXrl/ujWbYF8ZWbf22ZLjnBeNNeUtD2Mz4qXI+yrERek+Nwe9GHj56Fy131n+Hv96A7Q
+-->
+
+
+</body>
+</html>

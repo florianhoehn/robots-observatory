@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>
+      document.documentElement.classList.add(
+        /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream
+          ? "is-ios"
+          : "is-non-ios"
+      );
+    </script><script>(function(){
+  var root = document.documentElement;
+  var isIos = root.classList.contains("is-ios");
+  var override = new URLSearchParams(window.location.search).get("lh_ab");
+  var cookie = null;
+  var all = document.cookie ? document.cookie.split("; ") : [];
+  for (var i = 0; i < all.length; i++) {
+    var eq = all[i].indexOf("=");
+    if ((eq === -1 ? all[i] : all[i].slice(0, eq)) === "lh_ab") {
+      cookie = eq === -1 ? "" : all[i].slice(eq + 1);
+      break;
+    }
+  }
+  var isArm = function (value) { return value === "nl" || value === "as"; };
+  var arm = null;
+  var assigned = false;
+  if (!isIos) {
+    if (isArm(override)) {
+      arm = override;
+      assigned = override !== cookie;
+    } else if (isArm(cookie)) {
+      arm = cookie;
+    } else {
+      arm = Math.random() < 0.5 ? "nl" : "as";
+      assigned = true;
+    }
+  }
+  if (arm) {
+    root.classList.add("lh-ab-" + arm);
+    if (assigned) {
+      document.cookie = "lh_ab" + "=" + arm + "; expires=" + new Date(Date.now() + 30 * 86400000).toUTCString() + "; path=/; SameSite=Lax";
+    }
+  }
+  window.LH_AB = { arm: arm, assigned: assigned };
+})();</script><style>html:not(.lh-ab-nl) .lh-ab--nl{display:none!important}html.lh-ab-nl .lh-ab--as{display:none!important}</style><script>(function(){
+  var arm = null;
+  try {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var pair = cookies[i].trim().split("=");
+      if (pair[0] === "lh_hello_assessment") {
+        arm = pair[1];
+        break;
+      }
+    }
+  } catch (_) {}
+  if (arm !== "rebuild" && arm !== "problem") {
+    arm = Math.random() < 0.5 ? "rebuild" : "problem";
+    try {
+      document.cookie = "lh_hello_assessment" + "=" + arm + "; max-age=2592000; path=/; SameSite=Lax";
+    } catch (_) {}
+  }
+  document.documentElement.classList.add("lh-hello-" + arm);
+})();</script><style>html:not(.lh-hello-problem) .lh-hello--problem{display:none!important}html.lh-hello-problem .lh-hello--rebuild{display:none!important}</style><link rel="stylesheet" href="/_astro/global.YTsj_hxW.css"><script>window.LH_PAGE_META={"cluster":null,"postId":null};</script>  <link rel="preconnect" href="https://scripts.mediavine.com" crossorigin="anonymous">  <link rel="preconnect" href="https://keywords.mediavine.com" crossorigin="anonymous">  <link rel="dns-prefetch" href="//scripts.grow.me"> <link rel="dns-prefetch" href="//eu-us-cdn.consentmanager.net"> <link rel="dns-prefetch" href="//cdn.prod.uidapi.com">  <link rel="preconnect" href="https://ph.lifehack.org" crossorigin="anonymous"> <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"> <script>window.dataLayer = window.dataLayer || [];
+window.dataLayer_content = {};</script> <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog&&window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init("phc_v5iP2kcaHNqH1tFrrR1wR9gDzKNNpdkQSVzFgUWnDji",{"api_host":"https://ph.lifehack.org","defaults":"2026-01-30","disable_session_recording":true,"disable_conversations":true,"capture_pageview":false,"capture_exceptions":false,"capture_performance":{"web_vitals":false},"capture_pageleave":false,"autocapture":false});
+(function(){
+  var captured = false;
+
+  // Diagnostic for the zero-second iPhone in-app cohort: was the page on
+  // screen when it loaded, and when the pageview fired? Prefetched pages read
+  // "hidden" and never change; automated browsers usually read "visible".
+  // Decides between a visibility gate and a user-agent/edge filter.
+  function visibilityNow() {
+    return document.prerendering ? "prerender" : document.visibilityState;
+  }
+  var loadVisibility = visibilityNow();
+
+  function capturePageview() {
+    if (captured || !window.posthog || typeof window.posthog.capture !== "function") {
+      return;
+    }
+    captured = true;
+    window.posthog.capture("$pageview", {
+      displayed_ctas: window.CTAEmbed && window.CTAEmbed.displayedCTAs ? window.CTAEmbed.displayedCTAs : [],
+      cluster: window.LH_PAGE_META && window.LH_PAGE_META.cluster ? window.LH_PAGE_META.cluster : null,
+      post_id: window.LH_PAGE_META && window.LH_PAGE_META.postId ? window.LH_PAGE_META.postId : null,
+      load_visibility: loadVisibility,
+      capture_visibility: visibilityNow()
+    });
+  }
+
+  if (window.CTAEmbed && window.CTAEmbed.ready) {
+    capturePageview();
+  } else {
+    document.addEventListener("cta-embed:ready", capturePageview, { once: true });
+    // Safety net: fire pageview even if cta-client never reports ready (e.g. JS error)
+    setTimeout(capturePageview, 3000);
+  }
+})();</script> <script>window.addEventListener('mediavineCmp', function(event){
+  if (event.detail === 'tcfApiReady') {
+    window.__tcfapi('addEventListener', 2, function(tcData, success){
+      if (success && (tcData.eventStatus === 'tcloaded' || tcData.eventStatus === 'useractioncomplete')) {
+        if (tcData.purpose && tcData.purpose.consents && tcData.purpose.consents[1] && tcData.purpose.consents[8]) {
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('set', 'user_properties', {});
+gtag('config', "G-Z1ZD9EZ3KG", {"send_page_view":true});
+(function(){
+  var dl = window.dataLayer;
+  var ctaRx = /^lh_cta_(impression|submit|click|answer)$/;
+  var relatedRx = /^lh_related_(impression|click)$/;
+  var linkRx = /^lh_(body_link|nav)_click$/;
+  var seriesRx = /^lh_series_(impression|click|expand)$/;
+  var homeRx = /^lh_home_(route|section_view|video_play)$/;
+  function forward(obj){
+    if (!obj || typeof obj !== 'object') return;
+    var ev = obj.event;
+    if (typeof ev !== 'string') return;
+    if (ctaRx.test(ev)) {
+      gtag('event', ev, {
+        ctaId: obj.ctaId,
+        // placement/ctaPath/magnet are new: placement so CTR can be cut by
+        // surface without parsing ctaId strings, ctaPath so the choice unit's
+        // two paths are separable, magnet so a gated signup is attributable.
+        // Each still needs registering as a GA4 custom dimension before it
+        // shows up in reports.
+        placement: obj.placement,
+        ctaPath: obj.ctaPath,
+        magnet: obj.magnet,
+        // Question-first CTA: which answer the reader gave, and whether the
+        // current offer came from answering or from switching on the result.
+        ctaAnswer: obj.ctaAnswer,
+        answerSource: obj.answerSource,
+        // ctaPath and ctaAnswer are not registered custom dimensions yet;
+        // event_category / event_label are, so the path and answer are
+        // reportable in the Data API today.
+        event_category: obj.ctaPath,
+        event_label: obj.ctaAnswer,
+        // Direct page/destination context makes stable historical CTA IDs
+        // analyzable after their offer changes, without joining pageviews or
+        // parsing the outbound URL from a separate system.
+        cluster: obj.cluster,
+        sourcePostId: obj.sourcePostId,
+        ctaVersion: obj.ctaVersion,
+        offerId: obj.offerId,
+        outboundDestination: obj.outboundDestination,
+        outboundCampaign: obj.outboundCampaign,
+        outboundTerm: obj.outboundTerm,
+        // Submits can navigate to a thank-you page immediately. Beacon keeps
+        // the GA4 handoff eligible for delivery during that navigation.
+        transport_type: ev === 'lh_cta_submit' ? 'beacon' : undefined,
+        url: obj.url,
+        referrer: obj.referrer,
+        utm_source: obj.utm_source,
+        utm_medium: obj.utm_medium,
+        utm_campaign: obj.utm_campaign,
+        utm_term: obj.utm_term,
+        utm_content: obj.utm_content
+      });
+    } else if (ev === 'lh_pricing_checkout_click') {
+      gtag('event', 'begin_checkout', {
+        currency: obj.currency,
+        value: obj.value,
+        planId: obj.planId,
+        billingCycle: obj.billingCycle,
+        outboundDestination: obj.outboundDestination,
+        transport_type: 'beacon',
+        items: [{
+          item_id: obj.planId,
+          item_name: obj.planName,
+          item_variant: obj.billingCycle,
+          price: obj.value,
+          quantity: 1
+        }]
+      });
+    } else if (relatedRx.test(ev)) {
+      gtag('event', ev, {
+        sourcePostId: obj.sourcePostId,
+        targetPostId: obj.targetPostId,
+        position: obj.position,
+        placement: obj.placement,
+        viewportBucket: obj.viewportBucket,
+        pinned: obj.pinned,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    } else if (seriesRx.test(ev)) {
+      gtag('event', ev, {
+        seriesId: obj.seriesId,
+        sourcePostId: obj.sourcePostId,
+        position: obj.position,
+        seriesTotal: obj.seriesTotal,
+        placement: obj.placement,
+        action: obj.action,
+        targetPostId: obj.targetPostId,
+        targetPath: obj.targetPath,
+        // These dimensions are already registered, so series/action cuts work
+        // in the GA4 Data API without waiting for new custom definitions.
+        event_category: obj.seriesId,
+        event_label: obj.action,
+        transport_type: ev === 'lh_series_click' ? 'beacon' : undefined,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    } else if (homeRx.test(ev)) {
+      gtag('event', ev, {
+        section: obj.section,
+        option: obj.option,
+        position: obj.position,
+        targetPath: obj.targetPath,
+        placement: obj.placement,
+        // Registered dimensions, so section/option cuts work in the Data API
+        // without waiting for new custom definitions.
+        event_category: obj.section,
+        event_label: obj.option,
+        transport_type: ev === 'lh_home_route' ? 'beacon' : undefined,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    } else if (linkRx.test(ev)) {
+      gtag('event', ev, {
+        sourcePostId: obj.sourcePostId,
+        placement: obj.placement,
+        targetPath: obj.targetPath,
+        position: obj.position,
+        linkCount: obj.linkCount,
+        anchorText: obj.anchorText,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    }
+  }
+  for (var i = 0; i < dl.length; i++) forward(dl[i]);
+  var origPush = dl.push.bind(dl);
+  dl.push = function(){
+    for (var i = 0; i < arguments.length; i++) forward(arguments[i]);
+    return origPush.apply(null, arguments);
+  };
+})();
+(function(){
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent("G-Z1ZD9EZ3KG");
+  var f = document.getElementsByTagName('script')[0];
+  f.parentNode.insertBefore(s, f);
+})();
+          window.__tcfapi('removeEventListener', 2, function(){}, tcData.listenerId);
+        }
+      }
+    });
+  } else if (event.detail === 'gdprDoesNotApply') {
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag('js', new Date());
+gtag('set', 'user_properties', {});
+gtag('config', "G-Z1ZD9EZ3KG", {"send_page_view":true});
+(function(){
+  var dl = window.dataLayer;
+  var ctaRx = /^lh_cta_(impression|submit|click|answer)$/;
+  var relatedRx = /^lh_related_(impression|click)$/;
+  var linkRx = /^lh_(body_link|nav)_click$/;
+  var seriesRx = /^lh_series_(impression|click|expand)$/;
+  var homeRx = /^lh_home_(route|section_view|video_play)$/;
+  function forward(obj){
+    if (!obj || typeof obj !== 'object') return;
+    var ev = obj.event;
+    if (typeof ev !== 'string') return;
+    if (ctaRx.test(ev)) {
+      gtag('event', ev, {
+        ctaId: obj.ctaId,
+        // placement/ctaPath/magnet are new: placement so CTR can be cut by
+        // surface without parsing ctaId strings, ctaPath so the choice unit's
+        // two paths are separable, magnet so a gated signup is attributable.
+        // Each still needs registering as a GA4 custom dimension before it
+        // shows up in reports.
+        placement: obj.placement,
+        ctaPath: obj.ctaPath,
+        magnet: obj.magnet,
+        // Question-first CTA: which answer the reader gave, and whether the
+        // current offer came from answering or from switching on the result.
+        ctaAnswer: obj.ctaAnswer,
+        answerSource: obj.answerSource,
+        // ctaPath and ctaAnswer are not registered custom dimensions yet;
+        // event_category / event_label are, so the path and answer are
+        // reportable in the Data API today.
+        event_category: obj.ctaPath,
+        event_label: obj.ctaAnswer,
+        // Direct page/destination context makes stable historical CTA IDs
+        // analyzable after their offer changes, without joining pageviews or
+        // parsing the outbound URL from a separate system.
+        cluster: obj.cluster,
+        sourcePostId: obj.sourcePostId,
+        ctaVersion: obj.ctaVersion,
+        offerId: obj.offerId,
+        outboundDestination: obj.outboundDestination,
+        outboundCampaign: obj.outboundCampaign,
+        outboundTerm: obj.outboundTerm,
+        // Submits can navigate to a thank-you page immediately. Beacon keeps
+        // the GA4 handoff eligible for delivery during that navigation.
+        transport_type: ev === 'lh_cta_submit' ? 'beacon' : undefined,
+        url: obj.url,
+        referrer: obj.referrer,
+        utm_source: obj.utm_source,
+        utm_medium: obj.utm_medium,
+        utm_campaign: obj.utm_campaign,
+        utm_term: obj.utm_term,
+        utm_content: obj.utm_content
+      });
+    } else if (ev === 'lh_pricing_checkout_click') {
+      gtag('event', 'begin_checkout', {
+        currency: obj.currency,
+        value: obj.value,
+        planId: obj.planId,
+        billingCycle: obj.billingCycle,
+        outboundDestination: obj.outboundDestination,
+        transport_type: 'beacon',
+        items: [{
+          item_id: obj.planId,
+          item_name: obj.planName,
+          item_variant: obj.billingCycle,
+          price: obj.value,
+          quantity: 1
+        }]
+      });
+    } else if (relatedRx.test(ev)) {
+      gtag('event', ev, {
+        sourcePostId: obj.sourcePostId,
+        targetPostId: obj.targetPostId,
+        position: obj.position,
+        placement: obj.placement,
+        viewportBucket: obj.viewportBucket,
+        pinned: obj.pinned,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    } else if (seriesRx.test(ev)) {
+      gtag('event', ev, {
+        seriesId: obj.seriesId,
+        sourcePostId: obj.sourcePostId,
+        position: obj.position,
+        seriesTotal: obj.seriesTotal,
+        placement: obj.placement,
+        action: obj.action,
+        targetPostId: obj.targetPostId,
+        targetPath: obj.targetPath,
+        // These dimensions are already registered, so series/action cuts work
+        // in the GA4 Data API without waiting for new custom definitions.
+        event_category: obj.seriesId,
+        event_label: obj.action,
+        transport_type: ev === 'lh_series_click' ? 'beacon' : undefined,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    } else if (homeRx.test(ev)) {
+      gtag('event', ev, {
+        section: obj.section,
+        option: obj.option,
+        position: obj.position,
+        targetPath: obj.targetPath,
+        placement: obj.placement,
+        // Registered dimensions, so section/option cuts work in the Data API
+        // without waiting for new custom definitions.
+        event_category: obj.section,
+        event_label: obj.option,
+        transport_type: ev === 'lh_home_route' ? 'beacon' : undefined,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    } else if (linkRx.test(ev)) {
+      gtag('event', ev, {
+        sourcePostId: obj.sourcePostId,
+        placement: obj.placement,
+        targetPath: obj.targetPath,
+        position: obj.position,
+        linkCount: obj.linkCount,
+        anchorText: obj.anchorText,
+        url: obj.url,
+        referrer: obj.referrer
+      });
+    }
+  }
+  for (var i = 0; i < dl.length; i++) forward(dl[i]);
+  var origPush = dl.push.bind(dl);
+  dl.push = function(){
+    for (var i = 0; i < arguments.length; i++) forward(arguments[i]);
+    return origPush.apply(null, arguments);
+  };
+})();
+(function(){
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent("G-Z1ZD9EZ3KG");
+  var f = document.getElementsByTagName('script')[0];
+  f.parentNode.insertBefore(s, f);
+})();
+  }
+});</script> <script async defer data-noptimize="1" data-cfasync="false" fetchpriority="high" src="https://scripts.mediavine.com/tags/life-hack.js"></script> <meta name="description" content="The page you are looking for cannot be found."><meta name="robots" content="noindex, follow"><link rel="canonical" href="https://www.lifehack.org/404"><meta property="og:site_name" content="LifeHack"><meta property="og:title" content="Page Not Found | LifeHack"><meta property="og:description" content="The page you are looking for cannot be found."><meta property="og:url" content="https://www.lifehack.org/404"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Page Not Found | LifeHack"><meta name="twitter:description" content="The page you are looking for cannot be found."><meta name="msapplication-TileImage" content="/apple-touch-icon.png"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><title>Page Not Found | LifeHack</title><style>:root{--lh-hello-bar-height:45px}@media (width>=768px){:root{--lh-hello-bar-height:62px}}body:has(.lh-hello-bar-host:not([hidden])){padding-top:var(--lh-hello-bar-height)}body:has(.lh-hello-bar-host:not([hidden])) .site-header{top:var(--lh-hello-bar-height)}.lh-hello-bar[data-astro-cid-5xku6frc]{z-index:110;background:#000;position:fixed;top:0;left:0;right:0}.lh-hello-bar__inner[data-astro-cid-5xku6frc]{justify-content:space-between;align-items:center;gap:12px;max-width:1140px;margin:0 auto;padding:6px 16px;display:flex}@media (width>=768px){.lh-hello-bar__inner[data-astro-cid-5xku6frc]{padding:12px 24px}}.lh-hello-bar__message[data-astro-cid-5xku6frc]{color:#fff;font-family:var(--lh-font-body);flex:1;justify-content:center;align-items:center;gap:4px;font-size:13px;line-height:1.3;display:flex}@media (width>=768px){.lh-hello-bar__message[data-astro-cid-5xku6frc]{gap:8px;font-size:14px}}.lh-hello-bar__accent[data-astro-cid-5xku6frc]{color:var(--lh-yellow);font-weight:600}.lh-hello-bar__message-tail[data-astro-cid-5xku6frc]{opacity:.9;margin-left:4px;display:none}@media (width>=640px){.lh-hello-bar__message-tail[data-astro-cid-5xku6frc]{display:inline}}.lh-hello-bar__cta[data-astro-cid-5xku6frc]{background:var(--lh-yellow);color:#000;font-family:var(--lh-font-body);white-space:nowrap;border-radius:8px;align-items:center;gap:8px;padding:6px 12px;font-size:13px;font-weight:600;text-decoration:none;transition:background .16s;display:inline-flex}.lh-hello-bar__cta[data-astro-cid-5xku6frc]:hover{background:var(--lh-yellow-dark)}@media (width>=768px){.lh-hello-bar__cta[data-astro-cid-5xku6frc]{padding:8px 16px;font-size:14px}}.lh-hello-bar__close[data-astro-cid-5xku6frc]{color:#fff;cursor:pointer;background:#fff3;border:0;border-radius:9999px;flex-shrink:0;justify-content:center;align-items:center;width:28px;height:28px;padding:0;transition:background .16s;display:inline-flex}.lh-hello-bar__close[data-astro-cid-5xku6frc]:hover{background:#ffffff4d}.lh-hello-bar__close[data-astro-cid-5xku6frc]:focus-visible{outline-offset:2px;outline:2px solid #fff9}
+.lh-content[data-astro-cid-dzsv5wmv]{background:linear-gradient(135deg, var(--lh-green), var(--lh-green-light));border-radius:16px;max-width:580px;margin:32px auto;padding:32px;overflow:hidden;box-shadow:0 4px 25px #00000026}@media (width<=767px){.lh-content[data-astro-cid-dzsv5wmv]{margin:24px 16px;padding:24px}}.lh-content__inner[data-astro-cid-dzsv5wmv]{text-align:center}.lh-content__heading[data-astro-cid-dzsv5wmv]{font-family:var(--lh-font-display);letter-spacing:-.03em;color:#fff;margin:0;font-size:30px;font-weight:400;line-height:1.1}@media (width<=767px){.lh-content__heading[data-astro-cid-dzsv5wmv]{font-size:24px}}.lh-content__accent[data-astro-cid-dzsv5wmv]{color:var(--lh-yellow)}.lh-content__body[data-astro-cid-dzsv5wmv]{color:#ffffffe6;font-family:var(--lh-font-body);margin:16px 0 0;font-size:18px;line-height:1.5}@media (width<=767px){.lh-content__body[data-astro-cid-dzsv5wmv]{font-size:16px}}.lh-content__panel[data-astro-cid-dzsv5wmv]{background:#ffffff1a;border-radius:8px;margin-top:32px;padding:24px}@media (width<=767px){.lh-content__panel[data-astro-cid-dzsv5wmv]{padding:16px}}.lh-content__panel-title[data-astro-cid-dzsv5wmv]{color:#fff;font-family:var(--lh-font-body);margin:0 0 16px;font-size:16px;font-weight:600}.lh-content__list[data-astro-cid-dzsv5wmv]{text-align:left;color:#ffffffe6;font-family:var(--lh-font-body);flex-direction:column;gap:12px;margin:0;padding:0;font-size:16px;list-style:none;display:flex}.lh-content__list[data-astro-cid-dzsv5wmv] li[data-astro-cid-dzsv5wmv]{align-items:center;line-height:1.5;display:flex}.lh-content__list[data-astro-cid-dzsv5wmv] li[data-astro-cid-dzsv5wmv] span[data-astro-cid-dzsv5wmv]{color:var(--lh-yellow);flex-shrink:0;margin-right:12px;font-size:18px}.lh-content__cta[data-astro-cid-dzsv5wmv]{background:var(--lh-yellow);color:#000;font-family:var(--lh-font-body);text-align:center;border-radius:8px;margin-top:32px;padding:16px 32px;font-size:18px;font-weight:600;text-decoration:none;transition:background .16s;display:block}.lh-content__cta[data-astro-cid-dzsv5wmv]:hover{background:var(--lh-yellow-dark)}@media (width<=767px){.lh-content__cta[data-astro-cid-dzsv5wmv]{padding:12px 24px;font-size:16px}}.lh-content__footer[data-astro-cid-dzsv5wmv]{color:#ffffffb3;font-family:var(--lh-font-body);margin:16px 0 0;font-size:14px}
+</style></head> <body class="error404"> <a class="skip-link" href="#main-content">Skip to content</a> <div class="lh-hello-bar-host" data-cta-close-host data-astro-cid-5xku6frc> <div class="cta lh-hello-bar lh-hello--rebuild" data-cta-id="hello-bar-assessment-rebuild-score" data-cta-placement="hello-bar" data-cta-persist-dismiss="1" data-astro-cid-5xku6frc> <div class="lh-hello-bar__inner" data-astro-cid-5xku6frc> <div class="lh-hello-bar__message" data-astro-cid-5xku6frc> <span class="lh-hello-bar__accent" data-astro-cid-5xku6frc>Get your Life Rebuild Score</span> <span class="lh-hello-bar__message-tail" data-astro-cid-5xku6frc>Free assessment.</span> </div> <a class="lh-hello-bar__cta lh-hello-bar__cta--yellow" href="https://g.lifehack.org/life-rebuild-score?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=hello-bar-assessment-v1&amp;utm_term=rebuild" data-astro-cid-5xku6frc>
+Take it free
+</a> <button type="button" class="cta-close-button lh-hello-bar__close" aria-label="Close" data-astro-cid-5xku6frc> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" data-astro-cid-5xku6frc> <path d="M11 1L1 11M1 1L11 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-5xku6frc></path> </svg> </button> </div> </div> <div class="cta lh-hello-bar lh-hello--problem" data-cta-id="hello-bar-assessment-problem-finder" data-cta-placement="hello-bar" data-cta-persist-dismiss="1" data-astro-cid-5xku6frc> <div class="lh-hello-bar__inner" data-astro-cid-5xku6frc> <div class="lh-hello-bar__message" data-astro-cid-5xku6frc> <span class="lh-hello-bar__accent" data-astro-cid-5xku6frc>Find what’s keeping you stuck</span> <span class="lh-hello-bar__message-tail" data-astro-cid-5xku6frc>Free Problem Finder assessment.</span> </div> <a class="lh-hello-bar__cta lh-hello-bar__cta--yellow" href="https://www.lifehack.org/tools/assessments/problem-finder?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=hello-bar-assessment-v1&amp;utm_term=problem" data-astro-cid-5xku6frc>
+Take it free
+</a> <button type="button" class="cta-close-button lh-hello-bar__close" aria-label="Close" data-astro-cid-5xku6frc> <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" data-astro-cid-5xku6frc> <path d="M11 1L1 11M1 1L11 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-5xku6frc></path> </svg> </button> </div> </div> </div> <div class="site-shell"> <header id="masthead" class="site-header"> <div class="site-header-inner"> <a class="brand" href="/" aria-label="LifeHack home"> <img src="/lifehack-logo.svg" alt="LifeHack" width="160" height="40"> </a> <nav class="site-nav site-nav--desktop" aria-label="Primary navigation" data-desktop-nav> <details class="nav-group"> <summary>Start Here</summary> <div class="nav-panel"> <a href="/start-here">Start Here</a><a href="/guides">LifeHack Guides</a><a href="https://g.lifehack.org/life-rebuild-score?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=life-rebuild-score&amp;utm_term=Navbar-button">Life Rebuild Score</a><a href="/the-full-life-framework">Full Life Framework</a><a href="/good-life-balance">Life Balance</a><a href="/achieving-goals">Achieving Goals</a> </div> </details><details class="nav-group"> <summary>Products</summary> <div class="nav-panel"> <a href="/products">Products Overview</a><a href="/products/app">LifeHack App</a><a href="/products/full-life-framework-book">Full Life Framework Book</a><a href="/products/full-life-planner">Full Life Planner</a><a href="/products/learning-hub">Learning Hub</a> </div> </details><details class="nav-group"> <summary>Solutions</summary> <div class="nav-panel"> <a href="/solutions">Solutions Hub</a><a href="/solutions/burnout-recovery">Burnout Recovery</a><a href="/solutions/self-discipline-follow-through">Self-Discipline &amp; Follow-Through</a><a href="/solutions/purpose-direction">Purpose &amp; Direction</a><a href="/solutions/life-out-of-balance">Life Out of Balance</a><a href="/solutions/next-decade-rebuild">Next Decade Rebuild</a><a href="/solutions/solo-operator-execution">Solo Operator Execution</a> </div> </details> <a class="nav-link" href="/pricing">Pricing</a> </nav> <a class="site-cta site-cta--header" href="https://g.lifehack.org/life-rebuild-score?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=life-rebuild-score&amp;utm_term=Navbar-button">
+Take the Score
+</a> <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu" data-drawer-open> <span class="nav-toggle__lines" aria-hidden="true"> <span></span><span></span><span></span> </span> <span class="nav-toggle__text">Menu</span> </button> </div> </header> <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true" data-drawer> <div class="mobile-drawer__scrim" data-drawer-close tabindex="-1" aria-hidden="true"></div> <aside class="mobile-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="mobile-drawer-title"> <div class="mobile-drawer__head"> <span class="mobile-drawer__eyebrow" id="mobile-drawer-title">Navigate</span> <button class="mobile-drawer__close" type="button" data-drawer-close aria-label="Close menu"> <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"> <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path> </svg> </button> </div> <div class="mobile-drawer__body"> <nav class="mobile-nav" aria-label="Mobile primary navigation"> <a class="mobile-nav__top" href="/"> <span>Home</span> <span class="mobile-nav__arrow" aria-hidden="true">→</span> </a> <details class="mobile-nav__group"> <summary> <span class="mobile-nav__group-label">Start Here</span> <span class="mobile-nav__chevron" aria-hidden="true"></span> </summary> <ul class="mobile-nav__panel"> <li><a href="/start-here">Start Here</a></li><li><a href="/guides">LifeHack Guides</a></li><li><a href="https://g.lifehack.org/life-rebuild-score?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=life-rebuild-score&amp;utm_term=Navbar-button">Life Rebuild Score</a></li><li><a href="/the-full-life-framework">Full Life Framework</a></li><li><a href="/good-life-balance">Life Balance</a></li><li><a href="/achieving-goals">Achieving Goals</a></li> </ul> </details><details class="mobile-nav__group"> <summary> <span class="mobile-nav__group-label">Products</span> <span class="mobile-nav__chevron" aria-hidden="true"></span> </summary> <ul class="mobile-nav__panel"> <li><a href="/products">Products Overview</a></li><li><a href="/products/app">LifeHack App</a></li><li><a href="/products/full-life-framework-book">Full Life Framework Book</a></li><li><a href="/products/full-life-planner">Full Life Planner</a></li><li><a href="/products/learning-hub">Learning Hub</a></li> </ul> </details><details class="mobile-nav__group"> <summary> <span class="mobile-nav__group-label">Solutions</span> <span class="mobile-nav__chevron" aria-hidden="true"></span> </summary> <ul class="mobile-nav__panel"> <li><a href="/solutions">Solutions Hub</a></li><li><a href="/solutions/burnout-recovery">Burnout Recovery</a></li><li><a href="/solutions/self-discipline-follow-through">Self-Discipline &amp; Follow-Through</a></li><li><a href="/solutions/purpose-direction">Purpose &amp; Direction</a></li><li><a href="/solutions/life-out-of-balance">Life Out of Balance</a></li><li><a href="/solutions/next-decade-rebuild">Next Decade Rebuild</a></li><li><a href="/solutions/solo-operator-execution">Solo Operator Execution</a></li> </ul> </details> <div class="mobile-nav__utility"> <a href="/pricing"> <span>Pricing</span> <span class="mobile-nav__arrow" aria-hidden="true">→</span> </a> </div> </nav> </div> <div class="mobile-drawer__foot"> <a class="site-cta site-cta--drawer" href="https://g.lifehack.org/life-rebuild-score?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=life-rebuild-score&amp;utm_term=Navbar-button">
+Take the Score
+<span aria-hidden="true">→</span> </a> <p class="mobile-drawer__note">Find the highest-leverage starting point. Free.</p> </div> </aside> </div> <script>
+        (function () {
+          var drawer = document.getElementById("mobile-drawer");
+          var toggle = document.querySelector("[data-drawer-open]");
+          if (!drawer || !toggle) return;
+          var panel = drawer.querySelector(".mobile-drawer__panel");
+          var closeEls = drawer.querySelectorAll("[data-drawer-close]");
+          var closeBtn = drawer.querySelector(".mobile-drawer__close");
+          var firstOpened = false;
+          function setState(open) {
+            if (open) {
+              drawer.dat

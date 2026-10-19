@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<script type="text/javascript" src="RES_NOT_FOUND"></script>
+<script type="text/javascript" src="/javax.faces.resource/jquery.component.js.faces?ln=org.richfaces"></script>
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/reset.css.faces?ln=css/common/960" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/text.css.faces?ln=css/common/960" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/960.css.faces?ln=css/common/960" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/jquery.css.faces?ln=javascript/common/jquery" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/styles.css.faces?ln=css/common" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/jquery.fancybox.css.faces?ln=javascript/jquery" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/css/fontello.css.faces" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/css/left_content.css.faces" />
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/css/cookie-consent.css.faces" />
+<script type="text/javascript" src="/javax.faces.resource/jquery/jquery.js.faces?ln=primefaces&amp;v=2.2.1"></script>
+<script type="text/javascript" src="/javax.faces.resource/jquery-ui.js.faces?ln=javascript/common/jquery"></script>
+<script type="text/javascript" src="/javax.faces.resource/cookie-consent.i18n.js.faces?ln=javascript"></script>
+<script type="text/javascript" src="/javax.faces.resource/cookie-consent.js.faces?ln=javascript"></script>
+<script type="text/javascript" src="/javax.faces.resource/jquery.blockUI.js.faces?ln=javascript/jquery"></script>
+<script type="text/javascript" src="/javax.faces.resource/jquery.fancybox.js.faces?ln=javascript/jquery"></script>
+<script type="text/javascript" src="/javax.faces.resource/css3-multi-column.js.faces?ln=javascript"></script>
+<script type="text/javascript" src="/javax.faces.resource/util.js.faces?ln=javascript"></script>
+<link type="text/css" rel="stylesheet" href="/javax.faces.resource/home_banner.css.faces?ln=css" />
+<script type="text/javascript" src="/javax.faces.resource/jquery.cycle.js.faces?ln=javascript/jquery"></script>
+<script type="text/javascript" src="/javax.faces.resource/home_banner.js.faces?ln=javascript"></script>
+      <title>ironDNS®</title>
+
+      <link rel="icon" type="image/png" href="/resources/images/favicon.png" />
+  <!--
+    commonly used JavaScript functionalities
+    that require the faces context
+  -->
+
+  <script type="text/javascript">
+    var requestContextPath = "";
+  </script>
+
+      <!-- prevents richfaces from loading jquery.js -->
+  <!--
+    fancy box standard styles
+  -->
+
+      <!-- excludes a resource -->
+      <!--p:resources exclude="/jquery/jquery.js">
+      </p:resources-->
+
+      <!--h:outputScript name="jquery.js" target="head" /-->
+      <!--h:outputScript library="javascript/common/jquery" name="jquery.createdomnodes.js" target="head"/-->
+  <!--
+    javascript libraries used on each page
+  -->
+  
+  <!-- cookie consent settings -->
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+      cookieconsent.init ({
+        // consent mode options
+        // - opt-out (EU Cookies Directive)
+        // - opt-in (GDPR, default)
+        "consent_mode": "opt-in",
+        // cookie_notification_style options
+        // - notify (banner on page bottom)
+        // - notify-top (banner on top)
+        // - enforce (overlay with transparent background, default)
+        "cookie_notification_style": "notify",
+        // color theme options
+        // - light (dark on light, default)
+        // - dark (light on dark)
+        // "theme": "light",
+        // url referer for users to view the cookie policy
+        //"cookie_policy_url": "https://irondns.net/about/cookie-policy.faces",
+        "cookie_policy_url": "/about/cookie-policy.faces",
+        // the default language to use if browser setting is not applicable
+        "default_language": "de"
+      });
+    });
+  </script>
+  <noscript>
+    Note: Some features of this website are not available
+          because JavaScript is deactivated.
+  </noscript>
+  
+
+  <!-- essential cookie script code -->
+  <script type="text/plain" data-cookie-consent="essential">
+    console.log ("Activating essential cookies...");
+    // insert essential cookie code here
+  </script>
+  
+  
+  <!-- functional cookie script code -->
+  <script type="text/plain" data-cookie-consent="functional">
+    console.debug ("Activating functional cookies...");
+    // insert functional cookie code here
+  </script>
+  
+  
+  <!-- tracking cookie script code -->
+  <script type="text/plain" data-cookie-consent="tracking">
+    console.debug ("Activating tracking cookies...");
+    
+    // Google Analytics
+    if (false) {
+      (function (win, doc, scrpt, ga_js_src, ga_id, a, m) {
+        win['GoogleAnalyticsObject'] = ga_id;
+        win[ga_id] = win[ga_id] || function () {
+          (win[ga_id].q = win[ga_id].q || []).push(arguments)
+        }, win[ga_id].l = 1 * new Date();
+        a = doc.createElement(scrpt),
+          a.type = 'text/javascript',
+          a.setAttribute ('cookie-consent', 'tracking'),
+          m = doc.getElementsByTagName(scrpt)[0];
+        a.async = 1;
+        a.src = ga_js_src;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+      ga('create', 'UA-67183362-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('require', 'linkid', 'linkid.js');
+      ga('send', 'pageview');
+      console.debug ("...Google Analytics activated.");
+    } else {
+      console.debug ("...Google Analytics deactivated by server configuration.");
+    }
+    
+    // Matomo (Piwik)
+    if (true) {
+      var _paq = window._paq = window._paq || [];
+      _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+      _paq.push(["setCookieDomain", "*.irondns.net"]);
+      _paq.push(["setDomains", ["*.irondns.net"]]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function () {
+        var u = "//www-stats2.knipp.de/";
+        _paq.push(['setTrackerUrl', u + 'matomo.php']);
+        _paq.push(['setSiteId', '2']);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.type = 'text/javascript';
+        g.async = true;
+        g.src = u + 'matomo.js';
+        s.parentNode.insertBefore(g, s);
+      })();
+      console.debug ("...Matomo (Piwik) activated.");
+    } else {
+      console.debug ("...Matomo (Piwik) deactivated by server configuration.");
+    }
+  </script>
+  
+  
+  <!-- targeting cookie script code -->
+  <script type="text/plain" data-cookie-consent="targeting">
+    console.debug ("Activating targeting cookies...");
+    
+    //  Google Ads - Code Remarketing-Tag
+    if (true) {
+      /* <![CDATA[ */
+      var google_tag_params = {
+        dynx_itemid: 'IronDNS',
+        //dynx_itemid2: 'REPLACE_WITH_VALUE',
+        dynx_pagetype: 'other',
+        dynx_totalvalue: 0,
+      };
+      var google_conversion_id = 947841238;
+      var google_custom_params = window.google_tag_params;
+      var google_remarketing_only = true;
+      /* ]]> */
+      console.debug ("...Google Ads activated.");
+    } else {
+      console.debug ("...Google Ads deactivated by server configuration.");
+    }
+  </script>
+  
+  <!-- Google Ads - further targeting cookie script code -->
+  
+  <!--  
+    <script type="text/plain" data-cookie-consent="targeting"
+            src="//www.googleadservices.com/pagead/conversion.js">
+    </script>
+  
+    Note: document.write isn't possible from an asynchronously-loaded
+          external script; use the explicit include below to include
+          the Google Ads conversion library.
+  -->
+    <div style="display:none">
+      <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+      </script>
+    </div></head><body>
+      <div id="pageBackgroundContainer">
+        <div id="pageContainer">
+          <div id="leftColArea">
+            <div id="menuContainer"><a href="https://www.irondns.net/home.faces" class="logo"><img src="/javax.faces.resource/logo.png.faces?ln=images/common" alt="ironDNS" /></a>
+
+  <script type="text/javascript">
+    /*<![CDATA[*/
+    jQuery(function () {
+      var locHref = location.href.toString().replace(/\.\w\w\.faces/, '.faces');
+
+      const controlPanelInvisible = {
+        details: "search",
+        modify: "search"
+      };
+
+      Object.keys(controlPanelInvisible).forEach ((s) => {
+        locHref = locHref.replace (s, controlPanelInvisible[s]);
+      });
+
+      var params = locHref.indexOf('?');
+
+      if (params > 0)
+        locHref = locHref.substr(0, params);
+
+      var locLen = locHref.length;
+      if (locHref.match(/\/home\./))
+      {
+        //jQuery("div.menuLeft").addClass('active');
+      }
+      jQuery("#menuLeft").accordion(
+        {
+          autoHeight: false,
+          collapsible: true,
+          active: false,
+          navigation: true,
+          navigationFilter: function () {
+            var isActive = false;
+            var curHref = this.href;
+            var hrefLen = curHref.length;
+            if (hrefLen <= locLen)
+            {
+              var test = locHref.substr(0, hrefLen);
+              isActive = (curHref === test);
+            }
+            return isActive;
+          },
+          header: 'dt'
+        });
+      var $activeLink = jQuery("#menuLeft dd li a[href=" + locHref + "]");
+      var isLinkSpecial = false;
+      if ($activeLink.length === 0) {
+        $activeLink = jQuery("#menuLeft dd li a[href=" + location.href.toString() + "]");
+        isLinkSpecial = true;
+      }
+      $activeLink.parents('li').addClass('active');
+      jQuery('#menuLeft .superItem').hover(function () {
+        jQuery('ul', this).toggle();
+      });
+      // expand manager menu for manager urls, which are not present in menu
+      if (location.href.indexOf('https://manager.irondns.net') === 0 && isLinkSpecial)
+      {
+        jQuery("#menuLeft").accordion("activate", $activeLink.parents('dd').prev('dt'));
+      }
+    });
+    /*]]>*/
+  </script>
+
+  <div class="menuLeft"><a href="https://www.irondns.net/home.faces" class="">Home</a>
+  </div>
+
+  <dl id="menuLeft">
+    <dt class="menu2"><a href="#">About ironDNS<sup class="registered">®</sup></a></dt>
+    <dd>
+      <ul>
+        <li><a href="https://www.irondns.net/about/overview.faces" class="">Overview</a></li>
+        <li><a href="https://www.irondns.net/about/roadmap.faces" class="">Roadmap</a></li>
+        <li><a href="https://www.irondns.net/about/7reasons.faces" class="">Reasons for ironDNS<sup class="registered">®</sup></a></li>
+          <li class="superItem"><a href="#" class="switch">IT Security Act</a>
+            <ul>
+              <li><a href="https://www.irondns.net/about/kritisv-test.faces" class="">
+                  KritisV Test</a>
+              </li>
+              <li><a href="https://www.irondns.net/about/kritisv-todo.faces" class="">
+                  Recommendations</a>
+              </li>
+            </ul>
+          </li>
+
+        <li><a href="https://www.irondns.net/about/news.faces" class="">News</a></li>
+        <li><a href="https://www.irondns.net/about/privacy.faces" class="">Privacy Statement</a></li>
+        <li><a href="https://www.irondns.net/about/cookie-policy.faces" class="">Cookie Policy</a></li>
+        <li><a href="https://www.irondns.net/about/imprint.faces" class="">Imprint</a></li>
+        <li><a href="https://www.irondns.net/about/contact.faces" class="">Contact</a></li>
+      </ul>
+    </dd>
+
+    <dt class="menu3"><a href="#">Products</a></dt>
+    <dd>
+      <ul>
+        <li><a href="https://www.irondns.net/products/features.faces" class="">Features</a></li>
+        <li><a href="https://www.irondns.net/products/diversity.faces" class="">Diversity</a></li>
+        <li><a href="https://www.irondns.net/products/corporates/overview.faces" class="">For Corporates</a></li>
+        <li><a href="https://www.irondns.net/products/registrars/overview.faces" class="">For Registrars</a></li>
+        <li><a href="https://www.irondns.net/products/registries/overview.faces" class="">For Registries</a></li>
+      </ul>
+    </dd>
+
+    <dt class="menu4"><a href="#">Technology</a></dt>
+    <dd>
+      <ul>
+        <li><a href="https://www.irondns.net/technology/locations.faces" class="">Locations</a></li>
+        <li><a href="https://www.irondns.net/technology/operation.faces" class="">Operations</a></li>
+        <li class="superItem"><a href="#" class="switch">Provisioning</a>
+          <ul>
+            <li><a href="https://www.irondns.net/technology/provisioning/soap.faces" class="">SOAP</a></li>
+            <li><a href="https://www.irondns.net/technology/provisioning/rest.faces" class="">REST</a></li>
+            <li><a href="https://www.irondns.net/technology/provisioning/axfrixfr.faces" class="">AXFR / IXFR</a></li>
+            <li><a href="https://www.irondns.net/technology/provisioning/controlpanel.faces" class="">Control Panel</a></li>
+          </ul>
+        </li>
+        <li><a href="https://www.irondns.net/technology/dnssec.faces" class="">DNSSEC</a></li>
+        <li><a href="https://www.irondns.net/technology/zonelock.faces" class="">Zone Lock</a></li>
+        <li><a href="https://www.irondns.net/technology/aname.faces" class="">ANAME</a></li>
+        <li><a href="https://www.irondns.net/technology/standards.faces" class="">Standards</a></li>
+        <li><a href="https://www.irondns.net/technology/glossary.faces" class="">Glossary</a></li>
+      </ul>
+    </dd>
+
+  </dl>
+    <div class="menuLeft"><a href="https://manager.irondns.net/v2/login" class="menu5">Control Panel</a></div>
+  <!--div class="menuDeco"></div-->
+            </div>
+        <div class="phoneContainer">
+          <div class="phoneTitle">
+            Info + Support
+          </div>
+          <div class="icon-phone"></div>
+          <a class="phoneNumber" href="tel:+492319703222">
+            +49 231<br />9703-222
+          </a>
+        </div>
+          </div>
+          <div id="mainColArea" class="container_12">
+            <div id="mainContentArea" class="container_12">
+
+  <script type="text/javascript">
+  /*<![CDATA[*/
+    jQuery(function() {
+      jQuery('#loginPopup').dialog({
+        autoOpen: false,
+        height: 530,
+        width: 600,
+        modal: true,
+        buttons: {
+          Cancel: function() {
+            jQuery(this).dialog( 'close' )
+          },
+        },
+      })
+    })
+
+    function searchSubmit (event) {
+      event.preventDefault()
+      const searchTerm = document.getElementById('searchTerm').value
+      window.location.href = 'https://manager.irondns.net/v2/search/%7B"zoneName":"' + searchTerm + '"%7D'
+    }
+  /*]]>*/
+  </script>
+  <div id="toolbar"><div class="loginArea">
+      <a class="cpLogin" href="https://manager.irondns.net">Control panel</a></div>
+    <script type="text/javascript">
+    /*<![CDATA[*/
+      jQuery(function() {
+        initLanguageSelector('.languageSelector');
+        var curLang = "en";
+        if (curLang) {
+          jQuery('.languageSelector li.' + curLang).addClass('active');
+        }
+      });
+    /*]]>*/
+    </script>
+    <div class="languageSelector selector">
+<form id="j_idt141:j_idt143" name="j_idt141:j_idt143" method="post" action="/home.faces;jsessionid=0F35AF2E2E9065B5C72FF2B4FEC9F6BA" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="j_idt141:j_idt143" value="j_idt141:j_idt143" />
+
+        <dl>
+          <dt><span class="title">Select Language</span></dt>
+          <dd style="display:none">
+            <ul>
+              <li class="en">
+<script type="text/javascript" src="/javax.faces.resource/jsf.js.faces?ln=javax.faces"></script>
+<a href="#" onclick="mojarra.jsfcljs(document.getElementById('j_idt141:j_idt143'),{'j_idt141:j_idt143:j_idt145':'j_idt141:j_idt143:j_idt145','langCode':'en'},'');return false">
+                    English
+                  </a>
+              </li>
+              <li class="de"><a href="#" onclick="mojarra.jsfcljs(document.getElementById('j_idt141:j_idt143'),{'j_idt141:j_idt143:j_idt149':'j_idt141:j_idt143:j_idt149','langCode':'de'},'');return false">
+                  Deutsch
+                  </a>
+              </li>
+            </ul>
+          </dd>
+        </dl><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState" value="-1797063911349306770:7293500079980148634" autocomplete="off" />
+</form>
+    </div>
+    <div class="searchArea">
+      <form id="search-form" class="inputForm" action="https://manager.irondns.net/" method="get" onsubmit="searchSubmit(event)">
+        <input id="searchTerm" class="inactive" name="searchText" type="text" value="search domain" onclick="this.value='';" />
+        <a class="searchSubmit" href="javascript:void(0);" onclick="searchSubmit(event)">Go</a>
+      </form>
+    </div>
+  </div>
+        <div id="slideshow_container">
+          <div class="slideshow"><img src="/javax.faces.resource/diversity.en.jpg.faces?ln=images/banner_themes" alt="" longdesc="/products/diversity" title="" />
+            <!--
+            <h:graphicImage
+              library="images/banner_themes"
+              name="internetwire.en.jpg"
+              longdesc="/references/internetwire"
+              alt=""
+              title=""/>
+            --><img src="/javax.faces.resource/datacenter.en.jpg.faces?ln=images/banner_themes" alt="" longdesc="/technology/operation" title="" />
+            <!--
+            <h:graphicImage
+              library="images/banner_themes"
+              name="epag.en.jpg"
+              longdesc="/references/epag"
+              alt=""
+              title=""/>
+            <h:graphicImage
+              library="images/banner_themes"
+              name="puntcat.en.jpg"
+              longdesc="/references/puntcat"
+              alt=""
+              title=""/>
+            --><img src="/javax.faces.resource/reasons.en.jpg.faces?ln=images/banner_themes" alt="" longdesc="/about/7reasons" title="" />
+          </div>
+        </div>
+
+        <!-- Teaser Col 1: news / person -->
+    <div class="container_4"><a href="/about/news.faces;jsessionid=0F35AF2E2E9065B5C72FF2B4FEC9F6BA"><img src="/javax.faces.resource/get-in-touch.en.png.faces?ln=images/teaser" alt="" longdesc="/" title="" /></a>
+    </div>
+
+        <!-- Teaser Col 2: general / timeless -->
+    <div class="container_4"><a href="/about/news.faces;jsessionid=0F35AF2E2E9065B5C72FF2B4FEC9F6BA#iso27001"><img src="/javax.faces.resource/iso27001.en.png.faces?ln=images/teaser" alt="" longdesc="/" title="" /></a>
+    </div>
+
+        <!-- Teaser Col 3: technology -->
+    <div class="container_4"><a href="/technology/provisioning/controlpanel.faces;jsessionid=0F35AF2E2E9065B5C72FF2B4FEC9F6BA"><img src="/javax.faces.resource/controlpanel.en.png.faces?ln=images/teaser" alt="" longdesc="/" title="" /></a>
+    </div>
+              <div class="clear"></div>
+            </div>
+            <div id="footer">
+              <div class="lfloat">Copyright © 2009- 2026 Knipp Medien und Kommunikation GmbH
+              </div>
+              <div class="rfloat"><a href="https://www.irondns.net/about/imprint.faces" class="">Imprint</a>
+                 | 
+                <a href="https://www.irondns.net/about/privacy.faces" class="">Privacy Statement</a>
+                 | 
+                <a href="https://www.irondns.net/about/cookie-policy.faces" class="">Cookie Policy</a>
+                 | 
+                <a href="https://www.irondns.net/about/contact.faces" class="">Contact</a>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div></body>
+  </html>

@@ -1,0 +1,114 @@
+#
+# robots.txt
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+#
+# This file will be ignored unless it is at the root of your host:
+# Used:    http://example.com/robots.txt
+# Ignored: http://example.com/site/robots.txt
+#
+# For more information about the robots.txt standard, see:
+# http://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+# CSS, JS, Images
+Allow: /core/*.css$
+Allow: /core/*.css?
+Allow: /core/*.js$
+Allow: /core/*.js?
+Allow: /core/*.avif
+Allow: /core/*.gif
+Allow: /core/*.jpg
+Allow: /core/*.jpeg
+Allow: /core/*.png
+Allow: /core/*.svg
+Allow: /core/*.webp
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.avif
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profiles/*.png
+Allow: /profiles/*.svg
+Allow: /profiles/*.webp
+# Directories
+Disallow: /core/
+Disallow: /profiles/
+# Files
+Disallow: /README.md
+Disallow: /composer/Metapackage/README.txt
+Disallow: /composer/Plugin/ProjectMessage/README.md
+Disallow: /composer/Plugin/Scaffold/README.md
+Disallow: /composer/Plugin/VendorHardening/README.txt
+Disallow: /composer/Template/README.txt
+Disallow: /modules/README.txt
+Disallow: /sites/README.txt
+Disallow: /themes/README.txt
+# Paths (clean URLs)
+Disallow: /admin/
+Disallow: /comment/reply/
+Disallow: /filter/tips
+Disallow: /node/add/
+Disallow: /search/
+Disallow: /search?
+Disallow: /user/register
+Disallow: /user/password
+Disallow: /user/login
+Disallow: /user/logout
+Disallow: /media/oembed
+Disallow: /*/media/oembed
+# Paths (no clean URLs)
+Disallow: /index.php/admin/
+Disallow: /index.php/comment/reply/
+Disallow: /index.php/filter/tips
+Disallow: /index.php/node/add/
+Disallow: /index.php/search/
+Disallow: /index.php/search?
+Disallow: /index.php/user/password
+Disallow: /index.php/user/register
+Disallow: /index.php/user/login
+Disallow: /index.php/user/logout
+Disallow: /index.php/media/oembed
+Disallow: /index.php/*/media/oembed
+
+
+# --- Mises additions -------------------------------------------------------
+#
+# Appended to core's robots.txt by composer scaffold; see
+# composer.json extra.drupal-scaffold.file-mapping. web/robots.txt itself is
+# gitignored and regenerated from core, so it must not be edited directly.
+#
+# Core's file opens a single "User-agent: *" group and ships no other groups,
+# so the Disallow lines below continue that group. Sitemap is a non-group
+# directive and is kept last.
+
+# TW30046174 - /admin returns 403 to crawlers, and core only disallows
+# "/admin/" with a trailing slash, which leaves "/admin" itself crawlable.
+# GSC reported it under "Blocked due to access forbidden (403)".
+Disallow: /admin
+Disallow: /index.php/admin
+
+# TW30046174 - Book export routes carry a noindex tag but are still crawled,
+# spending crawl budget on roughly 1.3k URLs that can never be indexed. They
+# were the bulk of GSC's "Excluded by 'noindex' tag" examples.
+Disallow: /book/export/
+Disallow: /index.php/book/export/
+
+# TW30046174 - The Views AJAX pager appends a jQuery cache-buster (?_=<epoch>),
+# and those endpoints are being crawled as full duplicate listing pages - they
+# recur throughout GSC's "Page with redirect" examples. Blocking them only
+# affects crawlers; AJAX from real browsers is unaffected.
+Disallow: /*?_=
+Disallow: /*&_=
+
+# TW30046174 - Advertise the canonical https sitemap. Every sitemap submitted
+# in Search Console is an http:// URL, so Google indexes the https pages but
+# records "No referring sitemaps detected" against them. This points crawlers
+# at the correct sitemap without waiting on a manual resubmission.
+Sitemap: https://mises.org/sitemap.xml

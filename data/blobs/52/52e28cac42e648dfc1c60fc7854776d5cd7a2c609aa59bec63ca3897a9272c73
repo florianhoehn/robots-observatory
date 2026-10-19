@@ -1,0 +1,579 @@
+<!doctype html>
+<html class="vn-26" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Coral</title>
+    <meta name="description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <script>
+        window.VERSION='26.41.0.12314-g791a3574';window.SINGLE_DOMAIN='1';
+        <!-- ClientConfig v1 start -->
+function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+}
+function load(endpoint) {
+    const lang = getCookie('lang') || 'en';
+    const version  = '1';
+    const headers = {};
+    if (version === '1') {
+      headers['x-bwin-browser-url'] = 'http%3A%2F%2Fwww.coral.co.uk%2F.well-known%2Fgpc.json';
+      headers['x-from-product'] = 'host-app';
+    }
+    if (endpoint[1].header && version !== '3') {
+      headers[`x-bwin-${endpoint[0]}-api`] = endpoint[1].header;
+    }
+    return fetch(`${(endpoint[1].url ?? '')}${(version === '3' && endpoint[0] !== 'host-app' ? `/${endpoint[0]}-api` : '')}/${lang}/api/clientconfig?browserUrl=http%3A%2F%2Fwww.coral.co.uk%2F.well-known%2Fgpc.json&x-from-product=host-app`, {
+        cache: 'no-store',
+        headers: headers,
+        credentials: 'include'
+    })
+        .then(res => res.json())
+        .then(config => { window['clientConfig'] = window['clientConfig'] || {}; Object.assign(window['clientConfig'], config); })
+        .catch(err => console.error(endpoint, err));
+}
+function boot() {
+    window['_endpoints'] = Object.entries({"host-app":{"enabled":true,"header":null,"keyOverride":null,"url":null},"sf":{"enabled":true,"header":"prod","keyOverride":null,"url":null},"ozone":{"enabled":true,"header":"prod","keyOverride":null,"url":null}});
+    return Promise.all(window['_endpoints'].map(endpoint => load(endpoint)));
+}
+window['_boot'] = boot();
+<!-- ClientConfig v1 end -->
+        window['vn_manifest']={"module-preload-links":"","main.js":"/ClientDist/browser/main-4ZTUTGYQ.js","sports.js":"/ClientDist/browser/sports-l21prm3v.js","polyfills.js":"/ClientDist/browser/polyfills-2XQEU5M7.js","preloader.js":"/ClientDist/browser/preloader.dcfbf5a8a5f7.js","preloader.oxygen.js":"/ClientDist/browser/preloader.oxygen.efaeb39b4616.js","preloader.casino.js":"/ClientDist/browser/preloader.casino.10965d32d4a0.js","assets/simulation/styles/bundle.css":"/ClientDist/browser/assets/simulation/styles/bundle.ca830b966061.css","themes-coral-betstation-betslip.css":"/ClientDist/browser/themes-coral-betstation-betslip.92c8725f7396.css","themes-coral-betstation-betstation-showcase.css":"/ClientDist/browser/themes-coral-betstation-betstation-showcase.149012d2e157.css","themes-coral-betstation-engagement.css":"/ClientDist/browser/themes-coral-betstation-engagement.ac43bae1ea5d.css","themes-coral-betstation-event-animations.css":"/ClientDist/browser/themes-coral-betstation-event-animations.810c55cea409.css","themes-coral-betstation-liveticker-scoreboard.css":"/ClientDist/browser/themes-coral-betstation-liveticker-scoreboard.0b494af6ac7c.css","themes-coral-betstation-main-screen.css":"/ClientDist/browser/themes-coral-betstation-main-screen.d450fc370f12.css","themes-coral-betstation-main.css":"/ClientDist/browser/themes-coral-betstation-main.b19ce3559093.css","themes-coral-betstation-popularbets.css":"/ClientDist/browser/themes-coral-betstation-popularbets.6019d67b424c.css","themes-coral-betstation-top-screen-banners.css":"/ClientDist/browser/themes-coral-betstation-top-screen-banners.408218a7c17d.css","themes-coral-betstation-top-screen-marquee-widget.css":"/ClientDist/browser/themes-coral-betstation-top-screen-marquee-widget.4473faa16ef8.css","themes-coral-betstation-top-screen.css":"/ClientDist/browser/themes-coral-betstation-top-screen.c4287eb57224.css","themes-coral-betstation-v-deck-screen.css":"/ClientDist/browser/themes-coral-betstation-v-deck-screen.c4682d5bb1e5.css","themes-coral-betstation-very-top-screen.css":"/ClientDist/browser/themes-coral-betstation-very-top-screen.fc884948e6c7.css","themes-coral-bingo.css":"/ClientDist/browser/themes-coral-bingo.cf3680a521e3.css","themes-coral-casino.css":"/ClientDist/browser/themes-coral-casino.4b77d1763a20.css","themes-coral-engagement.css":"/ClientDist/browser/themes-coral-engagement.4431b4d4ffb8.css","themes-coral-main.css":"/ClientDist/browser/themes-coral-main.2a12215d4582.css","themes-coral-ozone.css":"/ClientDist/browser/themes-coral-ozone.025f4345730f.css","themes-coral-payments.css":"/ClientDist/browser/themes-coral-payments.f3289a3d2078.css","themes-coral-poker.css":"/ClientDist/browser/themes-coral-poker.e3a24f34fcb6.css","themes-coral-portal.css":"/ClientDist/browser/themes-coral-portal.9a76553c61dc.css","themes-coral-promo.css":"/ClientDist/browser/themes-coral-promo.8efd28da25c3.css","themes-coral-sports-betfinder.css":"/ClientDist/browser/themes-coral-sports-betfinder.6191de434612.css","themes-coral-sports-betgenerator.css":"/ClientDist/browser/themes-coral-sports-betgenerator.d97d1b743946.css","themes-coral-sports-betslip.css":"/ClientDist/browser/themes-coral-sports-betslip.2ed3b87800f0.css","themes-coral-sports-betting-preferences.css":"/ClientDist/browser/themes-coral-sports-betting-preferences.5185a592763a.css","themes-coral-sports-epcot.css":"/ClientDist/browser/themes-coral-sports-epcot.5f189e08c048.css","themes-coral-sports-event-animations.css":"/ClientDist/browser/themes-coral-sports-event-animations.4158c6ca5dd9.css","themes-coral-sports-event-details-sitemap.css":"/ClientDist/browser/themes-coral-sports-event-details-sitemap.62734150ddda.css","themes-coral-sports-event-details.css":"/ClientDist/browser/themes-coral-sports-event-details.63fe0fff1797.css","themes-coral-sports-favourites-dashboard.css":"/ClientDist/browser/themes-coral-sports-favourites-dashboard.8cf240b15b02.css","themes-coral-sports-highlights-marquee.css":"/ClientDist/browser/themes-coral-sports-highlights-marquee.25d591955cac.css","themes-coral-sports-link-external-accounts.css":"/ClientDist/browser/themes-coral-sports-link-external-accounts.4c04245dd837.css","themes-coral-sports-live.css":"/ClientDist/browser/themes-coral-sports-live.60a5898977ba.css","themes-coral-sports-multi-builder.css":"/ClientDist/browser/themes-coral-sports-multi-builder.afb04b438a76.css","themes-coral-sports-my-bets.css":"/ClientDist/browser/themes-coral-sports-my-bets.1bb4c2ec7ee9.css","themes-coral-sports-outrights-grid.css":"/ClientDist/browser/themes-coral-sports-outrights-grid.8a30a3ac243d.css","themes-coral-sports-print.css":"/ClientDist/browser/themes-coral-sports-print.4958c57858f6.css","themes-coral-sports-product-menu.css":"/ClientDist/browser/themes-coral-sports-product-menu.48da6f112a07.css","themes-coral-sports-quicklinks.css":"/ClientDist/browser/themes-coral-sports-quicklinks.e181b4885000.css","themes-coral-sports-racing.css":"/ClientDist/browser/themes-coral-sports-racing.eae412fd7f17.css","themes-coral-sports-scoreboards.css":"/ClientDist/browser/themes-coral-sports-scoreboards.dfc47396dd4a.css","themes-coral-sports-sitemap.css":"/ClientDist/browser/themes-coral-sports-sitemap.76cdb8f34f99.css","themes-coral-sports-skeleton-ui.css":"/ClientDist/browser/themes-coral-sports-skeleton-ui.88cbce8695b7.css","themes-coral-sports-statistics.css":"/ClientDist/browser/themes-coral-sports-statistics.2c4e0d965fd3.css","themes-coral-sports-team-pages.css":"/ClientDist/browser/themes-coral-sports-team-pages.6d93ab25a0bb.css","themes-coral-sports-top-events.css":"/ClientDist/browser/themes-coral-sports-top-events.63f16de4e54f.css","themes-coral-sports-virtual-list.css":"/ClientDist/browser/themes-coral-sports-virtual-list.ff3ca6fe1a10.css","themes-coral-sports.css":"/ClientDist/browser/themes-coral-sports.9a88dc2ea5b4.css","coral/themes-coral-account-menu-v6.css":"/ClientDist/browser/coral/themes-coral-account-menu-v6.da9ea7e2bc48.css","coral/themes-coral-account-menu.css":"/ClientDist/browser/coral/themes-coral-account-menu.7c5c4965a1b6.css","coral/themes-coral-authentication.css":"/ClientDist/browser/coral/themes-coral-authentication.b12c600a832d.css","coral/themes-coral-belowthefold.css":"/ClientDist/browser/coral/themes-coral-belowthefold.925c182d647b.css","coral/themes-coral-click-interaction.css":"/ClientDist/browser/coral/themes-coral-click-interaction.1263797fb555.css","coral/themes-coral-customer-hub-2024.css":"/ClientDist/browser/coral/themes-coral-customer-hub-2024.b1f5bc6c9060.css","coral/themes-coral-customer-hub.css":"/ClientDist/browser/coral/themes-coral-customer-hub.295fbca4af17.css","coral/themes-coral-deprecated-vertical-list.css":"/ClientDist/browser/coral/themes-coral-deprecated-vertical-list.f614fd620197.css","coral/themes-coral-legacy-badge-ticket.css":"/ClientDist/browser/coral/themes-coral-legacy-badge-ticket.03ca012eeff9.css","coral/themes-coral-legacy-login-dialog.css":"/ClientDist/browser/coral/themes-coral-legacy-login-dialog.d4dfb69a1fc0.css","coral/themes-coral-legacy-pagination.css":"/ClientDist/browser/coral/themes-coral-legacy-pagination.e4f04869f378.css","coral/themes-coral-legacy-portal-content.css":"/ClientDist/browser/coral/themes-coral-legacy-portal-content.c58ee98ead92.css","coral/themes-coral-legacy-portal-wrapper.css":"/ClientDist/browser/coral/themes-coral-legacy-portal-wrapper.61bbdaceb12c.css","coral/themes-coral-legacy-promo-card.css":"/ClientDist/browser/coral/themes-coral-legacy-promo-card.c081456a6421.css","coral/themes-coral-legacy-search-button.css":"/ClientDist/browser/coral/themes-coral-legacy-search-button.6fea66a16b0a.css","coral/themes-coral-lh-tooltip-legacy.css":"/ClientDist/browser/coral/themes-coral-lh-tooltip-legacy.f8cea71576ea.css","coral/themes-coral-native-app.css":"/ClientDist/browser/coral/themes-coral-native-app.2e62404d3e9e.css","coral/themes-coral-offer-button.css":"/ClientDist/browser/coral/themes-coral-offer-button.a51528c11cdd.css","coral/themes-coral-oxygen.css":"/ClientDist/browser/coral/themes-coral-oxygen.1f54afe9feb8.css","coral/themes-coral-pc-banner.css":"/ClientDist/browser/coral/themes-coral-pc-banner.cafc87f92195.css","coral/themes-coral-portal-progress-bar.css":"/ClientDist/browser/coral/themes-coral-portal-progress-bar.3a02411e8f98.css","coral/themes-coral-portal-tab-tiles.css":"/ClientDist/browser/coral/themes-coral-portal-tab-tiles.98d3718d94fb.css","coral/themes-coral-promo-item-box-container.css":"/ClientDist/browser/coral/themes-coral-promo-item-box-container.6b8c432006c5.css","coral/themes-coral-root.css":"/ClientDist/browser/coral/themes-coral-root.d6fccef50e51.css","coral/themes-coral-safer-gambling.css":"/ClientDist/browser/coral/themes-coral-safer-gambling.a347759d69d8.css","coral/themes-coral-semantic-tokens.css":"/ClientDist/browser/coral/themes-coral-semantic-tokens.2eb1d2f95f9d.css","coral/themes-coral-skeleton-cashier-v2.css":"/ClientDist/browser/coral/themes-coral-skeleton-cashier-v2.faf08c5d72ea.css","coral/themes-coral-skeleton-cashier.css":"/ClientDist/browser/coral/themes-coral-skeleton-cashier.93d3dc44ad3b.css","coral/themes-coral-skeleton-v2.css":"/ClientDist/browser/coral/themes-coral-skeleton-v2.ab068e910f39.css","coral/themes-coral-skeleton.css":"/ClientDist/browser/coral/themes-coral-skeleton.7e8c43ab84d4.css","coral/themes-coral-splash-loader.css":"/ClientDist/browser/coral/themes-coral-splash-loader.7438129bf6bc.css","coral/themes-coral-system-colors-v2.css":"/ClientDist/browser/coral/themes-coral-system-colors-v2.7f6ccabcb56b.css","coral/themes-coral-system-colors.css":"/ClientDist/browser/coral/themes-coral-system-colors.d25019edc2da.css","coral/themes-coral-theme-v2-split-media.css":"/ClientDist/browser/coral/themes-coral-theme-v2-split-media.0f36c463939e.css","coral/themes-coral-themeicons.css":"/ClientDist/browser/coral/themes-coral-themeicons.ae1dceae6a87.css","coral/themes-coral-tooltip-v2.css":"/ClientDist/browser/coral/themes-coral-tooltip-v2.fd87eed0b4f5.css","coral/themes-coral-tooltip.css":"/ClientDist/browser/coral/themes-coral-tooltip.6e7c83f34cfa.css","coral/media/themes-coral-oxygen-max-width-599-98.css":"/ClientDist/browser/coral/media/themes-coral-oxygen-max-width-599-98.690581e942de.css","coral/media/themes-coral-oxygen-min-width-1280.css":"/ClientDist/browser/coral/media/themes-coral-oxygen-min-width-1280.3170ca2666cf.css","coral/media/themes-coral-oxygen-min-width-1600.css":"/ClientDist/browser/coral/media/themes-coral-oxygen-min-width-1600.d598b3abdda5.css","coral/media/themes-coral-oxygen-min-width-1920.css":"/ClientDist/browser/coral/media/themes-coral-oxygen-min-width-1920.892e9ed0e7b5.css","coral/media/themes-coral-oxygen-min-width-600.css":"/ClientDist/browser/coral/media/themes-coral-oxygen-min-width-600.df5d5ad234d8.css","coral/media/themes-coral-oxygen-min-width-960.css":"/ClientDist/browser/coral/media/themes-coral-oxygen-min-width-960.6554d8666f63.css","coral/media/themes-coral-theme-v2-split-media-max-width-599-98.css":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-max-width-599-98.ad5044847f34.css","coral/media/themes-coral-theme-v2-split-media-min-width-1280.css":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-1280.3170ca2666cf.css","coral/media/themes-coral-theme-v2-split-media-min-width-1600.css":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-1600.d598b3abdda5.css","coral/media/themes-coral-theme-v2-split-media-min-width-1920.css":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-1920.892e9ed0e7b5.css","coral/media/themes-coral-theme-v2-split-media-min-width-600.css":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-600.426993aa9ae2.css","coral/media/themes-coral-theme-v2-split-media-min-width-960.css":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-960.25815bab0c7f.css"}
+window['vn_scripts']=[]
+window['vn_styles']=[{"url":"/ClientDist/browser/themes-coral-main.2a12215d4582.css","lazyLoad":1,"alias":null,"media":null},{"url":"/ClientDist/browser/coral/themes-coral-theme-v2-split-media.0f36c463939e.css","lazyLoad":1,"alias":null,"media":null},{"url":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-max-width-599-98.ad5044847f34.css","lazyLoad":1,"alias":null,"media":"lt-sm"},{"url":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-600.426993aa9ae2.css","lazyLoad":1,"alias":null,"media":"gt-xs"},{"url":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-960.25815bab0c7f.css","lazyLoad":1,"alias":null,"media":"gt-sm"},{"url":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-1280.3170ca2666cf.css","lazyLoad":1,"alias":null,"media":"gt-md"},{"url":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-1600.d598b3abdda5.css","lazyLoad":1,"alias":null,"media":"gt-mw"},{"url":"/ClientDist/browser/coral/media/themes-coral-theme-v2-split-media-min-width-1920.892e9ed0e7b5.css","lazyLoad":1,"alias":null,"media":"gt-lg"},{"url":"/ClientDist/browser/coral/themes-coral-belowthefold.925c182d647b.css","lazyLoad":3,"alias":null,"media":null}]
+    </script>
+    <script src="/ClientDist/browser/preloader.oxygen.efaeb39b4616.js"></script>
+    
+    <style>
+.casino-lobby-container-main .casino-sr-card-widget mat-slider .mdc-slider__thumb-knob {
+visibility: hidden;
+}
+@media (min-width: 1280px) {
+.hide-bingo-tournaments .cdk-overlay-container .mat-mdc-dialog-container {max-width: 100%;}
+}
+</style>
+<style>
+.casino-lobby-container-main .casino-game-cls .game-image-link{
+position: unset !important;
+overflow: unset !important;
+}
+</style>
+<style>
+div.casino-lobby-container-main .teaser-on-product-section .teasers-skeleton-block-opt {
+    margin-top: unset;
+}
+</style>
+<style>
+@media only screen and (min-width: 768px) {
+.roomslist .bingolobby-main .bingorooms-data .bingo-rooms .swiper .swiper-button-next  {
+right: -22px;
+}
+}
+@media only screen and (max-width: 760px) {
+.bingo-host-app-page .vn-dialog-container .mat-mdc-dialog-container {
+    height: auto !important;
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+ .bingo-host-app-page .bingolobby-main .new-tiles-data .new-tiles.horizontal-rooms {
+        display: flex;
+        overflow: auto;
+    }
+}
+.bingo-host-app-page .vn-product-menu-container vn-product-menu.right {
+    float: none;
+}
+</style>
+<style>
+bg-rooms-item-component .bingolobby-main {
+overflow: inherit !important;
+display: inline;
+ text-align: left;
+}
+</style>
+<style>
+.product-portal .vn-scope main {
+    height: auto;
+}</style>
+<style>
+@font-face {
+    font-family: 'Tungsten Condensed';
+    src: url('https://scmedia.itsfogo.com/$-$/7a4b05a2b0ab44cb8de00d9d155f5c58.eot');
+    src: local('Tungsten Condensed Semibold'), local('TungstenCondensed-Semibold'),
+        url('https://scmedia.itsfogo.com/$-$/7a4b05a2b0ab44cb8de00d9d155f5c58.eot?#iefix') format('embedded-opentype'),
+        url('https://scmedia.itsfogo.com/$-$/1feb3b62988d419f91d7c14dd08075e0.woff2') format('woff2'),
+        url('https://scmedia.itsfogo.com/$-$/97765d1f188d42f1bd5783c6688b5504.woff') format('woff'),
+        url('https://scmedia.itsfogo.com/$-$/e1ea136c65854091b80c61bdbb438853.ttf') format('truetype'),
+        url('https://scmedia.itsfogo.com/$-$/a8fe69bcc58a49cb820503cc96f0f2aa.svg#TungstenCondensed-Semibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Tungsten Condensed';
+    src: url('https://scmedia.itsfogo.com/$-$/494a56ba04874f74b80de490855d544c.eot');
+    src: local('Tungsten Condensed Bold'), local('TungstenCondensed-Bold'),
+        url('https://scmedia.itsfogo.com/$-$/494a56ba04874f74b80de490855d544c.eot?#iefix') format('embedded-opentype'),
+        url('https://scmedia.itsfogo.com/$-$/0b062f24e022459ebab8f8a262be6c2c.woff2') format('woff2'),
+        url('https://scmedia.itsfogo.com/$-$/4ddcba5069a44705ad95971bb230b256.woff') format('woff'),
+        url('https://scmedia.itsfogo.com/$-$/9eeaa70e453f4d71ae32c323263e0366.ttf') format('truetype'),
+        url('https://scmedia.itsfogo.com/$-$/0aebe366a12f461eaf1b2518e82b6416.svg#TungstenCondensed-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.text-brand-red {
+    color: #ef3340 !important;
+}
+
+.text-brand-blue {
+    color: #004696 !important;
+}
+
+.bg-gray-custom {
+    background-color: #f2f6fa;
+}
+
+.line-height-fix {
+    bottom: -1px;
+    position: relative;
+}
+
+.cb-layout-v1 .card h1,
+.cb-layout-v1 .card h2,
+.cb-layout-v1 .card h3,
+.cb-layout-v1 .card h4,
+.cb-layout-v1 .card h5,
+.cb-layout-v1 .card h6 {
+    font-family: 'Tungsten Condensed';
+    text-transform: uppercase;
+    line-height: .8;
+    font-weight: 600;
+}
+
+.cb-layout-v1 .card {
+    max-width: 140px;
+    margin: 10px 0 0 10px;
+    width: 100% !important;
+    height: auto !important;
+   border-radius: 0 !important;
+}
+
+.cb-layout-v1 .md-teaser-text {
+    justify-content: flex-start !important;
+}
+
+.cb-layout-v1 .md-teaser-inner-text {
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+.cb-layout-v1 .card:hover {transform: none !important; box-shadow: none !important;}
+.cb-layout-v1 .md-teaser-cta {
+    position: absolute !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: 0 !important;
+    display: block !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.cb-layout-v1 .md-teaser-cta .btn {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 100% !important;
+    display: inline-block !important;
+    width: 100% !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+    color: transparent !important;
+}
+
+.cb-layout-v1 .md-teaser-cta .btn.btn-primary {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.cb-layout-v1 .md-teaser-text .small-terms {
+    background: rgba(0, 70, 150, .6) !important;
+    line-height: .9 !important;
+}
+
+/* HIDE BULLET POINTS */
+.teasers-crousale .swiper.s-wrapper .swiper-pagination {
+    display: none !important;
+}
+
+.cb-layout-v1 .card h1 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.cb-layout-v1 .card h2,
+.cb-layout-v1 .card h3,
+.cb-layout-v1 .card h4,
+.cb-layout-v1 .card h5,
+.cb-layout-v1 .card h6 {
+    font-size: 14px;
+    letter-spacing: 0.1px;
+}
+
+@media screen and (min-width: 375px) {
+    .cb-layout-v1 .card {
+        max-width: 172px;
+    }
+
+}
+
+@media screen and (min-width: 767px) {
+    .cb-layout-v1 .card h1 {
+        font-size: 58px;
+    }
+
+    .cb-layout-v1 .card h2,
+    .cb-layout-v1 .card h3,
+    .cb-layout-v1 .card h4,
+    .cb-layout-v1 .card h5,
+    .cb-layout-v1 .card h6 {
+        font-size: 28px;
+    }
+
+    .cb-layout-v1 .card {
+        max-width: 282px;
+        margin: 20px 0 0 20px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .teasers-crousale .swiper.s-wrapper .swiper-pagination {
+        display: flex !important;
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    .cb-layout-v1 .card h1 {
+        font-size: 68px;
+    }
+
+    .cb-layout-v1 .card h2,
+    .cb-layout-v1 .card h3,
+    .cb-layout-v1 .card h4,
+    .cb-layout-v1 .card h5,
+    .cb-layout-v1 .card h6 {
+        font-size: 38px;
+    }
+
+    .cb-layout-v1 .card {
+        max-width: 325px;
+        margin-left: 10%;
+        margin-top: 25px;
+    }
+
+}
+</style>
+<style>
+.click-interaction .bottom-nav .menu-item {pointer-events: all; will-change: transform;}
+.click-interaction .bottom-nav .menu-item:after {z-index: -1;}
+.click-interaction .bottom-nav {contain: content;}
+</style>
+<style>
+@media only screen and (min-width: 768px) {
+.casino-lobby-container-main .casino-embed-search .desktop-search input, .casino-lobby-container-main .casino-embed-search .desktop-searchnav input {
+padding-right: 0px !important;
+}
+}
+</style>
+<style>
+.casino-lobby-container-main #casino-embed-game-view .embed-right-section .casino-embed-search .search-filed #desktop-search, #casino-embed-game-view .embed-right-section .casino-embed-search .search-filed #desktop-searchnav {
+  right: 56px !important;
+  left: auto;
+  top: 50px !important;
+}
+.casino-lobby-container-main #casino-embed-game-view .embed-right-section .casino-embed-search .search-filed #desktop-search .casino-desktop-search-results, #casino-embed-game-view .embed-right-section .casino-embed-search .search-filed #desktop-searchnav .casino-desktop-search-results {
+  top: 83px !important;
+  right: 36px !important;
+}
+@media only screen and (min-width: 768px) {
+.casino-lobby-container-main .casino-embed-search #desktop-search .casino-desktop-search-results .search-non-touch li:hover, .casino-lobby-container-main .casino-embed-search #desktop-searchnav .casino-desktop-search-results .search-non-touch li:hover,
+.casino-lobby-container-main .casino-embed-search #desktop-search .casino-desktop-search-results .search-non-touch li:hover pre, .casino-lobby-container-main .casino-embed-search #desktop-searchnav .casino-desktop-search-results .search-non-touch li:hover pre {
+    background-color: #8bbd23;
+    color : #fff;
+}
+}
+</style>
+
+<style>
+.casino-onboarding-container .casino-onboarding-body .swiper .swiper-button-next, .casino-onboarding-container .casino-onboarding-body .swiper .swiper-button-prev {
+display : none !important;
+}
+</style>
+<style>
+#myTickets .allTicketsWrapper .ticketWrapper .ticketsbuttons .activeTicket {
+    cursor: pointer !important;
+}
+
+#myTickets .allTicketsWrapper .ticketWrapper .ticketsbuttons .defaultTicket {
+    cursor: pointer !important;
+}
+</style>
+<style>
+    /* New Tournament Calendar Styles */
+    .mat-table-theme .table tbody td .reg-cal-group .btn-sm, .schedule-tournament-main .filters-wrap .filters-toggle-btn {
+           font-size: 12px;
+           height: auto;
+     }
+</style>
+
+<script type="module">
+var p=()=>location.pathname.split("/").filter(t=>t!=="").join(" - ")||"home";var h=window?.VERSIONS?.HOST||window?.VERSION||"0.0.0",s=h;var r=()=>((1+Math.random())*65536|0).toString(16).substring(1),d=r()+r()+"-"+r()+"-"+r()+"-"+r()+"-"+r()+r()+r(),l=!1,c=[],E=()=>{if(!window.dataLayer||!Array.isArray(window.dataLayer))return!1;for(let t of window.dataLayer)if(t&&typeof t=="object"&&t.event==="vanilla_gtm_loaded")return!0;return!1};function g(t){window.dataLayer.push(t)}function k(){l=!0;for(let t of c)requestIdleCallback(()=>g(t));c.length=0}function y(t){l?g(t):(c.push(t),E()&&k())}function a(t){return e=>{let n=p();return requestIdleCallback(()=>y(t(e,n)))}}var i="none",_=({value:t,attribution:e},n)=>({event:"webVital",inp_interaction:e?.interactionType||i,inp_target_element:e?.interactionTarget||i,inp_value:t,inp_page_group:n,inp_app_version:s}),u=({attribution:t,value:e,navigationType:n},o)=>{let m=navigator.connection,{downlink:f=0}=m;return{event:"LCP_tracking",inp_app_version:s,inp_page_group:o,inp_target_element:t?.element||i,inp_render_delay:Math.round(t?.elementRenderDelay||0),inp_load_delay:Math.round(t?.resourceLoadDelay||0),inp_load_duration:Math.round(t?.resourceLoadDuration||0),inp_ttfb:Math.round(t?.timeToFirstByte||0),inp_value:Math.round(e||0),inp_navigation_type:n,inp_url:t?.lcpEntry?.url||i,inp_ram:navigator.deviceMemory||0,inp_bandwidth:Math.round(f||0),inp_session:d}},v=({value:t,attribution:e},n)=>({event:"cls_tracking",inp_interaction:(e?.largestShiftValue||0).toFixed(5)||i,inp_target_element:e?.largestShiftTarget||i,inp_value:parseFloat(t.toFixed(5)),inp_page_group:n,inp_app_version:s});var T=.1;"requestIdleCallback"in window&&Math.random()<T&&import("https://unpkg.com/web-vitals@4.1/dist/web-vitals.attribution.js?module").then(({onINP:t,onLCP:e,onCLS:n})=>{let o={reportAllChanges:!0};t(a(_),o),e(a(u),o),n(a(v))}).catch(console.error);
+</script>
+<style>
+.calendar-section .calendar-widjet .calendar-widjet-row .vn-carousel .carousel-next, .calendar-section .calendar-widjet .calendar-widjet-row .vn-carousel .carousel-previous {
+    color: #78be20 !important;
+}
+.tournamets-calendar .filters-info .right-sec .pager-sec ul.pagination p::selection, .tournamets-calendar .tournaments-section .right-sec .pager-sec ul.pagination p::selection{
+background: #78be20 !important;
+}
+</style>
+<style>
+.roomcozy-combined .card .name-section {
+    padding-bottom: 0 !important;
+}
+</style>
+<style>
+    /* Please comment your CSS blocks in detail, link to CRE-XXXXX ticket if possible within the comment, and ensure they are namespaced so that they can't conflict with other site styles */
+
+    /*FONTS FOR TEASERS*/
+
+    @font-face {
+        font-family: 'PantonRustHeavyGr';
+        font-style: normal;
+        font-weight: 400;
+        src: url('https://scmedia.itsfogo.com/$-$/3a87feffe5424122b455a334aac6df20.woff2') format('woff2');
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap');
+
+
+    /**
+     * Teasers now have no CTA, however no cursor change either on desktop
+     */
+
+    .teasers-crousale.teasers {
+        cursor: pointer;
+    }
+
+    /**
+     * On mobile, SEO texts are split by letter... why?
+     */
+
+    .cre-lower-text .pc-txt {
+        word-break: break-word;
+    }
+
+    /**
+     * Fix for text sliding under terms and conditions after teaser height was reduced
+     */
+
+    div.item-slide.actor.disable-right-actor .md-teaser-text .md-teaser-inner-text {
+        padding: 0 0 36px 10px!important;
+    }
+
+    .item-slide.actor.disable-right-actor .md-teaser-text {
+        padding-bottom: 35px;
+    }
+
+    /**
+     * margin around lockup is far too large
+     */
+    .item-slide.actor .md-teaser-body .md-teaser-text img {
+        height: 30px !important;
+    }
+
+    /**
+    * Fix for the Poker & Bingo Carousel Button Removal
+    */
+
+    .bingoSlide .md-teaser-cta {
+        display: none!important;
+    }
+
+    /**
+    * Fix for the gaming banners
+    */
+
+    .pc-t-h-cont {
+        align-self: flex-start !important;
+		order: 3;
+    }
+
+    .pc-banner .pc-header {
+        align-self: flex-start !important;
+		order: 2;
+    }
+    .pc-t-img-opt {
+        justify-content: flex-start;
+        order: 1;
+        position: initial!important;
+        height: min-content;
+        /* margin-left: -15px; */
+        margin-top: -10px;
+        width: 50%;
+    }
+
+    img.lockup {
+        /* object-fit: none!important; */
+        width: min-content;
+        height: min-content!important;
+		margin: 5px 0px !important;
+    }
+
+    .pc-banner .pc-t-txt-opt {
+        order: 5;
+    }
+
+    .pc-banner-jp-alt .pc-t-img-opt,
+    .pc-banner-jp .pc-t-img-opt,
+    .pc-banner .pc-t-img-opt {
+        width: 45%;
+        justify-content: center;
+        height: auto !important;
+    }
+
+    .pc-banner-jp-alt .pc-t-img-opt img,
+    .pc-banner-jp .pc-t-img-opt img,
+    .pc-banner .pc-t-img-opt img {
+        width: 55%;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        .pc-banner,
+        .pc-banner-jp,
+        .pc-banner-jp-alt {
+            justify-content: left;
+            position: relative;
+        }
+        .pc-banner-jp-alt .pc-header,
+        .pc-banner-jp .pc-header,
+        .pc-banner .pc-header {
+            margin-top: 1.25rem;
+            /*margin-bottom: .25rem;*/
+            width: 53%;
+            height: auto;
+            padding: 0 .8rem 0 .8rem;
+        }
+        .pc-banner-jp-alt .pc-header,
+        .pc-banner-jp .pc-header,
+        .pc-banner .pc-header .pc-banner-jp-alt .pc-t-img-cont,
+        .pc-banner-jp .pc-t-img-cont,
+        .pc-banner .pc-t-img-cont {
+            margin-left: -4px;
+        }
+        .pc-banner-jp-alt .pc-t-img-cont .pc-img,
+        .pc-banner-jp .pc-t-img-cont .pc-img,
+        .pc-banner .pc-t-img-cont .pc-img {
+            object-position: 85% center;
+        }
+        .pc-banner-jp-alt .pc-t-img-opt,
+        .pc-banner-jp .pc-t-img-opt,
+        .pc-banner .pc-t-img-opt {
+            width: 55%;
+            margin-top: 10px;
+            height: auto !important;
+            justify-content: center;
+            padding: .8rem .8rem 1.2rem .8rem;
+        }
+        .pc-banner-jp-alt .pc-t-img-opt img,
+        .pc-banner-jp .pc-t-img-opt img,
+        .pc-banner .pc-t-img-opt img {
+            width: 60%;
+        }
+        .pc-banner-jp-alt .pc-t-h-cont,
+        .pc-banner-jp .pc-t-h-cont,
+        .pc-banner .pc-t-h-cont {
+            width: 50%;
+            height: auto;
+            /*display: block;*/
+            padding: 0 .8rem 0 .8rem;
+        }
+        .pc-banner-jp-alt .pc-t-txt-opt,
+        .pc-banner-jp .pc-t-txt-opt,
+        .pc-banner .pc-t-txt-opt {
+            height: auto;
+            /*width: auto;*/
+            width: inherit;
+            margin-right: 0px;
+            padding: 0 .8rem 0 .8rem;
+            justify-content: center;
+            align-items: center;
+            display: inline-flex;
+        }
+        .pc-banner-jp-alt .pc-header .pc-h,
+        .pc-banner-jp .pc-header .pc-h,
+        .pc-banner .pc-header .pc-h {
+            font-size: 2.25rem;
+        }
+        .pc-banner-jp-alt .pc-t-h-cont .pc-t-h-cont-sub,
+        .pc-banner-jp .pc-t-h-cont .pc-t-h-cont-sub,
+        .pc-banner .pc-t-h-cont .pc-t-h-cont-sub {
+            font-size: 28px;
+        }
+    }
+    @media only screen and (max-width: 768px) {
+		.item-slide.actor .md-teaser-body .md-teaser-text img {
+            height: 14px !important;
+        }
+        .pc-banner-jp-alt .pc-header .pc-h,
+        .pc-banner-jp .pc-header .pc-h,
+        .pc-banner .pc-header .pc-h {
+            font-size: 1.5rem;
+        }
+        .pc-banner-jp-alt .pc-t-img-cont .pc-img,
+        .pc-banner-jp .pc-t-img-cont .pc-img,
+        .pc-banner .pc-t-img-cont .pc-img {
+            object-position: 80% center;
+        }
+        .pc-banner-jp-alt .pc-t-img-opt img,
+        .pc-banner-jp .pc-t-img-opt img,
+        .pc-banner .pc-t-img-opt img {
+            width: 75%;
+            height: auto;
+        }
+        .pc-banner-jp-alt .pc-t-h-cont .pc-t-h-cont-sub,
+        .pc-banner-jp .pc-t-h-cont .pc-t-h-cont-sub,
+        .pc-banner .pc-t-h-cont .pc-t-h-cont-sub {
+            font-size: 1.125rem;
+        }
+    }
+	 /*
+    / Banner fix for mobile.
+    / 
+    */
+	@media (max-width: 599.98px) {
+		.pc-banner-jp-alt .pc-t-h-cont,
+		.pc-banner-jp .pc-t-h-cont,
+		.pc-banner .pc-t-h-cont {
+			align-self: auto;
+			display: block!important;
+			width: 100%;
+			margin-top: -15px;
+		}
+	}
+	@media only screen and (max-width: 599px) {
+        .pc-banner-jp-alt .pc-t-img-opt,
+        .pc-banner-jp .pc-t-img-opt,
+        .pc-banner .pc-t-img-opt {
+            padding: .8rem .8rem 0rem .8rem;
+        }
+	}
+    @media only screen and (max-width: 425px) {
+        .pc-banner-jp-alt .pc-header .pc-h,
+        .pc-banner-jp .pc-header .pc-h,
+        .pc-banner .pc-header .pc-h {
+            font-size: 1.05rem;
+        }
+        .pc-banner-jp-alt .pc-t-img-c

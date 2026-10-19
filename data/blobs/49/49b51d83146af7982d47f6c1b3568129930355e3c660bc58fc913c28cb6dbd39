@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>tuttomercatoweb.com</title>		<meta name="language" content="it">									<link rel="preload" href="https://tmw-static-auto.tcccdn.com/template/default/css/file/font4/tcc-tmw.woff" as="font" type="font/woff" crossorigin>
+			<link rel="preload" href="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img-css-js/72ce12fe82d35f271c41cf2986935748.css" as="style">
+			<link rel="stylesheet" href="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img-css-js/72ce12fe82d35f271c41cf2986935748.css">
+							<meta name="theme-color" content="#086203">
+		<meta name="viewport" content="width=device-width, maximum-scale=5, user-scalable=yes, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+		<link rel="shortcut icon" sizes="144x144" href="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img/favicon5/144.png">
+		<link rel="shortcut icon" sizes="36x36" href="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img/favicon5/36.png">
+		<link rel="icon" sizes="16x16" href="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img/favicon5/favicon.ico">
+		<script src="https://tmw-static-auto.tcccdn.com/template/default/img-css-js/db22093e5685db59bf666a78819a7c8c.js" async></script>	<link rel="alternate" type="application/rss+xml" title="Tutte le notizie" href="//www.tuttomercatoweb.com/rss/">
+<meta property="fb:pages" content="168271766534476" /><!-- Serve per gli instantarticle -->		<script>
+	function addListener(element, type, callback)
+	{
+		if (element.addEventListener) element.addEventListener(type, callback);
+		else if (element.attachEvent) element.attachEvent('on' + type, callback);
+	}
+	
+	function getQueryParam(param)
+	{
+		var result = window.location.search.match(new RegExp("(\\?|&)" + param + "(\\[\\])?=([^&]*)"));
+		return result ? result[3] : false;
+	}
+
+	/* Settaggio delle variabili */
+	var platform  = 'desktop';
+	var asset_id  = 'error';
+	var menunav     = 'humans.txt';
+	var indirizzo   = window.location.pathname.split('/');
+	var word        = '';
+	if (word=='') word = getQueryParam('word');
+	var zona        = '';
+	var azione      = '';
+	var idsezione   = '';
+	var titolo_art  = "";
+	var sezione_art = "";
+	var now         = 'lunedì 19 ottobre 2026 ore 21:47';
+	var squadra     = "";
+	var archivio    = false;
+	var isLongArticle = false;
+	var s24oOnlyLongArticle = false;
+
+	/* Settaggio della searchbar (con titoletto) */
+	var searchbar = false;
+	if (indirizzo[1]!='' && word=='') searchbar = indirizzo[1].replace(/-/gi, " ").replace(/_/gi, " ").toUpperCase();
+	else if (azione=='search') {
+		searchbar = 'Ricerca';
+		if (word!=false && word!='') searchbar = searchbar + ' per ' + word.toUpperCase()
+	} else if (azione=='contatti') searchbar = azione.toUpperCase();
+	indirizzo = indirizzo[1].replace('-', '');
+	if (word==false) word = '';
+
+	/* Caricamento asincrono degli script social */
+	if("read"==azione||"media"==azione){var scripts=["//connect.facebook.net/it_IT/all.js#xfbml=1"];!function(e){for(var t=0,a=e.length;a>t;t++){var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=e[t];var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(o,r)}}(scripts)}
+</script>
+
+<script>var zonaLeonardo = 'genr';</script>
+
+<script>
+var zonaSole24Ore = 'TMW/Altro/Ros';
+var mapZonaSole24Ore = {
+	"atalanta": "TMW/Atalanta/Ros",
+	"bologna": "TMW/Bologna/Ros",
+	"championsleague": "tuttochampions/ros",
+	"fiorentina": "TMW/Fiorentina/Ros",
+	"inter": "TMW/Inter/Ros",
+	"juventus": "TMW/Juventus/Ros",
+	"lazio": "TMW/Lazio/Ros",
+	"milan": "TMW/Milan/Ros",
+	"napoli": "TMW/Napoli/Ros",
+	"roma": "TMW/Roma/Ros",
+	"serie-b": "TMW/Serie_B/Ros",
+	"serie-c": "TMW/Serie_C/Ros",
+	"mondiale-per-club": "FifaWorldCup/ros",
+	"mondiali": "tuttomondiali/ros"
+};
+if (idsezione == '94' || (azione == "read" && document.querySelector('meta[name="news_keywords"]') !== null && document.querySelector('meta[name="news_keywords"]').content.split(",").includes("Mondiale per club"))) {	zonaSole24Ore = 'FifaWorldCup/ros';
+} else if (zona == 'network' && typeof mapZonaSole24Ore[squadra] !== 'undefined') {
+	zonaSole24Ore = mapZonaSole24Ore[squadra];
+} else if (squadra == 'scommesse') {
+	zonaSole24Ore = 'TMW/scommesse/Ros';
+} else if (azione == 'home' && zona == 'default') {
+	zonaSole24Ore = 'TMW/Homepage';
+} else if (azione == 'live') {
+	zonaSole24Ore = 'TMW/Live/Ros';
+} else if (idsezione == '1') {	zonaSole24Ore = 'TMW/Serie_A/Ros';
+} else if (idsezione == '2') {	zonaSole24Ore = 'TMW/Serie_B/Ros';
+} else if (idsezione == '3') {	zonaSole24Ore = 'TMW/Serie_C/Ros';
+} else if (idsezione == '95') {	zonaSole24Ore = 'tuttomondiali/ros';
+}
+</script>
+
+<script>
+const suppressMessage = () => {
+	window.googlefc = window.googlefc || {};
+	window.googlefc.controlledMessagingFunction = (message) => {
+		message.proceed(false);
+	};
+};
+suppressMessage();
+</script>
+
+<script async src="https://fundingchoicesmessages.google.com/i/pub-7074224334010734?ers=1" nonce="6vuVmAqTcFyllwLtCCvxfQ"></script>
+<script nonce="6vuVmAqTcFyllwLtCCvxfQ">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
+		<!-- InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+<script async>
+(function() {
+	var host = window.location.hostname;
+	var element = document.createElement('script');
+	var firstScript = document.getElementsByTagName('script')[0];
+	var url = 'https://cmp.inmobi.com'.concat('/choice/', 'zps7Pn88rZM7r', '/', host, '/choice.js?tag_version=V3');
+	var uspTries = 0;
+	var uspTriesLimit = 3;
+	element.async = true;
+	element.type = 'text/javascript';
+	element.src = url;
+	element.addEventListener('load', function(event) {
+		window.dispatchEvent(new Event('inmobiLoaded'));
+	});
+
+	firstScript.parentNode.insertBefore(element, firstScript);
+
+	function makeStub() {
+		var TCF_LOCATOR_NAME = '__tcfapiLocator';
+		var queue = [];
+		var win = window;
+		var cmpFrame;
+
+		function addFrame() {
+			var doc = win.document;
+			var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+			if (!otherCMP) {
+				if (doc.body) {
+					var iframe = doc.createElement('iframe');
+
+					iframe.style.cssText = 'display:none';
+					iframe.name = TCF_LOCATOR_NAME;
+					doc.body.appendChild(iframe);
+				} else {
+					setTimeout(addFrame, 5);
+				}
+			}
+			return !otherCMP;
+		}
+
+		function tcfAPIHandler() {
+			var gdprApplies;
+			var args = arguments;
+
+			if (!args.length) {
+				return queue;
+			} else if (args[0] === 'setGdprApplies') {
+				if (
+					args.length > 3 &&
+					args[2] === 2 &&
+					typeof args[3] === 'boolean'
+				) {
+					gdprApplies = args[3];
+					if (typeof args[2] === 'function') {
+						args[2]('set', true);
+					}
+				}
+			} else if (args[0] === 'ping') {
+				var retr = {
+					gdprApplies: gdprApplies,
+					cmpLoaded: false,
+					cmpStatus: 'stub'
+				};
+
+				if (typeof args[2] === 'function') {
+					args[2](retr);
+				}
+			} else {
+				if (args[0] === 'init' && typeof args[3] === 'object') {
+					args[3] = Object.assign(args[3], { tag_version: 'V3' });
+				}
+				queue.push(args);
+			}
+		}
+
+		function postMessageEventHandler(event) {
+			var msgIsString = typeof event.data === 'string';
+			var json = {};
+
+			try {
+				if (msgIsString) {
+					json = JSON.parse(event.data);
+				} else {
+					json = event.data;
+				}
+			} catch (ignore) {}
+
+			var payload = json.__tcfapiCall;
+
+			if (payload) {
+				window.__tcfapi(
+					payload.command,
+					payload.version,
+					function(retValue, success) {
+						var returnMsg = {
+							__tcfapiReturn: {
+								returnValue: retValue,
+								success: success,
+								callId: payload.callId
+							}
+						};
+						if (msgIsString) {
+							returnMsg = JSON.stringify(returnMsg);
+						}
+						if (event && event.source && event.source.postMessage) {
+							event.source.postMessage(returnMsg, '*');
+						}
+					},
+					payload.parameter
+				);
+			}
+		}
+
+		while (win) {
+			try {
+				if (win.frames[TCF_LOCATOR_NAME]) {
+					cmpFrame = win;
+					break;
+				}
+			} catch (ignore) {}
+
+			if (win === window.top) {
+				break;
+			}
+			win = win.parent;
+		}
+		if (!cmpFrame) {
+			addFrame();
+			win.__tcfapi = tcfAPIHandler;
+			win.addEventListener('message', postMessageEventHandler, false);
+		}
+	};
+
+	makeStub();
+
+	function makeGppStub() {
+		const CMP_ID = 10;
+		const SUPPORTED_APIS = [
+			'2:tcfeuv2',
+			'6:uspv1',
+			'7:usnatv1',
+			'8:usca',
+			'9:usvav1',
+			'10:uscov1',
+			'11:usutv1',
+			'12:usctv1'
+		];
+
+		window.__gpp_addFrame = function (n) {
+			if (!window.frames[n]) {
+				if (document.body) {
+					var i = document.createElement("iframe");
+					i.style.cssText = "display:none";
+					i.name = n;
+					document.body.appendChild(i);
+				} else {
+					window.setTimeout(window.__gpp_addFrame, 10, n);
+				}
+			}
+		};
+		window.__gpp_stub = function () {
+			var b = arguments;
+			__gpp.queue = __gpp.queue || [];
+			__gpp.events = __gpp.events || [];
+
+			if (!b.length || (b.length == 1 && b[0] == "queue")) {
+				return __gpp.queue;
+			}
+
+			if (b.length == 1 && b[0] == "events") {
+				return __gpp.events;
+			}
+
+			var cmd = b[0];
+			var clb = b.length > 1 ? b[1] : null;
+			var par = b.length > 2 ? b[2] : null;
+			if (cmd === "ping") {
+				clb(
+					{
+						gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+						cmpStatus: "stub", // possible values: stub, loading, loaded, error
+						cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+						signalStatus: "not ready", // possible values: not ready, ready
+						supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+						cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
+						sectionList: [],
+						applicableSections: [-1],
+						gppString: "",
+						parsedSections: {},
+					},
+					true
+				);
+			} else if (cmd === "addEventListener") {
+				if (!("lastId" in __gpp)) {
+					__gpp.lastId = 0;
+				}
+				__gpp.lastId++;
+				var lnr = __gpp.lastId;
+				__gpp.events.push({
+					id: lnr,
+					callback: clb,
+					parameter: par,
+				});
+				clb(
+					{
+						eventName: "listenerRegistered",
+						listenerId: lnr, // Registered ID of the listener
+						data: true, // positive signal
+						pingData: {
+							gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+							cmpStatus: "stub", // possible values: stub, loading, loaded, error
+							cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+							signalStatus: "not ready", // possible values: not ready, ready
+							supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+							cmpId: CMP_ID, // list of supported APIs
+							sectionList: [],
+							applicableSections: [-1],
+							gppString: "",
+							parsedSections: {},
+						},
+					},
+					true
+				);
+			} else if (cmd === "removeEventListener") {
+				var success = false;
+				for (var i = 0; i < __gpp.events.length; i++) {
+					if (__gpp.events[i].id == par) {
+						__gpp.events.splice(i, 1);
+						success = true;
+						break;
+					}
+				}
+				clb(
+					{
+						eventName: "listenerRemoved",
+						listenerId: par, // Registered ID of the listener
+						data: success, // status info
+						pingData: {
+							gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+							cmpStatus: "stub", // possible values: stub, loading, loaded, error
+							cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+							signalStatus: "not ready", // possible values: not ready, ready
+							supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+							cmpId: CMP_ID, // CMP ID
+							sectionList: [],
+							applicableSections: [-1],
+							gppString: "",
+							parsedSections: {},
+						},
+					},
+					true
+				);
+			} else if (cmd === "hasSection") {
+				clb(false, true);
+			} else if (cmd === "getSection" || cmd === "getField") {
+				clb(null, true);
+			}
+			//queue all other commands
+			else {
+				__gpp.queue.push([].slice.apply(b));
+			}
+		};
+		window.__gpp_msghandler = function (event) {
+			var msgIsString = typeof event.data === "string";
+			try {
+				var json = msgIsString ? JSON.parse(event.data) : event.data;
+			} catch (e) {
+				var json = null;
+			}
+			if (typeof json === "object" && json !== null && "__gppCall" in json) {
+				var i = json.__gppCall;
+				window.__gpp(
+					i.command,
+					function (retValue, success) {
+						var returnMsg = {
+							__gppReturn: {
+								returnValue: retValue,
+								success: success,
+								callId: i.callId,
+							},
+						};
+						event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
+					},
+					"parameter" in i ? i.parameter : null,
+					"version" in i ? i.version : "1.1"
+				);
+			}
+		};
+		if (!("__gpp" in window) || typeof window.__gpp !== "function") {
+			window.__gpp = window.__gpp_stub;
+			window.addEventListener("message", window.__gpp_msghandler, false);
+			window.__gpp_addFrame("__gppLocator");
+		}
+	};
+
+	makeGppStub();
+
+	var uspStubFunction = function() {
+		var arg = arguments;
+		if (typeof window.__uspapi !== uspStubFunction) {
+			setTimeout(function() {
+				if (typeof window.__uspapi !== 'undefined') {
+					window.__uspapi.apply(window.__uspapi, arg);
+				}
+			}, 500);
+		}
+	};
+
+	var checkIfUspIsReady = function() {
+		uspTries++;
+		if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+			console.warn('USP is not accessible');
+		} else {
+			clearInterval(uspInterval);
+		}
+	};
+
+	if (typeof window.__uspapi === 'undefined') {
+		window.__uspapi = uspStubFunction;
+		var uspInterval = setInterval(checkIfUspIsReady, 6000);
+	}
+})();
+</script>
+<!-- End InMobi Choice. Consent Manager Tag v3.0 (for TCF 2.2) -->
+
+<script>
+
+function addListener(element, type, callback)
+{
+	if (element.addEventListener) element.addEventListener(type, callback);
+	else if (element.attachEvent) element.attachEvent('on' + type, callback);
+}
+var tcfGoogleConsent = "0";
+
+addListener(window, "inmobiLoaded", () => {
+	__tcfapi("addEventListener", 2, (tcData, success) => {
+		if (success && tcData.gdprApplies) {
+						if (tcData.eventStatus == "useractioncomplete" || tcData.eventStatus == "tcloaded") {
+								var obWidget = document.querySelector('.OUTBRAIN');
+				if (obWidget && "IntersectionObserver" in window) {
+					var observer = new IntersectionObserver(function(entries) {
+						if (entries[0].isIntersecting) {
+							var s = document.createElement("script");
+							s.async = true;
+							s.src = "https://widgets.outbrain.com/outbrain.js";
+							document.head.appendChild(s);
+							observer.disconnect();
+						}
+					}, { rootMargin: "200px" });
+					observer.observe(obWidget);
+				} else {
+					var s = document.createElement("script");
+					s.async = true;
+					s.src = "https://widgets.outbrain.com/outbrain.js";
+					document.head.appendChild(s);
+				}
+								if (
+					Object.entries(tcData.purpose.consents).length > 0
+					&& Object.values(tcData.purpose.consents)[0] === true
+					&& typeof tcData.vendor.consents[755] !== "undefined"
+					&& tcData.vendor.consents[755] === true
+				) {
+					tcfGoogleConsent = "1";
+									} else {
+					tcfGoogleConsent = "-1";
+									}
+			}
+		}
+	});
+});
+</script>
+<script>
+function TCCLoadScript(){var scripts=document.getElementsByClassName("tcc-script"),documentFragment=document.createDocumentFragment();for(i=0;i<scripts.length;i++){for(s=document.createElement("script"),j=0;j<scripts[i].attributes.length;j++){var attrib=scripts[i].attributes[j];attrib.specified&&("type"==attrib.name?s.setAttribute("type","text/javascript"):"data-src"==attrib.name?s.setAttribute("src",attrib.value):"class"==attrib.name?s.setAttribute(attrib.name,attrib.value.replace("tcc-script","")):s.setAttribute(attrib.name,attrib.value))}s.innerHTML=scripts[i].innerHTML,documentFragment.appendChild(s)}document.body.appendChild(documentFragment)}window.addEventListener?window.addEventListener("load",TCCLoadScript):window.attachEvent&&window.attachEvent("onload",TCCLoadScript);
+</script>
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+
+<script async src="https://dvagh3p3rk8xj.cloudfront.net/prebid9.40.0.js"></script>
+<script src="https://dvagh3p3rk8xj.cloudfront.net/prebid_header/tmw_tcf2_pb940.js"></script>
+<script>
+	var _adv = { id: "16977", ad: "16533", analytics: true };
+	_dL = window._dL || []; _dI = window._dI || false; _dT = window._dT || function(a) {_dL.push(a);};  _dT(_adv);
+	if (!_dI) { _dI = true; (function (e, t) { var n = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.src = "https://js.datafront.co/df.js"; n.async = true; r.parentNode.insertBefore(n, r) })(document, "scr" + "ipt")}
+</script>
+
+<script>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+
+googletag.cmd.push(function() {
+	googletag.defineSlot('/57491254/tuttomercatoweb.com/' + zonaSole24Ore + '/MaxTicker', [[970, 250], [320, 50], [728, 90], [320, 100], [990, 30], [990, 250]], 'div-gpt-ad-MaxTicker').addService(googletag.pubads());
+	googletag.defineSlot('/57491254/tuttomercatoweb.com/' + zonaSole24Ore + '/MPU_Top', [[300, 250], [300, 600]], 'div-gpt-ad-MPU_Top').addService(googletag.pubads());
+	googletag.defineSlot('/57491254/tuttomercatoweb.com/' + zonaSole24Ore + '/MPU_Middle', [300, 251], 'div-gpt-ad-MPU_Middle').addService(googletag.pubads());
+	googletag.defineSlot('/57491254/tuttomercatoweb.com/' + zonaSole24Ore + '/MPU_Bottom', [300, 252], 'div-gpt-ad-MPU_Bottom').addService(googletag.pubads());
+		googletag.defineSlot('/57491254/tuttomercatoweb.com/' + zonaSole24Ore + '/Top', [1, 1], 'div-gpt-ad-Top').addService(googletag.pubads());
+	googletag.defineOutOfPageSlot('/57491254/tuttomercatoweb.com/' + zonaSole24Ore + '/Overlay', 'div-gpt-ad-Overlay').addService(googletag.pubads());
+
+	googletag.pubads().setRequestNonPersonalizedAds(0);
+	googletag.pubads().setCookieOptions(0);
+	googletag.pubads().enableSingleRequest();
+	googletag.pubads().disableInitialLoad();
+
+	oz_config(googletag);
+	//googletag.enableServices();
+});
+</script>
+	</head>
+	<body class=" sez channel">
+		<script>
+document.addEventListener("DOMContentLoaded", function () {
+	var adsbygoogleScript = document.createElement("script");
+	adsbygoogleScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+	adsbygoogleScript.async = true;
+	document.body.appendChild(adsbygoogleScript);
+});
+</script>
+		<div id="fb-root"></div>
+		<div id="tcc-panel">
+	<div class="left">
+		<div>
+			<span class="tcc-border">Menu</span>
+			<a href="https://www.tuttomercatoweb.com/serie-a/">Serie A</a><a href="https://www.tuttomercatoweb.com/serie-b/">Serie B</a><a href="https://www.tuttomercatoweb.com/serie-c/">Serie C</a><a href="https://www.tuttomercatoweb.com/calciomercato/">Calciomercato</a><a href="https://www.tuttomercatoweb.com/calcio-estero/">Calcio Estero</a><a href="https://www.tuttomercatoweb.com/formazioni/">Formazioni</a><a href="https://www.tuttomercatoweb.com/calendario_classifica/serie_a/">Calendari</a><a href="https://www.tuttomercatoweb.com/scommesse/">Scommesse</a><a href="https://www.tuttomercatoweb.com/scommesse/pronostici/">Pronostici</a>			<br>
+			<a href="https://www.tuttomercatoweb.com/live-partite/">Eventi Live</a><a href="https://www.tuttomercatoweb.com/calciomercato-trasferimenti/">Calciomercato H24</a><a href="https://www.tuttomercatoweb.com/mobile/">Mobile</a><a href="https://www.tuttomercatoweb.com/network/">Network</a><a href="https://www.tuttomercatoweb.com/redazione/">Redazione</a><a href="https://www.tuttomercatoweb.com/contatti/">Contatti</a>		</div>
+		<div>
+			<span class="tcc-border">Canali Serie A</span>
+			<a href="https://www.tuttomercatoweb.com/atalanta/" class="capitalize">atalanta</a><a href="https://www.tuttomercatoweb.com/bologna/" class="capitalize">bologna</a><a href="https://www.tuttomercatoweb.com/cagliari/" class="capitalize">cagliari</a><a href="https://www.tuttomercatoweb.com/como/" class="capitalize">como</a><a href="https://www.tuttomercatoweb.com/fiorentina/" class="capitalize">fiorentina</a><a href="https://www.tuttomercatoweb.com/frosinone/" class="capitalize">frosinone</a><a href="https://www.tuttomercatoweb.com/genoa/" class="capitalize">genoa</a><a href="https://www.tuttomercatoweb.com/inter/" class="capitalize">inter</a><a href="https://www.tuttomercatoweb.com/juventus/" class="capitalize">juventus</a><a href="https://www.tuttomercatoweb.com/lazio/" class="capitalize">lazio</a><a href="https://www.tuttomercatoweb.com/lecce/" class="capitalize">lecce</a><a href="https://www.tuttomercatoweb.com/milan/" class="capitalize">milan</a><a href="https://www.tuttomercatoweb.com/monza/" class="capitalize">monza</a><a href="https://www.tuttomercatoweb.com/napoli/" class="capitalize">napoli</a><a href="https://www.tuttomercatoweb.com/parma/" class="capitalize">parma</a><a href="https://www.tuttomercatoweb.com/roma/" class="capitalize">roma</a><a href="https://www.tuttomercatoweb.com/sassuolo/" class="capitalize">sassuolo</a><a href="https://www.tuttomercatoweb.com/torino/" class="capitalize">torino</a><a href="https://www.tuttomercatoweb.com/udinese/" class="capitalize">udinese</a><a href="https://www.tuttomercatoweb.com/venezia/" class="capitalize">venezia</a>		</div>
+		<div>
+			<span class="tcc-border">Canali altre squadre</span>
+			<a href="https://www.tuttomercatoweb.com/ascoli/" class="capitalize">ascoli</a><a href="https://www.tuttomercatoweb.com/avellino/" class="capitalize">avellino</a><a href="https://www.tuttomercatoweb.com/bari/" class="capitalize">bari</a><a href="https://www.tuttomercatoweb.com/benevento/" class="capitalize">benevento</a><a href="https://www.tuttomercatoweb.com/casertana/" class="capitalize">casertana</a><a href="https://www.tuttomercatoweb.com/cesena/" class="capitalize">cesena</a><a href="https://www.tuttomercatoweb.com/hellasverona/" class="capitalize">hellas verona</a><a href="https://www.tuttomercatoweb.com/latina/" class="capitalize">latina</a><a href="https://www.tuttomercatoweb.com/livorno/" class="capitalize">livorno</a><a href="https://www.tuttomercatoweb.com/monza/" class="capitalize">monza</a><a href="https://www.tuttomercatoweb.com/palermo/" class="capitalize">palermo</a><a href="https://www.tuttomercatoweb.com/perugia/" class="capitalize">perugia</a><a href="https://www.tuttomercatoweb.com/pescara/" class="capitalize">pescara</a><a href="https://www.tuttomercatoweb.com/pordenone/" class="capitalize">pordenone</a><a href="https://www.tuttomercatoweb.com/potenza/" class="capitalize">potenza</a><a href="https://www.tuttomercatoweb.com/reggina/" class="capitalize">reggina</a><a href="https://www.tuttomercatoweb.com/sampdoria/" class="capitalize">sampdoria</a><a href="https://www.tuttomercatoweb.com/sassuolo/" class="capitalize">sassuolo</a>		</div>
+		<div>
+			<span class="tcc-border">Altri canali</span>
+			<a href="https://www.tuttomercatoweb.com/calciomercato/" class="capitalize">calciomercato</a><a href="https://www.tuttomercatoweb.com/serie-b/" class="capitalize">serie b</a><a href="https://www.tuttomercatoweb.com/serie-c/" class="capitalize">serie c</a><a href="https://www.tuttomercatoweb.com/championsleague/" class="capitalize">champions league</a><a href="https://www.tuttomercatoweb.com/fantacalcio/" class="capitalize">fantacalcio</a><a href="https://www.tuttomercatoweb.com/podcast/" class="capitalize">podcast</a><a href="https://www.tuttomercatoweb.com/statistiche/" class="capitalize">statistiche</a><a href="https://www.tuttomercatoweb.com/mondiali/" class="capitalize">mondiali</a><a href="https://www.tuttomercatoweb.com/mondiale-per-club/" class="capitalize">mondiale per club</a>		</div>
+	</div>
+</div>
+		<div id="content" class="inner centra">
+			<div id="tcc-head" class=" large text-center">
+	<div class="bar">
+		<div class="left text-uppercase"
+			><a href="https://www.tuttomercatoweb.com/network/">Network</a
+			><a href="https://www.tuttomercatoweb.com/live-partite/" class="tcc-border-radius tag live">Eventi live</a
+			><a href="https://www.tmwradio.com/" target="_blank" rel="nofollow" class="tmwradio">TMW Radio</a
+			><a href="https://www.sportissimomagazine.it/" target="_blank" rel="nofollow" class="sportissimo">Sportissimo</a
+			><a href="https://www.tmwnews.it/" target="_blank" rel="nofollow" class="tmwnews">TMW News</a
+			><a href="https://www.tuttomercatoweb.com/calciomercato-trasferimenti/" class="calciomercato">Calciomercato h24</a
+		></div
+		><div class="right text-uppercase"
+			><a href="https://www.facebook.com/168271766534476" target="_blank" rel="nofollow" title="Facebook"><span class="tmw-font-icon facebook"></span></a><a href="https://www.x.com/TuttoMercatoWeb" target="_blank" rel="nofollow" title="X"><span class="tmw-font-icon x"></span></a><a href="https://www.threads.net/@tuttomercatoweb_com" target="_blank" rel="nofollow" title="Threads"><span class="tmw-font-icon threads"></span></a><a href="https://www.instagram.com/tuttomercatoweb_com" target="_blank" rel="nofollow" title="Instagram"><span class="tmw-font-icon instagram" title="Instagram"></span></a><a href="https://www.youtube.com/VideoTMW" target="_blank" rel="nofollow" title="Youtube"><span class="tmw-font-icon youtube"></span></a><a href="/mobile/#telegram" target="_blank" rel="nofollow" title="Telegram"><span class="tmw-font-icon telegram"></span></a><a href="/media/" title="Media"><span class="tmw-font-icon photo"></span></a><a href="https://www.todomercadoweb.es/" target="_blank" rel="nofollow" title="Todo mercado web"><span class="tcc-icon flag es"></span></a
+			><a href="https://www.transfermarketweb.com/" target="_blank" rel="nofollow" title="Transfer market web"><span class="tcc-icon flag en"></span></a
+		></div>
+	</div>
+</div>
+<div id="tcc-menu" class="large center">
+	<div class="logo">
+		<div class="manchette left"><div><a href="https://www.google.com/preferences/source?q=tuttomercatoweb.com" target="_blank" rel="nofollow"><img fetchpriority="low" decoding="async" src="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img/banner/bnr-googlesource.gif" alt="Google Source"></a></div>
+</div
+		><a href="https://www.tuttomercatoweb.com" id="border" class="center tmw" title="TUTTOmercatoWEB">
+			<div id="tcc-logo"><img src="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img/head-logo.png" alt="TUTTOmercatoWEB"></div>
+			<div id="tcc-date"></div></a
+		><div class="manchette right"><div><a href="https://www.google.com/preferences/source?q=tuttomercatoweb.com" target="_blank" rel="nofollow"><img fetchpriority="low" decoding="async" src="https://tmw-static-auto.tcccdn.com/template/tuttomercatoweb.com/default/img/banner/bnr-googlesource.gif" alt="Google Source"></a></div>
+</div>
+	</div>
+		<div id="bar-menu" class="bar-menu"
+		><div class="left" aria-label="Menù" role="menu"
+			><span id="panelMenu" class="tmw-font-icon menu tcc-link" role="menuitem" title="Menù" accesskey="m" tabindex="0"></span>
+			<a href="/" class="mv_hp" role="menuitem">Home</a><a href="https://www.tuttomercatoweb.com/serie-a/" class="mv_serie-a mv_hp" role="menuitem">Serie A</a><a href="https://www.tuttomercatoweb.com/serie-b/" class="mv_serie-b mv_hp" role="menuitem">Serie B</a><a href="https://www.tuttomercatoweb.com/serie-c/" class="mv_serie-c mv_hp" role="menuitem">Serie C</a><a href="https://www.tuttomercatoweb.com/calciomercato/" class="mv_calciomercato mv_hp" role="menuitem">Calciomercato</a><a href="https://www.tuttomercatoweb.com/calcio-estero/" class="mv_calcio-estero mv_hp" role="menuitem">Calcio Estero</a><a href="https://www.tuttomercatoweb.com/formazioni/" class="mv_formazioni mv_hp" role="menuitem">Formazioni</a><a href="https://www.tuttomercatoweb.com/calendario_classifica/serie_a/" class="mv_calendario_classifica/serie_a mv_hp" role="menuitem">Calendari</a><a href="https://www.tuttomercatoweb.com/scommesse/" class="mv_scommesse mv_hp" role="menuitem">Scommesse</a><a href="https://www.tuttomercatoweb.com/scommesse/pronostici/" class="mv_scommesse/pronostici mv_hp" role="menuitem">Pronostici</a>			</div
+		><div class="right search"><span id="search-icon" class="tmw-font-icon search tcc-link" title="Cerca" accesskey="s" tabindex="0"></span></div
+	></div>
+	<div id="bar-search">
+				<select name="w" id="form-search-domain" aria-label="Seleziona il dominio o l'archivio di ricerca">
+			<option value="www.tuttomercatoweb.com" selected >tuttomercatoweb.com</option>
+			<option value="archivio.tuttomercatoweb.com"  >archivio.tuttomercatoweb.com</option>
+		</select>
+				<form action="https://www.tuttomercatoweb.com/" method="get" name="searchform" id="form-search" role="search" aria-label="Cerca">
+			<input type="hidden" name="action" value="searchform">
+			<input name="word" placeholder="Cerca" id="wordsearchform" autocomplete="off" title="Cerca">
+			<input type="submit" name="send" value="Cerca" title="Invia">
+		</form>
+	</div>
+	</div>
+<script>
+var mv = document.getElementsByClassName('mv_'+menunav);
+if (mv[0]!==undefined && mv[0]!==null) mv[0].className += " selected";
+
+var panel  = document.getElementById('tcc-panel');
+var menu   = document.getElementById('panelMenu');
+var search = document.getElementById('search-icon');
+var barsearch = document.getElementById('bar-search');
+var formsearch = document.getElementById('form-search');
+var domainsearch = document.getElementById('form-search-domain');
+
+var changedomain = function() {
+	let action = new URL(formsearch.getAttribute('action'));
+	    action.host = domainsearch.value;
+	let target = (action.host!=window.location.host) ? '_blank' : '_self';
+	formsearch.setAttribute('action', action)
+	formsearch.setAttribute('target', target)
+};
+
+var openPanel = function() {
+	// chiudo la ricerca (prima posizione)
+	if (barsearch.style.display=='block')
+	{
+		var evObj = document.createEvent('MouseEvents');
+	    evObj.initMouseEvent('click', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null );
+	    search.dispatchEvent(evObj);
+	}
+	
+	this.parentNode.insertBefore(panel, this.nextSibling);
+	var bar = document.getElementById('bar-menu');
+	panel.style.left = Math.round(bar.offsetLeft)+'px';
+	panel.style.display = (panel.style.display=='none' || panel.style.display=='') ? 'block' : 'none'; 
+	menu.classList.toggle('menu');
+	menu.classList.toggle('close');
+
+	bar.classList.toggle('no-radius-bottom');
+};
+menu.addEventListener('click', openPanel, false);
+if (domainsearch!==undefined && domainsearch!==null) domainsearch.addEventListener('change', changedomain, false);
+
+var openBarsearch = function(){
+	// chiudo il menu (prima posizione)
+	if (panel.style.display=='block')
+	{
+		var evObj = document.createEvent('MouseEvents');
+	    evObj.initMouseEvent('click', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null );
+	    menu.dispatchEvent(evObj);
+	}
+	barsearch.style.display = (barsearch.style.display=='' || barsearch.style.display=='none') ? 'block' : 'none';
+	document.getElementById('wordsearchform').focus();
+	search.classList.toggle('search');
+	search.classList.toggle('close');
+};
+search.addEventListener('click', openBarsearch, false);
+
+document.getElementById("wordsearchform").value = word;
+if (azione=='searchform' && barsearch.style.display!='block')
+{
+	var evObj = document.createEvent('MouseEvents');
+    evObj.initMouseEvent('click', true, true, window, 1, 12, 345, 7, 220, false, false, true, false, 0, null );
+    search.dispatchEvent(evObj);
+}
+
+var date = document.getElementById('tcc-date');
+if (date!==undefined && date!==null) date.innerHTML = now;
+
+// CANALE o ARCHIVIO
+var border = document.getElementById("border");
+if (squadra!='' || archivio)
+{
+	var txt = (archivio) ? 'archivio' : 'Canale TMW';
+	    txt = (squadra=='media') ? 'Media' : txt;
+	var span = document.createElement("span");
+	    span.className = "canale upper tcc-label tcc-border-radius "+squadra;
+	    span.innerHTML = txt;
+	if (date!==undefined && date!==null) date.insertBefore(span, null);
+	if (border!==undefined && border!==null) border.classList.add(squadra);
+	var logo = document.getElementById('tcc-logo');
+	if (logo!==undefined && logo!==null && squadra!='media') logo.innerHTML = squadra.replace(/-/gi, ' ').replace(/_/gi, ' ');
+}
+else border.classList.add("none");
+</script>
+<div class="teams center" 

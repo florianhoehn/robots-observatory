@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spinner App</title>
+<style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        height: 98vh;
+        overflow-y: hidden;
+        text-align: center;
+        color: rgb(46, 46, 46);
+      }
+ 
+      .spin {
+        border: 7px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 7px solid rgb(255, 51, 51);
+        border-bottom: 7px solid rgb(255, 51, 51);
+        width: 60px;
+        height: 60px;
+        animation: spinner 2s linear infinite;
+      }
+ 
+      @keyframes spinner {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+</style>
+<script>
+	const pathSegments = window.location.pathname.split('/').filter(segment => segment.length > 0);                                                                 
+const folderName = pathSegments[0];
+	if (folderName === 'global-wealth' || folderName === 'internationalbanking') {
+      if (window.location.pathname !== '/global-wealth/index.html') {
+        window.location.href = '/global-wealth/index.html';
+       }
+    } else {
+    if (window.location.pathname !== '/default.page') {                                                                                                                   
+      window.location.href = '/default.page';                                                                                                                     }
+}
+</script>
+</head>
+<body>
+<div>
+<h2>Loading</h2>
+<div class="spin"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# robots.txt for unglobalcompact.org
+#
+# Scope: steer crawlers around the PUBLIC site only — block crawl traps
+# (search/filter endpoints) and public auth pages that shouldn't appear in
+# search results. Internal/admin tooling is intentionally NOT listed here:
+# this file is world-readable, so listing those paths only advertises them.
+# They are protected by authentication instead.
+
+User-Agent: *
+
+# Public auth pages — keep out of search results, and stop crawler hits on the
+# password-reset URLs that were returning 500s
+Disallow: /password
+Disallow: /login
+Disallow: /logout
+Disallow: /confirmation
+Disallow: /general-check-email
+
+# Search & filter endpoints (crawl traps)
+Disallow: /search
+Disallow: /library/search
+Disallow: /what-is-gc/participants/search
+
+# Legacy public paths kept from the previous robots.txt
+Disallow: /COP/analyzing_progress/
+Disallow: /Cops/
+Disallow: /docs/
+Disallow: /news/
+Disallow: /participant/
+Disallow: /participants/
+
+Crawl-delay: 3
+
+# Known unwanted bots: block entirely
+User-Agent: SEOkicks-Robot
+Disallow: /
+
+User-Agent: CFNetwork
+Disallow: /

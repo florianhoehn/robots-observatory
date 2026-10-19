@@ -1,0 +1,192 @@
+#
+#                ..;coxkOOOOOOkxoc;'.
+#             .:d0NWMMMMMMMMMMMMMMWN0xc'
+#          .:kXMMMMMMMMMMMMMMMMMMMMMMMXl.
+#        .c0WMMMMMMMMMMMMMMMMMMMMMMMXd'
+#       ,OWMMMMMMMMMMMMMMMMMMMMMMMXo'       ..
+#      cXMMMMMMXo::::::::::::::col.       .lKXl.
+#     lNMMMMMMM0'                       .lKWMMNo
+#    :XMMMMMMMM0'                     .l0WMMMMMNc
+#   .OMMMMMMMMM0'     .ccccccc;.      ,KMMMMMMMMO.
+#   :NMMMMMMMMM0'     oWMMMMMMWKc.     oWMMMMMMMN:
+#   lWMMMMMMMMM0'     oWMMMMMMMMX:     ,KMMMMMMMMo
+#   oMMMMMMMMMM0'     oWMMMMMMMMNc     ,KMMMMMMMMd
+#   cNMMMMMMMMM0'     oWMMMMMMMNd.     lWMMMMMMMWl
+#   '0MMMMMMMMWk.     ,oooooooc'      ,0MMMMMMMMK,
+#    oWMMMMMMXo.                     ,0MMMMMMMMWo
+#    .xWMMMXd'                     ,dXMMMMMMMMWk.
+#     .xWNx'       .',''''''',,;coONMMMMMMMMMWk.
+#      .:,       .l0WWWWWWWWWWWMMMMMMMMMMMMMNd.
+#              .lKWMMMMMMMMMMMMMMMMMMMMMMMWk;
+#            .lKWMMMMMMMMMMMMMMMMMMMMMMMNk;.
+#            .ckXWMMMMMMMMMMMMMMMMMMWXkl'
+#               .;ldO0XNWWWWWWNXKOxl;.
+#                    ..'',,,,''..
+#
+#
+
+# NOTE: Allow is a non-standard directive for robots.txt. It is allowed by Google bots. See https://developers.google.com/search/reference/robots_txt#allow
+
+User-agent: *
+# Crawl delay asks bots to wait this many seconds between requests. Ignored by google.
+Crawl-delay: 5
+Disallow: /admin/
+Disallow: /newsletter/
+Disallow: /healthcheck/
+Disallow: /subpage/
+Disallow: /ckeditor/
+Disallow: /api/
+Disallow: /static/images/
+Disallow: /subscriber/
+Disallow: /selfservice/
+Disallow: /press-release/preview/
+Disallow: /press-release/editor/
+
+# no deep queries to search
+Disallow: /search/*
+Allow: /search/$
+
+# don't index our dynamic images
+Disallow: /user_media/
+Disallow: /imgproxy/
+
+# don't deep index topic pages
+Disallow: /topic/?page=*
+
+Allow: /sitemap.xml
+
+#
+# Rules for specific crawlers below. Note that these don't stack. If you create a specific user-agent rule
+# you should copy the rules over from '*' above by hand.
+#
+
+# Allow Twitter to see all links
+User-agent: Twitterbot
+Crawl-delay: 5
+Disallow:
+
+# Allow Googlebot-News to see header images and favicons, BUT make it follow all the directives from our * group
+# See below link for why we have to repeat these directives
+# https://developers.google.com/search/reference/robots_txt#order-of-precedence-for-user-agents
+User-agent: Googlebot-News
+Disallow: /admin/
+Disallow: /newsletter/
+Disallow: /healthcheck/
+Disallow: /subpage/
+Disallow: /ckeditor/
+Disallow: /api/
+Disallow: /static/images/
+Disallow: /subscriber/
+Disallow: /selfservice/
+Disallow: /press-release/preview/
+Disallow: /press-release/editor/
+
+# no deep queries to search
+Disallow: /search/*
+Allow: /search/$
+
+Allow: /google_news_sitemap.xml
+# Allow Google News to see header images and favicons
+Allow: /user_media/
+Allow: /imgproxy/
+Allow: /static/images/favicons
+
+
+# Googlebot-Image is now used for favicons. Allow it to see favicon-related files but nothing else
+User-agent: Googlebot-Image
+Disallow: /
+Allow: /imgproxy/
+Allow: /static/images/favicons
+Allow: /favicon.ico
+Allow: /white-favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /favicon-32x32.png
+Allow: /white-favicon-32x32.png
+Allow: /favicon-16x16.png
+Allow: /white-favicon-16x16.png
+Allow: /site.webmanifest
+Allow: /safari-pinned-tab.svg
+Allow: /browserconfig.xml
+Allow: /android-chrome-144x144.png
+Allow: /mstile-150x150.png
+
+# Don't let PetalBot crawl at all
+User-agent: PetalBot
+Disallow: /
+
+# Block sentione.com
+User-agent: sentibot
+Disallow: /
+
+# block seoclarity.net/bot.html
+User-agent: claritybot
+Disallow: /
+
+# block omgili.com/crawler.html
+User-Agent: omgilibot
+Disallow: /
+User-Agent: omgili
+Disallow: /
+
+# All Facebook crawler user-agent to see all
+User-agent: facebookexternalhit/1.1
+Disallow:
+
+User-agent: AhrefsBot
+# We want this bot to crawl way slower https://ahrefs.com/robot/
+Crawl-Delay: 30
+
+Disallow: /admin/
+Disallow: /newsletter/
+Disallow: /healthcheck/
+Disallow: /subpage/
+Disallow: /ckeditor/
+Disallow: /api/
+Disallow: /static/images/
+Disallow: /subscriber/
+Disallow: /selfservice/
+Disallow: /press-release/preview/
+Disallow: /press-release/editor/
+
+# no deep queries to search
+Disallow: /search/*
+Allow: /search/$
+
+# don't index our dynamic images
+Disallow: /user_media/
+Disallow: /imgproxy/
+
+Disallow: /topic/
+Disallow: /editors/
+
+User-agent: Amazonbot
+# Restrict what Amazonbot (Alexa) can see, and a
+Crawl-Delay: 10
+
+Disallow: /admin/
+Disallow: /newsletter/
+Disallow: /healthcheck/
+Disallow: /subpage/
+Disallow: /ckeditor/
+Disallow: /api/
+Disallow: /static/images/
+Disallow: /subscriber/
+Disallow: /selfservice/
+Disallow: /press-release/preview/
+Disallow: /press-release/editor/
+
+# no deep queries to search
+Disallow: /search/*
+Allow: /search/$
+
+# don't index our dynamic images
+Disallow: /user_media/
+Disallow: /imgproxy/
+
+Disallow: /topic/
+Disallow: /editors/
+Disallow: /signup/*
+Allow: /signup/$
+
+User-agent: amazon-kendra # Amazon Kendra Web Crawler
+Disallow: /

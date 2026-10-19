@@ -1,0 +1,431 @@
+Sitemap: https://www.rituals.com/sitemap.xml
+
+User-agent: *
+
+# Block duplicate-language headless locales
+# These .html pages are re-allowed below for Shopping/feed purposes.
+Disallow: /en-at/
+Disallow: /en-be/
+Disallow: /en-bg/
+Disallow: /en-ch/
+Disallow: /en-cy/
+Disallow: /en-de/
+Disallow: /en-dk/
+Disallow: /en-ee/
+Disallow: /en-es/
+Disallow: /en-fi/
+Disallow: /en-fr/
+Disallow: /en-gr/
+Disallow: /en-hk/
+Disallow: /en-hr/
+Disallow: /en-hu/
+Disallow: /en-ie/
+Disallow: /en-it/
+Disallow: /en-lt/
+Disallow: /en-lu/
+Disallow: /en-lv/
+Disallow: /en-no/
+Disallow: /en-pl/
+Disallow: /en-pt/
+Disallow: /en-ro/
+Disallow: /en-se/
+Disallow: /en-si/
+Disallow: /fr-be/
+Disallow: /fr-lu/
+Disallow: /de-at/
+
+#Exclusion of internal shops/ duplicate locales
+Disallow: */fra-                           
+Disallow: */eng-                             
+Disallow: */deu-                            
+#END locale exclusion
+
+#Legacy disallows
+Disallow: */account
+Disallow: */account/*
+Disallow: *rituals-account
+Disallow: /account-edit-profile
+Disallow: /address-list
+Disallow: /order-*
+Disallow: /cart
+#END legacy Disallows
+
+#201708 - Expand Online KV - Catchall allow rule for resources
+Allow: *css                                         
+Allow: *js                                   
+Allow: *jpg                                    
+Allow: *svg                                     
+Allow: *png                                      
+Allow: *gif                                       
+Allow: *woff                                       #NB this filetype is not currently in use, added for forward compatibility.
+Allow: *ttf                                   
+#END catchall allow rule for resources
+
+Disallow: /corporate-gifting*
+Allow: /corporate-gifting*/home
+
+Disallow: /hospitality-leisure*
+Allow: /hospitality-leisure*/home
+
+Disallow: /corporategifting*
+Disallow: /corporategifting/eng-at/home
+Disallow: /corporategifting/deu-at/home
+Disallow: /corporategifting/eng-be/home
+Disallow: /corporategifting/fra-be/home
+Disallow: /corporategifting/eng-bg/home
+Disallow: /corporategifting/eng-cy/home
+Disallow: /corporategifting/eng-de/home
+Disallow: /corporategifting/eng-dk/home
+Disallow: /corporategifting/eng-ee/home
+Disallow: /corporategifting/eng-es/home
+Disallow: /corporategifting/eng-fi/home
+Disallow: /corporategifting/eng-fr/home
+Disallow: /corporategifting/eng-gr/home
+Disallow: /corporategifting/eng-hk/home
+Disallow: /corporategifting/eng-hr/home
+Disallow: /corporategifting/eng-hu/home
+Disallow: /corporategifting/eng-ie/home
+Disallow: /corporategifting/eng-it/home
+Disallow: /corporategifting/eng-lt/home
+Disallow: /corporategifting/fra-lu/home
+Disallow: /corporategifting/eng-lv/home
+Disallow: /corporategifting/eng-no/home
+Disallow: /corporategifting/eng-pl/home
+Disallow: /corporategifting/eng-pt/home
+Disallow: /corporategifting/eng-ro/home
+Disallow: /corporategifting/eng-se/home
+Disallow: /corporategifting/eng-si/home
+Allow: /corporategifting*/home
+
+Disallow: /personalised-gifts*
+Allow: /personalised-gifts*/home
+
+#201708 - Expand Online KV - Disallow robots from wasting crawl budget. 
+Disallow: */demandware.static/                   #Irrelevant urls that are either 410 or 500s. NB the resources are locale folder specific, therefore the non-specific paths. 
+Disallow: */demandware.store/                   #Internal API urls that are either 410 or 500s or empty pages. NB the resources are locale folder specific, therefore the non-specific paths. 
+#END Disallow robots from wasting crawl budget
+
+#201708 - Expand Online KV - Specific allow for resources in the static folder which are used throughout the website for images and resources.
+Allow: */demandware.static/*jpg                
+Allow: */demandware.static/*svg                  
+Allow: */demandware.static/*png                      
+Allow: */demandware.static/*css                  
+Allow: */demandware.static/*js                       
+Allow: */demandware.static/*gif                   
+Allow: */demandware.static/*woff              #NB this filetype is not currently in use, added for forward compatibility.
+Allow: */demandware.static/*ttf                     
+#END specific allow for resources in static demandware folder 
+
+
+#201708 - Expand Online KV - Allow product pages for Google shopping feed;  
+#Note some other pages are also included but this is the best we can do. 
+
+# FRA locales
+Allow: /fra-*/*.html                             #Allow all pages ending in .html for FRA urls, this will allow products, collection, magazine and some other content pages to be crawled. 
+Disallow: /fra-*/collection*.html                #Exclude the collection pages
+Disallow: /fra-*/mag-*                           #Exclude the magazine pages
+Disallow: /fra-*/faq*                            #Exclude the faq pages. 
+
+# ENG locales
+Allow: /eng-*/*.html                             #Allow all pages ending in .html for ENG urls, this will allow products, collection, magazine and some other content pages to be crawled. 
+Disallow: /eng-*/collection*.html                #Exclude the collection pages
+Disallow: /eng-*/mag-*                           #Exclude the magazine pages
+Disallow: /eng-*/faq*                            #Exclude the faq pages. 
+
+# DEU locales
+Allow: /deu-*/*.html                             #Allow all pages ending in .html for DEU urls, this will allow products, collection, magazine and some other content pages to be crawled. 
+Disallow: /deu-*/collection*.html                #Exclude the collection pages
+Disallow: /deu-*/mag-*                           #Exclude the magazine pages
+Disallow: /deu-*/faq*                            #Exclude the faq pages. 
+
+# Headless duplicate-language locales
+# Allow PDP-like .html pages for Shopping/feed purposes.
+# Collections, magazine and FAQ pages remain excluded.
+
+Allow: /en-at/*.html
+Disallow: /en-at/collection*.html
+Disallow: /en-at/mag-*
+Disallow: /en-at/faq*
+
+Allow: /en-be/*.html
+Disallow: /en-be/collection*.html
+Disallow: /en-be/mag-*
+Disallow: /en-be/faq*
+
+Allow: /en-bg/*.html
+Disallow: /en-bg/collection*.html
+Disallow: /en-bg/mag-*
+Disallow: /en-bg/faq*
+
+Allow: /en-ch/*.html
+Disallow: /en-ch/collection*.html
+Disallow: /en-ch/mag-*
+Disallow: /en-ch/faq*
+
+Allow: /en-cy/*.html
+Disallow: /en-cy/collection*.html
+Disallow: /en-cy/mag-*
+Disallow: /en-cy/faq*
+
+Allow: /en-de/*.html
+Disallow: /en-de/collection*.html
+Disallow: /en-de/mag-*
+Disallow: /en-de/faq*
+
+Allow: /en-dk/*.html
+Disallow: /en-dk/collection*.html
+Disallow: /en-dk/mag-*
+Disallow: /en-dk/faq*
+
+Allow: /en-ee/*.html
+Disallow: /en-ee/collection*.html
+Disallow: /en-ee/mag-*
+Disallow: /en-ee/faq*
+
+Allow: /en-es/*.html
+Disallow: /en-es/collection*.html
+Disallow: /en-es/mag-*
+Disallow: /en-es/faq*
+
+Allow: /en-fi/*.html
+Disallow: /en-fi/collection*.html
+Disallow: /en-fi/mag-*
+Disallow: /en-fi/faq*
+
+Allow: /en-fr/*.html
+Disallow: /en-fr/collection*.html
+Disallow: /en-fr/mag-*
+Disallow: /en-fr/faq*
+
+Allow: /en-gr/*.html
+Disallow: /en-gr/collection*.html
+Disallow: /en-gr/mag-*
+Disallow: /en-gr/faq*
+
+Allow: /en-hk/*.html
+Disallow: /en-hk/collection*.html
+Disallow: /en-hk/mag-*
+Disallow: /en-hk/faq*
+
+Allow: /en-hr/*.html
+Disallow: /en-hr/collection*.html
+Disallow: /en-hr/mag-*
+Disallow: /en-hr/faq*
+
+Allow: /en-hu/*.html
+Disallow: /en-hu/collection*.html
+Disallow: /en-hu/mag-*
+Disallow: /en-hu/faq*
+
+Allow: /en-ie/*.html
+Disallow: /en-ie/collection*.html
+Disallow: /en-ie/mag-*
+Disallow: /en-ie/faq*
+
+Allow: /en-it/*.html
+Disallow: /en-it/collection*.html
+Disallow: /en-it/mag-*
+Disallow: /en-it/faq*
+
+Allow: /en-lt/*.html
+Disallow: /en-lt/collection*.html
+Disallow: /en-lt/mag-*
+Disallow: /en-lt/faq*
+
+Allow: /en-lu/*.html
+Disallow: /en-lu/collection*.html
+Disallow: /en-lu/mag-*
+Disallow: /en-lu/faq*
+
+Allow: /en-lv/*.html
+Disallow: /en-lv/collection*.html
+Disallow: /en-lv/mag-*
+Disallow: /en-lv/faq*
+
+Allow: /en-no/*.html
+Disallow: /en-no/collection*.html
+Disallow: /en-no/mag-*
+Disallow: /en-no/faq*
+
+Allow: /en-pl/*.html
+Disallow: /en-pl/collection*.html
+Disallow: /en-pl/mag-*
+Disallow: /en-pl/faq*
+
+Allow: /en-pt/*.html
+Disallow: /en-pt/collection*.html
+Disallow: /en-pt/mag-*
+Disallow: /en-pt/faq*
+
+Allow: /en-ro/*.html
+Disallow: /en-ro/collection*.html
+Disallow: /en-ro/mag-*
+Disallow: /en-ro/faq*
+
+Allow: /en-se/*.html
+Disallow: /en-se/collection*.html
+Disallow: /en-se/mag-*
+Disallow: /en-se/faq*
+
+Allow: /en-si/*.html
+Disallow: /en-si/collection*.html
+Disallow: /en-si/mag-*
+Disallow: /en-si/faq*
+
+Allow: /fr-be/*.html
+Disallow: /fr-be/collection*.html
+Disallow: /fr-be/mag-*
+Disallow: /fr-be/faq*
+
+Allow: /fr-lu/*.html
+Disallow: /fr-lu/collection*.html
+Disallow: /fr-lu/mag-*
+Disallow: /fr-lu/faq*
+
+Allow: /de-at/*.html
+Disallow: /de-at/collection*.html
+Disallow: /de-at/mag-*
+Disallow: /de-at/faq*
+
+#END allow for Google shopping
+
+#201708 - Expand Online KV - Allow urls to be de-indexed when products or pages are not present anymore because of demandware catchall intercept.
+Allow: /fra-*/notfound      
+Allow: /eng-*/notfound
+Allow: /deu-*/notfound
+#END de-indexed pages
+
+#201710 - Expand Online KV - Exclude parameters from being crawled
+Disallow: /*?sz=*
+Disallow: /*&sz=*
+Disallow: /*?switchpipeline=*
+Disallow: /*&switchpipeline=*
+Disallow: /*?StoreID=*
+Disallow: /*&StoreID=*
+Disallow: /*?original=*
+Disallow: /*&original=*
+Disallow: /*?locale=*
+Disallow: /*&locale=*
+Disallow: /*?lang=*
+Disallow: /*&lang=*
+Disallow: /*?id=*
+Disallow: /*&id=*
+Disallow: /*?format=*
+Disallow: /*&format=*
+Disallow: /*?fdid=*
+Disallow: /*&fdid=*
+Disallow: /*?dwcont=*
+Disallow: /*&dwcont=*
+Disallow: /*?country=*
+Disallow: /*&country=*
+Disallow: /*?category=*
+Disallow: /*&category=*
+Disallow: /*?cgid=*
+Disallow: /*&cgid=*
+Disallow: /*?self=*
+Disallow: /*&self=*
+Disallow: /*?cid=*
+Disallow: /*&cid=*
+Disallow: /*?pid=*
+Disallow: /*&pid=*
+Disallow: /*?dwvar_*m_size=*
+Disallow: /*&dwvar_*m_size=*
+Disallow: /*?q=*
+Disallow: /*&q=*
+Disallow: /*?searchTerm=*
+Disallow: /*&searchTerm=*
+#END Exclude parameters
+
+#Search disallows
+Disallow: */search
+Disallow: */search/*
+#END Search disallows
+
+#Disallow Checkout
+Disallow: */checkout*
+#END Disallow Checkout
+
+Allow: */jobs
+
+
+
+#201910 Prevent website from being crawled by InternetArchive Crawler
+User-agent: ia_archiver
+Disallow: /
+
+#Advent 2022
+User-agent: *
+Disallow: */advent*/home
+Disallow: /advent/*
+Allow: */advent*/the-rituals-of-advent*
+Allow: /advent/*/home
+Allow: /advent/*/the-ritual-of-advent-2d-ecom-2022-1114275.html
+Allow: /advent/*/the-ritual-of-advent-3d-ecom-2022-1114272.html
+Allow: /advent/*/the-ritual-of-advent-premium-2022-1114276.html
+Allow: /advent/*/the-ritual-of-advent-3d-2022-usa-1114273.html
+Allow: /advent/*/the-ritual-of-advent-3d-2022-hk-1115230.html
+
+
+Disallow: /nl-nl/cadeaus/cadeaupakketten/adventskalender
+Disallow: /en-hk/gifts/gift-sets/advent-calendar
+Disallow: /zh-hk/Á¶ÆÂìÅ/Á¶ÆÂìÅÂ•óË£ù/advent-calendar-ËÅñË™ïÂÄíÊï∏ÊúàÊõÜ
+Disallow: /pt-pt/presentes/coffrets/calendario-do-advento
+Disallow: /es-es/regalos/cofres-de-regalo/calendario-de-adviento
+Disallow: /de-ch/geschenke/geschenksets/adventskalender
+Disallow: /de-de/geschenke/geschenksets/adventskalender
+Disallow: /fr-ch/cadeaux/coffrets-cadeaux/calendrier-de-l‚Äôavent
+Disallow: /no-no/gaver/gavesett/adventskalender
+Disallow: /da-dk/gaver/gaves√¶t/gavekalender
+Disallow: /fi-fi/lahjat/lahjapakkaukset/joulukalenteri
+Disallow: /sv-se/gavor/gavoset/adventskalender
+Disallow: /en-nl/gifts/gift-sets/advent-calendar
+Disallow: /fr-fr/cadeaux/coffrets-cadeaux/calendrier-de-lavent
+Disallow: /hu-hu/ajandek/ajandekszettek/adventi-naptar
+Disallow: /ro-ro/cadouri/seturi-cadou/calendar-de-advent
+Disallow: /it-it/regali/confezioni-regalo/calendario-dellavvento
+Disallow: /pl-pl/prezenty/zestawy-podarunkowe/kalendarz-adwentowy
+Disallow: /el-gr/Œ¥œéœÅŒ±/œÉŒµœÑ-Œ¥œéœÅŒøœÖ/Œ∑ŒºŒµœÅŒøŒªœåŒ≥ŒπŒø-Œ±ŒΩœÑŒØœÉœÑœÅŒøœÜŒ∑œÇ-ŒºŒ≠œÑœÅŒ∑œÉŒ∑œÇ-œáœÅŒπœÉœÑŒøœÖŒ≥Œ≠ŒΩŒΩœâŒΩ
+Disallow: /lt-lt/dovanos/dovan≈≥-rinkiniai/advento-kalendorius
+Disallow: /lv-lv/dƒÅvanas/dƒÅvanu-komplekti/adventes-kalendƒÅrs
+Disallow: /hr-hr/darivanje/poklon-kompleti/adventski-kalendar
+Disallow: /et-ee/kingitused/kinkekomplektid/advendikalender
+Disallow: /bg-bg/–ø–æ–¥–∞—Ä—ä—Ü–∏/–ø–æ–¥–∞—Ä—ä—á–Ω–∏-–∫–æ–º–ø–ª–µ–∫—Ç–∏/–∞–¥–≤–µ–Ω—Ç–µ–Ω-–∫–∞–ª–µ–Ω–¥–∞—Ä
+Disallow: /sl-si/darila/darilni-seti/adventni-koledar
+Disallow: /nl-be/cadeaus/cadeaupakketten/adventskalender
+Disallow: /en-us/gifts/gift-sets/advent-calendar
+Disallow: /en-gb/gifts/gift-sets/advent-calendar
+Disallow: /en-nl/gifts/gift-sets/advent-calendar
+Disallow: */advent-2022-fastlane-blocks.html
+
+#Disallow gifting Fastlane 2021
+Disallow: /gifting/*
+
+#Allow gifting Fastlane pages for ads purposes 2022
+Allow: /gifting/*/home
+Allow: /gifting/*/the-ritual-of*
+Allow: /gifting/*/amsterdam-collection*
+Allow: /gifting/*/private-collection-set*
+Allow: /gifting/*/edp-gift-set*
+Allow: /gifting/*/good-fortune*
+Allow: /gifting/*/love-gift*
+Allow: /gifting/*/happiness-gift*
+Allow: /gifting/*/homme*
+
+
+#2021 Disallow greenfriday site pages
+Disallow: /greenfriday/*
+Allow: /greenfriday/*/green-friday*
+Allow: /greenfriday/*/home
+
+#2022 Disallow easter site pages
+Disallow: /easter/*
+Allow: /easter/*/easter-eggs-2022-1113886m.html
+Allow: /easter/*/easter-giftset-2022---karma-1113887.html
+Allow: /easter/*/easter-giftset-2022--mehr-1113888.html
+Allow: /easter/*/easter-giftset-2022---sakura-1113886.html
+
+#2022 Disallow individual SEO content assets
+Disallow: *category-seo-text-*
+
+#2022 Disallow talisman quiz page
+Disallow: *talisman-quiz*

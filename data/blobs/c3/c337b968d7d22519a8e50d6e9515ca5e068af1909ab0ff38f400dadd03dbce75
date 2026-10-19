@@ -1,0 +1,493 @@
+<!doctype html> <!--[if IE]><html id="html" class="ie t-ie" lang="en"><![endif]--> <!--[if !IE]>-->
+<html id="html" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"
+        type="text/javascript"></script>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5ZR4RSF6');</script>
+    <!-- End Google Tag Manager -->
+
+    <script type="text/html" id="sf-tracking-consent-manager">
+	<div id="tracking-consent-dialog" style="display:none" />
+</script>
+
+    <script type="text/javascript">
+        TrackingConsentManager = (function () {
+            var consentCookieName = "sf-tracking-consent";
+            var consentDialogHtml = "";
+            var consentDialog = null;
+            var eventListeners = { AfterDialogDisplayed: [], BeforeDialogClosed: [], ConsentChanged: [], };
+            function closeConsentDialog() {
+                if (consentDialog == null) {
+                    return;
+                } invokeEventListeners("BeforeDialogClosed", [consentDialog]);
+                document.body.removeChild(consentDialog);
+                consentDialog = null;
+            } function openConsentDialog() {
+                if (!document.body) {
+                    return;
+                } closeConsentDialog();
+                consentDialog = document.createElement("div");
+                var dialogHtml = document.getElementById("sf-tracking-consent-manager");
+                if (dialogHtml) {
+                    consentDialogHtml = dialogHtml.textContent;
+                    consentDialog.innerHTML = consentDialogHtml;
+                    document.body.insertBefore(consentDialog, document.body.childNodes[0]);
+                } var scripts = consentDialog.getElementsByTagName("script");
+                for (var idx = 0;
+                    idx < scripts.length;
+                    idx++) {
+                    try {
+                        eval(scripts[idx].textContent);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                } invokeEventListeners("AfterDialogDisplayed", [consentDialog]);
+            } function openDialogIfConsentNotProvided() {
+                var userConsent = readCookie(consentCookieName);
+                if (userConsent != null) {
+                    return;
+                } openConsentDialog();
+            } function createCookie(name, value, days) {
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    var expires = "; expires=" + date.toGMTString();
+                } else {
+                    var expires = "";
+                } document.cookie = name + "=" + value + expires + "; path=/";
+            } function readCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(";");
+                for (var i = 0;
+                    i < ca.length;
+                    i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == " ") {
+                        c = c.substring(1, c.length);
+                    } if (c.indexOf(nameEQ) == 0) {
+                        return c.substring(nameEQ.length, c.length);
+                    }
+                } return null;
+            } function findChildById(root, id) {
+                if (!root) {
+                    return null;
+                } if (!root.childNodes) {
+                    return null;
+                } for (var index = 0;
+                    index < root.childNodes.length;
+                    index++) {
+                    var child = root.childNodes[index];
+                    if (child.id == id) {
+                        return child;
+                    } var subChild = findChildById(child, id);
+                    if (subChild != null) {
+                        return subChild;
+                    }
+                } return null;
+            } function invokeEventListeners(eventName, args) {
+                var collection = eventListeners[eventName];
+                if (!collection) {
+                    return;
+                } for (var index = 0;
+                    index < collection.length;
+                    index++) {
+                    try {
+                        collection[index].apply(this, args);
+                    } catch (err) {
+                        console.error("TrackingConsentManager: Event listener of " + eventName + " event thew error: " + err);
+                    }
+                }
+            } if (window.addEventListener) {
+                window.addEventListener("DOMContentLoaded", openDialogIfConsentNotProvided, false);
+            } else {
+                if (window.attachEvent) {
+                    window.attachEvent("onload", openDialogIfConsentNotProvided);
+                }
+            } return {
+                canTrackCurrentUser: function () {
+                    return readCookie(consentCookieName) == "true";
+                }, askForUserConsent: function () {
+                    openConsentDialog();
+                }, updateUserConsent: function (consent) {
+                    var accepted = Boolean(consent);
+                    var oldState = this.canTrackCurrentUser();
+                    createCookie(consentCookieName, accepted, 9999);
+                    if (accepted != oldState) {
+                        invokeEventListeners("ConsentChanged", [accepted]);
+                    } closeConsentDialog();
+                }, addEventListener: function (eventName, listener) {
+                    if (typeof listener != "function") {
+                        return;
+                    } var collection = eventListeners[eventName];
+                    if (!collection) {
+                        return;
+                    } collection.push(listener);
+                }, removeEventListener: function (eventName, listener) {
+                    if (typeof listener != "function") {
+                        return;
+                    } var collection = eventListeners[eventName];
+                    if (!collection) {
+                        return;
+                    } var index = collection.indexOf(listener);
+                    if (index < 0) {
+                        return;
+                    } collection.splice(index, 1);
+                }
+            };
+        })();
+    </script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="facebook-domain-verification" content="iped7xyuad4346d3xj3c714j9b0g2v" />
+    <link rel="shortcut icon" href="https://www.progress.com/favicon.ico?v=2" />
+    <title>Work Management Platform | Streamline Collaboration & Workflows | Podio</title>
+    <link rel="preconnect" href="https://cdn.telerik-web-assets.com" />
+    <link rel="preconnect" href="https://cdn.telerik-web-assets.com" crossorigin="anonymous"
+        media="only screen and (min-width: 591px)" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" media="only screen and (min-width: 591px)" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"
+        media="only screen and (min-width: 591px)" />
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+        media="only screen and (min-width: 591px)" />
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+        media="only screen and (min-width: 591px)" />
+    <link href="https://d3ba5g9yhie26y.cloudfront.net/cache/1000/css/style.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.telerik-web-assets.com/prgs-nav/stable/css/index.min.css">
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Work Management Platform | Streamline Collaboration & Workflows | Podio" />
+    <meta property="og:description"
+        content="Podio is the all-in-one work management software that helps teams collaborate, automate workflows, and manage projects with ease. Build custom solutions that drive productivity and efficiency." />
+    <meta property="og:url" content="https://www.progress.com/podio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Progress.com" />
+    <style type="text/css" media="all">
+        .-h--custom {
+            height: 230px;
+            overflow-y: hidden
+        }
+
+        .LogosSlider {
+            height: 104px;
+            overflow-y: hidden
+        }
+		@media (max-width: 1280px) {
+			.LogosSlider {
+				height: 146px;
+			}
+		}
+
+        .Slider-navigation--outside .Slider-next,
+        .Slider-navigation--outside .Slider-prev {
+            top: calc(50% - 15px)
+        }
+
+        .Slider-navigation--outside .Slider-next,
+        .Section--mid .Slider-navigation--outside .Slider-next {
+            margin-right: -1.5em !important
+        }
+
+        .Slider-navigation--outside .Slider-prev,
+        .Section--mid .Slider-navigation--outside .Slider-prev {
+            margin-left: -1.5em !important
+        }
+    </style>
+    <style type="text/css" media="all">
+        .Testimonials-slider .Quote-wrap {
+            border-bottom: 1px solid rgba(158, 174, 195, .4) !important
+        }
+
+        .Testimonials-slider .Quote-wrap:after,
+        .QuoteBox {
+            color: #311b97
+        }
+
+        .Testimonials-slider .Quote-wrap:after {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 19.1 11.8'%3E%3Cpath fill='none' stroke='%235960b9' d='M.4.3 9.5 11 18.7.4'/%3E%3C/svg%3E")
+        }
+
+        @media only screen and (max-width:1700px) {
+            .Testimonials-slider-prev {
+                left: 0 !important
+            }
+
+            .Testimonials-slider-next {
+                right: 0 !important
+            }
+        }
+    </style>
+    <meta name="twitter:title" content="Work Management Platform | Streamline Collaboration & Workflows | Podio" />
+    <meta name="twitter:description"
+        content="Podio is the all-in-one work management software that helps teams collaborate, automate workflows, and manage projects with ease. Build custom solutions that drive productivity and efficiency." />
+    <meta name="twitter:url" content="https://www.progress.com/podio" />
+    <meta property="og:image"
+        content="https://www.progress.com/images/default-source/default-album/progress-album/images-album/social-image.png" />
+    <meta name="twitter:image"
+        content="https://www.progress.com/images/default-source/default-album/progress-album/images-album/social-image.png" />
+    <meta property="fb:app_id" content="154232704644633" />
+    <meta name="twitter:site" content="@ProgressSW" />
+    <meta name="twitter:creator" content="@ProgressSW" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="progress:product" content="chef, all-products" />
+    <link rel="alternate" href="https://www.progress.com/podio" hreflang="en" />
+    <link rel="alternate" href="https://www.progress.com/podio" hreflang="x-default" />
+    <link rel="canonical" href="https://www.podio.com/" />
+    <meta name="description"
+        content="Podio is the all-in-one work management software that helps teams collaborate, automate workflows, and manage projects with ease. Build custom solutions that drive productivity and efficiency." />
+
+    <!-- OneTrust Cookies Consent Notice start for podio.com -->
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8"
+        data-domain-script="019348e7-84ba-73ef-a77a-7915d235e3db"></script>
+    <script type="text/javascript">
+        function OptanonWrapper() { }
+    </script>
+    <!-- OneTrust Cookies Consent Notice end for podio.com -->
+
+</head>
+
+<body id="progress">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5ZR4RSF6" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <script type="text/plain" class="optanon-category-2"
+        src="https://script.crazyegg.com/pages/scripts/0087/4351.js"></script>
+
+<div class="SiteRibbon">
+  <div class="container">
+    <span class="SiteRibbon-text">
+      <p>
+        <span class="-dib -vam">Welcome to the new Progress Podio! Now find more product info at our new website <a href="https://www.progress.com/podio" target="_blank">here</a> or read the <a href="https://www.progress.com/blogs/podio-migration-live" target="_blank">blog</a> to learn more.</span>
+      </p>
+    </span>
+  </div>
+</div>
+
+
+    <div class="sf_colsIn PRGS-Nav--s" data-sf-element="EmptyWrapper"
+        data-placeholder-label="EmptyWrapper">
+        <div id="site-content"></div>
+        <div class="PRGS-modal"></div>
+        <script async type="module" src="https://cdn.telerik-web-assets.com/prgs-nav/stable/js/index.min.mjs"></script>
+    </div>
+    <div id="Content_T6F3B3E47002_Col00" class="sf_colsIn PRGS-Nav-stickyWrapper js-sticky-nav"
+        data-sf-element="EmptyWrapper" data-placeholder-label="EmptyWrapper">
+        <div id="Content_T6F3B3E47003_Col00" class="sf_colsIn PRGS-container" data-sf-element="EmptyWrapper"
+            data-placeholder-label="EmptyWrapper">
+
+
+            <div class="PRGS-Nav--black">
+                <nav class="PRGS-Nav PRGS-Nav--overlay track--contextualnav">
+                    <div class="PRGS-Nav-container -full">
+                        <header class="PRGS-Nav-head"><a class="PRGS-Nav-anchor" href="https://www.progress.com/podio"
+                                target="_blank">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="130" height="32" viewBox="0 0 512 120"
+                                    role="img" aria-label="Progress logo" class="-vam -mb1">
+                                    <path class="PRGS-branding-shape"
+                                        d="M95.52,29.33h0v51a3.93,3.93,0,0,1-1.78,3.08l-1.67,1L79.35,91.76l-8.59,5-1.78,1V42.6L21.23,15,43.91,1.93,46,0.74a3.94,3.94,0,0,1,3.56,0L81,18.9l14.51,8.38v2.05ZM58.36,48.72l-9.79-5.66L25.66,29.83a4,4,0,0,0-3.56,0L1.77,41.57,0,42.6,34.49,62.51v39.83l20.3-11.73,1.79-1a3.94,3.94,0,0,0,1.78-3.08V48.72ZM0,82.43L23.86,96.21V68.63Z">
+                                    </path>
+                                    <path class="PRGS-branding-text"
+                                        d="M148.09,27.28h-26V97.76h11.55V70.1h14.57c15.77,0,24.45-7.7,24.45-21.69,0-6.35-2.4-21.12-24.55-21.12M160.89,48.6c0,7.95-4.12,11.19-14.24,11.19h-13V37.69h14.57c8.56,0,12.71,3.57,12.71,10.91M207,46.41l0.87,0.42-2,10.42-1.35-.42a11.32,11.32,0,0,0-3.34-.51c-10.79,0-11.67,8.59-11.67,19V97.76H178.87V46h10v6.24c2.73-4.2,6-6.37,10.37-6.9A14.55,14.55,0,0,1,207,46.41M233.29,45c-8.42,0-15.16,3.2-19.5,9.27-4.56,6.37-5.23,13.85-5.23,17.74,0,16.36,9.7,26.92,24.73,26.92,18.26,0,24.73-14.71,24.73-27.3,0-7.25-2.15-13.82-6-18.51-4.41-5.31-10.87-8.12-18.7-8.12m0,44.38c-8.37,0-13.57-6.66-13.57-17.37s5.2-17.55,13.57-17.55S247,61.23,247,71.78c0,10.83-5.24,17.56-13.66,17.56M347.89,46.41l0.87,0.42-2,10.42-1.35-.42a11.26,11.26,0,0,0-3.33-.51c-10.78,0-11.66,8.59-11.66,19V97.76H319.76V46h10v6.24c2.73-4.2,6-6.37,10.37-6.9a14.54,14.54,0,0,1,7.73,1.06m38.4,34.76-0.2.57c-2.23,6.36-7.57,7.7-11.65,7.7-8.09,0-13.3-5.37-13.81-14.09h36.59l0.13-1a31.26,31.26,0,0,0,.12-4.12c0-.34,0-0.64,0-0.93C396.93,54.78,387.48,45,374,45c-7.9,0-14.37,3.1-18.73,9a30.85,30.85,0,0,0-5.54,18c0,16,9.95,26.74,24.74,26.74,11.45,0,19.33-5.82,22.2-16.38L397,81.16h-10.7ZM361,66.05c0.9-7.17,5.81-11.73,12.79-11.73,5.33,0,11.64,3.1,12.52,11.73H361Zm-60.7-15.71c-3.45-3.58-8.06-5.39-13.76-5.39-15.69,0-22.83,13.81-22.83,26.63,0,13.16,7.06,26.44,22.83,26.44a18.33,18.33,0,0,0,13.35-5.42c0,2.28-.1,4.45-0.16,5.38-0.58,8.54-4.68,12.51-12.91,12.51-4.47,0-9.61-1.59-10.6-6l-0.22-1H265.46l0.17,1.41c1.1,9.12,9.11,14.79,20.9,14.79,10.34,0,17.7-3.9,21.28-11.26,1.73-3.55,2.6-8.72,2.6-15.37V46H300.28v4.34ZM287.19,88.49c-3.74,0-12.43-1.69-12.43-17.37,0-10.3,4.87-16.7,12.71-16.7,6.06,0,12.52,4.39,12.52,16.7,0,10.87-4.79,17.37-12.81,17.37m159.67-6.31c0,8.23-6.83,16.53-22.09,16.53-13.5,0-21.53-5.85-22.61-16.45L402,81.16h10.52L412.73,82c1.29,6.38,7.37,7.72,12.24,7.72,5.34,0,11-1.72,11-6.54,0-2.44-1.59-4.18-4.73-5.16-1.86-.55-4.15-1.2-6.56-1.87-4.16-1.16-8.47-2.38-11.12-3.29-6.56-2.35-10.33-6.93-10.33-12.56,0-10.43,10.16-15.11,20.22-15.11,13.46,0,20.42,5.07,21.3,15.49l0.09,1.07H434.5l-0.14-.82c-1-6-7-6.9-10.48-6.9-3,0-10,.53-10,5.5,0,2.25,1.93,3.91,5.89,5.06,1.18,0.33,2.94.78,5,1.31,4.22,1.09,9.48,2.46,12.13,3.37,6.59,2.32,9.93,6.67,9.93,13m49.39,0c0,8.23-6.83,16.53-22.09,16.53-13.5,0-21.53-5.85-22.61-16.45l-0.11-1.09H462L462.12,82c1.29,6.38,7.37,7.72,12.24,7.72,5.34,0,11-1.72,11-6.54,0-2.44-1.59-4.18-4.72-5.16-1.86-.55-4.15-1.2-6.57-1.87-4.16-1.16-8.46-2.38-11.11-3.29-6.57-2.35-10.33-6.93-10.33-12.56,0-10.43,10.16-15.11,20.22-15.11,13.46,0,20.42,5.07,21.29,15.49l0.09,1.07H483.9l-0.14-.82c-1-6-7-6.9-10.48-6.9-3,0-9.95.53-9.95,5.5,0,2.25,1.93,3.91,5.89,5.06,1.18,0.33,2.94.78,5,1.31,4.22,1.09,9.48,2.46,12.13,3.37,6.58,2.32,9.93,6.67,9.93,13">
+                                    </path>
+                                    <path class="PRGS-branding-text"
+                                        d="M504.71,51.49A7.37,7.37,0,1,1,512,44.12a7.23,7.23,0,0,1-7.29,7.37m0-13.49a6.12,6.12,0,1,0,6,6.12,5.91,5.91,0,0,0-6-6.12m-0.85,7.49v2.46h-2.17V40.21h3.62a2.58,2.58,0,0,1,2.86,2.7,2.26,2.26,0,0,1-1.49,2.34l1.77,2.7H506l-1.49-2.46h-0.68ZM505.07,42h-1.21v1.73h1.21a0.86,0.86,0,0,0,1-.85,0.88,0.88,0,0,0-1-.89">
+                                    </path>
+                                    <!--[if lte IE 8]><image width="130" height="32" border="0" src="https://d3ba5g9yhie26y.cloudfront.net/img/progress-logo.png" xlink:href=""><![endif]-->
+                                </svg>
+                                <span class="PRGS-Nav-title">Podio <span class="reg">®</span></span>
+                            </a>
+                        </header>
+                        <div class="PRGS-Nav-content">
+                            <div class="PRGS-Nav-sections">
+                                <ul>
+                                    <li><a href="https://www.progress.com/podio" target="_blank">Overview</a>
+                                    </li>
+                                    <li class="has-dropdown"><a href="javascript:void(0)">Features</a>
+                                        <ul style="min-width:22em;">
+                                            <li class="-db -pl2 -pr2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="-co-black -fs14 -ttu -fw5 -mb1">Collaboration</div>
+                                                        <hr class="-m1 -ml0 -mr0" /><a
+                                                            href="https://www.progress.com/podio/workspaces"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0-xl-wsnl"
+                                                            target="_blank">Workspaces</a>
+                                                        <a href="https://www.progress.com/podio/task-management"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Task Management</a>
+                                                        <a href="https://www.progress.com/podio/file-sharing"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">File Sharing</a>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="-co-black -fs14 -ttu -fw5 -mb1">Customization</div>
+                                                        <hr class="-m1 -ml0 -mr0" /><a
+                                                            href="https://www.progress.com/podio/apps"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Podio Apps</a>
+                                                        <a href="https://www.progress.com/podio/workflow-automation"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Workflow Automations</a>
+                                                        <a href="https://www.progress.com/podio/integrations-and-extensions"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Integrations &amp; Extensions</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-dropdown"><a href="javascript:void(0)">Solutions</a>
+                                        <ul style="min-width:22em;">
+                                            <li class="-db -pl2 -pr2">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="-co-black -fs14 -ttu -fw5 -mb1">By Use Case</div>
+                                                        <hr class="-m1 -ml0 -mr0" /><a
+                                                            href="https://www.progress.com/podio/use-cases/project-management"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0-xl-wsnl"
+                                                            target="_blank">Project Management</a>
+                                                        <a href="https://www.progress.com/podio/use-cases/crm"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">CRM</a>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="-co-black -fs14 -ttu -fw5 -mb1">By Industry</div>
+                                                        <hr class="-m1 -ml0 -mr0" /><a
+                                                            href="https://www.progress.com/podio/industries/accounting"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Accounting</a>
+                                                        <a href="https://www.progress.com/podio/industries/agencies"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Agencies</a>
+                                                        <a href="https://www.progress.com/podio/industries/real-estate"
+                                                            class="-db -fs15 -fw5 -lh120 -mb1 -pl0 -pr0 -xl-wsnl"
+                                                            target="_blank">Real Estate</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="has-dropdown"><a href="javascript:void(0)">Resources</a>
+                                        <ul class="-mark-external">
+                                            <li class="-db"><a class="-fs18 -fw6 -mt1 -lh130"
+                                                    href="https://www.progress.com/podio/resources"
+                                                    target="_blank">Resource Center</a>
+                                                <hr class="-m1" />
+                                            </li>
+                                            <li><a href="https://www.progress.com/customers?filter=product%5epodio"
+                                                    target="_blank">Customer Stories</a></li>
+                                            <li><a href="https://www.progress.com/blogs/podio" target="_blank">Blogs</a>
+                                            </li>
+                                            <li><a href="https://docs.sharefile.com/en-us/podio.html"
+                                                    target="_blank">Documentation</a></li>
+                                            <li><a href="https://support.sharefile.com/s/" target="_blank">Community</a>
+                                            </li>
+                                            <li><a href="https://status.podio.com/" target="_blank">Podio Status</a>
+                                            </li>
+                                            <li><a href="https://www.progress.com/podio/contact" target="_blank">Get in
+                                                    touch</a></li>
+                                            <li><a href="https://www.progress.com/podio/partners"
+                                                    target="_blank">Partners</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="https://www.progress.com/podio/pricing" target="_blank">Pricing</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="PRGS-Nav-cta PRGS-Nav-cta--ghost -xl-ml0"><a
+                                    href="https://podio.com/login?force_locale=en_US" class="-pl2 -pr2">Log In</a></div>
+                            <div class="PRGS-Nav-cta"><a href="https://podio.com/signup?force_locale=en_US">Sign Up</a>
+                            </div>
+                            <div class="PRGS-Nav-drop">&nbsp;</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+
+    </div>
+    <div id="Content_TC11A6E6B002_Col00" class="sf_colsIn ContentWrapper" data-sf-element="EmptyWrapper"
+        data-placeholder-label="EmptyWrapper">
+        <section class="Section" data-sf-element="Section" data-placeholder-label="Section Banner">
+            <div id="Content_C143_Col00" class="sf_colsIn Section-bg Section-bg--n" data-sf-element="Section Background"
+                data-placeholder-label="Section Background"><img loading="eager" fetchpriority="high"
+                    class="-contain -l0 -pa"
+                    src="https://www.progress.com/images/default-source/products/podio/pluses-bg.png?sfvrsn=30e35974_1" /><img
+                    loading="eager" fetchpriority="high" class="-cover"
+                    src="https://www.progress.com/images/default-source/products/podio/hex-bg-ill.svg?sfvrsn=57e17a8a_1" />
+            </div>
+            <div id="Content_C143_Col01" class="sf_colsIn container" data-sf-element="Section Content"
+                data-placeholder-label="Section Content">
+                <div class="row -tac" data-sf-element="Row">
+                    <div id="Content_C148_Col00" class="sf_colsIn col-18" data-sf-element="Column 1"
+                        data-placeholder-label="Column 1">
+
+
+                        <h1>Simplify Work, Amplify Results with Progress Podio</h1>
+                        <p class="-fs28 -mb4">Unify and automate work with no-code tools, flexible workflows and
+                            customizable business solutions.</p>
+                    </div>
+                </div>
+                <div class="row -tac -mb9" data-sf-element="Row">
+                    <div id="Content_C149_Col00" class="sf_colsIn col-6" data-sf-element="Column 1"
+                        data-placeholder-label="Column 1">
+
+
+                        <a href="https://podio.com/signup?force_locale=en_US" class="Btn Btn--prim -db">Sign Up</a>
+                    </div>
+                    <div id="Content_C149_Col01" class="sf_colsIn col-6" data-sf-element="Column 2"
+                        data-placeholder-label="Column 2">
+
+
+                        <a href="https://podio.com/login?force_locale=en_US" class="Btn Btn--sec -db">Log In</a>
+                    </div>
+                </div>
+
+
+                <img loading="lazy"
+                    src="https://www.progress.com/images/default-source/products/podio/podio-head-illustration.png?sfvrsn=aa4cf807_1"
+                    title="podio-head-illustration" />
+                <div class="row -mt9" data-sf-element="Row">
+                    <div id="Content_C153_Col00" class="sf_colsIn col-21" data-sf-element="Column 1"
+                        data-placeholder-label="Column 1">
+
+
+                        <h2>Structure, Automate and Scale—Your Way</h2>
+                        <p class="-fs24 -mb6">Podio supports building digital workspaces tailored to your team's unique
+                            processes. Whether you're tracking leads, managing projects, streamlining operations or
+                            automating approvals, Podio is built to support a wide range of workflows. With powerful
+                            no-code tools, automation and real-time collaboration, Podio helps you structure, scale and
+                            simplify work&mdash;on your terms.</p>
+                        <h3>Key Capabilities:</h3>
+                    </div>
+                </div>
+                <div class="row" data-sf-element="Row">
+                    <div id="Content_C155_Col00" class="sf_colsIn col-12" data-sf-element="Column 1"
+                        data-placeholder-label="Column 1">
+
+
+                        <h4 class="-mb3">Customize</h4>
+                        <ul class="ListAdapt -vs1 -fs20 -accent-green5">
+                            <li>No-code drag and drop builder to customize your data structure</li>
+                            <li>Personalized dashboards and workspace layouts</li>
+                            <li>Multiple data views: table, kanban, calendar and badge</li>
+                            <li>Pre-built templates to jumpstart setup</li>
+                            <li>Bidirectional relationship fields to link related data items</li>
+                            <li>Webforms for data intake to capture external submissions</li>
+                  

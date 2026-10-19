@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, follow">
+    <title>File not found | Musicnotes.com</title>
+    <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
+    <!--
+        Real-user analytics only. This page is served as a static file (no server-side
+        layout/VMB), so tracking is client-side. Bots don't execute JS, so the ~800k/day
+        junk 404s never trigger any of this; only real users hitting dead links do.
+        Gated to the production hostname so dev/staging 404s don't pollute prod data
+        (this static file ships un-transformed to every environment).
+    -->
+    <script>
+        (function () {
+            if (location.hostname !== 'www.musicnotes.com') return;
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+
+            // Consent Mode v2: default-deny BEFORE GTM loads. This static page has no
+            // server-derived compliance_status (no shopper/DB/GeoIP lookup), so we fail
+            // closed: GA4 runs cookieless/consent-denied and ad tags are suppressed for
+            // every user. Compliant regardless of the GTM container's own consent config.
+            gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'security_storage': 'granted',
+                'wait_for_update': 500
+            });
+
+            window.dataLayer.push({
+                event: 'page_view',
+                page_type: 'errorPage',
+                error_status: 404,
+                page_path: location.pathname,
+                referrer: document.referrer || ''
+            });
+
+            // Google Tag Manager (feeds GA4 + container tags). page_type=errorPage above
+            // lets GTM exclude this from conversion/remarketing tags.
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5CQ8CLH');
+
+            // First-party behavioral collector -> /api/analytics/events -> Snowflake.
+            // Intercepts dataLayer and replays existing items, so it captures the
+            // page_view pushed above. Independent of GTM.
+            var sc = document.createElement('script');
+            sc.src = '/Scripts/Track/snowflakeCollector.js';
+            sc.defer = true;
+            document.head.appendChild(sc);
+        })();
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #0272b3;
+            color: #fff;
+        }
+        #background {
+            background-color: #0272b3;
+            color: #fff;
+            background-image: url('/images2/error-background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            max-width: 475px;
+            display: flex;
+            margin: 0 auto;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        h5 {
+            opacity: .5;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0 0 20px;
+            font-size: 14px;
+        }
+        h3 {
+            margin: 0 0 10px;
+            font-size: 28px;
+        }
+        p { font-size: 16px; line-height: 1.5; }
+        a { color: #fff; text-decoration: none; }
+        .search-bar { width: 100%; max-width: 400px; margin: 30px auto; }
+        .search-bar form { display: flex; }
+        .search-bar input[type="text"] {
+            flex: 1;
+            height: 44px;
+            border: none;
+            padding: 0 12px;
+            font-size: 16px;
+        }
+        .search-bar button {
+            height: 44px;
+            width: 56px;
+            border: none;
+            background-color: #a2bc35;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .buttons { width: 100%; max-width: 300px; }
+        .btn {
+            display: block;
+            margin: 15px auto 0;
+            padding: 10px 15px;
+            width: 100%;
+            border: 1px solid #fff;
+            background-color: transparent;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        .btn:hover { background-color: rgba(255, 255, 255, .23); }
+        .img-responsive { display: none; }
+        @media (max-width: 1050px) {
+            #background {
+                background-image: url('/images2/error-bg-tablet.jpg');
+            }
+        }
+        @media (max-width: 750px) {
+            #background { background-image: none; }
+            .img-responsive {
+                display: block;
+                max-width: 250px;
+                width: 100%;
+                margin: 0 auto 30px;
+            }
+            h3 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="background">
+        <div class="container">
+            <img class="img-responsive" alt="Page not found" src="/images2/error-mobile.png">
+            <h5>File not found</h5>
+            <h3>Let's Take This From The Top...</h3>
+            <p>Looks like we hit a wrong note - our bad. While we go practice our scales, try searching the site or clicking one of the links below.</p>
+            <div class="search-bar">
+                <form name="searchform2" id="searchform2" action="/search/go" method="get">
+                    <input type="text" name="w" placeholder="Find Sheet Music" aria-label="Find Sheet Music" autocomplete="off" value="">
+                    <input type="hidden" name="search_origin" value="header">
+                    <button type="submit" aria-label="Submit Search">&#128269;</button>
+                </form>
+            </div>
+            <div class="buttons">
+                <a href="/" class="btn">Visit Home Page</a>
+                <a href="/landing?qnewness=7&isort=bestselling" class="btn">Browse New Sheet Music</a>
+                <a href="/commerce/myaccount.asp?rc=1" class="btn">View Your Account Page</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

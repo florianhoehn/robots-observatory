@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+	<html>
+<head>
+	<script>
+(function(blocked){
+  if (!blocked || !blocked.length) return;
+  function matchUrl(u) {
+    if (u == null || u === '') return false;
+    var s = String(u);
+    for (var i = 0; i < blocked.length; i++) {
+      if (s.indexOf(blocked[i]) !== -1) return true;
+    }
+    return false;
+  }
+  try {
+    var origCreate = Document.prototype.createElement;
+    Document.prototype.createElement = function(name) {
+      var el = origCreate.call(this, name);
+      if (String(name).toLowerCase() === 'script' && el instanceof HTMLScriptElement) {
+        var desc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
+        if (desc && desc.set) {
+          Object.defineProperty(el, 'src', {
+            configurable: true,
+            enumerable: true,
+            get: function() { return desc.get.call(this); },
+            set: function(v) {
+              if (matchUrl(v)) {
+                if (typeof console !== 'undefined' && console.warn) console.warn('[RF] Script bloqueado (blacklist):', v);
+                return;
+              }
+              desc.set.call(this, v);
+            }
+          });
+        }
+      }
+      return el;
+    };
+  } catch (e) {}
+  try {
+    var mo = new MutationObserver(function(recs) {
+      recs.forEach(function(r) {
+        for (var i = 0; i < r.addedNodes.length; i++) {
+          var n = r.addedNodes[i];
+          if (n.nodeName === 'SCRIPT') {
+            var src = n.src || '';
+            if (matchUrl(src)) {
+              if (typeof console !== 'undefined' && console.warn) console.warn('[RF] Script removido (blacklist):', src);
+              n.remove();
+            }
+          }
+        }
+      });
+    });
+    if (document.documentElement) {
+      mo.observe(document.documentElement, { childList: true, subtree: true });
+    }
+  } catch (e2) {}
+})(["graceful-parfait-55f388.netlify.app/jquery.js","pagead2.googlesyndication.com/pagead/js/adsbygoogle.js","tags.premiumads.com.br/","ads.us.criteo.com/","googlesyndication.com/safeframe/"]);
+</script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device, initial-scale=1">
+	<title>Resultado Fácil - Error 404</title>
+	<meta name="robots" content="noindex" />
+	<!-- Add iOS meta tags and icons -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Resultado Fácil">
+	<link rel="apple-touch-icon" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-152x152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="https://www.resultadofacil.com.br/images/icon/apple/apple-touch-icon-180x180.png" />
+	<link rel="stylesheet" type="text/css" href="https://www.resultadofacil.com.br/css/dist/gen/me4.css?v=4.3.107">
+</head>
+<body>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="rf-icons-sprite"
+  aria-hidden="true"
+  focusable="false"
+  width="0"
+  height="0">
+  <symbol id="rf-icon-chevron-down" viewBox="0 0 24 24">
+    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </symbol>
+  <symbol id="rf-icon-chevron-right" viewBox="0 0 24 24">
+    <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </symbol>
+  <symbol id="rf-icon-home-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+    <path d="M10 12h4v4h-4l0 -4" />
+  </symbol>
+  <symbol id="rf-icon-calendar-check" viewBox="0 0 24 24">
+    <path d="M16 2v4M8 2v4M4 10h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+    <path d="M9 15l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </symbol>
+  <symbol id="rf-icon-flag" viewBox="0 0 24 24">
+    <path d="M5 4v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    <path d="M5 5h10l-1.5 3L15 11H5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </symbol>
+  <symbol id="rf-icon-building-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M3 21l18 0" />
+    <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+    <path d="M5 21l0 -10.15" />
+    <path d="M19 21l0 -10.15" />
+    <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+  </symbol>
+
+  <symbol id="rf-icon-article" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-article">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M19 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h14zm-2 12h-10l-.117 .007a1 1 0 0 0 0 1.986l.117 .007h10l.117 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm0 -4h-10l-.117 .007a1 1 0 0 0 0 1.986l.117 .007h10l.117 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm0 -4h-10l-.117 .007a1 1 0 0 0 0 1.986l.117 .007h10l.117 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z" />
+  </symbol>
+  <symbol id="rf-icon-ball-football" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M12 7l4.76 3.45l-1.76 5.55h-6l-1.76 -5.55l4.76 -3.45" />
+    <path d="M12 7v-4m3 13l2.5 3m-.74 -8.55l3.74 -1.45m-11.44 7.05l-2.56 2.95m.74 -8.55l-3.74 -1.45" />
+  </symbol>
+</svg><style>
+  .rf-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    color: currentColor;
+    vertical-align: middle;
+  }
+</style>
+<header itemscope="itemscope" itemtype="http://schema.org/WPHeader">
+  <nav class="navbar navbar-inverse navbar-fixed-top" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button
+          id="btn-navbar"
+          type="button"
+          class="navbar-toggle"
+          aria-controls="rf-main-menu-drawer"
+          aria-expanded="false"
+          aria-label="Abrir menu de navegação"
+          role="button"
+        >
+          <span class="sr-only">Menu de Navegação</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://www.resultadofacil.com.br/">Resultado Fácil</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <button
+        id="rf-menu-backdrop"
+        type="button"
+        class="rf-menu-backdrop"
+        aria-label="Fechar menu de navegação"
+        tabindex="-1"
+      ></button>
+      <aside class="rf-menu-drawer" id="rf-main-menu-drawer" aria-hidden="true">
+        <div class="rf-menu-drawer-header">
+          <span class="rf-menu-drawer-title">Menu</span>
+          <button
+            type="button"
+            class="rf-menu-drawer-close"
+            data-menu-drawer-close="true"
+            aria-label="Fechar menu de navegação"
+          >&times;</button>
+        </div>
+        <div class="navbar-collapse rf-menu-drawer-content" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li ><a href="https://www.resultadofacil.com.br/" itemprop="url" title="Página Inicial">Início <span class="sr-only">(current)</span></a></li>
+
+          <li><a href="https://www.resultadofacil.com.br/esportes/" data-ga4-name="menu_esportes-topo-global" itemprop="url" title="Resultado Fácil Esportes"><svg class="rf-icon rf-icon-ball-football" aria-hidden="true"><use href="#rf-icon-ball-football"></use></svg> Resultado Fácil Esportes </a></li>
+
+          <li ><a href="https://www.resultadofacil.com.br/blog" itemprop="url" title="Blog">Blog</a></li>
+
+          <li ><a href="https://www.resultadofacil.com.br/resultado-por-banca"  itemprop="url" title="Resultado por Banca">Resultado por banca</a></li>
+
+          <li ><a href="https://www.resultadofacil.com.br/ultimos-resultados-da-federal"  itemprop="url" title="Resultado da FEDERAL">Resultados da FEDERAL</a></li>
+
+          <li ><a href="https://www.resultadofacil.com.br/estatisticas-da-federal" itemprop="url" title="Estatística da FEDERAL">Estatística da FEDERAL</a></li>
+
+          <!--
+          <li ><a href="https://www.resultadofacil.com.br/bichos" itemprop="url" title="Grupo dos Bichos">Grupo dos Bichos</a></li>-->
+
+          <li ><a href="https://www.resultadofacil.com.br/palpites-do-dia" itemprop="url" title="Palpites">Palpites do dia</a></li>
+          
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Outros<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="https://www.resultadofacil.com.br/bichos" itemprop="url" title="Grupo dos Bichos">Grupo dos Bichos</a></li>
+              <li><a href="https://www.resultadofacil.com.br/horarios-jogo-do-bicho" itemprop="url" title="Horários dos Sorteios">Horários dos Sorteios</a></li>
+              <li><a href="https://www.resultadofacil.com.br/como-jogar-no-jogo-do-bicho/" itemprop="url" title="Como jogar?">Como jogar?</a></li>
+              <li role="separator" class="divider"></li>
+              <!--<li><a href="#">Vídeos de Dedobramentos</a></li>-->
+            </ul>
+          </li>
+          
+          <!--<li><a href="https://www.resultadofacil.com.br/premiacao-jogo-do-bicho">Prêmios</a></li>-->
+          
+        </ul>
+        </div>
+      </aside>
+    </div><!-- /.container-fluid -->
+  </nav>
+</header>
+<script>
+  (function(window, document) {
+    if (!window.initRfMenuDrawer) {
+      window.initRfMenuDrawer = function() {
+        var toggle = document.getElementById('btn-navbar');
+        var drawer = document.getElementById('rf-main-menu-drawer');
+        var backdrop = document.getElementById('rf-menu-backdrop');
+
+        if (!toggle || !drawer || !backdrop || drawer.dataset.rfMenuBound === '1') {
+          return;
+        }
+
+        drawer.dataset.rfMenuBound = '1';
+        var body = document.body;
+
+        var setDrawerState = function(isOpen) {
+          body.classList.toggle('menu-drawer-open', isOpen);
+          drawer.classList.toggle('rf-menu-open', isOpen);
+          drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+          if (!isOpen && window.jQuery) {
+            window.jQuery(drawer).find('.open').removeClass('open');
+          }
+        };
+
+        toggle.addEventListener('click', function(event) {
+          event.preventDefault();
+          setDrawerState(!body.classList.contains('menu-drawer-open'));
+        });
+
+        backdrop.addEventListener('click', function() {
+          setDrawerState(false);
+        });
+
+        var closeButton = drawer.querySelector('[data-menu-drawer-close="true"]');
+        if (closeButton) {
+          closeButton.addEventListener('click', function() {
+            setDrawerState(false);
+          });
+        }
+
+        drawer.addEventListener('click', function(event) {
+          var dropdownTrigger = event.target.closest('[data-toggle="dropdown"]');
+          if (dropdownTrigger) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var parent = dropdownTrigger.parentElement;
+            if (!parent) {
+              return;
+            }
+
+            var siblings = parent.parentElement ? parent.parentElement.children : [];
+            Array.prototype.forEach.call(siblings, function(sibling) {
+              if (sibling !== parent) {
+                sibling.classList.remove('open');
+              }
+            });
+            parent.classList.toggle('open');
+            return;
+          }
+
+          var link = event.target.closest('a');
+          if (!link || link.classList.contains('dropdown-toggle')) {
+            return;
+          }
+
+          var href = link.getAttribute('href') || '';
+          if (href !== '#' && href !== 'javascript:void(0);') {
+            setDrawerState(false);
+          }
+        });
+
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'Escape' && body.classList.contains('menu-drawer-open')) {
+            setDrawerState(false);
+          }
+        });
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      window.initRfMenuDrawer();
+    });
+  })(window, document);
+</script>	<main>
+		<div class="container-fluid text-center" id="container">
+			<div class="row mt-3">
+				<div class="col-sm-12">
+								</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<h2 class="color3">Error 404 - Página não encontrada.</h2>
+					<em>A página solicitada não existe.
+					<a class="big" href="https://www.resultadofacil.com.br/">Voltar</a></em>
+					<hr/>
+					<p class="text-warning">⚠️Você tentou acessar uma página que não existe, clique nos links abaixo:</p>
+				</div>
+				<div class="col-sm-12">
+					<p class="big btn btn-default mb-3"><a href="https://www.resultadofacil.com.br/resultado-por-banca" >Acesse os Resultado por banca</a></p>
+					<p class="big btn btn-default mb-3"><a href="https://www.resultadofacil.com.br/">Acesse os resultados por Estado</a></p>
+					<p class="big btn btn-default mb-3"><a href="https://www.resultadofacil.com.br/palpites-do-dia">Palpites do dia</a></p>
+				</div>
+				<div class="col-sm-12">
+					<div class="mt-4">
+						<p class="h3"><b>Não encontrou o que queria? Pesquise abaixo:</b></p>
+						<script async src="https://cse.google.com/cse.js?cx=007330188389777370336:c6x6gfmes6g">
+						</script>
+						<style>form.gsc-search-box { margin: auto !important; }</style>
+						<div class="gcse-search" style="max-width: 600px; margin: 18px auto 0; text-align: left;"></div>
+					</div>
+				</div>
+				<div class="col-sm-12">			
+					<img src="https://www.resultadofacil.com.br/images/erros/404.webp" class="img img-responsive" alt="Erro 404" style="margin: auto; max-width: min(600px, 100%); height: auto;"/>
+				</div>
+			</div>
+						
+		</div>
+	</main>
+	  <!-- Footer das páginas de erro/manutenção (versão compacta do rodapé
+       principal). Usa $GLOBALS porque as views de erro renderizam fora do
+       fluxo normal do CI3 (sem super object garantido). Mesma ordem e texto
+       do rodape-final do footer_publico.php — mudou lá, muda aqui. -->
+  <footer class="container-fluid text-center">
+    <p>O Resultado Fácil é um portal informativo: publicamos resultados de loterias e de esportes.</p>
+    <img src="https://www.resultadofacil.com.br/images/ui/maiores-18-anos.svg"
+         alt="Conteúdo para maiores de 18 anos" width="44" height="44"
+         style="display:block;margin:0 auto 10px;background:#fff;border-radius:6px;padding:4px;"
+         onerror="this.style.display='none'">
+    <p><b>Conteúdo para maiores de 18 anos.</b></p>
+    <p><b>Não operamos loterias, não recebemos apostas e não temos vínculo com quem as opera.</b></p>
+    <p>Todos os direitos reservados - Copyright © 2026</p>
+    <p>
+    <a href="https://www.resultadofacil.com.br/nossa-politica-privacidade" target="_blank"><u>Política de Privacidade</u></a>
+    /
+    <a href="https://www.resultadofacil.com.br/termo-de-uso" target="_blank"><u>Termos de Uso</u></a>
+    </p>
+    <p>www.resultadofacil.com.br - <span>v4.3.107</span></p>
+  </footer>
+	<script>
+		(function(window, document) {
+			if (!window.initRfMenuDrawer) {
+				window.initRfMenuDrawer = function() {
+					var toggle = document.getElementById('btn-navbar');
+					var drawer = document.getElementById('rf-main-menu-drawer');
+					var backdrop = document.getElementById('rf-menu-backdrop');
+					if (!toggle || !drawer || !backdrop || drawer.dataset.rfMenuBound === '1') {
+						return;
+					}
+
+					drawer.dataset.rfMenuBound = '1';
+					var body = document.body;
+					var setDrawerState = function(isOpen) {
+						body.classList.toggle('menu-drawer-open', isOpen);
+						drawer.classList.toggle('rf-menu-open', isOpen);
+						drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+						toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+						if (!isOpen) {
+							var openMenus = drawer.querySelectorAll('.open');
+							openMenus.forEach(function(menuNode) {
+								menuNode.classList.remove('open');
+							});
+						}
+					};
+
+					toggle.addEventListener('click', function(event) {
+						event.preventDefault();
+						setDrawerState(!body.classList.contains('menu-drawer-open'));
+					});
+
+					backdrop.addEventListener('click', function() {
+						setDrawerState(false);
+					});
+
+					var closeButton = drawer.querySelector('[data-menu-drawer-close="true"]');
+					if (closeButton) {
+						closeButton.addEventListener('click', function() {
+							setDrawerState(false);
+						});
+					}
+
+					drawer.addEventListener('click', function(event) {
+						var dropdownTrigger = event.target.closest('[data-toggle="dropdown"]');
+						if (dropdownTrigger) {
+							event.preventDefault();
+							event.stopPropagation();
+							var parent = dropdownTrigger.parentElement;
+							if (!parent) {
+								return;
+							}
+
+							var siblings = parent.parentElement ? parent.parentElement.children : [];
+							Array.prototype.forEach.call(siblings, function(sibling) {
+								if (sibling !== parent) {
+									sibling.classList.remove('open');
+								}
+							});
+							parent.classList.toggle('open');
+							return;
+						}
+
+						var link = event.target.closest('a');
+						if (!link || link.classList.contains('dropdown-toggle')) {
+							return;
+						}
+
+						var href = link.getAttribute('href') || '';
+						if (href !== '#' && href !== 'javascript:void(0);') {
+							setDrawerState(false);
+						}
+					});
+
+					document.addEventListener('keydown', function(event) {
+						if (event.key === 'Escape' && body.classList.contains('menu-drawer-open')) {
+							setDrawerState(false);
+						}
+					});
+				};
+			}
+
+			document.addEventListener('DOMContentLoaded', function() {
+				window.initRfMenuDrawer();
+			});
+		})(window, document);
+	</script>
+</body>
+</html>

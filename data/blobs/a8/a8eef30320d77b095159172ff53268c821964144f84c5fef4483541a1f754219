@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>RevenueCat Backup Servers: 8-lives-cat.io</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* RevenueCat Brand Colors */
+            --rc-red: #F2545B;
+            --rc-purple: #1F1F47;
+            --rc-green: #11D483;
+            --rc-orange: #FF8552;
+        }
+        
+        /* Light mode (default) */
+        :root {
+            --bg-primary: #FAFAFA;
+            --bg-secondary: #FFFFFF;
+            --bg-gradient-start: #f8f4ff;
+            --bg-gradient-end: #fff5f5;
+            --text-primary: #1F1F47;
+            --text-secondary: #4a4a6a;
+            --text-muted: #6b6b8a;
+            --card-shadow: 0 8px 32px rgba(31, 31, 71, 0.1);
+            --card-border: rgba(31, 31, 71, 0.08);
+            --code-bg: #f0eef5;
+            --footer-bg: rgba(31, 31, 71, 0.03);
+        }
+
+        /* Dark mode - via system preference */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0f0f1a;
+                --bg-secondary: #1a1a2e;
+                --bg-gradient-start: #1a1a2e;
+                --bg-gradient-end: #2d1f2f;
+                --text-primary: #f0f0f5;
+                --text-secondary: #b8b8d0;
+                --text-muted: #8888aa;
+                --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                --card-border: rgba(255, 255, 255, 0.06);
+                --code-bg: #252538;
+                --footer-bg: rgba(255, 255, 255, 0.02);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        /* Decorative background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(242, 84, 91, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(17, 212, 131, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(31, 31, 71, 0.03) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .domain-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--rc-red) 0%, #e04048 100%);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 16px rgba(242, 84, 91, 0.3);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h1 .logo {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.1em;
+            margin-right: 0.1em;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+        
+        /* Show appropriate logo based on theme */
+        h1 .logo-light { display: inline-block; }
+        h1 .logo-dark { display: none; }
+        
+        @media (prefers-color-scheme: dark) {
+            h1 .logo-light { display: none; }
+            h1 .logo-dark { display: inline-block; }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .hero-image {
+            margin: 2.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--card-border);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--card-border);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h2 .icon {
+            font-size: 1.75rem;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: var(--rc-red);
+            font-weight: 700;
+        }
+
+        .domain-mention {
+            display: inline-block;
+            background: var(--code-bg);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 0.9em;
+            color: var(--rc-red);
+            font-weight: 600;
+        }
+
+        .lives-counter {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .life {
+            font-size: 2rem;
+            transition: transform 0.2s ease;
+        }
+
+        .life:hover {
+            transform: scale(1.2);
+        }
+
+        .life.lost {
+            filter: grayscale(1);
+            opacity: 0.3;
+        }
+
+        .why-name {
+            background: linear-gradient(135deg, rgba(242, 84, 91, 0.08) 0%, rgba(255, 133, 82, 0.08) 100%);
+            border-left: 4px solid var(--rc-red);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .why-name {
+                background: linear-gradient(135deg, rgba(242, 84, 91, 0.12) 0%, rgba(255, 133, 82, 0.08) 100%);
+            }
+        }
+        
+        .tech-details {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-top: 1rem;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .tech-details code {
+            color: var(--rc-green);
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .footnote {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--footer-bg);
+            border-radius: 12px;
+        }
+
+        .footnote-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--text-muted);
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .footnote-link:hover {
+            color: var(--rc-red);
+            border-color: var(--rc-red);
+        }
+
+        /* Smooth transitions for theme changes */
+        @media (prefers-reduced-motion: no-preference) {
+            * {
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            }
+        }
+        
+        /* Top navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .top-nav a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            gap: 0.5rem;
+        }
+        
+        .top-nav img {
+            height: 28px;
+            width: auto;
+        }
+        
+        .container {
+            padding-top: 5rem;
+        }
+        
+        /* Blog links */
+        .blog-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .blog-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--rc-red);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        
+        .blog-link:hover {
+            color: var(--rc-orange);
+        }
+        
+        .blog-link::before {
+            content: '→';
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <a href="https://www.revenuecat.com" target="_blank" rel="noopener noreferrer">
+            <img src="assets/rc-logo-header.svg" alt="RevenueCat">
+        </a>
+    </nav>
+    <div class="container">
+        <header>
+            <div class="domain-badge">8-lives-cat.io</div>
+            <h1><img src="assets/logomark-dark.svg" alt="RevenueCat" class="logo logo-light"><img src="assets/logomark-light.svg" alt="RevenueCat" class="logo logo-dark"> 8 Lives Cat</h1>
+            <p class="subtitle">RevenueCat's Backup Server System</p>
+        </header>
+
+        <div class="hero-image">
+            <img src="assets/servers-on-fire.svg" alt="RevenueCat characters managing server chaos, a cat and a bear running around while servers are on fire">
+        </div>
+
+        <div class="card">
+            <h2>What is this?</h2>
+            <p>
+                If you've noticed network calls to <span class="domain-mention">8-lives-cat.io</span> in your app, 
+                don't worry, <span class="highlight">this is expected behavior</span>.
+            </p>
+            <p>
+                This domain hosts RevenueCat's <strong>backup servers</strong>. When our primary infrastructure 
+                experiences issues, our SDK automatically and seamlessly switches to these backup servers to keep 
+                your app's subscription features running smoothly.
+            </p>
+        </div>
+
+        <div class="card why-name">
+            <h2><span class="icon">✨</span> Why "8 Lives Cat"?</h2>
+            <p>
+                You know how cats have <a href="#lives-footnote" class="footnote-link">nine lives?*</a> Well, if you're seeing traffic to this domain, 
+                it means our primary servers (the cat) have temporarily lost one life.
+            </p>
+            <p>
+                But don't panic, <span class="highlight">there are still 8 lives left</span>! 
+                Our backup system is here to keep things running while we sort out any issues with the main servers.
+            </p>
+            <div class="lives-counter" title="8 lives remaining!">
+                <span class="life lost">😿</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+                <span class="life">😺</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="icon">🔧</span> For Developers</h2>
+            <p>
+                This backup domain is yet another layer in our multi-layered approach to reliability, 
+                working alongside our <strong>Offline Entitlements</strong> and <strong>RC Fortress</strong> systems. 
+                It handles scenarios like:
+            </p>
+            <ul style="margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary);">
+                <li>DNS propagation issues with our primary domain</li>
+                <li>CDN or infrastructure outages</li>
+                <li>Regional connectivity problems</li>
+            </ul>
+            <p>
+                The switch happens automatically and is completely transparent to your users. 
+                No action is required on your part.
+            </p>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">
+                Curious about how we protect your revenue? Read more:
+            </p>
+            <div class="blog-links">
+                <a href="https://www.revenuecat.com/blog/engineering/introducing-offline-entitlements/" class="blog-link" target="_blank" rel="noopener noreferrer">
+                    Introducing Offline Entitlements
+                </a>
+                <a href="https://www.revenuecat.com/blog/engineering/building-the-rc-fortress/" class="blog-link" target="_blank" rel="noopener noreferrer">
+                    Building the RC Fortress
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p class="footnote" id="lives-footnote">
+                *Depending on where you're from, you might have heard that cats have 9 lives (English-speaking countries), 
+                7 lives (Spain, Portugal, Brazil), or even 6 lives (Turkish and Arabic traditions). 
+                We went with 9 because we have the best cats
+            </p>
+        </footer>
+    </div>
+
+    <script>
+var msg=`%c
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+███████████████████▓▓▓▒▒▒▒▒░░░░░░▒▒▒▒▓▓██████████████████████████▓▓▒▒▒░░░░▒▒▒▒▓█████████████████████
+██████████████████▓░░░░░░░░░░░░░░░░░░░░░░░▓██████████████████▓▒░░░░░░░░░░░░░░░░░░▓██████████████████
+██████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░▒▓████████████▓░░░░░░░░░░░░░░░░░░░░░░░██████████████████
+██████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████▓░░░░░░░░░░░░░░░░░░░░░░░░░▒█████████████████
+██████████████████▓░░░░░░░░████████▓▒░░░░░░░░░░▓███████░░░░░░░░░░░░▒▓▓████████▓▓▒▒▒█████████████████
+██████████████████▓░░░░░░░░███████████▓░░░░░░░░░██████░░░░░░░░░░▒███████████████████████████████████
+██████████████████▓░░░░░░░░████████████▒░░░░░░░░█████░░░░░░░░░▒█████████████████████████████████████
+██████████████████▓░░░░░░░░████████████▓░░░░░░░░████▒░░░░░░░░▒██████████████████████████████████████
+██████████████████▓░░░░░░░░████████████▒░░░░░░░░████░░░░░░░░░███████████████████████████████████████
+██████████████████▓░░░░░░░░███████████▒░░░░░░░░▒███▓░░░░░░░░▒███████████████████████████████████████
+██████████████████▓░░░░░░░░▒▒▓▓▓▓▓▒▒░░░░░░░░░░░████▓░░░░░░░░▓███████████████████████████████████████
+██████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░░░▒█████▒░░░░░░░░▓███████████████████████████████████████
+██████████████████▓░░░░░░░░░░░░░░░░░░░░░░░░▒███████▓░░░░░░░░▒███████████████████████████████████████
+██████████████████▓░░░░░░░░░░░░░░░░░░░░░░░██████████░░░░░░░░░███████████████████████████████████████
+██████████████████▓░░░░░░░░███▓▓▓▓░░░░░░░░░▓████████░░░░░░░░░▒██████████████████████████████████████
+██████████████████▓░░░░░░░░████████░░░░░░░░░▒███████▓░░░░░░░░░▒█████████████████████████████████████
+██████████████████▓░░░░░░░░█████████▒░░░░░░░░▒███████▒░░░░░░░░░░▓███████████████████████████████████
+██████████████████▓░░░░░░░░██████████▒░░░░░░░░░███████▒░░░░░░░░░░░░▒▓████████████▓▓█████████████████
+██████████████████▓░░░░░░░░███████████▒░░░░░░░░░███████▓░░░░░░░░░░░░░░░░░░░░░░░░░░░█████████████████
+██████████████████▓░░░░░░░░████████████▓░░░░░░░░░▓███████▓░░░░░░░░░░░░░░░░░░░░░░░░░▓████████████████
+██████████████████▓░░░░░░░░██████████████░░░░░░░░░▓████████▓▒░░░░░░░░░░░░░░░░░░░░░░▒████████████████
+███████████████████▓▒▒▒▒▒▓▓███████████████▓▓▒▒▒▒▒▓▓████████████▓▓▒▒▒░░░░░░░░░░░░░░░▒████████████████
+████████████████████████████████████████████████████████████████████████████▓░░░░░░▒████████████████
+██████████████████████▓▓▒░░░░░░░░░░░░░░░░▒▒▒▒▒▓▓▓▓▓████████████████████████▓░░░░░░░▒████████████████
+████████████████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▓▓▓████████▓▒░░░░░░░░░█████████████████
+███████████████████▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓█████████████████
+███████████████████░░░░░░▓█████████████████▓▓▓▓▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▓███████████████████
+██████████████████▓░░░░░▓█████████████████████████████████▓▓▓▒▒▒░░░░░░░░░░░▒▒▓██████████████████████
+███████████████████░░░░░░▒▓████▓▓▓▒▒░░░▒████████████████████████████████████████████████████████████
+████████████████████░░░░░░░░░░░░░░░░░░░░░███████████████████████████████████████████████████████████
+█████████████████████▓▒░░░░░░░░░░░░░░░░░░███████████████████████████████████████████████████████████
+█████████████████████████▓▒▒▒▒░░░░░▒▒▒▒▓████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+████████████████████████████████████████████████████████████████████████████████████████████████████
+If you are interested in building highly reliable services for developers, we are hiring!
+https://www.revenuecat.com/careers/
+`;
+document.addEventListener('DOMContentLoaded', function() {
+    console.log(msg, 'color:#f2545b');
+    
+});
+    </script>
+</body>
+</html>
+

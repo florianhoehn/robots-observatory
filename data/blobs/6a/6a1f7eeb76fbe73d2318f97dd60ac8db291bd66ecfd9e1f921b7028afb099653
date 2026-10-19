@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        // Aplicar dark mode ANTES de renderizar para evitar flash blanco
+        (function() {
+            var isClouu = false;
+            var saved = localStorage.getItem('darkMode');
+            var isDark = isClouu ? (saved === '1') : (saved !== '0');
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.style.background = '#0a0000';
+                document.documentElement.style.backgroundColor = '#111111';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.style.background = '#f0f0f0';
+                document.documentElement.style.backgroundColor = '#f0f0f0';
+            }
+        })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>404 — ForoGore</title>
+            <link rel="canonical" href="https://forogore.net/.well-known/gpc.json">
+    
+        <meta name="description" content="ForoGore — Foro de contenido gore y adulto en español. Comunidad de habla hispana con videos, imágenes y debates extremos.">
+
+    
+    <meta property="og:site_name" content="ForoGore">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://forogore.net/.well-known/gpc.json">
+    <meta property="og:title" content="ForoGore — Foro gore y adulto en español">
+    <meta property="og:description" content="ForoGore — Foro de contenido gore y adulto en español. Comunidad de habla hispana con videos, imágenes y debates extremos.">
+    <meta property="og:image" content="https://forogore.net/img/og-default.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="es_ES">
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ForoGore — Foro gore y adulto en español">
+    <meta name="twitter:description" content="ForoGore — Foro de contenido gore y adulto en español.">
+    <meta name="twitter:image" content="https://forogore.net/img/og-default.jpg">
+    <link rel="icon" type="image/jpeg" href="https://forogore.net/images/faviFG.jpg">
+    <!-- Fuentes del sistema -->
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --cereza: #CC0000;
+            --cereza-dark: #A00000;
+            --bg: transparent;
+            --surface: rgba(255,255,255,0.75);
+            --border: #E0E0E0;
+            --text: #1A1A1A;
+            --text-muted: #888;
+            --radius: 12px;
+            --link: #1A1A1A;
+        }
+
+        body.dark {
+            --bg: transparent;
+            --surface: rgba(15,15,15,0.75);
+            --border: #2a2a2a;
+            --text: #F2F2F2;
+            --text-muted: #aaa;
+            --link: #E0E0E0;
+        }
+
+        .thread-card, .sidebar-card, .reply-card, .post-card,
+        .auth-card, .profile-card, .category-card, .market-card,
+        .edit-card, .creator-form, .notif-card, .inventory-item {
+            background: rgba(255,255,255,0.75) !important;
+        }
+        body.dark .navbar,
+        body.dark .sidebar-card,
+        body.dark .thread-body,
+        body.dark .reply-card,
+        body.dark .notif-card,
+        body.dark .gori-card,
+        body.dark .gori-canvas,
+        body.dark .inventory-item {
+        background: rgba(15,15,15,0.75) !important;
+        }
+        body.dark .auth-card {
+        background: rgba(15,15,15,0.75) !important;
+        }
+        body.dark .picos-balance {
+        background: rgba(15,15,15,0.75) !important;
+        }
+        body.dark .market-card {
+        background: rgba(15,15,15,0.75) !important;
+        }
+        body.dark .edit-card {
+        background: rgba(15,15,15,0.75) !important;
+        }
+        body.dark .creator-form,
+        body.dark .rarity-info,
+        body.dark .cosmetic-table,
+        body.dark .thread-card,
+        body.dark .profile-card,
+        body.dark .category-card,
+        body.dark .post-card,
+        body.dark .post-body,
+        body.dark .block-editor-container,
+        body.dark .btn,
+        body.dark .btn-ghost,
+        body.dark [style*="background:#fff"],
+        body.dark [style*="background: #fff"],
+        body.dark [style*="background:white"],
+        body.dark [style*="background: white"] {
+            background: var(--surface) !important;
+            color: var(--text) !important;
+        }
+        body.dark input,
+        body.dark textarea,
+        body.dark select {
+            background: var(--surface) !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
+        }
+        body.dark [style*="border:1px solid"],
+        body.dark [style*="border: 1px solid"] {
+            border-color: var(--border) !important;
+        }
+        body.dark [style*="color:#888"],
+        body.dark [style*="color: #888"],
+        body.dark [style*="color:#1A1A1A"],
+        body.dark [style*="color:#555"],
+        body.dark [style*="color:#333"] {
+            color: var(--text-muted) !important;
+        }
+
+        html {
+            font-size: 16px;
+            overflow-x: hidden;
+            background: #0a0000;
+        }
+        html:not(.dark) {
+            background: #f0f0f0;
+        }
+        .logo-light { display: inline; }
+        .logo-dark { display: none; }
+        html.dark .logo-light { display: none; }
+        html.dark .logo-dark { display: inline; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #111111;
+            background-image: none;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        body:not(.dark) {
+            background-color: #f0f0f0;
+        }
+
+        *, *::before, *::after {
+            max-width: 100%;
+        }
+
+        img, video, iframe, embed, object {
+            max-width: 100%;
+            height: auto;
+        }
+        img.post-avatar-large {
+            width: 72px !important;
+            height: 72px !important;
+            min-width: 72px !important;
+            min-height: 72px !important;
+            max-width: 72px !important;
+            max-height: 72px !important;
+        }
+        @media (max-width: 600px) {
+            img.post-avatar-large {
+                width: 52px !important;
+                height: 52px !important;
+                min-width: 52px !important;
+                min-height: 52px !important;
+                max-width: 52px !important;
+                max-height: 52px !important;
+            }
+        }
+
+        table {
+            max-width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
+        }
+
+        a { color: var(--link) !important; text-decoration: none; }
+        .btn, .btn-primary, .btn-secondary, button { color: inherit !important; }
+        .nav-brand, .nav-brand * { color: var(--cereza) !important; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            line-height: 1;
+        }
+        .btn-primary {
+            background: var(--cereza);
+            color: #fff !important;
+        }
+        .btn-primary:hover {
+            background: var(--cereza-dark);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover {
+            border-color: var(--cereza);
+            color: var(--cereza);
+        }
+
+        /* NAV */
+.nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.nav-brand {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--cereza);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.nav-brand svg { width: 22px; height: 20px; }
+.nav-search { display: flex; gap: 8px; }
+.nav-search input {
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    background: var(--bg);
+    width: 200px;
+}
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-locale { position: relative; }
+.nav-locale-code { display: none; }
+.nav-locale select {
+    font-size: 13px;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+}
+.nav-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--text);
+}
+.nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #111111;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 8px 16px;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 99;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+body:not(.dark) .nav-mobile-menu {
+    background: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a, .nav-mobile-menu button {
+    font-size: 14px;
+    color: var(--text);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 6px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+body:not(.dark) .nav-mobile-menu a,
+body:not(.dark) .nav-mobile-menu button {
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    color: #1a1a1a;
+}
+.nav-mobile-menu form input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--bg);
+}
+@media (max-width: 768px) {
+    .nav-search, .nav-actions { display: none; }
+    .nav-hamburger { display: flex; align-items: center; }
+    .nav-right { gap: 8px; }
+    /* En movil se ve el codigo (ES, EN): el nombre completo no cabe a 320px y un idioma
+       futuro ("Português") no entraria. El <select> sigue encima, transparente, asi que
+       al tocar se abre la lista nativa. 16px evita el zoom de iOS al enfocarlo. */
+    .nav-locale-code {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 4px 6px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+    }
+    .nav-locale select {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        font-size: 16px;
+        opacity: 0;
+    }
+}
+
+        /* MAIN */
+        .main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 16px;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                padding: 12px 8px;
+                width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+        }
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background: #fff0f0;
+            border: 1px solid #f5c0c0;
+            color: #c0392b;
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MHQVQ7TH2Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MHQVQ7TH2Q');
+</script>
+    <!-- Ads -->
+    
+        <script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var l=window,i="e0677223e2f5e6f02f25d12d50e140f1",v=[["siteId",673-638-443+255*64+4707929],["minBid",0],["popundersPerIP","3:12"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],s=["d3d3LmRpc3BsYXl2ZXJ0aXNpbmcuY29tL1RpRGQvSFVPdmhYL3FobHMubWluLmpz","ZDNtem9rdHk5NTFjNXcuY2xvdWRmcm9udC5uZXQveWlwYWRkci5taW4uanM=","d3d3LnZwdmx4dW9vYWQuY29tL0F0RlQvTmRHZy9oaGxzLm1pbi5qcw==","d3d3Lnl6a2tka3lidWx2LmNvbS9waXBhZGRyLm1pbi5qcw=="],z=-1,w,m,q=function(){clearTimeout(m);z++;if(s[z]&&!(1816946969000<(new Date).getTime()&&1<z)){w=l.document.createElement("script");w.type="text/javascript";w.async=!0;var y=l.document.getElementsByTagName("script")[0];w.src="https://"+atob(s[z]);w.crossOrigin="anonymous";w.onerror=q;w.onload=function(){clearTimeout(m);l[i.slice(0,16)+i.slice(0,16)]||q()};m=setTimeout(q,5E3);y.parentNode.insertBefore(w,y)}};if(!l[i]){try{Object.freeze(l[i]=v)}catch(e){}q()}})();
+/*]]>/* */
+</script>
+        <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8B0000">
+    <link rel="apple-touch-icon" href="/img/icon-192.png">
+
+    
+</head>
+<body>
+<div id="adult-banner" style="background:#1a0000;border-bottom:2px solid #CC0000;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+    <span style="color:#ccc;font-size:0.85rem;">⚠️ Este sitio contiene contenido para adultos (+18). Al continuar navegando aceptas ser mayor de edad.</span>
+    <button onclick="dismissAdultBanner()" style="background:#CC0000;color:#fff;border:none;padding:5px 14px;cursor:pointer;border-radius:4px;white-space:nowrap;font-size:0.82rem;flex-shrink:0;">Entendido</button>
+</div>
+<script>
+function dismissAdultBanner() {
+    document.getElementById('adult-banner').style.display = 'none';
+    fetch('/adult-warning-dismiss', {method:'POST', headers:{'X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content}});
+}
+</script>
+
+<nav class="nav">
+    <a href="https://forogore.net" class="nav-brand">
+                <img src="https://forogore.net/images/LOGOFOROGORE2.webp" alt="ForoGore" style="height:32px; width:auto;" id="site-logo" class="logo-light">
+        <img src="https://forogore.net/images/LOGOFOROGORE.webp" alt="ForoGore" style="height:32px; width:auto;" id="site-logo-dark" class="logo-dark">
+            </a>
+
+    <form method="GET" action="https://forogore.net/buscar" class="nav-search">
+        <input type="text" name="q" placeholder="Buscar...">
+    </form>
+
+    <div class="nav-right">
+    <div class="nav-actions">
+        
+                <a href="https://forogore.net/c" style="font-size:14px; color:var(--text); font-weight:600;">Categorías</a>
+        <a href="https://forogore.net/galeria" style="font-size:14px; color:var(--text);">Galería</a>
+        <a href="https://forogore.net/chat" style="font-size:14px; color:var(--text);">Chat</a>
+        <a href="https://forogore.net/marketplace" style="font-size:14px; color:var(--text);">Tienda</a>
+        <a href="https://forogore.net/juegos" style="font-size:14px; color:var(--text);">Juegos</a>
+        <a href="https://forogore.net/anarquia" style="font-size:14px; color:var(--text);">Mapa</a>
+                <button id="dark-toggle" onclick="toggleDark()" style="background:none; border:none; cursor:pointer; font-size:18px; color:var(--text); padding:0; line-height:1;">🖤</button>
+                    <a href="https://forogore.net/login" class="btn btn-ghost">Entrar</a>
+            <a href="https://forogore.net/registro" class="btn btn-primary">Unirse</a>
+            </div>
+
+    
+    <form method="POST" action="https://forogore.net/idioma" class="nav-locale">
+        <span class="nav-locale-code" aria-hidden="true">ES <span style="font-size:10px;">▾</span></span>
+        <select id="locale-select" name="locale" aria-label="Idioma" onchange="this.form.submit()">
+                            <option value="es" selected>Español</option>
+                            <option value="en" >English</option>
+                            <option value="pt_BR" >Português (Brasil)</option>
+                    </select>
+        <noscript><button type="submit" class="btn btn-ghost">Cambiar</button></noscript>
+    </form>
+
+    <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menú" style="position:relative;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+            </button>
+    </div>
+</nav>
+
+<div class="nav-mobile-menu" id="mobileMenu">
+    <form method="GET" action="https://forogore.net/buscar">
+        <input type="text" name="q" placeholder="Buscar...">
+    </form>
+    
+    <a href="https://forogore.net/c" style="font-weight:600;">Categorías</a>
+    <a href="https://forogore.net/galeria">Galería</a>
+    <a href="https://forogore.net/chat">Chat</a>
+    <a href="https://forogore.net/marketplace">Tienda</a>
+    <a href="https://forogore.net/juegos">Juegos</a>
+    <a href="https://forogore.net/anarquia">Mapa</a>
+    <button onclick="toggleDark()" id="dark-toggle-mobile" style="background:none; border:none; cursor:pointer; font-size:15px; color:var(--text); padding:0; text-align:left;">🖤 Modo oscuro</button>
+
+            <a href="https://forogore.net/login">Entrar</a>
+        <a href="https://forogore.net/registro" style="color:var(--cereza); font-weight:600;">Unirse</a>
+    </div>
+
+    <main class="main">
+            <div style="max-width:700px; margin:0 auto; padding:40px 0;">
+    <div style="text-align:center; margin-bottom:40px;">
+        <div style="font-size:80px; font-weight:700; color:var(--cereza); line-height:1;">404</div>
+        <h2 style="font-size:20px; font-weight:400; margin-top:8px; color:var(--text);">Esta página no existe o fue eliminada</h2>
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+            <a href="https://forogore.net" class="btn btn-primary" style="font-size:13px; padding:7px 18px;">Ir al inicio</a>
+            <a href="https://forogore.net/c" class="btn btn-ghost" style="font-size:13px; padding:7px 18px;">Ver categorías</a>
+        </div>
+    </div>
+
+        <div style="margin-bottom:32px;">
+        <div style="font-size:14px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">🔥 Temas activos ahora</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+                        <a href="https://forogore.net/t/les-gusta-GnlBXB" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Les gusta?</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Sexy o No - Vota mi Cuerpo · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    4 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/quiero-pene-ePGmzb" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Quiero pene</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Socializar y Contactos · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    19 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/odio-cuando-intentan-vender-autoestima-a-la-gente-b5WvP0" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">ODIO CUANDO INTENTAN VENDER AUTOESTIMA A LA GENTE</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Sin Filtro - Escupo Odio · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    14 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/pochita-wCRx41" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Pochita</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Sexy o No - Vota mi Cuerpo · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    7 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/volvi-al-traje-UzHkNz" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Volví al traje</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        La Comuna Gore · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    10 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/regalo-foto-orto-6vdMDE" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">REGALO FOTO ORTO</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Socializar y Contactos · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    11 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/mutilan-a-pendejo-que-violo-un-bebe-LfAvXI" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Mutilan a pendejo que violo un bebe</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Peleas y agresiones · hace 2 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    0 resp.
+                </div>
+            </a>
+                        <a href="https://forogore.net/t/perrita-encadenada-Ilkllp" style="display:flex; align-items:center; gap:12px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cereza); border-radius:8px; padding:12px 14px; text-decoration:none; transition:background 0.15s;">
+                <div style="flex:1; min-width:0;">
+                    <div style="font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Perrita encadenada</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                        Porno Duro · hace 3 minutos
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); flex-shrink:0;">
+                    0 resp.
+                </div>
+            </a>
+                    </div>
+    </div>
+    
+        <div>
+        <div style="font-size:14px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">📂 Categorías</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                                    <a href="https://forogore.net/c/la-comuna-gore" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #14b8a6; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">La Comuna Gore</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">14,859 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/confesiones-y-secretos" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #64748b; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Confesiones y Secretos</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">1,715 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/sin-filtro-escupo-odio" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #dc2626; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Sin Filtro - Escupo Odio</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">9,457 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/socializar" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #d97706; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Socializar y Contactos</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">1,063 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/psiquiatria" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #0d9488; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Psiquiatría y Desorden Mental</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">370 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/gaming" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #84cc16; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gaming</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">302 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/humor-negro" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #d946ef; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Humor Negro</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">2,088 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/religion" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #831843; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Religión, Satanismo, Espiritualidad</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">183 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/musica" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #6366f1; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Música</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">2,724 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/accidentes" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #ef4444; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Accidentes</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">14,420 temas</div>
+            </a>
+                                    <a href="https://forogore.net/c/politica" style="display:block; background:var(--surface); border:1px solid var(--border); border-left:3px solid #1d4ed8; border-radius:8px; padding:10px 14px; text-decoration:none;">
+                <div style="font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Patria y Política</div>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">189 temas</div>
+           

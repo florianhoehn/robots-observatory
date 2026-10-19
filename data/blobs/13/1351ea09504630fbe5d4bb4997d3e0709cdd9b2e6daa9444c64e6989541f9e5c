@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html id="XF" lang="en-US" dir="LTR"
+	data-app="public"
+	data-template="error"
+	data-container-key=""
+	data-content-key=""
+	data-logged-in="false"
+	data-cookie-prefix="xf_"
+	data-csrf="1792447436,88cda79cd786190eedc90f5cca389bc2"
+	class="has-no-js template-error"
+	>
+<head>
+	
+
+
+
+	
+	<!-- Ezoic Consent Manager Tag v3.0 (for TCF 2.3) -->
+<script type="text/javascript" async=true>
+(function() {
+var host = window.location.hostname;
+var element = document.createElement('script');
+var firstScript = document.getElementsByTagName('script')[0];
+var url = 'https://cmp.inmobi.com'
+.concat('/choice/', 'M9yqsMNVAjQJK', '/', host, '/choice.js?tag_version=V3');
+var uspTries = 0;
+var uspTriesLimit = 3;
+element.async = true;
+element.type = 'text/javascript';
+element.src = url;
+
+firstScript.parentNode.insertBefore(element, firstScript);
+
+function makeStub() {
+var TCF_LOCATOR_NAME = '__tcfapiLocator';
+var queue = [];
+var win = window;
+var cmpFrame;
+
+function addFrame() {
+var doc = win.document;
+var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+if (!otherCMP) {
+if (doc.body) {
+var iframe = doc.createElement('iframe');
+
+iframe.style.cssText = 'display:none';
+iframe.name = TCF_LOCATOR_NAME;
+doc.body.appendChild(iframe);
+} else {
+setTimeout(addFrame, 5);
+}
+}
+return !otherCMP;
+}
+
+function tcfAPIHandler() {
+var gdprApplies;
+var args = arguments;
+
+if (!args.length) {
+return queue;
+} else if (args[0] === 'setGdprApplies') {
+if (
+args.length > 3 &&
+args[2] === 2 &&
+typeof args[3] === 'boolean'
+) {
+gdprApplies = args[3];
+if (typeof args[2] === 'function') {
+args[2]('set', true);
+}
+}
+} else if (args[0] === 'ping') {
+var retr = {
+gdprApplies: gdprApplies,
+cmpLoaded: false,
+cmpStatus: 'stub'
+};
+
+if (typeof args[2] === 'function') {
+args[2](retr);
+}
+} else {
+if(args[0] === 'init' && typeof args[3] === 'object') {
+args[3] = Object.assign(args[3], { tag_version: 'V3' });
+}
+queue.push(args);
+}
+}
+
+function postMessageEventHandler(event) {
+var msgIsString = typeof event.data === 'string';
+var json = {};
+
+try {
+if (msgIsString) {
+json = JSON.parse(event.data);
+} else {
+json = event.data;
+}
+} catch (ignore) {}
+
+var payload = json.__tcfapiCall;
+
+if (payload) {
+window.__tcfapi(
+payload.command,
+payload.version,
+function(retValue, success) {
+var returnMsg = {
+  __tcfapiReturn: {
+    returnValue: retValue,
+    success: success,
+    callId: payload.callId
+  }
+};
+if (msgIsString) {
+  returnMsg = JSON.stringify(returnMsg);
+}
+if (event && event.source && event.source.postMessage) {
+  event.source.postMessage(returnMsg, '*');
+}
+},
+payload.parameter
+);
+}
+}
+
+while (win) {
+try {
+if (win.frames[TCF_LOCATOR_NAME]) {
+cmpFrame = win;
+break;
+}
+} catch (ignore) {}
+
+if (win === window.top) {
+break;
+}
+win = win.parent;
+}
+if (!cmpFrame) {
+addFrame();
+win.__tcfapi = tcfAPIHandler;
+win.addEventListener('message', postMessageEventHandler, false);
+}
+};
+
+makeStub();
+
+function makeGppStub() {
+const CMP_ID = 10;
+const SUPPORTED_APIS = [
+'2:tcfeuv2',
+'6:uspv1',
+'7:usnatv1',
+'8:usca',
+'9:usvav1',
+'10:uscov1',
+'11:usutv1',
+'12:usctv1'
+];
+
+window.__gpp_addFrame = function (n) {
+if (!window.frames[n]) {
+if (document.body) {
+var i = document.createElement("iframe");
+i.style.cssText = "display:none";
+i.name = n;
+document.body.appendChild(i);
+} else {
+window.setTimeout(window.__gpp_addFrame, 10, n);
+}
+}
+};
+window.__gpp_stub = function () {
+var b = arguments;
+__gpp.queue = __gpp.queue || [];
+__gpp.events = __gpp.events || [];
+
+if (!b.length || (b.length == 1 && b[0] == "queue")) {
+return __gpp.queue;
+}
+
+if (b.length == 1 && b[0] == "events") {
+return __gpp.events;
+}
+
+var cmd = b[0];
+var clb = b.length > 1 ? b[1] : null;
+var par = b.length > 2 ? b[2] : null;
+if (cmd === "ping") {
+clb(
+{
+gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+cmpStatus: "stub", // possible values: stub, loading, loaded, error
+cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+signalStatus: "not ready", // possible values: not ready, ready
+supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+cmpId: CMP_ID, // IAB assigned CMP ID, may be 0 during stub/loading
+sectionList: [],
+applicableSections: [-1],
+gppString: "",
+parsedSections: {},
+},
+true
+);
+} else if (cmd === "addEventListener") {
+if (!("lastId" in __gpp)) {
+__gpp.lastId = 0;
+}
+__gpp.lastId++;
+var lnr = __gpp.lastId;
+__gpp.events.push({
+id: lnr,
+callback: clb,
+parameter: par,
+});
+clb(
+{
+eventName: "listenerRegistered",
+listenerId: lnr, // Registered ID of the listener
+data: true, // positive signal
+pingData: {
+  gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+  cmpStatus: "stub", // possible values: stub, loading, loaded, error
+  cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+  signalStatus: "not ready", // possible values: not ready, ready
+  supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+  cmpId: CMP_ID, // list of supported APIs
+  sectionList: [],
+  applicableSections: [-1],
+  gppString: "",
+  parsedSections: {},
+},
+},
+true
+);
+} else if (cmd === "removeEventListener") {
+var success = false;
+for (var i = 0; i < __gpp.events.length; i++) {
+if (__gpp.events[i].id == par) {
+__gpp.events.splice(i, 1);
+success = true;
+break;
+}
+}
+clb(
+{
+eventName: "listenerRemoved",
+listenerId: par, // Registered ID of the listener
+data: success, // status info
+pingData: {
+  gppVersion: "1.1", // must be “Version.Subversion”, current: “1.1”
+  cmpStatus: "stub", // possible values: stub, loading, loaded, error
+  cmpDisplayStatus: "hidden", // possible values: hidden, visible, disabled
+  signalStatus: "not ready", // possible values: not ready, ready
+  supportedAPIs: SUPPORTED_APIS, // list of supported APIs
+  cmpId: CMP_ID, // CMP ID
+  sectionList: [],
+  applicableSections: [-1],
+  gppString: "",
+  parsedSections: {},
+},
+},
+true
+);
+} else if (cmd === "hasSection") {
+clb(false, true);
+} else if (cmd === "getSection" || cmd === "getField") {
+clb(null, true);
+}
+//queue all other commands
+else {
+__gpp.queue.push([].slice.apply(b));
+}
+};
+window.__gpp_msghandler = function (event) {
+var msgIsString = typeof event.data === "string";
+try {
+var json = msgIsString ? JSON.parse(event.data) : event.data;
+} catch (e) {
+var json = null;
+}
+if (typeof json === "object" && json !== null && "__gppCall" in json) {
+var i = json.__gppCall;
+window.__gpp(
+i.command,
+function (retValue, success) {
+var returnMsg = {
+  __gppReturn: {
+    returnValue: retValue,
+    success: success,
+    callId: i.callId,
+  },
+};
+event.source.postMessage(msgIsString ? JSON.stringify(returnMsg) : returnMsg, "*");
+},
+"parameter" in i ? i.parameter : null,
+"version" in i ? i.version : "1.1"
+);
+}
+};
+if (!("__gpp" in window) || typeof window.__gpp !== "function") {
+window.__gpp = window.__gpp_stub;
+window.addEventListener("message", window.__gpp_msghandler, false);
+window.__gpp_addFrame("__gppLocator");
+}
+};
+
+makeGppStub();
+
+var uspStubFunction = function() {
+var arg = arguments;
+if (typeof window.__uspapi !== uspStubFunction) {
+setTimeout(function() {
+if (typeof window.__uspapi !== 'undefined') {
+window.__uspapi.apply(window.__uspapi, arg);
+}
+}, 500);
+}
+};
+
+var checkIfUspIsReady = function() {
+uspTries++;
+if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+console.warn('USP is not accessible');
+} else {
+clearInterval(uspInterval);
+}
+};
+
+if (typeof window.__uspapi === 'undefined') {
+window.__uspapi = uspStubFunction;
+var uspInterval = setInterval(checkIfUspIsReady, 6000);
+}
+})();
+</script>
+<!-- Ezoic Consent Manager Tag v3.0 (for TCF 2.2) -->
+			
+		<script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+<script>
+    window.ezstandalone = window.ezstandalone || {};
+    ezstandalone.cmd = ezstandalone.cmd || [];
+</script>
+	<style type="text/css">#ezPrivacyCenter {display:none !important;}  </style>
+
+	
+	
+	
+	
+	
+	
+	
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NL4MCC3');</script>
+<!-- End Google Tag Manager -->	
+		
+	
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-74D8TTN6VP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-74D8TTN6VP');
+</script>
+
+	
+	
+	
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	
+	
+	
+	
+
+	<title>Oops! We ran into some problems. 88 | Tattle Life</title>
+	
+	<script>
+	var th_giphyIcon = {
+		type: 'image',
+		
+		value: '/styles/themehouse/giphy/giphy.png'
+		
+	};
+</script>
+
+	
+	
+		
+	
+	
+	<meta property="og:site_name" content="Tattle Life" />
+
+
+	
+	
+		
+	
+	
+	<meta property="og:type" content="website" />
+
+
+	
+	
+		
+	
+	
+	
+		<meta property="og:title" content="Oops! We ran into some problems. 88" />
+		<meta property="twitter:title" content="Oops! We ran into some problems. 88" />
+	
+
+
+	
+	
+	
+		
+	
+	
+	<meta property="og:url" content="https://tattle.life/llms.txt" />
+
+
+	
+	
+
+	
+		<meta name="theme-color" content="#3b5998" />
+	
+
+	
+		
+	
+
+	
+
+
+	<link rel="preload" href="/styles/fonts/fa/fa-regular-400-reduced.woff2?_v=5.12.1" as="font" type="font/woff2" crossorigin="anonymous" />
+
+
+	<link rel="preload" href="/styles/fonts/fa/fa-solid-90-reduced0.woff2?_v=5.12.1" as="font" type="font/woff2" crossorigin="anonymous" />
+
+
+<link rel="preload" href="/styles/fonts/fa/fa-brands-400-reduced.woff2?_v=5.12.1" as="font" type="font/woff2" crossorigin="anonymous" />
+
+	<link rel="stylesheet" href="/css.php?css=public%3Anormalize.css%2Cpublic%3Acore.less%2Cpublic%3Aapp.less&amp;s=16&amp;l=1&amp;d=1791015237&amp;k=03581377af01a71f297d59c4e0a8c6fa273c0a87" />
+
+	<link rel="stylesheet" href="/css.php?css=public%3Anotices.less%2Cpublic%3Aextra.less&amp;s=16&amp;l=1&amp;d=1791015237&amp;k=3663bb1ac6cadbae29e3f5d2d9b229aeec6b523c" />
+
+	
+		<script src="/js/xf/preamble.min.js?_v=f6d92a62"></script>
+	
+
+	
+	
+	
+	
+	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-122477381-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-122477381-1', {
+			// 
+			
+			
+		});
+	</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+<script class="js-klEditorTemplates" type="application/json">
+	false
+</script>
+</head>
+<body data-template="error" class="dt1019">
+	
+	
+
+<div class="p-pageWrapper" id="top">
+
+
+
+<header class="p-header" id="header">
+	<div class="p-header-inner">
+		<div class="p-header-content">
+
+			<div class="p-header-logo p-header-logo--image">
+				<a href="https://tattle.life/">
+					<img src="/tattlepng.svg" width="100" height="36"
+						alt="Tattle Life"
+						 />
+				</a>
+			</div>
+
+			
+		</div>
+	</div>
+</header>
+
+
+
+
+
+	<div class="p-navSticky p-navSticky--primary" data-xf-init="sticky-header">
+		
+	<nav class="p-nav">
+		<div class="p-nav-inner">
+			<a class="p-nav-menuTrigger" data-xf-click="off-canvas" data-menu=".js-headerOffCanvasMenu" role="button" tabindex="0">
+				<i aria-hidden="true"></i>
+				<span class="p-nav-menuText">Menu</span>
+			</a>
+
+			<div class="p-nav-smallLogo">
+				<a href="https://tattle.life/">
+					<img src="/tattlepng.svg"
+						alt="Tattle Life"
+					 />
+				</a>
+			</div>
+
+			<div class="p-nav-scroller hScroller" data-xf-init="h-scroller" data-auto-scroll=".p-navEl.is-selected">
+				<div class="hScroller-scroll">
+					<ul class="p-nav-list js-offCanvasNavSource">
+					
+						<li>
+							
+	<div class="p-navEl " data-has-children="true">
+		
+
+			
+	
+	<a href="https://tattle.life/"
+		class="p-navEl-link p-navEl-link--splitMenu "
+		
+		
+		data-nav-id="forums">Forums</a>
+
+
+			<a data-xf-key="1"
+				data-xf-click="menu"
+				data-menu-pos-ref="< .p-navEl"
+				class="p-navEl-splitTrigger"
+				role="button"
+				tabindex="0"
+				aria-label="Toggle expanded"
+				aria-expanded="false"
+				aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="/whats-new/posts/"
+		class="menu-linkRow u-indentDepth0 js-offCanvasCopy "
+		
+		
+		data-nav-id="newPosts">New posts</a>
+
+	
+
+					
+						
+	
+	
+	<a href="/trending/"
+		class="menu-linkRow u-indentDepth0 js-offCanvasCopy "
+		
+		
+		data-nav-id="thtrending">Trending</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="p-navEl " >
+		
+
+			
+	
+	<a href="/whats-new/latest-activity"
+		class="p-navEl-link "
+		
+		data-xf-key="2"
+		data-nav-id="live">Live</a>
+
+
+			
+
+		
+		
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="p-navEl " >
+		
+
+			
+	
+	<a href="https://influview.com"
+		class="p-navEl-link "
+		
+		data-xf-key="3"
+		data-nav-id="250">Reviews</a>
+
+
+			
+
+		
+		
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="p-navEl " data-has-children="true">
+		
+
+			
+	
+	<a href="/wiki/special/pages"
+		class="p-navEl-link p-navEl-link--splitMenu "
+		
+		
+		data-nav-id="EWRcarta">Wiki</a>
+
+
+			<a data-xf-key="4"
+				data-xf-click="menu"
+				data-menu-pos-ref="< .p-navEl"
+				class="p-navEl-splitTrigger"
+				role="button"
+				tabindex="0"
+				aria-label="Toggle expanded"
+				aria-expanded="false"
+				aria-haspopup="true"></a>
+
+		
+		
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					
+						
+	
+	
+	<a href="/wiki/special/pages"
+		class="menu-linkRow u-indentDepth0 js-offCanvasCopy "
+		
+		
+		data-nav-id="EWRcarta_pages">Pages</a>
+
+	
+
+					
+						
+	
+	
+	<a href="/wiki/special/activity/"
+		class="menu-linkRow u-indentDepth0 js-offCanvasCopy "
+		
+		
+		data-nav-id="EWRcarta_activity">Latest activity</a>
+
+	
+
+					
+				</div>
+			</div>
+		
+	</div>
+
+						</li>
+					
+					</ul>
+				</div>
+			</div>
+
+			<div class="p-nav-opposite">
+				<div class="p-navgroup p-account p-navgroup--guest">
+					
+						<a href="/login/" class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--logIn"
+							data-xf-click="overlay" data-follow-redirects="on">
+							<span class="p-navgroup-linkText">Log in</span>
+						</a>
+													<a href="https://docs.google.com/forms/d/1qEXAVvXK-4EQ5PNR64M9Y8Q_EBXAzxKKcFGYrIfcZ2I/" class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--register"
+								target="new">
+								<span class="p-navgroup-linkText">Register</span>
+							</a>
+						
+						
+							
+						
+					
+				</div>
+
+				<div class="p-navgroup p-discovery p-discovery--noSearch">
+					<a href="/whats-new/"
+						class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--whatsnew"
+						aria-label="What&#039;s new"
+						title="What&#039;s new">
+						<i aria-hidden="true"></i>
+						<span class="p-navgroup-linkText">What's new</span>
+					</a>
+
+					
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	</div>
+	
+			
+		<div class="p-sectionLinks">
+			<div class="p-sectionLinks-inner hScroller" data-xf-init="h-scroller">
+				<div class="hScroller-scroll">
+					<ul class="p-sectionLinks-list">
+					
+						<li>
+							
+	<div class="p-navEl " >
+		
+
+			
+	
+	<a href="/whats-new/latest-activity"
+		class="p-navEl-link "
+		
+		data-xf-key="alt+1"
+		data-nav-id="defaultLatestActivity">Latest activity</a>
+
+
+			
+
+		
+		
+	</div>
+
+						</li>
+					
+						<li>
+							
+	<div class="p-navEl " >
+		
+
+			
+	
+	<a href="/register/"
+		class="p-navEl-link "
+		
+		data-xf-key="alt+2"
+		data-nav-id="defaultRegister">Register</a>
+
+
+			
+
+		
+		
+	</div>
+
+						</li>
+					
+					</ul>
+				</div>
+			</div>
+		</div>
+	
+
+
+
+<div class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasMenu" data-menu="menu" aria-hidden="true" data-ocm-builder="navigation">
+	<div class="offCanvasMenu-backdrop" data-menu-close="true"></div>
+	<div class="offCanvasMenu-content">
+		<div class="offCanvasMenu-header">
+			Menu
+			<a class="offCanvasMenu-closer" data-menu-close="true" role="button" tabindex="0" aria-label="Close"></a>
+		</div>
+		
+			<div class="p-offCanvasRegisterLink">
+				<div class="offCanvasMenu-linkHolder">
+					<a href="/login/" class="offCanvasMenu-link" data-xf-click="overlay" data-menu-close="true">
+						Log in
+					</a>
+				</div>
+				<hr class="offCanvasMenu-separator" />
+				
+				
+				
+					<div class="offCanvasMenu-linkHolder">
+						<a href="https://docs.google.com/forms/d/1qEXAVvXK-4EQ5PNR64M9Y8Q_EBXAzxKKcFGYrIfcZ2I/" target="new" class="offCanvasMenu-link">
+							Register
+						</a>
+					</div>
+					<hr class="offCanvasMenu-separator" />
+				
+			</div>
+		
+		<div class="js-offCanvasNavTarget"></div>
+	</div>
+</div>
+
+<div class="p-body">
+	<div class="p-body-inner">
+		<!--XF:EXTRA_OUTPUT-->
+
+		
+			
+	
+		
+		
+		
+
+		<ul class="notices notices--block  js-notices"
+			data-xf-init="notices"
+			data-type="block"
+			data-scroll-interval="6">
+
+			
+				
+	<li class="notice js-notice notice--primary"
+		data-notice-id="23"
+		data-delay-duration="0"
+		data-display-duration="0"
+		data-auto-dismiss=""
+		data-visibility="">
+
+		
+		<div class="notice-content">
+			
+				<a href="/account/dismiss-notice?notice_id=23" class="notice-dismiss js-noticeDismiss" data-xf-init="tooltip" title="Dismiss notice"></a>
+			
+			<a href="https://tattle.life/threads/brian-dowling-toxic-threads-virgin-ireland.51726/page-9#post-25633564">Virgin Media Ireland misled their audience in a recent documentary and chose to ignore the Right of Reply that Tattle sent. The audience deserves the truth. Read more..</a>
+		</div>
+	</li>
+
+			
+		</ul>
+	
+
+		
+
+		
+
+		
+		
+	
+		<ul class="p-breadcrumbs "
+			itemscope itemtype="https://schema.org/BreadcrumbList">
+		
+			
+
+			
+			
+				
+				
+	<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+		<a href="https://tattle.life/" itemprop="item">
+			<span itemprop="name">Forums</span>
+		</a>
+		<meta itemprop="position" content="1" />
+	</li>
+
+			
+
+			
+			
+
+		
+		</ul>
+	
+
+		
+
+		
+	<noscript><div class="blockMessage blockMessage--important blockMessage--iconic u-noJsOnly">JavaScript is disabled. For a better experience, please enable JavaScript in your browser before proceeding.</div></noscript>
+
+		
+	<!--[if lt IE 9]><div class="blockMessage blockMessage&#45;&#45;important blockMessage&#45;&#45;iconic">You are using an out of date browser. It  may not display this or other websites correctly.<br />You should upgrade or use an <a href="https://www.google.com/chrome/browser/" target="_blank">alternative browser</a>.</div><![endif]-->
+
+
+		
+			<div class="p-body-header">
+			
+				
+					<div class="p-title ">
+					
+						
+							<h1 class="p-title-value">Oops! We ran into some problems. 88</h1>
+						
+						
+					
+					</div>
+				
+
+				
+			
+			</div>
+		
+
+		<div class="p-body-main  ">
+			
+
+			<div class="p-body-content">
+				
+				<div class="p-body-pageContent">
+
+<div class="blockMessage">
+	
+		The requested page could not be found.
+	
+</div>
+
+<style type="text/css">.p-nav-opposite { display:none !important; }</style>
+</div>
+				
+			</div>
+
+			
+		</div>
+
+		
+		
+	
+		<ul class="p-breadcrumbs p-breadcrumbs--bottom"
+			itemscope itemtype="https://schema.org/BreadcrumbList">
+		
+			
+
+			
+			
+				
+				
+	<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+		<a href="https://tattle.life/" itemprop="item">
+			<span itemprop="name">Forums</span>
+		</a>
+		<meta itemprop="position" content="1" />
+	</li>
+
+			
+
+			
+			
+
+		
+		</ul>
+	
+
+		
+	</div>
+</div>
+
+<footer class="p-footer" id="footer">
+	<div class="p-footer-inner">
+		<div class="p-footer-row">
+			
+				<div class="p-footer-row-main">
+<select id="dynamic_select" style="font-size:1.5em;margin-bottom:10px;">
+<option value="" selected>Quick Jump to forum</option>
+<option value='https://tattle.life/tags/alfie-deyes'>Alfie Deyes</option><option value='https://tattle.life/tags/alicej_t'>Alicej_T</option><option value='https://tattle.life/tags/all-that-dreams-glitters'>All That Dreams Glitters</option><option value='https://tattle.life/tags/anastasia-kingsnorth'>Anastasia Kingsnorth</option><option value='https://tattle.life/tags/anna-bey'>Anna Bey</option><option value='https://tattle.life/tags/aoibhe-devlin'>Aoibhe Devlin</option><option value='https://tattle.life/tags/ashmamareid'>Ashmamareid</option><option value='https://tattle.life/tags/becky-home-sweet-home'>Becky Home Sweet Home</option><option value='https://tattle.life/tags/being_robbo'>Being_Robbo</option><option value='https://tattle.life/tags/brogan-tate'>Brogan Tate</option><option value='https://tattle.life/tags/brummymummyof2'>Brummymummyof2</option><option value='https://tattle.life/tags/caroline-hirons'>Caroline Hirons</option><option value='https://tattle.life/tags/carrie-hope-fletcher'>Carrie Hope Fletcher</option><option value='https://tattle.life/tags/cassy-clark'>Cassy Clark</option><option value='https://tattle.life/tags/charlotte-louise-taylor'>Charlotte Louise Taylor</option><option value='https://tattle.life/tags/chet-sket'>Chet Sket</option><option value='https://tattle.life/tags/children'>Children</option><option value='https://tattle.life/tags/chloe-todd'>Chloe Todd</option><option value='https://tattle.life/tags/cleaning_with_mario'>Cleaning_With_Mario</option><option value='https://tattle.life/tags/clemmie-telford'>Clemmie Telford</option><option value='https://tattle.life/tags/daddy-to-triplet-girls'>Daddy To Triplet Girls</option><option value='https://tattle.life/tags/dan-osborne'>Dan Osborne</option><option value='https://tattle.life/tags/demi-donnelly'>Demi Donnelly</option><option value='https://tattle.life/tags/eimear-varian-barry'>Eimear Varian Barry</option><option value='https://tattle.life/tags/elaine12jones'>Elaine12Jones</option><option value='https://tattle.life/tags/elle-darby'>Elle Darby</option><option value='https://tattle.life/tags/elle-florence'>Elle Florence</option><option value='https://tattle.life/tags/emily-canham'>Emily Canham</option><option value='https://tattle.life/tags/emilywalters_journal'>Emilywalters_Journal</option><option value='https://tattle.life/tags/emma-drew'>Emma Drew</option><option value='https://tattle.life/tags/emsheldon'>Emsheldon</option><option value='https://tattle.life/tags/faces-by-grace'>Faces By Grace</option><option value='https://tattle.life/tags/family-fizz'>Family Fizz</option><option value='https://tattle.life/tags/fashionmumblr'>Fashionmumblr</option><option value='https://tattle.life/tags/fathering-autism'>Fathering Autism</option><option value='https://tattle.life/tags/fopperholic'>Fopperholic</option><option value='https://tattle.life/tags/gabriella-lindley'>Gabriella Lindley</option><option value='https://tattle.life/tags/gemma-louise-miles'>Gemma Louise Miles</option><option value='https://tattle.life/tags/grace-beverley'>Grace Beverley</option><option value='https://tattle.life/tags/harry-and-meghan'>Harry And Meghan</option><option value='https://tattle.life/tags/helen-anderson'>Helen Anderson</option><option value='https://tattle.life/tags/helen-briggs'>Helen Briggs</option><option value='https://tattle.life/tags/hunters-and-heels'>Hunters And Heels</option><option value='https://tattle.life/tags/imogenation'>Imogenation</option><option value='https://tattle.life/tags/inthefrow'>Inthefrow</option><option value='https://tattle.life/tags/itsdaniellesjourney'>Itsdaniellesjourney</option><option value='https://tattle.life/tags/itsthefergusons'>Itsthefergusons</option><option value='https://tattle.life/tags/j-k-rowling'>J. K. Rowling</option><option value='https://tattle.life/tags/jack-monroe'>Jack Monroe</option><option value='https://tattle.life/tags/jacqueline-jossa'>Jacqueline Jossa</option><option value='https://tattle.life/tags/james-charles'>James Charles</option><option value='https://tattle.life/tags/james-smith'>James Smith</option><option value='https://tattle.life/tags/jane-gammons-2'>Jane Gammons</option><option value='https://tattle.life/tags/jessica-millichamp'>Jessica Millichamp</option><option value='https://tattle.life/tags/jim-chapman'>Jim Chapman</option><option value='https://tattle.life/tags/joanne-larby'>Joanne Larby</option><option value='https://tattle.life/tags/joe-sugg'>Joe Sugg</option><option value='https://tattle.life/tags/joe-wicks'>Joe Wicks</option><option value='https://tattle.life/tags/katie-ellison'>Katie Ellison</option><option value='https://tattle.life/tags/katie-hayes'>Katie Hayes</option><option value='https://tattle.life/tags/katie-price'>Katie Price</option><option value='https://tattle.life/tags/keepingkate'>Keepingkate</option><option value='https://tattle.life/tags/keepingupwithkirstylea'>Keepingupwithkirstylea</option><option value='https://tattle.life/tags/kerry-conway'>Kerry Conway</option><option value='https://tattle.life/tags/lauren-goodger'>Lauren Goodger</option><option value='https://tattle.life/tags/lauryn-goodman'>Lauryn Goodman</option><option value='https://tattle.life/tags/life-of-beckie'>Life Of Beckie</option><option value='https://tattle.life/tags/life-with-oaks-and-olive'>Life With Oaks And Olive</option><option value='https://tattle.life/tags/lifewiththeaustins'>Lifewiththeaustins</option><option value='https://tattle.life/tags/lily-pebbles'>Lily Pebbles</option><option value='https://tattle.life/tags/lisa-jordan'>Lisa Jordan</option><option value='https://tattle.life/tags/lorna-luxe'>Lorna Luxe</option><option value='https://tattle.life/tags/louise-pentland'>Louise Pentland</option><option value='https://tattle.life/tags/lucy-jessica-carter'>Lucy Jessica Carter</option><option value='https://tattle.life/tags/luxefamily5'>Luxefamily5</option><option value='https://tattle.life/tags/lydia-millen'>Lydia Millen</option><option value='https://tattle.life/tags/lynsey-queen-of-clean'>Lynsey Queen Of Clean</option><option value='https://tattle.life/tags/madison-sarah'>Madison Sarah</option><option value='https://tattle.life/tags/makeup-by-julie'>Makeup By Julie</option><option value='https://tattle.life/tags/megan-ellaby'>Megan Ellaby</option><option value='https://tattle.life/tags/melanie-murphy'>Melanie Murphy</option><option value='https://tattle.life/tags/melissamillsbari'>Melissamillsbari</option><option value='https://tattle.life/tags/mia-jeal'>Mia Jeal</option><option value='https://tattle.life/tags/misha-grimes'>Misha Grimes</option><option value='https://tattle.life/tags/mod-fod'>Mod & Fod</option><option value='https://tattle.life/tags/mrs-bavington'>Mrs Bavington</option><option value='https://tattle.life/tags/mrs-hinch'>Mrs Hinch</option><option value='https://tattle.life/tags/mumma-to-triplet-girls'>Mumma To Triplet Girls</option><option value='https://tattle.life/tags/nadia-sawalha'>Nadia Sawalha</option><option value='https://tattle.life/tags/natascha-ashford'>Natascha Ashford</option><option value='https://tattle.life/tags/natasha-ashford'>Natasha Ashford</option><option value='https://tattle.life/tags/niomi-smart'>Niomi Smart</option><option value='https://tattle.life/tags/odonnell-sisters-2'>O'Donnell Sisters</option><option value='https://tattle.life/tags/part-time-working-mummy'>Part Time Working Mummy</option><option value='https://tattle.life/tags/phillip-schofield'>Phillip Schofield</option><option value='https://tattle.life/tags/phoebecourt'>Phoebecourt</option><option value='https://tattle.life/tags/rebecca-lamb'>Rebecca Lamb</option><option value='https://tattle.life/tags/rvk-loves'>Rvk Loves</option><option value='https://tattle.life/tags/sacconejolys'>Sacconejolys</option><option value='https://tattle.life/tags/saffron-barker'>Saffron Barker</option><option value='https://tattle.life/tags/sali-hughes'>Sali Hughes</option><option value='https://tattle.life/tags/sallie-axl'>Sallie Axl</option><option value='https://tattle.life/tags/sam-faiers'>Sam Faiers</option><option value='https://tattle.life/tags/sarah-burke'>Sarah Burke</option><option value='https://tattle.life/tags/sarahs-day'>Sarahs Day</option><option value='https://tattle.life/tags/scousebirdblogs'>Scousebirdblogs</option><option value='https://tattle.life/tags/sean-pratt'>Sean Pratt</option><option value='https://tattle.life/tags/siobhohagan'>Siobh.Ohagan</option><option value='https://tattle.life/tags/sophia-and-cinzia'>Sophia And Cinzia</option><option value='https://tattle.life/tags/sophie-and-dave'>Sophie And Dave</option><option value='https://tattle.life/tags/stacey-solomon'>Stacey Solomon</option><option value='https://tattle.life/tags/styled-by-susie'>Styled By Susie</option><option value='https://tattle.life/tags/susie-verrill'>Susie Verrill</option><option value='https://tattle.life/tags/swfeebs'>Swfeebs</option><option value='https://tattle.life/tags/tamara-kalinic'>Tamara Kalinic</option><option value='https://tattle.life/tags/tanya-burr'>Tanya Burr</option><option value='https://tattle.life/tags/tanya-whitlock'>Tanya Whitlock</option><option value='https://tattle.life/tags/teen-mom'>Teen Mom</option><option value='https://tattle.life/tags/the-home-that-made-me'>The Home That Made Me</option><option value='https://tattle.life/tags/the-house-build'>The House Build</option><option value='https://tattle.life/tags/the-ingham-family'>The Ingham Family</option><option value='https://tattle.life/tags/theradfordfamily'>Theradfordfamily</option><option value='https://tattle.life/tags/thetimtracker'>Thetimtracker</option><option value='https://tattle.life/tags/thismamalife'>Thismamalife</option><option value='https://tattle.life/tags/tignam'>Tignam</option><option value='https://tattle.life/tags/tracy-dimarco'>Tracy Dimarco</option><option value='https://tattle.life/tags/trim-with-tan'>Trim With Tan</option><option value='https://tattle.life/tags/twinsandme'>Twinsandme</option><option value='https://tattle.life/tags/xameliax'>Xameliax</option><option value='https://tattle.life/tags/zanna-van-dijk'>Zanna Van Dijk</option><option value='https://tattle.life/tags/zoe-sugg'>Zoe Sugg</option>
+</select>
+					<ul class="p-footer-linkList">
+					
+						
+							<li><a href="/misc/style" data-xf-click="overlay"
+								data-xf-init="tooltip" title="Style chooser" rel="nofollow">
+								<i class="fa--xf far fa-paint-brush" aria-hidden="true"></i> Blue
+							</a></li>
+						
+						
+					
+					</ul>
+				</div>
+			
+			<div class="p-footer-row-opposite">
+				<ul class="p-footer-linkList">
+					
+					
+						
+							<li><a href="/misc/contact" data-xf-click="overlay">Contact us</a></li>
+						
+					
+
+					
+						<li><a href="/help/terms/">Terms and rules</a></li>
+					
+
+					
+						<li><a href="/help/privacy-policy/">Privacy policy</a></li>
+					
+					
+					<li><a href="/help/takedown">Takedown Request</a></li>
+
+					
+						<li><a href="/help/">Help</a></li>
+					
+
+					
+
+					<li><a href="/forums/-/index.rss" target="_blank" class="p-footer-rssLink" title="RSS"><span aria-hidden="true"><i class="fa--xf far fa-rss" aria-hidden="true"></i><span class="u-srOnly">RSS</span></span></a></li>
+				</ul>
+				
+
+			<div class="p-footer-copyright">
+				The opinions and views expressed in posts are solely those of the individual users and do not represent or reflect the opinions, views, or positions of Tattle Life. Tattle Life does not endorse, support, or verify the accuracy of any user-generated content.<br />
+			</div>
+
+			</div>
+		</div>
+
+
+
+
+		
+	</div>
+</footer>
+
+</div> <!-- closing p-pageWrapper -->
+
+<div class="u-bottomFixer js-bottomFixTarget">
+	
+	
+		
+	
+		
+		
+		
+
+		<ul class="notices notices--bottom_fixer  js-notices"
+			data-xf-init="notices"
+			data-type="bottom_fixer"
+			data-scroll-interval="6">
+
+			
+				
+	<li class="notice js-notice notice--primary notice--cookie"
+		data-notice-id="-1"
+		data-delay-duration="0"
+		data-display-duration="0"
+		data-auto-dismiss="0"
+		data-visibility="">
+
+		
+		<div class="notice-content">
+			
+			<div class="u-alignCenter">
+	We and our partners set cookies and collect data from your browser in order to improve the user experience, keep you logged in if you register, personalize content, analyze data traffic and customize advertisements.<br /><br />
+By continuing to use this site, you are consenting to our use of essential cookies.
+</div>
+
+<div class="u-inputSpacer u-alignCenter">
+	<a href="/account/dismiss-notice" class="js-noticeDismiss button--notice button button--icon button--icon--confirm"><span class="button-text">Accept</span></a>
+	<a href="/help/cookies" class="button--notice button" style="background-color:grey;border-color:grey;"><span class="button-text">Reject</span></a>
+</div>
+		</div>
+	</li>
+
+			
+		</ul>
+	
+
+	
+</div>
+
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script>window.jQuery || document.write('<script src="/js/vendor/jquery/jquery-3.

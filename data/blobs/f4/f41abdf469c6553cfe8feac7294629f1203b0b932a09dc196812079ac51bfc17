@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T8ZH4WN');</script>
+  <!-- End Google Tag Manager -->
+   
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DXKLJQWHE7"></script>
+  <script>
+    var ga4Id = "G-DXKLJQWHE7";
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', ga4Id);
+  </script>
+
+  <title>SK telecom</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  <!-- 공통 // -->
+  <script type="text/javascript" src="/js/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-migrate-3.4.1.min.js"></script><!-- 템플릿 안에 사용된 .size() 대응 -->
+  <script type="text/javascript" src="/js/jquery-ui.1.14.1.min.js"></script>
+  <script type="text/javascript" src="/js/gsap.3.12.2.min.js"></script>
+  <script type="text/javascript" src="/js/ScrollTrigger.3.12.7.min.js"></script>
+  <script type="text/javascript" src="/js/ScrollToPlugin.3.12.7.min.js"></script>
+  <script type="text/javascript" src="/js/gnb-re.js"></script>
+  <script type="text/javascript" src="/js/skt-script.js"></script><!-- 공통스크립트 -->
+  
+  <link rel="stylesheet" href="/css/jquery-ui.1.14.1.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- // 공통 -->
+</head>
+<body>
+<div class="container">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8ZH4WN"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+     
+    <!-- content start -->
+    <div id="content" class="content">
+        <h2 class="txt-hide layout-area-title" id="error_title">본문 영역</h2>
+
+        <!-- content-inner start -->
+        <div id="content_inner" class="error-page">
+            <div class="section content-body">
+                <div class="section-inner">
+                    <div class="error-box" id="kor">
+                        <h3>
+                            <img src="/images/etc/error-title_sm.png" alt="요청하신 페이지를 찾을 수 없습니다." draggable="false" class="only-mobile">
+                            <img src="/images/etc/error-title_lg.png" alt="요청하신 페이지를 찾을 수 없습니다." draggable="false" class="only-tablet-desktop">
+                        </h3>
+                        <p class="desc-nor">찾으시려는 페이지가 제거되었거나<br class="only-mobile"> 페이지 이름이 변경되었거나<br class="only-mobile"> 일시적으로 사용하실 수 없습니다.<br>입력하신 페이지 주소가 정확한지 다시 한번<br class="mobile-br"> 확인해 보시기 바랍니다.</p>
+                        <div class="link-wrap">
+                            <a href="#" class="link-back">이전 화면으로</a>
+                            <a href="/index.html" class="link-home">SK텔레콤 홈으로</a>
+                        </div>
+                    </div>
+                    <div class="error-box" id="en" style="display: none;">
+                        <h3 id="en" class="error-headline">This webpage is not found
+                        </h3>
+                        <p class="desc-nor">The page you are trying to access does not exist on this server.</p>
+                        <div class="link-wrap">
+                            <a href="#" class="link-back">Go Back</a>
+                            <a href="/index_en.html" class="link-home">Go Home</a>
+                        </div>
+                    </div>
+                    <style>
+                        .error-headline {
+                            color: var(--color-gray_900, #1A2232);
+                            text-align: center;
+                            font-family: "SKT Sans Text";
+                            font-size: 32px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: 160%;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+        <!-- content-inner end -->
+    </div>
+    <!-- content end -->
+</div>
+<script type="text/javascript">
+  $(function() {
+      var pageurl = window.location.pathname;
+
+      $('a.link-back').click(function(e) {
+          e.preventDefault();
+          history.go(-1);
+      });
+      
+    // 국문, 영문 페이지 구분
+      if(pageurl.indexOf("/index_en")>=0 || pageurl.indexOf("/en/")>=0){
+        document.getElementById("en").style.display = "";
+        document.getElementById("kor").style.display = "none";
+        document.getElementById("error_title").innerText = "content area";
+      }else{
+        document.getElementById("kor").style.display = "";
+        document.getElementById("en").style.display = "none";
+        document.getElementById("error_title").innerText = "본문 영역";
+      }
+  });
+</script>
+</body>
+</html>

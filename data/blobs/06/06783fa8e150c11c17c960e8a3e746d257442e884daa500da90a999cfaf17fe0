@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr" class="js js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>@@titre@@ | EDF</title>
+    <!-- LMA -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="shortcut icon" href="/failover/DISCOVR/ONE/assets_waf/favicon.ico" type="image/vnd.microsoft.icon">
+    <link type="text/css" rel="stylesheet" href="/failover/DISCOVR/ONE/assets_waf/css/crisis.css" media="all">
+    <script src="https://cdn.tagcommander.com/1922/tc_edfgroupe_1.js"></script>
+  </head>
+  <body>
+    <div class="page-maintenance">
+      <!-- Container header visual -->
+      <div class="wrapper-visual">
+        <div class="wrapper-logo">
+          <img alt="Logo EDF" src="/failover/DISCOVR/ONE/assets_origin/images/logo-edf.svg" loading="lazy">
+        </div>
+        <div class="bg-blue">
+          <img alt="Logo EDF" src="/failover/DISCOVR/ONE/assets_origin/images/icon-ecrou.svg" loading="lazy">
+        </div>
+      </div>
+      <!-- Container text -->
+      <div class="wrapper-text">
+        <h1 class="title" id="page-title">Le site EDF est en cours de maintenance</h1>
+        <div class="text" id="page-text">Nous serons de retour très bientôt.</div>
+        <!-- Button -->
+        <p class="white" id="title-customer-areas">Vos espaces clients</p>
+        <div class="container-btn">
+          <a href="/" class="btn button-primary-text white" id="cta-residential">Particulier</a>
+          <a href="/" class="btn button-primary-text" id="cta-businesses">Entreprise et collectivité</a>
+        </div>
+        
+        <div class="container-select">
+          <p class="white" id="title-areas-outside">Vos espaces hors France métropolitaine</p>
+          <select name="SEI" onChange="if (this.options[this.selectedIndex].value !== 'noop') location.href=''+this.options[this.selectedIndex].value;">
+            <option value="noop" id="select-noop">Sélectionnez</option>
+            <option value="https://sei-ael-corse.edf.com/aelEDF/jsp/arc/habilitation/login.jsp" id="corse">Corse</option>
+            <option value="https://sei-ael-guadeloupe.edf.com/aelEDF/jsp/arc/habilitation/login.jsp">Guadeloupe</option>
+            <option value="https://sei-ael-martinique.edf.com/aelEDF/jsp/arc/habilitation/login.jsp">Martinique</option>
+            <option value="https://sei-ael-guyane.edf.com/aelEDF/jsp/arc/habilitation/login.jsp" id="guyane">Guyane</option>
+            <option value="https://sei-ael-reunion.edf.com/aelEDF/jsp/arc/habilitation/login.jsp" id="reunion">La Réunion</option>
+            <option value="https://sei-portailpro.edf.fr/connexion" id="marche-affaires">Marché d'affaires</option>
+            <option value="https://portail-raccordement.edf.fr/s/?language=fr" id="raccordement">Raccordement</option>
+          </select>
+        </div>
+        
+        <div>
+        <style> .white{color: #FFFFFF;}</style>
+        <p class="white"><br><br><br><br>Incident ID: 0.1f901002.1792444792.1026f244<br>Client IP: 82.39.15.43</p>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var traductions = {
+        "fr":{
+        "titre":"Le site EDF est en cours de maintenance",
+        "texte":"Nous serons tr\u00e8s bient\u00f4t de retour.",
+        "cta_label":"Particulier",
+        "cta_lien":"https:\/\/particulier.edf.fr\/fr\/accueil.html",
+        "cta_label_business":"Entreprise et collectivité",
+        "cta_lien_business":"/",
+        "title_customer_areas":"Vos espaces client",
+        "title_areas_outside":"Vos espaces hors France métropolitaine",
+        "corse":"Corse",
+        "guyane":"Guyane",
+        "reunion":"La Réunion",
+        "marche-affaires":"Marché d'affaires",
+        "raccordement" : "Raccordement",
+        "select-noop":"Sélectionnez"
+        },
+        "en": {
+        "titre":"Our site is currently undergoing maintenance",
+        "texte":"Please check back soon.",
+        "cta_label":"Residential",
+        "cta_lien":"https:\/\/particulier.edf.fr\/en\/home.html",
+        "cta_label_business":"Businesses",
+        "cta_lien_business":"https://auth.entreprises-collectivites.edf.fr/",
+        "title_customer_areas":"Your customer areas",
+        "title_areas_outside":"Your areas outside mainland France",
+        "corse":"Corsica",
+        "guyane":"French Guiana",
+        "reunion":"Reunion",
+        "marche-affaires":"Business Marketplace",
+        "raccordement" : "Connection (in french)",
+        "select-noop":"Select"
+        }
+      };
+      var navFR = navigator.language.match(/^fr/);
+      var labels = navFR ? traductions['fr']: traductions['en'];
+      console.log(labels)
+      var titre = document.getElementById('page-title');
+      titre.innerHTML = labels.titre;
+      document.title = document.title.replace('@@titre@@', labels.titre);
+      var texte = document.getElementById('page-text');
+      texte.innerHTML = labels.texte;
+      var ctaResidential = document.getElementById('cta-residential');
+      var ctaBusinesses = document.getElementById('cta-businesses');
+
+      var titleCustomerAreas = document.getElementById('title-customer-areas');
+      var titleAreasOutside = document.getElementById('title-areas-outside');
+      titleCustomerAreas.innerHTML = labels.title_customer_areas;
+      titleAreasOutside.innerHTML = labels.title_areas_outside;
+
+      if ((labels['cta_lien'].length > 0) && (labels['cta_label'].length > 0)) {
+        ctaResidential.innerHTML = labels['cta_label'];
+        ctaResidential.href = labels['cta_lien']; 
+      }
+      if ((labels['cta_lien_business'].length > 0) && (labels['cta_label_business'].length > 0)) {
+        ctaBusinesses.innerHTML = labels['cta_label_business'];
+        ctaBusinesses.href = labels['cta_lien_business'];
+      }
+      var optionCorse = document.getElementById('corse');
+      var optionGuyane = document.getElementById('guyane');
+      var optionReunion = document.getElementById('reunion');
+      var optionMarcheAffaires = document.getElementById('marche-affaires');
+      var optionRaccordement = document.getElementById('raccordement');
+      var optionNoop = document.getElementById('select-noop');
+
+      optionCorse.innerHTML = labels['corse']
+      optionGuyane.innerHTML = labels['guyane']
+      optionReunion.innerHTML = labels['reunion']
+      optionMarcheAffaires.innerHTML = labels['marche-affaires']
+      optionRaccordement.innerHTML = labels['raccordement']
+      optionNoop.innerHTML = labels['select-noop']
+    </script>
+    <script>
+      function triggerNovaAnalyticsReady() {
+        if(tC !== undefined) {
+          tc_vars.virtualpagetitle = 'Page Maintenance';
+          if (tC.container && tC.event) {
+            tC.container.reload();
+            tC.event.virtualpageview();
+          }
+        }
+      }
+    </script>
+    <script src="https://cdn.tagcommander.com/1922/tc_edfgroupe_3.js" onload="triggerNovaAnalyticsReady()"></script>
+  </body>
+</html>

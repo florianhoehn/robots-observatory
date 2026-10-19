@@ -1,0 +1,48 @@
+<html><head>
+<meta name="robots" content="noindex, nofollow">
+<script>
+function ajax(url, callback, data, x) {
+	try {
+		x = new(this.XMLHttpRequest || ActiveXObject)('MSXML2.XMLHTTP.3.0');
+		x.open(data ? 'POST' : 'GET', url, 1);
+		x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		x.onreadystatechange = function () {
+			x.readyState > 3 && callback && callback(x.responseText, x);
+		};
+		x.send(data)
+	} catch (e) {
+		window.console && console.log(e);
+	}
+}
+
+
+	ajax('/on/demandware.store/Sites-HemaNL-Site/nl_NL/Home-ErrorNotFound200', function(data) {
+		document.open();
+		document.write(data);
+		document.close();
+	});
+
+</script>
+</head><body><!-- Demandware Analytics code 1.0 (body_end-analytics-tracking-asynch.js) -->
+<script type="text/javascript">//<!--
+/* <![CDATA[ */
+function trackPage() {
+    try{
+        var trackingUrl = "https://www.hema.nl/on/demandware.store/Sites-HemaNL-Site/nl_NL/__Analytics-Start";
+        var dwAnalytics = dw.__dwAnalytics.getTracker(trackingUrl);
+        if (typeof dw.ac == "undefined") {
+            dwAnalytics.trackPageView();
+        } else {
+            dw.ac.setDWAnalytics(dwAnalytics);
+        }
+    }catch(err) {};
+}
+/* ]]> */
+// -->
+</script>
+<script type="text/javascript" src="/on/demandware.static/Sites-HemaNL-Site/-/nl_NL/v1792381607598/internal/jscript/dwanalytics-22.2.js" async="async" onload="trackPage()"></script>
+<!-- Demandware Active Data (body_end-active_data.js) -->
+<script src="/on/demandware.static/Sites-HemaNL-Site/-/nl_NL/v1792381607598/internal/jscript/dwac-21.7.1.js" type="text/javascript" async="async"></script><!-- CQuotient Activity Tracking (body_end-cquotient.js) -->
+<script src="https://cdn.cquotient.com/js/v2/gretel.min.js" type="text/javascript" async="async"></script>
+</body></html>

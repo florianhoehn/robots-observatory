@@ -1,0 +1,41 @@
+# CryptoQuant — robots.txt
+# Preview/staging exclusion is enforced by X-Robots-Tag and page robots meta.
+# Crawling remains allowed so crawlers can read noindex. Sitemap URLs are production only.
+# Content-Signal is intentional policy; older validators may report an unknown directive.
+#
+# AI 크롤러 정책: 검색 노출과 AI 답변 인용은 허용하되, 모델 학습용 수집은 거부한다.
+# Content-Signal은 이 의도를 크롤러가 읽을 수 있게 명시하는 필드다.
+#   search=yes    검색엔진 색인·노출 허용
+#   ai-input=yes  AI 답변 생성 시 인용(RAG) 허용 — /llms.txt 를 제공하는 의도와 같은 방향
+#   ai-train=no   모델 학습용 데이터 수집 거부
+#
+# NOTE: GPTBot·ClaudeBot·PerplexityBot·CCBot 개별 블록을 두지 않는다.
+# robots.txt 규격상 크롤러는 자신과 매칭되는 User-agent 블록 하나만 읽고 `*` 블록은 무시하므로,
+# 개별 블록을 두면 아래 Content-Signal이 정작 그 AI 크롤러들에게 적용되지 않는다.
+# (기존에 있던 4개 블록은 규칙이 `*`와 완전히 동일해 동작상 차이가 없었다.)
+#
+# NOTE: /api 전체가 아니라 /api/inner 와 /api/auth 만 막는다.
+#   /api/inner  서비스 내부 전용 라우트 (미들웨어가 Sec-Fetch-Site 로 외부 요청을 이미 403 처리하므로
+#               여기서는 색인 의도를 명시하는 역할)
+#   /api/auth   NextAuth 라우트. 커스텀 pages 설정이 없어 /api/auth/signin·/error 가
+#               noindex 없는 HTML 로 200 응답한다 — 로그인 페이지가 검색에 색인되는 것을 막는다.
+# 나머지(/api/alert·/api/analytics·/api/health-check)는 색인을 막을 이유가 없어 열어 둔다.
+#
+# NOTE: Disallow 를 Allow 보다 먼저 둔다.
+# Google은 규칙 길이가 긴 쪽(= 더 구체적인 Disallow)을 채택하지만,
+# 순서대로 첫 매칭을 쓰는 파서에서는 `Allow: /` 가 먼저 걸려 Disallow 가 뚫린다.
+# 이 순서는 두 방식 모두에서 차단이 성립한다.
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Disallow: /api/inner
+Disallow: /api/auth
+Allow: /
+
+# Sitemaps
+Sitemap: https://cryptoquant.com/sitemap.xml
+Sitemap: https://cryptoquant.com/asset/sitemap.xml
+Sitemap: https://cryptoquant.com/community/dashboard/sitemap.xml
+Sitemap: https://cryptoquant.com/insights/quicktake/sitemap.xml
+Sitemap: https://cryptoquant.com/insights/research/sitemap.xml
+Sitemap: https://cryptoquant.com/applied-research/sitemap.xml
+Sitemap: https://cryptoquant.com/alert/preset/sitemap.xml

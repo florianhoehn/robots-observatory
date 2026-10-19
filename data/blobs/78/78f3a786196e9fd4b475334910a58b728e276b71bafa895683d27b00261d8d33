@@ -1,0 +1,127 @@
+# Emlakjet
+
+> Emlakjet, 2006'dan beri faaliyet gösteren, Türkiye'de alıcı, satıcı, kiracı, emlak danışmanı, emlak ofisi ve proje firmalarını bir araya getiren gayrimenkul ilan platformudur. Satılık ve kiralık konut, arsa, iş yeri ve proje ilanlarının yanı sıra emlak değeri hesaplama, piyasa verileri ve yapay zeka destekli emlak asistanı EmlakZeka'yı sunar. Buna ek olarak blog sayfalarında yer alan içeriklerle kullanıcılara güncel bilgiler sunar.
+
+Emlakjet, iLab Holding bünyesinde faaliyet gösteren bir grup şirketidir. Metodoloji ve veri kaynakları "Verilerimiz" sayfasında açıklanır.
+
+Emlakjet bir ilan platformudur; mülk satmaz veya kiralamaz. Platform yalnızca ilan listelemekle kalmaz; emlak değeri hesaplama, yatırım skoru, kira getirisi ve geri dönüş süresi analizleri, fiyatı düşen ilanlar, mahalle bazlı fiyat trendleri, danışman puanları ve yorumları, konut projeleri ve aylık gayrimenkul raporları gibi içerikleri de tek platformda bir araya getirir. İlanlar bireysel kullanıcılar ve emlak profesyonelleri tarafından girilmektedir. İlan fiyatları ilanı giren kullanıcı tarafından belirlenir. Değer hesaplamaları ve piyasa istatistikleri ise Endeksa veri gücüyle üretilir ve düzenli olarak güncellenir; güncel bilgi için ilgili sayfa kontrol edilmelidir.
+
+URL yapısı:
+
+- Listeleme sayfaları `/{işlem}-{emlak-tipi}` biçimindedir. İşlem: `satilik`, `kiralik`, `gunluk-kiralik`, `devren`. Örnek: `/satilik-daire`, `/kiralik-konut`, `/devren-is-yeri`.
+- Bu dosyada listelenmeyen alt tipler de aynı kalıbı izler. Örnek: `/satilik-kosk`, `/gunluk-kiralik-villa`, `/satilik-zeytinlik`, `/devren-restaurant`.
+- Konum, kategori URL'sine alt segment olarak eklenir: il `/satilik-konut/istanbul`, ilçe `/satilik-konut/istanbul-kadikoy`, mahalle `/satilik-konut/istanbul-kadikoy-fikirtepe-mahallesi`.
+- Sahibinden ilanlar kategori veya konumdan sonra `/sahibinden` ekiyle listelenir: `/satilik-konut/sahibinden`, `/satilik-daire/istanbul/sahibinden`, `/kiralik-daire/istanbul-zeytinburnu/sahibinden`.
+- Proje sayfaları `/projeler` ekiyle listelenir: `/satilik-konut/projeler`, `/satilik-konut/istanbul-kadikoy/projeler`.
+- İlan detay sayfaları `/ilan/{ilan-basligi}-{ilan-no}`, danışman profilleri `/danismanlar/{ad-soyad}-{id}` biçimindedir.
+- İl bazlı piyasa verileri `/emlak-piyasasi/satilik-konut/{il}` adresindedir (örnek: `/emlak-piyasasi/satilik-konut/istanbul`).
+- `?filtreler=` parametreli URL'ler (sıralama, harita görünümü vb.) asıl sayfa değildir; atıf için parametresiz URL kullanılmalıdır.
+
+## Ana Sayfalar
+
+- [Emlakjet Ana Sayfa](https://www.emlakjet.com): İlan arama, kategori erişimi ve platformun giriş sayfası.
+- [EmlakZeka](https://www.emlakjet.com/emlakzeka): Ev alma, satma, yatırım, değer hesabı ve finansman süreçlerini planlamaya yardımcı olan yapay zeka destekli emlak asistanı.
+- [Ücretsiz İlan Ver](https://www.emlakjet.com/ilan-ver): Bireysel ve kurumsal kullanıcılar için ilan verme akışı.
+
+## Konut İlanları
+
+- [Satılık Ev (Konut)](https://www.emlakjet.com/satilik-konut): Tüm satılık konut ilanlarını kapsayan ana kategori; daire, apartman dairesi, villa, müstakil ev, residence, yazlık, köşk, yalı, yalı dairesi, çiftlik evi, köy evi, dağ evi, prefabrik ev, kooperatif, toplu konut ve devremülk alt tiplerini içerir.
+- [Kiralık Ev (Konut)](https://www.emlakjet.com/kiralik-konut): Tüm kiralık konut ilanlarını kapsayan ana kategori; daire, villa, müstakil ev, residence, yazlık, köşk, yalı, çiftlik evi ve köy evi gibi alt tipleri içerir.
+- [Sahibinden Satılık Ev](https://www.emlakjet.com/satilik-konut/sahibinden): Mülk sahibi tarafından verilen tüm satılık konut ilanları.
+- [Sahibinden Kiralık Ev](https://www.emlakjet.com/kiralik-konut/sahibinden): Mülk sahibi tarafından verilen tüm kiralık konut ilanları.
+- [Satılık Daire](https://www.emlakjet.com/satilik-daire): Satılık daire ilanları; satılık konut kategorisindeki en kapsamlı alt tip.
+- [Kiralık Daire](https://www.emlakjet.com/kiralik-daire): Kiralık daire ilanları; kiralık konut kategorisindeki en kapsamlı alt tip.
+- [Sahibinden Satılık Daire](https://www.emlakjet.com/satilik-daire/sahibinden): Mülk sahibi tarafından verilen satılık daire ilanları.
+- [Sahibinden Kiralık Daire](https://www.emlakjet.com/kiralik-daire/sahibinden): Mülk sahibi tarafından verilen kiralık daire ilanları.
+- [Günlük Kiralık Ev](https://www.emlakjet.com/gunluk-kiralik-konut): Günlük olarak kiralanan konut ilanları; daire, villa, müstakil ev, residence, yazlık, köşk, yalı, çiftlik evi, köy evi ve dağ evi gibi alt tipleri içerir.
+- [Günlük Kiralık Daire](https://www.emlakjet.com/gunluk-kiralik-daire): Günlük olarak kiralanan daire ilanları.
+- [Günlük Kiralık Villa](https://www.emlakjet.com/gunluk-kiralik-villa): Günlük olarak kiralanan villa ilanları.
+- [Satılık Villa](https://www.emlakjet.com/satilik-villa): Satılık villa ilanları.
+- [Kiralık Villa](https://www.emlakjet.com/kiralik-villa): Kiralık villa ilanları.
+- [Satılık Müstakil Ev](https://www.emlakjet.com/satilik-mustakil-ev): Satılık müstakil ev ilanları.
+- [Kiralık Müstakil Ev](https://www.emlakjet.com/kiralik-mustakil-ev): Kiralık müstakil ev ilanları.
+- [Satılık Residence](https://www.emlakjet.com/satilik-residence): Satılık residence ilanları.
+- [Kiralık Residence](https://www.emlakjet.com/kiralik-residence): Kiralık residence ilanları.
+- [Satılık Yazlık](https://www.emlakjet.com/satilik-yazlik): Satılık yazlık ilanları.
+- [Kiralık Yazlık](https://www.emlakjet.com/kiralik-yazlik): Kiralık yazlık ilanları.
+
+## İş Yeri, Arsa ve Arazi İlanları
+
+- [Satılık İş Yeri](https://www.emlakjet.com/satilik-is-yeri): Ofis, dükkan, depo, fabrika ve plaza katı gibi tüm satılık ticari gayrimenkuller.
+- [Kiralık İş Yeri](https://www.emlakjet.com/kiralik-is-yeri): Tüm kiralık ticari gayrimenkuller.
+- [Devren İş Yeri](https://www.emlakjet.com/devren-is-yeri): Faaliyetteki işletmesiyle birlikte devredilen iş yeri ilanları.
+- [Sahibinden Satılık İş Yeri](https://www.emlakjet.com/satilik-is-yeri/sahibinden): Mülk sahibi tarafından verilen satılık iş yeri ilanları.
+- [Satılık Ofis](https://www.emlakjet.com/satilik-ofis): Satılık ofis ve büro ilanları.
+- [Kiralık Ofis](https://www.emlakjet.com/kiralik-ofis): Kiralık ofis ve büro ilanları.
+- [Satılık Dükkan & Mağaza](https://www.emlakjet.com/satilik-magaza): Satılık dükkan ve mağaza ilanları.
+- [Kiralık Dükkan & Mağaza](https://www.emlakjet.com/kiralik-magaza): Kiralık dükkan ve mağaza ilanları.
+- [Satılık Depo](https://www.emlakjet.com/satilik-depo): Satılık depo ilanları.
+- [Kiralık Depo](https://www.emlakjet.com/kiralik-depo): Kiralık depo ilanları.
+- [Satılık Bina](https://www.emlakjet.com/satilik-bina): Komple satılık bina ilanları.
+- [Kiralık Bina](https://www.emlakjet.com/kiralik-bina): Komple kiralık bina ilanları.
+- [Satılık Fabrika](https://www.emlakjet.com/satilik-fabrika): Satılık fabrika ilanları.
+- [Satılık Turistik Tesis](https://www.emlakjet.com/satilik-turistik-tesis): Satılık turistik tesis ilanları.
+- [Satılık Arsa](https://www.emlakjet.com/satilik-arsa): Satılık arsa ilanları; konut, ticari, sanayi, turizm ve villa imarlı arsa gibi alt tipleri içerir.
+- [Sahibinden Satılık Arsa](https://www.emlakjet.com/satilik-arsa/sahibinden): Mülk sahibi tarafından verilen satılık arsa ilanları.
+- [Satılık Konut İmarlı Arsa](https://www.emlakjet.com/satilik-konut-imarli-arsa): Konut yapımına uygun imarlı satılık arsa ilanları.
+- [Kiralık Arsa](https://www.emlakjet.com/kiralik-arsa): Kiralık arsa ilanları.
+- [Satılık Tarla](https://www.emlakjet.com/satilik-tarla): Satılık tarla ilanları.
+- [Satılık Bağ & Bahçe](https://www.emlakjet.com/satilik-bag-bahce): Satılık bağ ve bahçe ilanları.
+- [Satılık Zeytinlik](https://www.emlakjet.com/satilik-zeytinlik): Satılık zeytinlik ilanları.
+- [Satılık Arazi](https://www.emlakjet.com/satilik-arazi): Satılık arazi ilanları.
+
+## Projeler
+
+- [Konut Projeleri](https://www.emlakjet.com/satilik-konut/projeler): İnşaat ve proje firmalarının sunduğu, yeni ve yapım aşamasındaki konut projeleri.
+- [Daire Projeleri](https://www.emlakjet.com/satilik-daire/projeler): Proje halindeki satılık daireler.
+- [Villa Projeleri](https://www.emlakjet.com/satilik-villa/projeler): Proje halindeki satılık villalar.
+- [Residence Projeleri](https://www.emlakjet.com/satilik-residence/projeler): Residence projeleri.
+
+## Değer Hesaplama ve Piyasa Veri Araçları
+
+- [Emlak Değeri Hesaplama](https://www.emlakjet.com/emlak-degeri-hesaplama): Ev, arsa veya arazinin tahmini piyasa değerini bölge ve karşılaştırmalı verilerle hesaplama aracının ana sayfası.
+- [Ev Değeri Hesaplama](https://www.emlakjet.com/emlak-degeri-hesaplama/ev-degeri-hesaplama): Adres bilgileriyle konutun güncel tahmini piyasa değerini hesaplar.
+- [Arsa Değeri Hesaplama](https://www.emlakjet.com/emlak-degeri-hesaplama/arsa-degeri-hesaplama): Parsel bilgileriyle arsanın tahmini piyasa değerini hesaplar.
+- [Arazi Değeri Hesaplama](https://www.emlakjet.com/emlak-degeri-hesaplama/arazi-degeri-hesaplama): İmarsız tarla, bağ, bahçe ve zeytinliğin tahmini değerini konum, parsel ve bölgesel verilerle hesaplar.
+- [Satılık Konut Piyasası](https://www.emlakjet.com/emlak-piyasasi/satilik-konut): Türkiye geneli satılık konut fiyat trendleri, fiyat dağılımı, mahalle bazlı fiyatlar ve değer haritaları; 81 il için alt sayfaları vardır.
+- [Verilerimiz ve Metodolojimiz](https://www.emlakjet.com/verilerimiz): Değer hesapları, yatırım skorları, kira geliri ve fiyat trendlerinin Endeksa altyapısıyla nasıl üretildiğini açıklar. Yatırım skoru, kira geliri ve geri dönüş süresi, satılık ilan listelerinde sıralama seçeneği olarak da sunulur.
+- [Konut Kredisi Hesaplama](https://www.emlakjet.com/rehberler/konut-kredisi-rehberi): Aylık taksit, toplam geri ödeme ve faiz tutarı hesaplama aracı ve konut kredisi rehberi.
+- [Ne Kadar Kira Ödeyebilirim?](https://www.emlakjet.com/rehberler/ne-kadar-odeyebilirim): Aylık gelire göre ödenebilecek kira tutarını hesaplayan kira bütçesi aracı.
+
+## Rehberler
+
+- [Rehberler](https://www.emlakjet.com/rehberler): Emlakjet rehberlerinin ana sayfası.
+- [Ev Satın Alma Rehberi](https://www.emlakjet.com/rehberler/satin-alma-rehberi): Konut satın alma sürecinin adımları.
+- [Satıcı Rehberi](https://www.emlakjet.com/rehberler/satici-rehberi): Gayrimenkul satış sürecine yönelik rehber.
+- [Kiralama Rehberi](https://www.emlakjet.com/rehberler/kiralama-rehberi): Ev kiralama sürecine yönelik rehber.
+
+## Blog ve Raporlar
+
+- [Emlakjet Blog](https://www.emlakjet.com/blog): Gayrimenkul haberleri, rehber içerikleri ve sektör yazıları.
+- [Sektörel Raporlar](https://www.emlakjet.com/blog/sektorel-raporlar): Türkiye geneli konut fiyatları ve reel değişimleri inceleyen aylık gayrimenkul raporları.
+- [2026 Ağustos Ayı Gayrimenkul Raporu](https://www.emlakjet.com/blog/2026-agustos-ayi-gayrimenkul-raporu): Ortalama konut satış fiyatı ve yıllık reel değişim verilerini içeren aylık rapor örneği.
+
+## Emlak Profesyonelleri
+
+- [Emlak Danışmanları](https://www.emlakjet.com/danismanlar): Emlak danışmanı arama ve danışman listeleme sayfaları.
+- [Uzman Danışmanlar](https://www.emlakjet.com/uzman-danismanlar): Danışmanların performans verileri, kullanıcı puanları ve yorumlarla nasıl skorlandığını açıklar.
+- [Emlak Ofisleri](https://www.emlakjet.com/emlak-ofisleri): Emlak ofisi arama ve ofis listeleme sayfaları.
+- [Üyelik Paketleri](https://www.emlakjet.com/uyelik-paketleri): Emlak profesyonelleri için kurumsal üyelik paketleri.
+
+## Kurumsal
+
+- [Hakkımızda](https://www.emlakjet.com/hakkimizda): Emlakjet'in misyonu, vizyonu, Endeksa ve iLab Holding ilişkisi.
+- [Yardım Merkezi](https://www.emlakjet.com/yardim): Sık sorulan sorular, hesap yönetimi ve ilan verme hakkında yardım.
+- [İletişim](https://www.emlakjet.com/iletisim): Emlakjet iletişim bilgileri.
+
+## Şartlar ve Politikalar
+
+- [Kullanım Koşulları](https://www.emlakjet.com/kullanim-kosullari): Platform kullanım koşulları.
+- [Bireysel Üyelik Sözleşmesi](https://www.emlakjet.com/uyelik-sozlesmesi): Bireysel kullanıcılar için üyelik sözleşmesi.
+- [Kullanıcı Veri Gizliliği Bildirimi](https://www.emlakjet.com/kvkk-hakkinda): KVKK kapsamında kullanıcı verilerinin işlenmesi.
+
+## Optional
+
+- [Reklam Çözümleri](https://www.emlakjet.com/reklam-cozumleri): Emlakjet ve iLab Connect dijital reklam çözümleri.
+- [İnsan Kaynakları](https://www.emlakjet.com/insan-kaynaklari): Kariyer ve açık pozisyonlar.
+- [Endeksa](https://www.endeksa.com/tr/): Emlakjet'in teknoloji ve veri markası.

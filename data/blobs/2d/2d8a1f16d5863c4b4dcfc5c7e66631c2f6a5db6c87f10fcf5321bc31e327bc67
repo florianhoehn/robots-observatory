@@ -1,0 +1,65 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "alerts.in.ua Air Raid Alert Agent",
+  "description": "Returns the current Ukrainian air raid alert situation report: which oblasts are under warning, the threat behind each warning (ballistic and cruise missiles, Shahed-type drones, aircraft activity), recent explosion and incident reports, warnings that ended recently, nationwide totals with a seven-day trend, and recent official statements from Ukrainian and allied air commands. Civil-defence information — never a guarantee of safety.",
+  "version": "1.0.0",
+  "url": "https://api.alerts.in.ua/a2a",
+  "preferredTransport": "JSONRPC",
+  "supportedInterfaces": [
+    {
+      "url": "https://api.alerts.in.ua/a2a",
+      "transport": "JSONRPC"
+    }
+  ],
+  "additionalInterfaces": [
+    {
+      "url": "https://api.alerts.in.ua/a2a",
+      "transport": "JSONRPC"
+    }
+  ],
+  "provider": {
+    "organization": "alerts.in.ua",
+    "url": "https://alerts.in.ua"
+  },
+  "documentationUrl": "https://devs.alerts.in.ua/",
+  "iconUrl": "https://alerts.in.ua/apple-touch-icon.png",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/markdown",
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "current-air-raid-sitrep",
+      "name": "Current air raid situation report",
+      "description": "Returns the live Ukraine-wide air raid situation report as Markdown: active warnings by oblast, the specific threat behind each, recent explosion reports, recently ended warnings, nationwide and regional statistics, and sourced official statements. Place names use official Ukrainian romanization with the Ukrainian original in brackets. No authentication required. Any message sent to this agent returns the current report.",
+      "tags": [
+        "ukraine",
+        "air-raid",
+        "alerts",
+        "civil-defence",
+        "situation-report",
+        "realtime"
+      ],
+      "examples": [
+        "Is there an air raid alert in Lviv right now?",
+        "What is the current air raid situation in Ukraine?",
+        "Which oblasts are under warning and why?",
+        "Give me the latest SITREP."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/markdown"
+      ]
+    }
+  ]
+}

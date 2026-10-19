@@ -1,0 +1,154 @@
+# Permitir acceso a ciertos recursos estáticos
+User-agent: *
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+
+# Googlebot puede tener reglas especiales
+User-agent: Googlebot
+Allow: /*.js
+Allow: /*.css
+User-agent: AhrefsBot
+
+
+# Bloquear carpetas y archivos específicos
+Disallow: /cgi-bin
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /wp-includes/
+Disallow: /*/attachment/
+Disallow: /tag/*/page/
+Disallow: /tag/*/feed/
+Disallow: /page/
+Disallow: /comments/
+Disallow: /xmlrpc.php
+Disallow: /?attachment_id*
+Disallow: /wp-content/uploads/*.pdf$
+
+# Bloqueo de búsquedas
+Disallow: /?s=
+Disallow: /search
+
+# Bloqueo de trackbacks
+Disallow: /trackback
+Disallow: /*trackback
+Disallow: /*/trackback
+
+# Bloqueo de feeds para crawlers
+Allow: /feed/$
+Disallow: /feed/
+Disallow: /comments/feed/
+Disallow: /*/feed/$
+Disallow: /*/feed/rss/$
+Disallow: /*/trackback/$
+Disallow: ///feed/$
+Disallow: ///feed/rss/$
+Disallow: ///trackback/$
+Disallow: ///*/feed/$
+Disallow: ///*/feed/rss/$
+Disallow: ///*/trackback/$
+
+# Ralentizar algunos bots que se suelen volver locos
+User-agent: noxtrumbot
+Crawl-delay: 20
+User-agent: msnbot
+Crawl-delay: 20
+User-agent: Slurp
+Crawl-delay: 20
+
+# Bloqueo de bots y crawlers poco útiles
+User-agent: MSIECrawler
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: Microsoft.URL.Control
+Disallow: /
+
+User-agent: libwww
+Disallow: /
+
+User-agent: Orthogaffe
+Disallow: /
+
+User-agent: UbiCrawler
+Disallow: /
+
+User-agent: DOC
+Disallow: /
+
+User-agent: Zao
+Disallow: /
+
+User-agent: sitecheck.internetseer.com
+Disallow: /
+
+User-agent: Zealbot
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: Fetch
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: TeleportPro
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: linko
+Disallow: /
+
+User-agent: Xenu
+Disallow: /
+
+User-agent: larbin
+Disallow: /
+
+User-agent: ZyBORG
+Disallow: /
+
+User-agent: Download Ninja
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: grub-client
+Disallow: /
+
+User-agent: k2spider
+Disallow: /
+
+User-agent: NPBot
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+# Permitir acceso a Googlebot para CSS y JS
+User-Agent: Googlebot
+Allow: /*.css$
+Allow: /*.js$
+# Permitir acceso a admin-ajax
+Allow: /wp-admin/admin-ajax.php
+# Sitemap
+Sitemap: https://cun.edu.co/post-sitemap.xml
+Sitemap: https://cun.edu.co/page-sitemap.xml
+Sitemap: https://cun.edu.co/category-sitemap.xml
+Sitemap: https://cun.edu.co/local-sitemap.xml
+Sitemap: https://cun.edu.co/locations.kml

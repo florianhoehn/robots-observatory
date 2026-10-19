@@ -1,0 +1,16 @@
+User-Agent: *
+Crawl-delay: 3
+Disallow: /~moshkow/book
+Disallow: /win
+Disallow: /koi
+Disallow: /iso
+Disallow: /mac
+Disallow: /alt
+Disallow: /lat
+Disallow: /cgi-bin
+Disallow: /LYNX
+Disallow: /AQUARIUM
+Disallow: /MPECHKIN
+Disallow: /rk
+Disallow: /Forum
+Host: lib.ru

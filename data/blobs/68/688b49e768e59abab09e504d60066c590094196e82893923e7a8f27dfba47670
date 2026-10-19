@@ -1,0 +1,702 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <head>
+        <title>縮短網址產生器 - reurl</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/asset/stylesheets/style.css?v=1">
+        
+
+    <script type="application/javascript" src="//anymind360.com/js/9479/ats.js"></script>
+
+
+        <script async src="/asset/javascripts/common/pixel.js"></script>
+        <script async src="/asset/javascripts/common/ga.js"></script>
+        <script async src="/asset/javascripts/common/ga4.js"></script>
+
+        <noscript>
+            <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1675200226052423&amp;ev=PageView&amp;noscript=1">
+        </noscript>
+        
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDFZCDVDK1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZDFZCDVDK1')
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N394QBRGC0"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-N394QBRGC0');
+</script>
+
+        
+<meta property="og:title" content="縮短網址產生器 - reurl">
+<meta property="og:url" content="/main/tw">
+<meta property="og:image" content="/asset/images/reurl_logo.png?v=2">
+<meta name="google-site-verification" content="35yZBoxjlsiffOFKx9IESv2F-W5CGQNYxH1G3VINmXo">
+<meta name="description" content="免費隱藏縮短網址的點擊次數，只有自己可以看到，不讓外人將短網址還原。可直接填寫所需的utm參數，低調且方便的縮網址產生工具">
+<meta property="og:description" content="免費隱藏縮短網址的點擊次數，只有自己可以看到，不讓外人將短網址還原。可直接填寫所需的utm參數，低調且方便的縮網址產生工具">
+<link rel="alternate" hreflang="x-default" href="/main/en">
+<link rel="alternate" hreflang="zh-Hant" href="/main/tw">
+<link rel="alternate" hreflang="zh-Hans" href="/main/cn">
+
+        
+<script async src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.7.1/dist/clipboard.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<script async src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.all.min.js"></script>
+<script async src='/asset/javascripts/common/file_saver.js'></script>
+<link rel="alternate" hreflang="zh-Hant" href="https://reurl.cc/main/tw">
+<link rel="alternate" hreflang="zh-Hans" href="https://reurl.cc/main/cn">
+<link rel="alternate" hreflang="en" href="https://reurl.cc/main/en">
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@id": "https://reurl.cc",
+                "name": "reurl"
+            }
+        }]
+    }
+</script>
+
+    </head>
+    <body>
+        
+<nav class="navbar navbar-expand-lg navbar-dark bg-reurl fixed-top nav-no-padding">
+    <div class="container">
+        <a class="nav-home" href="/main/tw">
+            <label class="nav-no-margin-bottom">回首頁</label>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <ul class="navbar-nav ml-auto">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/main/user/signin/tw">
+                        <span class="lead nav-font">登入</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a id="languageDropdown" class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="lead nav-font">語系</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <a class="dropdown-item" href="/main/tw">
+                            <span class="lead">繁中</span>
+                        </a>
+                        <a class="dropdown-item" href="/main/cn">
+                            <span class="lead">简中</span>
+                        </a>
+                        <a class="dropdown-item" href="/main/en">
+                            <span class="lead">English</span>
+                        </a>
+                    </div>
+                </li>
+
+
+
+
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <input type="hidden" id="label" value="ODIuMzkuMTUuNDM">
+        <input type="hidden" id="category" value="0">
+        
+
+<div id="app">
+    <span ref="csrf" hidden="hidden">2974bd6c-697c-43ab-80b9-74cda9b31677:1792443892:qu9vDHWJb2D3Sq9Gm/WGVIRXklW6vyzPfafHjwbOxeY=</span>
+    <span ref="cutSuccessMsg" hidden="hidden">縮網址成功!</span>
+    <span ref="copySuccessMsg" hidden="hidden">拷貝成功!</span>
+    <span ref="timeout" hidden="hidden">網頁過期，請重新整理網頁</span>
+    <span ref="too_long" hidden="hidden">網址過長(大於768字元)</span>
+    <span ref="bad_request" hidden=hidden>網址連線失敗，請確認是否為有效網址或稍後再試</span>
+    <span ref="cutting" hidden=hidden>進行縮址中...</span>
+    <span ref="shorten_box_placeholder" hidden=hidden>在這裡輸入你的網址</span>
+    <span ref="contactSuccessMsg" hidden="hidden">訊息送出成功</span>
+    <span ref="contactEmail" hidden="hidden"></span>
+    <span ref="contactUsername" hidden="hidden"></span>
+
+    <section id="main-sec" class="mt-4">
+        <div class="shorten-overlay text-center pt-5">
+            <h1>歡迎使用 reurl.cc</h1>
+        </div>
+    </section>
+
+    <section id="services-sec" class="mt-4">
+        <div class="container pb-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <ul class="nav nav-tabs" id="typeTab" role="tablist">
+                        <li class="nav-item col-12 col-md-4">
+                            <a class="nav-link active" id="url-tab" data-toggle="tab" href="#url_tab">
+                                <span class="lead">縮網址</span>
+                            </a>
+                        </li>
+                        <li class="nav-item col-6 col-md-4">
+                            <a class="nav-link" id="image-tab" href="https://imgus.cc" target="_blank">
+                                <span class="lead">縮圖片</span>
+                            </a>
+                        </li>
+                        <li class="nav-item col-6 col-md-4">
+                            <a class="nav-link" id="ytdlp-tab" href="https://youtils.cc/yt-dlp/main/tw" target="_black">
+                                <span class="lead">下載youtube</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="tab-content" id="tabContent">
+                        <div class="container tab-pane active" id="url_tab">
+                            <div class="input-group input-group-lg mt-3">
+                                <input id="shortenBox" ref="shortenBox" type="text" v-model="originalURL" @keydown.enter="shorten" @focus="clear" autofocus="true" class="form-control input-cls">
+                                <span class="input-group-append">
+                                    <button type="button" @click="shorten" :disabled="cutBtnDisabled" class="btn btn-success">縮址</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="recaptcha" class="g-recaptcha"></div>
+                <input type="hidden" ref="isLogin" value="false">
+                <input type="hidden" ref="skey" value="">
+            </div>
+        </div>
+    </section>
+    <section id="result-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center d-none d-sm-block">
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseSection" aria-controls="collapseSection" @click="setArrow">
+                        <span class="lead">選項</span>
+                    </button>
+                </div>
+            </div>
+            <div class="collapse" id="collapseSection">
+                <div class="row">
+                    <div v-if="beforeCut" class="col-xl-4 col-12"></div>
+                    <div class="col-xl-4 col-12 text-center d-none d-sm-block">
+                        <div class="form-group mb-0">
+                            <br>
+                            <div v-for="(str, idx) in utms">
+                                <label class="utm-label">
+                                    <input class="form-control utm-input" :placeholder="str" v-model="utm[str]">
+                                </label>
+                            </div>
+                        </div>
+                        <a href="https://youtils.cc/utm">
+                            <span class="feature-span">什麼是utm?</span>
+                        </a>
+                    </div>
+                    <div v-if="!beforeCut" class="col-xl-4 col-12">
+                        <div class="form-group text-center d-none d-sm-block">
+                            <span class="lead"> 分享預覽畫面 </span>
+                        </div>
+                        <br>
+                        <img :src="meta_image" height=210 width=345>
+                        <br>
+                        <textarea v-model="meta_title" rows=2 class="meta-title" readonly></textarea>
+                        <br>
+                        <textarea v-model="meta_desc" rows=4 class="meta-desc" readonly></textarea>
+                    </div>
+                    <div v-if="!beforeCut" class="col-xl-4 col-12">
+                        <div class="form-group text-center">
+                            <label class="text-success"> 你的縮網址為 </label>
+                            <br>
+                            <a :href="shortURL" target="_blank" v-text="shortURL"></a>
+                            <br>
+                            <button type="button" class="btn btn-info btn-sm copyButton" @click="copy" :data-clipboard-text="shortURL">拷貝連結</button>
+                            <br>
+                            <qrcode :value="qrcodeURL" :options="{ size: 250}" tag="img" ref="qrcode"></qrcode>
+                            <br>
+                            <button type="button" class="btn btn-info btn-sm mt-1" @click="downloadPic">下載</button>
+                            <br>
+                            <a href="https://youtils.cc/qrcode">
+                                <span class="feature-span"> 產生其他QRCode </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<div class="container">
+    <div class="row">
+        <script async type="text/javascript" src="//cdn.holmesmind.com/js/init.js"></script>
+        <div class="col-md-6 text-center">
+            <ins class="clickforceads" style="display:inline-block;" data-ad-zone="18877"></ins>
+        </div>
+        <div class="col-md-6 text-center">
+            <ins class="clickforceads" style="display:inline-block;" data-ad-zone="18876"></ins>
+        </div>
+    </div>
+</div>
+
+    <section id="ad-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center d-md-none">
+                    <div id="taboola-below-article-300x250"></div>
+                    <script type="text/javascript">
+                        window._taboola = window._taboola || [];
+                        _taboola.push({ mode: "thumbnail-300x250", container: 'taboola-below-article-300x250', placement: 'Below article 300x250', target_type: 'mix'})
+                    </script>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center d-none d-md-block">
+                    <div id="taboola-below-article-970x250"></div>
+                    <script type="text/javascript">
+                        window._taboola = window._taboola || [];
+                        _taboola.push({ mode: "thumbnails-970x250", container: 'taboola-below-article-970x250', placement: 'Below article 970x250', target_type: 'mix'})
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="api-sec" class="mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center">
+                    <div class="api-image">
+                        <img src="/asset/images/section-api.webp" alt="API連接示意圖" class="img-fluid api-img">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-12 text-center mb-4">
+                        <h2>開發者 API</h2>
+                    </div>
+                    <div class="api-content">
+                        <p class="api-text">reurl 提供 API 服務，讓開發者可以透過程式化方式自動產生短網址，可以輕鬆整合到系統、應用程式或是自動化流程中，快速導入讓你的產品更易使用。</p>
+                        <a href="/main/dev/doc/tw" class="btn btn-primary">查看 API 文件</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="extension-sec" class="mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="col-12 text-center mb-4">
+                        <h2>瀏覽器擴充套件</h2>
+                    </div>
+                    <div class="extension-content">
+                        <p class="extension-text">安裝 reurl Chrome 擴充套件，讓您能夠快速縮短當前頁面的網址，無需切換頁面，一鍵完成縮網址，提升工作效率，讓分享更快速更方便。</p>
+                        <a href="https://chrome.google.com/webstore/detail/kbcpafllcaoefpacjojiliohdhfjgbmo" target="_blank" class="btn btn-primary">
+                            <span>安裝 Chrome 擴充套件</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="extension-image">
+                        <img src="/asset/images/section-extention.webp" alt="瀏覽器擴充套件示意圖" class="img-fluid extension-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="linebot-sec" class="mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center">
+                    <div class="linebot-image">
+                        <img src="/asset/images/section-linebot.webp" alt="LINE Bot示意圖" class="img-fluid linebot-img">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-12 text-center mb-4">
+                        <h2>LINE Bot</h2>
+                    </div>
+                    <div class="linebot-content">
+                        <p class="linebot-text">只要將長網址傳送給 Reurl 的 LINE Bot，系統會立即自動產生一個專屬短網址回傳給你。無需打開網頁或安裝額外 App，就能快速縮短連結，讓分享更方便、訊息更簡潔。</p>
+                        <a href="https://line.me/R/ti/p/@nnj0738u" target="_blank" class="btn btn-primary">
+                            <span>加入 LINE Bot</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq-sec" class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>常見問題 FAQ</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="faqAccordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        什麼是短網址？
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    短網址是一種將長網址轉換成簡短網址的服務，讓您可以更方便地分享連結。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        使用短網址有什麼好處？
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    短網址可以節省字數限制、美化外觀、追蹤點擊數據，並且更容易記憶和分享。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        短網址有效時間是多久?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    當短網址超過五個月以上無人點擊使用時，reurl會將該短網址歸類為非活躍連結。我們會不定期的檢視非活躍連結，並有可能會將該連結刪除。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        該如何查詢短網址點擊數
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    用戶只能查詢自己擁有的短網址，用戶登入後縮的網址可以在[分析]頁面內查詢點擊數
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingFive">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        該如何在不點擊連結的情況下取得短網址資訊?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    在短網址後加上加號(&#43;)，即可查詢該短網址的基本資訊
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingSix">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        網站使用Cloudflare後，為何縮圖與描述無法顯示？
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    當網站使用 Cloudflare 時，reurl 將無法抓取到該網站的縮圖和簡介。解決方法就是在 Cloudflare 中將 reurl 設為白名單，允許 reurl 對網站進行訪問。
+                                    <a href="/main/info/cloudflare/tw">說明</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="headingSeven">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                        Web API 有什麼使用限制？
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Web API 是一項免費服務，每位使用者每天可以使用 100 次。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact-form">
+                        <h3 class="text-center mb-4">聯絡我們</h3>
+                        <div class="row text-left">
+                            <div class="col-12">
+                                <label for="contact-nick" class="lead">您的稱呼</label>
+                                <input id="contact-nick" type="text" class="form-control" v-model="contactUsername">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row text-left">
+                            <div class="col-12">
+                                <label for="contact-email" class="lead">您的Email</label>
+                                <input id="contact-email" type="email" class="form-control" v-model="contactEmail">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row text-left">
+                            <div class="col-12">
+                                <label for="contact-context" class="lead">內容</label>
+                                <textarea id="contact-context" rows="10" class="form-control" v-model="contactContent"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <small class="text-muted">請勿回報使用短網址服務的網站相關問題（例如：活動報名、購物訂單等）。reurl.cc 僅提供縮短網址服務，與短網址所指向的網站內容無關，相關問題請直接聯繫該網站的管理者。</small>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row text-center">
+                            <div class="col-12">
+                                <button type="button" class="btn btn-info" @click="sendContactMessage" :disabled="contactContent.length == 0">
+                                    送出
+                                </button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <span>另外您還可以至這裡留言:</span>
+                                <span>&nbsp;</span>
+                                <a href="https://www.facebook.com/reurl.cc/" target="_blank">FB粉絲團</a>
+                            </div>
+                            <div class="col-12 text-center">
+                                <span>或是直接寄信到:</span>
+                                <span>&nbsp;</span>
+                                <a href="mailto:admin@reurl.cc">admin@reurl.cc</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+        
+<div id="renews" class="container">
+    <div class="row">
+        <div class="col-md-6 col-12 mt-1 pl-0 pr-0">
+            <div id="div-onead-nd"></div>
+            <script type="text/javascript">
+                var custom_call_ND = function (params) {
+                    if (params.hasAd) {
+                        console.log('[ONEAD] ND 首頁 has AD')
+                    } else {
+                        console.log('[ONEAD] ND 首頁 AD Empty');
+                        
+                        window.document.getElementsByClassName("col-md-6 col-12 mt-1 pl-0 pr-0")[0].setAttribute('style', 'display:none;');
+                    }
+                }
+
+                ONEAD_TEXT = {};
+                ONEAD_TEXT.pub = {};
+                ONEAD_TEXT.pub.uid = 1000480;
+                ONEAD_TEXT.pub.slotobj = document.getElementById("div-onead-nd");
+                ONEAD_TEXT.pub.player_mode = "native-drive";
+                ONEAD_TEXT.pub.space_id = "";
+                ONEAD_TEXT.pub.max_threads = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)? 3 : 1;
+                ONEAD_TEXT.pub.queryAdCallback = custom_call_ND;
+                window.ONEAD_text_pubs = window.ONEAD_text_pubs || [];
+                ONEAD_text_pubs.push(ONEAD_TEXT);
+            </script>
+
+            <script src="https://ad-specs.guoshipartners.com/static/js/ad-serv.min.js"></script>
+        </div>
+        <div v-for="post in latestPosts" class="col-md-6 col-12 mt-1 pl-0 pr-0">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-4">
+                        <a :href="post.link">
+                            <img :src="post.image" class="card-img mw-100 cropped">
+                        </a>
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body pt-1 pb-1 pr-1">
+                            <p class="card-title" v-text="post.title"></p>
+                            <a :href="post.link" class="stretched-link">
+                                <p class="card-text">
+                                    <span class="card-text text-muted" v-text="post.publish_date"></span>
+                                    <span>&nbsp;</span>
+                                    <span class="card-text text-muted" v-text="post.source_data.name"></span>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        
+<script defer src='https://www.google.com/recaptcha/api.js?render=explicit'></script>
+<script defer src='/asset/javascripts/common/recaptcha.js'></script>
+<script defer src='/asset/javascripts/home/vue-qrcode.min.js'></script>
+<script defer src='/asset/javascripts/home/main.js?v=22'></script>
+
+
+
+
+        <script src="/asset/javascripts/common/renews.js"></script>
+        
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12 col-md-5">
+            <div class="row">
+                <div class="col-4 text-right">
+                    <span>語系: 繁體中文</span>
+                </div>
+                <div class="col-8">
+                    <a href="/main/en">English</a>
+                    <span>&nbsp;,&nbsp;</span>
+                    <a href="/main/tw">繁體中文</a>
+                    <span>&nbsp;,&nbsp;</span>
+                    <a href="/main/cn">簡體中文</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-6 col-md-9 text-right">
+                    <span>&copy;2020 reurl.cc v3.1.0</span>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a class="btn footer-button" href="/main/policy/terms/tw">
+                        <span class="small">條款</span>
+                    </a>
+                    <span>&nbsp;</span>
+                    <span>&nbsp;</span>
+                    <a class="btn footer-button" href="/main/policy/privacy/tw">
+                        <span class="small">隱私權</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+<hr>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 text-left">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="lead">其他免費線上工具</span>
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="col-6 text-left">
+                    <ul>
+                        <li><a href="https://youtils.cc/emoji" target="_blank"><span class="lead">表情符號(emoji)</span></a></li>
+                        <li><a href="https://youtils.cc/geoip" target="_blank"><span class="lead">IP查詢</span></a></li>
+                        <li><a href="https://youtils.cc/big5gb" target="_blank"><span class="lead">繁簡轉換</span></a></li>
+                        <li><a href="https://youtils.cc/qrcode" target="_blank"><span class="lead">QRCode</span></a></li>
+                        <li><a href="https://youtils.cc/length" target="_blank"><span class="lead">身高/長度換算</span></a></li>
+                    </ul>
+                </div>
+                <div class="col-6 text-left">
+                    <ul>
+                        <li><a href="https://www.comptw.com/" target="_blank"><span class="lead">台灣公司查詢網</span></a></li>
+                        <li><a href="https://stockinfo.tw/" target="_blank"><span class="lead">台股資訊網</span></a></li>
+                        <li><a href="https://youtils.cc/wordcounter/zh-Hants" target="_blank"><span class="lead">字數統計</span></a></li>
+                        <li><a href="https://youtils.cc/dateCalculator" target="_blank"><span class="lead">日期計算機</span></a></li>
+                        <li><a href="https://youtils.cc/lunarCalendar" target="_blank"><span class="lead">農曆轉國曆</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="lead">工具介紹</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-left">
+                    <ul>
+                        <li><a href="https://youtils.cc/geoip" target="_blank"><span>IP查詢</span></a><span> - 可以查詢自己的IP位址，也可以輸入IP查詢所在位置</span></li>
+                        <li><a href="https://youtils.cc/big5gb" target="_blank"><span>繁簡轉換</span></a><span>: 可進行繁轉簡或是簡轉繁</span></li>
+                        <li><a href="https://youtils.cc/qrcode" target="_blank"><span>QRCode</span></a><span> - 輸入網址或是任何其他資訊，快速產生QRCode下載使用</span></li>
+                        <li><a 

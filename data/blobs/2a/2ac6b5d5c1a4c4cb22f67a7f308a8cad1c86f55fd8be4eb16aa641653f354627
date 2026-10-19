@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+	<meta name="theme-color" content="#000000">
+	<link rel="shortcut icon" href="//sgimage.netmarble.com/favicon/netmarble/favicon.ico">
+	<link rel="apple-touch-icon" href="//sgimage.netmarble.com/favicon/netmarble/favicon-120x120.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="//sgimage.netmarble.com/favicon/netmarble/favicon-180x180.png">
+	<link rel="stylesheet" type="text/css" href="//sgimage.netmarble.net/font/css/font-1.0.6.css?20260928_01">
+	<link rel="stylesheet" type="text/css" href="//sgimage.netmarble.net/netmarble/gportal/brand/v1/index.css?20260928_01">
+	<link rel="stylesheet" type="text/css" href="//sgimage.netmarble.net/netmarble/gportal/brand/v1/css/event.css?20260928_01">
+	<script type='text/javascript' src="//sgimage.netmarble.com/js/lib/net/net.deviceUtil-1.0.5.js"></script>
+	<meta name="naver-site-verification" content="4eea498c02e35ab9dbd5bce4e1185a21f8246d87" />
+	<meta name="google-site-verification" content="RUG6c3_lrqKUyHNSiY7jkwsNjgujpsamO_UjhsyqZTE" />
+	<meta name="facebook-domain-verification" content="z99awjllt9ovx2tcr0mpg8rizbhhkx" />
+	<title>Netmarble</title>
+	<script type="text/javascript">
+		var DOMAIN_PATH = "//sgimage.netmarble.net";
+		var HOST_PREFIX = "";
+		var DEVICE = "pc";
+		var ORIGIN_COUNTRY = "GB"
+		var COUNTRY = "GB";
+		var LANG = "ai";
+		var GAMECODE = "";
+		var IN_HOUSE = false;
+
+		var NM_LANG = "";
+		var NM_REGION = "";
+
+		var browser = netDeviceUtil.getBrowser();
+
+		var isNAEU = true;   //isNAEU인지
+		// NMCoookieAgreed값이 Y이면 agreedCookie true
+		// 그 외 값인 경우 false 바인딩
+		var agreedCookie = false;
+	</script>
+<meta property="og:title" content="NETMARBLE">
+	<meta property="og:url" content="https://netmarble.com/en">
+	<meta property="og:description" content="Explore Netmarble's newest titles! Sign up for latest news and exclusive content.">
+<meta property="og:image" content="https://sgimage.netmarble.com/images/netmarble/COMMON/20170406/1491442128033.jpg">
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MV57XTS');
+</script>
+</head>
+<body>
+	<div id="gnbView"></div>
+	<div id="lnbView"></div>
+	<div id="appView"></div>
+	<div id="footerView"></div>
+	<script data-main="/resources/js/controller/main-built.js?v=20260928_01" src="//sgimage.netmarble.net/js/lib/require-2.3.2.min.js"></script>
+</body>
+  <script src="https://sgimage.netmarble.com/common/cookie/NMCookieAgreed.js"></script>
+  <script type="text/javascript">
+
+    /* 쿠키 세팅 팝업 노출 */
+    // TODO footer의 cookie Setting클릭시 호출하도록 개발 필요
+    function showCookieSetting(){
+      showNMCookiePopup();
+    }
+    /* 북미, EU 면서, 동의 안한 경우 */
+    if( isNAEU && !agreedCookie ){
+      function clearAllCookie(necessaryCookies){
+        var cookies = document.cookie.split(';')
+        for (var i = 0; i < cookies.length; i++) {
+          var name = cookies[i].split('=')[0].trim()
+
+          // 필수 쿠키가 아닌 경우 삭제
+          if (!necessaryCookies.includes(name)) {
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.' + window.location.hostname + '; path=/';
+          }
+          // GA4 중복 삽입을 위한 _로 시작하는 쿠키 삭제하는 방어코드 추가
+          if (name.startsWith('_')) { // name이 '_'로 시작하는지
+            document.cookie = name +'=;expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.netmarble.com; path=/';
+          }
+        }
+      }
+
+      var necessaryCookies = ['NMCookieAgreed']; //필수쿠키
+      this.clearAllCookie( necessaryCookies ); //필수쿠키 삭제
+    }
+
+    // 페이지 최초 접근시 window객체에 개인정보 처리방침 링크 넣어야 함
+    window.__NMPrivacyPolicy = "https://help.netmarble.com/terms/privacy_policy_" + window.LANG;
+  </script>
+</html>

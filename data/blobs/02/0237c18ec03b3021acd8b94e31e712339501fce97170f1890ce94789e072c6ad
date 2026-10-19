@@ -1,0 +1,112 @@
+# tc-lib-pdf (TCPDF)
+
+> Pure-PHP PDF generation for PHP 8.2 and later, installed with Composer and
+> split across a set of focused packages. tc-lib-pdf is the current generation
+> of TCPDF; the legacy TCPDF codebase and its global TCPDF class are deprecated
+> and expose a different API.
+
+Install: `composer require tecnickcom/tc-lib-pdf`
+Entry class: `\Com\Tecnick\Pdf\Tcpdf`
+Source: https://github.com/tecnickcom/tc-lib-pdf
+Packagist: https://packagist.org/packages/tecnickcom/tc-lib-pdf
+Licence: LGPL-3.0-or-later
+
+## Documentation
+
+- [Home](https://tcpdf.org/): what tc-lib-pdf is, requirements, installation, font setup, and a minimal script.
+- [Guides](https://tcpdf.org/docs/): one guide per topic, with links to the packages and examples each covers.
+- [Fonts](https://tcpdf.org/docs/fonts/): font generation at install time, K_PATH_FONTS, custom font import, third-party font licensing.
+- [HTML and CSS](https://tcpdf.org/docs/html-css/): addHTMLCell and getHTMLCell, the cascade and the global stylesheet, the supported CSS subset, tables, forms, and flow across pages.
+- [Typed enums](https://tcpdf.org/docs/enums/): the backed enums exposed across the stack, and how they coexist with the string API.
+- [Remote resources](https://tcpdf.org/docs/remote-resources/): host and path allowlists, cURL policy, and the full fileOptions reference.
+- [Digital signatures](https://tcpdf.org/docs/digital-signatures/): detached CMS and PAdES baseline profiles, RFC 3161 timestamps, LTV material, external and two-phase signing.
+- [Standards and conformance](https://tcpdf.org/docs/standards/): PDF/A, PDF/X and PDF/UA modes, hybrid e-invoices, reproducible output, XMP.
+- [PDF import](https://tcpdf.org/docs/pdf-import/): registering a source, importing pages as Form XObjects, appending documents, the parser limits and their diagnostics, and the fidelity limits.
+- [External cache](https://tcpdf.org/docs/cache/): the optional CacheInterface for font subsets and processed images.
+- [Development and packaging](https://tcpdf.org/docs/development/): the Makefile workflow, QA, the preflight matrix, RPM and DEB targets.
+- [AI coding assistants](https://tcpdf.org/docs/ai-assistants/): the legacy-TCPDF API a model reaches for by default, the method mapping, rules to pin, and prompt snippets.
+- [Features](https://tcpdf.org/features/): the capability index, area by area.
+- [Comparison](https://tcpdf.org/comparison/): tc-lib-pdf next to TCPDF, FPDF, mPDF, Dompdf, HTML2PDF, FPDI, and the headless-browser renderers.
+- [Licence](https://tcpdf.org/docs/license/): the full LGPL-3.0-or-later text.
+
+## Packages
+
+- [tc-lib-pdf](https://tcpdf.org/docs/srcdoc/tc-lib-pdf): the top-level library. Document authoring, text and HTML layout, page management, and PDF output.
+- [tc-lib-pdf-page](https://tcpdf.org/projects/tc-lib-pdf-page/): page geometry, formats, margins, the five page boxes, page groups, and page-level attributes.
+- [tc-lib-pdf-graph](https://tcpdf.org/projects/tc-lib-pdf-graph/): vector primitives, the graphics style stack, transformations, transparency, and shadings.
+- [tc-lib-pdf-font](https://tcpdf.org/projects/tc-lib-pdf-font/): font loading, parsing, subsetting, embedding, and font data generation.
+- [tc-lib-unicode](https://tcpdf.org/projects/tc-lib-unicode/): Unicode string processing, the bidirectional algorithm (UAX #9), normalization, and Arabic shaping.
+- [tc-lib-unicode-data](https://tcpdf.org/projects/tc-lib-unicode-data/): the generated Unicode character data tables read by tc-lib-unicode.
+- [tc-lib-color](https://tcpdf.org/projects/tc-lib-color/): colour parsing and conversion across RGB, HSL, CMYK, Lab, grayscale, and spot colours, for CSS and PDF output.
+- [Colour notations](https://tcpdf.org/projects/tc-lib-color/notations/): every colour string the parser accepts, with the separator, angle and alpha rules.
+- [Colour models](https://tcpdf.org/projects/tc-lib-color/models/): the five models side by side, with components, ranges and output forms.
+- [Grayscale model](https://tcpdf.org/projects/tc-lib-color/gray/): one component, the Rec. 709 luma weights and the g() notation.
+- [RGB model](https://tcpdf.org/projects/tc-lib-color/rgb/): three channels, the hex forms and the alpha channel.
+- [HSL model](https://tcpdf.org/projects/tc-lib-color/hsl/): hue as a fraction of a turn, percentage saturation and lightness, wrapping.
+- [CMYK model](https://tcpdf.org/projects/tc-lib-color/cmyk/): four subtractive components, key extraction and the limits of the conversion.
+- [CIE Lab model](https://tcpdf.org/projects/tc-lib-color/lab/): L*a*b* components, the D65 white point and perceptual distance.
+- [Colour conversions](https://tcpdf.org/projects/tc-lib-color/conversions/): the conversion matrix, the formulas, round-trip accuracy, inversion and gamut.
+- [Web colours](https://tcpdf.org/projects/tc-lib-color/web-colors/): the 150 named colours with swatches, hex codes and CSS forms.
+- [Nearest colour](https://tcpdf.org/projects/tc-lib-color/nearest-color/): closest named colour by sRGB distance or by CIE76 distance in Lab.
+- [Spot colours](https://tcpdf.org/projects/tc-lib-color/spot-colors/): the registry, the eleven defaults, CMYK and Lab separations, and the PDF objects they emit.
+- [Colour PDF output](https://tcpdf.org/projects/tc-lib-color/pdf-output/): fill and stroke operators, component strings, appearance arrays and Acrobat JavaScript colours.
+- [Colour errors](https://tcpdf.org/projects/tc-lib-color/errors/): every exception message with the call that raises it, and the inputs that clamp instead.
+- [tc-lib-pdf-image](https://tcpdf.org/projects/tc-lib-pdf-image/): image loading, PNG and JPEG parsing, transparency and soft masks, ICC profiles, and embedding.
+- [tc-lib-barcode](https://tcpdf.org/projects/tc-lib-barcode/): 73 linear, postal, GS1, and two-dimensional barcode symbologies, rendered as SVG, PNG, HTML, or PDF operators.
+- [Barcode rendering options](https://tcpdf.org/projects/tc-lib-barcode/rendering/): width, height, padding, colour and the payload limits shared by every symbology.
+- [Barcode output formats](https://tcpdf.org/projects/tc-lib-barcode/output-formats/): SVG, PNG, GD, HTML, character grids and bar coordinate arrays, with measured sizes.
+- [Linear barcodes](https://tcpdf.org/projects/tc-lib-barcode/linear/): 49 one-dimensional symbologies, one page each, with input ranges, PHP examples and SVG output.
+- [2D barcodes](https://tcpdf.org/projects/tc-lib-barcode/2d/): 13 two-dimensional symbologies, one page each, with parameters, PHP examples and SVG output.
+- [Postal barcodes](https://tcpdf.org/projects/tc-lib-barcode/postal/): 11 postal symbologies, one page each, with input ranges, PHP examples and SVG output.
+- [tc-lib-pdf-parser](https://tcpdf.org/projects/tc-lib-pdf-parser/): reads existing PDF files, for import and manipulation.
+- [tc-lib-pdf-filter](https://tcpdf.org/projects/tc-lib-pdf-filter/): PDF stream filters and predictors.
+- [tc-lib-pdf-encrypt](https://tcpdf.org/projects/tc-lib-pdf-encrypt/): document encryption and permissions, from RC4-40 to AES-256 R6, including public-key recipients.
+- [tc-lib-pdf-sign](https://tcpdf.org/projects/tc-lib-pdf-sign/): signature primitives (PKCS#7, CAdES, PAdES baseline), RFC 3161 timestamps, and LTV material.
+- [tc-lib-file](https://tcpdf.org/projects/tc-lib-file/): file and data-URI helpers, and the local path and remote host allowlists the rest of the stack relies on.
+
+## Examples
+
+Every example page carries a description, the rendered PDF, and the PHP source.
+The source is served as plain text at
+`https://tcpdf.org/files/examples/<id>.phps`, so it can be fetched directly.
+
+- [All 91 examples](https://tcpdf.org/examples/): grouped by topic, with a one-line description for each.
+- [E006 minimal](https://tcpdf.org/examples/E006_minimal/): the shortest script that produces a PDF. Start here.
+- [E076 absolute position](https://tcpdf.org/examples/E076_absolute_position/): placing content at explicit coordinates.
+- [E049 output targets integration](https://tcpdf.org/examples/E049_output_targets_integration/): streaming, saving, downloading, and attaching the same bytes.
+- [E000 overview](https://tcpdf.org/examples/E000_overview/): a visual showcase of barcodes, SVG, images, transparency, and gradients.
+- [E001 invoice](https://tcpdf.org/examples/E001_invoice/): a Factur-X 1.07 and ZUGFeRD 2.3 hybrid invoice in PDF/A-3.
+- [E031 html features](https://tcpdf.org/examples/E031_html_features/): the breadth of the HTML and CSS support.
+- [E043 html tables](https://tcpdf.org/examples/E043_html_tables/): structure tags, spanning cells, and headers repeated across pages.
+- [E020 barcodes](https://tcpdf.org/examples/E020_barcodes/): every supported symbology in one document.
+- [E030 svg](https://tcpdf.org/examples/E030_svg/): SVG paths, markers, text anchoring, and style inheritance.
+- [E037 image methods](https://tcpdf.org/examples/E037_image_methods/): image placement, scaling, and aspect ratio handling.
+- [E007 signature basic](https://tcpdf.org/examples/E007_signature_basic/): a PAdES B-B detached CMS signature.
+- [E045 encryption and permissions](https://tcpdf.org/examples/E045_encryption_and_permissions/): user and owner passwords, and the permission flags.
+- [E065 import single page](https://tcpdf.org/examples/E065_import_single_page/): importing a page of an existing PDF as a Form XObject.
+- [E047 remote resources security](https://tcpdf.org/examples/E047_remote_resources_security/): the fileOptions host and path allowlists.
+
+## Rules
+
+- The package is `tecnickcom/tc-lib-pdf` and the entry class is
+  `\Com\Tecnick\Pdf\Tcpdf`. The legacy `tecnickcom/tcpdf` package and its
+  global `TCPDF` class are deprecated and expose an entirely different API.
+- There are no `AddPage`, `SetFont`, `Cell`, `MultiCell`, `writeHTML` or
+  `Output` methods. Use `addPage()`, `font->insert()`, `addTextCell()`,
+  `addHTMLCell()`, and `getOutPDFString()` followed by `renderPDF()`,
+  `savePDF()` or `downloadPDF()`.
+- Font data must be generated before first use and `K_PATH_FONTS` must point at
+  the generated directory, otherwise font insertion fails.
+- Remote URLs are blocked and local reads are restricted to an allowlist. An
+  image, font or SVG from anywhere else needs `allowedHosts`, `allowedPaths` or
+  `markupAllowedPaths` in the `fileOptions` constructor argument.
+- PHP 8.2 or later. Every option string is also available as a backed enum, and
+  both forms are accepted on the same parameter.
+- A PDF/A or PDF/X mode suppresses encryption and document JavaScript, and
+  reports the problems it cannot fix through `getWarnings()`.
+
+## Optional
+
+- [Generated API reference](https://tcpdf.org/docs/srcdoc/): one page per class, for every package.
+- [Legacy TCPDF API reference](https://tcpdf.org/docs/srcdoc/TCPDF): kept online for projects still running the deprecated codebase.
+- [Sponsor](https://tcpdf.org/sponsor/): how the maintenance of this stack is funded.

@@ -1,0 +1,36 @@
+User-agent: *
+Disallow: /dmca/
+Disallow: /stream/
+Disallow: /video/*/
+Disallow: /*?c=*
+Disallow: /*?a=*
+Disallow: /*&date=*
+Disallow: /*?date=*
+Disallow: /*&chanel=*
+Disallow: /*&channel=*
+Disallow: /*&cat_id=*
+Disallow: /*&from=*
+Disallow: /*?p=*
+Disallow: /*&p=*
+Disallow: /*%26tab%3D
+Disallow: /*?tab=
+Disallow: /*&amp;tab=
+Disallow: /*?gclid=*
+Disallow: /*?refresh
+Disallow: /*&refresh
+Disallow: /*/?*
+Disallow: /?*
+Disallow: /*activate_email_code*
+Disallow: /*&test=*
+Disallow: /*&nohash=*
+Disallow: /*&code=*
+Disallow: /*a=link*
+Disallow: /*ts_cn=*
+Disallow: /*showvideo=*
+Disallow: /*showpress=*
+Disallow: /*cmd_mr=*
+Host: soccer365.ru
+
+User-agent: Mediapartners-Google
+User-Agent: YandexDirect
+Disallow:

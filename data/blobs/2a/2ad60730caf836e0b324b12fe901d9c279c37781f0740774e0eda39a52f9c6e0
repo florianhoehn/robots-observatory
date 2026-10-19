@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+Host: https://fakti.bg
+Sitemap: https://fakti.bg/sitemap.xml
+Sitemap: https://fakti.bg/sitemapNews.xml
+Sitemap: https://fakti.bg/sitemap-images.xml
+Sitemap: https://fakti.bg/sitemapNews-images.xml
+Disallow: /captcha/*
+Disallow: /search?q=*
+Disallow: /terms
+Disallow: /citati*
+Disallow: /vchera
+Disallow: /novinite-dnes
+# Archive pagination: /{section}/YYYY/MM/DD/{seconds} walks back to 2011 one page
+# at a time, across every category, region, author and topic, in bg, en and amp.
+# The pages duplicate the article lists and were only carrying noindex, which
+# Google has to fetch to see. Articles are discovered through the sitemaps.
+Disallow: /*/20*/*/*/

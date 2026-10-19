@@ -1,0 +1,167 @@
+<!DOCTYPE html><html class="no-js" lang="en" ng-app="doxy" ng-controller="GlobalController as $ctrl"><head><meta charset="utf-8"><title ng-bind="$ctrl.state.title | translate"></title><meta name="description" ng-attr-content="{{$ctrl.state.description}}"><meta ng-if="$ctrl.state.robots" name="robots" ng-attr-content="{{$ctrl.state.robots}}"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- Specify og tags for social card --><meta ng-attr-name="{{name}}" ng-attr-content="{{content}}" ng-repeat="(name, content) in $ctrl.state.metaTags"><link data-favicon rel="icon" href="/assets/favicon/favicon.ico"><!-- Check Compatibility --><script src="/v2/scripts/check-compatibility.js" type="text/javascript"></script><!-- Dynamic Configuration --><script type="text/javascript" src="/config.js"></script><script type="text/javascript">function _getDynConfigKey(n,o){var i,d;return null===(d=null===(i=null==n?void 0:n.doxymeconfig)||void 0===i?void 0:i.frontend)||void 0===d?void 0:d[o]}</script><!-- preload --><link rel="preload" as="font" href="/assets/fonts/icon-font/doxyme-icons.woff" type="font/woff" crossorigin><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script><!-- SEGMENT Analytics --><script type="text/javascript">// Segment initialization configuration
+      // Handles cookie domain setup, storage priority, and root domain cookie synchronization
+      (function (window) {
+        'use strict';
+        function deriveCookieDomain(baseUrl) {
+          if (!baseUrl) return null;
+          try {
+            const url = new URL(baseUrl);
+            const hostname = url.hostname;
+            const parts = hostname.split('.');
+            if (parts.length >= 2) return '.' + parts.slice(-2).join('.');
+            if (parts.length === 1) return '.' + hostname;
+          } catch (e) {}
+          return null;
+        }
+        function getCookieValue(name) {
+          try {
+            const value = '; ' + document.cookie;
+            const parts = value.split('; ' + name + '=');
+            if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+          } catch (e) {}
+          return null;
+        }
+        function clearSubdomainCookies(cookieDomain) {
+          try {
+            const currentHostname = window.location.hostname;
+            const rootDomain = cookieDomain.replace('.', '');
+            if (currentHostname !== rootDomain && currentHostname.endsWith(cookieDomain)) {
+              ['ajs_anonymous_id', 'ajs_user_id', 'ajs_group_id', 'ajs_event_id'].forEach(function (cookieName) {
+                document.cookie = cookieName + '=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;';
+              });
+            }
+          } catch (e) {}
+        }
+        function createSegmentLoadOptions(cookieDomain) {
+          const loadOptions = {
+            storage: { stores: ['cookie', 'localStorage', 'memory'] },
+            user: { storage: { stores: ['cookie', 'localStorage', 'memory'] } }
+          };
+          if (cookieDomain) loadOptions.cookie = { domain: cookieDomain };
+          return loadOptions;
+        }
+        function setupRootDomainCookieSync(analytics, cookieDomain) {
+          if (!cookieDomain) return;
+          try {
+            const currentHostname = window.location.hostname;
+            const rootDomain = cookieDomain.replace('.', '');
+            if (currentHostname !== rootDomain && currentHostname.endsWith(cookieDomain)) {
+              analytics.ready(function () {
+                try {
+                  const rootDomainCookieValue = getCookieValue('ajs_anonymous_id');
+                  const currentAnonymousId = analytics.user().anonymousId();
+                  if (rootDomainCookieValue && rootDomainCookieValue !== currentAnonymousId) {
+                    analytics.setAnonymousId(rootDomainCookieValue);
+                  }
+                } catch (e) {}
+              });
+            }
+          } catch (e) {}
+        }
+        window.SegmentInit = {
+          deriveCookieDomain: deriveCookieDomain,
+          getCookieValue: getCookieValue,
+          clearSubdomainCookies: clearSubdomainCookies,
+          createSegmentLoadOptions: createSegmentLoadOptions,
+          setupRootDomainCookieSync: setupRootDomainCookieSync
+        };
+      })(window);</script><script type="text/javascript">!function() {
+        const config = _getDynConfigKey(window, 'segmentConfig') || {};
+        if (!config.src || !config.key) {
+          console.log('Can\'t load Segment due to missing configuration');
+          return;
+        }
+
+        // Derive cookie domain from baseUrl to share anonymousId across subdomains
+        const baseUrl = _getDynConfigKey(window, 'baseUrl') || '';
+        const cookieDomain = window.SegmentInit
+          ? window.SegmentInit.deriveCookieDomain(baseUrl)
+          : null;
+
+        // Clear subdomain-specific Segment cookies if we're on a subdomain
+        if (cookieDomain && window.SegmentInit) {
+          window.SegmentInit.clearSubdomainCookies(cookieDomain);
+        }
+
+        var i = "analytics", analytics = window[i] = window[i] || [];
+        if (!analytics.initialize) if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice."); else {
+          analytics.invoked = !0;
+          analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "screen", "once", "off", "on", "addSourceMiddleware", "addIntegrationMiddleware", "setAnonymousId", "addDestinationMiddleware", "register"];
+          analytics.factory = function(e) {
+            return function() {
+              if (window[i].initialized) return window[i][e].apply(window[i], arguments);
+              var n = Array.prototype.slice.call(arguments);
+              if (["track", "screen", "alias", "group", "page", "identify"].indexOf(e) > -1) {
+                var c = document.querySelector("link[rel='canonical']");
+                n.push({
+                  __t: "bpc",
+                  c: c && c.getAttribute("href") || void 0,
+                  p: location.pathname,
+                  u: location.href,
+                  s: location.search,
+                  t: document.title,
+                  r: document.referrer
+                });
+              }
+              n.unshift(e);
+              analytics.push(n);
+              return analytics;
+            };
+          };
+          for (var n = 0; n < analytics.methods.length; n++) {
+            var key = analytics.methods[n];
+            analytics[key] = analytics.factory(key);
+          }
+          analytics.load = function(key, n) {
+            var t = document.createElement("script");
+            t.type = "text/javascript";
+            t.async = !0;
+            t.setAttribute("data-global-segment-analytics-key", i);
+            t.src = analytics._src;
+            var r = document.getElementsByTagName("script")[0];
+            r.parentNode.insertBefore(t, r);
+            analytics._loadOptions = n;
+          };
+          analytics._src = config.src;
+          analytics._writeKey = config.key;
+          analytics._cdn = "https://evs.segment.doxy.me";
+          analytics.SNIPPET_VERSION = "5.2.0";
+          
+          // Load Segment with cookie domain and storage priority configuration
+          const loadOptions = window.SegmentInit
+            ? window.SegmentInit.createSegmentLoadOptions(cookieDomain)
+            : {};
+          analytics.load(config.key, loadOptions);
+          
+          // Set up root domain cookie synchronization for subdomains
+          if (cookieDomain && window.SegmentInit) {
+            window.SegmentInit.setupRootDomainCookieSync(analytics, cookieDomain);
+          }
+          
+          // Add loaded_in_iframe to every Segment event (track, page, identify, etc.) in the context object of the payload.
+          // @docs https://www.twilio.com/docs/segment/connections/sources/catalog/libraries/website/javascript/middleware
+          analytics.ready(function () {
+            var loadedInIframe = (function () {
+              if (typeof window === 'undefined') return false;
+              try {
+                return window.self !== window.top;
+              } catch (e) {
+                return true;
+              }
+            })();
+            analytics.addSourceMiddleware(function (_a) {
+              var payload = _a.payload, next = _a.next;
+              if (payload && payload.obj) {
+                if (!payload.obj.context) payload.obj.context = {};
+                payload.obj.context.loaded_in_iframe = loadedInIframe;
+              }
+              next(payload);
+            });
+            analytics.page();
+          });
+        }
+      }();</script><!-- end SEGMENT Analytics --><!-- end Analytics --><base href="/"><noscript><div class="support-browser"><div class="center-content"><header><strong class="subtitle"><span>Oh No!</span></strong><h2 class="title"><span>JavaScript is disabled in your browser.</span></h2></header><div class="content"><p><span>Doxy.me can't provide patients and clinicians an amazing experience if JavaScript is disabled. Please refer to the links below to learn how to enable JavaScript in your browser, or contact your system administrator.</span></p><ul class="links"><li><a href="https://activatejavascript.org/en/instructions/chrome" target="_blank"><i class="icon chrome-icon"></i> <b><span>Google Chrome</span></b></a></li><li><a href="https://activatejavascript.org/en/instructions/firefox" target="_blank"><i class="icon firefox-icon"></i> <b><span>Firefox</span></b></a></li></ul></div></div><a class="icon logo-footer" href="/" aria-label="Homepage">Homepage</a></div></noscript><style>body{font-size:14px;font-family:Arial,sans-serif}:root{--main-color:#66cccc}.root-page-loader{position:absolute;display:block;top:50%;left:50%;width:34px;height:34px;transform:translateY(-50%) translateX(-50%);overflow:hidden}.root-page-loader svg{position:absolute;top:0;left:0;width:32px;height:32px;transform-origin:center;animation:root-page-loader-rotate 1.5s linear infinite}.root-page-loader svg circle{transform-origin:center center;stroke-dasharray:1,200;stroke-dashoffset:0;stroke:var(--main-color);animation:root-page-loader-dash 1.5s ease-out infinite;stroke-width:5px}@keyframes root-page-loader-rotate{100%{transform:rotate(360deg)}}@keyframes root-page-loader-dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:89,200;stroke-dashoffset:-35px}100%{stroke-dasharray:89,200;stroke-dashoffset:-124px}}</style><link rel="stylesheet" type="text/css" href="/bundle/index.81593c2688235a8f870b.css"></head><body class="{{$ctrl.state.bodyClass}}" ng-class="{'no-scrollbar': $ctrl.ui.noScrollbar, 'is-in-call': $ctrl.activeVideoProvider.isInCall, 'is-patient': $ctrl.isPatient}" d-sidebar-hover=""><!-- Google Tag Manager (noscript) --><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CGWHNT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><!-- End Google Tag Manager (noscript) --><iframe id="iframe" sandbox="allow-same-origin" style="display:none"></iframe><notifications-bar class="notifications" closeicon="icon icon-close"></notifications-bar><unsupported-browser></unsupported-browser><server-error-screen></server-error-screen><react-global-notifications></react-global-notifications><div class="root-page-loader"><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="21" fill="none" stroke-width="2" stroke-miterlimit="10"></circle></svg></div><main id="main-ui-view" ng-class="{'sidebar-hidden': $ctrl.ui.sidebarHidden}" ui-view autoscroll="true" class="ng-cloak"></main><!--
+      Mounted at the body level (outside ui-view) so that lifecycle
+      announcements like "Call ended" survive route transitions and aren't
+      cut off by the destination page taking focus.
+    --><live-announcer></live-announcer><script src="/bundle/manifest.81593c2688235a8f870b.js"></script><script src="/bundle/index.81593c2688235a8f870b.js"></script><link href="https://fonts.googleapis.com/css?family=Mrs+Saint+Delafield&subset=latin,latin-ext" rel="stylesheet" type="text/css"><div style="position:absolute;z-index:-1;top:0;left:0;width:0;height:0"> <?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><symbol viewBox="0 0 12 8" id="arrow-down" xmlns="http://www.w3.org/2000/svg"><path d="M10.59.295L6 4.875 1.41.295 0 1.705l6 6 6-6-1.41-1.41z"/></symbol><symbol viewBox="0 0 12 7" id="arrow-expand" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 1.047L1.055 0 6 4.906 10.945 0 12 1.047 6 7 0 1.047z"/></symbol><symbol viewBox="0 0 30 30" id="brochure" xmlns="http://www.w3.org/2000/svg"><path d="M29.507 2.74L19.959.027l-.01-.002a.665.665 0 0 0-.07-.015l-.02-.003A.686.686 0 0 0 19.773 0h-.001a.684.684 0 0 0-.084.006l-.021.003a.676.676 0 0 0-.07.015l-.01.002-9.362 2.662L.864.026A.679.679 0 0 0 0 .679v25.927c0 .304.201.57.493.653l9.547 2.715.01.002a.67.67 0 0 0 .07.015l.021.003a.679.679 0 0 0 .17 0c.007 0 .014-.002.02-.003a.67.67 0 0 0 .07-.015c.004 0 .007 0 .01-.002l9.363-2.662 9.362 2.662a.678.678 0 0 0 .864-.653V3.394a.679.679 0 0 0-.493-.653zM10.905 3.907l8.19-2.329v24.517l-8.19 2.329V3.906zm-9.548-2.33l8.19 2.33v24.516l-8.19-2.33V1.578zm27.285 26.846l-8.19-2.33V1.578l8.19 2.33v24.516z"/><path d="M7.697 24.503l-4.118-1.171a.679.679 0 1 0-.37 1.306l4.116 1.17a.68.68 0 1 0 .372-1.305zm0-3.394l-4.118-1.17a.679.679 0 1 0-.37 1.305l4.116 1.17a.68.68 0 1 0 .372-1.305zm0-3.394l-4.118-1.17a.679.679 0 1 0-.37 1.305l4.116 1.171a.68.68 0 1 0 .372-1.306zm0-12.353l-4.118-1.17a.679.679 0 0 0-.864.653v8.959c0 .303.201.57.493.653l4.117 1.17a.677.677 0 0 0 .865-.652v-8.96a.679.679 0 0 0-.493-.653zm-.865 8.714l-2.76-.785V5.743l2.76.785v7.548zm6.108-7.382a.679.679 0 0 0 .186-.026l4.118-1.17a.679.679 0 1 0-.371-1.306l-4.118 1.17a.679.679 0 0 0 .185 1.332zm3.933 16.638l-4.118 1.17a.679.679 0 1 0 .371 1.307l4.118-1.171a.679.679 0 1 0-.371-1.306zm0-3.394l-4.118 1.171a.679.679 0 1 0 .371 1.306l4.118-1.171a.679.679 0 1 0-.371-1.306zm0-3.393l-4.118 1.17a.679.679 0 1 0 .371 1.306l4.118-1.17a.679.679 0 1 0-.371-1.306zm0-3.395l-4.118 1.172a.679.679 0 0 0 .371 1.305l4.118-1.17a.679.679 0 0 0-.371-1.306zm5.43-7.653l4.118 1.171a.68.68 0 1 0 .371-1.306l-4.118-1.17a.679.679 0 0 0-.371 1.305zm0 3.394l4.118 1.171a.68.68 0 1 0 .371-1.306l-4.118-1.17a.679.679 0 0 0-.371 1.305zm0 3.394l4.118 1.17a.68.68 0 1 0 .371-1.305l-4.118-1.171a.679.679 0 0 0-.371 1.306zm0 12.353l4.118 1.17a.677.677 0 0 0 .864-.652v-8.96a.679.679 0 0 0-.493-.653l-4.118-1.17a.679.679 0 0 0-.864.652v8.96c0 .303.2.57.493.652zm.864-8.714l2.76.785v7.548l-2.76-.785v-7.548z"/></symbol><symbol viewBox="0 0 24 24" id="button-error" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0 2c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></symbol><symbol viewBox="0 0 24 24" id="button-success" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0 2c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z"/><path d="M9.167 15l-3.5-3.5L4.5 12.667l4.667 4.666 10-10L18 6.167 9.167 15z"/></symbol><symbol viewBox="0 0 16 4" id="call-dots" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM6 2c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z"/></symbol><symbol fill="none" viewBox="0 0 18 18" id="call-downsize" xmlns="http://www.w3.org/2000/svg"><path d="M13.583 2.348L12.205.954a.448.448 0 0 0-.765.314l-.072 5.011a.453.453 0 0 0 .454.46l4.951-.072a.455.455 0 0 0 .31-.775L15.71 4.504 18 2.186 15.873.033l-2.29 2.315zm3.497 9.79a.455.455 0 0 0-.31-.775l-4.95-.073a.453.453 0 0 0-.455.46l.072 5.011c.006.401.484.6.765.315l1.378-1.394L15.87 18l2.127-2.153-2.29-2.318 1.374-1.391zM6.563 1.242l.069 5.011a.453.453 0 0 1-.455.46l-4.95-.073a.455.455 0 0 1-.311-.775l1.377-1.394-2.29-2.318L2.13 0l2.29 2.318L5.797.924c.279-.281.76-.083.766.318zm-.388 10.015l-4.95.073a.455.455 0 0 0-.312.775l1.378 1.39L0 15.816l2.126 2.152 2.29-2.318 1.378 1.394c.282.285.76.086.766-.315l.072-5.01a.457.457 0 0 0-.458-.46z" fill="#fff"/></symbol><symbol fill="none" viewBox="0 0 120 123" id="call-dropped" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="48" r="47.25" stroke="#6CC" stroke-opacity=".24" stroke-width="1.5"/><g filter="url(#ahfilter0_d)"><mask id="aha" maskUnits="userSpaceOnUse" x="24" y="12" width="72" height="72"><circle cx="60" cy="48" r="36" fill="#6CC"/></mask><g mask="url(#aha)"><path d="M96 48c0 19.882-16.118 36-36 36S24 67.882 24 48s16.118-36 36-36 36 16.118 36 36z" fill="#6CC"/><circle cx="84" cy="48" r="2" fill="#3CB7B7"/><path fill-rule="evenodd" clip-rule="evenodd" d="M42 28.313c0 .734-.47 1.36-1.125 1.591v13.829c.392-.11.8-.184 1.219-.215C44.817 36.276 51.807 31.124 60 31.124s15.183 5.152 17.906 12.392c.42.032.827.105 1.219.216V29.904a1.688 1.688 0 1 1 1.125 0v14.27a6.19 6.19 0 0 1-1.125 11.467v6.622A3.737 3.737 0 0 1 75.388 66H69c0 .776-.098 1.53-.283 2.248C74.253 71.318 78 77.22 78 84c0 9.941-8.059 18-18 18s-18-8.059-18-18c0-6.779 3.747-12.682 9.283-15.752A9.013 9.013 0 0 1 51 66h-6.388a3.737 3.737 0 0 1-3.737-3.737v-6.62a6.19 6.19 0 0 1-1.125-11.468V29.904A1.688 1.688 0 1 1 42 28.313zm24.75 25.312h-13.5a6.75 6.75 0 1 0 13.5 0zM54.375 47a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zM69 50.375a3.375 3.375 0 1 0 0-6.75 3.375 3.375 0 0 0 0 6.75z" fill="#3CB7B7"/><path fill-rule="evenodd" clip-rule="evenodd" d="M40.875 26.904a1.688 1.688 0 1 0-1.125 0v14.27a6.19 6.19 0 0 0 1.125 11.467v6.622A3.737 3.737 0 0 0 44.612 63H51c0 .776.098 1.53.283 2.248C45.747 68.318 42 74.22 42 81c0 9.941 8.059 18 18 18s18-8.059 18-18c0-6.779-3.747-12.682-9.283-15.752A9.013 9.013 0 0 0 69 63h6.388a3.737 3.737 0 0 0 3.737-3.737v-6.62a6.19 6.19 0 0 0 1.125-11.468V26.904a1.688 1.688 0 1 0-1.125 0v13.829c-.392-.11-.8-.184-1.219-.215C75.183 33.276 68.193 28.124 60 28.124s-15.183 5.152-17.906 12.392c-.42.032-.827.105-1.219.216V26.904zM51 47.375a3.375 3.375 0 1 0 0-6.75 3.375 3.375 0 0 0 0 6.75zM72.375 44a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0z" fill="#fff"/></g><circle cx="60" cy="81" r="18" fill="#fff"/><g clip-path="url(#ahclip0)"><path d="M60.556 91.026a2.011 2.011 0 1 0 0-4.023 2.011 2.011 0 0 0 0 4.023z" fill="#EB5757"/><path d="M72.907 76.664a17.466 17.466 0 0 0-24.701 0 .318.318 0 0 0 0 .45l1.497 1.496a.318.318 0 0 0 .449 0 14.715 14.715 0 0 1 20.809 0 .316.316 0 0 0 .45 0l1.496-1.497a.318.318 0 0 0 0-.449z" fill="#6CC"/><path d="M67.593 82.296a.318.318 0 0 0 .224-.093l1.497-1.497a.318.318 0 0 0 0-.45 12.386 12.386 0 0 0-17.515 0 .317.317 0 0 0 0 .45l1.497 1.497a.318.318 0 0 0 .449 0 9.633 9.633 0 0 1 13.623 0 .319.319 0 0 0 .225.093z" fill="#6CC"/><path d="M64 85.889a.316.316 0 0 0 .224-.093l1.497-1.497a.318.318 0 0 0 0-.45 7.304 7.304 0 0 0-10.33 0 .316.316 0 0 0 0 .45l1.498 1.497a.32.32 0 0 0 .346.069.32.32 0 0 0 .103-.07 4.553 4.553 0 0 1 6.437 0 .319.319 0 0 0 .225.094z" fill="#EB5757"/></g><path fill-rule="evenodd" clip-rule="evenodd" d="M84.464 48.314C86.511 53.432 82.742 59 77.23 59H69v-1h8.23c4.805 0 8.09-4.853 6.306-9.314l.928-.372z" fill="#3CB7B7"/><rect x="66" y="57" width="5" height="3" rx="1.5" fill="#3CB7B7"/><path fill-rule="evenodd" clip-rule="evenodd" d="M84.464 47.314C86.511 52.432 82.742 58 77.23 58H69v-1h8.23c4.805 0 8.09-4.853 6.306-9.314l.928-.372z" fill="#fff"/><circle cx="84" cy="47" r="2" fill="#fff"/><rect x="66" y="56" width="5" height="3" rx="1.5" fill="#333"/><path d="M57 53l3.5-3 3.5 3" stroke="#6CC" stroke-width="2"/></g><defs><filter id="ahfilter0_d" x="-12" y="-24" width="144" height="147" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset/><feGaussianBlur stdDeviation="12"/><feColorMatrix values="0 0 0 0 0.4 0 0 0 0 0.811765 0 0 0 0 0.815686 0 0 0 0.16 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter><clipPath id="ahclip0"><path fill="#fff" transform="translate(48 71)" d="M0 0h25v20H0z"/></clipPath></defs></symbol><symbol viewBox="0 0 24 24" id="call-end" xmlns="http://www.w3.org/2000/svg"><path d="M0 12.522l.015 2.067.002.003c.005.473.371.81.78.805l.006.003 5.583-.047c.431-.004.767-.373.762-.817l-.016-2.07-.272.004c.085-.859 1.076-1.061 3.053-1.29l4.759-.044c1.144.117 2.253.333 2.333 1.268h-.153l.015 2.067.001.003c.004.474.372.81.782.806l.005.004 5.582-.049c.432-.001.766-.371.763-.816l-.016-2.069-.203.002c-.196-1.257-2.169-5.314-11.49-5.352C2.618 6.963.353 11.172.236 12.52L0 12.522z"/></symbol><symbol viewBox="0 0 14 14" id="call-expand" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 5H0V0h5v2H2v3zM0 9h2v3h3v2H0V9zm12 3H9v2h5V9h-2v3zM9 2V0h5v5h-2V2H9z"/></symbol><symbol fill="none" viewBox="0 0 26 14" id="call-gallery-view" xmlns="http://www.w3.org/2000/svg"><path d="M.4 0v5.6h11.2V0H.4zm0 8.4V14h11.2V8.4H.4zm14-8.4v5.6h11.2V0H14.4zm0 8.4V14h11.2V8.4H14.4z" fill="#fff"/></symbol><symbol viewBox="0 0 22 24" id="call-group" xmlns="http://www.w3.org/2000/svg"><path d="M9.56 12.165c3.38 0 4.595-3.384 4.913-6.164C14.867 2.577 13.246 0 9.56 0S4.254 2.577 4.646 6.001c.319 2.78 1.534 6.164 4.914 6.164z"/><path d="M16.95 13.573c.108 0 .216.003.323.01a2.583 2.583 0 0 0-.564-.595c-.65-.485-1.49-.644-2.234-.936a9.671 9.671 0 0 1-.99-.444c-1.027 1.126-2.366 1.715-3.926 1.715-1.559 0-2.897-.589-3.924-1.715a9.66 9.66 0 0 1-.99.444c-.744.292-1.585.451-2.234.936-1.123.838-1.414 2.724-1.642 4.01a23.06 23.06 0 0 0-.351 3.224c-.029.835.384.953 1.083 1.205.875.316 1.778.55 2.688.742 1.757.37 3.568.656 5.37.669a21.594 21.594 0 0 0 2.62-.19 5.76 5.76 0 0 1-1.022-3.282 5.8 5.8 0 0 1 5.792-5.793z"/><path d="M16.95 14.732a4.634 4.634 0 1 0 0 9.268 4.634 4.634 0 0 0 0-9.268zm2.027 5.429h-1.233v1.232a.795.795 0 0 1-1.59 0v-1.232h-1.232a.795.795 0 1 1 0-1.59h1.232v-1.233a.795.795 0 1 1 1.59 0v1.233h1.233a.795.795 0 1 1 0 1.59z"/></symbol><symbol viewBox="1 0 20 24" id="call-group-pause" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v14.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1-.75-.75V4.75zM2.75 20a.75.75 0 0 1-.75-.75V4.75A.75.75 0 0 1 2.75 4h4.5a.75.75 0 0 1 .75.75v14.5a.75.75 0 0 1-.75.75h-4.5z"/></symbol><symbol viewBox="0 0 13 22" id="call-hide-menu" xmlns="http://www.w3.org/2000/svg"><path d="M3.414 11l9.293 9.293-1.414 1.414L.586 11 11.293.293l1.414 1.414z"/></symbol><symbol viewBox="0 0 18 12" id="call-menu" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 2V0h18v2H0zm0 5h18V5H0v2zm0 5h18v-2H0v2z"/></symbol><symbol viewBox="0 0 24 24" id="call-mic" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.737 9.25v4.125c0 2.75-2.83 5.5-5.661 5.5v2.75h4.246V23H7.415v-1.375h4.246v-2.75c-2.83 0-5.661-2.75-5.661-5.5V9.25h1.415v4.125c0 2.063 2.123 4.125 4.246 4.125h1.415c2.123 0 4.246-2.063 4.246-4.125V9.25h1.415zM11.667 1h1.402c1.572 0 2.837 1.226 2.837 2.739v9.647c0 1.501-1.27 2.739-2.837 2.739h-1.401c-1.572 0-2.838-1.226-2.838-2.739V3.739C8.83 2.238 10.1 1 11.668 1z"/></symbol><symbol viewBox="0 0 24 24" id="call-mic-off" xmlns="http://www.w3.org/2000/svg"><path d="M5.196 9.514v4.033c0 1.01.43 2.037 1.101 2.904l.79-1.33c-.27-.5-.427-1.037-.427-1.574V9.514H5.196zM18 13.544V9.511h-1.465v4.033c0 2.017-2.197 4.033-4.394 4.033h-1.465c-.404 0-.6.052-.99-.071l-.68 1.132c.62.237 1.018.284 1.67.284v2.688H7.434l-.767 1.345h9.868V21.61h-4.394v-2.688c2.93 0 5.859-2.69 5.859-5.378zM12.215 1h-1.45C9.141 1 7.827 2.21 7.827 3.678l.15 9.466 6.54-11.127C13.98 1.389 13.157 1 12.214 1z"/><path d="M12.15 16.233c1.622 0 2.937-1.21 2.937-2.678V8.243l-4.598 7.949 1.661.041z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M4.657 22.709a.646.646 0 0 1-.267-.906L16.463.9a.727.727 0 0 1 .952-.28.646.646 0 0 1 .267.906L5.61 22.43a.727.727 0 0 1-.952.28z"/></symbol><symbol viewBox="0 0 24 24" id="call-mic-on" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.737 9.25v4.125c0 2.75-2.83 5.5-5.661 5.5v2.75h4.246V23H7.415v-1.375h4.246v-2.75c-2.83 0-5.661-2.75-5.661-5.5V9.25h1.415v4.125c0 2.063 2.123 4.125 4.246 4.125h1.415c2.123 0 4.246-2.063 4.246-4.125V9.25h1.415zM11.667 1h1.402c1.572 0 2.837 1.226 2.837 2.739v9.647c0 1.501-1.27 2.739-2.837 2.739h-1.401c-1.572 0-2.838-1.226-2.838-2.739V3.739C8.83 2.238 10.1 1 11.668 1z"/></symbol><symbol viewBox="0 0 14 16" id="call-pause" xmlns="http://www.w3.org/2000/svg"><path d="M11.623 0c-1.314 0-2.378.35-2.378 1.486v13.028C9.245 15.65 10.31 16 11.623 16 12.936 16 14 15.65 14 14.514V1.486C14 .349 12.936 0 11.623 0zM2.377 0C1.064 0 0 .35 0 1.486v13.028C0 15.65 1.064 16 2.377 16c1.313 0 2.378-.35 2.378-1.486V1.486C4.755.349 3.69 0 2.377 0z"/></symbol><symbol viewBox="0 0 24 24" id="call-pin" xmlns="http://www.w3.org/2000/svg"><path d="M14.115 2l-.536.535-2.806 2.807 1.514 1.515-1.927 1.926c-.55-.142-1.103-.279-1.673-.28h-.003c-1.807 0-3.54.719-4.818 1.997l-.535.536 4.281 4.281L2 20.929V22h1.07l5.614-5.614 4.282 4.282.535-.536a6.816 6.816 0 0 0 1.998-4.815v-.002c-.002-.57-.14-1.124-.283-1.675l1.928-1.927 1.514 1.514L22 9.885 14.115 2z"/></symbol><symbol viewBox="0 0 60 60" id="call-placeholder" xmlns="http://www.w3.org/2000/svg"><path d="M29.5 30c-3.59 0-6.5-3.582-6.5-8s.956-8 6.5-8c5.544 0 6.5 3.582 6.5 8s-2.91 8-6.5 8zm12.487 11.207c.007.49.011.574.013.53v.594S40.232 46 30.001 46c-10.234 0-12-3.669-12-3.669L18 41.528c.002.071.008.039.018-.569.136-7.448 1.164-9.595 8.503-10.959 0 0 1.045 1.371 3.479 1.371 2.435 0 3.479-1.371 3.479-1.371 7.42 1.379 8.39 3.559 8.508 11.207zM30 60C13.431 60 0 46.569 0 30 0 13.431 13.431 0 30 0c16.569 0 30 13.431 30 30 0 16.569-13.431 30-30 30zm0-1c16.016 0 29-12.984 29-29S46.016 1 30 1 1 13.984 1 30s12.984 29 29 29z"/></symbol><symbol viewBox="0 0 14 16" id="call-play" xmlns="http://www.w3.org/2000/svg"><path d="M14 8L.5 15.794V.206L14 8z"/></symbol><symbol viewBox="0 0 16 16" id="call-resize" xmlns="http://www.w3.org/2000/svg"><path d="M13.785 4.425l1.377 1.394c.281.285.76.086.766-.314L16 .494a.452.452 0 0 0-.455-.46l-4.95.072a.455.455 0 0 0-.311.775l1.374 1.388-2.29 2.318 2.126 2.153 2.29-2.315zM10.28 15.152a.455.455 0 0 0 .311.775l4.95.073a.453.453 0 0 0 .456-.46l-.072-5.011a.448.448 0 0 0-.766-.315l-1.378 1.394-2.29-2.318-2.127 2.153 2.29 2.318-1.373 1.391zM.072 5.471L.003.461A.453.453 0 0 1 .458 0l4.95.073c.396.007.592.49.311.775L4.342 2.242l2.29 2.319-2.127 2.152-2.29-2.318L.837 5.789c-.278.282-.759.083-.765-.318zm.386 10.496l4.95-.073a.455.455 0 0 0 .311-.775l-1.377-1.39 2.29-2.32-2.126-2.152-2.29 2.318-1.378-1.394a.448.448 0 0 0-.766.315L0 15.506c0 .256.206.464.458.461z"/></symbol><symbol viewBox="0 0 24 24" id="call-settings" xmlns="http://www.w3.org/2000/svg"><path d="M22.512 10.086l-2.524-.62a8.326 8.326 0 0 0-.582-1.387l1.175-1.958a.645.645 0 0 0-.097-.787L18.661 3.51a.643.643 0 0 0-.787-.097l-1.961 1.175a8.3 8.3 0 0 0-1.378-.577l-.62-2.524A.644.644 0 0 0 13.288 1H10.71a.644.644 0 0 0-.625.488s-.43 1.762-.62 2.523c-.507.16-.996.37-1.463.623L5.97 3.414a.646.646 0 0 0-.787.097L3.36 5.334a.645.645 0 0 0-.097.787l1.258 2.1a8.26 8.26 0 0 0-.508 1.242l-2.524.623A.644.644 0 0 0 1 10.71v2.578c0 .296.201.554.488.625l2.525.62c.153.486.351.957.593 1.41L3.48 17.82a.645.645 0 0 0 .097.787L5.4 20.43a.647.647 0 0 0 .787.097l1.88-1.127a8.29 8.29 0 0 0 1.399.589l.62 2.523c.071.287.33.488.625.488h2.578a.644.644 0 0 0 .625-.488l.62-2.523a8.203 8.203 0 0 0 1.43-.608l1.91 1.146a.645.645 0 0 0 .787-.097l1.823-1.823a.644.644 0 0 0 .097-.787l-1.159-1.93c.229-.434.418-.888.566-1.355l2.524-.62a.644.644 0 0 0 .488-.626v-2.578a.644.644 0 0 0-.488-.625zM12 16.512A4.517 4.517 0 0 1 7.488 12 4.517 4.517 0 0 1 12 7.488 4.517 4.517 0 0 1 16.512 12 4.517 4.517 0 0 1 12 16.512z"/></symbol><symbol viewBox="0 0 14 14" id="call-settings-close" xmlns="http://www.w3.org/2000/svg"><path d="M14 1.41L12.59 0 7 5.59 1.41 0 0 1.41 5.59 7 0 12.59 1.41 14 7 8.41 12.59 14 14 12.59 8.41 7 14 1.41z"/></symbol><symbol fill="none" viewBox="0 0 18 14" id="call-show-menu" xmlns="http://www.w3.org/2000/svg"><rect width="17.116" height="2" rx="1" fill="#fff"/><rect y="6" width="17.116" height="2" rx="1" fill="#fff"/><rect y="12" width="17.116" height="2" rx="1" fill="#fff"/></symbol><symbol fill="none" viewBox="0 0 29 16" id="call-standard-view" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M19 16H0V0h19v16zm2-6V6h8v4h-8zm0 2v4h8v-4h-8zm0-8V0h8v4h-8z" fill="#fff"/></symbol><symbol viewBox="0 0 24 24" id="call-switch-camera" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M17.313 4.3H20.8c1.21 0 2.2.99 2.2 2.2v13.2c0 1.21-.99 2.2-2.2 2.2H3.2c-1.21 0-2.2-.99-2.2-2.2V6.5c0-1.21.99-2.2 2.2-2.2h3.487L8.7 2.1h6.6l2.013 2.2zm-9.51 4.759l-.472-.472-.472.472-2.402 2.402-.471.471.943.944.472-.472 1.266-1.266v.795a6.072 6.072 0 0 0 6.072 6.072h.668v-1.334h-.668a4.737 4.737 0 0 1-4.737-4.738v-.788l1.26 1.26.471.471.944-.944-.472-.471-2.402-2.402zm8.871 7.343l-.472-.471-2.402-2.402-.472-.472.944-.944.472.472 1.26 1.26v-.79a4.737 4.737 0 0 0-4.738-4.737h-.667V6.984h.667a6.072 6.072 0 0 1 6.072 6.072v.795l1.266-1.266.472-.472.944.944-.472.472-2.402 2.402-.472.471z"/></symbol><symbol viewBox="0 0 24 24" id="call-unpin" xmlns="http://www.w3.org/2000/svg"><path d="M13.501 20.132a6.815 6.815 0 0 0 1.722-2.9L6.767 8.779a6.814 6.814 0 0 0-2.9 1.721l-.536.536 4.281 4.281L2 20.929V22h1.07l5.614-5.614 4.282 4.282.535-.536zm3.642-8.419l-1.337 1.338-4.858-4.856 1.339-1.338-1.514-1.515L14.115 2 22 9.885l-3.342 3.342-1.515-1.514zm3.937 8.024a.646.646 0 0 1-.024.945.727.727 0 0 1-.992-.025L2.993 3.592a.646.646 0 0 1 .023-.945.727.727 0 0 1 .992.024L21.08 19.737z"/></symbol><symbol viewBox="0 0 24 24" id="call-video-off" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.047 22.567a.79.79 0 0 1-.29-1.08l11.48-19.882a.79.79 0 0 1 1.368.79L6.126 22.277a.79.79 0 0 1-1.08.29z"/><path d="M1 15.29c0 1.828 1.495 3.31 3.338 3.31h.252l8.09-13.995H4.338C2.495 4.606 1 6.09 1 7.918v7.372zm22 .752V7.157a.893.893 0 0 0-1.345-.765l-3.73 2.134v-.608a3.28 3.28 0 0 0-.61-1.907L10.047 18.6h4.536c1.843 0 3.338-1.482 3.338-3.311v-.608l3.73 2.135c.6.341 1.349-.088 1.349-.775z"/></symbol><symbol viewBox="0 0 24 24" id="call-video-on" xmlns="http://www.w3.org/2000/svg"><path d="M23 7.606v9.079c0 .702-.766 1.14-1.379.791l-3.811-2.181v.621c0 1.869-1.528 3.384-3.41 3.384H4.41C2.528 19.3 1 17.785 1 15.916V8.384C1 6.515 2.527 5 4.41 5h9.994c1.883 0 3.41 1.515 3.41 3.384v.621l3.812-2.181A.913.913 0 0 1 23 7.606z"/></symbol><symbol viewBox="0 0 24 24" id="chat" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 0C4.477 0 0 3.86 0 8.62c.047 2.4 1.134 4.65 2.957 6.117L.87 19.962l5.54-3.303a11.38 11.38 0 0 0 3.59.581c5.523 0 10-3.859 10-8.62C20 3.86 15.523 0 10 0z"/></symbol><symbol viewBox="0 0 14 11" id="checked" xmlns="http://www.w3.org/2000/svg"><path d="M4.455 8.432L1.114 5.09 0 6.205l4.455 4.454L14 1.114 12.886 0 4.455 8.432z"/></symbol><symbol viewBox="0 0 16 9" id="chevron-bottom" xmlns="http://www.w3.org/2000/svg"><path d="M14.646.646l.708.708L8 8.707.646 1.354l.708-.708L8 7.293z"/></symbol><symbol fill="none" viewBox="0 0 16 16" id="connection-0" xmlns="http://www.w3.org/2000/svg"><path d="M2.667 13.333H0V16h2.667v-2.667zm4.444-4.444H4.444v7.11h2.667V8.89zm4.445-4.445H8.889V16h2.667V4.444zM16 0h-2.667v16H16V0z" fill="#AFB4BE"/></symbol><symbol fill="none" viewBox="0 0 16 16" id="connection-1" xmlns="http://www.w3.org/2000/svg"><path d="M2.667 13.333H0V16h2.667v-2.667zm4.444-4.444H4.444v7.11h2.667V8.89z" fill="#EB5757"/><path d="M11.556 4.444H8.889V16h2.667V4.444zM16 0h-2.667v16H16V0z" fill="#AFB4BE"/></symbol><symbol fill="none" viewBox="0 0 16 16" id="connection-2" xmlns="http://www.w3.org/2000/svg"><path d="M2.667 13.333H0V16h2.667v-2.667zm4.444-4.444H4.444v7.11h2.667V8.89z" fill="#EB5757"/><path d="M11.556 4.444H8.889V16h2.667V4.444zM16 0h-2.667v16H16V0z" fill="#AFB4BE"/></symbol><symbol fill="none" viewBox="0 0 16 16" id="connection-3" xmlns=

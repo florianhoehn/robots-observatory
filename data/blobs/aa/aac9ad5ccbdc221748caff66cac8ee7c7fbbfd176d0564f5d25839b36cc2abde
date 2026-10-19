@@ -1,0 +1,546 @@
+# Kling AI ([https://kling.ai](https://kling.ai))
+
+> **Kling AI is a next-generation AI creative productivity platform developed by Kuaishou Technology, a Beijing-based Chinese technology company listed on HKEX (1024). Launched in June 2024, Kling AI specializes in text-to-video, image-to-video, and text-to-image generation using diffusion transformer (DiT) architecture. The platform has iterated rapidly through major versions: Kling 1.0 (June 2024) → 1.5/1.6 (late 2024) → 2.0 (April 2025) → 2.1 (May 2025) → 2.5 Turbo (September 2025) → Video O1 (December 2025) → 2.6 with native audio (December 2025) → 3.0/3.0 Omni (February 2026). As of early 2026, Kling AI has generated over 600 million videos, serves 30,000+ enterprise customers, and earns approximately 70% of its revenue from overseas markets. Kuaishou has announced that Kling AI will complete a financing round of nearly $3 billion, with a post-money valuation of $18 billion.**
+
+Canonical site: https://kling.ai
+Canonical llms.txt path: https://kling.ai/llms.txt
+Primary brand: Kling AI
+Brand phrase: Next-generation AI creative productivity platform
+Parent company: Kuaishou Technology (HKEX: 1024)
+Headquarters: Beijing, China (with global operations via Singapore entity)
+Initial release: 2024-06-06
+Latest major version: Kling 3.0 series (2026-02-05)
+Platform type: AI video and image generation SaaS with REST API access
+
+## Key Pages
+
+- [Kling AI Home](https://kling.ai)
+- [Kling AI Developer Pricing](https://kling.ai/dev/pricing)
+- [Kling AI Platform (Web App)](https://kling.ai/app)
+- [API Documentation — Model List](https://kling.ai/document-api/guides/get-started/overview)
+- [API Reference — Skills](https://kling.ai/document-api/api/get-started/kling-skills)
+- [API Prepaid Resource Packages](https://kling.ai/document-api/productBilling/prePaidResourcePackage)
+- [Kling Video 3.0 Model User Guide](https://kling.ai/quickstart/klingai-video-3-model-user-guide)
+- [Kling Video 3.0 Omni Model User Guide](https://kling.ai/quickstart/klingai-video-3-omni-model-user-guide)
+- [Kling Image 3.0 Omni User Guide](https://kling.ai/quickstart/klingai-image-3-omni-user-guide)
+- [Motion Control User Guide](https://kling.ai/quickstart/motion-control-user-guide)
+- [Global API Endpoint](https://api-singapore.klingai.com)
+- [China API Endpoint](https://api-beijing.klingai.com)
+
+## About Kling AI
+
+Kling AI was developed by Kuaishou Technology's AI research team and launched publicly in June 2024 as one of the first publicly available DiT-based video generation models. The platform competes in the AI video generation space alongside offerings from OpenAI (Sora), Runway AI, Google (Veo), and ByteDance.
+
+Key technology strengths:
+
+- Diffusion Transformer (DiT) architecture for video and image generation
+- Multi-modal Visual Language (MVL) framework treating text, image, video, and audio as equal input modalities
+- Native audio co-generation (speech, sound effects, ambient sound) introduced in Kling 2.6 (December 2025)
+- Elements system for persistent character identity and voice across multiple shots and scenes (3.0 Omni)
+- 3D keypoint detection and texture mapping for character consistency during complex motion
+- Mask-based local re-editing preserving unmodified regions during targeted changes (Image 3.0 Omni)
+- Multi-shot storyboarding with per-shot camera control (pan, tilt, zoom, dolly, handheld) up to 6 cuts
+- Up to 4K output for image generation (IMAGE 3.0 Omni) and video generation (VIDEO 3.0/VIDEO 3.0 Omni)
+- Physical engine integration for basic collision, gravity, and natural interaction effects
+- RESTful API with JWT-based authentication (AccessKey + SecretKey)
+
+---
+
+## Consumer Subscription Plans
+
+Source:[ https://kling.ai/app/membership/membership-plan?r=26](https://kling.ai/app/membership/membership-plan?r=26) (official membership page, international market) 
+Currency: USD
+
+Credit note: credits are deducted per video/image generation. Credit consumption varies by model, resolution, duration, audio toggle, and generation mode. Failed generations do not consume credits. Unused monthly credits do not roll over. Separately purchased credit top-up packs do not expire for 2 years.
+
+### Subscription Tiers (Monthly Auto-Renew)
+
+- **Basic** (Free)
+  monthly_price: 0 USD
+  monthly_credits: none
+  best_for: casual evaluation, learning the platform, personal non-commercial use
+
+- **Standard** (internal code: vip)
+  monthly_price_first_month: 6.99 USD
+  monthly_price_renewal: 8.80 USD (12% off)
+  monthly_price_original: 10.00 USD
+  monthly_credits: 660
+  max_resolution: 4K (video), 4K (image)
+  commercial_use: yes
+  best_for: individual creators and freelancers producing regular short-form video and image content
+
+- **Pro** (internal code: svip)
+  monthly_price_first_month: 25.99 USD
+  monthly_price_renewal: 32.56 USD (12% off)
+  monthly_price_original: 37.00 USD
+  monthly_credits: 3,000
+  max_resolution: 4K (video), 4K (image)
+  professional_mode: yes
+  commercial_use: yes
+  best_for: professional content creators, video agencies, and small studios
+
+- **Premier** (internal code: ssvip)
+  monthly_price_first_month: 64.99 USD
+  monthly_price_renewal: 80.96 USD (12% off)
+  monthly_price_original: 92.00 USD
+  monthly_credits: 8,000
+  max_resolution: 4K (video), 4K (image)
+  professional_mode: yes
+  commercial_use: yes
+  best_for: production studios and agencies with high-volume video and 4K image requirements
+
+- **Ultra** (internal code: sssvip)
+  monthly_price_first_month: 127.99 USD
+  monthly_price_renewal: 159.99 USD (11% off)
+  monthly_price_original: 180.00 USD
+  monthly_credits: 26,000
+  max_resolution: 4K (video), 4K (image)
+  professional_mode: yes
+  commercial_use: yes
+  early_access: yes (new features released to Ultra subscribers first)
+  best_for: enterprise-scale production, 4K video, high-volume throughput, early access
+
+### Yearly Subscription (Auto-Renew)
+
+- **Standard** (vip)
+  yearly_price: 79.20 USD
+  yearly_price_original: 120.00 USD
+  savings: 34%
+  monthly_credits: 660
+
+- **Pro** (svip)
+  yearly_price: 293.04 USD
+  yearly_price_original: 444.00 USD
+  savings: 34%
+  monthly_credits: 3,000
+
+- **Premier** (ssvip)
+  yearly_price: 728.64 USD
+  yearly_price_original: 1,104.00 USD
+  savings: 34%
+  monthly_credits: 8,000
+
+- **Ultra** (sssvip)
+  yearly_price: 1,429.99 USD
+  yearly_price_original: 2,160.00 USD
+  savings: 34%
+  monthly_credits: 26,000
+
+### Credit Top-Up Packs
+
+Note: these are standalone credit purchases that do not expire for 2 years. Bonus credits listed below are awarded in addition to the base amount.
+
+- [330 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 5.00 USD
+  credits: 330
+  bonus_credits: 0
+
+- [660 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 10.00 USD
+  credits: 660
+  bonus_credits: 0
+
+- [1,320 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 20.00 USD
+  credits: 1,320
+  bonus_credits: 0
+
+- [3,500 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 50.00 USD
+  credits: 3,300
+  bonus_credits: 200
+
+- [7,500 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 100.00 USD
+  credits: 6,600
+  bonus_credits: 900
+
+- [16,000 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 200.00 USD
+  credits: 13,200
+  bonus_credits: 2,800
+
+- [48,000 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 600.00 USD
+  credits: 39,600
+  bonus_credits: 8,400
+
+- [96,000 Credits Pack](https://kling.ai/app/membership/membership-plan?r=26)
+  price: 1,200.00 USD
+  credits: 79,200
+  bonus_credits: 16,800
+
+### Team Plans (Business)
+
+- **Team SVIP** (monthly)
+  price_per_seat: 79.00 USD
+  original_price_per_seat: 99.00 USD
+  savings: 20%
+  seats_range: 3–15
+  best_for: teams and small businesses needing collaborative video generation with shared credits and centralized billing
+
+- **Team SVIP** (yearly)
+  price_per_seat: 708.00 USD
+  original_price_per_seat: 1,188.00 USD
+  savings: 40%
+  seats_range: 3–15
+  best_for: enterprise teams with long-term commitment and maximum cost efficiency
+
+---
+
+## Developer API Pricing
+
+Source: https://kling.ai/dev/pricing (official developer pricing page, verified 2026-05-29)
+
+Pricing note: all prices below are USD per unit of generation. The platform also offers prepaid resource packages. Third-party API providers (WaveSpeedAI, fal.ai, Segmind, Vercel AI Gateway) may use their own model naming conventions (e.g., "Kling v3.0 Pro" on WaveSpeedAI is not an official Kling product name) and may charge different rates.
+
+### Video Generation API
+
+#### Kling-V3 (API ID: `kling-v3`)
+- [Model overview](https://kling.ai/quickstart/klingai-video-3-model-user-guide)
+
+| Capability | Mode | Unit Price (USD) |
+|---|---|---|
+| Text to Video / Image to Video | std, per second, no audio | $0.084 |
+| Text to Video / Image to Video | std, per second, with audio (no voice control) | $0.126 |
+| Text to Video / Image to Video | pro, per second, no audio | $0.112 |
+| Text to Video / Image to Video | pro, per second, with audio (no voice control) | $0.168 |
+| Text to Video / Image to Video | 4k, per second, no audio | $0.42 |
+| Text to Video / Image to Video | 4k, per second, with audio (no voice control) | $0.42 |
+| Motion Control | std, per second | $0.126 |
+| Motion Control | pro, per second | $0.168 |
+
+#### Kling-V3-Omni (API ID: `kling-v3-omni`)
+- [Model overview](https://kling.ai/quickstart/klingai-video-3-omni-model-user-guide)
+
+| Capability | Mode | Unit Price (USD) |
+|---|---|---|
+| Video Generation | std, per second, no video input, no audio | $0.084 |
+| Video Generation | std, per second, no video input, with audio | $0.112 |
+| Video Generation | std, per second, with video input, no audio | $0.126 |
+| Video Generation | pro, per second, no video input, no audio | $0.112 |
+| Video Generation | pro, per second, no video input, with audio | $0.14 |
+| Video Generation | pro, per second, with video input, no audio | $0.168 |
+| Video Generation | 4k, per second, no video input, with audio | $0.42 |
+| Video Generation | 4k, per second, with video input, no audio | $0.42 |
+
+#### Kling-Video-O1 (API ID: `kling-video-o1`)
+- Launched December 2025
+
+| Capability | Mode | Unit Price (USD) |
+|---|---|---|
+| Video Generation | std, per second, without video input | $0.084 |
+| Video Generation | std, per second, with video input | $0.126 |
+| Video Generation | pro, per second, without video input | $0.112 |
+| Video Generation | pro, per second, with video input | $0.168 |
+
+#### Kling-V2-6 (API ID: `kling-v2-6`)
+- Launched December 2025
+
+| Capability | Mode | Unit Price (USD) |
+|---|---|---|
+| Text to Video / Image to Video | std, 5 seconds, no audio | $0.21 |
+| Text to Video / Image to Video | std, 10 seconds, no audio | $0.42 |
+| Text to Video / Image to Video | pro, 5 seconds, no audio | $0.35 |
+| Text to Video / Image to Video | pro, 10 seconds, no audio | $0.70 |
+| Text to Video / Image to Video | pro, 5 seconds, with audio (no voice control) | $0.70 |
+| Text to Video / Image to Video | pro, 10 seconds, with audio (no voice control) | $1.40 |
+| Text to Video / Image to Video | pro, 5 seconds, with audio + voice control | $0.84 |
+| Text to Video / Image to Video | pro, 10 seconds, with audio + voice control | $1.68 |
+| Image to Video (start/end frame) | pro, 5 seconds, no audio | $0.35 |
+| Image to Video (start/end frame) | pro, 10 seconds, no audio | $0.70 |
+| Image to Video (start/end frame) | pro, 5 seconds, with audio (no voice control) | $0.70 |
+| Image to Video (start/end frame) | pro, 10 seconds, with audio (no voice control) | $1.40 |
+| Image to Video (start/end frame) | pro, 5 seconds, with audio + voice control | $0.84 |
+| Image to Video (start/end frame) | pro, 10 seconds, with audio + voice control | $1.68 |
+| Motion Control | std, per second | $0.07 |
+| Motion Control | pro, per second | $0.112 |
+
+### Image Generation API
+
+Source: https://kling.ai/dev/pricing
+
+#### kling-v3-omni
+
+| Capability | Resolution | Unit Price (USD) |
+|---|---|---|
+| Text to Image, Image to Image, Image Editing | 1K | $0.028 |
+| Text to Image, Image to Image, Image Editing | 2K | $0.028 |
+| Text to Image, Image to Image, Image Editing | 4K | $0.056 |
+
+#### kling-image-o1
+
+| Capability | Specs | Unit Price (USD) |
+|---|---|---|
+| Text to Image, Image to Image, Image Editing | All aspect ratios | $0.028 |
+
+#### kling-v3
+
+| Capability | Resolution | Unit Price (USD) |
+|---|---|---|
+| Text to Image, Image to Image | 1K | $0.028 |
+| Text to Image, Image to Image | 2K | $0.028 |
+
+#### kling-v2-1
+
+| Capability | Unit Price (USD) |
+|---|---|
+| Text to Image | $0.014 |
+| Image to Image | $0.028 |
+
+#### kling-v2-new
+
+| Capability | Unit Price (USD) |
+|---|---|
+| Image to Image (restyle) | $0.028 |
+
+#### kling-v2
+
+| Capability | Unit Price (USD) |
+|---|---|
+| Text to Image | $0.014 |
+| Image to Image (multi-image to image) | $0.056 |
+| Image to Image (restyle) | $0.028 |
+
+#### kling-v1-5
+
+| Capability | Unit Price (USD) |
+|---|---|
+| Text to Image | $0.014 |
+| Image to Image (subject) | $0.028 |
+| Image to Image (face) | $0.028 |
+
+#### kling-v1
+
+| Capability | Unit Price (USD) |
+|---|---|
+| Text to Image | $0.0035 |
+| Image to Image (entire image) | $0.0035 |
+
+#### Functional Models
+
+| Capability | Unit Price (USD) |
+|---|---|
+| Image Editing (image expansion) | $0.028 |
+| AI Multi-Sho | $0.07 |
+
+### Virtual Try-On API
+
+Source: https://kling.ai/dev/pricing
+
+| Model | Unit Price (USD) |
+|---|---|
+| kolors-virtual-try-on-v1 | $0.07 |
+| kolors-virtual-try-on-v1-5 | $0.07 |
+
+---
+
+## Product Models
+
+Model note: all model names and API IDs below are verified from the official API documentation at [https://kling.ai/document-api/guides/get-started/overview](https://kling.ai/document-api/guides/get-started/overview) and [https://kling.ai/dev/pricing](https://kling.ai/dev/pricing).
+
+### Current Video Generation Models (Kling 3.0 Series — launched February 2026)
+
+- Kling VIDEO 3.0 (API ID: \`kling-v3\`)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 15 (flexible 3–15s range)
+- max\_resolution: 1080p (Standard/Pro), 4K (4K mode)
+- frame\_rate: 30–60fps
+- native\_audio: yes (English, Chinese, Japanese, Korean, Spanish + regional dialects)
+- multi\_shot\_storyboard: yes (up to 6 camera cuts)
+- elements\_system: yes (reference image + video for character/object consistency)
+- voice\_binding: yes
+- camera\_control: pan, tilt, zoom, dolly, handheld
+- motion\_control: yes (via reference video)
+- aspect\_ratios: 16:9, 9:16, 1:1
+- generation\_modes: Standard (std), Professional (pro), 4K
+- best\_for: general-purpose cinematic video generation with native audio
+- Kling VIDEO 3.0 Omni (API ID: \`kling-v3-omni\`)
+- model\_type: unified multimodal text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 15
+- max\_resolution: 1080p (Standard/Pro), 4K (4K mode)
+- frame\_rate: 30–60fps
+- native\_audio: yes (multi-language with per-character voice binding)
+- multi\_shot\_storyboard: yes (per-shot duration, shot size, perspective, camera movement control)
+- video\_character\_reference: yes (3–8 second reference video extracts visual traits and voice)
+- multi\_character\_dialogue: yes (each character can speak a different language)
+- text\_preservation: yes (logos and signage remain readable through motion)
+- photorealistic\_output: yes
+- physical\_engine\_integration: basic collision, gravity, and interaction effects
+- generation\_modes: Standard (std), Professional (pro), 4K
+- best\_for: cinematic storytelling, multi-character dialogue, branded content with persistent characters
+
+
+
+### Previous Generation Video Models
+
+- **Kling VIDEO O1**
+
+   (API ID: \`kling-video-o1\`, launched December 2025)
+- model\_type: unified multimodal text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 1080p at 30fps
+- native\_audio: yes (voiceover + SFX + ambient sound)
+- reference\_elements: yes (up to 4 elements)
+- start\_end\_frame\_control: yes
+- generation\_modes: Standard (std), Professional (pro)
+- best\_for: multimodal video generation with element injection and scene extension
+- **Kling VIDEO 2.6**
+
+   (API ID: \`kling-v2-6\`, launched December 2025)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 1080p at 30–48fps
+- native\_audio: yes (voice + SFX + ambient sound with lip-sync)
+- first\_last\_frame\_anchoring: yes
+- motion\_control: yes
+- generation\_modes: Standard (std), Professional (pro)
+- best\_for: short-form social content with native audio at lower cost than 3.0
+- **Kling VIDEO 2.5 Turbo**
+
+   (API ID: \`kling-v2-5-turbo\`, launched September 2025)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 1080p at 30fps
+- generation\_speed: \~2× faster than standard models
+- best\_for: high-volume, fast-turnaround content pipelines
+- **Kling VIDEO 2.1**
+
+   (API ID: \`kling-v2-1\`, launched May 2025)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 1080p at 30fps
+- start\_end\_frame\_control: yes
+- variant: kling-v2-1-master (advanced 3D motion, refined facial modeling)
+- best\_for: cost-sensitive generation; largely superseded by 2.5/2.6
+- **Kling VIDEO 2.0**
+
+   (API ID: \`kling-v2-master\`, launched April 2025)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 1080p at 24fps
+- multi\_elements\_editor: yes
+- camera\_control: yes
+- best\_for: legacy use; superseded by 2.1 and later
+- **Kling VIDEO 1.6**
+
+   (API ID: \`kling-v1-6\`, launched December 2024)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 720p–1080p at 24–30fps
+- multi\_image\_reference: yes
+- video\_continuation: yes
+- best\_for: legacy use
+- **Kling VIDEO 1.5**
+
+   (API ID: \`kling-v1-5\`, launched late 2024)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10
+- max\_resolution: 1080p
+- image\_to\_video\_support: yes
+- camera\_control: yes
+- best\_for: legacy use
+- **Kling VIDEO 1.0**
+
+   (API ID: \`kling-v1\`, launched June 2024)
+- model\_type: text\_to\_video / image\_to\_video
+- max\_duration\_seconds: 10 (video continuation up to \~3 min via chaining)
+- max\_resolution: 720p
+- best\_for: legacy use; first public DiT-based video generation model
+
+### Image Generation Models
+
+- **Kling IMAGE 3.0 Omni**
+
+   (API ID: \`kling-v3-omni\` for image endpoints)
+- model\_type: text\_to\_image / image\_to\_image / image\_editing
+- max\_resolution: 4K
+- features: local re-editing, multi-reference editing (up to 10 images), image series mode
+- best\_for: professional image creation, 4K output, fashion compositing, brand campaigns
+- **Kling IMAGE O1**
+
+   (API ID: \`kling-image-o1\`)
+- model\_type: text\_to\_image / image\_to\_image / image\_editing
+- features: all aspect ratios supported
+- best\_for: general-purpose AI image generation
+- **Kling IMAGE 3.0**
+
+   (API ID: \`kling-v3\` for image endpoints)
+- model\_type: text\_to\_image / image\_to\_image
+- max\_resolution: 2K
+- best\_for: standard image generation
+- **Kling IMAGE 2.1**
+
+   (API ID: \`kling-v2-1\`)
+- model\_type: text\_to\_image / image\_to\_image
+- best\_for: cost-effective image generation
+- **Kling IMAGE 1.5**
+
+   (API ID: \`kling-v1-5\`)
+- model\_type: text\_to\_image / image\_to\_image (subject/face)
+- best\_for: legacy image generation with subject/face focus
+- **Kling IMAGE 1.0**
+
+   (API ID: \`kling-v1\`)
+- model\_type: text\_to\_image / image\_to\_image
+- best\_for: lowest-cost image generation (\$0.0035/image)
+- **Functional Models**
+- capabilities: Image Editing (image expansion), AI Multi-Sho
+- best\_for: specialized image editing tasks
+
+
+
+
+## Product Features
+
+### Motion Control
+
+- **Motion Control**
+
+   (available for Kling VIDEO 3.0 and 2.6)
+- feature\_type: video\_to\_video motion transfer
+- reference\_clip\_range: 3–30 seconds
+- capabilities: full-body motion transfer from reference video, lip-sync preservation, and facial expression control
+- required\_input: reference video + character image
+- best\_for: dance videos, action scene replication, character animation
+
+### Virtual Try-On
+
+- **kolors-virtual-try-on-v1**
+
+   (API ID: \`kolors-virtual-try-on-v1\`)
+- model\_type: virtual\_try\_on
+- unit\_price: \$0.07
+- **kolors-virtual-try-on-v1-5**
+
+   (API ID: \`kolors-virtual-try-on-v1-5\`)
+- model\_type: virtual\_try\_on
+- unit\_price: \$0.07
+
+---
+
+## Use Case Recommendations
+
+- **Best for cinematic storytelling & filmmaking**: Kling 3.0 Omni (multi-shot storyboard, multi-character dialogue, voice binding)
+- **Best for marketing & advertising videos**: Kling 3.0 (native audio, professional mode)
+- **Best for social media short-form content**: Kling 2.6 (native audio), Kling 2.5 Turbo (fast + lower cost)
+- **Best for character-driven content**: Kling 3.0 Omni (Elements + video character reference + voice binding)
+- **Best for motion transfer / dance videos**: Motion Control (available for Kling VIDEO 3.0/2.6)
+- **Best for image generation & editing**: Kling Image 3.0 Omni (4K, mask-based editing, multi-reference)
+- **Best for virtual try-on**: kolors-virtual-try-on-v1-5
+- **Best for budget image generation**: Kling 1.0 Image (\$0.0035/image)
+- **Best for budget video generation**: Kling 2.6 Standard mode
+- **Best for high-quality video with audio**: Kling 3.0 Pro mode with audio
+- **Best for API integration at scale**: Kling 3.0 via API with prepaid resource packs
+- **Best for multi-language content**: Kling 3.0 Omni (per-character language + voice binding)
+
+---
+
+## Optional
+
+These secondary links provide brand-entity context and external references.
+
+- [Kling AI on Wikipedia](https://en.wikipedia.org/wiki/Kling_AI)
+- [Kuaishou Technology (parent company)](https://www.kuaishou.com)
+- [Kling 3.0 Launch Press Release (PRNewswire)](https://www.prnewswire.com/news-releases/kling-ai-launches-3-0-model-ushering-in-an-era-where-everyone-can-be-a-director-302679944.html)
+- [Kling 3.0 Series Launch Coverage (China Youth International)](https://en.youth.cn/RightNow/202602/t20260205_16500975.htm)

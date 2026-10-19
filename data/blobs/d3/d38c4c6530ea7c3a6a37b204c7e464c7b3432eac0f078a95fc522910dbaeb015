@@ -1,0 +1,158 @@
+User-agent: Twitterbot
+Allow: /
+User-Agent: *
+Disallow: /data/
+Disallow: /trade-new/
+Disallow: /futures_trade/
+Disallow: /why-us
+Disallow: /trade-old/
+Disallow: /nl/
+Disallow: /tr/
+Disallow: /th/
+Disallow: /de/
+Disallow: /en-jp
+Disallow: /ja-jp
+Disallow: /safu-user-assets-security-fund
+Disallow: /invite
+Disallow: /index_component_breakdown/*
+Disallow: /dfdid/*
+Disallow: /get_etf_net
+Disallow: /market_price/get_coin_search_list
+Disallow: /admin
+Disallow: /wp-admin
+Disallow: /ref/*
+Disallow: /wp-login.php
+Disallow: /live/search
+Disallow: /panel
+Disallow: /backend
+Disallow: /cms
+Disallow: /dashboard
+Disallow: /testsdn.html
+Disallow: /smscallback/*
+Disallow: /kyc/callback/jumio
+Disallow: *?search=*
+Disallow: /search?*
+Disallow: /news/search?*
+Disallow: /*/news/search?*
+Disallow: /news/flash/search?*
+Disallow: /*/news/flash/search?*
+Disallow: /learn/search?*
+Disallow: /*/learn/search?*
+Disallow: /blog/search?*
+Disallow: /*/blog/search?*
+Disallow: /bitwiki/search?*
+Disallow: /*/bitwiki/search?*
+Disallow: /post/
+Disallow: /*/post/
+Allow: /post/status/curated/
+Allow: /zh/post/status/curated/
+Allow: /vi/post/status/curated/
+Allow: /zh-tw/post/status/curated/
+Allow: /es/post/status/curated/
+Allow: /ru/post/status/curated/
+Allow: /fr/post/status/curated/
+Allow: /pt/post/status/curated/
+Allow: /id/post/status/curated/
+Allow: /ja/post/status/curated/
+Allow: /ar/post/status/curated/
+Allow: /uk/post/status/curated/
+Allow: /pt-br/post/status/curated/
+Disallow: /post/status/curated/*?search=*
+Disallow: /*/post/status/curated/*?search=*
+Disallow: /post/status/curated/*?ref*
+Disallow: /post/status/curated/*?*&ref*
+Disallow: /*/post/status/curated/*?ref*
+Disallow: /*/post/status/curated/*?*&ref*
+# ref parameter URL indexing control
+Disallow: /*?ref*
+Disallow: /*?*&ref*
+Disallow: /login?*
+Disallow: /*/login?*
+Disallow: /signup?*
+Disallow: /*/signup?*
+Disallow: /cdn/fe/static/tradingView/
+Disallow: /js/footer_float_menu.js?v=*
+Disallow: /json_svr/
+Disallow: /cdn/fe/gate-ai-card/
+Disallow: /api/web/v1/marketing-activity/
+
+# High-frequency non-SEO APIs observed in Googlebot logs on 2026-05-10
+Disallow: /api/web/v1/rebate/get_agents_exclusive_user_info
+Disallow: /apiweb/v1/copytrading/get_copytrading_status
+Disallow: /apiw/v2/quant-trading/strategybot/get_strategy_ranking
+Disallow: /cdn/fe/webai-chat-micro/prod/default/
+Disallow: /apiw/v2/live/streams/im_history
+Disallow: /apiw/v2/live/reward/list
+Disallow: /api/copytrade/copy_trading/leader/status
+Disallow: /apiw/v2/live/stream_detail/market_cap
+Disallow: /api/web/v1/welfare-center/getWelfareWebRouters
+Disallow: /api/web/v1/site/fullsiteBulletin
+Disallow: /apiw/v2/herald/msg/unread/num
+Disallow: /api/web/v1/kyc/footerTipsCheck
+Disallow: /future-event-api/api/future/reportB
+Disallow: /cdn/fe/static/gateCaptcha/
+Disallow: /api/web/v1/usercenter/device_is_login
+Disallow: /cdn/fe/micro-fe/prod/letter_orientation/
+Disallow: /apiw/v2/pre_market/market_orders
+
+# 独立性能与行为遥测 SDK；版本升级须复核，不能扩展为整个静态资源目录。
+# 精确文件和带查询参数的请求分别匹配，保留 Next.js、翻译与业务数据资源。
+Disallow: /cdn/fe/static/libs/webpro.2.10.2.js$
+Disallow: /cdn/fe/static/libs/webpro.2.10.2.js?
+Disallow: /cdn/fe/static/analysis/collect-rangers-v5.2.8.js$
+Disallow: /cdn/fe/static/analysis/collect-rangers-v5.2.8.js?
+
+# News/Learn 独立聊天浮层；SSR 正文和内链不依赖该模块。
+# 当前线上版本采用精确 hash；禁止扩展成 306.* 或整个 chunks 目录。
+Disallow: /cdn/fe/_next/static/chunks/306.770f4f7c113c6b87.js$
+Disallow: /cdn/fe/_next/static/chunks/306.770f4f7c113c6b87.js?
+Disallow: /cdn/fe/_next/static/chunks/306.5bdf944ec933a1f6.js$
+Disallow: /cdn/fe/_next/static/chunks/306.5bdf944ec933a1f6.js?
+# 后续版本只使用应用专属包名，业务构建必须通过 OptionalCrawlChunkPlugin 校验。
+Disallow: /cdn/fe/_next/static/chunks/seo-optional-news-ai-chat.*.js$
+Disallow: /cdn/fe/_next/static/chunks/seo-optional-news-ai-chat.*.js?
+Disallow: /cdn/fe/_next/static/chunks/seo-optional-learn-ai-chat.*.js$
+Disallow: /cdn/fe/_next/static/chunks/seo-optional-learn-ai-chat.*.js?
+
+# price-prediction detail duplicates
+Disallow: /price-prediction/*/*
+Disallow: /*/price-prediction/*/*
+# cfd how-to-buy details are indexable
+Allow: /cfd/how-to-buy$
+Allow: /cfd/how-to-buy/*
+Allow: /*/cfd/how-to-buy$
+Allow: /*/cfd/how-to-buy/*
+# how-to-buy nested duplicates
+Disallow: /how-to-buy/*/*
+Disallow: /*/how-to-buy/*/*
+# converter nested duplicates
+Disallow: /converter/*/*/*
+Disallow: /*/converter/*/*/*
+
+# buy-sell subpages (keep /buy-sell homepage)
+Disallow: /crypto/buy-
+Disallow: /crypto/sell-
+Disallow: /*/crypto/buy-
+Disallow: /*/crypto/sell-
+# crypto-trading-bots subpages (keep /crypto-trading-bots homepage)
+Disallow: /crypto-trading-bots/
+Disallow: /*/crypto-trading-bots/
+# convert subpages (keep /convert homepage)
+Disallow: /convert/
+Disallow: /*/convert/
+# p2p subpages (keep /p2p homepage, merchant, market_big)
+Disallow: /p2p/buy/
+Disallow: /p2p/sell/
+Disallow: /*/p2p/buy/
+Disallow: /*/p2p/sell/
+# questionnaire pages
+Disallow: /questionnaire/
+Disallow: /*/questionnaire/
+
+# Yandex-only duplicate parameter consolidation.
+# Google/Bing ignore Clean-param and still rely on canonical/noindex/internal linking.
+Clean-param: utm&utm_source&utm_medium&utm_campaign&utm_term&utm_content&utm_id&utm_cmp
+Clean-param: fbclid&gclid&msclkid&yclid&ysclid&twclid
+Clean-param: ref&ref_type&_ref_type&refUid&ch&channel&fromlink
+Clean-param: gt_disable_intercept_jump&needNavBar
+Sitemap: https://www.gate.com/sitemap.xml

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>
+       Heap | Mobile and Web Analytics
+    </title>
+    <meta name='google-site-verification' content='kxFUvueBT4E_mdVtCKjjmv6uA7fsjddWG_ArgZ7G36k' />
+    <meta name="facebook-domain-verification" content="hn11mzjf5euiarznevn30da3kyx346" />
+    <meta name='description' content='Heap builds analytics infrastructure for every online business. We automate the annoying parts of user analytics. No more manual anything. Just insights.'/>
+    <meta property='og:image' content='https://heapanalytics.com/img/logo/logo_by_cs.png'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+
+    <link rel="stylesheet" href="/css/site/front_rebrand.css?v=1uje-10t8u77" />
+    <script nonce="ARwiAr145loN5J6R4T0Nvw==" type='text/javascript' src='/js/site/front.js?v=2p0q-1oxekst'></script>
+    
+<!-- Google Tag Manager -->
+<script nonce="ARwiAr145loN5J6R4T0Nvw==">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K3HQ8NT');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Heap script -->
+<script nonce="ARwiAr145loN5J6R4T0Nvw==" type="text/javascript">
+window.heapReadyCb=window.heapReadyCb||[],window.heap=window.heap||[],heap.load=function(e,t){window.heap.envId=e,window.heap.clientConfig=t=t||{},window.heap.clientConfig.shouldFetchServerConfig=!1;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://cdn.heapanalytics.com/config/"+e+"/heap_config.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(a,r);var n=["init","startTracking","stopTracking","track","resetIdentity","identify","getSessionId","getUserId","getIdentity","addUserProperties","addEventProperties","removeEventProperty","clearEventProperties","addAccountProperties","addAdapter","addTransformer","addTransformerFn","onReady","addPageviewProperties","removePageviewProperty","clearPageviewProperties","trackPageview"],i=function(e){return function(){var t=Array.prototype.slice.call(arguments,0);window.heapReadyCb.push({name:e,fn:function(){heap[e]&&heap[e].apply(heap,t)}})}};for(var p=0;p<n.length;p++)heap[n[p]]=i(n[p])};
+heap.load("236035469", {
+  secureCookie: true,
+  ingestServer: 'https://heapanalytics.com',
+  sdk: {
+    domain: 'https://cdn.heapanalytics.com'
+  },
+  supportedDomains: ['contentsquare.com','hotjar.com']
+});
+heap.clearEventProperties();
+heap.addEventProperties({
+  // Screen dimensions are fairly standardized, so combine into one string
+  'Screen Dimensions': '' + window.screen.width + ' x ' + window.screen.height,
+  'Screen Pixel Ratio': window.devicePixelRatio,
+  // :KLUDGE: Adding this because we couldn't (immediately) figure out how to
+  // inject the Webpack `VERSION` value here. (`VERSION` is a Git hash of the
+  // deployed code and is therefore a bit more useful, see `defineVersionPlugin`
+  // in `environments.ts`.) If we do figure that out, we can remove the code
+  // we added in https://github.com/heap/heap/pull/44337 to inject `VERSION`
+  // into custom HoH events.
+  'Kludge Manually Incremented App Version': 1
+});
+// Attempt to grab email param from path, and add it as a user property.
+// This allows us to sort of track outbound email recipients who never sign up.
+var match = /[\\?&]email=([^&#]*)/.exec(window.location.search);
+if (match) {
+  try {
+    var email = window.decodeURIComponent(match[1]);
+    heap.addUserProperties({"Outbound Email": email});
+  } catch(e) {
+    // decodeURIComponent can throw on invalid URI encoding. Do nothing.
+  }
+}
+</script>
+
+
+
+
+
+<link
+  rel="icon"
+  href="/img/favicon-light.png?v=1"
+  data-href-light="/img/favicon-light.png?v=1"
+  data-href-dark="/img/favicon-dark.png?v=1"
+  sizes="32x32"
+/>
+<script nonce="ARwiAr145loN5J6R4T0Nvw==">
+  (() => {
+    if (!window.matchMedia) {
+      return;
+    }
+
+    const favicons = document.querySelectorAll('link[rel="icon"]');
+
+    const toggleDarkMode = (event) => {
+      const darkModeOn = !!event.matches;
+
+      favicons.forEach((link) => {
+        link.href = darkModeOn ? link.dataset.hrefDark : link.dataset.hrefLight;
+      });
+    };
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', toggleDarkMode);
+    toggleDarkMode(window.matchMedia('(prefers-color-scheme: dark)'));
+  })();
+</script>
+
+
+
+<script nonce="ARwiAr145loN5J6R4T0Nvw==" defer src = "https://js.chargebee.com/v2/chargebee.js"></script>
+
+
+
+  </head>
+  <body>
+    
+  <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3HQ8NT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+
+
+
+    <div class="module module-nav">
+  <div class="module-container">
+    <div class="nav-block-logo">
+      <a href="https://heap.io">
+        <img src="/img/logo/logo_by_cs.svg?v=408-yktbyx" alt="Heap by Contentsquare logo">
+      </a>
+    </div>
+    <div class="nav-block-cta">
+      <nav class="nav-menu">
+        
+        <a href="https://heap.io/contact-sales" class="nav-menu-item">Contact Us</a>
+        <a href="/login" class="nav-menu-item nav-menu-item-spacing-lg">Log In</a>
+        <a href="/signup" class="nav-menu-item cta-button-outline-nav">Sign Up</a>
+        
+      </nav>
+    </div>
+  </div>
+</div>
+
+    </div>
+    </div>
+    <div class='module-content centered-text'>
+      <h2>Oops, we can't find the page you're looking for.</h2>
+      <p>We're sorry we seem to have lost this page, but we don't want to lose you.</p>
+    </div>
+    <div class="module module-footer">
+  <div class="module-container">
+    <div class="layout-main">
+      <div class="layout-logo">
+        <div class="footer-block-logo">
+          <a href="https://heap.io/">
+            <img src="/img/logo/logomark_white_green.svg?v=b6-8rudqg" alt="Heap Logo">
+          </a>
+        </div>
+        <p class="tagline">Power your business decisions with truth.</p>
+      </div>
+      <nav class="footer-menu footer-menu-product">
+        <div class="footer-menu-heading">Product</div>
+        <a href="https://heap.io/product/product-analytics/" class="footer-menu-item">Product
+          Analytics</a>
+        <a href="https://heap.io/product/connect/" class="footer-menu-item">Connect</a>
+        <a href="https://heap.io/product/autocapture/" class="footer-menu-item">Autocapture</a>
+        <a href="https://heap.io/product/virtual-events/" class="footer-menu-item">Virtual Events</a>
+        <a href="https://heap.io/product/data-governance/" class="footer-menu-item">Data Governance</a>
+        <a href="https://heap.io/product/security-compliance/" class="footer-menu-item">Security &amp;
+          Compliance</a>
+      </nav>
+      <nav class="footer-menu footer-menu-solutions">
+        <div class="footer-menu-heading">Solutions</div>
+        <a href="https://heap.io/solutions/conversion-rate-optimization/" class="footer-menu-item">Conversion Rate
+          Optimization</a>
+        <a href="https://heap.io/solutions/activation/" class="footer-menu-item">Activation</a>
+        <a href="https://heap.io/solutions/engagement/" class="footer-menu-item">Engagement</a>
+        <a href="https://heap.io/solutions/retention/" class="footer-menu-item">Retention</a>
+      </nav>
+      <nav class="footer-menu footer-menu-resources">
+        <div class="footer-menu-heading">Resources</div>
+        <a href="https://heap.io/why-product-analytics/" class="footer-menu-item">Why Product
+          Analytics</a>
+        <a href="https://heap.io/resources/" class="footer-menu-item">All Resources</a>
+        <a href="https://heap.io/blog/" class="footer-menu-item">Blog</a>
+        <a href="https://help.heap.io/" class="footer-menu-item">Docs</a>
+        <a href="https://learn.heap.io/" class="footer-menu-item">Heap University</a>
+        <a href="https://heap.io/pricing/" class="footer-menu-item">Pricing</a>
+      </nav>
+      <nav class="footer-menu footer-menu-company">
+        <div class="footer-menu-heading">Company</div>
+        <a href="https://heap.io/about/" class="footer-menu-item">About</a>
+        <a href="https://heap.io/partners/" class="footer-menu-item">Partners</a>
+        <a href="https://heap.io/customers/" class="footer-menu-item">Customers</a>
+        <a href="https://heap.io/careers/" class="footer-menu-item">Careers</a>
+        <a href="https://heap.io/contact-us/" class="footer-menu-item">Contact Us</a>
+      </nav>
+    </div>
+    <p class="copyright">&copy; 2026 Heap Inc.</p>
+  </div>
+</div>
+
+  </body>
+</html>

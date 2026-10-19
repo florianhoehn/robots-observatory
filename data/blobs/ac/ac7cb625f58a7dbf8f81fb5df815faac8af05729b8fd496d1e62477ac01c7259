@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="en"><head><link rel="manifest" href="/manifest.webmanifest"/>
+<script>if(window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone||document.referrer.includes('android-app://')){var p=new URLSearchParams(location.search),r=p.get("referrer")||"",u=window.location.protocol+"//"+window.location.hostname+"/index.html";window.location.href=u+(r?"?referrer="+encodeURIComponent(r):"")}</script>
+<script>
+(function(){
+  var w=7*24*60*60*1000,k="_ref",tk="_ref_time",p=new URLSearchParams(location.search);
+  function g(x){try{return localStorage.getItem(x)||""}catch(e){return""}}
+  function s(r){try{localStorage.setItem(k,r);localStorage.setItem(tk,String(Date.now()))}catch(e){}}
+  function c(){try{localStorage.removeItem(k);localStorage.removeItem(tk)}catch(e){}}
+  function ck(n){var v=("; "+document.cookie).split("; "+n+"=");if(v.length===2)return v.pop().split(";").shift()||"";return""}
+  function enc(r){return encodeURIComponent(r).split("").map(function(ch){return ch.charCodeAt(0).toString(16).padStart(2,"0")}).join("")}
+  function dec(r){try{var o="";for(var i=0;i+1<r.length;i+=2){var n=parseInt(r.slice(i,i+2),16);if(isNaN(n))return"";o+=String.fromCharCode(n)}return decodeURIComponent(o.replace(/\+/g,"%20"))}catch(e){return""}}
+  var ignore={nonce:1,ts:1,clickId:1,ak:1,sig:1},jumpKeys=["fbc","fbp","campaign","campaignId","adset","adsetId","ad","adId"];
+  function qs(r){try{var d=dec(r),m={},a,j,k,v;if(!d)return null;a=d.split("&");for(var i=0;i<a.length;i++){j=a[i].indexOf("=");k=j<0?a[i]:a[i].slice(0,j);v=j<0?"":a[i].slice(j+1);if(k)m[k]=v}return{raw:d,map:m}}catch(e){return null}}
+  function val(q,k){return q&&q.map?q.map[k]||"":""}
+  function hasPaid(r){var q=qs(r);return!!val(q,"paid")}
+  function hasClientNonce(r){var n=val(qs(r),"nonce");return!!(n&&n.length===9)}
+  function sameBusiness(a,b){var qa=qs(a),qb=qs(b),keys={},ok=true;if(!qa||!qb)return false;Object.keys(qa.map).forEach(function(k){if(!ignore[k])keys[k]=1});Object.keys(qb.map).forEach(function(k){if(!ignore[k])keys[k]=1});Object.keys(keys).forEach(function(k){if(val(qa,k)!==val(qb,k))ok=false});return ok}
+  function hasJumpFields(q){for(var i=0;i<jumpKeys.length;i++){if(val(q,jumpKeys[i]))return true}return false}
+  function isDirectUrlRef(r){var q=qs(r);return!!(q&&val(q,"channel")&&!hasJumpFields(q)&&p.get("j")!=="1"&&((p.get("q")||"").indexOf("azbycx")!==0))}
+  function rn(){var a="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",o="",b;if(window.crypto&&window.crypto.getRandomValues){b=new Uint8Array(9);window.crypto.getRandomValues(b);for(var i=0;i<b.length;i++)o+=a[b[i]%a.length];return o}for(var j=0;j<9;j++)o+=a[Math.floor(Math.random()*a.length)];return o}
+  function withNonce(r){var q=qs(r),a,o=[],j,k;if(!q)return r;a=q.raw.split("&");for(var i=0;i<a.length;i++){j=a[i].indexOf("=");k=j<0?a[i]:a[i].slice(0,j);if(k==="nonce"||!a[i])continue;o.push(a[i])}o.push("nonce="+rn());return enc(o.join("&"))}
+  function withQueryClickId(r){var cid,opcid,q,raw;if(p.get("referrer")||!r)return r;opcid=p.get("opcid")||"";cid=p.get("opcid")||p.get("click_id")||"";if(!cid||cid.length>512||!/^[A-Za-z0-9._~-]+$/.test(cid))cid="";if(!opcid||opcid.length>512||!/^[A-Za-z0-9._~-]+$/.test(opcid))opcid="";q=qs(r);if(!q)return r;raw=q.raw;if(cid&&!("click_id" in q.map))raw+="&click_id="+cid;if(opcid&&!("opera" in q.map))raw+="&opera=1";if(raw===q.raw)return r;return enc(raw)}
+  function withQueryPixelClickId(r){var cid,q;if(p.get("referrer")||!r)return r;cid=p.get("pixel_click_id")||"";if(!cid||cid.length>128||!/^[A-Za-z0-9._~-]+$/.test(cid))return r;q=qs(r);if(!q||("pixel_click_id" in q.map))return r;return enc(q.raw+"&pixel_click_id="+cid)}
+  function tagOpera(r){var opcid,q;if(!r)return r;opcid=p.get("opcid")||"";if(!opcid||opcid.length>512||!/^[A-Za-z0-9._~-]+$/.test(opcid))return r;q=qs(r);if(!q||("opera" in q.map))return r;return enc(q.raw+"&opera=1")}
+  function useRef(r){var n=tagOpera(r);if(n!==r)s(n);window.referrer=n}
+  function built(){
+    var fbc=ck("_fbc"),fbp=ck("_fbp"),campaign=p.get("p1"),campaignId=p.get("p2")||p.get("utm_campaign")||p.get("utm_id"),adset=p.get("p3"),adsetId=p.get("p4")||p.get("utm_term"),ad=p.get("p5"),adId=p.get("p6")||p.get("utm_content"),macanC=p.get("macanC"),zmclid=p.get("zmclid"),gtmId=p.get("gtm_id"),bbg=p.get("bbg"),clickId=p.get("opcid")||p.get("click_id"),pixelClickId=p.get("pixel_click_id"),startapp=p.get("startapp"),linkId=p.get("link_id"),channel=p.get("channel")||"",r="channel="+channel;
+    if(fbc)r+="&fbc="+fbc;if(fbp)r+="&fbp="+fbp;if(campaign)r+="&campaign="+campaign;if(campaignId)r+="&campaignId="+campaignId;if(adset)r+="&adset="+adset;if(adsetId)r+="&adsetId="+adsetId;if(ad)r+="&ad="+ad;if(adId)r+="&adId="+adId;if(macanC)r+="&macanC="+macanC;if(zmclid)r+="&zmId="+zmclid;if(gtmId)r+="&gtmId="+gtmId;if(bbg)r+="&bbg="+bbg;if(clickId)r+="&click_id="+clickId;if(p.get("opcid")&&p.get("opcid").length<=512&&/^[A-Za-z0-9._~-]+$/.test(p.get("opcid")))r+="&opera=1";if(pixelClickId)r+="&pixel_click_id="+pixelClickId;if(startapp)r+="&startapp="+startapp;if(linkId)r+="&link_id="+linkId;
+    return channel||fbc||fbp||campaign||campaignId||adset||adsetId||ad||adId||macanC||zmclid||gtmId||bbg||clickId||pixelClickId||startapp||linkId?enc(r):""
+  }
+  var fallback="706169642533442e77656c6c2d6b6e6f776e2532366368616e6e656c25334431676f2532366e6f6e63652533446e6c686a51645550";// 不要合并下面的字符串, RenderPlay 会替换最终 HTML 里的字面量 706169642533442e77656c6c2d6b6e6f776e2532366368616e6e656c25334431676f2532366e6f6e63652533446e6c686a51645550.
+  var marker="REFERRER"+"_"+"STR";if(fallback===marker)fallback="";
+  var current=g(k),t=parseInt(g(tk)||"0",10)||0;
+  var urlRef=p.get("referrer")||"",directUrl=false,polluted=false,currentMatchesFallback=false;if(fallback&&urlRef&&!sameBusiness(fallback,urlRef)){polluted=true;if(current&&sameBusiness(current,fallback))currentMatchesFallback=true;fallback=""}if(urlRef&&isDirectUrlRef(urlRef)){urlRef=withNonce(urlRef);directUrl=true}
+  var incoming=urlRef||fallback||built();if(!incoming)incoming="";incoming=withQueryClickId(incoming);incoming=withQueryPixelClickId(incoming);
+  var currentHasClientNonce=hasClientNonce(current);
+  var directPollutionFix=directUrl&&polluted&&currentMatchesFallback&&!currentHasClientNonce;
+  var incomingCanRefreshNoTime=directPollutionFix||(!urlRef&&!!fallback);
+  var currentHasPaid=hasPaid(current),incomingHasPaid=hasPaid(incoming);
+  if(current&&!t&&directPollutionFix){s(incoming);window.referrer=incoming;return}
+  if(current&&!t&&incomingCanRefreshNoTime){if(currentHasPaid&&!incomingHasPaid){t=Date.now();try{localStorage.setItem(tk,String(t))}catch(e){};useRef(current);return}s(incoming);window.referrer=incoming;return}
+  if(current&&!t){t=Date.now();try{localStorage.setItem(tk,String(t))}catch(e){}}
+  var expired=current&&Date.now()-t>w;
+  if(current&&!expired){if(directPollutionFix){s(incoming);window.referrer=incoming;return}if(!urlRef&&incomingHasPaid&&!currentHasPaid){s(incoming);window.referrer=incoming;return}useRef(current);return}
+  if(current&&expired)c();
+  if(incoming){s(incoming);window.referrer=incoming}
+})();
+</script>
+<style>
+.button{font:inherit;color:inherit}
+.close-icon{width:1rem;height:1rem;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;color:#202126}
+.guide-sheet{position:fixed;inset:0;z-index:30;pointer-events:none}
+.guide-sheet-mask{position:absolute;inset:0;background:rgba(14,18,28,.34);opacity:0;transition:opacity .24s ease}
+.guide-sheet-panel{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#f7f8fb 0%,#f2f4f8 100%);border-radius:1.2rem 1.2rem 0 0;padding:.55rem .75rem calc(env(safe-area-inset-bottom) + .75rem);max-height:calc(100dvh - .75rem);transform:translateY(105%);transition:transform .34s cubic-bezier(.24,.84,.32,1);overflow:hidden;overscroll-behavior:none}
+.guide-sheet.show{pointer-events:auto}
+.guide-sheet.show .guide-sheet-mask{opacity:1}
+.guide-sheet.show .guide-sheet-panel{transform:translateY(0)}
+.guide-sheet-handle{width:2.25rem;height:.24rem;border-radius:99rem;background:#c9cfda;margin:0 auto .42rem}
+.guide-dismiss{position:absolute;top:.46rem;right:.66rem;width:1.8rem;height:1.8rem;border:0;border-radius:50%;background:rgba(16,17,20,.08);display:flex;align-items:center;justify-content:center;z-index:5}
+.guide-carousel{display:flex;gap:.48rem;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-left:.08rem;-webkit-overflow-scrolling:touch;touch-action:pan-x;scrollbar-width:none;overscroll-behavior-x:contain;overscroll-behavior-y:contain;margin-top:.62rem;padding:1.18rem 1.25rem 0 .08rem}
+.guide-carousel::-webkit-scrollbar{display:none}
+.guide-slide{flex:0 0 80vw;max-width:calc(100% - 3.6rem);scroll-snap-align:start;display:flex;align-items:flex-start;justify-content:center;min-width:0;padding:0 0 .2rem}
+.guide-image-frame{width:100%;aspect-ratio:720/787;display:flex;justify-content:center;align-items:center;border-radius:.95rem;overflow:hidden;background:#fff;box-shadow:0 .24rem .95rem rgba(0,0,0,.12)}
+.guide-image{display:block;width:100%;height:100%;object-fit:contain}
+</style>
+<meta charset="UTF-8"><meta content="width=device-width,initial-scale=1" name="viewport"><title>1GO.PLUS</title><link id="favicon_ios" href="/my/static/turntables/192.png" rel="apple-touch-icon"><link rel="Bookmark" href="favicon.ico"><meta property="og:image" content="/my/static/turntables/192.png"><link rel="stylesheet" href="/my/static/turntables/main.css"><style>.giftDom{width:33%;height:55px;position:absolute;bottom:-33px;left:15px;cursor:pointer}.giftDom img{width:100%;height:100%}.giftCodeText{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:22px;font-weight:700;text-align:center;margin-top:8px;width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:1px 1px 2px rgba(0,0,0,.5);pointer-events:none}.copyTip{position:absolute;top:-35px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:5px 12px;border-radius:4px;font-size:12px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;z-index:1000}.copyTip.show{opacity:1}.down_btn_box{width:57%;height:50px;position:absolute;bottom:-28px;left:auto;right:15px;transform:none}</style><link rel="icon" href="data:image/png;base64,iVBORw0KGgo="><meta property="og:url" content="https://1goplus.com/"><meta property="og:locale" content="en"><meta name="og:site_name" property="og:site_name" content="1GO.PLUS"><meta name="og:type" content="article"><meta name="og:title" content="1GO.PLUS - Instant Withdrawal | Provably Fair | 24/7 Customer Support"><meta name="og:description" content="Hunting for a secure, fair, and fast-withdrawal App that offers abundant rewards and 24/7 customer support? Look no further—join us now and dive into the ultimate gaming adventure!🚀"><meta name="og:url" content="https://1goplus.com/"><meta name="og:image" content="https://1goplus.com/og-1go.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="1GO.PLUS - Instant Withdrawal | Provably Fair | 24/7 Customer Support"><meta name="twitter:description" content="Hunting for a secure, fair, and fast-withdrawal App that offers abundant rewards and 24/7 customer support? Look no further—join us now and dive into the ultimate gaming adventure!🚀"><meta name="twitter:url" content="https://1goplus.com/"><meta name="twitter:image" content="https://1goplus.com/og-1go.webp"><meta name="pinterest:url" content="https://1goplus.com/"><meta name="pinterest:description" content="Hunting for a secure, fair, and fast-withdrawal App that offers abundant rewards and 24/7 customer support? Look no further—join us now and dive into the ultimate gaming adventure!🚀"><meta name="pinterest:image" property="pinterest:image" content="https://1goplus.com/og-1go.webp"></head><body><div id="img_container" class="container" onclick="window.download()"><div class="btn_box"><div class="giftDom" id="giftDom"><img src="/my/static/turntables/giftCodeBg.png" class="gift_btn" id="gift_btn"> <span id="giftCodeText" class="giftCodeText"></span></div><div class="down_btn_box"><img src="/my/static/turntables/down_btn.png" class="btn_ic" id="down_btn_ic"> <img src="/my/static/turntables/down_btn_n.png" class="btn_ic" id="down_btn_none"> <span id="download-btn-text" class="down_load_text"></span> <img src="/my/static/turntables/finger.png" style="margin-top:20px" class="finger_ic" id="finger_ic"><div id="progress-btn"></div></div><img src="/my/static/turntables/banner_1.jpg"></div><div><img src="/my/static/turntables/banner_2.jpg"></div></div><script>
+!function(){
+  var nativeText=document.querySelector("#download-btn-text");
+  var nativeProgress=document.querySelector("#progress-btn");
+  if(nativeText&&nativeProgress)return;
+  if(document.getElementById("pwa-install-dialog"))return;
+
+  var root=document.createElement("div");
+  var style=document.createElement("style");
+  var compat=document.createElement("div");
+  var installLabel="1GO.PLUS Install";
+  var installIconUrl="https://1goplus.com/icons/icon-96.png";
+  var complete=false;
+  var hasPwaPrompt=false;
+
+  style.id="pwa-install-dialog-style";
+  style.textContent=[
+    '.pwa-install-dialog{--pwa-install-progress:0;position:fixed;inset:0;z-index:2147483647;display:grid;align-items:end;justify-items:center;padding:24px;padding-bottom:calc(30px + env(safe-area-inset-bottom));background:rgba(0,0,0,.62);opacity:0;pointer-events:none;transition:opacity .18s ease;font-family:Inter,"Google Sans",Roboto,Arial,sans-serif;color:#111827}',
+    '.pwa-install-dialog.is-active{opacity:1;pointer-events:auto}',
+    '.pwa-install-dialog *{box-sizing:border-box}',
+    '.pwa-install-dialog__shell{position:relative;width:min(420px,calc(100vw - 32px));overflow:hidden;border:1px solid rgba(255,255,255,.72);border-radius:8px;background:linear-gradient(180deg,#fbfcff 0%,#f5f7fb 100%);box-shadow:0 34px 90px rgba(0,0,0,.38),0 12px 34px rgba(0,0,0,.2);transform:translateY(18px) scale(.985);transition:transform .22s ease,box-shadow .22s ease}',
+    '.pwa-install-dialog.is-active .pwa-install-dialog__shell{transform:translateY(0) scale(1)}',
+    '.pwa-install-dialog__shell:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,rgba(15,118,110,.08),rgba(37,99,235,.72),rgba(124,58,237,.14))}',
+    '.pwa-install-dialog__shell:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.74),rgba(255,255,255,0) 36%),linear-gradient(180deg,rgba(255,255,255,0),rgba(15,23,42,.035))}',
+    '.pwa-install-dialog__body{position:relative;z-index:1;padding:26px}',
+    '.pwa-install-dialog__top{display:grid;grid-template-columns:72px 1fr;gap:18px;align-items:center}',
+    '.pwa-install-dialog__meter{position:relative;width:72px;height:72px;border-radius:20px;padding:5px;background:conic-gradient(#0f766e calc(var(--pwa-install-progress)*1%),#e6ebf2 0);box-shadow:0 15px 32px rgba(37,99,235,.14)}',
+    '.pwa-install-dialog__meter-value{position:relative;width:100%;height:100%;border-radius:16px;display:grid;place-items:center;overflow:hidden}',
+    '.pwa-install-dialog__app-icon{position:relative;display:block;width:100%;height:100%;border-radius:16px;overflow:hidden;background:transparent;box-shadow:none}',
+    '.pwa-install-dialog__app-icon img{display:block;width:100%;height:100%;object-fit:cover}',
+    '.pwa-install-dialog.is-complete .pwa-install-dialog__meter{background:linear-gradient(135deg,#059669,#2563eb)}',
+    '.pwa-install-dialog__brand{display:flex;align-items:center;gap:8px;margin-bottom:7px}',
+    '.pwa-install-dialog__badge{display:inline-flex;align-items:center;max-width:100%;height:23px;padding:0 10px;border:1px solid rgba(15,118,110,.16);border-radius:8px;background:rgba(15,118,110,.07);font-size:12px;line-height:1;font-weight:750;letter-spacing:0;color:#0f766e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+    '.pwa-install-dialog h2{margin:0;font-size:22px;line-height:1.15;font-weight:780;letter-spacing:0;color:#0f172a}',
+    '.pwa-install-dialog__caption{margin:17px 0 0;font-size:14px;line-height:1.55;color:#5b6676}',
+    '.pwa-install-dialog__track{position:relative;height:7px;margin-top:20px;border-radius:8px;background:#e7ecf3;overflow:hidden;box-shadow:inset 0 1px 2px rgba(15,23,42,.08)}',
+    '.pwa-install-dialog__bar{position:relative;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#0f766e,#2563eb,#7c3aed);box-shadow:0 0 18px rgba(37,99,235,.24);transition:width .18s ease;overflow:hidden}',
+    '.pwa-install-dialog__bar:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.48),rgba(255,255,255,0));transform:translateX(-100%);animation:pwa-install-sheen 1.6s ease infinite}',
+    '.pwa-install-dialog__meta{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:12px;font-size:13px;color:#697586}',
+    '.pwa-install-dialog__meta strong{font-size:14px;color:#0f172a;font-weight:760}',
+    '.pwa-install-dialog__actions{display:flex;justify-content:flex-end;margin-top:23px}',
+    '.pwa-install-dialog__action{appearance:none;position:relative;isolation:isolate;overflow:hidden;border:0;border-radius:8px;min-width:134px;height:44px;padding:0 18px;background:#0f172a;color:#fff;font-size:14px;font-weight:760;letter-spacing:0;box-shadow:0 15px 30px rgba(15,23,42,.23);cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,opacity .16s ease,background .16s ease}',
+    '.pwa-install-dialog__action span{position:relative;z-index:1}',
+    '.pwa-install-dialog__action:disabled{cursor:default;opacity:.42;box-shadow:none}',
+    '.pwa-install-dialog__action:not(:disabled):hover{background:#111827;box-shadow:0 18px 34px rgba(15,23,42,.26)}',
+    '.pwa-install-dialog__action:not(:disabled):active{transform:translateY(1px);box-shadow:0 8px 18px rgba(15,23,42,.2)}',
+    '.pwa-install-dialog.is-complete .pwa-install-dialog__action{opacity:1;transform-origin:center;animation:pwa-install-open-pulse 1.4s ease-in-out infinite;box-shadow:0 18px 36px rgba(15,23,42,.28),0 0 0 1px rgba(255,255,255,.16) inset}',
+    '.pwa-install-dialog.is-complete .pwa-install-dialog__action:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(90deg,rgba(255,255,255,.16),#22d3ee,#ffffff,#8b5cf6,rgba(255,255,255,.16));background-size:260% 100%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:pwa-install-border-flow .72s linear infinite;pointer-events:none}',
+    '.pwa-install-dialog.is-complete .pwa-install-dialog__action:after{content:"";position:absolute;inset:-45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transform:translateX(-70%) rotate(14deg);animation:pwa-install-button-sheen .9s ease-in-out infinite;pointer-events:none}',
+    '@keyframes pwa-install-sheen{to{transform:translateX(100%)}}',
+    '@keyframes pwa-install-border-flow{to{background-position:260% 0}}',
+    '@keyframes pwa-install-button-sheen{to{transform:translateX(70%) rotate(14deg)}}',
+    '@keyframes pwa-install-open-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.018)}}',
+    '@media (max-width:480px){.pwa-install-dialog{padding:16px;padding-bottom:calc(18px + env(safe-area-inset-bottom))}.pwa-install-dialog__body{padding:23px 18px 18px}.pwa-install-dialog__top{grid-template-columns:64px 1fr;gap:14px}.pwa-install-dialog__meter{width:64px;height:64px;border-radius:18px;padding:5px}.pwa-install-dialog__meter-value,.pwa-install-dialog__app-icon{border-radius:14px}.pwa-install-dialog h2{font-size:20px}.pwa-install-dialog__caption{font-size:13px}}',
+    '@media (prefers-reduced-motion:reduce){.pwa-install-dialog,.pwa-install-dialog__shell,.pwa-install-dialog__bar,.pwa-install-dialog__action{transition:none}.pwa-install-dialog.is-complete .pwa-install-dialog__action,.pwa-install-dialog__bar:after,.pwa-install-dialog.is-complete .pwa-install-dialog__action:before,.pwa-install-dialog.is-complete .pwa-install-dialog__action:after{animation:none}}'
+  ].join("");
+  root.id="pwa-install-dialog";
+  root.className="pwa-install-dialog";
+  root.setAttribute("aria-hidden","true");
+  root.setAttribute("data-stage","download");
+  root.style.setProperty("--pwa-install-progress","0");
+  root.innerHTML='<div class="pwa-install-dialog__shell" role="dialog" aria-modal="true" aria-labelledby="pwa-install-dialog-title"><div class="pwa-install-dialog__body"><div class="pwa-install-dialog__top"><div class="pwa-install-dialog__meter" aria-hidden="true"><div class="pwa-install-dialog__meter-value"><span class="pwa-install-dialog__app-icon" data-install-meter-label><img data-install-icon alt="" decoding="async"></span></div></div><div><div class="pwa-install-dialog__brand"><span class="pwa-install-dialog__badge" data-install-badge></span></div><h2 id="pwa-install-dialog-title">Preparing app</h2></div></div><p class="pwa-install-dialog__caption">Optimizing the install package for this device.</p><div class="pwa-install-dialog__track" aria-hidden="true"><div class="pwa-install-dialog__bar" data-install-dialog-bar></div></div><div class="pwa-install-dialog__meta"><span data-install-status>Starting</span><strong data-install-percent>0%</strong></div><div class="pwa-install-dialog__actions"><button class="pwa-install-dialog__action" type="button" disabled><span data-install-dialog-label>Preparing</span></button></div></div></div>';
+  (document.head||document.documentElement).appendChild(style);
+  compat.setAttribute("data-pwa-install-compat","1");
+  compat.setAttribute("aria-hidden","true");
+  compat.style.cssText="position:absolute!important;width:0!important;height:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important";
+  if(!nativeText){
+    nativeText=document.createElement("span");
+    nativeText.id="download-btn-text";
+    compat.appendChild(nativeText)
+  }
+  if(!nativeProgress){
+    nativeProgress=document.createElement("div");
+    nativeProgress.id="progress-btn";
+    compat.appendChild(nativeProgress)
+  }
+  (document.body||document.documentElement).appendChild(compat);
+  (document.body||document.documentElement).appendChild(root);
+
+  var title=root.querySelector("#pwa-install-dialog-title");
+  var caption=root.querySelector(".pwa-install-dialog__caption");
+  var badge=root.querySelector("[data-install-badge]");
+  var label=root.querySelector("[data-install-dialog-label]");
+  var status=root.querySelector("[data-install-status]");
+  var percent=root.querySelector("[data-install-percent]");
+  var meterLabel=root.querySelector("[data-install-meter-label]");
+  var installIcon=root.querySelector("[data-install-icon]");
+  var action=root.querySelector(".pwa-install-dialog__action");
+  var dialogBar=root.querySelector("[data-install-dialog-bar]");
+  var watchedText=document.querySelector("#download-btn-text");
+  var watchedBar=document.querySelector("#progress-btn");
+  if(badge)badge.textContent=installLabel;
+  if(installIcon)installIcon.src=installIconUrl;
+
+  function launchUrl(){
+    var params=new URLSearchParams(window.location.search);
+    var ref=window.referrer||params.get("referrer")||"";
+    return window.location.origin+"/index.html"+(ref?"?referrer="+ref:"")
+  }
+  function openApp(){window.open(launchUrl(),"_blank")}
+  function isIOSDevice(){
+    return /iPad|iPhone|iPod/.test(navigator.userAgent)||"MacIntel"===navigator.platform&&navigator.maxTouchPoints>1
+  }
+  function setProgress(value){
+    var safe=Math.max(0,Math.min(100,value||0));
+    root.style.setProperty("--pwa-install-progress",String(safe));
+    if(dialogBar)dialogBar.style.width=safe+"%";
+    percent.innerText=Math.floor(safe)+"%";
+    meterLabel.setAttribute("aria-label",Math.floor(safe)+"%")
+  }
+  function setOpenState(){
+    complete=true;
+    root.classList.add("is-active","is-complete");
+    root.setAttribute("aria-hidden","false");
+    root.setAttribute("data-stage","ready");
+    title.innerText="Ready to open";
+    caption.innerText="Installation is complete.";
+    status.innerText="Ready";
+    setProgress(100);
+    label.innerText="Open";
+    dialogBar.style.width="100%";
+    action.disabled=false
+  }
+  function show(stage,titleText,captionText,statusText,value){
+    if(complete)return;
+    root.classList.add("is-active");
+    root.classList.remove("is-complete");
+    root.setAttribute("aria-hidden","false");
+    root.setAttribute("data-stage",stage);
+    title.innerText=titleText;
+    caption.innerText=captionText;
+    status.innerText=statusText;
+    setProgress(value);
+    action.disabled=true
+  }
+  function showPending(stage){
+    if(complete)return;
+    var install=stage==="install";
+    var value=parseFloat((watchedBar&&watchedBar.style&&watchedBar.style.width)||dialogBar.style.width)||0;
+    if(install)value=Math.min(value,99);
+    show(install?"install":"download",install?"Installing app":"Downloading app",install?"Finalizing setup on this device.":"Delivering the install package securely.",install?"Installing":"Downloading",value)
+  }
+  function isDownloadTrigger(target){
+    if(!target||root.contains(target))return false;
+    var node=target.closest&&target.closest("[onclick],button,a,[role='button']");
+    if(!node)return false;
+    var inline=(node.getAttribute("onclick")||"").toLowerCase();
+    var bodyInline=((document.body&&document.body.getAttribute("onclick"))||"").toLowerCase();
+    return inline.indexOf("download")>=0||bodyInline.indexOf("download")>=0||(node.classList&&node.classList.contains("download-btn"))||(node.querySelector&&node.querySelector("#download-btn-text"))
+  }
+  function sync(){
+    var text=((watchedText&&watchedText.textContent)||label.textContent||"").trim();
+    var widthText=(watchedBar&&watchedBar.style&&watchedBar.style.width)||dialogBar.style.width||"0";
+    var value=parseFloat(widthText)||0;
+    if(watchedText&&watchedText!==label&&text)label.innerText=text;
+    if(watchedBar&&watchedBar!==dialogBar&&watchedBar.style.width)dialogBar.style.width=watchedBar.style.width;
+    if(/open/i.test(text)){setOpenState();return}
+    if(/install/i.test(text)){
+      show("install","Installing app","Finalizing setup on this device.","Installing",Math.min(value,99));
+      return
+    }
+    if(/download/i.test(text)){
+      if(value>=100){
+        show("download","Download ready","The install package is ready to continue.","Complete",100);
+        label.innerText="OK";
+        action.disabled=false;
+      }else{
+        show("download","Downloading app","Delivering the install package securely.","Downloading",value)
+      }
+      return
+    }
+    if(value>0)show("download","Preparing app","Optimizing the install package for this device.","Working",value)
+  }
+  action.addEventListener("click",function(){
+    if(complete){openApp();return}
+    root.classList.remove("is-active");
+    root.setAttribute("aria-hidden","true")
+  });
+  if(!isIOSDevice()){
+    document.addEventListener("click",function(event){
+      if(isDownloadTrigger(event.target)&&!hasPwaPrompt)showPending("download")
+    },true)
+  }
+  if(watchedText)new MutationObserver(sync).observe(watchedText,{childList:true,characterData:true,subtree:true});
+  if(watchedBar)new MutationObserver(sync).observe(watchedBar,{attributes:true,attributeFilter:["style","class"]});
+  document.body.addEventListener("pwaBeforeInstallPrompt",function(){hasPwaPrompt=true});
+  document.body.addEventListener("pwaInstallAccepted",function(){showPending("install")});
+  document.body.addEventListener("pwaInstallRejected",function(){root.classList.remove("is-active");root.setAttribute("aria-hidden","true")});
+}();
+</script><script>
+(function() {
+  const divList = document.querySelectorAll('.list');
+  let num = 0;
+  setInterval(() => {
+    for (let i = 0; i < divList.length; i++)
+      divList[i].className = 'list'
+    if (divList[num])
+        divList[num].className = 'list active'
+    num = (num + 1) % 3;
+  }, 1000)
+
+  let post = () => {};
+  let referrer = null;
+  const setReferrerStorage = (value) => {
+    if (!value || value === '706169642533442e77656c6c2d6b6e6f776e2532366368616e6e656c25334431676f2532366e6f6e63652533446e6c686a51645550')
+      return;
+    try {
+      localStorage.setItem("_ref", value);
+      localStorage.setItem("_ref_time", String(Date.now()));
+    } catch (e) {}
+  };
+  {
+    const params = (new URL(document.location)).searchParams;
+    referrer = window.referrer || params.get('referrer');
+    if (referrer) {
+      const r = decodeURIComponent(referrer.split(/(\w\w)/g).filter(p => !!p).map(c => String.fromCharCode(parseInt(c, 16))).join(""));
+      const ps = r.split('&');
+      for (const p of ps) {
+        const pps = p.split('=');
+        if (pps[0] === 'channel') {
+            post = (type) => { var url='/bpi/event/pwa?type='+type+'&referrer='+referrer; if (navigator.sendBeacon) return navigator.sendBeacon(url); var x=new XMLHttpRequest(); x.open("GET",url,true); x.onload=function(){if(x.status != 200)post(type)}; x.send() };
+            post('openInChrome');
+        } else if (pps[0] === 'gtmId') {
+            localStorage.setItem("gtmId", pps[1]);
+        }
+      }
+      window.referrer = referrer;
+    }
+  }
+  const hideLoading = () => {
+    const p = document.querySelector('body #loading');
+    if (p) {
+      p.className = 'hidden';
+      setTimeout(() => { if (p) p.parentNode.removeChild(p) }, 150);
+    }
+  };
+  let deferred = false;
+  window.deferredPromptCallback = function () {
+    deferred = true;
+    hideLoading();
+  }
+  window.download = function () {
+    if (!deferred) {
+      post('installApk');
+      if (window.downloadApk)
+        return window.downloadApk();
+      window.apkInstallOk && window.apkInstallOk();
+      window.location.href = "/1go.apk"+(referrer?'?referrer='+referrer:'')+(!referrer&&'706169642533442e77656c6c2d6b6e6f776e2532366368616e6e656c25334431676f2532366e6f6e63652533446e6c686a51645550'?'?referrer=706169642533442e77656c6c2d6b6e6f776e2532366368616e6e656c25334431676f2532366e6f6e63652533446e6c686a51645550':'');
+      return;
+    }
+    setReferrerStorage(referrer);
+    document.body.dispatchEvent(new CustomEvent('pwaInstall'));
+    return false;
+  }
+
+  const downloadBtnTxt = document.querySelector('#download-btn-text')
+  const progressBtn = document.querySelector('#progress-btn')
+  let installInterval = null;
+  window.pwaInstallOk = function () {
+    if (installInterval)
+      return;
+    post('installPwa');
+    window.download = function () {};
+    let p = 0, dot = '.', i = 0;
+    installInterval = setInterval(() => {
+      downloadBtnTxt.innerText = 'Installing' + dot;
+      if ((++i) % 100 === 0) { dot += '.'; dot = dot.length > 3 ? '.' : dot }
+      progressBtn.style.width = p + '%'
+      if ((p += 0.058) >= 100) { clearInterval(installInterval); installInterval = null }
+    }, 0, 1);
+  }
+  window.apkInstallOk = function () {
+    if (!installInterval)
+      return;
+    post('installApk');
+    //window.download = function () {};
+    let p = 0, dot = '.', i = 0;
+    installInterval = setInterval(() => {
+      downloadBtnTxt.innerText = 'Downloading' + dot;
+      if ((++i) % 100 === 0) { dot += '.'; dot = dot.length > 3 ? '.' : dot }
+      progressBtn.style.width = p + '%'
+      if ((p += 0.258) >= 100) { clearInterval(installInterval); installInterval = null; downloadBtnTxt.innerText = 'Download'; }
+    }, 0, 1);
+  }
+  const check = () => {
+    if (!window.navigator.getInstalledRelatedApps)
+        return hideLoading();
+    window.navigator.getInstalledRelatedApps().then((a) => {
+      if (a.length <= 0)
+        setTimeout(check, 50);
+      else {
+        setTimeout(() => {
+          if (installInterval) {
+            clearInterval(installInterval);
+            installInterval = null;
+          }
+          hideLoading();
+          progressBtn.style.width = '100%';
+          downloadBtnTxt.innerText = 'Open';
+          window.download = function () {
+            window.navigator.getInstalledRelatedApps().then((a) => {
+              if (a && a.length > 0) {
+                const params = new URLSearchParams(window.location.search);
+                const referrer = window.referrer || params.get('referrer') || "";
+                window.open(window.location.origin + "/index.html" + (referrer ? "?referrer=" + referrer : ""), '_blank');
+              }
+            });
+          }
+        }, 1688);
+      }
+    });
+  };
+  check();
+  setTimeout(() => hideLoading(), 4500);
+})();
+(function(){
+ if ('serviceWorker' in n

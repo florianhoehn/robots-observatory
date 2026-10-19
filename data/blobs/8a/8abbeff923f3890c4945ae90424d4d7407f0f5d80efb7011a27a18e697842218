@@ -1,0 +1,40 @@
+# Robots.txt for Brevo
+# This file is used to manage how search engines index your site.
+
+User-agent: *
+Disallow: /integrations-p2/
+Disallow: /glossary-p2/
+Disallow: /enterprise-p2/
+Disallow: /contact-p2/
+
+# Block dynamic files and unwanted parameters
+Disallow: /*-p2/              # Block all "-p2" pages
+Disallow: /*.pdf$             # Block all .pdf files
+Disallow: /404                # Block custom 404 pages
+Disallow: /500                # Block custom 500 error pages
+
+# Block preview mode (Next.js Preview Mode)
+Disallow: /api/
+Disallow: /api/preview/
+
+# Block crawlers (waybackmachine) from all DE URLs
+User-agent: ia_archiver
+Disallow: /de/
+
+User-agent: archive.org_bot
+Disallow: /de/
+
+User-agent: special_archiver
+Disallow: /de/
+
+User-agent: Heritrix
+Disallow: /de/
+
+# Sitemap Locations for Multi-Language Setup
+Sitemap: https://www.brevo.com/sitemap.xml
+Sitemap: https://www.brevo.com/sitemap_en.xml
+Sitemap: https://www.brevo.com/sitemap_es.xml
+Sitemap: https://www.brevo.com/sitemap_pt.xml
+Sitemap: https://www.brevo.com/sitemap_it.xml
+Sitemap: https://www.brevo.com/sitemap_fr.xml
+Sitemap: https://www.brevo.com/sitemap_de.xml

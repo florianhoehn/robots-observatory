@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /.content/
+Disallow: /_imagenes/
+Disallow: /_documentos/
+Disallow: /portal/
+Disallow: /1.uva/1.05.empleo/.convocatoriaspas/_documentos/
+Disallow: /1.uva/1.05.empleo/.convocatoriaspdi/_documentos/
+Disallow: /export/sites/uva/1.uva/1.05.empleo/.convocatoriaspas/_documentos/
+Disallow: /export/sites/uva/1.uva/1.05.empleo/.convocatoriaspdi/_documentos/
+Allow: /index.html
+Sitemap: www.uva.com/sitemap.xml

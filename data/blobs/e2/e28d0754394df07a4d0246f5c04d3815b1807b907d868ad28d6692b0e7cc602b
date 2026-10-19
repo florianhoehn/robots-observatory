@@ -1,0 +1,433 @@
+# Delicious.com — open to search engines and AI answer engines alike.
+User-agent: *
+Allow: /
+Disallow: /admin-
+Disallow: /data/
+
+# NOT blocked on purpose: login.php, logout.php, verify.php, account.php,
+# dashboard.php, checkout.php and pantry-scan.php. These pages carry a noindex meta tag,
+# and a URL blocked here is never fetched — so the noindex is never seen and
+# the page stays in the index as "Indexed, though blocked by robots.txt".
+# Letting Google crawl them is what gets them OUT. Only endpoints with real
+# side effects belong below.
+
+# CRAWL TRAPS — infinite URL space and action endpoints.
+# build-day.php, mix.php and explore.php take a random ?seed=, so every value is a
+# distinct URL and the space never ends. Googlebot had already spent 46 crawls on
+# 46 different build-day seeds — none of which can ever be a landing page — while
+# the recipe pages it should be indexing waited their turn. The rest below are
+# buttons, not pages: they act and redirect.
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+
+# --- AI answer engines: explicitly welcome (we want to be cited & recommended) ---
+User-agent: GPTBot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: OAI-SearchBot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: ChatGPT-User
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: ClaudeBot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Claude-SearchBot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Claude-User
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: anthropic-ai
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: PerplexityBot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Perplexity-User
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Google-Extended
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Applebot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Applebot-Extended
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Amazonbot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: cohere-ai
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+User-agent: Bingbot
+Allow: /
+# inherit the crawl-trap rules from User-agent: * — a named group
+# REPLACES that group, it does not merge with it.
+Disallow: /admin-
+Disallow: /data/
+Disallow: /explore.php?
+Disallow: /build-day.php?
+Disallow: /build.php
+Disallow: /build-status.php
+Disallow: /mix-save.php
+Disallow: /plan-action.php
+Disallow: /fav-ids.php
+Disallow: /fav-toggle.php
+Disallow: /favorite.php
+Disallow: /rate.php
+Disallow: /cook.php
+Disallow: /cook-later.php
+Disallow: /shoplist-add.php
+Disallow: /shoplist-action.php
+Disallow: /remix.php
+Disallow: /redeem.php
+Disallow: /set-persona.php
+Disallow: /recipe-export.php
+Disallow: /grocery-export.php
+Disallow: /calendar-export.php
+
+Sitemap: https://delicious.com/sitemap.xml

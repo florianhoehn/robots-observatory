@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <?php
+    require_once 'Motor/config.php';
+   
+  ?>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="canonical" href="<?= $config['site_url'] ?>">
+  <meta property="og:url" content="<?= $config['site_url'] ?>">
+  <meta property="og:title" content="صفحه مورد نظر پیدا نشد - <?= $config['site_name'] ?>">
+  <meta property="og:description" content="صفحه مورد نظر شما در سایت <?= $config['site_name'] ?> پیدا نشد - ارور 404">
+  <meta property="og:type" content="Website">
+  <meta property="og:site_name" content="<?= $config['site_name'] ?>">
+  <title>صفحه پیدا نشد | <?= $config['site_name'] ?></title>
+
+  <link rel="stylesheet" href="src/css/bootstrap.rtl.min.css">
+  <style>
+    /* افکت Glitch */
+    .glitch {
+      position: relative;
+      display: inline-block;
+      font-weight: bold;
+      color: #00ff99;
+    }
+    .glitch:before,
+    .glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #ff007c;
+      overflow: hidden;
+      clip-path: inset(0 0 0 0);
+      animation: glitch-animation 1s infinite;
+    }
+    .glitch:after {
+      left: 2px;
+      text-shadow: -1px 0 red;
+      animation-delay: 0.2s;
+    }
+    .glitch:before {
+      left: -2px;
+      text-shadow: 1px 0 blue;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes glitch-animation {
+      0% { transform: translate(0); }
+      25% { transform: translate(-5px, 5px); }
+      50% { transform: translate(5px, -5px); }
+      75% { transform: translate(-5px, -5px); }
+      100% { transform: translate(5px, 5px); }
+    }
+    
+    /* افکت زمینه */
+    .bg-image {
+      background-image: "src/img/bg/login-bg5.webp"; /* اینجا تصویر پس‌زمینه خودتو بذار */
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.3) blur(5px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen flex items-center justify-center relative">
+
+  <!-- پس‌زمینه -->
+  <div class="bg-image"></div>
+
+  <!-- محتوا -->
+  <div class="text-center max-w-xl space-y-6">
+    <h1 class="text-7xl md:text-9xl glitch" data-text="404">404</h1>
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-100">گم شدی بین دنیاهای <?php echo $ManhwaKhali;?>؟</h2>
+    <p class="text-gray-400 text-lg md:text-xl">
+      صفحه‌ای که دنبالش بودی وجود نداره یا شاید توسط یک شخصیت مرموز حذف شده! 🕵️‍♂️
+    </p>
+
+    <a href="<?= $config['site_url'] ?>" class="inline-block mt-4 bg-cyan-600 hover:bg-cyan-700 text-white py-3 px-6 rounded-xl text-lg font-semibold transition duration-200">
+      بازگشت به صفحه اصلی
+    </a>
+
+    <p class="text-sm text-gray-500 mt-10"><?= $config['site_name'] ?> | جایی برای عاشقان دنیای بدون سانسور</p>
+  </div>
+
+  <!-- افکت صوتی (اختیاری) -->
+  <audio autoplay>
+    <source src="scr/404.mp3" type="audio/wav">
+    Your browser does not support the audio element.
+  </audio>
+  
+</body>
+</html>
+
+
+

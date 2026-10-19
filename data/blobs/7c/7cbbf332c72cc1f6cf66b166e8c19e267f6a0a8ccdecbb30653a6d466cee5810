@@ -1,0 +1,115 @@
+# BuiltWith
+
+> Find out what websites are built with.
+
+BuiltWith detects the technologies used on any website including CMS, ecommerce platforms, analytics,
+frameworks, hosting providers, and more.
+
+## Start Here (For LLMs and AI Agents)
+
+Use the API-focused LLM guide first:
+- https://api.builtwith.com/llms.txt
+
+For BuiltWith knowledge-base guidance, see https://kb.builtwith.com/llms.txt.
+
+This file is a high-level product map. The API LLM guide above contains detailed endpoint usage.
+A full version of this product map is at https://builtwith.com/llms-full.txt and the full API
+reference is at https://api.builtwith.com/llms-full.txt.
+
+Choose an access method:
+- BuiltWith API key: normal REST or standard MCP tools; calls spend account API credits.
+- Existing account with a saved Stripe method: Agent Stripe Credit Top-Up API; this is not x402.
+- Base USDC without a BuiltWith account: x402 v2 at https://api.builtwith.com/x402-api, using either one-off `/agent/*` HTTP payments or prepaid MCP lookup units.
+
+## Core BuiltWith Links
+
+- Website lookup: `https://builtwith.com/[domain]`
+  - Example: https://builtwith.com/example.org
+- Natural language Ask tool: https://builtwith.com/ask
+- Technology trends and market movement: https://trends.builtwith.com
+- MCP endpoint for AI integration: https://api.builtwith.com/mcp
+- API LLM guide (primary): https://api.builtwith.com/llms.txt
+
+## Discovery Endpoints
+
+BuiltWith publishes the following `.well-known` resources for agents, API clients, and integration discovery:
+
+- Agent Skills Discovery index: https://builtwith.com/.well-known/agent-skills/index.json
+- BuiltWith API agent skill: https://builtwith.com/.well-known/agent-skills/builtwith-api/SKILL.md
+- MCP discovery manifest: https://builtwith.com/.well-known/mcp.json
+- Agent card: https://builtwith.com/.well-known/agent-card.json
+  - Legacy A2A alias: https://builtwith.com/.well-known/agent.json
+- API catalog: https://builtwith.com/.well-known/api-catalog
+- x402 v2 payment discovery: https://api.builtwith.com/.well-known/x402
+  - `https://builtwith.com/.well-known/x402` redirects to the canonical API-host descriptor.
+- OAuth authorization server metadata: https://builtwith.com/.well-known/oauth-authorization-server
+- OAuth protected resource metadata: https://builtwith.com/.well-known/oauth-protected-resource
+- OpenAI plugin/app manifest: https://builtwith.com/.well-known/openai.json
+- HTTP message signatures directory: https://builtwith.com/.well-known/http-message-signatures-directory
+- Security contact policy: https://builtwith.com/.well-known/security.txt
+
+## MCP Registry
+
+A directory of remote Model Context Protocol servers BuiltWith has detected on company websites,
+discovered from each site's published `llms.txt`. Every server and every tool has its own page.
+
+- Registry home: https://builtwith.com/mcp-registry
+- Category: `https://builtwith.com/mcp-registry/[category-slug]`
+  - Example: https://builtwith.com/mcp-registry/developer-tools
+  - Newest discoveries: https://builtwith.com/mcp-registry/recently-added
+- Search: `https://builtwith.com/mcp-registry?search=[term]` - matches domains, endpoint URLs,
+  tool names and tool descriptions
+- Single MCP server: `https://builtwith.com/mcp/[domain]`
+  - Example: https://builtwith.com/mcp/globalsurfari.com
+- Single MCP tool: `https://builtwith.com/mcp/[domain]/tool/[tool-slug]`
+- Sitemap for all of the above: https://builtwith.com/mcp-sitemap.xml
+- Bulk and programmatic access: https://api.builtwith.com/mcp-api
+
+Categories: developer-tools, api-tools, ai---machine-learning, productivity, analytics,
+security---testing, devops, data-collection, general-tools, learning-resources, databases,
+content-tools, cloud-services, collaboration, design, browser-tools, marketing, ecommerce,
+social-media, game-development.
+
+## Agent Stripe Credit Top-Up Endpoints (Not x402)
+
+These legacy mppx paths charge an existing account's saved Stripe payment method and add account API credits. They are path aliases, not an x402 or MPP payment-challenge protocol.
+
+- Credit balance: `GET https://api.builtwith.com/mppx/api-discovery`
+- Spending limits: `GET https://api.builtwith.com/mppx/api-configuration`
+- Credit purchase: `POST https://api.builtwith.com/mppx/api-purchase` with a unique `Idempotency-Key`; quantities use fixed increments of 2,000.
+- Auth: separately scoped Agent Billing Key in `Authorization: Bearer`; general API keys and temporary `bw-` tokens cannot purchase. Monthly limits reset in UTC.
+- Local OpenAPI discovery: `GET https://api.builtwith.com/mppx/openapi.json`
+- BuiltWith.com aliases:
+  - `GET https://builtwith.com/mppx/api-discovery`
+  - `GET https://builtwith.com/mppx/api-configuration`
+  - `POST https://builtwith.com/mppx/api-purchase`
+  - `GET https://builtwith.com/mppx/openapi.json`
+
+## x402 Paid Access
+
+BuiltWith supports accountless x402 v2 access through prepaid MCP lookup units and fixed-price HTTP routes. These lookup units are separate from account API credits.
+
+- Human documentation: `GET https://api.builtwith.com/x402-api`
+- Canonical configuration and live pricing: `GET https://api.builtwith.com/.well-known/x402`
+- MCP endpoint: `https://api.builtwith.com/mcp`
+- Prepaid MCP flow: call `x402-pricing`, purchase at least 2,000 non-expiring lookup units with `x402-credit-purchase`, then pass the returned reusable `creditKey` to an `x402-*` lookup tool. Payment proof is sent in MCP request metadata at `_meta["x402/payment"]` only for purchases.
+- One-off HTTP flow: discover the 12 fixed-price API routes and two List-pass purchase routes at `GET https://api.builtwith.com/openapi.json`. Send the intended query/body, read `PAYMENT-REQUIRED`, and retry the identical request with `PAYMENT-SIGNATURE`; successful settlement returns `PAYMENT-RESPONSE`.
+- The descriptor is authoritative for the facilitator, network, asset, payment address, available tools, volume tiers, and List passes; clients should not hard-code those values.
+
+## Programmatic Access
+
+For direct API requests, use the official API docs and endpoint details:
+- https://api.builtwith.com
+
+Popular API families include:
+- Domain technology lookup
+- Technology and company lists
+- Relationships / related sites
+- Trust and risk signals
+- Redirect and keyword data
+- API-based trends data
+
+## Notes
+
+- Bots/AI agents may be blocked on interactive website pages.
+- For reliable automated access, use the API and MCP routes.

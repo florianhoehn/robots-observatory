@@ -1,0 +1,785 @@
+
+
+<!doctype HTML>
+
+<!-- BEGIN GenericError.jsp --><!-- MDSP-3782 .
+This piece is added to handle invalid category pages which 
+does not go through SWCrossSiteScriptingFilter but instead display generic error page.
+If the request url(category page url) contains prohibited characters, this logic will redirect to xss page. 
+ --><!-- End of MDSP-3782 -->
+<html xmlns:wairole="http://www.w3.org/2005/01/wai-rdf/GUIRoleTaxonomy#"
+
+xmlns:waistate="http://www.w3.org/2005/07/aaa" lang="en" xml:lang="en">
+	<head>
+		<!-- Include script files --><!-- BEGIN CommonJSToInclude.jspf -->
+<meta name="CommerceSearch" content="storeId_10151" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+<script type="text/javascript" src="/webapp/ruxitagentjs_ICA15789NPRTUVXfghjqrux_10347260902154543.js" data-dtconfig="app=97fdcb436c22011a|dsss=1|cors=1|srtbv=4|owasp=1|featureHash=ICA15789NPRTUVXfghjqrux|rdnt=1|uxrgce=1|cuc=0pafqnlx|mel=100000|expw=1|dpvc=1|md=mdcc1=bUserProfile.ACCOUNT_NAME,mdcc2=a[name='pageGroup']@content,mdcc3=a#CDC_Login_content_caption ^rb div,mdcc4=a#my-profile-container ^rb div ^rb div.col.clearfix ^rb div:nth-child(2) ^rb a,mdcc5=a.cart-total,mdcc6=a#CheckoutOrderTotal,mdcc7=bis_akamai_maintenance,mdcc8=boutage_code|lastModification=1791923094045|tp=500,50,0|srbbv=3|agentUri=/webapp/ruxitagentjs_ICA15789NPRTUVXfghjqrux_10347260902154543.js|reportUrl=https://bf12874nuk.bf.dynatrace.com/bf|rid=RID_358969135|rpid=-263642097|domain=sherwin-williams.com" data-config='{"revision":1791923094045,"beaconUri":"https:\/\/bf12874nuk.bf.dynatrace.com\/bf","agentUri":"\/webapp\/ruxitagentjs_ICA15789NPRTUVXfghjqrux_10347260902154543.js","environmentId":"0pafqnlx","modules":"ICA15789NPRTUVXfghjqrux"}' data-envconfig='{"tracestateKeyPrefix":"88fd2bd0-de3c5d08"}' data-appconfig='{"app":"97fdcb436c22011a","disableUserTracking":true}'></script><link rel="shortcut icon" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/favicon.ico" mce_href="/wcsstore/SherwinWilliamsAssetStore/dist/images/favicon.ico"/>
+
+
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon.png" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-57x57.png" sizes="57x57" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-72x72.png" sizes="72x72" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-76x76.png" sizes="76x76" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-114x114.png" sizes="114x114" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-120x120.png" sizes="120x120" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-144x144.png" sizes="144x144" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-152x152.png" sizes="152x152" />
+<link rel="apple-touch-icon-precomposed" href="/wcsstore/SherwinWilliamsAssetStore/dist/images/apple-touch-icon-180x180.png" sizes="180x180" />
+
+
+
+<link rel="preload" href="/wcsstore/SherwinWilliamsAssetStore/dist/fonts/frutiger_neue-webfont.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/wcsstore/SherwinWilliamsAssetStore/dist/fonts/frutiger_neue_bold-webfont.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/wcsstore/SherwinWilliamsAssetStore/dist/fonts/frutiger_neue_condensed-webfont.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/wcsstore/SherwinWilliamsAssetStore/dist/fonts/frutiger_neue_condensed_bold-webfont.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="/wcsstore/SherwinWilliamsAssetStore/dist/fonts/frutiger_neue_light-webfont.woff" as="font" type="font/woff" crossorigin>
+
+
+<link rel="stylesheet" href="/wcsstore/SherwinWilliamsAssetStore/dist/css/styles.css?_=1790369559659" type="text/css" /> 
+
+
+<!--[if IE 8]>
+<link rel="stylesheet" href="/wcsstore/SherwinWilliamsAssetStore/css/stylesIE8.css" type="text/css" media="" />
+<![endif]-->
+
+
+<link rel="stylesheet" href="/wcsstore/SherwinWilliamsAssetStore/dist/css/print.css?_=1790369559659" type="text/css" media="print" />
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGXDVvmUk4hGyVH8vC8FIBhftPDEPXzmU&libraries=places&language=en"></script>
+
+
+<script type="text/javascript">
+	
+	var WCParamJS = {
+		"storeId":'10151',
+		"catalogId":'10001',
+		"langId":'',
+		"pageView":'',
+		"orderBy":'',
+		"orderByContent":'',
+		"searchTerm":''
+	};
+	var absoluteURL = "https://www.sherwin-williams.com/";
+	var imageDirectoryPath = "/wcsstore/SherwinWilliamsAssetStore/";
+	var styleDirectoryPath = "images/colors/color1/";
+	var supportPaymentTypePromotions = false;
+
+	var subsFulfillmentFrequencyAttrName = "fulfillmentFrequency";
+	var subsPaymentFrequencyAttrName = "paymentFrequency";
+	var subsTimePeriodAttrName = "timePeriod";
+
+	var storeNLS = null;
+	var storeUserType = "G";
+	var ios = false;
+	var android = false;
+	var multiSessionEnabled = true;
+	var isDIYMiniCartEnabled = "true";
+	var isDIYGuestOrderingEnabled = "true";
+
+	var PROUser = "";
+	var isPROUser = "";
+	var ppStatus = "";
+	var myAccountPage = "";
+
+	
+	var inactivityTimeout = 1800000;
+
+	
+	var inactivityWarningDialogDisplayTimer = 20000;
+
+	
+	var inactivityWarningDialogBuffer = 30000;
+
+	
+	var inactivityTimeoutTracker = null;
+
+	
+	var dialogTimeoutTracker = null;
+
+	
+	var browseOnly = false;
+
+	var authToken = "";
+
+	
+	function getAbsoluteURL() {
+		if (absoluteURL != "") {
+			var currentURL = document.URL;
+			var currentProtocol = "";
+
+			if (currentURL.indexOf("://") != -1) {
+				currentProtocol = currentURL.substring(0, currentURL.indexOf("://"));
+			}
+
+			var savedProtocol = "";
+			if (absoluteURL.indexOf("://") != -1) {
+				savedProtocol = absoluteURL.substring(0, absoluteURL.indexOf("://"));
+			}
+
+			if (currentProtocol != savedProtocol) {
+				absoluteURL = currentProtocol + absoluteURL.substring(absoluteURL.indexOf("://"));
+			}
+		}
+
+		return absoluteURL;
+	}
+	
+	function getImageDirectoryPath() {
+		return imageDirectoryPath;
+	}
+	
+	function getStyleDirectoryPath() {
+		return styleDirectoryPath;
+	}
+
+	
+	var PaintAttributeOrder = [
+		{'id': 'ATT_calc_size__volume_or_weight_+_item_',
+		 'values': '1 Gallon(s);1 Gallon;5 Gallon(s);5 Gallon;1 Quart(s);1 Quart;1 Pint(s);1 Pint;16 Ounce(s);16 Ounce;12 Ounce(s);12 Ounce;6 Ounce(s);6 Ounce;4 Ounce(s);4 Ounce'},
+		{'id': 'ATT_sheen',
+		 'values': 'Ultra Flat;Flat;Matte;Dull Rubbed;Satin;Low Sheen;Low Sheen Eg-Shel;Low Luster;Low Lustre;Medium Rubbed;Medium Sheen;Eg-Shel;Eggshell;Pearl;Velvet;Medium Luster;Semi-Gloss;Low Gloss Eg-Shel;Low Gloss;Gloss;High Gloss;High;High Sheen;N/A'},
+		{'id': 'ATT_calc_base_name_or_package_color_',
+		 'values': 'Extra White;Aspen White;Brilliant White;Guide-Coat White;Snowcap White;Toned White;White;White Base;White Tint Base;White/Tint Base, Part A;White, Part A with Low Temp Hardener, Part B;White, Part A with Standard Hardener, Part B;High Reflective White;HW White;Luminous White;Tint Base;Tint Base (OTC);Tint White;Tintable White;Tinting White;Pure White;Pure White / Tint Base, Part A;Extra White/ Tint Base;Extra White - Tint Base Part A;Extra White, Part A;Extra White, Part S;Natural;Dark Base;Deep Base;Deep Tint Base;Deep Base, Part A;Medium Base;Midtone Base;Accent Base;Clear;Clear Base;Clear Parts A&B;Clear Tint Base;Clear Tint Base, Part A;Clear, Part A;Neutral Base;Ultradeep Base;Ultradeep / Clear Tint Base, Part A;Ultradeep Base, Part A;Ultradeep Base, Part S'}
+	];
+</script>
+
+
+
+<script>
+var SW = SW || {};
+
+SW.Properties = {
+  BASE_URL: "/wcsstore/SherwinWilliamsAssetStore/",
+  IMG_BASE_URL: "/wcsstore/SherwinWilliamsAssetStore/images/",
+  STORE: {
+    STORE_ID: '10151',
+    ENDPOINTS: {
+      API_BASE: "/wcs/resources/store/",
+      API_CART: "/cart/@self",
+      API_UPDATE_CART: "/cart/@self/update_order_item",
+	  SINGLE_PAGE_CHECKOUT : '/en-us/checkout'
+    },
+    CURRENCY: '$',
+    LANG_ID: '-1',
+    CATALOG_ID: '10001',
+    GLOBAL_ID: '10001',
+    DEFAULT_SEGMENT: '11051'
+  },
+  CATALOG: {
+  	HOMEOWNERS: '11051',
+  	CONTRACTORS: '11052',
+  	ARCHITECTS_DESIGNERS: '11053',
+  	FACILITY_MANAGERS: '11054',
+  	HOMEBUILDERS: '11055'
+  },
+  CMD: {
+	  	BASE: getAbsoluteURL()
+  },
+  USER : {
+    LOGON_STATE: ( function() {
+    	return document.cookie.indexOf("WC_isRegistered=true") > -1;
+    } )(),
+    PROFILE_TYPE : ''
+  },
+  LOGGER : {
+  	
+  	LOG_LEVEL : "warn",
+  	
+  	LOG_LEVEL_ANGULAR : "warn"
+  },
+  SHARE_THIS : {
+    ACCESS_KEY : "52637f4b569eae6f851673d664087997", 
+    PUBLISHER_KEY : "7be46227-6573-4460-bd94-5e0bf6b29fa2" 
+  },
+  RECAPTCHA : {
+  	SITE_KEY: '6LehDSwUAAAAAFhu9IEmDV1lhHiSnGj9RYo7wvUs'
+  },
+  REQUEST_TIMEOUT: 15000,
+  URLS : {
+  	PROJECT_LIST : "/MyProjectListDetailView?catalogId=10001&storeId=10151&langId=",
+  	MYSW_DASHBOARD : "/AjaxLogonForm?catalogId=10001&storeId=10151&langId=",
+  	PAINT_CALC : "/homeowners/color/color-selection-tools/paint-calculator/",
+		STORE_LOCATOR : "/store-locator",
+		CONTACT_US : "/homeowners/contact-us/feedback",
+		HOW_TO_BUY_ONLINE : "/homeowners/how-to-buy-online",
+		REGISTRATION : "/DisplayRegistration?new=true&amp;catalogId=10001&amp;langId=&amp;storeId=10151",
+		SPECIAL_OFFERS : "/homeowners/special-offers/",
+		PRO_PLUS: "/painting-contractors/pro-plus",
+		DIY_CATALOG: "/homeowners/products"
+  },
+  COOKIES : {
+  	PATH: "/",
+  	CHECK_FOR_HOME_STORE_ON_PAGE_LOAD : "CHECK_FOR_HOME_STORE_ON_PAGE_LOAD"
+  },
+  PRODUCTS : {
+  	EVERYDAY_LOW_PRICE_PRODUCT_IDS : "???EVERYDAY_LOW_PRICE_PRODUCT_IDS???",
+  	LIST_LABEL : "List:",
+  	LIST_PRICE_LABEL : "List Price:",
+  	EVERYDAY_LOW_PRICE_LABEL : "Everyday Low Price:"
+  },
+  STORE_LOCATOR : {
+	  RADIUS: "20",
+	  RADIUS_INIT: "50"
+  },
+  COUNTRY: {
+		UNITED_STATES : 'US'
+  },
+  CHARGES_AND_FEES : {
+		DIYSD : {
+	  	DELIVERY_FEE_ITEM : {
+				PART_NUMBER : "103215737",
+	  	}
+    }
+  },
+	ERRORMSGS : {
+		INVALID_ACCOUNT_NUMBER : "Please enter a valid account number.",
+		ERR_FIELD_REQUIRED :"%fieldname is required."
+	},
+	SILVERPOP_COLLECTOR : {
+		MAX_ASK_COUNT: "1",
+		HIDEDURATION: "1209600000", 
+		WAITDURATION: "10"
+	},
+	
+	TOGGLES: {
+		DESCARTES_DELIVERY: true,EXPANDED_STORE_NUMBER: true,SCHEDULE_DELIVERY: true,DIY_SCHEDULE_DELIVERY: true,DIY_PAINTPERKS_UNAVAILABLE: true,PAYMENT_ORCHESTRATION_LAYER: true,AEM_HEADER_FOOTER: true,POL_SAVED_CARD_ENABLED: true,PROJECT_LIST_SERVICE_ENABLED: true,PROGRESS_BAR_ENABLED: true,SINGLE_PAGE_CHECKOUT_ENABLED: true,
+	},
+	INVOICE_QUICKBOOKS_EXPORT_CHUNK_SIZE: parseInt( "500", 10),
+	STORE_DEFAULT : {
+		DIY : {
+			UNIQUE_ID : "24758",
+			STORE_NUMBER : "707447"
+		}
+	}
+};
+
+var isPdaoToggleEnabled = false;
+try {
+    var aemJsonStr = "{\n  \"isActive\": true,\n  \"isSocialRegistrationEnabled\": true,\n  \"isRegistrationReCAPTCHAEnabled\": false,\n  \"reCaptchaSiteKey\": \"\"\n}\n";
+    var toggleJson = JSON.parse(aemJsonStr ? aemJsonStr : "{}");
+    isPdaoToggleEnabled = !!toggleJson.isActive;
+} catch (e) {
+    isPdaoToggleEnabled = false;
+}
+
+if (isPdaoToggleEnabled) {
+    SW.Properties.TOGGLES.PDAO_REDIRECT = true;
+}
+</script>
+
+
+
+<script>
+
+var UserProfile = {
+		ACCOUNT_NUMBER: '',
+		ACCOUNT_NAME: '',
+		JOB_NUMBER: '',
+		JOB_NAME: '',
+		PRC_NUMBER: '',
+		PRC_NAME: '',
+		SELECTED_JOB_PRC_COUNT: '',
+        IS_ONE_ACCOUNT_JOB_PRC: '',
+        FLAGS: '0'
+}
+</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=recaptchaApiLoaded&render=explicit" defer async></script>
+
+
+<script>
+	window.recaptchaApiLoaded = (window.recaptchaApiLoaded || function(){});
+</script>
+
+
+
+<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/site.js?_=1790369569941"></script>
+
+<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/apps.js?_=1790369569941"></script>
+
+<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/commonJSToInclude.js?_=1790369569941"></script>
+
+
+<script>
+	dojo.require("wc.service.common");
+	dojo.require("dojo.number");
+	dojo.require("dojo.has");
+</script>
+
+
+
+<script type="text/javascript">
+( function( dojo ) {
+	
+	initializeInactivityWarning();
+
+	
+	window.ie6 = false;
+	window.ie7 = false;
+	if (navigator != null && navigator.userAgent != null) {
+		window.ie6 = (navigator.userAgent.toLowerCase().indexOf("msie 6.0") > -1);
+		window.ie7 = (navigator.userAgent.toLowerCase().indexOf("msie 7.0") > -1);
+	}
+	if (location.href.indexOf('UnsupportedBrowserErrorView') == -1 && (window.ie6 || window.ie7)) {
+		document.write('<meta http-equiv="Refresh" content="0;URL=/UnsupportedBrowserErrorView?catalogId=10001&amp;storeId=10151&amp;langId="/>');
+	}
+
+	
+	window.shoppingActionsJS && window.shoppingActionsJS.setCommonParameters( '', '10151', '11051', 'G', '$' );
+} )( dojo );
+</script>
+
+<!-- BEGIN AEMImportedScripts.jspf --><!-- AEM head scripts -->
+
+
+
+<!-- Loads Ketch script -->
+
+<!-- End Ketch script -->
+
+<!-- Loads Ensighten script -->
+
+    <script type="text/javascript" src="//nexus.ensighten.com/sherwin/Bootstrap.js"></script>
+
+<!-- End Ensighten script -->
+
+<!-- Preventing flickers - pre-hiding snippet -->
+<script>
+    !function(e,a,n,t){
+    var i=e.head;
+    if(i){
+    if (a) return;
+    var o=e.createElement("style");
+    o.id="alloy-prehiding",o.innerText=n,i.appendChild(o),setTimeout(function(){o.parentNode&&o.parentNode.removeChild(o)},t)}}
+    (document, document.location.href.indexOf("adobe_authoring_enabled") !== -1, ".picturefill, #buttonWrapper-39f8dc3d6c, #buttonWrapper-30d39cfedc, #buttonWrapper-62de10d7ad, #buttonWrapper-374312b416, #buttonWrapper-9817866f59 { opacity: 0 !important }", 3000);
+</script>
+<!-- End Preventing flickers - pre-hiding snippet -->
+ 
+<!-- Adobe Tag Manager -->
+     
+    <script>
+        const adobeScript = document.createElement('script');
+        adobeScript.src = "https://assets.adobedtm.com/17713f378cbf/07f3e400ceb0/launch-3c0eb47f22e7.min.js";
+        adobeScript.async = true;
+        document.head.appendChild(adobeScript);
+    </script>
+    <script>window.adobeDataLayer = window.adobeDataLayer || []</script>
+
+
+<!-- End Adobe Tag Manager -->
+
+
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/tag-aem-swcom/clientlibs/clientlib-base.min.a8c0588760c004b629925157eaf1adab.css" type="text/css">
+
+
+
+
+
+<!-- Google Tag Manager -->
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PHG9GCP');</script>
+
+
+<!-- End Google Tag Manager -->
+
+<!-- Glassbox -->
+
+    <script id="_cls_detector" data-clsconfig="reportURI=https://report.swp.gbqofs.io/reporting/e364031c-502a-5789-a561-6e32f935d970/cls_report" src="https://cdn.gbqofs.com/swp/p/detector-dom.min.js"></script>
+
+<!-- End Glassbox -->
+
+<!-- Pype Stream Monitor. -->
+
+    
+	
+		<script type="text/javascript">var app_id="bed8937d-a799-433c-97ed-943ce165253a";var currentUrl= window.location.href;function insertScript(){var e=document.createElement("script");e.type="text/javascript",e.src="https://web.pypestream.com/launcher.js"+"?ts="+Date.now(),e.async=!0,document.body.appendChild(e)}window.pypestreamConfig={APP_ID:app_id,first_name:"na",last_name:"Visitor",phone:"",email:"",screen_name:currentUrl,token:"",passthrough:"",language:"en"},window.addEventListener("load",insertScript);</script>
+		<script>var chatOpenSentTime=0,hasGotFirstMessage=!1,trackedUserFirstInteraction=!1,isChatActive="true"===localStorage.getItem("isChatActive");window.addEventListener("message",(function(t){"CHAT_SHOW"===t.data.type&&Date.now()-chatOpenSentTime>2e3&&(dataLayer.push({event:"chat_open"}),chatOpenSentTime=Date.now(),localStorage.setItem("isChatActive","true")),"CHAT_HIDE"===t.data.type&&dataLayer.push({event:"chat_minimize"}),"FIRST_MESSAGE_RECEIVED"!==t.data.type||isChatEnded||(hasGotFirstMessage=!0,dataLayer.push({event:"chat_first_message"})),!hasGotFirstMessage||"ADD_ARIA_LIVE"!==t.data.type||trackedUserFirstInteraction||isChatEnded||(trackedUserFirstInteraction=!0,dataLayer.push({event:"first_interaction"})),"CHAT_ENDED"===t.data.type&&isChatActive&&(dataLayer.push({event:"chat_end"}),trackedUserFirstInteraction=!1,localStorage.setItem("isChatActive","false")),"CHAT_RESTARTED"===t.data.type&&(dataLayer.push({event:"chat_reopen"}),isChatActive=!0,chatOpenSentTime=Date.now(),localStorage.setItem("isChatActive","true"))}),!1);</script>
+	
+
+
+<!-- End Pype Stream Monitor. -->
+<!-- END AEM head scripts -->
+
+
+
+<!-- Gigya Script -->
+
+    
+        <script src="https://cdns.gigya.com/js/gigya.js?apikey=3_J0C-p-U2nvXytymS5LeNbnD6JFk5mpK3Lncp1HjMKbA8XxTHoIcR3tKHAFoAVxhn"></script>
+    
+
+<!-- End Gigya Script --><!-- END AEMImportedScripts.jspf --><!-- BEGIN Project List Service Configuration. -->
+
+		<script type="text/javascript" charset="UTF-8" async src="/etc.clientlibs/tag-aem-spa/clientlibs/clientlib-account-project-list.min.js"></script>
+		<link rel="stylesheet" href="/etc.clientlibs/tag-aem-spa/clientlibs/clientlib-account-project-list.min.css" type="text/css" />
+	<!-- END Project List Service Configuration. --><!-- BEGIN Progress Bar Configuration. -->
+
+		<script type="text/javascript" charset="UTF-8" async src="/etc.clientlibs/tag-aem-spa/clientlibs/clientlib-component-progress-bar.min.js"></script>
+		<link rel="stylesheet" href="/etc.clientlibs/tag-aem-spa/clientlibs/clientlib-component-progress-bar.min.css" type="text/css" />
+	<!-- END Progress Bar Configuration --><!-- END CommonJSToInclude.jspf -->
+		<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/CommonContextsDeclarations.js"></script>
+		<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/CommonControllersDeclaration.js"></script>
+		<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/Widgets/collapsible.js"></script>
+		<script type="text/javascript" src="/wcsstore/SherwinWilliamsAssetStore/dist/js/Widgets/QuickInfo/QuickInfo.js"></script>
+
+		<script type="text/javascript">
+			dojo.addOnLoad(function() {
+				shoppingActionsJS.setCommonParameters('-1','10151','11051','G','$');
+				shoppingActionsServicesDeclarationJS.setCommonParameters('-1','10151','11051');	
+			});
+			
+			
+		</script>
+		<!-- No java script files will be included dynamically for this layout -->
+
+        <title>404 Page Not Found</title>
+        <meta property="og:title" content="404 Page Not Found" />
+        <meta property="og:image" content="https://www.sherwin-williams.com/wcsstore/SherwinWilliamsAssetStore/dist/images/logo-blue.png" />
+        <meta property="og:url" content="/homeowners"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:description" content="" />
+		<style>
+
+.site-content {
+    position: relative;
+    margin-bottom: 1em;
+}
+
+
+.breadcrumb-holder {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 990px;
+    background-size: 990px 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    min-height: 35px;
+}
+
+.breadcrumb-holder .breadcrumbs li {
+    display: inline;
+    background: none;
+    color: #666;
+    padding-left: .7em;
+}
+
+section {
+    display: block;
+}
+.error .content>section>div {
+    border-bottom: 1px dotted #c4c4c4;
+    margin-bottom: 20px;
+}
+
+.main-content.sitemap .content h2:first-child {
+    border: 0;
+    padding-top: 0;
+}
+.main-content.sitemap .content h2 {
+    font-family: Arial,Helvetica,sans-serif;
+    color: #333;
+    border-top: #C4C4C4 dotted 1px;
+    padding-top: 20px;
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+.error .content>section>div h2 {
+    margin: 0;
+}
+
+.error .content>section>div h2 a {
+    color: #333;
+    font-size: 1rem;
+}
+
+
+.breadcrumb-holder .breadcrumbs {
+    padding: 2.25em 3.5230352304% .615em;
+}
+
+.content-wrap {
+    position: relative;
+    width: 100%;
+    z-index: 0;
+    max-width: 990px;
+    margin: 0 auto;
+}
+
+
+.main-content.sitemap {
+    border: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.main-content.sitemap {
+    border-bottom: #ccc solid 1px;
+    background: #fff;
+}
+.main-content.sitemap .content {
+    padding: 3.5230352304%;
+}
+
+
+.main-content.sitemap .page-header {
+    padding: 3.5230352304%;
+}
+.main-content.sitemap .page-header {
+    padding: 3.5230352304%;
+    margin: 0 !important;
+    border-bottom: #efefef solid 1px;
+}
+.page-header {
+    border: 0;
+    margin: 0 !important;
+    padding: 1em 3.5230352304%;
+}
+
+.main-content.sitemap .page-header h1 {
+    margin: 0;
+}
+
+.content>section>div {
+    border-bottom: 1px dotted #c4c4c4;
+    margin-bottom: 20px;
+}
+
+.page-header h1, .page-header h2 {
+    float: left;
+    width: 100%;
+}
+.page-header h1 {
+    font-size: 1.375rem;
+    font-weight: normal;
+    font-family: "Frutiger Neue Condensed",Arial,Helvetica,sans-serif;
+    color: #333;
+    line-height: 1.65rem;
+    margin-top: 0;
+    margin-bottom: .5em;
+    color: #0069af;
+    margin: 0;
+}
+
+.main-content.sitemap .content h2:first-child {
+    border: 0;
+    padding-top: 0;
+}
+.main-content.sitemap .content h2 {
+    font-family: Arial,Helvetica,sans-serif;
+    color: #333;
+    border-top: #C4C4C4 dotted 1px;
+    padding-top: 20px;
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+.main-content.sitemap .content h2 a{
+    font-family: Arial,Helvetica,sans-serif;
+    color: #333;
+}
+
+.content>section>div p {
+    margin: 5px 0;
+    font-size: 0.875rem;
+}
+
+.content>section>div p a {
+    font-size: 0.6875rem;
+}
+
+		</style>
+	</head>
+	<body ng-app = "SW" class="homepage">
+
+		<!-- BEGIN CommonJSPFToInclude.jspf --><!-- Start CommonJSNoScriptToInclude.jspf --><!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id="
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><!-- End CommonJSNoScriptToInclude.jspf --><!-- BEGIN ProgressBar.jspf -->
+<div id="progress_bar_dialog" dojoType="dijit.Dialog" style="display: none;">
+	<div id="progress_bar">
+		<div id="loading_popup">
+			<div class="top_left" id="WC_StoreCommonUtilities_div_1"><img src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/transparent.gif" alt=""/></div>
+		        <div class="top_right" id="WC_StoreCommonUtilities_div_2"><img src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/transparent.gif" alt=""/></div>
+		        <div class="header" id="WC_StoreCommonUtilities_div_3"></div>
+		        <div class="bodyarea" id="WC_StoreCommonUtilities_div_4">
+				<div class="bodycontent" id="WC_StoreCommonUtilities_div_5">
+					<img src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/loading.gif" width="44" height="44" border="0" alt="Your request is being processed."/>
+			        </div>
+			</div>
+			<div class="footer" id="WC_StoreCommonUtilities_div_6">
+				 <div class="bot_left" id="WC_StoreCommonUtilities_div_7"></div>
+				 <div class="bot_right" id="WC_StoreCommonUtilities_div_8"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END ProgressBar.jspf --><!-- BEGIN MessageDisplay.jspf -->
+
+<span class="spanacce" style="display:none" id="MessageArea_ACCE_Title">Message Dialog</span>
+<div id="MessageArea" class="store_message" role="alert">
+	<div id="msgpopup_content_wrapper" class="content">
+		<a id="clickableErrorMessageImg" role="button" class="close tlignore" href="JavaScript:MessageHelper.hideMessageArea();">
+			<div class="close_text">Close</div>
+			<div class="close_icon"></div>
+			<div class="clear_float"></div>
+		</a>
+
+		<div class="clear_float"></div>
+
+		<div class="message">
+			<div class="message_icon">
+				<img id="error_icon" style="display:none;" class="error_icon" src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/error_icon.png" alt=""/>
+				<img id="success_icon" style="display:none;" class="error_icon" src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/success_icon.png" alt=""/>
+			</div>
+			<div class="message_text">
+				<span id="ErrorMessageText">
+					Command not found: &#034;.well-known/agent-card.json&#034;.
+				</span>
+			</div>
+			<div class="clear_float"></div>
+		</div>
+	</div>
+</div>
+<span class="spanacce" id="ariaMessage_ACCE_Label" style="display:none">Display Update Message</span>
+<span class="spanacce" id="ariaMessage" aria-live="assertive" aria-atomic="true" aria-relevant="additions"></span>
+<!-- END MessageDisplay.jspf -->
+
+<div id="inactivityWarningPopup" dojoType="dijit.Dialog" title="Inactivity Warning Dialog" style="display:none;">
+	<div class="widget_site_popup">
+		<div class="top">
+			<div class="left_border"></div>
+			<div class="middle"></div>
+			<div class="right_border"></div>
+		</div>
+		<div class="clear_float"></div>
+		<div class="middle">
+			<div class="content_left_border">
+				<div class="content_right_border">
+					<div class="content">
+						<a role="button" id="inactivityWarningPopup_close" class="close_acce" title="CLOSE" href="javascript:void(0);" onclick="hideInactivityWarningDialog(); if (dialogTimeoutTracker != null) {clearTimeout(dialogTimeoutTracker);}"><img role="button" onmouseover="this.src='/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/close_hover.png'" onmouseout="this.src='/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/close_normal.png'" src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/close_normal.png" class="closeImg" alt="CLOSE"/></a>
+						<div class="clear_float"></div>
+						<div id="inactivityWarningPopup_body" class="body">
+							<div class="message_icon left">
+								<img class="error_icon" src="/wcsstore/SherwinWilliamsAssetStore/images/colors/color1/warning_icon.png" alt="Warning">
+							</div>
+							
+							
+							
+							<div class="message_text left" role="alert" aria-live="assertive">
+							Your session is about to timeout due to inactivity.  Click OK to extend your time for an additional 30 minutes.
+							</div>
+							<div class="clear_float"></div>
+						</div>
+						<div class="footer">
+							<div class="button_container">
+								<a role="button" aria-labelledby="inactivityWarningPopupOK_Label" id="inactivityWarningPopupOK" href="javascript:void(0);" onclick="hideInactivityWarningDialog(); if (dialogTimeoutTracker != null) {clearTimeout(dialogTimeoutTracker);} resetServerInactivity();" onkeypress="hideInactivityWarningDialog(); if (dialogTimeoutTracker != null) {clearTimeout(dialogTimeoutTracker);} resetServerInactivity();" class="button_primary">
+									<div class="left_border"></div>
+									<div id="inactivityWarningPopupOK_Label" class="button_text">OK</div>
+									<div class="right_border"></div>
+								</a>
+								<div class="clear_float"></div>
+							</div>
+							<div class="clear_float"></div>
+						</div>
+						<div class="clear_float"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear_float"></div>
+		<div class="bottom">
+			<div class="left_border"></div>
+			<div class="middle"></div>
+			<div class="right_border"></div>
+		</div>
+		<div class="clear_float"></div>
+	</div>
+</div><!-- Start CommonJSTemplatesToInclude.jspf --><!-- BEGIN ForgotPasswordModal.jspf -->
+    <div class="tealeaf-classes-added">
+        <script type="text/ng-template" id="ForgotPasswordModal.html">
+            <div class="ngdialog__header">
+                Reset Your Password?
+            </div>
+            <div class="ngdialog__body">
+				
+                <form name="ResetPasswordForm" submit-default ng-submit="ctrl.handleFormSubmit(ResetPasswordForm, 'false' );" id="ResetPasswordForm" novalidate="novalidate" ng-init="logonId = ngDialogData.email">
+                    <input type="hidden" name="challengeAnswer" value="-" id="WC_PasswordResetForm_FormInput_challengeAnswer_In_ResetPasswordForm_1" />
+                    <input type="hidden" name="storeId" value='10151' id="WC_PasswordResetForm_FormInput_storeId_In_ResetPasswordForm_1" />
+                    <input type="hidden" name="catalogId" value='10001' id="WC_PasswordResetForm_FormInput_catalogId_In_ResetPasswordForm_1" />
+                    <input type="hidden" name="langId" value='-1' id="WC_PasswordResetForm_FormInput_langId_In_ResetPasswordForm_1" />
+                    <input class="PII" type="hidden" name="state" value="forgetpassword" id="WC_PasswordResetForm_FormInput_state_In_ResetPasswordForm_1" />
+                    <input type="hidden" name="URL" value="ResetPasswordForm" id="WC_PasswordResetForm_FormInput_URL_In_ResetPasswordForm_1" />
+                    <input type="hidden" ng-model="authToken" ng-init="authToken=''" name="authToken" value="" id="WC_PasswordResetForm_FormInput_authToken_In_ResetPasswordForm_1" />
+                    <input type="text" style="margin-top:-1066px; position:absolute;" tabindex="-1">
+
+                    <!-- show an error if one has been provided to this modal via ngDialogData -->
+                    <div class="notification notification--error" ng-if="ngDialogData.error" role="alert" aria-live="assertive" sw-compile="ngDialogData.error" tabindex="0" ng-cloak></div>
+
+                    <p>Enter the email address associated with your Sherwin-Williams.com profile. We'll send you an email with a link so you can create a new password.</p>
+
+                    <div class="field required">
+                        <label for="WC_PasswordResetForm_FormInput_logonId_In_ResetPasswordForm_1">
+                            Email address:
+                        </label>
+                        <input sw-focus="true"
+                            aria-describedby="logon-id-error"
+                            size="25" maxlength="100"
+                            type="email"
+                            name="logonId"
+                            ng-model="logonId"
+                            ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                            class="modern"
+                            required
+                            id="WC_PasswordResetForm_FormInput_logonId_In_ResetPasswordForm_1"/>
+
+                        <div ng-messages ng-cloak for="ResetPasswordForm.logonId.$touched && ResetPasswordForm.logonId.$error" role="alert" class="notification notification--error" >
+                            <ng-message when="required">Email address is required.</ng-message>
+                            <ng-message when="pattern">Please use a valid email format. Ex: yourname@address.com.</ng-message>
+                        </div>
+                    </div>
+
+                    
+                        <button type="submit" 
+                            ng-disabled="ctrl.isSubmitting || !ResetPasswordForm.$valid || !ctrl.validateRecaptcha" 
+                            class="Arrow-Button-Blue full-width no-icon" 
+                            type="button" 
+                            id="WC_PasswordResetForm_Link_2">
+                            <span class="label">
+                                Send Verification Email
+                            </span>
+                        </button>
+                        
+                        <sw-invisible-recaptcha 
+                            execute-validate="ctrl.validateRecaptcha"
+                            callback="ctrl.recaptchaCallback( response )"
+                            expired-callback="ctrl.expiredRecaptchaCallback( response )"
+                            site-key="6LehDSwUAAAAAFhu9IEmDV1lhHiSnGj9RYo7wvUs">
+                        </sw-invisible-recaptcha>
+                    
+
+                   <p>If you need help, please <a href="javascript:void(0)" target="_top" sw-contact-us-link>Contact Us</a>.</p>
+                </form>
+                <div class="indicate-loading indicate-loading--mask" disable-animate ng-cloak ng-if="ctrl.isSubmitting">
+                    <div class="visually-hidden" role="alert" aria-live="assertive">Submitting...</div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="ContactUs.html">
+            <div class="ngdialog__header">
+                Contact Us
+            </div>
+            <div class="ngdialog__body">
+                <p class="hide-mobile">
+                    Sherwin-Williams Online Account Support<br><b>1-800-

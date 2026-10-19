@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404</title>
+  <link href="/css/theme_colors.css?v=1772631388" rel="stylesheet">
+  <link rel="preload" href="/cdn/fe/static/fonts/Switzer/Switzer-Regular.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/cdn/fe/static/fonts/Switzer/Switzer-Medium.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/cdn/fe/static/fonts/Switzer/Switzer-Semibold.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/cdn/fe/static/fonts/Switzer/Switzer-Bold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/font-face/Gate_Sans.css?v=1767864287">
+  <link href="/css/grid.css?v=1686322779" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/404/index.css?v=1754563985" />
+  <script>
+    this.globalThis || (this.globalThis = this); //  Resolve browser-side globalThis is not defined error
+    var lang_prefix = '';
+  </script>
+    
+    <script>
+      // 提前准备加载逻辑，减少执行延迟
+      (function() {
+        // 提前准备子应用配置（lang_prefix 已在前面定义）
+        var notFoundSubappName = 'notFound_app';
+        var notFoundSubappMountContainer = '#remote-notFound-container';
+        var microAppNotFoundInstance = null;
+
+        // DOM 就绪后再执行（head 内 onerror 时 body 尚未解析，需等 DOMContentLoaded）
+        function whenDomReady(fn) {
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fn);
+          } else {
+            fn();
+          }
+        }
+        function showNotFoundFallback() {
+          whenDomReady(function() {
+            var notFoundRemote = document.getElementById('remote-notFound-container');
+            var notFoundFallback = document.getElementById('notFound-fallback-wrap');
+            if (notFoundRemote && notFoundFallback) {
+              notFoundRemote.style.display = 'none';
+              notFoundFallback.style.display = '';
+            }
+          });
+        }
+        window.applyQiankunFallback = showNotFoundFallback;
+
+        function loadMicroApp(config) {
+          try {
+            var instance = qiankun.loadMicroApp(config);
+            instance.mountPromise
+              .catch(function(error) {
+                showNotFoundFallback()
+              });
+            return instance;
+          } catch(error) {
+            showNotFoundFallback()
+            return null;
+          }
+        }
+        // 定义加载函数，等待 qiankun 就绪后立即执行
+        function loadQiankun() {
+          var searchParams = new URLSearchParams(window.location?.search);
+          var isInApp = searchParams?.get('device_type') || document.cookie?.indexOf('device_type') > - 1;
+          var domainBase = window.location.protocol + '//' + window.location.host + (typeof lang_prefix !== 'undefined' ? lang_prefix : '');
+
+          if (!isInApp) {
+            microAppNotFoundInstance = loadMicroApp({
+              name: notFoundSubappName,
+              entry: domainBase + '/404?type=remote-notFound',
+              container: notFoundSubappMountContainer,
+            });
+          }
+        }
+        window.loadQiankun = loadQiankun;
+      })();
+    </script>
+    <!-- 保持 defer 确保 DOM 就绪；onerror 时走兜底（qiankun 脚本加载失败） -->
+    <script src="/cdn/fe/static/libs/qiankun.2.10.16.min.js" async onload="window.loadQiankun && window.loadQiankun()" onerror="window.applyQiankunFallback && window.applyQiankunFallback()"></script>
+  
+  
+</head>
+
+<body class="theme-color-v3">
+      
+      <main id="remote-notFound-container">
+      </main>
+      <div id="notFound-fallback-wrap" style="display:none">  <main class="flex--grid--layout main">
+    <div class="container">
+      <div class="notFoundBg"></div>
+      <div class="notFouondH5"></div>
+      <div class="text__box">
+        <h1 class="title">Sorry, page not found</h1>
+        <a class="goBack" href="/"> <span>Back to Homepage</span> </a>
+      </div>
+    </div>
+
+          <div class="grid__container--footer">
+        <div class="grid__item">
+          <div class="link__heading">
+            <svg class="icon__2" width="40" height="40" viewBox="0 0 32 32" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <g class="32px-ç®åå¥½ç¨">
+                <g class="Group 1707482570" clip-rule="evenodd" fill-rule="evenodd">
+                  <path class="brand"
+                    d="m17.267 16.494 10.835 6.054-5.485 1.225-2.397 4.575-2.953-11.854Zm2.446 3.2 1.043 4.184.788-1.505 2.119-.473-3.95-2.206Z"
+                    fill="#2354E6" />
+                  <path class="normal"
+                    d="M16 11.675a4.325 4.325 0 1 0 0 8.65v1.8A6.125 6.125 0 1 1 22.125 16h-1.8A4.325 4.325 0 0 0 16 11.675Z"
+                    fill="#262933" />
+                  <path class="normal"
+                    d="M16 6.4a9.6 9.6 0 1 0 0 19.2v1.8C9.704 27.4 4.6 22.296 4.6 16S9.704 4.6 16 4.6 27.4 9.704 27.4 16h-1.8A9.6 9.6 0 0 0 16 6.4Z"
+                    fill="#262933" />
+                </g>
+              </g>
+            </svg>
+            <h3 class="earphone__title">Here are some helpful links</h3>
+          </div>
+          <ul class="link__box grid__container--links">
+            <!-- 第一列：交易相关 -->
+            <li class="link__column link__column--trading">
+              <a href="/trade/BTC_USDT">Spot</a>
+            </li>
+            <li class="link__column link__column--trading">
+              <a href="/futures/USDT/BTC_USDT">Futures</a>
+            </li>
+            <li class="link__column link__column--trading">
+              <a href="/alpha">Alpha</a>
+            </li>
+            <li class="link__column link__column--trading">
+              <a href="/etf">Leveraged Tokens</a>
+            </li>
+            <li class="link__column link__column--trading">
+              <a href="/buy-sell-crypto">Buy & Sell</a>
+            </li>
+            <li class="link__column link__column--trading">
+              <a href="/convert/USDT/BTC">Convert</a>
+            </li>
+            <li class="link__column link__column--trading">
+              <a href="/copytrading">Copy</a>
+            </li>
+
+            <!-- 第二列：行情相关 -->
+            <li class="link__column link__column--market">
+              <a href="/price">Crypto Prices</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/price/gate-gt">GT Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/price/bitcoin-btc">Bitcoin Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/price/ethereum-eth">Ethereum Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/price/xrp-xrp">XRP Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/price/solana-sol">Solana Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/gold-price-today">Today's Gold Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/silver-price-today">Today's Silver Price</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/how-to-buy">How to Buy Crypto</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/how-to-buy/gate-gt">How to Buy GT</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/how-to-buy/bitcoin-btc">How to Buy Bitcoin</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/how-to-buy/ethereum-eth">How to Buy Ethereum</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/how-to-buy/xrp-xrp">How to Buy XRP</a>
+            </li>
+            <li class="link__column link__column--market">
+              <a href="/how-to-buy/solana-sol">How to Buy Solana</a>
+            </li>
+
+            <!-- 第三列：学习相关 -->
+            <li class="link__column link__column--learning">
+              <a href="/learn">Gate Learn</a>
+            </li>
+            <li class="link__column link__column--learning">
+              <a href="/news">Gate News</a>
+            </li>
+            <li class="link__column link__column--learning">
+              <a href="/blog">Gate Blog</a>
+            </li>
+            <li class="link__column link__column--learning">
+              <a href="/crypto-wiki">Crypto Wiki</a>
+            </li>
+            <li class="link__column link__column--learning">
+              <a href="/research">Research</a>
+            </li>
+            <li class="link__column link__column--learning">
+              <a href="/explore/bitcoin-halving-countdown">Bitcoin Halving</a>
+            </li>
+            <li class="link__column link__column--learning">
+              <a href="/explore/eth-upgrade">Ethereum (ETH) Upgrade</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid__item grid__item--2">
+          <div class="link__heading">
+            <svg class="icon__2" width="40" height="40" viewBox="0 0 32 32" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <g class="32px-åå®¢">
+                <g class="Group 1707482294">
+                  <path clip-rule="evenodd" class="normal"
+                    d="M4.675 5.6h19.15v17.65a1.35 1.35 0 1 0 2.7 0v-7.912h1.8v7.912a3.15 3.15 0 1 1-6.3 0V7.4H6.475v17.2h13.162v1.8H4.675V5.6Z"
+                    fill-rule="evenodd" fill="#262933" />
+                  <g class="Group 1707482295">
+                    <path clip-rule="evenodd" class="brand"
+                      d="M18.299 20.9h-8.5v-1.8h8.5v1.8Zm.228-8.171-4.18 3.028-1.636-1.588-2.19 1.563-1.045-1.464 3.41-2.437 1.63 1.58 2.955-2.14 1.056 1.458Z"
+                      fill-rule="evenodd" fill="#2354E6" />
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <h3 class="earphone__title">Trending stories that might interest you</h3>
+          </div>
+          <ul class="link__box link__box_recommendation">
+            <li><a
+                href="/explore/bitcoin-halving-countdown">Bitcoin Halving: Countdown to the Next Crypto Bull Market</a>
+            </li>
+            <li><a
+                href="/learn/articles/what-is-copy-trading-and-how-to-use-it/298">What Is Copy Trading And How To Use It?</a>
+            </li>
+            <li><a href="/learn/articles/what-is-ordi/1224">What is ORDI? All You Need to Know About ORDI</a></li>
+          </ul>
+        </div>
+      </div>
+      </main>
+</div>
+    
+    </body>
+
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Google Tag Manager -->
+    <script async>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NT3GRKD');
+    </script>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NT3GRKD" height="0" width="0" style="display:none;visibility:hidden" ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager -->
+
+
+    <!-- Push user ID -->
+    <script>
+        if (document.querySelector('.mainUserSubMenu') !== null) {
+            dataLayer.push({
+                'userID': ''
+            });
+        }
+    </script>
+    <script>
+        const Laravel = {
+            csrfToken: null,
+            locale: "en"
+        };
+
+        // Fetch CSRF token asynchronously
+        (function() {
+            var csrfTokenPromise = null;
+
+            window.getCsrfToken = function() {
+                if (Laravel.csrfToken) {
+                    return Promise.resolve(Laravel.csrfToken);
+                }
+
+                if (!csrfTokenPromise) {
+                    csrfTokenPromise = fetch('/csrf-token', {
+                        credentials: 'same-origin'
+                    })
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            Laravel.csrfToken = data.token;
+                            return Laravel.csrfToken;
+                        })
+                        .finally(function() {
+                            csrfTokenPromise = null;
+                        });
+                }
+
+                return csrfTokenPromise;
+            };
+
+            window.getCsrfToken().catch(function(error) {
+                console.error('Error fetching CSRF token:', error);
+            });
+
+            // Auto-inject CSRF token into forms before submission
+            document.addEventListener('submit', function(event) {
+                var form = event.target;
+                if (!form.method || form.method.toLowerCase() !== 'post') {
+                    return;
+                }
+
+                function upsertTokenInput(token) {
+                    var existingInput = form.querySelector('input[name="_token"]');
+                    if (!existingInput) {
+                        existingInput = document.createElement('input');
+                        existingInput.type = 'hidden';
+                        existingInput.name = '_token';
+                        form.appendChild(existingInput);
+                    }
+                    existingInput.value = token;
+                }
+
+                if (Laravel.csrfToken) {
+                    upsertTokenInput(Laravel.csrfToken);
+                    return;
+                }
+
+                event.preventDefault();
+                window.getCsrfToken()
+                    .then(function(token) {
+                        if (!token) {
+                            return;
+                        }
+
+                        upsertTokenInput(token);
+                        form.submit();
+                    })
+                    .catch(function(error) {
+                        console.error('Error loading CSRF token before submit:', error);
+                    });
+            });
+        })();
+    </script>
+
+    
+        <title>The Canadian Encyclopedia</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="https://thecanadianencyclopedia.ca/manifest.json">
+    <meta name="description" content="History, politics, arts, science &amp; more: the Canadian Encyclopedia is your reference on Canada. Articles, timelines &amp; resources for teachers, students &amp; public.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-57x57.png?v=f22552fe571739798798bb695565903f">
+<link rel="apple-touch-icon" sizes="60x60" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-60x60.png?v=f417df6dda9ce41f908afc590778f94b">
+<link rel="apple-touch-icon" sizes="72x72" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-72x72.png?v=3af0c2e4ca8c973438f91f44e7a58d6c">
+<link rel="apple-touch-icon" sizes="76x76" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-76x76.png?v=41438835e152256cf9b311eb7eb116c0">
+<link rel="apple-touch-icon" sizes="192x192" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-precomposed.png?v=6d047b2f33e6b90d2af0b41ac01b0566">
+<link rel="apple-touch-icon" sizes="192x192" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon.png?v=6d047b2f33e6b90d2af0b41ac01b0566">
+<link rel="apple-touch-icon" sizes="114x114" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-114x114.png?v=91501eda47ce85d33e0feae1630a4e99">
+<link rel="apple-touch-icon" sizes="120x120" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-120x120.png?v=43adb2769c1827f1dda68db736544ec4">
+<link rel="apple-touch-icon" sizes="144x144" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-144x144.png?v=670a8df278b4101e8bf081d7b9ebb258">
+<link rel="apple-touch-icon" sizes="152x152" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-152x152.png?v=db581da4dde2d406e52a132691b14680">
+<link rel="apple-touch-icon" sizes="180x180" href="https://thecanadianencyclopedia.ca/images/favicon/apple-icon-180x180.png?v=8d4920caa59ad54fb454f2cd80ebfc1c">
+<link rel="icon" type="image/png" sizes="192x192"  href="https://thecanadianencyclopedia.ca/images/favicon/android-icon-192x192.png?v=6d047b2f33e6b90d2af0b41ac01b0566">
+<link rel="icon" type="image/png" sizes="36x36"  href="https://thecanadianencyclopedia.ca/images/favicon/android-icon-36x36.png?v=3e9842d534281da81a0f4b4c81a17592">
+<link rel="icon" type="image/png" sizes="48x48"  href="https://thecanadianencyclopedia.ca/images/favicon/android-icon-48x48.png?v=7eb74dc9409ece0737d81a8ba5841bf7">
+<link rel="icon" type="image/png" sizes="72x72"  href="https://thecanadianencyclopedia.ca/images/favicon/android-icon-72x72.png?v=3af0c2e4ca8c973438f91f44e7a58d6c">
+<link rel="icon" type="image/png" sizes="36x36"  href="https://thecanadianencyclopedia.ca/images/favicon/android-icon-36x36.png?v=3e9842d534281da81a0f4b4c81a17592">
+<link rel="icon" type="image/png" sizes="44x44"  href="https://thecanadianencyclopedia.ca/images/favicon/android-icon-44x44.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://thecanadianencyclopedia.ca/images/favicon/favicon-96x96.png?v=a46206812744ada382bc23a1bc4f1357">
+<link rel="icon" type="image/png" sizes="96x96" href="https://thecanadianencyclopedia.ca/images/favicon/favicon-96x96.png?v=a46206812744ada382bc23a1bc4f1357">
+<link rel="icon" type="image/png" sizes="16x16" href="https://thecanadianencyclopedia.ca/images/favicon/favicon-16x16.png?v=ff43d9c7c67bb75a3d9a471a65e6724f">
+<link rel="manifest" href="https://thecanadianencyclopedia.ca/images/favicon/manifest.json?v=de0c530598b698ec2dbe765b440b7479">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png')}}">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="shortcut icon" href="https://thecanadianencyclopedia.ca/images/favicon/favicon.ico?v=45c5ae5e358dcde8acbbf3140859fb18" type="image/x-icon">
+<link rel="icon" href="https://thecanadianencyclopedia.ca/images/favicon/favicon.ico?v=45c5ae5e358dcde8acbbf3140859fb18" type="image/x-icon">
+
+        <link rel="canonical" href="https://thecanadianencyclopedia.ca/robots.txt">
+        <link rel="alternate" hreflang="fr" href="https://thecanadianencyclopedia.ca/robots.txt?locale=fr">
+        
+    <!-- preload fonts -->
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/publico/Publico-Roman.ttf?v=da5cf4834925266e3fe9373d7c20987a" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/publico/Publico-Bold.ttf?v=3ad7881260304548a929a8add091efad" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/publico/Publico-Italic.ttf?v=a670bc7591f940131b96c1427a8bfcf9" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/publico/Publico-BoldItalic.ttf?v=1e6ee343e8f0d8d4784e7adaf55be5ed" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/avenir/Avenir-Roman.ttf?v=c4ed2390b8880049113ca6b174e5393e" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/avenir/Avenir-Heavy.ttf?v=6880b7f440fee3d3d23778d295fda4fc" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/avenir/Avenir-Oblique.ttf?v=b934234a7cf41ebc3b0ed646c856d94a" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://thecanadianencyclopedia.ca/fonts/avenir/Avenir-HeavyOblique.ttf?v=86f5c8cc80dbc9fdac444dacf0798808" as="font" type="font/ttf" crossorigin>
+    <!-- end preload fonts -->
+
+    <link rel="stylesheet" type="text/css" href="https://thecanadianencyclopedia.ca/css/styles.css?v=694c67c93c4b542cf362e14581ccc395">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.20.0/ui/trumbowyg.min.css">
+        <script>
+            // Polyfill if IE11
+            var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+            if (isIE11) {
+                document.write('<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js"><\/script>');
+            }
+
+            if ('serviceWorker' in navigator ) {
+              window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                      // Registration was successful
+                      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                  }, function(err) {
+                      // registration failed :(
+                      console.log('ServiceWorker registration failed: ', err);
+                  });
+              });
+          }
+    </script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- schema.org definitions -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "additionalType": "Charity",
+            "@id": "https://thecanadianencyclopedia.ca/#organization",
+            "name": "The Canadian Encyclopedia",
+            "url": "https://thecanadianencyclopedia.ca",
+            "description": "The Canadian Encyclopedia is a free, bilingual online resource and the only established national encyclopedia of its kind in the world. It offers the largest collection of authored, accurate and continually updated articles focused on Canada’s history and culture.",
+            "nonprofitStatus": "Nonprofit",
+            "logo": "https://thecanadianencyclopedia.ca/images/logo-en.svg",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "10 Adelaide Street East, Suite 400",
+                "addressLocality": "Toronto",
+                "addressRegion": "ON",
+                "postalCode": "M5C 1J3",
+                "addressCountry": "CA"
+            },
+            "contactPoint": [
+                {
+                    "@type": "ContactPoint",
+                    "contactType": "Customer Service",
+                    "telephone": "+1-866-701-1867",
+                    "contactOption": "TollFree",
+                    "areaServed": "CA",
+                    "availableLanguage": [
+                        "English"
+                    ],
+                    "email": "mailto:info@historicacanada.ca"
+                }
+            ],
+            "sameAs": [
+                "https://www.facebook.com/TheCanadianEncyclopedia"
+            ]
+        }
+    </script>
+</head>
+<body id="body" data-lang="en" class=" ">
+    
+    <header id="header" class="header">
+	<nav class="nav" role="navigation">
+		<div id="nav-top" class="nav-menu--top">
+			<div class="nav-logo--en">
+				<a aria-label="The Canadian Encyclopedia homepage" class="nav-logo__link" href="https://thecanadianencyclopedia.ca/en">
+				</a>
+			</div>
+			<button class="nav-icon--search js-search-tab" aria-label="Search in Canadian Encyclopedia"></button>
+
+			<button id="nav-menu-toggle" class="nav-icon--hamburger-menu" aria-label="open main navigation">
+				<div class="icon-container">
+					<span class="top"></span>
+					<span class="middle"></span>
+					<span class="bottom"></span>
+				</div>
+			</button>
+		</div>
+
+		<div id="nav-mid" class="nav-menu--mid">
+
+			
+			<section class="nav-menu--mid__item dropdown-group">
+					<button class="nav-menu--mid__item__heading dropdown-toggler" aria-haspopup="true" >
+						<span class="top-level-link">
+							topics
+						</span>
+						<span class="toggle-icon"></span>
+					</button>
+				<div class="sub-menu--topics dropdown-body" aria-expanded="false">
+					<div class="sub-menu__container">
+                    <section id="People" class="sub-menu__wrapper nav-menu--mid__item dropdown-group">
+            <div class="sub-menu__heading">
+                <a href="https://www.thecanadianencyclopedia.ca/en/browse/people" aria-label="Browse topic: People">
+                    People
+                </a>
+                <button class="sub-menu__button dropdown-toggler accordion-toggler" aria-label="expand section People">
+                    <span class="toggle-icon"></span>
+                </button>
+            </div>
+            <ul class="sub-menu nested dropdown-body" aria-expanded="false">
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/arts-culture"
+                       aria-label="Browse topic: People, category Arts &amp; Culture"
+                    >
+                        Arts &amp; Culture
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/business-economics"
+                       aria-label="Browse topic: People, category Business &amp; Economics"
+                    >
+                        Business &amp; Economics
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/communities-sociology"
+                       aria-label="Browse topic: People, category Communities &amp; Sociology"
+                    >
+                        Communities &amp; Sociology
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/education"
+                       aria-label="Browse topic: People, category Education"
+                    >
+                        Education
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/history-historical-figures"
+                       aria-label="Browse topic: People, category History/Historical Figures"
+                    >
+                        History/Historical Figures
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/military"
+                       aria-label="Browse topic: People, category Military"
+                    >
+                        Military
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/nature-geography"
+                       aria-label="Browse topic: People, category Nature &amp; Geography"
+                    >
+                        Nature &amp; Geography
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/politics-law"
+                       aria-label="Browse topic: People, category Politics &amp; Law"
+                    >
+                        Politics &amp; Law
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/science-technology"
+                       aria-label="Browse topic: People, category Science &amp; Technology"
+                    >
+                        Science &amp; Technology
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/people/sports-recreation"
+                       aria-label="Browse topic: People, category Sports &amp; Recreation"
+                    >
+                        Sports &amp; Recreation
+                    </a>
+                </li>
+                            </ul>
+        </section>
+                    <section id="Places" class="sub-menu__wrapper nav-menu--mid__item dropdown-group">
+            <div class="sub-menu__heading">
+                <a href="https://www.thecanadianencyclopedia.ca/en/browse/places" aria-label="Browse topic: Places">
+                    Places
+                </a>
+                <button class="sub-menu__button dropdown-toggler accordion-toggler" aria-label="expand section Places">
+                    <span class="toggle-icon"></span>
+                </button>
+            </div>
+            <ul class="sub-menu nested dropdown-body" aria-expanded="false">
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/arts-culture"
+                       aria-label="Browse topic: Places, category Arts &amp; Culture"
+                    >
+                        Arts &amp; Culture
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/buildings-monuments"
+                       aria-label="Browse topic: Places, category Buildings &amp; Monuments"
+                    >
+                        Buildings &amp; Monuments
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/cities-populated-places"
+                       aria-label="Browse topic: Places, category Cities &amp; Populated Places"
+                    >
+                        Cities &amp; Populated Places
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/geographical-features"
+                       aria-label="Browse topic: Places, category Geographical Features"
+                    >
+                        Geographical Features
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/historic-sites"
+                       aria-label="Browse topic: Places, category Historic Sites"
+                    >
+                        Historic Sites
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/military"
+                       aria-label="Browse topic: Places, category Military"
+                    >
+                        Military
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/parks-nature-reserves"
+                       aria-label="Browse topic: Places, category Parks &amp; Nature Reserves"
+                    >
+                        Parks &amp; Nature Reserves
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/provinces-territories"
+                       aria-label="Browse topic: Places, category Provinces &amp; Territories"
+                    >
+                        Provinces &amp; Territories
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/places/transportation"
+                       aria-label="Browse topic: Places, category Transportation"
+                    >
+                        Transportation
+                    </a>
+                </li>
+                            </ul>
+        </section>
+                    <section id="Things" class="sub-menu__wrapper nav-menu--mid__item dropdown-group">
+            <div class="sub-menu__heading">
+                <a href="https://www.thecanadianencyclopedia.ca/en/browse/things" aria-label="Browse topic: Things">
+                    Things
+                </a>
+                <button class="sub-menu__button dropdown-toggler accordion-toggler" aria-label="expand section Things">
+                    <span class="toggle-icon"></span>
+                </button>
+            </div>
+            <ul class="sub-menu nested dropdown-body" aria-expanded="false">
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/arts-culture"
+                       aria-label="Browse topic: Things, category Arts &amp; Culture"
+                    >
+                        Arts &amp; Culture
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/business-economics"
+                       aria-label="Browse topic: Things, category Business &amp; Economics"
+                    >
+                        Business &amp; Economics
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/communities-sociology"
+                       aria-label="Browse topic: Things, category Communities &amp; Sociology"
+                    >
+                        Communities &amp; Sociology
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/education"
+                       aria-label="Browse topic: Things, category Education"
+                    >
+                        Education
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/history"
+                       aria-label="Browse topic: Things, category History"
+                    >
+                        History
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/military"
+                       aria-label="Browse topic: Things, category Military"
+                    >
+                        Military
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/nature-geography"
+                       aria-label="Browse topic: Things, category Nature &amp; Geography"
+                    >
+                        Nature &amp; Geography
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/politics-law"
+                       aria-label="Browse topic: Things, category Politics &amp; Law"
+                    >
+                        Politics &amp; Law
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/science-technology"
+                       aria-label="Browse topic: Things, category Science &amp; Technology"
+                    >
+                        Science &amp; Technology
+                    </a>
+                </li>
+                                <li class="sub-menu__heading">
+                    <a href="https://www.thecanadianencyclopedia.ca/en/browse/things/sports-recreation"
+                       aria-label="Browse topic: Things, category Sports &amp; Recreation"
+                    >
+                        Sports &amp; Recreation
+                    </a>
+                </li>
+                            </ul>
+        </section>
+        </div>
+
+				</div>
+			</section>
+
+			
+			<section class="nav-menu--mid__item dropdown-group">
+				<button class="nav-menu--mid__item__heading dropdown-toggler" aria-haspopup="true" >
+					<span class="top-level-link">
+						Collections
+					</span>
+					<span class="toggle-icon"></span>
+				</button>
+				<div class="sub-menu--cta dropdown-body" aria-expanded="false">
+
+					<div class="sub-menu__container">
+						<ul class="sub-menu__wrapper nav-menu--mid__item dropdown-group">
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/collections">
+                                    All Collections
+								</a>
+							</li>
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/the-memory-project">
+                                    The Memory Project
+								</a>
+							</li>
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/cdc">
+                                    Canada During COVID-19
+								</a>
+							</li>
+						</ul>
+                                                    <div class="sub-menu__image">
+                                <div class="image-container">
+                                    <img src="https://d14fiu1i7ba797.cloudfront.net/950x479/MohawkInstitute/15054127924_92486c0870_o.jpg"
+                                        data-src="https://d14fiu1i7ba797.cloudfront.net/950x479/MohawkInstitute/15054127924_92486c0870_o.jpg"
+                                        alt="Mohawk Institute"
+                                    />
+                                </div>
+                                <a href="https://thecanadianencyclopedia.ca/en/collection/reconciliation-in-canada" class="sub-menu__image__link"> Explore the  Reconciliation in Canada  collection
+                                <span class="link-arrow"></span>
+                                </a>
+                            </div>
+                        					</div>
+				</div>
+			</section>
+
+			
+			<section class="nav-menu--mid__item dropdown-group">
+				<a href="https://thecanadianencyclopedia.ca/en/educators" class="nav-menu--mid__item__heading dropdown-toggler">
+					<span class="top-level-link">
+						Educators
+					</span>
+				</a>
+			</section>
+
+			
+			<section class="nav-menu--mid__item dropdown-group">
+				<button class="nav-menu--mid__item__heading dropdown-toggler" aria-haspopup="true" >
+					<span class="top-level-link">
+						Timelines
+					</span>
+					<span class="toggle-icon"></span>
+				</button>
+				<div class="sub-menu--cta dropdown-body" aria-expanded="false">
+
+					<div class="sub-menu__container">
+						<ul class="sub-menu__wrapper nav-menu--mid__item dropdown-group">
+                            <li class="sub-menu__heading">
+                                <a href="https://thecanadianencyclopedia.ca/en/timelines">
+                                    All Timelines
+                                </a>
+                            </li>
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/timelines/people">
+                                    People
+								</a>
+							</li>
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/timelines/places">
+                                    Places
+								</a>
+							</li>
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/timelines/things">
+                                    Things
+								</a>
+							</li>
+						</ul>
+                                                    <div class="sub-menu__image">
+                                <div class="image-container">
+                                    <img src="https://d14fiu1i7ba797.cloudfront.net/950x579/media/media/4b5beb76-524c-45d8-81fb-a0228fb51abf.jpg" data-src="https://d14fiu1i7ba797.cloudfront.net/950x579/media/media/4b5beb76-524c-45d8-81fb-a0228fb51abf.jpg" alt="Family during Great Depression"/>
+                                </div>
+                                <a href="https://thecanadianencyclopedia.ca/en/timeline/canada-in-the-1930s" class="sub-menu__image__link">Explore the  Canada in the 1930s  timeline
+                                    <span class="link-arrow" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        					</div>
+				</div>
+			</section>
+
+
+			
+			<section class="nav-menu--mid__item dropdown-group">
+				<button class="nav-menu--mid__item__heading dropdown-toggler" aria-haspopup="true" >
+					<span class="top-level-link">
+						Quizzes
+					</span>
+					<span class="toggle-icon"></span>
+				</button>
+				<div class="sub-menu--cta dropdown-body" aria-expanded="false">
+
+					<div class="sub-menu__container">
+						<ul class="sub-menu__wrapper nav-menu--mid__item dropdown-group">
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/quizzes">
+                                    Quizzes
+								</a>
+							</li>
+							<li class="sub-menu__heading">
+								<a href="https://thecanadianencyclopedia.ca/en/quiz/cc-quiz-citizenship">
+                                    The Challenge
+								</a>
+							</li>
+						</ul>
+                                                    <div class="sub-menu__image">
+                                <div class="image-container">
+                                    <img
+									src="https://d14fiu1i7ba797.cloudfront.net/950x579/e010947274-v8.jpg"
+									data-src="https://d14fiu1i7ba797.cloudfront.net/950x579/e010947274-v8.jpg"
+									alt=""/>
+                                </div>
+                                <a href="https://thecanadianencyclopedia.ca/en/quiz/fashion-history-in-canada" class="sub-menu__image__link">Fashion History in Canada
+                                    <span class="link-arrow"></span>
+                                </a>
+                            </div>
+                        					</div>
+				</div>
+			</section>
+
+			
+			<button class="nav-icon--search js-search-tab" aria-label="Search in Canadian Encyclopedia"></button>
+		</div>
+
+		<ul id="nav-low" class="nav-menu--low">
+			<li class="nav-menu--low__item">
+									<a class="articleNavPopupEvent btn-login nav-link

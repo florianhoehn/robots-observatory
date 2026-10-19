@@ -1,0 +1,116 @@
+# wnba.com/robots.txt
+# Applies to https://www.wnba.com only.
+# Team sites (aces.wnba.com, liberty.wnba.com, ...) and stats.wnba.com are
+# separate hosts and need their own robots.txt.
+
+Sitemap: https://www.wnba.com/sitemap_index.xml
+
+User-agent: *
+
+# API routes (no crawlable content)
+Disallow: /api/
+
+# Site search results
+Disallow: /search
+
+# Partner video hub
+Disallow: /video/partners
+Disallow: /watch/video/partners
+
+# In-app webviews — duplicates of the public pages, rendered chrome-less for
+# the WNBA mobile apps. Middleware redirects app traffic here automatically.
+Disallow: /webview/
+
+# CMS draft previews
+Disallow: /preview/
+
+# Authenticated account area
+Disallow: /account/
+Disallow: /signin
+Disallow: /id/amazon
+
+# Developer documentation
+Disallow: /docs/
+
+# Conversion confirmation pages
+Disallow: /allstar/vote/success
+Disallow: /golden-state/thank-you
+Disallow: /*/wnbalive/register/thank-you
+
+# Deprecated and internal test routes
+Disallow: /player_legacy/
+Disallow: /external-header-test
+Disallow: /error
+
+# Session, tracking and share parameters create duplicate URLs
+Disallow: /*?*utm_
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
+
+# Allow rendering assets so pages can be evaluated as users see them
+Allow: /_next/static/
+Allow: /images/
+Allow: /fonts/
+
+
+# ---------------------------------------------------------------------------
+# AI crawlers
+#
+# Blocked from editorial, video and premium content; reference pages (scores,
+# standings, schedules, rosters) stay open so league facts are represented
+# accurately. Mirrors the nba.com policy.
+# ---------------------------------------------------------------------------
+
+User-agent: GPTBot
+Disallow: /
+Allow: /standings
+Allow: /schedule
+Allow: /players
+Allow: /player/*profile$
+Allow: /teams
+Allow: /team/*
+Allow: /stats/inside-the-game
+
+User-agent: Google-Extended
+Disallow: /
+Allow: /standings
+Allow: /schedule
+Allow: /players
+Allow: /player/*profile$
+Allow: /teams
+Allow: /team/*
+Allow: /stats/inside-the-game
+
+# Search and attribution crawler — surfaces links back to wnba.com
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Quora-Bot
+Disallow: /

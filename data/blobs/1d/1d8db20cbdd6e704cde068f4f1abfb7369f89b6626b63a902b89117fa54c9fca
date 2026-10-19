@@ -1,0 +1,159 @@
+# UptimeRobot
+
+> UptimeRobot: Website Monitoring Service. Start monitoring in 30 seconds. Use advanced SSL, keyword, and cron monitoring. Get notified by email, SMS, Slack and more.
+
+UptimeRobot is an uptime monitoring service used by over 3 million users, providing alerts and detailed status pages. It helps individuals, teams, and enterprises ensure their websites, servers, and APIs are online and performing optimally.
+
+## Core Monitoring Features
+- [Website Monitoring (HTTP/HTTPS)](https://uptimerobot.com/website-monitoring/): Check your website and receive instant notifications if it goes down.
+- [API Monitoring](https://uptimerobot.com/api-monitoring/): Monitor authenticated APIs, validate JSON fields, and set response time thresholds.
+- [Cron Job / Heartbeat Monitoring](https://uptimerobot.com/cron-job-monitoring/): Monitor regular background actions and intranet devices.
+- [SSL Certificate Monitoring](https://uptimerobot.com/ssl-monitoring/): Get automated alerts for SSL certificate errors and expiry warnings.
+- [Port Monitoring](https://uptimerobot.com/port-monitoring/): Monitor specific ports to ensure essential services are always available.
+- [Ping Monitoring](https://uptimerobot.com/ping-monitoring/): Verify the connectivity of your servers and network devices.
+- [Keyword Monitoring](https://uptimerobot.com/keyword-monitoring/): Monitor the presence or absence of specific words in a page's HTML.
+- [DNS Monitoring](https://uptimerobot.com/dns-monitoring/): Track DNS records and get alerts for modifications.
+- [Domain Expiration Monitoring](https://uptimerobot.com/domain-expiration-monitoring/): Keep track of your domain registration and receive expiry alerts.
+- [Response Time Monitoring](https://uptimerobot.com/response-time-monitoring/): Track server response times and receive alerts when thresholds are exceeded.
+- [Multi-Location Monitoring](https://uptimerobot.com/location-specific-monitoring/): Monitor from specific global regions to isolate local outages.
+
+## Product & Platform
+- [Status Pages](https://uptimerobot.com/status-page/): Build hosted, customizable public or private status pages.
+- [Incident Management](https://uptimerobot.com/incident-management/): Track, filter, and resolve incidents collaboratively.
+- [IT Alerting Software](https://uptimerobot.com/it-alerting-software/): Centralize alerts across your IT stack.
+- [UptimeRobot Mobile App (iOS & Android)](https://uptimerobot.com/mobile-app/): Manage monitors and check statistics on the go.
+- [MCP (Model Context Protocol)](https://uptimerobot.com/mcp/): Integrate UptimeRobot directly into AI workflows. Server URL: https://mcp.uptimerobot.com/mcp
+
+## UptimeRobot REST API (v3)
+- [Documentation](https://uptimerobot.com/api/v3/): Full API reference.
+Base URL: `https://api.uptimerobot.com/v3`
+Authentication: HTTP Bearer Token.
+Format: JSON.
+Rate Limits: Free plan = 10 req/min. Paid plans = monitor limit * 2 req/min (max 5000 req/min).
+
+### Core Monitor Endpoints
+GET /monitors: List all monitors.
+GET /monitors/{id}: Get specific monitor details.
+POST /monitors: Create a new monitor.
+PATCH /monitors/{id}: Update a monitor.
+DELETE /monitors/{id}: Delete a monitor.
+POST /monitors/{id}/start: Start/resume a paused monitor.
+POST /monitors/{id}/pause: Pause a monitor.
+POST /monitors/{id}/reset: Reset statistics for a monitor.
+GET /monitors/uptime-stats: Get aggregated uptime statistics across all monitors.
+GET /monitors/{id}/stats/response-time: Get response time statistics and time series data.
+GET /monitors/{id}/stats/uptime: Get uptime statistics for a specific monitor.
+
+### Status Pages (PSPs) Endpoints
+GET /psps: List all Public Status Pages.
+POST /psps: Create a new PSP.
+GET /psps/{id}: Get specific PSP details.
+PATCH /psps/{id}: Update a PSP.
+DELETE /psps/{id}: Delete a PSP.
+
+### PSP Announcements Endpoints
+GET /psps/{pspId}/announcements: List announcements for a PSP.
+GET /psps/{pspId}/announcements/{id}: Get specific announcement.
+POST /psps/{pspId}/announcements: Create an announcement.
+PATCH /psps/{pspId}/announcements/{id}: Update an announcement.
+POST /psps/{pspId}/announcements/{id}/pin: Pin an announcement.
+POST /psps/{pspId}/announcements/{id}/unpin: Unpin an announcement.
+
+### Incidents Endpoints
+GET /incidents: List all incidents.
+GET /incidents/{id}: Get specific incident details.
+GET /incidents/{id}/comments: List comments for an incident.
+POST /incidents/{id}/comments: Create a comment.
+PATCH /incidents/{id}/comments/{commentId}: Update a comment.
+DELETE /incidents/{id}/comments/{commentId}: Delete a comment.
+GET /incidents/{id}/activity-log: Get incident activity log.
+GET /incidents/{id}/alerts: Get alerts associated with an incident.
+
+### Integrations Endpoints
+GET /integrations: List all integrations (alert contacts).
+GET /integrations/{id}: Get specific integration details.
+POST /integrations: Create an integration.
+PATCH /integrations/{id}: Update an integration.
+DELETE /integrations/{id}: Delete an integration.
+
+### Maintenance Windows Endpoints
+GET /maintenance-windows: List all maintenance windows.
+GET /maintenance-windows/{id}: Get specific maintenance window.
+POST /maintenance-windows: Create a maintenance window.
+PATCH /maintenance-windows/{id}: Update a maintenance window.
+DELETE /maintenance-windows/{id}: Delete a maintenance window.
+
+### Monitor Groups Endpoints
+GET /monitor-groups: List all monitor groups.
+GET /monitor-groups/{id}: Get specific monitor group.
+POST /monitor-groups: Create a monitor group.
+PATCH /monitor-groups/{id}: Update a monitor group.
+DELETE /monitor-groups/{id}: Delete a monitor group.
+
+### Tags Endpoints
+GET /tags: List all tags.
+DELETE /tags/{id}: Delete a tag.
+
+### User Endpoints
+GET /user/me: Get user information.
+GET /user/alert-contacts: Get user's alert contacts.
+GET /user/all-alert-contacts: Get all alert contacts for the user.
+
+## Quick Monitor Setup (for AI Agents)
+- [Quick Monitor Setup guide](https://uptimerobot.com/quick-monitor-setup): Create a forever free 5-minute interval HTTPS monitor for a user with only the email where the notifications shall go, no registration or API key. The owner confirms with one click in an activation email.
+- [GET /agentic/agent-monitor/challenge](https://api.uptimerobot.com/agentic/agent-monitor/challenge): Request a proof-of-work challenge with query params email and url; returns nonce, timestamp, difficulty, signature.
+- [POST /agentic/agent-monitor](https://api.uptimerobot.com/agentic/agent-monitor): Submit the monitor as JSON {email, url, nonce, timestamp, counter, signature} with the solved challenge; returns HTTP 200 uniformly.
+- [GET /agentic/agent-monitor/activate](https://api.uptimerobot.com/agentic/agent-monitor/activate): Render the owner's confirmation page (query param token).
+- [POST /agentic/agent-monitor/activate](https://api.uptimerobot.com/agentic/agent-monitor/activate): Confirm activation (query param token); creates the account and monitor.
+
+## Integrations & Alerts
+- [All Integrations](https://uptimerobot.com/integrations/): Browse full list.
+- [Slack](https://uptimerobot.com/integrations/slack-integration/): Slack integration.
+- [Discord](https://uptimerobot.com/integrations/discord-integration/): Discord integration.
+- [Microsoft Teams](https://uptimerobot.com/integrations/microsoft-teams-integration/): MS Teams integration.
+- [PagerDuty](https://uptimerobot.com/integrations/pagerduty/): PagerDuty integration.
+- [Google Chat](https://uptimerobot.com/integrations/google-chat-integration/): Google Chat integration.
+- [Telegram](https://uptimerobot.com/integrations/telegram-integration/): Telegram integration.
+- [Webhooks](https://uptimerobot.com/integrations/webhooks-integration/): Webhooks integration.
+- [Zapier](https://uptimerobot.com/integrations/zapier-integration/): Zapier integration.
+
+## Pricing & Plans
+- [Pricing Overview](https://uptimerobot.com/pricing/): Four tiers -- Free, Solo, Team, and Scale. Free plan includes 50 monitors. Annual billing discounts available. 14-day money-back guarantee.
+- [Machine-readable pricing](https://uptimerobot.com/pricing.md): Markdown pricing data for AI agents and automated crawlers. Linked from the pricing page via rel=alternate.
+
+## Key Facts
+- Founded in 2010
+- Over 3 million users worldwide
+- 50 monitors free forever (no credit card required)
+- 13 monitor types including HTTP, ping, port, keyword, DNS, SSL, heartbeat
+- 1-minute check intervals on paid plans
+- Status pages, incident management, and 15+ alert integrations included
+- SOC 2 compliant
+- Industry: Website and infrastructure monitoring (SaaS)
+
+## Contact
+- [Contact Us](https://uptimerobot.com/contact/): General inquiries and support.
+- [Help Center](https://uptimerobot.com/help/): Technical support and documentation.
+
+## Optional
+- [Compare Plans](https://uptimerobot.com/pricing/): See how UptimeRobot compares to other monitoring solutions.
+- [Uptime / Downtime Calculator](https://uptimerobot.com/free-tools/uptime-downtime-calculator/): Calculate downtime allowances.
+- [IP Subnet Calculator](https://uptimerobot.com/free-tools/ip-subnet-calculator/): Free IP subnet calculator.
+- [Cron Expression Generator](https://uptimerobot.com/free-tools/cron-expression-generator/): Generate and test cron schedules.
+- [Website Change Detection Tool](https://uptimerobot.com/free-tools/website-change-detection-tool/): Track website changes.
+- [DNS & Record Lookups](https://uptimerobot.com/free-tools/dns-lookup/): Check MX, A, CNAME, TXT records.
+- [SPF, DMARC, and DKIM Checkers](https://uptimerobot.com/free-tools/spf-checker/): Email deliverability checks.
+- [Monitoring for DevOps](https://uptimerobot.com/monitoring-for-devops/): Solutions for DevOps teams.
+- [Monitoring for Developers](https://uptimerobot.com/monitoring-for-developers/): Solutions for Developers.
+- [Monitoring for Business Owners](https://uptimerobot.com/monitoring-for-business-owners/): Solutions for Business Owners.
+- [Monitoring for Support Teams](https://uptimerobot.com/monitoring-for-support/): Solutions for Support Teams.
+- [UptimeRobot Blog](https://uptimerobot.com/blog/): Company news and updates.
+- [Knowledge Hub](https://uptimerobot.com/knowledge-hub/): Educational resources and guides.
+- [Official Monitoring IPs List](https://api.uptimerobot.com/meta/ips): JSON format list of IPs.
+- [Allow-listing IPs Guide](https://uptimerobot.com/help/locations/): Setup guide for allow-listing.
+- [Cron Job/Heartbeat Setup Guide](https://uptimerobot.com/help/heartbeat-monitoring/): Setup instructions.
+- [Terms of Service](https://uptimerobot.com/terms/): Legal terms.
+- [Privacy Policy](https://uptimerobot.com/privacy/): Privacy details.
+- [Data Processing Addendum (DPA)](https://uptimerobot.com/dpa/): GDPR-aligned data processing terms.
+- [UptimeRobot Service Status](https://uptimerobot.com/status/): Current platform status.
+- [Security & Compliance](https://uptimerobot.com/security/): Security information.

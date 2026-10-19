@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /preview
+Disallow: /!/*
+Disallow: /forms/build?template=*
+Disallow: /admin/organization/new
+Disallow: /forms/copy
+Disallow: /forms/new
+Disallow: /forms/templates
+Disallow: /forms/write-us
+Disallow: /forms
+Disallow: /l/square
+Disallow: /organization/*
+Sitemap: https://www.cognitoforms.com/sitemap.xml

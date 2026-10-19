@@ -1,0 +1,65 @@
+
+<!doctype html>
+<html lang="ko" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="/assets/css/responsive/common.css"><!--공통-->
+    <link rel="stylesheet" href="/assets/css/responsive/menu.css"><!--메뉴-->
+    <link rel="stylesheet" href="/assets/css/responsive/footer.css"><!--푸터-->
+    <link rel="stylesheet" href="/assets/css/responsive/badge.css"><!--뱃지모음-->
+    <link rel="stylesheet" href="/assets/css/responsive/error.css">
+    <link rel="stylesheet" href="/assets/css/responsive/theme.css">
+    <title>404 에러</title>
+    <script>
+        (function() {
+            const theme = document.cookie.split('; ').find(row => row.startsWith('theme='));
+            const currentTheme = theme ? theme.split('=')[1] : 'dark';
+            document.documentElement.setAttribute('data-bs-theme', currentTheme);
+        })();
+    </script>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<!--::404 에러-->
+<div class="error-page">
+    <div id="tabi" class="error-page__character tabi__char" data-animation-path="animation/"></div>
+
+    <div class="error-page__content">
+        <h3 class="error-page__title">페이지를 찾을 수 없습니다.</h3>
+
+        <p class="error-page__description">
+        입력하신 페이지의 주소가 정확한지<br>
+        다시 한번 확인해주세요.
+        </p>
+                <a href="/" class="error-page__home-link">홈으로</a>
+
+        <div class="error-page__support">
+        <p class="error-page__support-title">고객 센터</p>
+        <p class="error-page__support-email">
+            E-MAIL : <span><a href="mailto:toptoon@toptoon.com">toptoon@toptoon.com</a></span>
+        </p>
+        </div>
+    </div>
+</div>
+<!--//::404 에러-->
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabiContainer = document.getElementById("tabi");
+        if (!tabiContainer) return;
+
+        const anim = bodymovin.loadAnimation({
+            container: tabiContainer,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "/assets/css/responsive/lottie/error_404.json"
+        });
+    });
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.9/lottie.min.js"></script>

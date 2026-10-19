@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="static " data-root="/">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <title>
+        PowerShell Gallery
+        | Page Not Found</title>
+
+    <link href="/Content/css?v=opJiT1tq-dErH-FGMe-8ypxQIoYGZKOPxKZtPfyvGSc1" rel="stylesheet"/>
+
+
+    
+
+    <link href="/Public/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    
+    
+    
+
+    
+    <script type="text/javascript" crossorigin="anonymous">
+            // Application Insights usage
+            var appInsights = window.appInsights || function(config) {
+                function s(config) {
+                    t[config] = function() {
+                        var i = arguments;
+                        t.queue.push(function() { t[config].apply(t, i) })
+                    }
+                }
+                var t = { config: config }, r = document, f = window, e = "script", o = r.createElement(e), i, u;
+                for (o.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", r.getElementsByTagName(e)[0].parentNode.appendChild(o), t.cookie = r.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) s("track" + i.pop());
+                return config.disableExceptionTracking || (i = "onerror", s("_" + i), u = f[i], f[i] = function(config, r, f, e, o) {
+                    var s = u && u(config, r, f, e, o);
+                    return s !== !0 && t["_" + i](config, r, f, e, o), s
+                }), t
+            }({
+                instrumentationKey: "50d4abc3-17d3-4a1b-8361-2d1e9ca8f6d5"
+            });
+
+            window.appInsights = appInsights;
+            appInsights.trackPageView();
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const tabs = document.querySelectorAll('[role="tab"]');
+                const tabList = document.querySelector('[role="tablist"]');
+
+                // Add a click event handler to each tab
+                tabs.forEach((tab) => {
+                    tab.addEventListener('click', changeTabs);
+                });
+
+                // Enable arrow navigation between tabs in the tab list
+                let tabFocus = 0;
+
+                tabList?.addEventListener('keydown', (e) => {
+                    // Move right
+                    if (e.keyCode === 39 || e.keyCode === 37) {
+                        tabs[tabFocus].setAttribute('tabindex', -1);
+                        if (e.keyCode === 39) {
+                            tabFocus++;
+                            // If we're at the end, go to the start
+                            if (tabFocus >= tabs.length) {
+                                tabFocus = 0;
+                            }
+                            // Move left
+                        } else if (e.keyCode === 37) {
+                            tabFocus--;
+                            // If we're at the start, move to the end
+                            if (tabFocus < 0) {
+                                tabFocus = tabs.length - 1;
+                            }
+                        }
+
+                        tabs[tabFocus].setAttribute('tabindex', 0);
+                        tabs[tabFocus].focus();
+                    }
+                });
+            });
+
+            function changeTabs(e) {
+                const target = e.target;
+                const parent = target.parentNode;
+                const grandparent = parent.parentNode;
+
+                // Remove all current selected tabs
+                parent
+                    .querySelectorAll('[aria-selected="true"]')
+                    .forEach((t) => t.setAttribute('aria-selected', false));
+
+                // Set this tab as selected
+                target.setAttribute('aria-selected', true);
+
+                // Hide all tab panels
+                grandparent
+                    .querySelectorAll('[role="tabpanel"]')
+                    .forEach((p) => p.setAttribute('hidden', true));
+
+                // Show the selected panel
+                grandparent.parentNode
+                    .querySelector(`#${target.getAttribute('aria-controls')}`)
+                    .removeAttribute('hidden');
+            }
+    </script>
+</head>
+    <body>
+        <div id="service-alert"></div>
+        <div id="outer-wrapper">
+
+            <div id="header-logo">
+                <header class="main">
+                    <div id="logo" role="img" aria-label="PowerShell Gallery Logo">
+                        <img src="/Content/Images/Branding/packageDefaultIcon.png" alt="PowerShell Gallery Logo"/>
+                        <a href="/">
+                            <img src="/Content/Logos/psgallerylogo.png" alt="PowerShell Gallery" />
+                        </a>
+                    </div>
+                    <div class="user-display">
+        <span class="welcome">
+            <a href="/users/account/LogOn?returnUrl=%2F.well-known%2Fsecurity.txt" title="Register for an account or sign in with an existing account">Register / Sign in</a>
+        </span>
+</div>
+                </header>
+            </div>
+
+            <div id="header-menu">
+                <nav class="main">
+                    <ul id="menu" class="expanding-search" role="menubar">
+
+    <li role="menuitem" aria-posinset="1" aria-setsize="6"><a href="/">Home</a></li>
+    <li role="menuitem" aria-posinset="2" aria-setsize="6"><a href="/packages">Packages</a></li>
+    <li role="menuitem" aria-posinset="3" aria-setsize="6"><a href="/packages/manage/upload" class="upload">Publish</a></li>
+    <li role="menuitem" aria-posinset="5" aria-setsize="6"><a href="https://go.microsoft.com/fwlink/?linkid=2118473">Documentation</a></li>
+    <li role="menuitem" aria-posinset="6" aria-setsize="6"><a href="https://go.microsoft.com/fwlink/?LinkID=827697&amp;clcid=0x409">Status</a></li>
+</ul>
+                    <div id="searchBox" role="search">
+                        <form action="/packages" method="get" aria-label="Search Box">
+                            <input name="q" id="searchBoxInput" class="expanding-search" placeholder="Search Packages"
+                                    value="" aria-label="Search packages using tags"/>
+                            <input id="searchBoxSubmit" type="image" src="/Content/Images/searchbutton.png" value=" " alt="Search"/>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="content-wrapper">
+                <div id="body" role="main">
+                    
+
+    <section role="main" class="container main-container">
+        <div class="row page-error">
+            <div class="col-xs-12 col-sm-offset-1 col-sm-10 ms-fontWeight-light">
+                <p class="oops">Oops!</p>
+                <p class="error-title">Error 404 - Page Not Found</p>
+                <div class="error-text">
+                    <div class="text-main">
+                        
+<p>Looks like you might have gotten lost. Let's see if we can help you find your way!</p>
+
+                    </div>
+                </div>
+
+                <p class="error-action">Get me out of here! <a href="/">Go home</a></p>
+                <p class="error-action">Wondering if PowerShell Gallery is down? <a href="https://aka.ms/psgallery-status">Check our status</a></p>
+                <p class="error-action">Looking for a package? <a href="/packages">Try searching</a></p>
+                <p class="error-action">Package you're looking for doesn't exist? <a href="https://aka.ms/psgallery-publishitem">Make one</a></p>
+                <p class="error-action">Pretty sure we messed up? <a href="https://aka.ms/psgallery-issues">File a bug</a></p>
+            </div>
+        </div>
+    </section>
+
+                </div>
+            </div>
+            <div id="layout-footer" class="group">
+                <footer id="footer">
+                    <ul class="recommended" role="menu">
+    <li role="menuitem" aria-posinset="1" aria-setsize="4"><a href="/policies/Contact">Contact Us</a></li>
+    <li role="menuitem" aria-posinset="2" aria-setsize="4"><a href="/policies/Terms">Terms of Use</a></li>
+    <li role="menuitem" aria-posinset="3" aria-setsize="4"><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy Policy</a></li>
+    <li role="menuitem" aria-posinset="4" aria-setsize="4">&copy; 2026 Microsoft Corporation</li>
+</ul>
+
+
+                </footer>
+            </div>
+        </div>
+        
+
+    </body>
+</html>

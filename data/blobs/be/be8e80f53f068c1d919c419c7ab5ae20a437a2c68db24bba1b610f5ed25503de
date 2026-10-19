@@ -1,0 +1,345 @@
+# ============================================================
+# robots.txt — University of Nottingham
+# https://www.nottingham.ac.uk/robots.txt
+#
+# Last reviewed: March 2026 | Web & Digital Team
+# Modelled on BBC best practice (bbc.co.uk/robots.txt)
+#
+# In short: Please use our site like a human, not a robot.
+# That means:
+# - No scraping, crawling, or systematic extraction of content
+# - No use of University content for training or fine-tuning
+#   AI models, including large language models (LLMs)
+# - No retrieval-augmented generation (RAG), AI-powered search,
+#   agentic AI or grounding using University content
+# - No creating datasets from University content
+# - No text and data mining (TDM) under Article 4 of the EU
+#   Directive on Copyright in the Digital Single Market
+# - The University of Nottingham reserves all rights in its
+#   content and expressly opts out of any statutory exceptions
+#   in any jurisdiction for text and data mining, as permitted
+#   by law
+# ============================================================
+
+
+# ============================================================
+# SECTION 1 — ALL CRAWLERS (single consolidated wildcard block)
+#
+# BUGS FIXED FROM PREVIOUS FILE (last updated 2024):
+#
+#   1. Disallow:search.aspx
+#      Missing leading slash — ignored by every crawler since 2016.
+#      Fixed: Disallow: /search.aspx
+#
+#   2. Two separate User-agent: * blocks
+#      Invalid structure. The second block (containing
+#      /*search_keywords=* and /*ContensisTextOnly=*) was likely
+#      ignored by many parsers. Both blocks merged here.
+#
+#   3. Only one of three site search systems was referenced.
+#      Three distinct search URL patterns are now all blocked:
+#        - /search.aspx          (?q=, ?search_keywords=, ?category=)
+#        - /studywithus/ugstudy/search-results.html  (?search=)
+#        - /help-and-support/home/help-and-support-search.html
+#                                (?searchkeyword=)
+# ============================================================
+
+User-agent: *
+
+# ------------------------------------------------------------
+# SEARCH RESULT PAGES — all three site search systems
+#
+# These are internal result pages with no standalone content
+# value. Parameterised variants (especially ?search_keywords=)
+# have been observed indexed in Bing, including URLs exposing
+# personal names and other user-generated search queries.
+# One such URL ranked as high as position 9 in Bing (~Feb 2026).
+#
+# Each search system is blocked three ways:
+#   - The bare page path (catches any direct access)
+#   - The path$ anchor (exact match, belt-and-braces)
+#   - The path? prefix (catches all parameterised variants)
+# ------------------------------------------------------------
+
+# 1. Main site search — /search.aspx
+#    Parameters seen: ?q=, ?search_keywords=, ?category=
+Disallow: /search.aspx
+Disallow: /search.aspx$
+Disallow: /search.aspx?
+
+# 2. UG study search — /studywithus/ugstudy/search-results.html
+#    Parameter seen: ?search=
+Disallow: /studywithus/ugstudy/search-results.html
+Disallow: /studywithus/ugstudy/search-results.html$
+Disallow: /studywithus/ugstudy/search-results.html?
+
+# 3. Help & support search — /help-and-support/home/help-and-support-search.html
+#    Parameter seen: ?searchkeyword=
+Disallow: /help-and-support/home/help-and-support-search.html
+Disallow: /help-and-support/home/help-and-support-search.html$
+Disallow: /help-and-support/home/help-and-support-search.html?
+
+# Catch-all query string patterns covering all search parameters
+# across all three systems and any future search pages
+Disallow: /*?q=*
+Disallow: /*?search=*
+Disallow: /*?search_keywords=*
+Disallow: /*?searchkeyword=*
+Disallow: /*?category=*
+Disallow: /*ContensisTextOnly=*
+
+# ------------------------------------------------------------
+# CMS, ADMIN AND DEVELOPMENT AREAS
+# ------------------------------------------------------------
+Disallow: /__precms/
+Disallow: /beta/
+Disallow: /Brand2017/
+Disallow: /Zengenti-Test-Folder-2013-Re-Design/
+Disallow: /Z-oldsites/
+Disallow: /z-oldsites/
+Disallow: /nuvision/
+Disallow: /xpert/xcloud/
+Disallow: /xpert/services/service-xcloud/
+Disallow: /toolkits/
+Disallow: /common/
+Disallow: /common/apps/
+Disallow: /includes/
+Disallow: /utilities/emailafriend.aspx
+Disallow: /utilities/university-statement.aspx
+Disallow: /siteelementshomepage/
+Disallow: /html-emails/
+Disallow: /emailTemplates/
+Disallow: /webtechnicaltraining/
+
+# ------------------------------------------------------------
+# STATS, SERVER AND LEGACY TECHNICAL PATHS
+# ------------------------------------------------------------
+Disallow: /stats/
+Disallow: /ris/local/
+Disallow: /www/server/404.php
+Disallow: /~
+
+# ------------------------------------------------------------
+# AUTHENTICATED AND INTRANET AREAS
+# ------------------------------------------------------------
+Disallow: /pharmacy/intranet/
+Disallow: /educationstudentintranet/
+Disallow: /is/self-reg/
+Disallow: /pgapps-portalcontent/
+
+# ------------------------------------------------------------
+# PRE-COURSE AND APPLICANT AREAS
+# ------------------------------------------------------------
+Disallow: /shs-precourse/
+Disallow: /education/precourse/
+Disallow: /cele-precourse/
+Disallow: /N-Ready/
+Disallow: /Online-Openday/
+Disallow: /ugapplicants/i-have-an-offer/admissions-guide.aspx
+Disallow: /ugapplicants/i-have-an-offer/undecided-offer-holders/
+Disallow: /UGstudy/Offer-holder/offer-holder-open-day-programmes.aspx
+Disallow: /studywithus/Prospectus-Downloads/
+
+# ------------------------------------------------------------
+# SCHOOL, DEPARTMENT AND RESEARCH LOCAL AREAS
+# ------------------------------------------------------------
+Disallow: /nursing/404.php
+Disallow: /nursing/qaa/404.php
+Disallow: /chinese/about/school-staff.php
+Disallow: /physics/research/nano/cgi-bin/
+Disallow: /pharmacy/general/news/
+Disallow: /cyber/
+Disallow: /english/ins/epntest/
+Disallow: /teaching/browse/
+Disallow: /chemistry/safety/
+Disallow: /safety/local/
+Disallow: /communicationsmarketing/teams/corporate-marketing/logos/
+Disallow: /professionaldevelopment/
+Disallow: /jabu/
+
+# ------------------------------------------------------------
+# CAMPAIGNS AND TEMPORARY AREAS
+# ------------------------------------------------------------
+Disallow: /yourfuture/
+Disallow: /campaigns/
+Disallow: /virtualnottingham/
+
+# ------------------------------------------------------------
+# OUTDATED COURSE LISTINGS
+# ------------------------------------------------------------
+Disallow: /ugstudy/course/2022/
+
+# ------------------------------------------------------------
+# SITEMAPS
+# ------------------------------------------------------------
+Sitemap: https://www.nottingham.ac.uk/sitemap.xml
+
+
+# ============================================================
+# SECTION 2 — ALLOW W3C LINK CHECKER
+# Preserves the existing specific rule from the previous file.
+# ============================================================
+
+User-agent: W3C-checklink
+Disallow:
+
+
+# ============================================================
+# SECTION 3 — AI TRAINING AND LLM CRAWLERS (fully blocked)
+# Modelled directly on the BBC's robots.txt.
+# These bots harvest content for AI model training and have
+# no relevance to search engine visibility.
+# Blocking these does NOT affect Google Search or Bing rankings —
+# they use entirely separate user agents (Googlebot, Bingbot).
+# ============================================================
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Google-CloudVertexBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Amzn-SearchBot
+Disallow: /
+
+User-agent: Amzn-User
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+User-agent: magpie-crawler
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: ProRataInc
+Disallow: /
+
+User-agent: TurnitinBot
+Disallow: /
+
+
+# ============================================================
+# SECTION 4 — KNOWN SCRAPER AND SEO AUDIT BOTS (fully blocked)
+# These bots contribute to the ~15-20% bot sessions seen in
+# MS Clarity and have no legitimate search indexing purpose.
+# ============================================================
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: SemrushBot-SA
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: rogerbot
+Disallow: /
+
+User-agent: exabot
+Disallow: /
+
+User-agent: YisouSpider
+Disallow: /
+
+User-agent: sistrix
+Disallow: /
+
+User-agent: linkdexbot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: YandexAdditional
+Disallow: /
+
+User-agent: YandexAdditionalBot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: Mail.RU_Bot
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /

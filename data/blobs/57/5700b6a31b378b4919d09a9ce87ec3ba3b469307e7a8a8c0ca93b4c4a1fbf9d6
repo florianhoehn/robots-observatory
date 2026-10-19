@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-zetdm5md> <head><title>Page not found - Fathom Analytics</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" sizes="any" href="/assets/src/favicon.svg"><link rel="mask-icon" href="/assets/src/favicon.svg" color="#333740"><link rel="apple-touch-icon" sizes="180x180" href="/assets/src/apple-touch-icon.png"><meta name="robots" content="noindex,follow,noarchive,nosnippet"><meta name="description" content="Page not found"><link rel="stylesheet" href="/assets/css/fontawesome.min.css"><link rel="preload" href="/assets/fonts/fa-l.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/sw.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/jb.woff2" as="font" type="font/woff2" crossorigin><script id="fathom-embed" src="https://quick-esteemed.usefathom.com/" data-site="BIABKBRK" data-included-domains="usefathom.com" defer></script><script>
+      (function () {
+        var PRIMARY = 'BIABKBRK';
+        var SECONDARY = 'YPOHYGMI';
+        var wrapped = false;
+        var mirroring = false;
+
+        function wrapEvents(fathom) {
+          if (wrapped || !fathom) return;
+          wrapped = true;
+
+          ['trackEvent', 'trackGoal'].forEach(function (method) {
+            var original = fathom[method];
+            if (typeof original !== 'function') return;
+
+            fathom[method] = function () {
+              if (mirroring) {
+                return original.apply(fathom, arguments);
+              }
+
+              mirroring = true;
+              try {
+                original.apply(fathom, arguments);
+                fathom.setSite(SECONDARY);
+                original.apply(fathom, arguments);
+                fathom.setSite(PRIMARY);
+              } catch (e) {
+                try { fathom.setSite(PRIMARY); } catch (e2) {}
+              }
+              mirroring = false;
+            };
+          });
+        }
+
+        var embed = document.getElementById('fathom-embed');
+        if (embed) {
+          embed.addEventListener('load', function () {
+            wrapEvents(window.fathom);
+          });
+        }
+
+        window.addEventListener('load', function () {
+          var fathom = window.fathom;
+          if (!fathom) return;
+          try {
+            wrapEvents(fathom);
+            fathom.setSite(SECONDARY);
+            fathom.trackPageview();
+          } catch (e) {
+          } finally {
+            try { fathom.setSite(PRIMARY); } catch (e) {}
+          }
+        });
+      })();
+    </script><link rel="stylesheet" href="/_astro/404.DsYW1Wvx.css"></head> <body class="site" data-astro-cid-zetdm5md> <fa-rapper class="rap-full rap-centered" data-astro-cid-zetdm5md="true"> <fa-rapper class="rap-sm" data-astro-cid-zetdm5md="true"> <article class="body" data-astro-cid-zetdm5md> <div class="dance-party" data-astro-cid-zetdm5md>404</div> <h1 data-astro-cid-zetdm5md>Page not found</h1> <p data-astro-cid-zetdm5md>This page has wandered off (cats do that). Try heading back to our <a href="/" data-astro-cid-zetdm5md>homepage</a>, or check out our <a href="/docs" data-astro-cid-zetdm5md>help center</a> if you were looking for something specific.</p> </article> </fa-rapper> <img src="/assets/src/brand/fathom-luna.svg" alt="Page not found" class="fathom-cat footer-cat" data-astro-cid-zetdm5md="" loading="lazy" decoding="async"> </fa-rapper> <script type="module">var a=window.location.pathname;typeof fathom<"u"&&fathom.trackEvent("404: "+a);</script> </body> </html>

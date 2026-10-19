@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="en"><head title="Guitar Center"><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" class="jsx-2222227489"/><meta name="next-head-count" content="2"/><meta charSet="UTF-8"/><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/><link rel="dns-prefetch" href="https://static.guitarcenter.com/"/><link rel="preconnect" href="https://wsv3cdn.audioeye.com/" crossorigin="anonymous"/><link rel="dns-prefetch" href="https://alb.reddit.com/"/><link rel="dns-prefetch" href="https://bat.bing.com/"/><link rel="dns-prefetch" href="https://cdn.clarip.com/"/><link rel="dns-prefetch" href="https://connect.facebook.net/"/><link rel="preconnect" href="https://media.guitarcenter.com/"/><link rel="dns-prefetch" href="https://platform.twitter.com/"/><link rel="dns-prefetch" href="https://s.ytimg.com/"/><link rel="dns-prefetch" href="https://smetrics.gcimetrics.com/"/><link rel="dns-prefetch" href="https://sslwidget.criteo.com/"/><link rel="dns-prefetch" href="https://static.criteo.net/"/><link rel="dns-prefetch" href="https://static.guitarcenter.com/"/><link rel="dns-prefetch" href="https://t.channeladvisor.com/"/><link rel="dns-prefetch" href="https://web-sdk.urbanairship.com/"/><link rel="dns-prefetch" href="https://ws.audioeye.com"/><link rel="dns-prefetch" href="https://www.facebook.com/"/><link rel="dns-prefetch" href="https://www.google-analytics.com/"/><link rel="dns-prefetch" href="https://www.googleadservices.com/"/><link rel="dns-prefetch" href="https://www.googletagmanager.com/"/><link rel="dns-prefetch" href="https://www.redditstatic.com/"/><link rel="dns-prefetch" href="https://www.youtube.com/"/><link rel="dns-prefetch" href="https://tags.tiq.guitarcenter.com/"/><script>(function(w,d){
+if(w.__gcTealiumPageViewInitialized)return;
+var env=w.__ENV||{};
+var tealiumEnv="prod"||env.NEXT_PUBLIC_TEALIUM_ENV;
+if(!/^(dev|qa|prod)$/.test(tealiumEnv)){
+if(tealiumEnv&&w.console&&w.console.error)
+w.console.error('tealium: NEXT_PUBLIC_TEALIUM_ENV is not dev|qa|prod',tealiumEnv);
+return;}
+w.__gcTealiumPageViewInitialized=true;
+var data=w.utag_data=w.utag_data||{page_name:'',page_type:'',site_section:''};
+w.utag_cfg_ovrd=w.utag_cfg_ovrd||{};
+w.utag_cfg_ovrd.noview=true;
+var pendingPageViews=[];
+var lastReported=null;
+var lastReportedPath='';
+var hasNavigatedSinceReport=false;
+var isSamePage=function(a,b){
+return !!a&&!!b&&a.page_name===b.page_name&&a.page_type===b.page_type;};
+var path=function(){
+var p=(w.location&&w.location.pathname)||'';
+return p.length>1&&p.charAt(p.length-1)==='/'?p.slice(0,-1):p;};
+var lastPath=path();
+var markNavigation=function(){
+try{
+var nextPath=path();
+if(nextPath===lastPath)return;
+lastPath=nextPath;
+hasNavigatedSinceReport=true;
+}catch(e){if(w.console&&w.console.error)w.console.error('tealium markNavigation error',e);}
+};
+var wrapHistory=function(methodName){
+var original=w.history&&w.history[methodName];
+if(typeof original!=='function')return;
+w.history[methodName]=function(){
+var result=original.apply(this,arguments);
+markNavigation();
+return result;
+};
+};
+var txt=function(v){return String(v||'').trim();};
+var gciOmnitureData=function(){
+return w.GCI&&w.GCI.digitalData&&w.GCI.digitalData.omnitureData;};
+var setPageData=function(o){
+if(!o||!txt(o.pageName))return;
+data.page_name=txt(o.pageName);
+data.page_type=txt(o.pageType);
+data.site_section=txt(o.siteSection);
+};
+var buildPayload=function(o){
+if(!o)return null;
+return {
+tealium_event:'page_view',
+page_name:txt(o.pageName),
+page_type:txt(o.pageType),
+site_section:txt(o.siteSection),
+country_code:'us',
+language_code:'en'
+};
+};
+var isSuppressedPageView=function(payload,viewPath){
+if(!payload.page_name)return true;
+if(!isSamePage(payload,lastReported))return false;
+if(viewPath!==lastReportedPath)return true;
+return !hasNavigatedSinceReport;
+};
+var lastViewError=null;
+var sendPageView=function(payload,viewPath){
+try{w.utag.view(payload);}
+catch(err){lastViewError=err;return false;}
+lastReported={page_name:payload.page_name,page_type:payload.page_type};
+lastReportedPath=viewPath;
+hasNavigatedSinceReport=false;
+return true;
+};
+var isAwaitingRetry=function(payload,viewPath){
+for(var i=0;i<pendingPageViews.length;i++){
+var queued=pendingPageViews[i];
+if(queued.attempts>0&&queued.path===viewPath&&isSamePage(queued.payload,payload))return true;
+}
+return false;
+};
+var scheduledRetryDueAt=0;
+var scheduleNextRetry=function(){
+if(typeof w.setTimeout!=='function')return;
+var nextDueAt=0;
+for(var i=0;i<pendingPageViews.length;i++){
+var dueAt=pendingPageViews[i].dueAt;
+if(dueAt&&(!nextDueAt||dueAt<nextDueAt))nextDueAt=dueAt;
+}
+if(!nextDueAt)return;
+if(scheduledRetryDueAt&&scheduledRetryDueAt<=nextDueAt)return;
+scheduledRetryDueAt=nextDueAt;
+w.setTimeout(function(){scheduledRetryDueAt=0;flushPendingPageViews();},Math.max(0,nextDueAt-Date.now()));
+};
+var scheduleRetry=function(view){
+var delay=[250,1000][view.attempts-1];
+if(typeof delay!=='number'||typeof w.setTimeout!=='function')return;
+view.dueAt=Date.now()+delay;
+scheduleNextRetry();
+};
+var flushPendingPageViews=function(){
+try{
+var budget=pendingPageViews.length;
+while(budget-->0&&pendingPageViews.length&&w.utag&&typeof w.utag.view==='function'){
+var view=pendingPageViews.shift();
+if(!view)continue;
+if(view.dueAt&&Date.now()<view.dueAt){pendingPageViews.push(view);continue;}
+if(isSuppressedPageView(view.payload,view.path))continue;
+if(sendPageView(view.payload,view.path))continue;
+view.attempts=(view.attempts||0)+1;
+if(view.attempts>=3){
+if(w.console&&w.console.error)w.console.error('tealium view failed, giving up',lastViewError);
+continue;}
+pendingPageViews.push(view);
+scheduleRetry(view);}
+scheduleNextRetry();
+}catch(err){if(w.console&&w.console.error)w.console.error('tealium flush error',err);}
+};
+var loaded=false;
+var loadAttempts=0;
+var load=function(){
+try{
+if(loaded)return;
+if(w.utag&&typeof w.utag.view==='function'){loaded=true;flushPendingPageViews();return;}
+if(loadAttempts>=3)return;
+loadAttempts++;
+var s=d.createElement('script');
+s.src='//tags.tiq.guitarcenter.com/guitarcenter/'+encodeURIComponent(tealiumEnv)+'/utag.js';
+s.type='text/javascript';
+s.async=true;
+s.onload=flushPendingPageViews;
+s.onerror=function(){
+loaded=false;
+if(loadAttempts>=3){
+pendingPageViews=[];
+if(w.console&&w.console.error)w.console.error('tealium utag.js failed to load, giving up after '+loadAttempts+' attempts');
+return;}
+if(w.console&&w.console.warn)w.console.warn('tealium utag.js failed to load, will retry on the next page view');};
+var f=d.getElementsByTagName('script')[0];
+f.parentNode.insertBefore(s,f);
+loaded=true;}
+catch(e){if(w.console&&w.console.error)w.console.error('tealium loader error',e);}
+};
+var firePageView=function(payload){
+if(!payload)return;
+var currentPath=path();
+if(isSuppressedPageView(payload,currentPath))return;
+if(!isAwaitingRetry(payload,currentPath)&&pendingPageViews.length<10)
+pendingPageViews.push({payload:payload,path:currentPath,attempts:0});
+load();
+flushPendingPageViews();
+};
+var syncFromGci=function(){
+try{
+var o=gciOmnitureData();
+setPageData(o);
+firePageView(buildPayload(o));
+}catch(err){if(w.console&&w.console.error)w.console.error('tealium syncFromGci error',err);}
+};
+syncFromGci();
+w.addEventListener('gcDataLayerBridgeReady',syncFromGci);
+wrapHistory('pushState');
+wrapHistory('replaceState');
+w.addEventListener('popstate',markNavigation);
+w.addEventListener('dlUpdateEvent',function(e){
+try{
+var x=e.detail||{};
+var name=x.eventName||x.event;
+var o;
+if(name==='omnitureLoaded')o=x.omnitureLoaded&&x.omnitureLoaded.omnitureData;
+else if(name==='omnitureDataLoaded')o=gciOmnitureData();
+else return;
+setPageData(o);
+firePageView(buildPayload(o));
+}catch(err){if(w.console&&w.console.error)w.console.error('tealium dlUpdateEvent error',err);}
+});
+load();
+})(window,document);</script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(i)+dl+"\u0026gtm_auth=Mnsn28zwAP2jhhYYVNP0wQ\u0026gtm_preview=env-10\u0026gtm_cookies_win=x";
+f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',"GTM-KK7B2HH");</script><script type="text/javascript">var monetateT = new Date().getTime();</script><script id="monetate-entry" type="text/javascript" src="https://se.monetate.net/js/2/a-d9ea219b/p/guitarcenter.com/entry.js" async=""></script><link href="https://static.guitarcenter.com/img/brand/mobile-gc/favicon.ico?vId=7.2.33&amp;cb=18" rel="shortcut icon"/><link href="https://static.guitarcenter.com/img/brand/mobile-gc/GC_MobileIcon_57.png?vId=7.2.33&amp;cb=18" sizes="57x57" rel="apple-touch-icon"/><link href="https://static.guitarcenter.com/img/brand/mobile-gc/GC_MobileIcon_76.png?vId=7.2.33&amp;cb=18" sizes="76x76" rel="apple-touch-icon"/><link href="https://static.guitarcenter.com/img/brand/mobile-gc/GC_MobileIcon_120.png?vId=7.2.33&amp;cb=18" sizes="120x120" rel="apple-touch-icon"/><link href="https://static.guitarcenter.com/img/brand/mobile-gc/GC_MobileIcon_152.png?vId=7.2.33&amp;cb=18" sizes="152x152" rel="apple-touch-icon"/><link href="https://static.guitarcenter.com/img/brand/mobile-gc/GC_MobileIcon_167.png?vId=7.2.33&amp;cb=18" sizes="167x167" rel="apple-touch-icon"/><link href="https://static.guitarcenter.com/img/brand/mobile-gc/GC_MobileIcon_180.png?vId=7.2.33&amp;cb=18" sizes="180x180" rel="apple-touch-icon"/><script src="https://code.jquery.com/jquery-1.10.2.min.js" defer=""></script><script src="https://cdn.quantummetric.com/qscripts/quantum-guitarcenter.js" async=""></script><link rel="preload" href="/_next/static/media/904be59b21bd51cb.p.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font=""/><link rel="preload" href="/_next/static/media/26d0ba92e140f0dc.p.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font=""/><link rel="preload" href="/_next/static/css/21fb09387b643bba.css" as="style"/><link rel="stylesheet" href="/_next/static/css/21fb09387b643bba.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script defer="" src="/_next/static/chunks/8171.e3fd252ee87d4185.js"></script><script src="/_next/static/chunks/webpack-79519c4de43897cd.js" defer=""></script><script src="/_next/static/chunks/framework-978a6051e6d0c57a.js" defer=""></script><script src="/_next/static/chunks/main-f3561cb78bb58985.js" defer=""></script><script src="/_next/static/chunks/pages/_app-64385e45d909ad89.js" defer=""></script><script src="/_next/static/chunks/pages/404-e6903e12a21ebee5.js" defer=""></script><script src="/_next/static/deploy-gc-7.7.64.1-2026-09-30.a/_buildManifest.js" defer=""></script><script src="/_next/static/deploy-gc-7.7.64.1-2026-09-30.a/_ssgManifest.js" defer=""></script><style id="__jsx-2222227489">:root{--font-instrument-sans:'__Instrument_Sans_7eab84', helvetica, sans-serif;--font-montserrat:'__Montserrat_ce75c4', Instrument Sans, helvetica, sans-serif}</style><style id="__jsx-f52351b83a87079a">@media(max-width:975.9px){.ShopLogin{width:64px!important;.ShopLoginText{display:none}.ShopLoginIcon{top:14.4px}}}</style><style id="__jsx-8cab5a6ef61542e">.miniCartCount.jsx-8cab5a6ef61542e{font-family:var(--font-instrument-sans),Helvetica,sans-serif}@-moz-document url-prefix(){.miniCartCount.jsx-8cab5a6ef61542e{margin-left:-1px}}</style><style id="__jsx-9e6acfc1a15ec446">.outer-container.jsx-9e6acfc1a15ec446{}.outer-container.jsx-9e6acfc1a15ec446 .jsx-9e6acfc1a15ec446::-webkit-scrollbar{width:6px;height:6px}.outer-container.jsx-9e6acfc1a15ec446 .jsx-9e6acfc1a15ec446::-webkit-scrollbar-track{background:rgba(0,0,0,.06);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 5px rgba(0,0,0,.08)}.outer-container.jsx-9e6acfc1a15ec446 .jsx-9e6acfc1a15ec446::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:inset 0 0 10px rgba(0,0,0,.2)}.outer-container.jsx-9e6acfc1a15ec446{scrollbar-width:thin;scrollbar-color:var(--color-std-gray-500)var(--color-std-gray-100)}</style><style id="__jsx-33acea70119e5d82">.transform-rotate-90{-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-ms-transform:rotate(-90deg);-o-transform:rotate(-90deg);transform:rotate(-90deg)}.wrappedSubCategories{}.wrappedSubCategories .pb-3{padding-bottom:.75rem!important}.wrappedSubCategories .mb-4{margin-bottom:1rem!important}.sub-category-content{ul {
+            list-style: none;
+          }
+          & li > a:hover {
+            text-decoration: underline;
+          }
+        }.sub-category-content .py-4{padding-top:1rem!important;padding-bottom:1rem!important}@media(max-width:975.9px){.sub-category-content .pl-4{padding-left:1rem!important}.sub-category-content .py-3{padding-top:.75rem!important;padding-bottom:.75rem!important}}.sub-category-content .px-3{padding-left:.75rem!important;padding-right:.75rem!important}.sub-category-content .px-4{padding-left:1rem!important;padding-right:1rem!important}.no-item-name-special-menu .special li:last-child{border:none!important}</style><style id="__jsx-280d2c0700df27a6">.new-header-bottom{}.new-header-bottom>.px-4{}@media(max-width:975.9px){.new-header-bottom>.px-4{padding-left:1rem!important;padding-right:1rem!important}}</style><style id="__jsx-45dd01683d4c05bb">.gc-top-headroll-container a{font-weight:700}.header-layout{}@media(max-width:975.9px){.header-layout .pt-3{padding-top:.75rem!important}}.new-header-top{min-height:44px}.new-header-top>div{min-height:inherit}.new-header-top .flex.shrink-0{-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;-webkit-box-flex:0;-webkit-flex-grow:0;-moz-box-flex:0;-ms-flex-positive:0;flex-grow:0}body.overlay-and-overflow-hidden{position:relative}body.overlay-and-overflow-hidden:before{display:block;content:"";position:absolute;left:0;right:0;top:-16px;bottom:0;background-color:#000;z-index:51;opacity:.6}body.overlay-and-overflow-hidden .QSIFeedbackButton{z-index:50!important}@media(max-width:975px){body.overlay-and-overflow-hidden{overflow:hidden;height:100%}body.overlay-and-overflow-hidden:before{background-color:var(--color-std-white);opacity:1}}.ant-message-error .cs-tel,.ant-message-error .couponChat{font-weight:500}.ant-spin-nested-loading>div>.ant-spin{max-height:100%}.new-header-top a,.new-header-bottom a{font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif!important}</style><style id="__jsx-19934649cf80d7b1">.flex-template .breadcrumb-content-wrap{}@media(max-width:1499.98px){.flex-template .breadcrumb-content-wrap{margin-left:-20px}}@media(max-width:975.98px){.flex-template .breadcrumb-content-wrap{margin-left:-16px;margin-right:-16px}}</style><style id="__jsx-95c928bfac195fb3">.gc-checkbox{}.gc-checkbox .ant-checkbox .ant-checkbox-inner{border-width:2px}.gc-checkbox .ant-checkbox .ant-checkbox-inner:after{top:47%;width:8px;height:13.2}</style><style id="__jsx-3bbcef601b528c61">form.footer-sign-up .ant-form-item-label{display:none}form.footer-sign-up input:not(.ant-input-status-error):hover{border-color:var(--color-std-gray-600)}form.footer-sign-up .ant-input-status-error:not(.ant-input-disabled){background-color:var(--color-std-red-orange-50)}form.footer-sign-up .ant-form-item-explain-error{margin-top:8px}form.footer-sign-up .ant-checkbox{background-color:var(--color-std-white)}</style><style id="__jsx-5f8abfd6ac2e469d">.sr-only.jsx-5f8abfd6ac2e469d{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}</style><style id="__jsx-23af4ff2a7d0a260">.footer-bbb-links-wrap .bbb-links{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-moz-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:row;-webkit-justify-content:row;-moz-box-pack:row;-ms-flex-pack:row;justify-content:row}@media(min-width:768px){.footer-bbb-links-wrap .bbb-links{-webkit-box-pack:justify;-webkit-justify-content:space-between;-moz-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}}.footer-bbb-links-wrap .bbb-links .bbb-img{display:inline-block;width:48px;height:93px;text-indent:-9999px;background:url(/assets/images/common/sprite-gc-global.png)no-repeat -56px 0}.footer-bbb-links-wrap .bbb-links .bbb-caru-link img{-webkit-align-self:baseline;-ms-flex-item-align:baseline;align-self:baseline;width:107px}</style><style id="__jsx-cf83203ab24d04fb">.footer-links-wrap.jsx-322cf43dcf1282f0{max-width:1280px}.footer-links-wrap.jsx-322cf43dcf1282f0 .footer-heading.jsx-322cf43dcf1282f0{margin-bottom:10px;color:#000;font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif;font-size:18px;line-height:27px}@media(max-width:767px){.footer-links-wrap.jsx-322cf43dcf1282f0 .footer-heading.jsx-322cf43dcf1282f0{font-size:14px;white-space:normal}}.footer-links-wrap.jsx-322cf43dcf1282f0 .footer-links-item.jsx-322cf43dcf1282f0{}.footer-links-wrap.jsx-322cf43dcf1282f0 .footer-links-item.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0:nth-child(1){margin-right:-webkit-calc((100%*.1107) - 23px);margin-right:-moz-calc((100%*.1107) - 23px);margin-right:calc((100%*.1107) - 23px)}.footer-links-wrap.jsx-322cf43dcf1282f0 .footer-links-item.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0:nth-child(2){margin-right:-webkit-calc((100%*.1966) - 157px);margin-right:-moz-calc((100%*.1966) - 157px);margin-right:calc((100%*.1966) - 157px)}.footer-links-wrap.jsx-322cf43dcf1282f0 .footer-links-item.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0:nth-child(3){width:200px}.footer-links-wrap.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 ul.jsx-322cf43dcf1282f0 li.jsx-322cf43dcf1282f0{height:22px}.footer-links-wrap.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 ul.jsx-322cf43dcf1282f0 li.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 a{display:inline-block;margin-bottom:2px;color:#000;font-weight:400;font-size:14px;line-height:22px;white-space:nowrap}@media(max-width:767px){.footer-links-wrap.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 ul.jsx-322cf43dcf1282f0 li.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 a{font-size:12px;white-space:normal}}.footer-links-wrap.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 ul.jsx-322cf43dcf1282f0 li.jsx-322cf43dcf1282f0.jsx-322cf43dcf1282f0 a:hover{color:var(--color-std-red-200)}.footer-links-wrap.jsx-322cf43dcf1282f0 .how-we-doing.jsx-322cf43dcf1282f0{margin-right:-webkit-calc((100%*.2664) - 211px);margin-right:-moz-calc((100%*.2664) - 211px);margin-right:calc((100%*.2664) - 211px)}.footer-links-wrap.jsx-322cf43dcf1282f0 .provide-feedback.jsx-322cf43dcf1282f0{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-moz-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-webkit-justify-content:center;-moz-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;height:34px;margin-top:15px;margin-bottom:20px;font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif;font-size:16px;line-height:24px;font-weight:bold;border:1px solid var(--color-std-gray-600)}@media(max-width:767px){.footer-links-wrap.jsx-322cf43dcf1282f0 .provide-feedback.jsx-322cf43dcf1282f0{width:145px;font-size:12px;white-space:normal}}</style><style id="__jsx-a548514e836437cd">.legal-footer-wrap,.footer-legal-wrap>div{width:100%;max-width:1280px;font-size:12px}@media(max-width:767px){.legal-footer-wrap,.footer-legal-wrap>div{text-align:center}}.legal-footer-wrap span{font-family:var(--font-montserrat),sans-serif}.legal-footer-wrap a:not(.hidden),.footer-legal-wrap>div a:not(.hidden){display:inline-block;margin-left:23px;color:var(--color-std-white);font-weight:normal;font-size:10px;line-height:18px;font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif}.legal-footer-wrap a:not(.hidden):hover,.footer-legal-wrap>div a:not(.hidden):hover{color:var(--color-std-white);text-decoration:underline}.legal-footer-wrap{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-webkit-justify-content:flex-start;-moz-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.legal-footer-wrap a:not(.hidden):hover,.footer-legal-wrap>div a:not(.hidden):hover{color:var(--color-std-white);text-decoration:underline}.legal-footer-wrap a.right,.footer-legal-wrap>div a.right{float:none}</style><style id="__jsx-e8ecd005e8fb3c2a">.mobileConnectLinks{}.mobileConnectLinks .legal{}@media(max-width:975.9px){.mobileConnectLinks .legal{font-size:10px;clear:both;display:table;margin:0 auto 11px;width:100%}.mobileConnectLinks .legal li{display:table-cell;vertical-align:middle;font-family:var(--font-instrument-sans),Helvetica,sans-serif;line-height:15px;padding:0 5px}.mobileConnectLinks .legal .ui-link{line-height:15.6px}}@media(min-width:568px){.mobileConnectLinks .legal{font-size:14px}}@media(min-width:400px){.mobileConnectLinks .legal{font-size:12px}}@media(min-width:768px){.mobileConnectLinks .legal li{width:25%}}.mobileConnectLinks a{color:var(--color-std-white);text-decoration:none}.bbb-link-mobile .footer-bbb-links-wrap{display:block}.bbb-link-mobile .footer-bbb-links-wrap .bbb-link{display:none}.bbb-link-mobile .footer-bbb-links-wrap .bbb-caru-link{margin:0 auto;text-align:center;display:inline-block}.bbb-link-mobile .footer-bbb-links-wrap .bbb-caru-link img{width:140px!important}</style><style id="__jsx-3f3ec7bad02a330f">.mobile-footer.jsx-7383a15b4e8b8425{}@media(max-width:975.9px){.mobile-footer.jsx-7383a15b4e8b8425{display:block;font-family:var(--font-instrument-sans),Helvetica,sans-serif;text-align:center}.mobile-footer.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 a{color:var(--color-std-white);text-decoration:none}.mobile-footer.jsx-7383a15b4e8b8425 .contact-phone.jsx-7383a15b4e8b8425 a.jsx-7383a15b4e8b8425::before{display:none}.mobile-footer.jsx-7383a15b4e8b8425 #feedback{font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif;font-size:12px;font-weight:bold}}.mobile-footer.jsx-7383a15b4e8b8425 .contact-phone-list.jsx-7383a15b4e8b8425{padding-left:2%;padding-right:2%}.mobile-footer.jsx-7383a15b4e8b8425 .contact-phone-wrapper.jsx-7383a15b4e8b8425{background:-webkit-linear-gradient(var(--color-std-gray-500),var(--color-std-gray-600));background:-moz-linear-gradient(var(--color-std-gray-500),var(--color-std-gray-600));background:-o-linear-gradient(var(--color-std-gray-500),var(--color-std-gray-600));background:linear-gradient(var(--color-std-gray-500),var(--color-std-gray-600));-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px}.mobile-footer.jsx-7383a15b4e8b8425 .contact-phone-wrapper.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 span.jsx-7383a15b4e8b8425{padding-bottom:7px;font-weight:bold;font-size:12px;line-height:1.3;vertical-align:top}.mobile-footer.jsx-7383a15b4e8b8425 #btnChatNowFooter.jsx-7383a15b4e8b8425 a.jsx-7383a15b4e8b8425::before{position:relative;top:5px;display:inline-block;width:32px;height:32px;margin:0 10px 0 30px;background-image:url("https://static.guitarcenter.com/img/brand/mobile-gc/sprite_shared-ui_2x.webp?vId=ecmd-2021.8.1-gc-sam.0b");background-repeat:no-repeat;background-position:-215px -75px;-webkit-background-size:250px 172px;-moz-background-size:250px 172px;-o-background-size:250px 172px;background-size:250px 172px}.mobile-footer.jsx-7383a15b4e8b8425 .contact-phone.jsx-7383a15b4e8b8425{font-size:20px;line-height:20.8px;background:#424242;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}.mobile-footer.jsx-7383a15b4e8b8425 .contact-phone.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 a.ui-link.jsx-7383a15b4e8b8425{display:block;padding:10px;font-weight:bold;font-size:20px;line-height:20px;text-decoration:none}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425{float:left;width:100%;padding:12px 2%;font-size:11px;line-height:15.6px}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 li.jsx-7383a15b4e8b8425{display:inline-block;font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif;float:left;width:27%}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 li.gift-card.jsx-7383a15b4e8b8425,.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 li.mobile-app.jsx-7383a15b4e8b8425{width:23%}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 a{position:relative;display:block;padding-top:38px}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 a::before{position:absolute;top:0;left:50%;display:block;background-image:url("https://static.guitarcenter.com/img/brand/mobile-gc/sprite_shared-ui_2x.webp?vId=ecmd-2021.8.1-gc-sam.0b");background-repeat:no-repeat;-webkit-background-size:250px 172px;-moz-background-size:250px 172px;-o-background-size:250px 172px;background-size:250px 172px;content:""}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425 .gift-card.jsx-7383a15b4e8b8425 a::before{width:54px;height:32px;margin-left:-27px;background-position:0 -72px}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425 .customer-service.jsx-7383a15b4e8b8425 a::before{width:31px;height:32px;margin-left:-15px;background-position:-64px -40px}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425 .financing.jsx-7383a15b4e8b8425 a::before{width:54px;height:32px;margin-left:-27px;background-position:-55px -72px}.mobile-footer.jsx-7383a15b4e8b8425 .site-links.jsx-7383a15b4e8b8425 .mobile-app.jsx-7383a15b4e8b8425 a::before{left:35%;width:22px;height:37px;background-image:url("https://static.guitarcenter.com/img/brand/mobile-gc/footerMobileAppIcon.png?vId=ecmd-2021.8.1-gc-sam.0b&cb=7");-webkit-background-size:contain;-moz-background-size:contain;-o-background-size:contain;background-size:contain}.mobile-footer.jsx-7383a15b4e8b8425 .social-icons.jsx-7383a15b4e8b8425{}.mobile-footer.jsx-7383a15b4e8b8425 .social-icons.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 li.jsx-7383a15b4e8b8425{font-size:0}.mobile-footer.jsx-7383a15b4e8b8425 .social-icons.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 a.jsx-7383a15b4e8b8425{width:32px;height:32px}.mobile-footer.jsx-7383a15b4e8b8425 .social-icons.jsx-7383a15b4e8b8425 .sr-only.jsx-7383a15b4e8b8425{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.mobile-footer.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 .feedback-link{font-size:10px}.mobile-footer.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 .feedback-link::before{position:relative;top:-1px;display:inline-block;width:6px;height:6px;margin-right:2px;background-image:url("https://static.guitarcenter.com/img/brand/mobile-gc/sprite_shared-ui_2x.webp?vId=ecmd-2021.8.1-gc-sam.0b");background-repeat:no-repeat;background-position:-168px 0;-webkit-background-size:250px 172px;-moz-background-size:250px 172px;-o-background-size:250px 172px;background-size:250px 172px;content:""}.mobile-footer.jsx-7383a15b4e8b8425 .legal.jsx-7383a15b4e8b8425{}.mobile-footer.jsx-7383a15b4e8b8425 .legal.jsx-7383a15b4e8b8425.jsx-7383a15b4e8b8425 li.jsx-7383a15b4e8b8425{display:table-cell;padding:0 5px;font-family:var(--font-instrument-sans),Helvetica,sans-serif;line-height:15px;vertical-align:middle}.mobile-footer.jsx-7383a15b4e8b8425 .legal.jsx-7383a15b4e8b8425 .ui-link.jsx-7383a15b4e8b8425{line-height:15.6px}.mobile-footer.jsx-7383a15b4e8b8425 .copyright.jsx-7383a15b4e8b8425::before{position:relative;top:2px;display:inline-block;width:40px;height:21px;margin-right:5px;background-image:url("https://static.guitarcenter.com/img/brand/mobile-gc/sprite_shared-ui_2x.webp?vId=ecmd-2021.8.1-gc-sam.0b");background-repeat:no-repeat;background-position:0 -40px;-webkit-background-size:250px 172px;-moz-background-size:250px 172px;-o-background-size:250px 172px;background-size:250px 172px;content:""}</style><style id="__jsx-ced656f3539ec970">.sitemap-hero h1{font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif;font-size:38px;color:#000}.sitemap-hero h2{font-family:var(--font-montserrat),var(--font-instrument-sans),Helvetica,sans-serif;font-size:27px;font-weight:normal}.sitemap-hero p{margin-top:12px;font-size:16px;font-family:var(--font-instrument-sans),Helvetica,sans-serif}.sitemap-hero ul{display:table;table-layout:fixed;margin:12px auto 0;padding:0;font-family:var(--font-instrument-sans),Helvetica,sans-serif}.sitemap-hero ul>li{display:table-cell;list-style:none;padding:0 15px;text-align:center}.sitemap-hero ul>li>a{color:#c00;font-size:14px}.sitemap-hero>ul>li a:visited{color:#000}.sitemap-hero ul>li>a>span{display:inline-block;width:0;height:0;border:5px solid transparent;border-left-color:#c00;margin-left:5px}.section_heading_secondary{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-moz-box-align:center;-ms-flex-align:center;align-items:center}.section_heading_secondary .section_header_title_secondary{color:#000;font-size:18px;letter-spacing:-1px;line-height:28px;margin-right:12px;-webkit-box-flex:0;-webkit-flex:none;-moz-box-flex:0;-ms-flex:none;flex:none}.section_heading_secondary::after{display:block;content:"";-webkit-box-flex:1;-webkit-flex:1;-moz-box-flex:1;-ms-flex:1;flex:1;border-top:1px solid#000}.sitemap-list-container{display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;padding-bottom:24px;font-family:var(--font-instrument-sans),Helvetica,sans-serif}.sitemap-list-container .sitemap-list-column{-webkit-box-flex:1;-webkit-flex:auto;-moz-box-flex:1;-ms-flex:auto;flex:auto}.sitemap-list-container .sitemap-list-column ul{margin-top:15px}.sitemap-list-container .sitemap-list-column .sitemap-list li.heading{font-weight:bold;padding-bottom:5px}.sitemap-list-container .sitemap-list-column .sitemap-list li a{font-size:13px;color:#000;padding-top:5px;text-decoration:none}.sitemap-list-container .sitemap-list-column .sitemap-list li a:visited{color:#000}.sitemap-list-container .sitemap-list-column .sitemap-list li a:hover,.sitemap-list-container .sitemap-list-column .sitemap-list li a:focus{color:var(--color-std-red-200);text-decoration:none}</style></head><body class="tailwind"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KK7B2HH&amp;gtm_auth=Mnsn28zwAP2jhhYYVNP0wQ&amp;gtm_preview=env-10&amp;gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"><main id="app" class="jsx-2222227489 tailwind __variable_ce75c4 __variable_7eab84 __className_ce75c4 next-app-container font-semibold"><div class="jsx-ced656f3539ec970 basic-layout"><div data-testid="header-layout" class="jsx-45dd01683d4c05bb header-layout print:hidden"><div class="pre-header-roll-wrapper flex min-h-8 items-center justify-center p-0" id="preHeaderRollWrapper" data-testid="promo-message-content"></div><div data-testid="new-header-top" class="jsx-45dd01683d4c05bb new-header-top relative z-103 bg-white"><div class="jsx-45dd01683d4c05bb mx-auto flex w-full max-w-385 flex-wrap items-center justify-between gap-3 px-2 pt-3 legacy:flex-nowrap! legacy:justify-around legacy:gap-8 legacy:p-4! legacy:px-5!"><div class="jsx-45dd01683d4c05bb flex gap-1 legacy:hidden"><button class="shop-menu order-1 size-11"><span role="img" aria-label="shop menu" aria-hidden="false" class="gc-icon gc-icon-shop-menu flex items-center justify-center focus:outline-none focus-visible:outline-none"><svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="11" y="14" width="22" height="2" rx="1" fill="var(--color-std-gray-600)"></rect><rect x="11" y="21" width="22" height="2" rx="1" fill="var(--color-std-gray-600)"></rect><rect x="11" y="28" width="22" height="2" rx="1" fill="var(--color-std-gray-600)"></rect></svg></span></button><button class="jsx-45dd01683d4c05bb order-2 flex size-11 items-center justify-center"><a href="tel:866-498-7882" class="jsx-45dd01683d4c05bb inline-block size-6"><img alt="call center number" loading="eager" width="24" height="24" decoding="async" data-nimg="1" style="color:transparent" src="/assets/images/new-header/icon-phone.svg"/></a></button></div><d

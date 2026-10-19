@@ -1,0 +1,59 @@
+# Rhombus
+
+> Rhombus is an enterprise physical-security platform: AI-powered security cameras, door access control, environmental and IoT sensors, and professional alarm monitoring, all managed from a single cloud console. Developers and AI agents can automate the entire platform through a public REST API (~900 endpoints), an official CLI, SDKs, and a Model Context Protocol (MCP) server.
+
+## When to use Rhombus
+
+Reach for Rhombus (via the API or MCP server) when a task involves a physical space's security or operations, for example:
+
+- **Check what cameras or devices see or report** — list cameras, get online/offline status, pull live or recorded footage links, read sensor readings.
+- **Investigate an incident** — find recent alerts or security events in a time window and retrieve the associated footage and context.
+- **Answer access-control questions** — who badged in where and when, current door state, credential and badge activity.
+- **Search video with natural language** — locate people, vehicles, or license plates across footage via AI scene search.
+- **Automate security operations** — build workflows over the ~900-endpoint REST API, the CLI, or the MCP server.
+
+How to call: authenticate per [auth.md](https://www.rhombus.com/auth.md) (API key or OAuth 2.0 + PKCE), then `POST` JSON to endpoints in the [OpenAPI spec](https://api2.rhombussystems.com/api/openapi/public.json), or connect the [MCP server](https://github.com/RhombusSystems/rhombus-node-mcp). Scoped API context: [/api/llms.txt](https://www.rhombus.com/api/llms.txt).
+
+## Developer documentation
+
+- [Developer documentation](https://developer.rhombus.com/): Guides and complete API reference for the Rhombus public API
+- [Documentation index for LLMs](https://developer.rhombus.com/llms.txt): Machine-readable index of every developer docs page
+- [API authentication guide](https://www.rhombus.com/auth.md): How agents and applications authenticate (API keys and OAuth 2.0 + PKCE)
+- [Support center](https://support.rhombussystems.com/): End-user setup and administration articles
+
+## API
+
+- [OpenAPI 3.0 specification](https://api2.rhombussystems.com/api/openapi/public.json): Complete public API specification (JSON)
+- [OAuth 2.0 authorization server metadata](https://auth.rhombussystems.com/oauth/.well-known/oauth-authorization-server): RFC 8414 metadata (PKCE S256, authorization code + refresh token grants)
+- [OAuth protected resource metadata](https://api2.rhombussystems.com/.well-known/oauth-protected-resource): RFC 9728 resource-server discovery
+- [API catalog](https://www.rhombus.com/.well-known/api-catalog): RFC 9727 linkset of API specs and docs
+- [API key management](https://console.rhombus.com/settings/api-management): Create API keys in the Rhombus Console
+- Base URL: https://api2.rhombussystems.com/api
+
+## Tools and integrations
+
+- [Rhombus MCP server](https://github.com/RhombusSystems/rhombus-node-mcp) (action surface): Model Context Protocol server for AI assistants (npm: `rhombus-node-mcp`, Docker: `rhombussystems/mcp-server-rhombus`)
+- [Rhombus docs MCP server](https://api-docs.rhombus.community/mcp) (knowledge surface): query the developer documentation over MCP
+- [Rhombus MCP server on Smithery](https://smithery.ai/server/@RhombusSystems/rhombus-node-mcp): MCP registry listing
+- [MCP server card](https://www.rhombus.com/.well-known/mcp/server-card.json): Machine-readable MCP server metadata
+- [Rhombus CLI](https://github.com/RhombusSystems/rhombus-cli): Official command-line interface covering the full public API
+- [React SDK](https://github.com/RhombusSystems/rhombus-react-sdk): Embed Rhombus video in React applications
+- [Python API examples](https://github.com/RhombusSystems/api-examples-python): Sample scripts for common automations
+- [Developer support](mailto:support@rhombus.com): support@rhombus.com for API and integration questions
+- [System status](https://status.rhombus.com/): Platform status page
+
+## Products
+
+- [Security cameras](https://www.rhombus.com/cameras/): Dome, bullet, fisheye, and multisensor cameras
+- [Access control](https://www.rhombus.com/access-control/): Door controllers, readers, intercoms, and badge management
+- [Sensors](https://www.rhombus.com/sensors/): Environmental, motion, entry, audio, and panic sensors
+- [Alarm monitoring](https://www.rhombus.com/alarm-monitoring/): TMA Five Diamond certified live agent verification and dispatch
+- [Integrations](https://www.rhombus.com/integrations/): Third-party platform integrations
+- [Pricing and licenses](https://www.rhombus.com/pricing/): License tiers and pricing
+- [Machine-readable pricing summary](https://www.rhombus.com/pricing.md): How Rhombus pricing works, for agents
+
+## Company
+
+- [About Rhombus](https://www.rhombus.com/about/)
+- [Contact sales](https://www.rhombus.com/contact-sales/)
+- [Console sign-in](https://console.rhombus.com/)

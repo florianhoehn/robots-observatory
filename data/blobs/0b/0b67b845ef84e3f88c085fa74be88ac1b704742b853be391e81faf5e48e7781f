@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>HDblog.it - Verifica Connessione</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVTTTH8S5L"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100vh; margin: 0; padding: 20px; text-align: center;
+    }
+    .container {
+      background: #fff; padding: 30px; border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1); max-width: 400px; width: 100%;
+      margin-top: -20%;
+    }
+    .logo { max-width: 220px; margin-bottom: 20px; }
+    .loader {
+      border: 4px solid #e0e0e0; border-top: 4px solid #3b82f6;
+      border-radius: 50%; width: 40px; height: 40px;
+      animation: spin 1s linear infinite; margin: 20px auto;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .hidden { display: none; }
+
+    #widget-container {
+      min-height: 70px;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="https://www.hdblog.it">
+      <img class="logo" src="https://css.hd-cdn.it/new_files/templates/theme_darklight/img/hdblog_logo.svg" alt="Logo">
+    </a>
+
+  <div id="step-v3">
+    <div id="widget-container"></div>
+    <br/><div id="message">Verifica automatica in corso...</div>
+  </div>
+</div>
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad"
+  defer
+></script>
+
+<script>
+  function onTurnstileLoad() {
+    turnstile.render("#widget-container", {
+      sitekey: "0x4AAAAAAB6Y02tK6mwHKw5h",
+      theme: "light",
+      size: 'flexible',
+	    action: 'filter_eu',
+      callback: function (token) {
+        console.log("Challenge completed:", token);
+		    verifyToken(token);
+      },
+      "error-callback": function (errorCode) {
+        console.error("Turnstile error:", errorCode);
+	      document.getElementById('message').classList.remove('hidden');
+        document.getElementById('message').innerText = 'Verifica manuale fallita. Riprova.';
+	      logError();
+      },
+    });
+  }
+
+function verifyToken(token) {
+    fetch('/api/cf_verify.php', {
+      method: 'POST',
+      headers: {'Content-Type':'application/x-www-form-urlencoded'},
+      body: 'token=' + encodeURIComponent(token)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        window.location.reload();
+      } else {
+        document.getElementById('message').classList.remove('hidden');
+        document.getElementById('message').innerText = 'Verifica manuale fallita. Riprova.';
+	logError();
+      }
+    })
+    .catch(() => {
+      document.getElementById('message').classList.remove('hidden');
+      document.getElementById('message').innerText = 'Errore tecnico. Riprova.';
+
+      logError();
+    });
+  }
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+function logError () {
+
+  gtag('js', new Date());
+  gtag('config', 'G-NVTTTH8S5L');
+
+  var asn  = '202282';
+  var asnm = 'fibrus networks ltd';
+
+  gtag('event', 'asn_blocked', {
+    as_number: String(asn),
+    as_name: String(asnm),
+    debug_mode: true
+  });
+}
+</script>
+</body>
+</html>

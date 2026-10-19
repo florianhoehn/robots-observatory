@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <base href="/">    <title>CloudBees</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script type="text/javascript" src="/config/env.js"></script>
+    <script>
+      // Suppress "ResizeObserver loop completed with undelivered notifications" — a benign browser
+      // notice fired by react-resizable-panels and ReactFlow. Must run before any bundle loads so
+      // this handler is registered before React's own error listener.
+      window.addEventListener('error', (e) => {
+        if (e.message && e.message.includes('ResizeObserver loop')) {
+          e.stopImmediatePropagation();
+        }
+      }, true);
+    </script>
+  <link rel="stylesheet" href="styles.70fa101146366d04.css"><link rel="stylesheet" href="main.cce6b1cceee2246d.css"></head>
+  <body>
+    <div id="root"></div>
+  <script src="runtime.a9f1efc4c18d5e29.js" type="module"></script><script src="styles.2fba8a2891754b01.js" type="module"></script><script src="main.7e2581ac2f117d17.js" type="module"></script></body>
+</html>

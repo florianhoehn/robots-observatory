@@ -1,0 +1,866 @@
+
+<!doctype html>
+<html lang="en" class="html header-fixed">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+					<script>
+        function handleCookieLogic() {
+          const hasToken = document.cookie.split('; ').some(cookie => cookie.startsWith('PL24TOKEN='));
+          const isIndexPage = window.location.pathname === '/en/index.html';
+
+          // if user is logged in and on index page, navigate to /portal-ui
+          if (hasToken && isIndexPage) {
+            const redirect = new URLSearchParams(window.location.search).get('redirect');
+            window.location = '/portal-ui' + (redirect ? '?redirect=' + encodeURIComponent(redirect) : '');
+          }
+        }
+
+                window.addEventListener('DOMContentLoaded', () => {
+          const hasToken = document.cookie.split('; ').some(cookie => cookie.startsWith('PL24TOKEN='));
+          if (!hasToken) {
+            document.querySelector('.nav__item--login')?.removeAttribute('data-logged-in');
+          }
+        });
+
+        window.addEventListener('pageshow', (event) => {
+          if (event.persisted) {
+            handleCookieLogic();
+          };
+        });
+
+        handleCookieLogic();
+			</script>
+
+            <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const registerLinks = document.querySelectorAll('.subscription-teaser__content a');
+          registerLinks.forEach(link => {
+            const countryCode = "GB";
+						link.setAttribute('href', link.getAttribute('href') + '&countryCode=' + countryCode);
+          });
+        });
+      </script>
+		
+		<script>
+  window.pl24Settings = {
+    "messages" : {
+      "loginNotAvailableMsg" : "The server does not allow any logins at the moment. Please try again later.",
+      "acceptPrivacyMsg" : "Privacy Policy",
+      "acceptCdpMsg" : "Data Processing Agreement",
+      "privacySettings" : "Privacy Settings"
+    },
+    "header_links" : {
+      "privacyURI" : "https://www.lexcom.de/legal/general-privacy/DE/en/general-privacy.html",
+      "cdpURI" : "https://www.lexcom.de/legal/general-dataprocessing/DE/en/general-dataprocessing.html"
+    },
+      "consentToolActive" : true,
+    "consentToolEnabled" : true,
+    "metaPixelEnabled": true,
+    "metaPixelAutoConfig" : true,
+    "googleTrackingEnabled" : true,
+    "googleAdsEnabled" : true,
+      "googleAdsConversionEventEnabled" : false,
+    "activeUserLocale" : "en"
+  };
+</script>
+				  <title>partslink24</title>
+  
+
+  
+  <link href="/static/styles/landingpage.b9a558dc.css" media="screen" rel="stylesheet" type="text/css" />
+
+
+				<link rel="icon" href=/static/favicons/favicon.b9a558dc.ico sizes="32x32">
+<link rel="icon" href=/static/favicons/favicon.b9a558dc.svg type="image/svg+xml">
+<link rel="apple-touch-icon" href=/static/favicons/apple-touch-icon.b9a558dc.png>
+<link rel="manifest" href=/static/favicons/site.b9a558dc.webmanifest>
+<link rel="mask-icon" href=/static/favicons/safari-pinned-tab.b9a558dc.svg color="#000000">
+<meta name="msapplication-TileColor" content="#f7c400">
+<meta name="msapplication-config" content=/static/favicons/browserconfig.b9a558dc.xml>
+<meta name="theme-color" content="#ffffff">
+
+								<script type="text/plain" data-usercentrics="Matomo (self hosted)">
+  var _paq = window._paq || [];
+  _paq.push(['HeatmapSessionRecording::disableCaptureKeystrokes']);
+
+  var _mtm = window._mtm = window._mtm || [];
+  _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+  g.async=true; g.src="https://metrics.partslink24.com/js/container_FOnHywHz.js"; s.parentNode.insertBefore(g,s);
+</script>
+
+						<link
+  rel="preconnect"
+  href="//app.usercentrics.eu"
+/>
+<script
+  id="usercentrics-cmp"
+  type="text/javascript"
+  src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
+  data-avoid-prefetch-services
+  data-language="en"
+  async data-settings-id="1dDyIAPUm"
+></script>
+			</head>
+	<body class="body body--landingpage">
+		<div class="page">
+      <header class="header">
+    <div class="header__container">
+        <a href="/en" data-test-id="pl24-header-link-home">
+          <img
+            class="header__logo"
+            src="/static/img/logo.b9a558dc.png"
+            width="153"
+            height="32"
+            alt=""
+            role="presentation"
+          />
+        </a>
+
+                  
+	
+
+
+<nav class="navbar navbar--self-centered navbar--landingpage">
+	<div class="navbar__container">
+		<div class="nav-wrapper">
+      <ul class="nav nav--secondary">
+              <li class="nav__item">
+    <a href="/partslink24/contact-extern.action?lang=en" linktype="direct" text="FAQ / Contact" path="/partslink24/contact-extern.action?lang=en" target="_blank" title="FAQ / Contact" class="nav__link" data-test-id="pl24-header-link-faq-contact">FAQ / Contact</a>
+  </li>
+
+
+				
+<li class="nav__item">
+  <div id="language-switcher" class="language-switcher">
+    <button
+        id="language-switcher-toggle"
+        class="language-switcher-toggle nav__link nav__btn"
+        data-action="toggle"
+        data-test-id="pl24-language-button-select-language"
+        title="English"
+    >
+      English
+      <span class="language-switcher-toggle__mobile-icon icon icon--arrow-right"></span>
+      <span class="language-switcher-toggle__desktop-icon icon icon--triangle-down"></span>
+    </button>
+    <div id="language-switcher-menu" class="language-switcher-menu mobile-drawer">
+      <header class="header mobile-drawer-header">
+        <div class="header__container mobile-drawer-header__container">
+          <button
+              id="language-switcher-menu-back"
+              class="language-switcher-menu__btn"
+              aria-label="back"
+              data-action="back"
+              data-test-id="pl24-language-mobile-menu-button-back"
+          >
+            <span class="icon icon--arrow-left"></span>
+          </button>
+          <button
+              id="language-switcher-menu-close"
+              class="language-switcher-menu__btn"
+              aria-label="close"
+              data-action="close"
+              data-test-id="pl24-language-mobile-menu-button-close"
+          >
+            <span class="icon icon--close"></span>
+          </button>
+        </div>
+      </header>
+      <div class="language-switcher-menu__content">
+        <div class="language-switcher-list language-switcher-list--mobile">
+
+          <div class="language-switcher-list__col language-switcher-list__col--right-border">
+                          <a class="language-switcher-list__item" href="/cs" data-test-id="pl24-language-mobile-menu-link-language-cs">Čeština</a>
+                          <a class="language-switcher-list__item" href="/da" data-test-id="pl24-language-mobile-menu-link-language-da">Dansk</a>
+                          <a class="language-switcher-list__item" href="/de" data-test-id="pl24-language-mobile-menu-link-language-de">Deutsch</a>
+                          <a class="language-switcher-list__item" href="/en" data-test-id="pl24-language-mobile-menu-link-language-en">English</a>
+                          <a class="language-switcher-list__item" href="/es" data-test-id="pl24-language-mobile-menu-link-language-es">Español</a>
+                          <a class="language-switcher-list__item" href="/fr" data-test-id="pl24-language-mobile-menu-link-language-fr">Français</a>
+                          <a class="language-switcher-list__item" href="/hr" data-test-id="pl24-language-mobile-menu-link-language-hr">Hrvatski</a>
+                          <a class="language-switcher-list__item" href="/it" data-test-id="pl24-language-mobile-menu-link-language-it">Italiano</a>
+                          <a class="language-switcher-list__item" href="/hu" data-test-id="pl24-language-mobile-menu-link-language-hu">Magyar</a>
+                          <a class="language-switcher-list__item" href="/nl" data-test-id="pl24-language-mobile-menu-link-language-nl">Nederlands</a>
+                          <a class="language-switcher-list__item" href="/no" data-test-id="pl24-language-mobile-menu-link-language-nb">Norsk bokmål</a>
+                          <a class="language-switcher-list__item" href="/pl" data-test-id="pl24-language-mobile-menu-link-language-pl">Polski</a>
+                          <a class="language-switcher-list__item" href="/pt" data-test-id="pl24-language-mobile-menu-link-language-pt">Português</a>
+                      </div>
+
+          <div class="language-switcher-list__col">
+                          <a class="language-switcher-list__item" href="/pt-br" data-test-id="pl24-language-mobile-menu-link-language-pt_BR">Português (Brasil)</a>
+                          <a class="language-switcher-list__item" href="/ro" data-test-id="pl24-language-mobile-menu-link-language-ro">Română</a>
+                          <a class="language-switcher-list__item" href="/sk" data-test-id="pl24-language-mobile-menu-link-language-sk">Slovenčina</a>
+                          <a class="language-switcher-list__item" href="/sl" data-test-id="pl24-language-mobile-menu-link-language-sl">Slovenščina</a>
+                          <a class="language-switcher-list__item" href="/fi" data-test-id="pl24-language-mobile-menu-link-language-fi">Suomi</a>
+                          <a class="language-switcher-list__item" href="/sv" data-test-id="pl24-language-mobile-menu-link-language-sv">Svenska</a>
+                          <a class="language-switcher-list__item" href="/tr" data-test-id="pl24-language-mobile-menu-link-language-tr">Türkçe</a>
+                          <a class="language-switcher-list__item" href="/el" data-test-id="pl24-language-mobile-menu-link-language-el">Ελληνικά</a>
+                          <a class="language-switcher-list__item" href="/ru" data-test-id="pl24-language-mobile-menu-link-language-ru">Русский</a>
+                          <a class="language-switcher-list__item" href="/ko" data-test-id="pl24-language-mobile-menu-link-language-ko">한국어</a>
+                          <a class="language-switcher-list__item" href="/zh" data-test-id="pl24-language-mobile-menu-link-language-zh">中文</a>
+                          <a class="language-switcher-list__item" href="/zh-tw" data-test-id="pl24-language-mobile-menu-link-language-zh_Hant_TW">中文（繁體，台灣）</a>
+                          <a class="language-switcher-list__item" href="/ja" data-test-id="pl24-language-mobile-menu-link-language-ja">日本語</a>
+                      </div>
+        </div>
+        <div class="language-switcher-list language-switcher-list--desktop">
+          <div class="language-switcher-list__col">
+                          <a class="language-switcher-list__item" href="/cs" data-test-id="pl24-language-desktop-menu-link-language-cs">Čeština</a>
+                          <a class="language-switcher-list__item" href="/da" data-test-id="pl24-language-desktop-menu-link-language-da">Dansk</a>
+                          <a class="language-switcher-list__item" href="/de" data-test-id="pl24-language-desktop-menu-link-language-de">Deutsch</a>
+                          <a class="language-switcher-list__item" href="/en" data-test-id="pl24-language-desktop-menu-link-language-en">English</a>
+                          <a class="language-switcher-list__item" href="/es" data-test-id="pl24-language-desktop-menu-link-language-es">Español</a>
+                          <a class="language-switcher-list__item" href="/fr" data-test-id="pl24-language-desktop-menu-link-language-fr">Français</a>
+                          <a class="language-switcher-list__item" href="/hr" data-test-id="pl24-language-desktop-menu-link-language-hr">Hrvatski</a>
+                          <a class="language-switcher-list__item" href="/it" data-test-id="pl24-language-desktop-menu-link-language-it">Italiano</a>
+                          <a class="language-switcher-list__item" href="/hu" data-test-id="pl24-language-desktop-menu-link-language-hu">Magyar</a>
+                          <a class="language-switcher-list__item" href="/nl" data-test-id="pl24-language-desktop-menu-link-language-nl">Nederlands</a>
+                          <a class="language-switcher-list__item" href="/no" data-test-id="pl24-language-desktop-menu-link-language-nb">Norsk bokmål</a>
+                          <a class="language-switcher-list__item" href="/pl" data-test-id="pl24-language-desktop-menu-link-language-pl">Polski</a>
+                          <a class="language-switcher-list__item" href="/pt" data-test-id="pl24-language-desktop-menu-link-language-pt">Português</a>
+                          <a class="language-switcher-list__item" href="/pt-br" data-test-id="pl24-language-desktop-menu-link-language-pt_BR">Português (Brasil)</a>
+                          <a class="language-switcher-list__item" href="/ro" data-test-id="pl24-language-desktop-menu-link-language-ro">Română</a>
+                          <a class="language-switcher-list__item" href="/sk" data-test-id="pl24-language-desktop-menu-link-language-sk">Slovenčina</a>
+                          <a class="language-switcher-list__item" href="/sl" data-test-id="pl24-language-desktop-menu-link-language-sl">Slovenščina</a>
+                          <a class="language-switcher-list__item" href="/fi" data-test-id="pl24-language-desktop-menu-link-language-fi">Suomi</a>
+                          <a class="language-switcher-list__item" href="/sv" data-test-id="pl24-language-desktop-menu-link-language-sv">Svenska</a>
+                          <a class="language-switcher-list__item" href="/tr" data-test-id="pl24-language-desktop-menu-link-language-tr">Türkçe</a>
+                          <a class="language-switcher-list__item" href="/el" data-test-id="pl24-language-desktop-menu-link-language-el">Ελληνικά</a>
+                          <a class="language-switcher-list__item" href="/ru" data-test-id="pl24-language-desktop-menu-link-language-ru">Русский</a>
+                          <a class="language-switcher-list__item" href="/ko" data-test-id="pl24-language-desktop-menu-link-language-ko">한국어</a>
+                          <a class="language-switcher-list__item" href="/zh" data-test-id="pl24-language-desktop-menu-link-language-zh">中文</a>
+                          <a class="language-switcher-list__item" href="/zh-tw" data-test-id="pl24-language-desktop-menu-link-language-zh_Hant_TW">中文（繁體，台灣）</a>
+                          <a class="language-switcher-list__item" href="/ja" data-test-id="pl24-language-desktop-menu-link-language-ja">日本語</a>
+                      </div>
+          <button
+              class="language-switcher-menu__btn"
+              aria-label="close"
+              data-action="close"
+              data-test-id="pl24-language-desktop-menu-button-close"
+          >
+            <span class="icon icon icon--close-small"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="language-switcher-menu-wrapper-backdrop"></div>
+</li>
+        <li class="nav__item nav__item--login" data-logged-in>
+  <div id="login-wrapper" class="login-wrapper login-wrapper--landingpage">
+    <button
+      id="login-wrapper-btn"
+      class="btn btn-primary btn-login"
+      data-test-id="pl24-login-button-open-dialog"
+    >
+      <span class="icon icon--user-outlined-small"></span>
+      Login
+    </button>
+
+          <button
+        id="login-wrapper-btn-alt"
+        class="btn-login-small"
+        data-test-id="pl24-login-button-scroll-into-view"
+      >
+        <span class="icon icon--user-outlined-small"></span>
+      </button>
+    
+    <div id="login-wrapper-dialog" class="login-wrapper__dialog dialog" hidden>
+      <pl24-login-ui lang="en" class="login-wrapper__login-box"></pl24-login-ui>
+    </div>
+  </div>
+</li>			</ul>
+		</div>
+  </div>
+
+	<div id="navbar-menu" class="navbar__menu" data-test-id="pl24-navigation-button-menu-mobile-open-close">
+		<span class="icon icon--mainmenu"></span>
+		<span id="navbar-menu-close" class="icon icon--close"></span>
+	</div>
+</nav>
+        
+            </div>
+</header>
+
+			<main class="main">
+				
+				<div class="main__container main__container--white">
+					
+						
+	<section class="pl24-components">
+		<div class="pl24-components__manufacturer">
+			
+
+
+
+                                    <div class="pimcore_area_pl24-manufacturer-component pimcore_area_content ">
+            
+                                      <pl24-manufacturer-ui
+    lang="en"
+    headline="%ZAHL% brands, all models, all versions - with one login!"
+    subheadline="Click on your desired brand and see for yourself in our demo catalogs" country="GB"
+    >
+  </pl24-manufacturer-ui>
+
+  <script src="/pl24-manufacturer-ui/v1/index.iife.js" defer></script>
+
+                
+                            </div>
+                    
+
+		</div>
+		<div class="pl24-components__login">
+			
+
+
+
+                                    <div class="pimcore_area_pl24-login-component pimcore_area_content ">
+            
+                                      <pl24-login-ui
+    lang="en" country="GB">
+  </pl24-login-ui>
+
+                
+                            </div>
+                    
+
+		</div>
+	</section>
+
+  <section class="pl24-subscriptions">
+    <div class="subscription-grid">
+      
+
+
+
+                                    
+            
+                                    
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  
+  
+                  
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          <div class="subscription-grid__item subscription-teaser" data-test-id="pl24-subscription-jahr-ex-brasilien-GB">
+              <a href="https://www.partslink24.com/partslink24/registration-data.action?subscriptionProductId=210047&amp;countryCode=GB&amp;lang=en&amp;changeLang=en" target="_blank" class="subscription-teaser__link">
+    <header class="subscription-teaser__header h3">
+              <object class="subscription-icon" type="image/svg+xml" data="/static/img/subscription-icons/bookmark-star-filled.b9a558dc.svg" height="64" width="64" role="presentation" alt=""></object>
+            <div class="subscription-teaser__header-text">Yearly Subscription</div>
+    </header>
+  </a>
+
+  <div class="subscription-teaser__price-wrapper">
+    <div class="subscription-teaser__price-information">
+              <span data-test-id="pl24-subscription-jahr-ex-brasilien-vat">
+        VAT
+        20 %:
+        £4.20
+      </span>
+        <br />
+                    <span data-test-id="pl24-subscription-jahr-ex-brasilien-net-price">
+        net
+        £21.00
+      </span>
+          </div>
+    <div class="subscription-teaser__price">
+              <span class="h1" data-test-id="pl24-subscription-jahr-ex-brasilien-gross-price">
+        £25.20
+      </span>
+        <span class="subscription-teaser__price-period" data-test-id="pl24-subscription-jahr-ex-brasilien-duration">per month</span>
+          </div>
+  </div>
+
+  <div class="subscription-teaser__period-information">
+    <div class="icon icon--inform-outlined"></div>
+    <div class="subscription-teaser__period-information-part">
+    <span class="subscription-teaser__period-information-label">
+      Min. duration
+    </span>
+      <span class="subscription-teaser__period-information-value" data-test-id="pl24-subscription-jahr-ex-brasilien-minimum-duration">1 year</span>
+      <span class="subscription-teaser__period-information-label">
+      Period of cancellation
+    </span>
+      <span class="subscription-teaser__period-information-value" data-test-id="pl24-subscription-jahr-ex-brasilien-notice-period">3 days at the end of period</span>
+    </div>
+  </div>
+
+          </div>
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                  
+                                  
+                
+                        
+                        
+            
+
+
+                
+                            
+                    
+
+
+
+
+                                    
+            
+                                    
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  
+  
+                  
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          <div class="subscription-grid__item subscription-teaser" data-test-id="pl24-subscription-monat-ex-brasilien-GB">
+              <a href="https://www.partslink24.com/partslink24/registration-data.action?subscriptionProductId=210052&amp;countryCode=GB&amp;lang=en&amp;changeLang=en" target="_blank" class="subscription-teaser__link">
+    <header class="subscription-teaser__header h3">
+              <object class="subscription-icon" type="image/svg+xml" data="/static/img/subscription-icons/bookmark.b9a558dc.svg" height="64" width="64" role="presentation" alt=""></object>
+            <div class="subscription-teaser__header-text">Monthly Subscription</div>
+    </header>
+  </a>
+
+  <div class="subscription-teaser__price-wrapper">
+    <div class="subscription-teaser__price-information">
+              <span data-test-id="pl24-subscription-monat-ex-brasilien-vat">
+        VAT
+        20 %:
+        £5.40
+      </span>
+        <br />
+                    <span data-test-id="pl24-subscription-monat-ex-brasilien-net-price">
+        net
+        £27.00
+      </span>
+          </div>
+    <div class="subscription-teaser__price">
+              <span class="h1" data-test-id="pl24-subscription-monat-ex-brasilien-gross-price">
+        £32.40
+      </span>
+        <span class="subscription-teaser__price-period" data-test-id="pl24-subscription-monat-ex-brasilien-duration">per month</span>
+          </div>
+  </div>
+
+  <div class="subscription-teaser__period-information">
+    <div class="icon icon--inform-outlined"></div>
+    <div class="subscription-teaser__period-information-part">
+    <span class="subscription-teaser__period-information-label">
+      Min. duration
+    </span>
+      <span class="subscription-teaser__period-information-value" data-test-id="pl24-subscription-monat-ex-brasilien-minimum-duration">1 month</span>
+      <span class="subscription-teaser__period-information-label">
+      Period of cancellation
+    </span>
+      <span class="subscription-teaser__period-information-value" data-test-id="pl24-subscription-monat-ex-brasilien-notice-period">1 day at the end of period</span>
+    </div>
+  </div>
+
+          </div>
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                  
+                                  
+                
+                        
+                        
+            
+
+
+                
+                            
+                    
+
+
+
+
+                                    
+            
+                                    
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+  
+  
+                  
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          <div class="subscription-grid__item subscription-teaser" data-test-id="pl24-subscription-tag-ex-brasilien-GB">
+              <a href="https://www.partslink24.com/partslink24/registration-data.action?subscriptionProductId=210059&amp;countryCode=GB&amp;lang=en&amp;changeLang=en" target="_blank" class="subscription-teaser__link">
+    <header class="subscription-teaser__header h3">
+              <object class="subscription-icon" type="image/svg+xml" data="/static/img/subscription-icons/hourglass.b9a558dc.svg" height="64" width="64" role="presentation" alt=""></object>
+            <div class="subscription-teaser__header-text">One Day Access</div>
+    </header>
+  </a>
+
+  <div class="subscription-teaser__price-wrapper">
+    <div class="subscription-teaser__price-information">
+              <span data-test-id="pl24-subscription-tag-ex-brasilien-vat">
+        VAT
+        20 %:
+        £2.20
+      </span>
+        <br />
+                    <span data-test-id="pl24-subscription-tag-ex-brasilien-net-price">
+        net
+        £11.00
+      </span>
+          </div>
+    <div class="subscription-teaser__price">
+              <span class="h1" data-test-id="pl24-subscription-tag-ex-brasilien-gross-price">
+        £13.20
+      </span>
+        <span class="subscription-teaser__price-period" data-test-id="pl24-subscription-tag-ex-brasilien-duration">one-off</span>
+          </div>
+  </div>
+
+  <div class="subscription-teaser__period-information">
+    <div class="icon icon--inform-outlined"></div>
+    <div class="subscription-teaser__period-information-part">
+    <span class="subscription-teaser__period-information-label">
+      Min. duration
+    </span>
+      <span class="subscription-teaser__period-information-value" data-test-id="pl24-subscription-tag-ex-brasilien-minimum-duration">24 hours</span>
+      <span class="subscription-teaser__period-information-label">
+      Period of cancellation
+    </span>
+      <span class="subscription-teaser__period-information-value" data-test-id="pl24-subscription-tag-ex-brasilien-notice-period">None</span>
+    </div>
+  </div>
+
+          </div>
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+        
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                      
+                    
+          
+                  
+                                  
+                
+                        
+                        
+            
+
+
+                
+                            
+                    
+
+
+
+
+                                    
+            
+                                    
+        
+                                        
+  
+  
+                  
+                    
+          
+              

@@ -1,0 +1,1535 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" wf-loading>
+    <head>
+        
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+
+
+    <script>
+        window.newrelicAttributes = {
+            accountId: "1796917",
+            trustKey: "1796917",
+            agentId: "149134891",
+            licenseKey: "f701a6c63c",
+            applicationId: "149134891"
+        };
+    </script>
+    <script src="/newrelic.js"></script>
+
+
+
+<!-- Compliant Google Optimize -->
+<script>
+        (() => {
+            const getPrivacyCookie = () => {
+                const privacyCookie = document.cookie.match('(^|;)\\s*cmapi_cookie_privacy\\s*=\\s*([^;]+)');
+
+                return privacyCookie ? privacyCookie.pop() : null;
+            };
+
+            const getBehaviorCookie = () => {
+                const behaviorCookie = document.cookie.match('(^|;)\\s*notice_behavior\\s*=\\s*([^;]+)');
+
+                return behaviorCookie ? behaviorCookie.pop() : null;
+            };
+
+            const hasOptedIn = () => {
+                const behaviorCookie = getBehaviorCookie();
+                const privacyCookie = getPrivacyCookie();
+
+                return behaviorCookie && behaviorCookie.match(/^none$/) || privacyCookie && privacyCookie.match(/2|3/);
+            }
+
+            const appendOptimize = () => {
+                const head = document.getElementsByTagName('head')[0];
+
+                if (head) {
+                    const script = document.createElement('script');
+
+                    script.src = 'https://www.googleoptimize.com/optimize.js?id=GTM-M6BQF2W';
+                    script.id = "google-optimize"
+                    head.append(script);
+                }
+            };
+
+            const removeOptimize = () => {
+                const head = document.getElementsByTagName('head')[0];
+                const optimizeScript = document.getElementById('google-optimize');
+
+                if (head && optimizeScript) {
+                    head.removeChild(optimizeScript);
+                }
+            }
+
+            /**
+             * Append or remove Google Optimize script to head,
+             * depending on whether user's cookie preferences
+             * have opted in and Google Optimize script already
+             * exists in head.
+             */
+            const handleConsentDecision = () => {
+                const googleOptimizeScript = document.getElementById('google-optimize');
+                if (hasOptedIn() && !googleOptimizeScript) {
+                    appendOptimize();
+                } else if (!hasOptedIn() && googleOptimizeScript) {
+                    removeOptimize();
+                }
+            }
+
+            /**
+             * Callbacks will occur in the form of a PostMessage event. This code listens for the
+             * appropriately formatted PostMessage event, gets the new consent decision, and then sets
+             * the new cookie preferences.
+             */
+            const handlePreferencesUpdated = (e) => {
+                try {
+                    const { capabilities, action } = JSON.parse(e.data).PrivacyManagerAPI || {};
+                    if (capabilities && action === 'getConsentDecision') {
+                        handleConsentDecision();
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            /**
+             * Registers with the TrustArc Content Manager (CM) API to receive callbacks when
+             * a preference update occurs, and initialized dispatched preferences array to
+             * the user's current preferences. You must wait for the CM API (PrivacyManagerAPI object)
+             * to exist on the page before registering.
+             */
+            const CMICallbackRegister = () => {
+                const interval = setInterval(() => {
+                    if (window.PrivacyManagerAPI && interval) {
+                        const apiObject = {
+                            PrivacyManagerAPI: {
+                                action: 'getConsentDecision',
+                                timestamp: new Date().getTime(),
+                                self: window.location.host
+                            }
+                        };
+                        window.top.postMessage(JSON.stringify(apiObject), '*');
+                        clearInterval(interval);
+                    }
+                }, 50);
+            }
+
+            /**
+             * Listener registers a message callback on the TrustArc Content Manager when
+             * user's cookie preferences are updated and adds an event listener
+             * on the message events that occur when said preference updates occur.
+             */
+            const trustArcScriptLoadListener = () => {
+                if (typeof window.truste === 'object') {
+                    CMICallbackRegister();
+                    window.addEventListener('message', handlePreferencesUpdated);
+                }
+            }
+
+            window.addEventListener('load', trustArcScriptLoadListener);
+            const behaviorCookie = getBehaviorCookie();
+
+            if (behaviorCookie === null) {
+                // wait for TrustArc script to load before checking cookies
+                let numIntervals = 0;
+                const scriptLoadInterval = setInterval( () => {
+                    if(getBehaviorCookie()) {
+                        handleConsentDecision();
+                        clearInterval(scriptLoadInterval);
+                    }
+                    // Stop running interval after 8 times (8x the documented 500ms it
+                    // should take to load the TrustArc script on the BE) to prevent running forever
+                    if (++numIntervals >= 10) {
+                        clearInterval(scriptLoadInterval);
+                    }
+                } , 500);
+            } else {
+                handleConsentDecision();
+            }
+        })();
+</script>
+    <!-- End Compliant Google Optimize -->
+
+
+<!-- Google Tag Manager -->
+<script>
+    (function(w, d, s, l) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+
+        var f = d.getElementsByTagName(s)[0];
+        var j = d.createElement(s);
+        var dl = l !== 'dataLayer' ? '&l=' + l : '';
+
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TG32RCX' + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer');
+</script>
+<!-- End Google Tag Manager -->
+
+
+
+<style>
+    [unresolved] {
+        visibility: hidden !important;
+    }
+</style>
+
+
+<noscript>
+    <style>
+        [unresolved] {
+            visibility: visible !important;
+        }
+    </style>
+</noscript>
+
+<style>
+    body {
+        margin: 0;
+    }
+
+    .image img {
+        max-width: 100%;
+    }
+</style>
+
+
+<script>
+    
+    if (!CSS.supports('width', 'calc((var(--test))')) {
+        window.ShadyCSS = {
+            shimcssproperties: true
+        };
+    }
+
+    document.addEventListener('nds.typeKit.active', function() {
+        document.querySelector('html').removeAttribute('wf-loading');
+    });
+</script>
+
+<script src="//unpkg.com/@webcomponents/webcomponentsjs@2.2.7/webcomponents-loader.js"
+    integrity="sha384-3HK5hxQbkFqOIxMbpROlRmRtYl2LBZ52t+tqcjzsmr9NJuOWQxl8RgQSyFvq2lhy"
+    crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
+    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+    crossorigin="anonymous"></script>
+<script src="//w.soundcloud.com/player/api.js"></script>
+
+
+
+
+
+
+<script>
+    window.nds = window.nds || {};
+    window.nds.componentUrlPrefix = '//pl.ea.com/release/4.69.8/elements/ea-elements.min.js'.substring(0, '//pl.ea.com/release/4.69.8/elements/ea-elements.min.js'.lastIndexOf('/') + 1);
+    window.nds.contentfulUrl = 'https://contentful-proxy.juno.ea.com/graphql';
+    window.nds.salUrl = 'https://service-aggregation-layer.juno.ea.com/graphql';
+    window.nds.useApq = true;
+    window.nds.salClientId = 'eacom-fe';
+    window.nds.xGameDistMethod = 'eacom';
+    window.nds.lockboxGameId = 'eacom_quantum';
+    window.nds.lockboxInvoiceSource = 'EACOM-STORE-WEB-%countryCode%';
+    window.nds.lockboxExternalPaymentPath = '/lockbox-external-payment';
+</script>
+
+
+
+<script type="module" src="//pl.ea.com/release/4.69.8/elements/ea-elements.min.js"></script>
+<script nomodule defer src="//pl.ea.com/release/4.69.8/elements/ea-elements.min.js"></script>
+
+
+
+    
+        
+    
+
+<style>
+    @font-face {
+    font-family: 'ElectronicArtsDisplay';
+    src: url(/assets/fonts/display/ElectronicArtsDisplay-Regular.woff2) format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsDisplay';
+    src: url(/assets/fonts/display/ElectronicArtsDisplay-Bold.woff2) format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Light.woff2) format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-LightItalic.woff2) format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Regular.woff2) format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Italic.woff2) format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Bold.woff2) format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-BoldItalic.woff2) format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+</style>
+
+
+
+
+
+
+    <title>PopCap Studios - Official EA Site</title>
+    
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="PopCap Studios - Official EA Site">
+<meta property="og:description" content="Our games are sprinkled with a whirlwind of smile-inducing awesomeness and polished to a shiny sheen that keeps the world coming back again and again. And best of all, you’ll find our games on mobile, console, PC, and many other devices – you may even be able to play them on the moon!">
+
+    <meta property="og:url" content="https://www.ea.com/ea-studios/popcap">
+
+<meta property="og:site_name" content="Electronic Arts Inc.">
+
+    <meta property="og:image" content="https://media.contentapi.ea.com/content/dam/eacom/popcap/images/2017/08/popcap-featured-image.png.adapt.crop191x100.1200w.png">
+
+
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
+
+
+<meta name="description" content="Our games are sprinkled with a whirlwind of smile-inducing awesomeness and polished to a shiny sheen that keeps the world coming back again and again. And best of all, you’ll find our games on mobile, console, PC, and many other devices – you may even be able to play them on the moon!">
+<meta name="author" content="Electronic Arts">
+<meta property="article:modified_time" content="2017-10-19T23:51:40Z">
+<meta property="article:published_time" content="2017-02-14T00:29:23Z">
+
+
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ea">
+<meta name="twitter:title" content="PopCap Studios - Official EA Site">
+<meta name="twitter:description" content="Our games are sprinkled with a whirlwind of smile-inducing awesomeness and polished to a shiny sheen that keeps the world coming back again and again. And best of all, you’ll find our games on mobile, console, PC, and many other devices – you may even be able to play them on the moon!">
+
+    <meta name="twitter:image" content="https://media.contentapi.ea.com/content/dam/eacom/popcap/images/2017/08/popcap-featured-image.png.adapt.crop16x9.1023w.png">
+
+<meta name="twitter:creator" content="@ea">
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+     
+"image": {
+    "@type": "ImageObject",
+    "url": "https://media.contentapi.ea.com/content/dam/eacom/popcap/images/2017/08/popcap-featured-image.png.adapt.crop191x100.1200w.png"
+},
+ 
+    "author": {
+      "@type": "Organization",
+      "name": "Electronic Arts",
+      "sameAs": "https://en.wikipedia.org/wiki/Electronic_Arts"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Electronic Arts",
+        "sameAs": "https://en.wikipedia.org/wiki/Electronic_Arts",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://media.contentapi.ea.com/content/dam/ea/EA_logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "inLanguage": "en",
+    "description": "Our games are sprinkled with a whirlwind of smile-inducing awesomeness and polished to a shiny sheen that keeps the world coming back again and again. And best of all, you’ll find our games on mobile, console, PC, and many other devices – you may even be able to play them on the moon!",
+    "datePublished": "2017-02-14T00:29:23Z",
+    "dateModified": "2017-10-19T23:51:40Z",
+    "headline": "PopCap Studios - Official EA Site",
+    "url": "https://www.ea.com/ea-studios/popcap"
+}
+</script>
+
+
+
+    </head>
+    <body unresolved>
+        
+    
+
+
+<custom-style><style include="ea-shared-styles-base-common"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-headings"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-lists"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-links"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-images"></style></custom-style>
+<custom-style><style include="ea-shared-styles-typography-headings"></style></custom-style>
+<custom-style><style include="ea-shared-styles-typography-paragraphs"></style></custom-style>
+<custom-style><style include="ea-shared-styles-typography-labels"></style></custom-style>
+
+
+    
+        
+            <custom-style>
+                <style>
+                    html {
+                        
+                            --ea-theme-color: #FF313F;
+                        
+                            --ea-theme-dark-gradient: #FF313F;
+                        
+                            --ea-theme-light-gradient: #FF4855;
+                        
+                    }
+                </style>
+            </custom-style>
+        
+    
+
+
+
+<ea-elements-loader elements="ea-network-nav, ea-player, ea-type-kit">
+</ea-elements-loader>
+
+
+    <ea-network-nav
+        unresolved
+        userData="/user-data"
+        content="//nds-network-nav.ea.com//en-us/network-nav"
+        login-url="/login"
+        logout-url="/logout"
+            
+                
+                    
+                        hide-logo
+                    
+                
+            
+    ></ea-network-nav>
+
+
+
+
+
+
+
+    
+        
+            
+                
+<ea-elements-loader elements="ea-local-nav-advanced, ea-link">
+</ea-elements-loader>
+<ea-local-nav-advanced
+    
+    
+        home-text="Home"
+        home-tooltip=""
+        home-link="/studios/popcap"
+    
+    
+        logo-image="https://media.contentapi.ea.com/content/dam/eacom/en-us/common/popcap-top-hero-popcap-logo.png"
+        
+            logo-tooltip=""
+        
+    
+    
+        theme="light"
+    
+    
+        shelf-type="scrim"
+    
+    
+        open-drawer-text="Menu"
+    
+    
+        close-drawer-text="Close"
+    
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    unresolved
+>
+    
+
+    
+
+    
+        <a title="" href="/studios/popcap">
+            Home
+            
+                <img
+                    src="https://media.contentapi.ea.com/content/dam/eacom/en-us/common/popcap-top-hero-popcap-logo.png"
+                    
+                />
+            
+        </a>
+    
+
+    
+        
+            
+                <ea-link
+                    slot="local-nav-shelf-link"
+                    class="eapl-local-nav__shelf-link"
+                    text-color="dark"
+                    link-href="/studios/popcap/about"
+                    link-title=""
+                    link-text="About"
+                    unresolved
+                >
+                    <a href="/studios/popcap/about">About</a>
+                </ea-link>
+            
+        
+    
+        
+            
+                <ea-link
+                    slot="local-nav-shelf-link"
+                    class="eapl-local-nav__shelf-link"
+                    text-color="dark"
+                    link-href="/studios/popcap/careers"
+                    link-title=""
+                    link-text="Careers"
+                    unresolved
+                >
+                    <a href="/studios/popcap/careers">Careers</a>
+                </ea-link>
+            
+        
+    
+        
+            
+                <ea-link
+                    slot="local-nav-shelf-link"
+                    class="eapl-local-nav__shelf-link"
+                    text-color="dark"
+                    link-href="/studios/popcap/games"
+                    link-title=""
+                    link-text="Games"
+                    unresolved
+                >
+                    <a href="/studios/popcap/games">Games</a>
+                </ea-link>
+            
+        
+    
+
+    
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        
+            slot="local-nav-drawer-link"
+        
+        class="eapl-local-nav__drawer-link"
+        link-href="/studios/popcap/about"
+        link-title=""
+        link-text="About"
+        text-color="dark"
+        unresolved
+    >
+        <a href="/studios/popcap/about">About</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        
+            slot="local-nav-drawer-link"
+        
+        class="eapl-local-nav__drawer-link"
+        link-href="/studios/popcap/careers"
+        link-title=""
+        link-text="Careers"
+        text-color="dark"
+        unresolved
+    >
+        <a href="/studios/popcap/careers">Careers</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        
+            slot="local-nav-drawer-link"
+        
+        class="eapl-local-nav__drawer-link"
+        link-href="/studios/popcap/games"
+        link-title=""
+        link-text="Games"
+        text-color="dark"
+        unresolved
+    >
+        <a href="/studios/popcap/games">Games</a>
+    </ea-link>
+
+
+        
+    
+
+    
+</ea-local-nav-advanced>
+
+            
+        
+    
+
+
+
+
+
+<main>
+    
+
+
+<ea-elements-loader elements="ea-section">
+</ea-elements-loader>
+<ea-section
+    unresolved
+    slot="section"
+    
+    
+        type="full-bleed"
+    
+    
+        layout="100"
+    
+    
+    
+        background-color="none"
+    
+    
+    
+        background-overflow="visible"
+    
+    
+        spacing-top="none"
+    
+    
+        spacing-bottom="none"
+    
+    
+    
+    
+    
+>
+    
+    
+
+
+<ea-section-column
+    slot="section-column"
+    
+        indent-left=""
+    
+    
+        indent-right=""
+    
+    
+        text-align="left"
+    
+    
+    
+        mobile-order="0"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-hero">
+</ea-elements-loader>
+<ea-hero
+    
+        layout="medium"
+    
+    
+        text-position="center"
+    
+    
+        text-align="center"
+    
+    
+        text-color="light"
+    
+    
+    
+    
+    
+    
+    
+        background-color="light"
+    
+    
+    
+    
+    
+        subtitle-text="Inspire the world to play!"
+    
+    
+    
+        image-smallest="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop3x5.320w.jpg"
+        image-small="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop3x5.767w.jpg"
+        image-medium="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop2x1.1023w.jpg"
+        image-large="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop5x2.1455w.jpg"
+        image-largest="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop7x2.1920w.jpg"
+        image-tooltip=""
+    
+    
+    
+    
+    
+    
+        logo-image="https://media.contentapi.ea.com/content/dam/eacom/en-us/common/popcap-top-hero-popcap-logo.png"
+        logo-alt=""
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        spacing-bottom="medium"
+    
+    
+    
+        scrim-color="dark"
+    
+    
+        scrim-opacity="medium"
+    
+    
+    unresolved
+    
+        custom-styles="{}"
+    
+    
+    
+    
+>
+    
+    
+        <h2>Inspire the world to play!</h2>
+    
+    
+    
+    
+        <img
+            src="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop3x5.320w.jpg"
+            alt=""
+            srcset="https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop3x5.320w.jpg 320w, https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop3x5.767w.jpg 768w, https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop2x1.1023w.jpg 1024w, https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop5x2.1455w.jpg 1320w, https://media.contentapi.ea.com/content/dam/eacom/en-us/migrated-images/2017/02/popcap-top-hero-ea-hero-popcap-m.jpg.adapt.crop7x2.1920w.jpg 1456w"
+        />
+    
+    
+    
+    
+    
+    
+        <img
+            src="https://media.contentapi.ea.com/content/dam/eacom/en-us/common/popcap-top-hero-popcap-logo.png"
+            
+            alt=""
+        />
+    
+    
+    
+    
+    
+    
+<ea-elements-loader elements="ea-html5-video">
+</ea-elements-loader>
+<ea-html5-video
+    slot="html5-video"
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        webm-src="https://www.ea.com/netstorage/PopCap_WebHero.webm"
+    
+
+    
+        mp4-src="https://www.ea.com/netstorage/PopCap_WebHero.mp4"
+    
+
+    
+
+    
+
+    
+        autoplay=""
+    
+
+    
+
+    
+
+    
+        loop=""
+    
+
+    
+
+    
+
+    
+    unresolved
+>
+    
+</ea-html5-video>
+
+    
+    
+</ea-hero>
+
+</ea-section-column>
+
+    
+</ea-section>
+
+<ea-elements-loader elements="ea-section">
+</ea-elements-loader>
+<ea-section
+    unresolved
+    slot="section"
+    
+    
+        type="railed"
+    
+    
+        layout="100"
+    
+    
+    
+        background-color="none"
+    
+    
+    
+        background-overflow="hidden"
+    
+    
+        spacing-top="none"
+    
+    
+        spacing-bottom="medium"
+    
+    
+    
+    
+        background-image-smallest="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.320w.jpg"
+        background-image-small="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.768w.jpg"
+        background-image-medium="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.1024w.jpg"
+        background-image-large="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.1456w.jpg"
+        background-image-largest="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.1920w.jpg"
+        image-tooltip=""
+    
+    
+>
+    
+        <img
+            src="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.320w.jpg"
+            alt=""
+            srcset="https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.320w.jpg 320w, https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.768w.jpg 768w, https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.1024w.jpg 1024w, https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.1456w.jpg 1320w, https://media.contentapi.ea.com/content/dam/eacom/popcap/common/popcap-about-section.jpg.adapt.1920w.jpg 1456w"
+        />
+    
+    
+
+
+<ea-section-column
+    slot="section-column"
+    
+        indent-left="1"
+    
+    
+        indent-right="1"
+    
+    
+        text-align="center"
+    
+    
+    
+        mobile-order="0"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-subheading">
+</ea-elements-loader>
+<ea-subheading
+    unresolved
+    
+        type="ordered"
+    
+    
+        layout="large"
+    
+    
+        text-align="left"
+    
+    
+        text-color="dark"
+    
+    
+    
+    
+    
+        spacing-top="medium"
+    
+    
+        spacing-bottom="medium"
+    
+>
+    
+    
+    
+</ea-subheading>
+
+<ea-elements-loader elements="ea-subheading">
+</ea-elements-loader>
+<ea-subheading
+    unresolved
+    
+        type="ordered"
+    
+    
+        layout="small"
+    
+    
+        text-align="center"
+    
+    
+        text-color="light"
+    
+    
+    
+        title-text="We Make Great Games"
+    
+    
+    
+        spacing-top="medium"
+    
+    
+        spacing-bottom="medium"
+    
+>
+    
+    
+        <h3>We Make Great Games</h3>
+    
+    
+</ea-subheading>
+
+<ea-elements-loader elements="ea-text">
+</ea-elements-loader>
+<ea-text
+    unresolved
+    slot="text"
+    
+        text-color="light"
+    
+>
+    <p>Our games are sprinkled with a whirlwind of smile-inducing awesomeness and polished to a shiny sheen that keeps the world coming back again and again. And best of all, you’ll find our games on mobile, console, PC, and many other devices – you may even be able to play them on the moon!</p>
+
+    
+</ea-text>
+
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/studios/popcap/about"
+    
+    
+    
+        link-text="Learn More"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="light"
+    
+    
+        stroke-color="light"
+    
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/studios/popcap/about"
+        
+        
+    >
+        
+            Learn More
+        
+    </a>
+</ea-cta>
+
+<ea-elements-loader elements="ea-subheading">
+</ea-elements-loader>
+<ea-subheading
+    unresolved
+    
+        type="ordered"
+    
+    
+        layout="large"
+    
+    
+        text-align="left"
+    
+    
+        text-color="dark"
+    
+    
+    
+    
+    
+        spacing-top="medium"
+    
+    
+        spacing-bottom="medium"
+    
+>
+    
+    
+    
+</ea-subheading>
+
+</ea-section-column>
+
+    
+</ea-section>
+
+<ea-elements-loader elements="ea-section">
+</ea-elements-loader>
+<ea-section
+    unresolved
+    slot="section"
+    
+    
+        type="railed"
+    
+    
+        layout="100"
+    
+    
+    
+        background-color="none"
+    
+    
+    
+        background-overflow="visible"
+    
+    
+        spacing-top="none"
+    
+    
+        spacing-bottom="none"
+    
+    
+    
+    
+    
+>
+    
+    
+
+
+<ea-section-column
+    slot="section-column"
+    
+    
+    
+        text-align="center"
+    
+    
+    
+        mobile-order="0"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-subheading">
+</ea-elements-loader>
+<ea-subheading
+    unresolved
+    
+        type="ordered"
+    
+    
+        layout="small"
+    
+    
+        text-align="center"
+    
+    
+        text-color="dark"
+    
+    
+    
+        title-text="We Are Worldwide"
+    
+    
+    
+        spacing-top="medium"
+    
+    
+        spacing-bottom="none"
+    
+>
+    
+    
+        <h3>We Are Worldwide</h3>
+    
+    
+</ea-subheading>
+
+<ea-elements-loader elements="ea-grid">
+</ea-elements-loader>
+<ea-grid
+    
+
+    type="ordered"
+
+
+    tile-media-shape="circle"
+
+
+
+    layout="4up"
+
+
+    tile-type="vertical"
+
+
+    tile-text-align="center"
+
+
+    tile-text-color="dark"
+
+
+    tile-color="none"
+
+
+
+
+    hide-eyebrow
+
+
+
+    hide-copy
+
+
+    hide-ctas
+
+
+    hide-brand-stroke
+
+
+    hide-byline
+
+
+    spacing-top="medium"
+
+
+    spacing-bottom="none"
+
+
+
+
+    
+    
+    
+        tile-scrim-color="none"
+    
+    
+        tile-scrim-opacity="medium"
+    
+    tile-align="center"
+    
+    
+    
+    
+    
+    
+    
+    animate-in-order=""
+    animate-out-order=""
+    
+    unresolved
+>
+    
+    
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:0"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/ea/Locations/seattle/50-50-seattle.jpg.adapt.crop1x1.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="SEATTLE"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>SEATTLE</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/studios/popcap/seattle"
+    
+    
+    
+        link-text="SEATTLE"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="secondary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/studios/popcap/seattle"
+        
+        
+    >
+        
+            SEATTLE
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:1"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/ea/Locations/vancouver/50-50-asset/50-50-vancouver.jpg.adapt.crop1x1.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="VANCOUVER"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>VANCOUVER</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/studios/popcap/vancouver"
+    
+    
+    
+        link-text="VANCOUVER"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="secondary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/studios/popcap/vancouver"
+        
+        
+    >
+        
+            VANCOUVER
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:2"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/ea/Locations/shanghai/50-50-shanghai.jpg.adapt.crop1x1.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="SHANGHAI"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+       

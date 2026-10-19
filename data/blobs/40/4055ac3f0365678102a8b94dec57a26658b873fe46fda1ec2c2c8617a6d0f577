@@ -1,0 +1,121 @@
+# ai.txt - AI Agent Access Policy
+# This file follows the ai.txt specification from https://spawning.ai/ai-txt
+# Last updated: 2026-02-05
+
+# Default policy: Allow AI agents to access public content with restrictions
+# We welcome responsible AI crawling that respects our rate limits and users
+
+# ——— OPENAI ———
+# Model-training crawler (for GPT model training)
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 10
+
+# User-driven browsing from ChatGPT (acts after human request)
+User-agent: ChatGPT-User
+Allow: /
+Crawl-delay: 5
+
+# OpenAI Search Bot (shows pages as links in ChatGPT)
+User-agent: OAI-SearchBot
+Allow: /
+Crawl-delay: 5
+
+# ——— ANTHROPIC (Claude) ———
+# Web-focused crawl
+User-agent: Claude-Web
+Allow: /
+Crawl-delay: 10
+
+# Chat citation fetch
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 10
+
+# Bulk model training
+User-agent: anthropic-ai
+Allow: /
+Crawl-delay: 10
+
+# ——— GOOGLE ———
+# Google Bard/Gemini
+User-agent: Google-Extended
+Allow: /
+Crawl-delay: 10
+
+# ——— MICROSOFT ———
+# Bing AI and Copilot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 5
+
+# ——— OTHER AI CRAWLERS ———
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 10
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+Crawl-delay: 10
+
+# Apple AI/Siri
+User-agent: Applebot-Extended
+Allow: /
+Crawl-delay: 10
+
+# Common Crawl (used by many AI companies)
+User-agent: CCBot
+Allow: /
+Crawl-delay: 15
+
+# Meta/Facebook AI
+User-agent: FacebookBot
+Allow: /
+Crawl-delay: 10
+
+# Meta AI Research
+User-agent: Meta-ExternalAgent
+Allow: /
+Crawl-delay: 10
+
+# Disallow access to sensitive areas for all AI agents
+User-agent: *
+Disallow: /admin/
+Disallow: /sidekiq/
+Disallow: /users/
+Disallow: /api/private/
+Disallow: /*.json$
+Disallow: /api/
+Disallow: /contenidos/*/track_click
+Disallow: /drawings/*/submissions
+Disallow: /temp/
+Disallow: /cache/
+
+# Rate limiting notice
+# Please respect crawl delays to avoid being blocked
+# For API access or bulk data needs, contact: amelia@enloteria.com
+
+# Content usage guidelines
+# - Our lottery results are factual data and can be used for informational purposes
+# - Do not use our content to create competing lottery result services
+# - Attribution to enloteria.com, premios.do, ayitiraj.com, or lotoayiti.com is appreciated when citing our data
+# - User-generated content (comments, submissions) requires explicit permission
+
+# Training data notice
+# We allow our public content to be used for AI training with the following conditions:
+# - Respect user privacy and do not include personally identifiable information
+# - Focus on lottery results and general information, not user behavior
+# - Contact us if you plan to use our data for commercial AI products
+
+# Preferred crawl times
+# Best time to crawl: 2:00 AM - 6:00 AM AST (Atlantic Standard Time)
+# Lottery draws occur throughout the day from 8:00 AM to 11:00 PM AST
+
+# Content types available
+# - Lottery results (numbers, dates, times) - Dominican Republic, Haiti, US, Caribbean
+# - Historical lottery data
+# - RSS feeds at /rss
+# - Structured data via llms.txt at /llms.txt
+# - Available in Spanish (enloteria.com, premios.do) and Haitian Creole (ayitiraj.com, lotoayiti.com)

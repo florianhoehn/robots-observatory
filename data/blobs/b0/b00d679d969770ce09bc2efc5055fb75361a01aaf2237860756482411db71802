@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD7SURBVHgBpVLbDYMwDHSr/sMGsAGMwAhsUEagEyAmASaAEWACRkg2SDZIc5FIE0Aqj5MsObFjny8mpdRbm1DnwfD2AYeIYroGiQKKbuC1OHVdb4JJklCe58bnnFPXdRRFERVF8UtaBoK7Np1oB4aPO8aYJ4RXwH3gomkaE6+qahN70h+AOsaL45iyLCMppZ/gMgjDUOlEY2VZetQXQ2ye5/0REMQDGGhjXtxrIZUQwpzRRDM5psEwDOa+7/uNmIc0wJcB0zRZPcZxpDRN9zXY+wVo4WqAEVxGdhPbtrVKr4GuYBEEgVkiXcTGbq8yNJB0HRwFPnDoPNC4/gIZIIIT4+meGwAAAABJRU5ErkJggg=="><title>Protected</title><style type="text/css">body.Theme_color_light {
+    color-scheme: light;
+}
+.Theme_color_light_deprecated {
+    --color-on-surface-hovered: var(--color-secondary-low);
+    --color-primary-200-hovered-state: var(--color-primary-disabled);
+    --color-primary-200-12-8: var(--color-secondary-low);
+    --color-success-12-8: var(--color-status-green-low);
+    --color-warning-12-8: var(--color-status-yellow-low);
+    --color-danger-12-8: var(--color-status-red-low);
+    --color-elevation-overlay-12: linear-gradient(0deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.14)), var(--color-level-1);
+    --color-elevation-overlay-16: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)), var(--color-level-1);
+    --color-elevation-overlay-24: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), var(--color-level-1);
+    --color-elevation-overlay-01: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), var(--color-level-1);
+    --color-elevation-overlay-02: linear-gradient(0deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)), var(--color-level-1);
+    --color-elevation-overlay-03: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), var(--color-level-1);
+    --color-elevation-overlay-04: linear-gradient(0deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.09)), var(--color-level-1);
+    --color-elevation-overlay-06: linear-gradient(0deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.11)), var(--color-level-1);
+    --color-elevation-overlay-08: linear-gradient(0deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)), var(--color-level-1);
+    --color-unsorted-danger-scoring: var(--color-level-1);
+    --color-unsorted-statistic-track: var(--color-level-1);
+    --color-unsorted-background: var(--color-level-1);
+    --color-unsorted-surface: var(--color-level-1);
+    --color-unsorted-outline: var(--color-secondary-low);
+    --color-syntax-on-dark-key: var(--color-syntax-key);
+    --color-syntax-on-dark-values: var(--color-syntax-value);
+    --color-syntax-on-dark-operation: var(--color-syntax-operation);
+    --color-on-surface-high-emphasis: var(--color-secondary-high);
+    --color-on-surface-medium-emphasis: var(--color-secondary-medium);
+    --color-on-surface-disabled: var(--color-secondary-disabled);
+    --color-on-surface-white-12: var(--color-secondary-low);
+    --color-on-surface-white-8: var(--color-secondary-hover);
+    --color-on-surface-hovered-state: var(--color-secondary-hover);
+    --color-primary-200-high-emphasis: var(--color-primary-high);
+    --color-primary-200-medium-emphasis: var(--color-primary-medium);
+    --color-primary-200-disabled: var(--color-primary-disabled);
+    --color-primary-200-12: var(--color-primary-low);
+    --color-primary-200-8: var(--color-primary-lower);
+    --color-primary-200-4: var(--color-primary-lower);
+    --color-on-primary-high-emphasis: var(--color-tertiary-high);
+    --color-on-primary-medium-emphasis: var(--color-tertiary-medium);
+    --color-on-primary-disabled: var(--color-tertiary-disabled);
+    --color-on-primary-12: var(--color-tertiary-low);
+    --color-on-primary-8: var(--color-tertiary-lower);
+    --color-success-high-emphasis: var(--color-status-green-high);
+    --color-success-medium-emphasis: var(--color-status-green-medium);
+    --color-success-disabled: var(--color-status-green-disabled);
+    --color-success-12: var(--color-status-green-low);
+    --color-success-8: var(--color-status-green-lower);
+    --color-success-4: var(--color-status-green-lower);
+    --color-warning-high-emphasis: var(--color-status-yellow-high);
+    --color-warning-medium-emphasis: var(--color-status-yellow-medium);
+    --color-warning-disabled: var(--color-status-yellow-disabled);
+    --color-warning-12: var(--color-status-yellow-low);
+    --color-warning-8: var(--color-status-yellow-lower);
+    --color-warning-4: var(--color-status-yellow-lower);
+    --color-danger-high-emphasis: var(--color-status-red-high);
+    --color-danger-medium-emphasis: var(--color-status-red-medium);
+    --color-danger-disabled: var(--color-status-red-disabled);
+    --color-danger-12: var(--color-status-red-low);
+    --color-danger-8: var(--color-status-red-lower);
+    --color-danger-4: var(--color-status-red-lower);
+    --color-on-danger-high-emphasis: var(--color-tertiary-high);
+    --color-on-danger-medium-emphasis: var(--color-tertiary-intense);
+    --color-on-danger-disabled: var(--color-tertiary-medium);
+    --color-white-high: rgba(255, 255, 255, 0.9);
+    --color-white-medium: rgba(255, 255, 255, 0.6);
+    --color-white-disabled: rgba(255, 255, 255, 0.4);
+    --color-white-low: rgba(255, 255, 255, 0.12);
+    --color-white-hover: rgba(255, 255, 255, 0.08);
+    --color-black-high: rgba(0, 0, 0, 0.9);
+    --color-black-medium: rgba(0, 0, 0, 0.6);
+    --color-black-disabled: rgba(0, 0, 0, 0.4);
+    --color-black-low: rgba(0, 0, 0, 0.12);
+    --color-level-no-blur: #0A1020;
+
+    --color-graph-social-node: #006ad8;
+    --color-graph-social-node-disabled: #083462;
+    --color-graph-social-pie: #0073eb;
+    --color-graph-social-pie-disabled: #08386a;
+    --color-graph-social-wire: #0056d8;
+    --color-graph-social-wire-disabled: #082b62;
+
+    --color-graph-network-node: #2A8E68;
+    --color-graph-network-node-disabled: #1B4439;
+    --color-graph-network-pie: #5BAE76;
+    --color-graph-network-pie-disabled: #2F513F;
+    --color-graph-network-wire: #1B825D;
+    --color-graph-network-wire-disabled: #153F34;
+
+    --color-graph-malicious-node: #D44B57;
+    --color-graph-malicious-node-disabled: #6B2D37;
+    --color-graph-malicious-pie: #FF7474;
+    --color-graph-malicious-pie-disabled: #733C41;
+    --color-graph-malicious-wire: #D44B57;
+    --color-graph-malicious-wire-disabled: #612C35;
+
+    --color-graph-hacker-node: #FE7235;
+    --color-graph-hacker-node-disabled: #733D2A;
+    --color-graph-hacker-pie: #FF9154;
+    --color-graph-hacker-pie-disabled: #744B37;
+    --color-graph-hacker-wire: #E36B36;
+    --color-graph-hacker-wire-disabled: #693A2B;
+
+    --color-graph-contact-node: #FCCF52;
+    --color-graph-contact-node-disabled: #756539;
+    --color-graph-contact-pie: #FFE86D;
+    --color-graph-contact-pie-disabled: #766F45;
+    --color-graph-contact-wire: #E4B737;
+    --color-graph-contact-wire-disabled: #6B5B2E;
+}
+.Theme_color_light {
+    --color-primary-high: rgba(187, 186, 255, 1);
+    --color-primary-intense: rgba(187, 186, 255, 0.8);
+    --color-primary-medium: rgba(187, 186, 255, 0.6);
+    --color-primary-disabled: rgba(187, 186, 255, 0.4);
+    --color-primary-intermediate: rgba(187, 186, 255, 0.16);
+    --color-primary-low: rgba(187, 186, 255, 0.12);
+    --color-primary-lower: rgba(187, 186, 255, 0.08);
+
+    --color-secondary-high: rgba(0, 0, 0, 1);
+    --color-secondary-intense: rgba(0, 0, 0, 0.8);
+    --color-secondary-medium: rgba(0, 0, 0, 0.6);
+    --color-secondary-disabled: rgba(0, 0, 0, 0.4);
+    --color-secondary-intermediate: rgba(0, 0, 0, 0.16);
+    --color-secondary-low: rgba(0, 0, 0, 0.12);
+    --color-secondary-lower: rgba(0, 0, 0, 0.08);
+    --color-secondary-hover: rgba(0, 0, 0, 0.08);
+
+    --color-tertiary-high: rgba(255, 255, 255, 1);
+    --color-tertiary-intense: rgba(255, 255, 255, 0.8);
+    --color-tertiary-medium: rgba(255, 255, 255, 0.6);
+    --color-tertiary-disabled: rgba(255, 255, 255, 0.4);
+    --color-tertiary-intermediate: rgba(255, 255, 255, 0.16);
+    --color-tertiary-low: rgba(255, 255, 255, 0.12);
+    --color-tertiary-lower: rgba(0, 0, 0, 0.08);
+    --color-tertiary-hover: rgba(255, 255, 255, 0.08);
+
+    --color-brand-high: rgba(146, 108, 253, 1);
+    --color-brand-intense: rgba(146, 108, 253, 0.8);
+    --color-brand-medium: rgba(146, 108, 253, 0.6);
+    --color-brand-disabled: rgba(146, 108, 253, 0.4);
+    --color-brand-intermediate: rgba(146, 108, 253, 0.16);
+    --color-brand-low: rgba(146, 108, 253, 0.12);
+    --color-brand-lower: rgba(146, 108, 253, 0.08);
+    
+    --color-negative-high: rgba(255, 87, 78, 1);
+    --color-negative-intense: rgba(255, 87, 78, 0.8);
+    --color-negative-medium: rgba(255, 87, 78, 0.6);
+    --color-negative-disabled: rgba(255, 87, 78, 0.4);
+    --color-negative-intermediate: rgba(255, 87, 78, 0.16);
+    --color-negative-hover: rgba(255, 87, 78, 0.12);
+    --color-negative-low: rgba(255, 87, 78, 0.12);
+    --color-negative-lower: rgba(255, 87, 78, 0.08);
+
+    --color-syntax-key: #EEB696;
+    --color-syntax-operation: #ACC48E;
+    --color-syntax-value: #9BCBFA;
+
+    --color-level-1: rgba(255, 255, 255, 1);
+    --color-level-2: rgba(249, 249, 249, 1);
+    --color-level-3: rgba(240, 241, 242, 1);
+    --color-level-4: rgba(225, 227, 230, 1);
+    --color-level-5: rgba(213, 215, 217, 1);
+    --color-level-6: rgba(198, 201, 204, 1);
+    
+    --color-level-blur: rgba(6, 6, 13, 0.4);
+    --color-level-no-blur: #0A1020;
+    --color-level-overlay: rgba(3, 9, 25, 0.7);
+    --color-level-overlay: rgba(6, 6, 13, 0.7);
+
+    --color-level-1-hover: #1A1A20;
+    --color-level-2-hover: #26282C;
+    --color-level-3-hover: #303236;
+    --color-level-4-hover: #383A3E;
+    --color-level-5-hover: #414247;
+    --color-level-6-hover: #4D4D53;
+
+    --color-level-1-checked-hover: #353544;
+    --color-level-2-checked-hover: #3F404E;
+    --color-level-3-checked-hover: #474956;
+    --color-level-4-checked-hover: #4E4F5D;
+    --color-level-5-checked-hover: #565764;
+    --color-level-6-checked-hover: #5F606F;
+
+    --color-secondary-level-1: rgba(157, 160, 162, 1);
+    --color-secondary-level-2: rgba(76, 76, 79, 1);
+    --color-secondary-level-3: rgba(54, 54, 56, 1);
+    --color-secondary-level-4: rgba(29, 29, 30, 1);
+    --color-secondary-level-5: rgba(16, 16, 18, 1);
+
+    --color-status-green-high: rgba(50, 212, 154, 1);
+    --color-status-green-intense: rgba(50, 212, 154, 0.8);
+    --color-status-green-medium: rgba(50, 212, 154, 0.6);
+    --color-status-green-disabled: rgba(50, 212, 154, 0.4);
+    --color-status-green-intermediate: rgba(50, 212, 154, 0.16);
+    --color-status-green-low: rgba(50, 212, 154, 0.12);
+    --color-status-green-lower: rgba(50, 212, 154, 0.08);
+
+    --color-status-yellow-high: rgba(254, 215, 11, 1);
+    --color-status-yellow-intense: rgba(254, 215, 11, 0.8);
+    --color-status-yellow-medium: rgba(254, 215, 11, 0.6);
+    --color-status-yellow-disabled: rgba(254, 215, 11, 0.4);
+    --color-status-yellow-intermediate: rgba(254, 215, 11, 0.16);
+    --color-status-yellow-low: rgba(254, 215, 11, 0.12);
+    --color-status-yellow-lower: rgba(254, 215, 11, 0.08);
+
+    --color-status-orange-high: rgba(254, 158, 11, 1);
+    --color-status-orange-intense: rgba(254, 158, 11, 0.8);
+    --color-status-orange-medium: rgba(254, 158, 11, 0.6);
+    --color-status-orange-disabled: rgba(254, 158, 11, 0.4);
+    --color-status-orange-intermediate: rgba(254, 158, 11, 0.16);
+    --color-status-orange-low: rgba(254, 158, 11, 0.12);
+    --color-status-orange-lower: rgba(254, 158, 11, 0.08);
+
+    --color-status-red-high: rgba(255, 87, 78, 1);
+    --color-status-red-intense: rgba(255, 87, 78, 0.8);
+    --color-status-red-medium: rgba(255, 87, 78, 0.6);
+    --color-status-red-disabled: rgba(255, 87, 78, 0.4);
+    --color-status-red-intermediate: rgba(255, 87, 78, 0.16);
+    --color-status-red-low: rgba(255, 87, 78, 0.12);
+    --color-status-red-lower: rgba(255, 87, 78, 0.08);
+
+    --color-status-blue-high: rgba(115, 166, 255, 1);
+    --color-status-blue-intense: rgba(115, 166, 255, 0.8);
+    --color-status-blue-medium: rgba(115, 166, 255, 0.6);
+    --color-status-blue-disabled: rgba(115, 166, 255, 0.4);
+    --color-status-blue-intermediate: rgba(115, 166, 255, 0.16);
+    --color-status-blue-low: rgba(115, 166, 255, 0.12);
+    --color-status-blue-lower: rgba(115, 166, 255, 0.08);
+
+    --color-status-purple-high: rgba(202, 106, 250, 1);
+    --color-status-purple-intense: rgba(202, 106, 250, 0.8);
+    --color-status-purple-medium: rgba(202, 106, 250, 0.6);
+    --color-status-purple-disabled: rgba(202, 106, 250, 0.4);
+    --color-status-purple-intermediate: rgba(202, 106, 250, 0.16);
+    --color-status-purple-low: rgba(202, 106, 250, 0.12);
+    --color-status-purple-lower: rgba(202, 106, 250, 0.08);
+
+    --color-status-gray-high: rgba(159, 161, 167, 1);
+    --color-status-gray-intense: rgba(159, 161, 167, 0.8);
+    --color-status-gray-medium: rgba(159, 161, 167, 0.6);
+    --color-status-gray-disabled: rgba(159, 161, 167, 0.4);
+    --color-status-gray-intermediate: rgba(159, 161, 167, 0.16);
+    --color-status-gray-low: rgba(159, 161, 167, 0.12);
+    --color-status-gray-lower: rgba(159, 161, 167, 0.08);
+
+    --color-status-aquamarine-high: rgba(128, 240, 248, 1);
+    --color-status-aquamarine-intense: rgba(128, 240, 248, 0.8);
+    --color-status-aquamarine-medium: rgba(128, 240, 248, 0.6);
+    --color-status-aquamarine-disabled: rgba(128, 240, 248, 0.4);
+    --color-status-aquamarine-intermediate: rgba(128, 240, 248, 0.16);
+    --color-status-aquamarine-low: rgba(128, 240, 248, 0.12);
+    --color-status-aquamarine-lower: rgba(128, 240, 248, 0.08);
+
+    --color-status-amaranth-high: rgba(239, 177, 255, 1);
+    --color-status-amaranth-intense: rgba(239, 177, 255, 0.8);
+    --color-status-amaranth-medium: rgba(239, 177, 255, 0.6);
+    --color-status-amaranth-disabled: rgba(239, 177, 255, 0.4);
+    --color-status-amaranth-intermediate: rgba(239, 177, 255, 0.16);
+    --color-status-amaranth-low: rgba(239, 177, 255, 0.12);
+    --color-status-amaranth-lower: rgba(239, 177, 255, 0.08);
+
+    --color-status-light-green-high: rgba(130, 202, 113, 1);
+    --color-status-light-green-intense: rgba(130, 202, 113, 0.8);
+    --color-status-light-green-medium: rgba(130, 202, 113, 0.6);
+    --color-status-light-green-disabled: rgba(130, 202, 113, 0.4);
+    --color-status-light-green-intermediate: rgba(130, 202, 113, 0.16);
+    --color-status-light-green-low: rgba(130, 202, 113, 0.12);
+    --color-status-light-green-lower: rgba(130, 202, 113, 0.08);
+
+    --color-status-pink-high: rgba(255, 121, 132, 1);
+    --color-status-pink-intense: rgba(255, 121, 132, 0.8);
+    --color-status-pink-medium: rgba(255, 121, 132, 0.6);
+    --color-status-pink-disabled: rgba(255, 121, 132, 0.4);
+    --color-status-pink-intermediate: rgba(255, 121, 132, 0.16);
+    --color-status-pink-low: rgba(255, 121, 132, 0.12);
+    --color-status-pink-lower: rgba(255, 121, 132, 0.08);
+
+    --color-status-apricot-high: rgba(255, 199, 187, 1);
+    --color-status-apricot-intense: rgba(255, 199, 187, 0.8);
+    --color-status-apricot-medium: rgba(255, 199, 187, 0.6);
+    --color-status-apricot-disabled: rgba(255, 199, 187, 0.4);
+    --color-status-apricot-intermediate: rgba(255, 199, 187, 0.16);
+    --color-status-apricot-low: rgba(255, 199, 187, 0.12);
+    --color-status-apricot-lower: rgba(255, 199, 187, 0.08);
+
+    --color-status-light-yellow-high: rgba(246, 245, 120, 1);
+    --color-status-light-yellow-intense: rgba(246, 245, 120, 0.8);
+    --color-status-light-yellow-medium: rgba(246, 245, 120, 0.6);
+    --color-status-light-yellow-disabled: rgba(246, 245, 120, 0.4);
+    --color-status-light-yellow-intermediate: rgba(246, 245, 120, 0.16);
+    --color-status-light-yellow-low: rgba(246, 245, 120, 0.12);
+    --color-status-light-yellow-lower: rgba(246, 245, 120, 0.08);
+
+    --color-chart-1: #0063f6;
+    --color-chart-2: #ffa600;
+    --color-chart-3: #c70039;
+    --color-chart-4: #148c00;
+    --color-chart-5: #b659b9;
+    --color-chart-6: #42a5f5;
+    --color-chart-7: #fa3c85;
+    --color-chart-8: #16a085;
+    --color-chart-9: #655dc9;
+    --color-chart-10: #ff5733;
+    --color-chart-11: #efb1ff;
+    --color-chart-12: #82ca71;
+    --color-chart-13: #ffc7bb;
+    --color-chart-14: #26c6da;
+    --color-chart-15: #ff7984;
+    --color-chart-16: #f6f578;
+    --color-chart-17: #80f0f8;
+    --color-chart-18: #8DC0A5;
+    --color-chart-19: #5AA9B8;
+    --color-chart-20: #3F79AA;
+    --color-chart-21: #305095;
+    --color-chart-22: #243485;
+    --color-chart-23: #67CD50;
+    --color-chart-24: #A9E99A;
+    --color-chart-25: #E580FF;
+    --color-chart-26: #58B4FF;
+    --color-chart-27: #F18759;
+
+    --color-graph-blue-wire: #0056D8;
+    --color-graph-blue-node: #023065;
+    --color-graph-blue-pie: #0073EB;
+    --color-graph-blue-wire-disabled: #09295D;
+    --color-graph-blue-node-disabled: #051E3D;
+    --color-graph-blue-pie-disabled: #06254A;
+
+    --color-graph-green-wire: #1B825D;
+    --color-graph-green-node: #133E39;
+    --color-graph-green-pie: #5BAE76;
+    --color-graph-green-wire-disabled: #153D3D;
+    --color-graph-green-node-disabled: #0F2629;
+    --color-graph-green-pie-disabled: #1D3430;
+
+    --color-graph-red-wire: #D44B57;
+    --color-graph-red-node: #572332;
+    --color-graph-red-pie: #FF7474;
+    --color-graph-red-wire-disabled: #442230;
+    --color-graph-red-node-disabled: #371B28;
+    --color-graph-red-pie-disabled: #462831;
+
+    --color-graph-orange-wire: #E36B36;
+    --color-graph-orange-node: #673324;
+    --color-graph-orange-pie: #FF9154;
+    --color-graph-orange-wire-disabled: #402624;
+    --color-graph-orange-node-disabled: #3B2321;
+    --color-graph-orange-pie-disabled: #47312B;
+
+    --color-graph-yellow-wire: #E4B737;
+    --color-graph-yellow-node: #675830;
+    --color-graph-yellow-pie: #FFE86D;
+    --color-graph-yellow-wire-disabled: #383324;
+    --color-graph-yellow-node-disabled: #3C3729;
+    --color-graph-yellow-pie-disabled: #484633;
+
+    --color-graph-violet-wire: #542A59;
+    --color-graph-violet-node: #37293C;
+    --color-graph-violet-pie: #BF6DFF;
+    --color-graph-violet-wire-disabled: #423348;
+    --color-graph-violet-node-disabled: #B737E4;
+    --color-graph-violet-pie-disabled: #332438;
+
+    --color-graph-gray-wire: #3D3D3D;
+    --color-graph-gray-node: #333333;
+    --color-graph-gray-pie: #737373;
+    --color-graph-gray-wire-disabled: #3E3E3E;
+    --color-graph-gray-node-disabled: #8D8D8D;
+    --color-graph-gray-pie-disabled: #2E2E2E;
+
+    --color-graph-light-blue-wire: #1F3B4F;
+    --color-graph-light-blue-node: #111C24;
+    --color-graph-light-blue-pie: #4CC8EF;
+    --color-graph-light-blue-wire-disabled: #15222B;
+    --color-graph-light-blue-node-disabled: #42AFD1;
+    --color-graph-light-blue-pie-disabled: #182B38;
+
+    --color-graph-light-orange-wire: #503934;
+    --color-graph-light-orange-node: #2A2220;
+    --color-graph-light-orange-pie: #FFC7BB;
+    --color-graph-light-orange-wire-disabled: #403330;
+    --color-graph-light-orange-node-disabled: #F0A493;
+    --color-graph-light-orange-pie-disabled: #3C2D2A;
+
+    --color-graph-light-violet-wire: #4B3450;
+    --color-graph-light-violet-node: #2C252F;
+    --color-graph-light-violet-pie: #E1B7EC;
+    --color-graph-light-violet-wire-disabled: #423546;
+    --color-graph-light-violet-node-disabled: #DD93F0;
+    --color-graph-light-violet-pie-disabled: #382A3C;
+}
+.Theme_root_light_deprecated {
+    --round-s: 4px;
+    --round-m: 8px;
+    --round-l: 16px;
+    --space-4-xs: 2px;
+    --space-3-xs: 4px;
+    --space-2-xs: 6px;
+    --space-xs: 8px;
+    --space-s: 12px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 32px;
+    --space-2-xl: 40px;
+    --space-3-xl: 48px;
+    --typography-line-height-xs: 16px;
+    --typography-line-height-s: 24px;
+    --typography-line-height-m: 32px;
+    --typography-line-height-l: 40px;
+    --typography-line-height-xl: 46px;
+    --typography-line-height-2-xl: 56px;
+    --typography-font-family-regular: 'Roboto', Helvetica, Arial, sans-serif;
+    --typography-font-family-roboto: 'Roboto';
+    --typography-font-family-roboto-mono: 'Roboto Mono';
+    --typography-font-weight-light: 300;
+    --typography-font-weight-regular: 400;
+    --typography-font-weight-medium: 500;
+    --typography-font-weight-semibold: 600;
+    --typography-font-weight-bold: 700;
+    --typography-font-size-2-xs-font-size: 11px;
+    --typography-font-size-xs-font-size: 12px;
+    --typography-font-size-s-font-size: 13px;
+    --typography-font-size-m-font-size: 16px;
+    --typography-font-size-l-font-size: 22px;
+    --typography-font-size-xl-font-size: 32px;
+    --typography-font-size-2-xl-font-size: 42px;
+    --typography-font-size-3-xl-font-size: 56px;
+}
+.Theme_root_light {
+    --space-x05: 2px;
+    --space-x1: 4px;
+    --space-x2: 8px;
+    --space-x3: 12px;
+    --space-x4: 16px;
+    --space-x5: 20px;
+    --space-x6: 24px;
+    --space-x8: 32px;
+    --space-x10: 40px;
+    --space-x12: 48px;
+
+    --space-2: 2px;
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-28: 28px;
+    --space-32: 32px;
+    --space-36: 36px;
+    --space-40: 40px;
+    --space-44: 44px;
+    --space-48: 48px;
+
+    --round-x05: 2px;
+    --round-x1: 4px;
+    --round-x2: 8px;
+    --round-x3: 12px;
+    --round-x4: 16px;
+    --round-x5: 20px;
+
+    --round-1: 1px;
+    --round-2: 2px;
+    --round-4: 4px;
+    --round-6: 6px;
+    --round-8: 8px;
+    --round-12: 12px;
+    --round-16: 16px;
+    --round-20: 20px;
+    --round-24: 24px;
+    --round-32: 32px;
+}</style><style type="text/css">.DY0oX0IAMg{font-family:var(--typography-font-family-regular)}
+.CvRn34IvN_{color:var(--color-secondary-high)}
+.IO48XAIq0B{color:var(--color-secondary-medium)}
+.WwX9WTh0VV{line-height:24px;font-size:16px;font-weight:500}
+.YvRgMD6S9P{line-height:16px;font-size:13px;font-weight:400}
+.PSbFZd_dO2{line-height:16px;font-size:11px;font-weight:400}</style><style type="text/css">.uUpJkFx8wG{display:inline-block;width:min-content;height:min-content;line-height:0}</style><style type="text/css">@keyframes mv8SFuvqq0{0%{opacity:1}23%{opacity:1}25%{opacity:0}98%{opacity:0}100%{opacity:1}}
+@keyframes GcRkSlmUA1{0%{opacity:0}23%{opacity:0}25%{opacity:1}48%{opacity:1}50%{opacity:0}100%{opacity:0}}
+@keyframes xcxbPL2uLE{0%{opacity:0}48%{opacity:0}50%{opacity:1}73%{opacity:1}75%{opacity:0}100%{opacity:0}}
+@keyframes WFIq4dgTy8{0%{opacity:0}73%{opacity:0}75%{opacity:1}98%{opacity:1}100%{opacity:0}}
+@keyframes mIesb0pjCS{0%,20%{transform:translateY(-14px)}52%{transform:translateY(86px)}84%{transform:translateY(-14px)}100%{transform:translateY(86px)}}
+@keyframes VPvWi3LvLU{0%,10%{opacity:0}52%{opacity:.4}84%{opacity:.4}100%{opacity:0}}
+@keyframes UbEdDycPtd{0%{opacity:0;transform:translate(25px, 25px)}15%,92%{opacity:1;transform:translate(0, 0)}100%{opacity:0;transform:translate(25px, 25px)}}
+@keyframes yXi0P3TiDh{0%{opacity:0;transform:translate(-25px, 25px)}15%,92%{opacity:1;transform:translate(0, 0)}100%{opacity:0;transform:translate(-25px, 25px)}}
+@keyframes dljz_H43ve{0%{opacity:0;transform:translate(25px, -25px)}15%,92%{opacity:1;transform:translate(0, 0)}100%{opacity:0;transform:translate(25px, -25px)}}
+@keyframes wHq06QQgAc{0%{opacity:0;transform:translate(-25px, -25px)}15%,92%{opacity:1;transform:translate(0, 0)}100%{opacity:0;transform:translate(-25px, -25px)}}
+.qXYbdYxJbw{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:var(--space-32) 0 var(--space-24)}
+.DorCGbLTMd{display:flex;flex-direction:column;align-items:center;gap:var(--space-8)}
+.TvT5tIkdFi{display:flex;flex-direction:column;align-items:center;gap:var(--space-4)}
+.n4_WATZ3An{color:var(--color-primary-high);text-decoration:none}
+.MXxI2jdido{display:flex;flex-direction:column;align-items:center}
+.OwuixK0jOP{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gA3YK24qPw{display:flex;flex-direction:column;align-items:center;padding:var(--space-24);gap:var(--space-12)}
+.qbxiXc0BWG{position:relative;height:24px;width:300px}
+.X90j28JJ8x{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;animation-duration:16s;animation-timing-function:linear;animation-iteration-count:infinite}
+.X90j28JJ8x:nth-child(1){animation-name:mv8SFuvqq0}
+.X90j28JJ8x:nth-child(2){animation-name:GcRkSlmUA1}
+.X90j28JJ8x:nth-child(3){animation-name:xcxbPL2uLE}
+.X90j28JJ8x:nth-child(4){animation-name:WFIq4dgTy8}
+.jWqB5Q6guD{position:relative;width:92px;height:92px}
+.iz8_wqldTP{position:absolute;inset:0;border-radius:50%;overflow:hidden;z-index:2}
+.iz8_wqldTP img{display:block;width:100%;height:100%}
+.VEgGFWgCVL{position:absolute;inset:2px;border-radius:50%;overflow:hidden;z-index:3}
+.npinJx2gYr{position:absolute;top:0;left:0;right:0;height:6px;box-shadow:0 0 10px 0 rgba(146,108,253,.5);background:rgba(146,108,253,.5);animation:mIesb0pjCS 4s linear infinite}
+.x3opUuTcmQ{position:absolute;width:100px;height:100px;top:50%;left:50%;transform:translate(-50%, -50%);border-radius:50%;background:var(--color-primary-high, #926cfd);filter:blur(35px);pointer-events:none;z-index:3;animation:VPvWi3LvLU 4s linear infinite}
+.hL9yT5dCq_,.CaItZhASEy,.v3iSTXIKji,.AnKzyZzCbD{position:absolute;width:10px;height:10px;pointer-events:none;z-index:1}
+.hL9yT5dCq_::before,.hL9yT5dCq_::after,.CaItZhASEy::before,.CaItZhASEy::after,.v3iSTXIKji::before,.v3iSTXIKji::after,.AnKzyZzCbD::before,.AnKzyZzCbD::after{content:"";position:absolute;background:var(--color-brand-high);border-radius:1px}
+.hL9yT5dCq_::before,.CaItZhASEy::before,.v3iSTXIKji::before,.AnKzyZzCbD::before{height:1px;left:0;right:0}
+.hL9yT5dCq_::after,.CaItZhASEy::after,.v3iSTXIKji::after,.AnKzyZzCbD::after{width:1px;top:0;bottom:0}
+.hL9yT5dCq_{top:-3px;left:-3px;animation:UbEdDycPtd 4s ease-in-out infinite}
+.hL9yT5dCq_::before{top:0}
+.hL9yT5dCq_::after{left:0}
+.CaItZhASEy{top:-3px;right:-3px;animation:yXi0P3TiDh 4s ease-in-out infinite}
+.CaItZhASEy::before{top:0}
+.CaItZhASEy::after{right:0;left:auto}
+.v3iSTXIKji{bottom:-3px;left:-3px;animation:dljz_H43ve 4s ease-in-out infinite}
+.v3iSTXIKji::before{bottom:0;top:auto}
+.v3iSTXIKji::after{left:0}
+.AnKzyZzCbD{bottom:-3px;right:-3px;animation:wHq06QQgAc 4s ease-in-out infinite}
+.AnKzyZzCbD::before{bottom:0;top:auto}
+.AnKzyZzCbD::after{right:0;left:auto}</style><style type="text/css">*{scrollbar-width:thin;scrollbar-color:hsla(0,0%,100%,.12) rgba(0,0,0,0);box-sizing:border-box}
+* ::-webkit-scrollbar-track{border-radius:100px;margin:4px}
+* ::-webkit-scrollbar{width:8px}
+* ::-webkit-scrollbar-thumb{border-radius:10px;background-color:hsla(0,0%,100%,.25)}
+html,body{margin:0;padding:0;border:0;font-size:13px;height:100%}
+body{color:var(--color-secondary-high);font-family:var(--typography-font-family-roboto);display:flex;flex-direction:column;height:100%}
+body.Theme_color_light{background:var(--color-level-1)}
+p,h1,h2,h3,h4,h5,h6{padding:0;margin:0}</style>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    const userLanguage = navigator.language || navigator.userLanguage || 'en';
+    const language = userLanguage.toLowerCase().split('-')[0];
+
+    const ruDiv = document.getElementById('ru');
+    const enDiv = document.getElementById('en');
+    const currentYearSpans = document.getElementsByClassName("currentYear");
+
+    if (language === 'ru') {
+        if (ruDiv) ruDiv.style.display = 'block';
+        if (enDiv) enDiv.style.display = 'none';
+    } else {
+        if (ruDiv) ruDiv.style.display = 'none';
+        if (enDiv) enDiv.style.display = 'block';
+    }
+
+    Array.from(currentYearSpans).forEach(
+        (year) => { year.textContent = new Date().getFullYear(); }
+    );
+});
+</script>
+
+<script>window.gibOnFlowResponse=function(){window.gibOnFlowResponse=function(){};document.location.href="/llms.txt";}</script>
+
+<script>
+    (function (cid, backUrl) {
+        if (typeof window.fp?.events?.onDataRequest === "undefined") {
+            window.onFPLoad = function () { 
+                init();
+            };
+        } else {
+            init();
+        }
+
+        function init() {
+            window.fp?.init?.({
+                cid: cid,
+                backUrl: backUrl,
+            });
+        }
+    })("w-f6-sec", "/api/fl");
+</script><script type="text/javascript">(function() {
+  function a(){var lR=['WQ8hyCoYpCoMW6GBWQbfjmkms8otW6xcR8ojfa10W50HxMuHW7n8DCkMjc7cVJxcSeNdVYmrmSokhu/cR3bfW7dcHSoQW7VcJfJdGHq3W4/cICkQW4SGj8kImazsWROZbCoKW63cMe5HWOisjSo+n2pdQ8klWORcUKCffchdKf1pWPOBfCklW41IiSoEWR3cV8k+fSoxlmoAtxPkimkrFmkHxbvKdCkuW58inmoiz2arW6/dGSkQWQVdHZJdRSk2WO3cSYVcNH9/W5RdMNtdNxBdNmo7W5hcRL4lW57cGhO8WOdcJwjswgJcMeSFWRpcNvKPW6RdM8oNWQHhnCkkWPZdHmoxAZPsoSk4WOFcHbSKWPaeAmoFW5JdVSo8W6JdKZtcJSosjmkrW70ZWPNdUSkgW6bnn8oNk8kwA2ZdPCkCWQZdPCoLWQZdMajvlcq','t0yQW73cHa','WOlcOuH9W54','wc0Rh07dTsZcRaJdKCkCfZlcOdW2WQnnumk0W4BcRragW4ZdV2G9WPDdvmkwEtmKcJNdGq','W4pcTe9CjG','W6uuma','W67cLg5PbmoV','eCkAn8kVga','imoDW67cH1JdMHLhWP4','CI/dQSoElmkPWO0ukG','kYhdMCkUhW','WPNdOg5MpqpdH8k7W443lCk3W7BcSMC','tYe','qSoRW5LnCa','ux1/De3dUvVcTqJdKmoOeKtcSq','uhj8Bq','WOFdRw5ogG','m8kUaJ4GW7NdRMOilG','W6z/WOZdVmoep8o5W6lcGSk1WPZcUxLixmkgWR/dGIpcHNpcGSo9jXW3WPmRW71zW5VcSKL5gSomxue','gCk5sSoBdmk5WOFcLGFcHSkVwvtdImoOh8kxtSkNW7SBb8kcWQL7lcXWuSkVa38ZWRriDdqr','sxxdRSkc','dI3dV8oihCoA','WRDVlJ7cGq','WPhcG8k2W5tdLSo5FSkPWPtdU8oPh8kE','iSkprSkaW4PsW7ZdNcrM','W7pcPxBdHq','pdBdMmkUaqJcHG','W5K9W5ZcMmkjyCkJlb1bxIhdMCoVodtdHvNcKxdcLCojtmk7bNW3f8klDaPazmonW6/cOW','DCkdWRm','uIGVWQv6rG','jCo/kG','sttdUxzeBSo5WO0FWPm','dX1OWRS','vmoJW63dK8oqWQ5wWQH5mCoKW4W','esddSmkDxmke','WO5PWPRdUmovnCoXFLCOtsBdMCoIlJVdJv/cVNxcJmoiqmkH','cvK','W7VcHSora1C','W7lcJSojcG5CgmoR','WOm1WQmjWQC','vahcJedcPmkvW7BdQx4','CaTaC8kAWOBcLmkggh1ChmoDadC','dmkCdSkfkmkCWRhdJZa','WRBdJW','W4BdPbu3','WPZdNK3cHG9SD18','WQtdSG','WPHSg8oo','laxcIJ/dTCkAW4SqW58','W7ZcJW','BGhcVahcPSkvW4/dKLBdGuldMSoPWPpdQxFcICkOW51fWRbGW6T4jJLXhSkYWRjTn3yAWR7cOba','CCoRhtOTW5NdSg8','C3nuW7e','WPy7WRjEia','D8kfW7lcNYVdGa8gWONdQW3dLhihvMHuW4ldVvhdVG','ySowW7OulrW','WRnNm8kVWRS','DW1h','W5Wtv2FdIG','W6hcMMn+eCo1WPFdIG','pCkbWRVdNZ7dRvaFW43cOYddVwGLfePSWQVcGe7cJXPGfu/cMCokW4TrbCottvtcM2JcIWfX','ualcVuBcUCkAW5a','W7dcJ8ohvrjxfSk2','eIOK','W5uq','WPPPhW','D8oSfZHbW5/dUw0D','wc9CzdVdUIVdNaJdKCoPyKdcOdW2WQnkjSk0W4BcQgiaW4ZdU2W7WPi3iCoMcebscdNdGq','zGvFB8oT','WQfSmaJcSNxcLG','rmkUqW','WOSjWP5QgWW','eLW','zWXkymkd','gCoktSkVFSoeWOFcK3dcHSkOlchcTmoOh8kxtSkNW7SAbSkdW5j7kcH2v8oBDG9cW4C+DJqr','dXegACopcmkh','freAFCosdW','BcJdPgO','BY/dTa','W54iWOldR8ku','CmoEfmokWRenW53dOsXeqSkY','W4D1W7PbW7JdVmogbra','W4VdHG','wSonsSoz','sK1gkmo3dmkBW6ezWPe','W4VcH2v6nSo9WPBdLW','W6VcJ8oHgXv2gSoMg15AB8k8WQNdQCktbNPJ','CCkJzSkJfMHc','WRfEk0jA','m8kXqMqW','uSotsmocFG','oSkqhSkHhq','WRHKaCkRWRnpW6W6tGnvpmk+WQ7dNSkM','xmo3W43dOSou','zXrpB8kd','mbOcE8okdSknWQaiWOxcRCk7Cevbsq','s18JW6dcGW','WR5yWR3cUW','zuxdJ8kVfCoUiSkSWPpdHG','wMHOWOLvfSktW5bwFYddLmkxfColD3lcMsjiW6qMnsfDWPZdUSkFWPBdN8o+eMFdUmk3WPVdRqC','W7VdHW','sZTIu8kJWQVcPCkHcvbTjmoR','padcNmo4','gHGvACov','bmoMW4a','mdnpWQ8','W4KCWOL0bW0qW7hdH8olFxnjWPpdT8k9y8oOW7JdG8k1W4RcMbldONtcMCkbW6r7W4JdNCoYWPzdv1NcKIFdUmo2W6GWf3hdQmoRW5/dUSkNWRhcIJOMgcOIWRhcLM/dUaNcRe4StcBcLfjvWPjiASktW5nzW7KME0KjWR7dTd/dQMadaCkKWQ7cTbdcPaVcSMNdVrldKCkVpsXjCwdcQSo6vGDKW6fBWOxdT8knW47dOG','W501sSonW4nU','WOJdPHu8WP8UyCopWP3dGq/dRCobe8oZBhnOpelcIu3cQv/cVf7dGMmpWO7dPmoXW5nWmSoZWR8D','WOC','jadcLSoQmSozk8kJ','f1FdSbG','imkvtSktW6v7W7FdLXfABCk3W7rHW4ZdOftcV0tcQG','CWaIDHCfWRZdKa','sx3cQG','WRhcGmovbsFcGCohW7u6DCoieCoAWO7cIaTlyhJdIbTAFwqkW5BdS1K+b3JcMIBcGmkTWRxcS8oI','u2H4pXBcVWFdTLBdNmk3qHxdSwrQW6iUCmo1WPhdUYD+WPFcRIP2W45SDCoZsHubcINdISorWQqIW7vufJLtW6KviuK4c8oMW6BdKGldNutdVmowtXpdNNKJcCkOpfxcNSoVWPNdTJFcKY7dRr89z8kIWOvEWQ10W7/cVt3dStPcWRf0WPOqsmkCn3ZcUCoya8ourx7cVupcV8oXEa/cVZZcOW','q8o/W6dcLSojWQrhWO1tp8kQW43cQSorW7a','W7qQ','WPP2jCkNWRmdW60ZqLDrcq','xZv0v8kF','W4VcMbxdKeW','WO4FWRzKaWGVW6BdSCoWqxfkWO3dT8oN','WPXUg8oj','WPPYjmovwCkLW43cLKHJFY1DCHbTsmoSWRa','W40nFHmAW4tdGSkmrWpdRMG','CvpdJwtcPG','ugPXnqS','WQOTWQHsxcaKW5FdJmoCu0vZWQ3dJmkhwCocW5e','WRuKW4fIi8kmoZBcKW','uG','WPqyWP9/dGmE','dbP4','ptVdISoW','WRPeWQ/cHSkpyCkJ','z8oYjCkeAZP/zCocF8kThCkdW5lcINhdPCoyWQ5JnSkFWRePtczpF8oxW6eZWOTMAv54dci','jZvyECofD8oCeSk9tKNdSSkdt8kVWPq0D8kMcCkPECozW6tdJCkyiWldVCoKChLiW7e2nMqmWPWVW63cQSoPWQjpWQXtuSo7','nCoCW6pdMt7cMa','cItdRmkuqCkcra','WRTtWRG','WOSdWPnSgW0uW60','Cc/dQCozkmkG','CSomW7yujbCn','W6ZcGxr+bSo0WQVdJcJcTSk3WRe','WRXMhaqy','kMW','WPPgbtdcLWK','WPDQgG','r8kRW5O','W6/cLCoi','zmkJWP/dNSkH','WRnYiCkTWQ1gWPu5uWnWnCo4WRNdN8oLWQhcVG9Y','ysrtBSou','WP9bWQ3dImoL','i10t','WQ1NbWm','W644WQhdISoDBmkLWRK','zWXcnmocW5u','B

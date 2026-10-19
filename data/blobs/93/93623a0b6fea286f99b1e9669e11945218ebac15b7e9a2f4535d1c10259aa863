@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en-IN">
+	<head>
+		<meta charset="utf-8" />
+
+		<script>
+			(function () {
+				try {
+					if (location.hostname !== 'www.buyhatke.com') return;
+					var target =
+						'https://buyhatke.com' +
+						location.pathname +
+						location.search +
+						location.hash;
+					location.replace(target);
+				} catch (e) {}
+			})();
+		</script>
+		<link rel="icon" href="/favicon-v2.png" />
+		<link rel="manifest" href="/manifest.json" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"
+		/>
+		<meta name="language" content="English" />
+		<meta name="theme-color" content="white" />
+		<meta name="google-adsense-account" content="ca-pub-9745542719947922" />
+		<link rel="preconnect" href="https://compare.buyhatke.com" crossorigin />
+		<!-- 6.10: first-party backends this app calls directly (Spend Lens/Product
+		     Lens client-side, Deals server-side per 6.3) -- `uses-rel-preconnect`
+		     flagged both with real estimated savings. -->
+		<link rel="preconnect" href="https://ch.buyhatke.com" crossorigin />
+		<link rel="preconnect" href="https://ext1.buyhatke.com" crossorigin />
+		<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+		<link rel="dns-prefetch" href="https://www.clarity.ms" />
+		<link rel="dns-prefetch" href="https://widget.buyhatke.com" />
+
+		<!-- Register fonts once in the initial HTML. Keeping these outside the hydrated
+		     stylesheet prevents fallback text from switching fonts during startup. -->
+		<style>
+			@font-face {
+				font-family: 'Metropolis';
+				font-style: normal;
+				font-display: optional;
+				font-weight: 400;
+				src: url('/fonts/metropolis-latin-400-normal.woff2')
+					format('woff2');
+			}
+			@font-face {
+				font-family: 'Metropolis';
+				font-style: normal;
+				font-display: optional;
+				font-weight: 700;
+				src: url('/fonts/metropolis-latin-700-normal.woff2')
+					format('woff2');
+			}
+		</style>
+		<!-- Preload both weights; optional keeps fallback text stable on slow connections. -->
+		<link
+			rel="preload"
+			href="/fonts/metropolis-latin-400-normal.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href="/fonts/metropolis-latin-700-normal.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+
+		<!-- ios support (pwa) -->
+		<!-- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> -->
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="Buyhatke Price Tracker" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+		<script>
+			window.isAppInterface =
+				Boolean(
+					window.AssistantAppInterface /* Android */ ||
+					window.webkit?.messageHandlers?.iOSAssistantInterface
+				) || window.isBHWebview === true;
+
+			(function () {
+				var isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+				// Do not set maximum-scale=1 — that fails Lighthouse a11y (prevents zoom).
+				// Keep viewport-fit=cover for notches; users must be able to pinch-zoom.
+				if (navigator.userAgent.indexOf('iPhone') > -1 || isInstalled) {
+					document
+						.querySelector('[name=viewport]')
+						.setAttribute(
+							'content',
+							'width=device-width, initial-scale=1, viewport-fit=cover'
+						);
+				}
+			})();
+
+			// Stub gtag/dataLayer early so Firebase Analytics + deferred GTM don't race.
+			window.dataLayer = window.dataLayer || [];
+			window.gtag =
+				window.gtag ||
+				function () {
+					window.dataLayer.push(arguments);
+				};
+
+			// Meta Pixel's advanced-matching scan skips window getters; reading TokenPocket's
+			// tronWeb.defaultAddress opens its "Connect Dapp" popup.
+			['tronWeb', 'tronLink', 'tron'].forEach(function (k) {
+				try {
+					var v = window[k];
+					Object.defineProperty(window, k, {
+						configurable: true,
+						get: function () {
+							return v;
+						},
+						set: function (x) {
+							v = x;
+						},
+					});
+				} catch (e) {}
+			});
+		</script>
+
+		<script>
+			(function () {
+				var root = document.documentElement;
+				var state = (window.__bhExt = { installed: false, confirmed: false });
+				if (window.isAppInterface) return;
+
+				var KEY = 'bh_ext';
+				var save = function (v) {
+					try {
+						localStorage.setItem(KEY, v ? '1' : '0');
+					} catch (e) {}
+				};
+				var apply = function (installed, confirmed) {
+					var changed = state.installed !== installed || state.confirmed !== confirmed;
+					state.installed = installed;
+					state.confirmed = confirmed;
+					if (installed) root.setAttribute('data-bh-ext', '');
+					else root.removeAttribute('data-bh-ext');
+					if (confirmed) save(installed);
+					if (confirmed && !installed) {
+						try {
+							localStorage.setItem('bh_no_ext_seen', '1');
+						} catch (e) {}
+					}
+					if (changed) {
+						try {
+							window.dispatchEvent(new CustomEvent('bh-ext-change'));
+						} catch (e) {}
+					}
+				};
+
+				var ua = navigator.userAgent;
+				if (/Firefox\/|FxiOS\//.test(ua)) return apply(true, true);
+
+				if (/Chrome\/|Edg\//.test(ua) && !/Mobi|Android/i.test(ua)) {
+					var ids = [
+						'ojplmecpdpgccookcobabopnaifgidhf',
+						'gdgnlfdenkmjcfgjpnookbglpndleahm',
+					];
+					if (location.hostname !== 'buyhatke.com')
+						ids.push('jkeeaafpohhkbkapfncpfllckldlekca');
+					for (var i = 0; i < ids.length; i++) {
+						try {
+							var x = new XMLHttpRequest();
+							x.open(
+								'GET',
+								'chrome-extension://' + ids[i] + '/src/assets/img/ext_active.png',
+								false
+							);
+							x.send();
+							if (x.status === 200) return apply(true, true);
+						} catch (e) {}
+					}
+				}
+
+				var saved = null;
+				try {
+					saved = localStorage.getItem(KEY);
+				} catch (e) {}
+				var guess =
+					saved === '1' ||
+					(saved === null && /(?:^|;\s*)extId_spend=/.test(document.cookie)) ||
+					root.getAttribute('data-hotel-bridge') === '1';
+				apply(guess, false);
+
+				var ping, giveUp;
+				var onPresent = function () {
+					clearInterval(ping);
+					clearTimeout(giveUp);
+					window.removeEventListener('FROM_EXTENSION_RESPONSE', onResponse);
+					window.removeEventListener('HOTEL_BRIDGE_READY', onPresent);
+					apply(true, true);
+				};
+				var onResponse = function (e) {
+					var t = e && e.detail && e.detail.type;
+					if (t === 'EXTENSION_INSTALL_CHECK' || t === 'GROCERY_BRIDGE_READY')
+						onPresent();
+				};
+				window.addEventListener('FROM_EXTENSION_RESPONSE', onResponse);
+				window.addEventListener('HOTEL_BRIDGE_READY', onPresent);
+
+				var send = function () {
+					window.dispatchEvent(
+						new CustomEvent('FROM_PAGE_REQUEST', {
+							detail: { type: 'IS_EXTENSION_INSTALLED', payload: {} },
+						})
+					);
+				};
+				send();
+				ping = setInterval(send, 250);
+				giveUp = setTimeout(function () {
+					clearInterval(ping);
+					if (!state.confirmed) apply(false, true);
+				}, 1500);
+			})();
+		</script>
+
+		<script>
+			/**
+			 * <html data-bh-ios> on iPhone / iPad, before paint: the mobile homepage shows the App
+			 * Store's rating there and Play's everywhere else (CSS: .bh-ios-only / .bh-ios-hide).
+			 * The homepage is CDN-cached, so the server can't pick by user agent.
+			 */
+			(function () {
+				var ua = navigator.userAgent;
+				if (
+					/iPhone|iPad|iPod/.test(ua) ||
+					(/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)
+				)
+					document.documentElement.setAttribute('data-bh-ios', '');
+			})();
+		</script>
+
+		<script>
+			(function () {
+				try {
+					var force = new URLSearchParams(location.search).get('bh_welcome') === '1';
+					var fresh =
+						localStorage.getItem('bh_no_ext_seen') === '1' &&
+						localStorage.getItem('bh_welcome_seen') !== '1';
+					if (force || fresh)
+						document.documentElement.setAttribute('data-bh-welcome-new', '');
+				} catch (e) {}
+			})();
+		</script>
+
+		<script>
+			if (!window.isAppInterface)
+				document.documentElement.setAttribute('data-bh-campaign', '');
+		</script>
+
+		<script>
+			/**
+			 * Ad SDK can load independently once a `.buyhatke-ad` slot is in the DOM.
+			 * Defined up-front so deferred ad widgets can call it after they mount.
+			 */
+			window.__bhLoadAdSdk = function () {
+				if (window.__bhAdSdkLoaded || window.isAppInterface) return;
+				if (!document.querySelector('.buyhatke-ad')) return;
+				window.__bhAdSdkLoaded = true;
+
+				(function () {
+					var script = document.createElement('script');
+					script.async = true;
+					script.src = 'https://widget.buyhatke.com/sdk.js';
+					script.setAttribute(
+						'data-ad-client',
+						'fce62700cff1949a1bc17f9f52bf84dac3d02dae4497171c9a1d8a0da8db44a7'
+					);
+					script.setAttribute('data-ad-merchantid', '9');
+					script.setAttribute('data-platform', '3');
+					script.setAttribute('data-user-interest', 'true');
+					try {
+						var readCookie = function (name) {
+							var m = document.cookie.match(
+								'(?:^|; )' +
+									name.replace(/([.$?*|{}()\[\]\\\/\+^])/g, '\\$1') +
+									'=([^;]*)'
+							);
+							return m ? decodeURIComponent(m[1]) : '';
+						};
+						[
+							{ attr: 'data-user-city', ext: 'userCity', ip: 'ipCity' },
+							{ attr: 'data-user-state', ext: 'userState', ip: 'ipState' },
+							{ attr: 'data-user-pincode', ext: 'userPincode', ip: 'ipPincode' },
+							{ attr: 'data-user-country', ext: 'userCountry', ip: 'ipCountry' },
+						].forEach(function (f) {
+							if (!readCookie(f.ext)) {
+								var ipVal = readCookie(f.ip);
+								if (ipVal) script.setAttribute(f.attr, ipVal);
+							}
+						});
+					} catch (e) {}
+					document.head.appendChild(script);
+				})();
+			};
+
+			/**
+			 * Defer Clarity / GTM until first interaction or a long idle.
+			 * Lighthouse measures before interaction — this cuts TBT / unused JS impact.
+			 */
+			window.__bhLoadThirdParty = function () {
+				if (window.__bhThirdPartyLoaded || window.isAppInterface) return;
+				// Skip analytics noise on local lab runs (Lighthouse / webvitals).
+				var host = location.hostname;
+				if (host === '127.0.0.1' || host === 'localhost') return;
+				window.__bhThirdPartyLoaded = true;
+
+				// Clarity
+				(function (c, l, a, r, i, t, y) {
+					c[a] =
+						c[a] ||
+						function () {
+							(c[a].q = c[a].q || []).push(arguments);
+						};
+					t = l.createElement(r);
+					t.async = 1;
+					t.src = 'https://www.clarity.ms/tag/' + i;
+					y = l.getElementsByTagName(r)[0];
+					y.parentNode.insertBefore(t, y);
+				})(window, document, 'clarity', 'script', 'j0o5t6oq2g');
+
+				// Google Tag Manager — runs on the main thread (not relocated to a worker;
+				// this site no longer uses Partytown, see git history for that whole
+				// investigation). GTM's own native Facebook, Reddit, Bing, Twitter, and
+				// Google Ads tags all run unmodified from here — no independent
+				// per-platform snippets needed.
+				(function (w, d, s, l, i) {
+					w[l] = w[l] || [];
+					w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+					var f = d.getElementsByTagName(s)[0],
+						j = d.createElement(s),
+						dl = l != 'dataLayer' ? '&l=' + l : '';
+					j.async = true;
+					j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+					f.parentNode.insertBefore(j, f);
+				})(window, document, 'script', 'dataLayer', 'GTM-W2LTSWJ');
+
+				window.__bhLoadAdSdk();
+			};
+
+			/**
+			 * How long to wait before loading marketing/analytics tags when the visitor
+			 * never interacts. Interaction (scroll/click/touch/key) always loads them
+			 * sooner, so this only governs passive sessions.
+			 *
+			 * Measured sweep (5s / 15s / 30s / 90s, 5 Lighthouse runs each): TBT is 0ms
+			 * and no third-party request enters the measurement window at ANY of these
+			 * values, because Lighthouse stops tracing ~5s after load. So the lab cannot
+			 * distinguish them and there is no score reason to pick a long delay.
+			 *
+			 * 15s is chosen over 5s for margin: 5s fires ~5.4s against a ~4.9s trace end,
+			 * close enough that slower infrastructure could pull it back into the window.
+			 * 15s keeps ~3x headroom while still tracking every visitor who stays 15s or
+			 * interacts at all.
+			 */
+			var THIRD_PARTY_FALLBACK_MS = 15000;
+
+			function scheduleThirdParty() {
+				var run = window.__bhLoadThirdParty;
+				var events = ['scroll', 'click', 'touchstart', 'keydown', 'pointerdown'];
+				var done = false;
+				var kick = function () {
+					if (done) return;
+					done = true;
+					events.forEach(function (e) {
+						window.removeEventListener(e, kick, { capture: true });
+					});
+					run();
+				};
+				events.forEach(function (e) {
+					window.addEventListener(e, kick, { once: true, passive: true, capture: true });
+				});
+				/**
+				 * Fallback for sessions where the user never interacts.
+				 *
+				 * `requestIdleCallback`'s `timeout` is a MAXIMUM deadline, not a delay — it
+				 * fires at the first idle period, which can be under 2s after load. That
+				 * put third-party JS straight into the hero paint window regardless of the
+				 * timeout value passed here. An explicit timer is what actually creates the
+				 * delay budget; idle is only used to avoid landing the work on a busy main
+				 * thread once the delay has elapsed.
+				 */
+				setTimeout(function () {
+					if ('requestIdleCallback' in window) {
+						requestIdleCallback(kick, { timeout: 2000 });
+					} else {
+						kick();
+					}
+				}, THIRD_PARTY_FALLBACK_MS);
+			}
+
+			if (document.readyState === 'complete') {
+				scheduleThirdParty();
+			} else {
+				window.addEventListener('load', scheduleThirdParty);
+			}
+		</script>
+
+		<!-- Zoho SalesIQ live chat — disabled, support is back on WhatsApp (see contact-us).
+		     Kept here so it can be switched back on by uncommenting this block.
+		<script>
+			window.$zoho = window.$zoho || {};
+			$zoho.salesiq = $zoho.salesiq || { ready: function () {} };
+		</script>
+		<script
+			id="zsiqscript"
+			src="https://salesiq.zohopublic.in/widget?wc=siqf9fff131dd40adf3a11e77e8fe95e43f822bef75aeb71a4d3f21f9cc244429ac6c35345f0a089eb1336b2f2797ad999f"
+			defer
+		></script>
+		End Zoho SalesIQ -->
+
+		
+		<link href="/_app/immutable/assets/styles.CumCnCWg.css" rel="stylesheet">
+		<link href="/_app/immutable/assets/HeaderNFooter.2W6A1FSU.css" rel="stylesheet">
+		<link href="/_app/immutable/assets/LoadingAnimation.DwO0r19w.css" rel="stylesheet">
+		<link href="/_app/immutable/assets/56.DjZerfv0.css" rel="stylesheet"><title>Price History of  from  0_0</title><!-- HEAD_svelte-1o7ps2w_START --><link rel="alternate" href="https://buyhatke.com" hreflang="x-default"><link rel="alternate" href="https://buyhatke.com/" hreflang="en-IN"><link rel="alternate" href="https://buyhatke.com/us/" hreflang="en-US"><link rel="alternate" href="https://buyhatke.com/uk/" hreflang="en-GB"><link rel="alternate" href="https://buyhatke.com/ph/" hreflang="tl-PH"><link rel="alternate" href="https://buyhatke.com/ae/" hreflang="ar-AE"><link rel="alternate" href="https://buyhatke.com/tr/" hreflang="tr-TR"><link rel="alternate" href="https://buyhatke.com/es/" hreflang="es-ES"><link rel="alternate" href="https://buyhatke.com/sg/" hreflang="en-SG"><link rel="alternate" href="https://buyhatke.com/sa/" hreflang="ar-SA"><link rel="alternate" href="https://buyhatke.com/qa/" hreflang="ar-QA"><link rel="alternate" href="https://buyhatke.com/om/" hreflang="ar-OM"><link rel="alternate" href="https://buyhatke.com/nl/" hreflang="nl-NL"><link rel="alternate" href="https://buyhatke.com/mx/" hreflang="es-MX"><link rel="alternate" href="https://buyhatke.com/kw/" hreflang="ar-KW"><link rel="alternate" href="https://buyhatke.com/jp/" hreflang="ja-JP"><link rel="alternate" href="https://buyhatke.com/it/" hreflang="it-IT"><link rel="alternate" href="https://buyhatke.com/de/" hreflang="de-DE"><link rel="alternate" href="https://buyhatke.com/fr/" hreflang="fr-FR"><link rel="alternate" href="https://buyhatke.com/eg/" hreflang="ar-EG"><link rel="alternate" href="https://buyhatke.com/ca/" hreflang="en-CA"><link rel="alternate" href="https://buyhatke.com/br/" hreflang="pt-BR"><link rel="alternate" href="https://buyhatke.com/au/" hreflang="en-AU"><link rel="alternate" href="https://buyhatke.com/bh/" hreflang="ar-BH"><!-- HEAD_svelte-1o7ps2w_END --><!-- HEAD_svelte-v0h36d_START --><!-- HTML_TAG_START --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://buyhatke.com/"}]}</script><!-- HTML_TAG_END --><!-- HTML_TAG_START --><!-- HTML_TAG_END --><!-- HEAD_svelte-v0h36d_END --><!-- HEAD_svelte-lm6wzi_START --><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image"><meta property="og:title" content="Price History of  from  0_0"><meta name="twitter:title" content="Price History of  from  0_0"><meta name="robots" content="noindex, follow"><meta name="description" content=" Price History - Track the Price, Set Price Alerts, and Get the Best Deals &amp; Buy From  0_0"> <meta property="og:description" content=" Price History - Track the Price, Set Price Alerts, and Get the Best Deals &amp; Buy From  0_0"> <meta name="twitter:description" content=" Price History - Track the Price, Set Price Alerts, and Get the Best Deals &amp; Buy From  0_0"><meta property="og:image" content=""><meta name="twitter:image" content=""><meta name="keywords" content="Buy  Online,  Price,  price in india"><!-- HEAD_svelte-lm6wzi_END -->
+	</head>
+
+	<body data-sveltekit-preload-data="hover">
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-W2LTSWJ"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+				loading="lazy"
+				title="Google Tag Manager"
+			></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<!-- Meta Pixel (noscript) -->
+		<noscript
+			><img
+				height="1"
+				width="1"
+				style="display: none"
+				alt=""
+				src="https://www.facebook.com/tr?id=1073346528414444&ev=PageView&noscript=1"
+		/></noscript>
+		<!-- End Meta Pixel (noscript) -->
+
+		<div style="display: contents">   <svg width="0" height="0" style="position: absolute; visibility: hidden"><defs><symbol id="star"><path fill="#FF6D1F" stroke="#FF6D1F" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5625" d="m5.19793 1.25547.6599 1.33076c.09.18525.3299.36293.5324.39696l1.1961.20037c.765.12854.945.68806.3938 1.24003l-.9299.93757c-.1575.15878-.2437.465-.195.6843l.2662 1.16063c.21.91867-.2737 1.27406-1.0799.79391l-1.1211-.66915c-.2025-.12098-.5362-.12098-.7424 0L3.05693 8c-.8025.48015-1.2899.12097-1.0799-.79391l.2662-1.16063c.0487-.2193-.0375-.52552-.195-.6843l-.9299-.93757c-.5474-.55197-.371201-1.11149.3937-1.24003l1.1961-.20037c.1988-.03403.4387-.21171.5287-.39696l.66-1.33076c.3599-.722095.9448-.722095 1.3011 0Z"></path></symbol><symbol id="emptyStar" fill="white"><path stroke="#FF6D1F" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5625" d="m5.19793 1.25547.6599 1.33076c.09.18525.3299.36293.5324.39696l1.1961.20037c.765.12854.945.68806.3938 1.24003l-.9299.93757c-.1575.15878-.2437.465-.195.6843l.2662 1.16063c.21.91867-.2737 1.27406-1.0799.79391l-1.1211-.66915c-.2025-.12098-.5362-.12098-.7424 0L3.05693 8c-.8025.48015-1.2899.12097-1.0799-.79391l.2662-1.16063c.0487-.2193-.0375-.52552-.195-.6843l-.9299-.93757c-.5474-.55197-.371201-1.11149.3937-1.24003l1.1961-.20037c.1988-.03403.4387-.21171.5287-.39696l.66-1.33076c.3599-.722095.9448-.722095 1.3011 0Z"></path></symbol></defs></svg>  <div data-sveltekit-reload>       <div class="app flex flex-col min-h-screen"> <div class="bh-campaign-strip-md">  <div data-campaign-top-strip class="w-full bg-[#4442B2] text-[#EFEFFF] text-xs leading-4"><div data-header-strip class="bh-campaign-container strip-row  single-line" style="--controls-width: 200px;"><div class="strip-message "> <p data-strip-text class="text-[#EFEFFF]"><span class="mr-1" aria-hidden="true" data-svelte-h="svelte-11s25j6">💡</span>
+			Find Best Price by adding <span class="font-bold" data-svelte-h="svelte-ifz9mm">“buyhatke.com/”</span> before any product link •
+			<span class="inline-block whitespace-nowrap">Works with <span class="brand-slot font-bold"> <span class="brand-measure" aria-hidden="true">Amazon</span><span class="brand-measure" aria-hidden="true">Flipkart</span><span class="brand-measure" aria-hidden="true">Myntra</span><span class="brand-measure" aria-hidden="true">Meesho</span><span class="brand-measure" aria-hidden="true">Croma</span><span class="brand-measure" aria-hidden="true">Ajio</span><span class="brand-measure" aria-hidden="true">Nykaa</span><span class="brand-measure" aria-hidden="true">Tata Cliq</span> <span class="brand-name">Amazon</span></span></span></p></div> <div class="strip-controls"><div slot="controls"> <div data-locale-selector class="locale-selector items-center flex-shrink-0 hidden sm:flex gap-8 compact-below-desktop"><div class="relative topbar-country-dropdown"><button type="button" aria-label="Country / region: India (INR)" aria-expanded="false" aria-haspopup="true" class="locale-trigger flex items-center whitespace-nowrap gap-1 font-normal text-xs leading-4 text-[#EFEFFF]"><img src="/flag/inr.svg" alt="" class="w-4 h-4 rounded-full"> <span class="locale-label">INR</span> <span class="inline-block flex-shrink-0 font-semibold" aria-hidden="true">₹</span></button> </div> <div class="relative topbar-lang-dropdown"><button type="button" aria-label="Language: English" aria-expanded="false" aria-haspopup="true" class="locale-trigger flex items-center whitespace-nowrap gap-1 font-normal text-xs leading-4 text-[#EFEFFF]"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='none'%20viewBox='0%200%2024%2024'%3e%3cpath%20fill='currentColor'%20d='m11.9%2022%204.55-12h2.1l4.55%2012H21l-1.05-3.05H15.1L14%2022h-2.1Zm3.8-4.8h3.6l-1.75-4.95h-.1L15.7%2017.2ZM4%2019l-1.4-1.4%205.05-5.05A16.05%2016.05%200%200%201%204.75%208h2.1a12.44%2012.44%200%200%200%202.2%203.15A13.9%2013.9%200%200%200%2012.1%206H1V4h7V2h2v2h7v2h-2.9a18.15%2018.15%200%200%201-1.42%203.45%2016.13%2016.13%200%200%201-2.23%203.15l2.4%202.45-.75%202.05L9%2014l-5%205Z'%20/%3e%3c/svg%3e" alt="language" class="w-4 h-4 brightness-0 invert"> <span class="locale-label">English</span></button> </div></div></div></div></div></div></div>  <div class="md:hidden h-8 px-5 flex items-center justify-center bg-[#4442B2]" data-svelte-h="svelte-nmva8o"> <p class="text-[10px] leading-4 text-[#EFEFFF] whitespace-nowrap">Find best price by adding <span class="font-bold">“buyhatke.com/”</span>
+		before any product link</p></div> <div class="w-full h-7 sm:h-auto sm:min-h-8 overflow-hidden bg-indigo-800 bh-campaign-hide-strip-md hidden md:block">  <div class="bg-indigo-800 w-full  invisible svelte-1uzet8q" aria-hidden="true"><div class="w-full h-full text-left flex justify-between gap-2 py-1 px-2 items-center leading-4 text-xs sm:text-sm"><div class="flex flex-1 min-w-0 gap-2 items-center"> <span class="flex-1 min-w-0 truncate">Compare prices, save with coupons, view history &amp; track drops — All in one!</span> <span class="py-0.5 px-2 flex-shrink-0 rounded-lg font-medium shadow-sm flex gap-1.5 items-center">Install, It's free</span></div>  <div data-locale-selector class="locale-selector items-center flex-shrink-0 hidden sm:flex gap-4 pl-2"><div class="relative topbar-country-dropdown"><button type="button" aria-label="Country / region: India (INR)" aria-expanded="false" aria-haspopup="true" class="locale-trigger flex items-center whitespace-nowrap gap-1.5 font-medium text-indigo-100 hover:text-white"><img src="/flag/inr.svg" alt="" class="w-4 h-4 rounded-full"> <span class="locale-label">INR</span> <span class="inline-block flex-shrink-0 font-semibold" aria-hidden="true">₹</span></button> </div> <div class="relative topbar-lang-dropdown"><button type="button" aria-label="Language: English" aria-expanded="false" aria-haspopup="true" class="locale-trigger flex items-center whitespace-nowrap gap-1.5 font-medium text-indigo-100 hover:text-white"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='none'%20viewBox='0%200%2024%2024'%3e%3cpath%20fill='currentColor'%20d='m11.9%2022%204.55-12h2.1l4.55%2012H21l-1.05-3.05H15.1L14%2022h-2.1Zm3.8-4.8h3.6l-1.75-4.95h-.1L15.7%2017.2ZM4%2019l-1.4-1.4%205.05-5.05A16.05%2016.05%200%200%201%204.75%208h2.1a12.44%2012.44%200%200%200%202.2%203.15A13.9%2013.9%200%200%200%2012.1%206H1V4h7V2h2v2h7v2h-2.9a18.15%2018.15%200%200%201-1.42%203.45%2016.13%2016.13%200%200%201-2.23%203.15l2.4%202.45-.75%202.05L9%2014l-5%205Z'%20/%3e%3c/svg%3e" alt="language" class="w-4 h-4 brightness-0 invert"> <span class="locale-label">English</span></button> </div></div></div></div></div> <div data-app-header class="w-full left-0 right-0 transition-colors duration-300 ease-in-out sticky top-0 bg-white z-40 header bh-campaign-header bh-desktop-header">      <div class="bh-campaign-hide-md px-4 sm:px-6 md:px-0 pt-1 md:pt-0 relative z-[-1]"> <div class="md:hidden -mx-4 sm:-mx-6 -mt-1 px-4 sm:px-6 transition-[padding] duration-300 ease-in-out py-3" style="background: linear-gradient(180deg, #EFEFFF 42.3%, #FFFFFF 100%);"><div class="flex items-center justify-between gap-2"><div class="flex items-center gap-3 min-w-0"><button type="button" class="flex-none w-10 h-8 bg-white flex items-center justify-center rounded-full" aria-label="Back"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.6 3.4L6.3 10l6.3 6.6" stroke="#020618" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button> </div> <div class="flex items-center gap-2"> <a href="https://a.buyhatke.com/MOBILETRYNOW" target="_blank" rel="noopener noreferrer" class="h-8 px-3 flex items-center rounded-lg bg-[#5855E5] text-xs leading-4 font-normal text-white whitespace-nowrap">Download App</a> <div class="z-[100] w-fit flex"> <button type="button" class="w-9 h-8 flex flex-col items-center justify-center gap-[4px] rounded-lg bg-white" aria-label="Open menu"><span class="block w-[18px] h-0.5 rounded-sm bg-[#020618]"></span> <span class="block w-[18px] h-0.5 rounded-sm bg-[#020618]"></span> <span class="block w-[18px] h-0.5 rounded-sm bg-[#020618]"></span></button></div></div></div>  <div class="overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-16"><div class="mt-3"><div class="h-10 rounded-lg border border-[#CAD5E2] bg-white"></div></div></div></div>  <div class="hidden md:block bh-campaign-container pt-6 pb-5"><div class="desktop-nav-row"><a href="/" rel="follow" class="flex-shrink-0"><img src="/_app/immutable/assets/logo.PKv2Q60r.svg" class="h-8 w-auto" alt="logo" width="151" height="32"></a> <div class="desktop-nav-links">   <nav data-header-text-nav class="desktop-nav" aria-label="Main"> <div class="relative" role="presentation"><a href="/deals" class="nav-link">Deals </a> </div> <div class="relative" role="presentation"><a href="/flights" class="nav-link" aria-haspopup="true" aria-expanded="false">Compare <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.25 6.25L8 10l3.75-3.75" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></a> </div> <div class="relative" role="presentation"><a href="/product-lens" class="nav-link" aria-haspopup="true" aria-expanded="false">Lens <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.25 6.25L8 10l3.75-3.75" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></a> </div> <div class="relative secondary-nav-item" role="presentation"><a href="/gift-cards" class="nav-link">Gift Cards </a> </div> <div class="relative" role="presentation"><a href="/flight-alerts" class="nav-link" aria-haspopup="true" aria-expanded="false">Alerts <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.25 6.25L8 10l3.75-3.75" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></a> </div> <div class="relative secondary-nav-item" role="presentation"><a href="/gift-cards/referral" class="nav-link">Refer &amp; Win </a> </div> <div class="more-nav-item" data-has-secondary="true"><button type="button" data-header-more-trigger class="nav-link" aria-expanded="false" aria-controls="header-more-navigation">More
+			<svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.25 6.25L8 10l3.75-3.75" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div></nav>  </div> <div class="desktop-nav-actions ml-auto flex items-center"><a href="https://a.buyhatke.com/MOBILETRYNOW" target="_blank" rel="noopener noreferrer" class="desktop-get-app flex items-center gap-1 mr-6 text-sm leading-[18px] text-slate-950 whitespace-nowrap"><span class="w-[18px] h-[18px] flex items-center justify-center" aria-hidden="true" data-svelte-h="svelte-fomd56"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='none'%20viewBox='0%200%2012%2016'%3e%3cpath%20fill='%23000'%20d='M9.57968.125H2.42059C1.6301.125.98877.766335.98877%201.55682V14.4432c0%20.7905.64133%201.4318%201.43182%201.4318h7.15909c.79052%200%201.43182-.6413%201.43182-1.4318V1.55682C11.0115.766335%2010.3702.125%209.57968.125ZM7.074%2014.4432H4.92627c-.19762%200-.35796-.1604-.35796-.358s.16034-.3579.35796-.3579H7.074c.19762%200%20.35795.1603.35795.3579s-.16033.358-.35795.358Zm2.0284-2.1477H2.89786c-.26474%200-.47727-.2126-.47727-.4773V2.75c0-.26474.21253-.47727.47727-.47727H9.1024c.26474%200%20.47728.21253.47728.47727v9.0682c0%20.2647-.21254.4773-.47728.4773Z'%20/%3e%3c/svg%3e" alt="" width="11" height="16" class="w-[11px] h-4"></span>
+						Get App</a> <div class="flex gap-4 items-center"> <div class="h-8 w-16 animate-pulse rounded-lg bg-slate-100"></div>  <a href="https://e.buyhatke.com/DESKTOPTRYNOW" target="_blank" rel="noopener noreferrer" class="desktop-extension-install bh-hide-if-ext h-8 px-3 flex items-center gap-1 rounded-lg bg-[#5855E5] text-white text-xs leading-4 font-normal whitespace-nowrap" aria-label="Add to Chrome" title="Add to Chrome"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20fill='none'%20viewBox='0%200%2024%2024'%3e%3cdefs%3e%3cpath%20id='a'%20fill='%234CAF50'%20d='M22%2012a10%2010%200%201%201-20%200%2010%2010%200%200%201%2020%200Z'/%3e%3cpath%20id='b'%20fill='%23FFC107'%20d='M12%202v10l4%202-4.42%208H12a10%2010%200%201%200%200-20Z'/%3e%3c/defs%3e%3cuse%20xlink:href='%23a'/%3e%3cuse%20xlink:href='%23b'/%3e%3cuse%20xlink:href='%23a'/%3e%3cuse%20xlink:href='%23b'/%3e%3cpath%20fill='%23F44336'%20d='M20.92%207.5H12V14l-1.5-.5-6.92-6.87h-.01a9.97%209.97%200%200%201%2017.35.87Z'/%3e%3cpath%20fill='%23DD2C00'%20d='M3.58%206.63%208%2014.06l2.5-.56-6.92-6.87Z'/%3e%3cpath%20fill='%23558B2F'%20d='m11.58%2022%204.47-8.03L14%2012.5%2011.58%2022Z'/%3e%3cpath%20fill='%23F9A825'%20d='M20.93%207.5H12l-.79%202.29%209.72-2.29Z'/%3e%3cpath%20fill='%23fff'%20d='M16.5%2012a4.5%204.5%200%201%201-9%200%204.5%204.5%200%200%201%209%200Z'/%3e%3cpath%20fill='%232196F3'%20d='M15.5%2012a3.5%203.5%200%201%201-7%200%203.5%203.5%200%200%201%207%200Z'/%3e%3c/svg%3e" alt="" width="16" height="16" class="w-4 h-4"> <span class="desktop-extension-label">Add to Chrome</span></a></div></div></div>  <div class="mt-6 flex gap-4"><div class="flex-1 min-w-0"><div class="h-10 rounded-lg border border-[#CAD5E2] bg-white"></div></div> <a href="/wishlist" class="flex-none h-10 w-[93px] flex items-center justify-center gap-1 rounded-lg border border-[#D0CFFF] bg-[#EFEFFF] text-sm leading-[18px] tracking-[-0.5px] text-slate-950" data-svelte-h="svelte-w99wcd"> <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='none'%20viewBox='0%200%2024%2024'%3e%3cpath%20fill='%235855E5'%20d='M12%2021.35l-1.45-1.32C5.4%2015.36%202%2012.28%202%208.5%202%205.42%204.42%203%207.5%203c1.74%200%203.41.81%204.5%202.09C13.09%203.81%2014.76%203%2016.5%203%2019.58%203%2022%205.42%2022%208.5c0%203.78-3.4%206.86-8.55%2011.54L12%2021.35Z'/%3e%3c/svg%3e" alt="" width="20" height="20" class="w-5 h-5">
+						Onelist</a></div></div></div>   <div class="bh-campaign-only-md h-14"><div class="campaign-row"><div class="bh-campaign-container h-full flex items-center justify-between"><a href="/" rel="follow" class="flex-shrink-0"><img src="/_app/immutable/assets

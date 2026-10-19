@@ -1,0 +1,158 @@
+User-agent: Yandex
+Disallow: /search?text=
+Disallow: /?ref=
+Disallow: /video?from=
+Disallow: /user/
+Disallow: /error/
+Disallow: /betcity$
+Disallow: *?app=
+Disallow: /*from=
+Disallow: /*click_
+Disallow: /*shared_token=
+Disallow: /*?*
+Disallow: /*?keepThis=
+Disallow: /*?fromtg=
+Disallow: /*?roistat_visit=
+Disallow: /*?fref=
+Disallow: /*?email=
+Disallow: /*?sfns=
+Disallow: /*?noredir=
+Disallow: /*?full=
+Disallow: /*?fromtg=
+Disallow: /*?guid=
+Disallow: /?fbclid=
+Disallow: /?redirect_=
+Disallow: /?amp_lite=
+Disallow: /?nw=
+Allow: /*.css
+Allow: /*.js
+Allow: /*.gif
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.svg
+Sitemap: https://sport24.ru/sitemap_index.xml
+
+User-agent: Googlebot
+Disallow: /search?text=
+Disallow: /?ref=
+Disallow: /video?from=
+Disallow: /user/
+Disallow: /error/
+Disallow: /betcity$
+Disallow: *?app=
+Disallow: /*from=
+Disallow: /*click_
+Disallow: /*shared_token=
+Disallow: /*?*
+Disallow: /*?keepThis=
+Disallow: /*?fromtg=
+Disallow: /*?roistat_visit=
+Disallow: /*?fref=
+Disallow: /*?email=
+Disallow: /*?sfns=
+Disallow: /*?noredir=
+Disallow: /*?full=
+Disallow: /*?fromtg=
+Disallow: /*?guid=
+Disallow: /?fbclid=
+Disallow: /?redirect_=
+Disallow: /?amp_lite=
+Disallow: /?nw=
+Allow: /*.css
+Allow: /*.js
+Allow: /*.gif
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.svg
+Sitemap: https://sport24.ru/sitemap_index.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Anthropic AI Bot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: YandexAI
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Cohere-AI
+Allow: /
+
+User-agent: *
+Disallow: /search?text=
+Disallow: /?ref=
+Disallow: /video?from=
+Disallow: /user/
+Disallow: /error/
+Disallow: /betcity$
+Disallow: *?app=
+Disallow: /*from=
+Disallow: /*click_
+Disallow: /*shared_token=
+Disallow: /*?*
+Disallow: /*?keepThis=
+Disallow: /*?fromtg=
+Disallow: /*?roistat_visit=
+Disallow: /*?fref=
+Disallow: /*?email=
+Disallow: /*?sfns=
+Disallow: /*?noredir=
+Disallow: /*?full=
+Disallow: /*?fromtg=
+Disallow: /*?guid=
+Disallow: /?fbclid=
+Disallow: /?redirect_=
+Disallow: /?amp_lite=
+Disallow: /?nw=
+Allow: /*.css
+Allow: /*.js
+Allow: /*.gif
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.svg
+Sitemap: https://sport24.ru/sitemap_index.xml
+
+Clean-Param: utm_source&ref&utm_medium&utm_campaign&gclid&yclid&ymclid&fbclid&clid&_cldee
+Sitemap: https://sport24.ru/sitemap_index.xml

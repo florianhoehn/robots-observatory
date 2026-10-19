@@ -1,0 +1,1540 @@
+<!-- Copyright (c) 2026 by VacationsToGo.com. All rights reserved. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<meta name="format-detection" content="telephone=no"/>
+<link rel="stylesheet" type="text/css" href="/lib/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/lib/glyphicons/2.1/css/glyphicons.css">
+<style>
+@media print {
+  a[href]:after {
+    content: none!important;
+  }
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  /* line-height set to bootstrap3 standard */
+  /*line-height: 1.428!important;*/
+  line-height: 1.2!important;
+  -webkit-text-size-adjust: none;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  background-color: #c1d5e8;
+  font-size: 14px;
+  color: #000!important;
+  font-family: Arial, Helvetica, sans-serif!important;
+  /* line-height set to bootstrap3 standard */
+  /*line-height: 1.428!important;*/
+  line-height: 1.2!important;
+  -webkit-text-size-adjust: none;
+}
+
+img {
+  border: 0px;
+}
+
+/* BEGIN: Match this to Bootstrap's anchor color! */
+.anchor-color {
+  color: #0000cd;
+}
+/* END: Match this to Bootstrap's anchor color! */
+
+a:link { color:#0000cd; text-decoration: none; }
+a:hover { color: #0000cd; text-decoration: underline; }
+a:visited { color: #0000cd; text-decoration: none; }
+a:visited:hover { color: #0000cd; text-decoration: none; }
+
+.padR { padding-right: 2em; }
+
+.text-color-dark {
+  color: #000;
+}
+
+.text-color-red {
+  color: #e8191f;
+}
+
+.center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn-vtg {
+  border: 0px;
+  line-height: 1em;
+  font-weight: bold;
+  font-size: 16px!important;
+  padding-top: 0.5em;
+  padding-right: 1em;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  border-radius: 0px;
+}
+
+.btn-vtg-yellow {
+  color: #000;
+  background-color: #f9ce0c;
+}
+
+.btn-vtg-gray {
+  color: #000;
+  background-color: #eee;
+}
+
+.btn-vtg-red {
+  color: #fff;
+  background-color: #cc0000;
+}
+
+.btn-vtg-red:hover,
+.btn-vtg-red:focus,
+.btn-vtg-red:visited:hover {
+  color: #fff!important;
+  text-decoration: none;
+}
+
+.btn-vtg-green {
+  color: #fff!important;
+  background-color: #00aa00;
+}
+
+.btn-vtg-blue {
+  color: #fff!important;
+  background-color: #00adef;  /* daily-special */
+}
+
+.btn-vtg-green:hover,
+.btn-vtg-green:focus,
+.btn-vtg-green:visited:hover {
+  color: #fff!important;
+  text-decoration: none;
+}
+
+.btn-book-online {
+  float: right;
+  margin-top: 10px;  /* offsets
+<h1>'s margin-top:15px; */
+}
+
+.btn-vtg-continue,
+.btn-vtg-continue:hover,
+.btn-vtg-continue:focus,
+.btn-vtg-continue:visited:hover {
+  color: #0000cd!important;
+  text-decoration: none;
+}
+
+.announcement {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+a[href^="tel"]{
+  color: inherit;
+  text-decoration: none;
+}
+
+.inline-block,
+.inline-column {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.inline-block.column {
+  text-align: left;
+  line-height: 1.6em;
+  white-space: nowrap;
+}
+
+.separation {
+  margin-right: 3em;
+}
+
+form label {
+  margin-bottom: 0em;
+}
+
+.label {
+  white-space:nowrap;
+}
+
+.one-place {
+  white-space: nowrap;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+#carouselContainer { width: 400px; }
+#slideshowCarousel { margin: 0.5em auto; }
+.tab-pane { padding-top: 15px; }
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  height: 40px !important;
+  width: 40px !important;
+}
+
+.carousel-control-prev-icon {
+ background-image: url(/images/chevron-left.png);
+}
+
+.carousel-control-next,.carousel-control-prev {
+  opacity: 1.0;
+}
+
+.carousel-control-next:focus,.carousel-control-next:hover,.carousel-control-prev:focus,.carousel-control-prev:hover {
+  opacity: 1.0;
+}
+
+.carousel-control-next-icon {
+  background-image: url(/images/chevron-right.png);
+}
+
+form .paragraph-margin {
+  margin-bottom: 1.25em!important;
+}
+
+/* ------------------------------------------------------------------ */
+/* ----------------- BEGIN: Body-related containers ----------------- */
+
+#bodyContainerBackground {
+  width: 1080px;
+  height: 100%;
+  margin: 0px auto;
+  position: relative;
+  background-color: #e5dfd1;
+}
+
+#bodyContainer {
+  width: inherit;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin: 0px;
+  padding: 0px;
+  background-color: #fff;
+}
+
+.body-section-container {
+  width: 100%;
+  clear: left;
+  margin: 0px;
+  padding: 0px;
+}
+
+/*red: #c93b2b */
+#siteHeader {
+  background-color: #0066cb;
+  height: 110px;
+  font-family: Arial, Helvetica, sans-serif!important;
+  line-height: 1.428!important;
+}
+
+#siteMenu {
+  font-family: Arial, Helvetica, sans-serif!important;
+  font-size: 18px;
+  height: 40px;
+}
+
+#siteFooter {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  background-color: #e5dfd1;
+  font-family: Arial, Helvetica, sans-serif!important;
+  line-height: 1.428;
+}
+
+.body-content {
+  width: 100%;
+  text-align: left;
+  padding: 8px 18px 18px 18px;
+}
+
+.vtg-layout {
+  width: 100%;
+  min-height: 600px;
+  display: table;
+  margin-top: 10px!important;
+}
+
+.vtg-layout-row {
+  display: table-row;
+}
+
+.vtg-layout-left-col {
+  width: 290px!important;
+  max-width: 290px!important;
+  padding-left: 0px;
+  padding-right: 15px;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.vtg-layout-main {
+  display: table-cell;
+  padding-right: 15px;
+  padding-left: 15px;
+  vertical-align: top;
+  width: 754px;
+  max-width: 754px;
+  -webkit-text-size-adjust: none;
+}
+
+.vtg-layout-cbr {
+  margin-left: 50px;
+}
+
+.vtg-left-section {
+  width: 275px!important;
+  max-width: 275px!important;
+  background-color: #e5dfd1;
+  padding: 15px 13px 10px 13px;
+  margin-bottom: 7px;
+  -webkit-text-size-adjust: none;
+}
+
+.vtg-left-section .header {
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: -6px;
+}
+
+.vtg-left-section input {
+  font-size: inherit!important;
+}
+
+.vtg-left-section .more-deals {
+  display: inline-block;
+  position: relative;
+  width: 111px;
+  margin-right: 15px;
+  line-height: 2em;
+}
+
+/* min-height for each left-section box */
+.vtg-left-section-ticker {
+  min-height: 100px;
+}
+
+.vtg-left-section-fab {
+  min-height: 340px;
+}
+
+.vtg-left-section-advanced {
+  min-height: 60px;
+}
+
+.vtg-left-section-lookup {
+  min-height: 60px;
+}
+
+a.text-color-dark:link { color: #000; text-decoration: none; }
+a.text-color-dark:hover { color: #0000cd; text-decoration: underline; }
+a.text-color-dark:visited { color: #000; text-decoration: none; }
+a.text-color-dark:visited:hover { color: #0000cd; text-decoration: none; }
+
+.vtg-myprofile-radio {
+  margin-top: 5px;
+  margin-bottom: 4px;
+}
+
+.more-discounts-image {
+  padding-top: 25px;
+}
+
+/* ------------------ END: Body-related containers ------------------ */
+/* ------------------------------------------------------------------ */
+
+
+/* ------------------------------------------------------------------ */
+/* ------------------------- BEGIN: Header -------------------------- */
+
+#siteHeader .left-block {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 395px;
+  text-align: left;
+  padding: 8px 10px 8px 40px;
+  color: #fff;
+}
+
+/* just resize logo for a site and don't touch .logo-cust! */
+
+#siteHeader .left-block .logo-cust {
+  position: absolute;
+  bottom: 10px;
+  font-size: 15px;
+  line-height: 1.428!important;
+}
+
+#siteHeader .left-block .logo-cust img {
+  margin-bottom: 4px;
+}
+
+#siteHeader .powered-by-vtg {
+  font-size: 14px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+#siteHeader .middle-block {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 290px;
+  padding: 8px 0px 8px 0px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#siteHeader .middle-block .top-half {
+  padding-top: 3px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#siteHeader .top-half a {
+  color: #feed00;
+  text-decoration: underline;
+}
+
+#siteHeader .middle-block .bottom-half {
+  position: absolute;
+  padding: 0px;
+  left: 10px;
+  bottom: 10px;
+  text-align: center;
+  width: 100%;
+  width: 260px;
+}
+
+#siteHeader .right-block {
+  position: relative;
+  float: right;
+  height: 100%;
+  width: 395px;
+  text-align: right;
+  padding: 8px 40px 8px 10px;
+  color: #fff;
+}
+
+#siteHeader .right-block .top-half {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+#siteHeader .right-block .top-half a:link { color: #fff; text-decoration: none; }
+#siteHeader .right-block .top-half a:hover { color: #fff; text-decoration: underline; }
+#siteHeader .right-block .top-half a:visited { color: #fff; text-decoration: none; }
+#siteHeader .right-block .top-half a:visited:hover { color: #fff; text-decoration: none; }
+
+#siteHeader .right-block button {
+  padding: 0px 0px 3px 0px;
+  color: #fff;
+  font-size: 1em;
+}
+
+#siteHeader .right-block .top-half span {
+  display: inline-block;
+}
+
+#siteHeader .right-block .pipe {
+  /*font-size: 20px;*/
+  margin-left: 0.20em;
+  margin-right: 0.20em;
+}
+
+#siteHeader .right-block .bottom-half {
+  position: absolute;
+  padding: 0px;
+  right: 50px;
+  bottom: 12px;
+}
+
+#siteHeader .right-block .phone-middle {
+  font-size: 21px;
+  white-space: nowrap;
+  padding-top: 8px!important;
+  padding-bottom: 8px!important;
+}
+#siteHeader .right-block .phone-middle a:hover { color: #fff; text-decoration: none; }
+
+#siteHeader .right-block .phone-top {
+  font-size: 18px;
+  white-space: nowrap;
+  line-height: 1em;
+}
+
+#siteHeader a[href^="tel"]{
+  color: white!important;
+  text-decoration: none;
+}
+
+/* .dropdown-toggle for changing language */
+#siteHeader-lang::after {
+  margin-left: 0px;
+  vertical-align: middle;
+}
+
+#siteHeader .dropdown-menu {
+  transform: translate3d(0px, 20px, 0px)!important;
+  margin-left: -30px;
+  font-size: 16px!important;
+}
+
+.welcome-back-exclamation {
+  padding-left: 2px;
+}
+
+.vtg-user-prompt-icon {
+  display: block;
+  content: "!";
+  border-radius: 50%;
+  border: 1px solid #00adef; /* #036ffc #00adef #f1ff2e */
+  background-color: #00adef;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  color: #fff; /* #c93b2b */
+  font-weight: bold;
+  font-size: 17px;
+}
+
+/* -------------------------- END: Header --------------------------- */
+/* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/* -------------------------- Begin: FAB  --------------------------- */
+
+/* BEGIN regular bootstrap select styles */
+
+select:-moz-focusring { 
+  color: transparent!important;
+  text-shadow: 0 0 0 #000!important;
+}
+
+select:focus::-ms-value {
+  background-color: #cefdce!important;
+}
+
+.custom-select {
+  /* START arrow in the select */
+  background-image:
+    linear-gradient(45deg, transparent 50%, black 60%),
+    linear-gradient(135deg, black 40%, transparent 50%) !important;
+  background-position:
+    calc(100% - 15px) 12px,
+    calc(100% - 10px) 12px,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* END arrow in the select */
+
+  cursor: pointer; /* does not have pointer by default */
+  color: #000; /* font color should be black */
+  padding-left: 7px;
+
+  /* START size changes */
+  font-size: 14px!important;
+  line-height: 1.2em;
+  /* END size changes */ 
+}
+
+/* red arrow on an invalid form field */
+.custom-select.is-invalid {
+  /* START arrow in the select */
+  background-image:
+    linear-gradient(45deg, transparent 50%, red 60%),
+    linear-gradient(135deg, red 40%, transparent 50%) !important;
+  background-position:
+    calc(100% - 15px) 12px,
+    calc(100% - 10px) 12px,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* END arrow in the select */
+}
+
+.custom-select:focus {
+  color: #000;
+  outline: 0;
+}
+
+.custom-select option {
+  color: #000;
+}
+.custom-select option:hover {
+  background-color: #0066CB;
+}
+
+/* green highlight when something is selected, occupancy is different since default is 2 */
+select[data-chosen]:not([data-chosen='0']):not([name='occ']) {
+  color: #212529;
+  background-color: #cefdce!important;
+  border-color: #ced4da;
+}
+select[name='occ']:not([data-chosen='2']) {
+  color: #212529;
+  background-color: #cefdce!important;
+  border-color: #ced4da;
+}
+select option:not([data-chosen='0']) {
+  color: #000;
+  background-color: #fff!important;
+  border-color: #ced4da;
+}
+
+/* END regular bootstrap select styles */
+
+
+
+
+#fabBoxContainer {
+  text-align: left;
+  padding: 0px;
+  max-width: 248px; /* stops select options from resizing container */
+  margin-top: -8px;
+}
+
+#fabBoxContainer form select,
+#fabBoxContainer form option {
+  font-size: 14px!important;
+}
+
+.bootstrap-select,
+.filter-option,
+.dropdown-menu {
+  font-size: 14px!important;
+}
+
+.bootstrap-select {
+  background-color: #fff!important;
+}
+
+#excludeSegmentsTooltip {
+  padding-top: 3px;
+}
+
+#fabTitle {
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 3px;
+}
+
+#fabMsgRegionID, #fabMsgMisc {
+  display: none;
+  color: red;
+}
+
+#fabMsgCount { 
+  color: forestgreen;
+  margin-right: 1em;
+}
+
+#fabMsgDepartures {
+   margin-bottom: 6px;
+}
+
+/* for all forms */
+.dropdown-item {
+  padding-top: 2px!important;
+  padding-bottom: 2px!important;
+}
+
+/* START FAB form */
+#fabForm .btn {
+  line-height: 1.2!important;
+  font-size: 12px!important;
+}
+
+#fabForm .form-control {
+  height: 100%;
+}
+
+#fabForm .form-group {
+  margin-bottom: 2px;
+}
+/* END FAB form */
+
+/* START override placeholder color */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #000!important;
+  opacity: 1!important; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #000!important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #000!important;
+}
+/* END override placeholder color */
+
+/* This overrides
+<option>
+color */
+#fabForm .dropdown-menu.open li a {
+  color: #000;
+}
+
+.dropdown-item {
+  color: #000!important;
+}
+
+.dropdown-item.active,.dropdown-item:active {
+  background-color: #ccc;
+}
+
+.dropdown-item:hover {
+  background-color: #ccc;
+}
+
+/* override the color by forcing 0px */
+.btn.focus,
+.btn:focus {
+ outline: 0;
+ box-shadow: 0 0 0 0rem rgba(0,123,255,.25)
+}
+
+/* force it to be white background instead of subtle grey */
+.btn-light{
+  color: #212529;
+  background-color: #fff!important;
+  border-color: #ced4da; /*#f8f9fa*/
+}
+
+.btn-light-selected {
+  color: #212529;
+  background-color: #cefdce!important;
+  border-color: #ced4da;
+}
+
+.custom-control-label {
+  padding-top: 5px;
+}
+
+#ShipID ~ .dropdown-menu {
+  min-height: 0px!important;
+}
+#ShipID ~ .dropdown-menu .inner {
+  min-height: 0px!important;
+}
+
+/* ---------------------------- END: FAB ---------------------------- */
+/* ------------------------------------------------------------------ */
+
+
+/* ------------------------------------------------------------------ */
+/* -------------------------- BEGIN: Menu --------------------------- */
+
+#siteMenu nav  {
+  height: 40px;
+  background-color: white;
+  border: 0px;
+  color: #000!important;
+  font-family: Arial, Helvetica, sans-serif!important;
+  font-size: 18px!important;
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+#siteNav li a {
+  padding: 10px 8px;
+}
+
+#siteNav {
+  width: 100%;
+}
+
+#siteMenu nav li a:hover {
+  background-color: #e0e0e0;
+  text-decoration: none;
+}
+
+#siteMenu a[href="#"] {
+  cursor: default;
+}
+
+#siteMenu .dropdown-toggle {
+  white-space: normal;
+}
+
+#siteMenu .dropdown-toggle:after {
+  display: none;
+}
+
+#siteMenu .navbar-default .navbar-nav>li>a {
+  color: #000;
+}
+
+#siteNav ul {
+  position: absolute;
+  white-space: nowrap;
+  z-index: -1;
+}
+
+#siteNav >
+li {
+  margin-left: 10px;
+  margin-right: 6px;
+}
+
+/* First Menu Item - Home */
+#siteNav >
+li:first-child {
+  margin-left: 0px!important;
+}
+#siteNav >
+li:first-child >
+a {
+  padding-left: 18px!important;
+}
+
+/* cruise line sub menu */
+#siteNav >
+li:nth-child(2):hover >
+ul { 
+  min-width: 460px;
+}
+
+/* cruise line sub menu */
+#siteNav >
+li:nth-child(2):hover >
+ul li:nth-child(odd){
+  float: left;
+  width: 50%;
+}
+
+/* cruise line sub menu */
+#siteNav >
+li:nth-child(2):hover >
+ul li:nth-child(even){
+  float: right;
+  width: 50%;
+}
+
+/* Newsletter */
+#siteNav >
+li:last-child {
+  margin-left: 15px!important;
+  margin-right: 0px!important;
+}
+#siteNav >
+li:last-child >
+a {
+  padding-right: 18px!important;
+}
+
+#siteNav >
+li:hover >
+ul {
+  left: auto;
+  width: 100%;
+  z-index: 10;
+}
+
+/* "Our Specialties" sub items */
+#siteNav >
+li:nth-child(6):hover >
+ul { 
+  min-width: 220px;
+  font-size: 16px;
+  line-height: 1.8em;
+}
+
+/* "Groups" sub items */
+#siteNav >
+li:nth-child(7):hover >
+ul { 
+  min-width: 220px;
+  font-size: 16px;
+  line-height: 1.8em;
+}
+
+#siteMenu >
+nav >
+ul >
+li.dropdown:hover >
+a {
+  background-color: #e0e0e0;
+  text-decoration: none;
+}
+
+/* --------------------------- END: Menu ---------------------------- */
+/* ------------------------------------------------------------------ */
+
+.vtg-off-center {
+  margin-left: 60px;
+}
+
+/* ------------------------------------------------------------------ */
+/* ------------------------- BEGIN: Footer -------------------------- */
+#siteFooter .callback {
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+#siteFooter .phone-footer {
+ color: #e8191f;
+}
+
+#siteFooter a[href^="tel"]{
+  color: #e8191f!important;
+  text-decoration: none;
+}
+
+#siteFooter .office-hours {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+#siteFooter .link-section {
+  margin-top: 30px;
+  font-size: 13px;
+}
+
+#siteFooter .inline-block {
+  text-align: left;
+}
+
+#siteFooter .separate {
+  margin-right: 70px;
+}
+
+#siteFooter .career-tellus {
+  margin-top: 1em;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#siteFooter .career-tellus .pipe {
+  margin-top: 1em;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+#siteFooter .copyright {
+  margin-top: 0.5em;
+  font-size: 12px;
+}
+
+
+#siteFooter .link-section a:link { color: #000; text-decoration: none; }
+#siteFooter .link-section a:hover { color: #0000cd; text-decoration: underline; }
+#siteFooter .link-section a:visited  { color: #000; text-decoration: none; }
+#siteFooter .link-section a:visited:hover { color: #0000cd; text-decoration: none; }
+
+/* -------------------------- END: Footer --------------------------- */
+/* ------------------------------------------------------------------ */
+
+
+/* ---------------------------------------------------------------- */
+/* ------------------------- BEGIN: Call Back --------------------- */
+
+.has-error {
+  color: #e8191f!important;  
+}
+
+#comment_msg,#fd_msg,#fd2_msg,#fd3_msg {
+  color:#e8191f;
+}
+
+/* ----------this is the same as myprofile.cfm lines per Troy-- */
+#callback_hr {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  background-size: 4px;
+  border-top: 4px solid #eee;
+  border-color: #eee;
+}
+
+/* -------------------------- END: Call Back --------------------------- */
+/* ---------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------- */
+/* ----- BEGIN: classes for CMS to make it look like BootStrap ----- */
+
+.vtg-thead-dark {
+  font-weight: normal;
+  color: #fff;
+  background-color: #666;
+}
+
+/* ----------------------------------------------------------------- */
+/* ------ END: classes for CMS to make it look like BootStrap ------ */
+
+/* ------------------------------------------------------------------ */
+/* ------------ BEGIN: Override Bootstrap's CSS settings ------------ */
+
+h1 {
+  color: #000;
+  font-size: 26px;
+  font-weight: normal;
+  margin-top: 0px;
+}
+
+h2 {
+  color: #000;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+h3 {
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+h4 {
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+p {
+  margin-top: 0.75em!important;
+  margin-bottom: 0.75em!important;
+}
+
+hr {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  height: 1px;
+}
+
+button.btn-vtg-info {
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+}
+
+/* delete? */
+/*.carousel-control {
+  outline: 0;
+  opacity: .9;
+}
+
+.carousel-control .glyphicon-chevron-left:before{  
+  font-size: 40px;
+}
+
+.carousel-control .glyphicon-chevron-right:before{  
+  font-size: 40px;
+}*/
+/* end delete? */
+
+/* Tabs on Cruise Lines and Ships */
+/* Bootstrap4 uses 1rem normally but we are reducing it so it fits into a smaller space than niche uses */
+#tabContainer .nav-link {
+  padding-left: 0.60rem;
+  padding-right: 0.60rem;
+  font-size: 14px;
+}
+
+/* Bootstrap4 uses 0.75rem but Bootstrap3 uses 8px */
+.table td, .table th {
+  padding: 4px 8px 4px 8px;
+}
+
+.table tbody {
+  color: #000!important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.popover-header,
+.popover-body {
+  font-family: Arial, Helvetica, sans-serif!important;
+  font-size: 14px!important;
+  color: #000!important;
+}
+
+.popover {
+  min-width: 450px;
+}
+
+/* -------------- END: Override Bootstrap's settings -------------- */
+/* ---------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------ */
+/* ------------ BEGIN: Override Bootstrap's NAV settings ------------ */
+
+.navbar-nav >
+li, .navbar-nav {
+  float: left!important;
+}
+
+nav li.dropdown:hover, .dropdown.open {
+  background-color: #dfdfdf;
+}
+
+nav li.dropdown .dropdown-menu {
+  border-top: 0px;
+}
+
+nav li.dropdown:hover .dropdown-menu {
+  display: block;
+  box-shadow: none;
+  padding: 10px 0px 10px 0px!important;
+}
+
+nav .dropdown-menu, nav .dropdown-menu >
+li {
+  background-color: #dfdfdf;
+  font-size: 14px!important;
+  line-height: 1.428!important;
+}
+
+nav .dropdown-menu >
+li {
+  padding: 0px!important;
+}
+
+nav .dropdown-menu >
+li >
+a {
+  text-align: left!important;
+  padding-top: 0.47em!important;
+  padding-bottom: 0.47em!important;
+  color: #000;
+  width: 100%;
+  display: block;
+}
+
+nav .dropdown-menu >
+li >
+a:hover {
+  background-color: #0066CB!important;
+  color: white;
+  width: 100%;
+}
+
+.bootstrap-select>.dropdown-toggle{
+  color:#000;
+}
+
+.bootstrap-select>.dropdown-toggle::after {
+    display: inline-block!important;
+    margin-left: .255em!important;
+    vertical-align: .255em!important;
+    content: ""!important;
+    border-top: .3em solid!important;
+    border-right: .3em solid transparent!important;
+    border-bottom: 0!important;
+    border-left: .3em solid transparent!important;
+}
+
+/* cruise lines and ships tabs */
+.nav >
+li >
+a:hover {
+  text-decoration: none;
+  background-color: #eee
+}
+
+/* ------------ END: Override Bootstrap's NAV settings ------------ */
+/* ---------------------------------------------------------------- */
+
+
+/* ------------ START: Override Bootstrap's TOOLTIP settings ------------ */
+/* -----------------------------------------------      ----------------- */
+
+.tooltip-inner {
+  background-color: #fff;
+  font-size: 14px;
+  color: #000!important;
+  font-family: Arial, Helvetica, sans-serif!important;
+  max-width: 450px;
+  border: 1px solid #c5c5c5;
+  text-align: left;
+  padding: 10px 20px 10px 20px;
+}
+
+.tooltip.show {
+  opacity: 1.0;
+}
+
+.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .bs-tooltip-bottom .arrow::before {
+  border-bottom-color: #c5c5c5 !important;
+}
+.bs-tooltip-auto[x-placement^=top] .arrow::before, .bs-tooltip-top .arrow::before {
+  border-top-color: #c5c5c5 !important;
+}
+.bs-tooltip-auto[x-placement^=left] .arrow::before, .bs-tooltip-left .arrow::before {
+  border-left-color: #c5c5c5 !important;
+}
+.bs-tooltip-auto[x-placement^=right] .arrow::before, .bs-tooltip-right .arrow::before {
+  border-right-color: #c5c5c5 !important;
+}
+
+/* ------------ END: Override Bootstrap's TOOLTIP settings ------------ */
+/* ------------------------------------------------    ---------------- */
+/* singles sub menu */
+#siteNav >
+li:nth-child(8):hover >
+ul { 
+  min-width: 278px;
+}
+
+.popover-saved-heart {
+  min-width: 170px!important;
+}
+@media screen and (max-width: 1079px) {
+  .whole {
+    width:1024px;
+  }
+  .home-whole {
+    margin-left:22px;
+    margin-right:22px;
+  }
+  a.MenuItemLink {
+    font-size:14px;
+  }
+  a.MenuItemLinkOn {
+    font-size:14px;
+  }
+  a.MenuItemLink {
+    padding-left:0px;
+  }
+  a.MenuItemLinkOn {
+    padding-left:0px;
+  }
+  #topnavlinks {
+    width: 977px;
+    margin-left:-53px;
+  }
+}
+</style>
+<link rel="preconnect" href="https://assets.vacationstogo.com" crossorigin="" />
+</head>
+<body>
+<div id="bodyContainerBackground">
+<div id="bodyContainer">
+<div id="siteHeader" class="body-section-container">
+<span class="left-block">
+<div class="logo-cust">
+<a href="/">
+<img src="/images/logo/VTGLogo2.png" alt="Discount cruises from Vacations To Go"/>
+</a>
+<br/>
+<span class="powered-by-vtg">Over 10 million happy customers since 1984</span>
+</div>
+</span>
+<span class="middle-block">
+<div class="top-half" style="font-size: 16px; padding-top: 0; color: yellow;">
+</div>
+<div class="bottom-half">
+</div>
+</span>
+<span class="right-block">
+<div class="top-half">
+<a href="https://www.rivercruise.com/?source=cruisetop">River Cruises</a>
+<span class="pipe">I</span>
+<a href="https://www.tourvacationstogo.com/?source=cruisetop">Tours</a>
+<span class="pipe">I</span>
+<a href="https://www.resortvacationstogo.com/?source=cruisetop">Resorts</a>
+<span class="pipe">I</span>
+<a href="https://www.africasafari.com/?source=cruisetop">Safaris</a><br/>
+<span class="phone-middle">0800-098-8546</span><br/>
+<span
+              id="site_saved_heart"
+              style="display: none;"
+            >
+<a href="/ticker.cfm?my=1&incCT=y"><img
+                  src="https://assets.vacationstogo.com/images/heart_teal.png"
+                  style="width: 18px; padding-bottom: 4px;"
+                  data-content="View my saved cruises."
+                /></a>
+<span class="pipe">I</span>
+</span>
+<a href="/myprofile.cfm">My Account</a>
+<span class="pipe">I</span>
+<div class="dropdown" style="display:inline;">
+<button id="siteHeader-lang" type="button" class="btn btn-anchor dropdown-toggle" data-toggle="dropdown">
+English
+</button>
+<div class="dropdown-menu" style="min-width: 0px;">
+<a class="dropdown-item" href="https://espanol.vacationstogo.com/?source=cruisetop">Espa&ntilde;ol</a>
+<a class="dropdown-item" href="https://francais.vacationstogo.com/?source=cruisetop">Fran&ccedil;ais</a>
+<a class="dropdown-item" href="https://portugues.vacationstogo.com/?source=cruisetop">Portugu&ecirc;s</a>
+</div>
+</div>
+</div>
+</span>
+</div>
+<div id="siteMenu" class="body-section-container">
+<nav class="navbar navbar-expand-lg navbar-expand navbar-default">
+<ul class="nav navbar-nav" id="siteNav">
+<li >
+<a href="/">
+Home
+</a>
+</li>
+<li class="dropdown" >
+<a href="/cruise_lines.cfm" 
+                      class="dropdown-toggle" 
+                       
+                      role="button">
+Cruise Lines
+</a>
+<ul class="dropdown-menu" style=" width:100%;">
+<li style="padding:0.5em;">
+<a href="/cruise_lines/american_cruise_lines.cfm">
+American Cruise Lines
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/oceania_cruises.cfm">
+Oceania Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/atlas_ocean_voyages.cfm">
+Atlas Ocean Voyages
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/pno_cruises.cfm">
+P&O Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/azamara_cruises.cfm">
+Azamara
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/paul_gauguin_cruises.cfm">
+Paul Gauguin Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/carnival_cruises.cfm">
+Carnival Cruise Line
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/ponant_yacht_cruises.cfm">
+Ponant
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/celebrity_cruises.cfm">
+Celebrity Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/princess_cruises.cfm">
+Princess Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/celestyal_cruises.cfm">
+Celestyal Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/Quark_Expeditions.cfm">
+Quark Expeditions
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/costa_cruises.cfm">
+Costa Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/regent_cruises.cfm">
+Regent Seven Seas Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/crystal_cruises.cfm">
+Crystal Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/ritz_carlton_yacht_collection.cfm">
+Ritz-Carlton Yacht Collection
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/cunard_cruises.cfm">
+Cunard Line
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/royal_caribbean_cruises.cfm">
+Royal Caribbean International
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/disney_cruise_line.cfm">
+Disney Cruise Line
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/scenic_cruises.cfm">
+Scenic Luxury Cruises & Tours
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/emerald_cruises.cfm">
+Emerald Cruises & Tours
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/seabourn_cruises.cfm">
+Seabourn
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/explora_journeys.cfm">
+Explora Journeys
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/seadream_yacht_club.cfm">
+SeaDream Yacht Club
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/holland_america_cruises.cfm">
+Holland America Line
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/silversea_cruises.cfm">
+Silversea Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/hurtigruten_cruises.cfm">
+Hurtigruten
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/star_clippers_cruises.cfm">
+Star Clippers
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/hx_expeditions.cfm">
+HX
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/victory_cruise_lines.cfm">
+Victory Cruise Lines
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/margaritaville_at_sea.cfm">
+Margaritaville at Sea
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/viking_cruises.cfm">
+Viking
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/msc_cruises.cfm">
+MSC Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/virgin_voyages.cfm">
+Virgin Voyages
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/lindblad_expeditions.cfm">
+National Geographic-Lindblad
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/windstar_cruises.cfm">
+Windstar Cruises
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines/norwegian_cruise_line.cfm">
+Norwegian Cruise Line
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/cruise_lines.cfm">
+<b>See all cruise lines</b>
+</a>
+</li>
+</ul>
+</li>
+<li >
+<a href="/cruise_ships.cfm">
+Ships &amp; Ratings
+</a>
+</li>
+<li >
+<a href="/cruise_destinations.cfm">
+Regions
+</a>
+</li>
+<li >
+<a href="/cruise_ports.cfm">
+Ports
+</a>
+</li>
+<li class="dropdown" >
+<a href="#" 
+                      class="dropdown-toggle" 
+                       
+                      role="button">
+Our Specialties
+</a>
+<ul class="dropdown-menu" style=" width:100%;">
+<li style="padding:0.5em;">
+<a href="/cruise_tours.cfm">
+Cruise & Land Tours
+</a>
+</li>
+<li style="padding:0.5em;">
+<a href="/expedition_cruises.cfm">

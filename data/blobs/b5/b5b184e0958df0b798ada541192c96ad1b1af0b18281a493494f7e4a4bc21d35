@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html  lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+  <head>
+    <script type="72566257631ddcb161c29334-text/javascript">document.cookie = "__adblocker=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+var setNptTechAdblockerCookie = function(adblocker) {
+  var d = new Date();
+  d.setTime(d.getTime() + 60 * 5 * 1000);
+  document.cookie = "__adblocker=" + (adblocker ? "true" : "false") + "; expires=" + d.toUTCString() + "; path=/";
+};
+var script = document.createElement("script");
+script.setAttribute("async", true);
+script.setAttribute("src", "//www.npttech.com/advertising.js");
+script.setAttribute("onerror", "setNptTechAdblockerCookie(true);");
+document.getElementsByTagName("head")[0].appendChild(script);</script>
+<meta charset="utf-8" />
+<script type="72566257631ddcb161c29334-text/javascript">(function() {
+  'use strict';
+
+  // Cookie TTL in minutes (sliding expiration - refreshed on each page view)
+  var COOKIE_TTL_MINUTES = 15;
+
+  // Define all marketing parameters to capture
+  var marketingParams = [
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+    'utm_id', 'utm_source_platform', 'utm_creative_format', 'utm_marketing_tactic',
+    'gclid', 'gcl', 'fbclid', 'fbc', 'fbp', 'li_fat_id', 'ttdimp', 'msclkid'
+  ];
+
+  // Get a cookie value by name
+  function getCookie(name) {
+    var value = '; ' + document.cookie;
+    var parts = value.split('; ' + name + '=');
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+    return null;
+  }
+
+  // Set a cookie with TTL (max-age in seconds)
+  function setCookie(name, value, ttlMinutes) {
+    var hostname = window.location.hostname;
+    var domain = '';
+
+    // Set domain-level cookie for .usni.org if on usni.org domain
+    if (hostname.indexOf('usni.org') !== -1) {
+      domain = '; domain=.usni.org';
+    }
+
+    var maxAge = ttlMinutes * 60; // Convert minutes to seconds
+    document.cookie = name + '=' + encodeURIComponent(value) + domain + '; path=/; SameSite=Lax; max-age=' + maxAge;
+  }
+
+  // Get URL parameter value by name
+  function getUrlParam(name) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
+  // Push marketing parameters to dataLayer for GTM
+  function pushToDataLayer(params) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'marketing_params_loaded',
+      'marketing_params': params
+    });
+  }
+
+  // Process marketing parameters
+  function captureMarketingParams() {
+    var collectedParams = {};
+
+    for (var i = 0; i < marketingParams.length; i++) {
+      var param = marketingParams[i];
+      var urlValue = getUrlParam(param);
+      var cookieValue = getCookie('marketing_' + param);
+
+      // If parameter exists in URL, update the cookie
+      if (urlValue !== null && urlValue !== '') {
+        setCookie('marketing_' + param, urlValue, COOKIE_TTL_MINUTES);
+        collectedParams[param] = urlValue;
+      }
+      // If parameter exists in cookie, refresh its TTL (sliding expiration)
+      else if (cookieValue !== null && cookieValue !== '') {
+        var decodedValue = decodeURIComponent(cookieValue);
+        setCookie('marketing_' + param, decodedValue, COOKIE_TTL_MINUTES);
+        collectedParams[param] = decodedValue;
+      }
+    }
+
+    // Push collected params to dataLayer for GTM access
+    if (Object.keys(collectedParams).length > 0) {
+      pushToDataLayer(collectedParams);
+    }
+  }
+
+  // Run immediately
+  captureMarketingParams();
+})();</script>
+<script id="ad-entity-settings" type="application/json">{"responsive":true,"inline":false,"p13n":false}</script>
+<meta name="description" content="The U.S. Naval Institute provides an independent forum for those who seek to advance and strengthen the naval profession." />
+<link rel="canonical" href="https://www.usni.org/" />
+<link rel="shortlink" href="https://www.usni.org/" />
+<meta property="og:site_name" content="U.S. Naval Institute" />
+<meta property="og:title" content="Page not found" />
+<meta property="og:description" content="The U.S. Naval Institute provides an independent forum for those who seek to advance and strengthen the naval profession." />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="The U.S. Naval Institute provides an independent forum for those who seek to advance and strengthen the naval profession." />
+<meta name="twitter:site" content="@NavalInstitute" />
+<meta name="twitter:title" content="Page not found" />
+<meta name="twitter:creator" content="@NavalInstitute" />
+<meta name="google-site-verification" content="D9Ewj86to4zb4ZCRoGiOQ6lvk1YVl-FL42YhjLU_Ki0" />
+<meta name="google-site-verification" content="fqB9wH1I31rvVXDNmJ-S1JopE88fuBwBDNu9VkkjOc4" />
+<meta name="theme-color" content="#0c1f3e" />
+<meta name="MobileOptimized" content="480" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/themes/custom/usni_bootstrap/favicon.ico" type="image/vnd.microsoft.icon" />
+<script type="72566257631ddcb161c29334-text/javascript">window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.thanks = {
+    postShare: false,
+    ad: false
+};</script>
+
+    <title>Page not found | U.S. Naval Institute</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css__s6L3yYcVjv64fZcNMiVokWwABmQgYFre1wBBDNIZfo.css?delta=0&amp;language=en&amp;theme=usni_bootstrap&amp;include=eJxljt0KwyAMhV_Izas9j0RNS6gmJcko7ulX1jGE3Z0_-A7U6gI8InzFfVFhD1nEzRX2R8xgOPu1SYZ2Mx-NeJ2bjmawooWyYSUXTcQV2XOTssVJhyKKkUU7NHphMHI8qGKChurnkjzYMMd-0Z_GlH6guJwP7S9U6HiIbldRpO_CJ9CiQ04f7Bsu_l2X" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css__1sA6x-sP-gxdVbCPaC1Z3gq0KjLCy9UQnl-ntuIMqM.css?delta=1&amp;language=en&amp;theme=usni_bootstrap&amp;include=eJxljt0KwyAMhV_Izas9j0RNS6gmJcko7ulX1jGE3Z0_-A7U6gI8InzFfVFhD1nEzRX2R8xgOPu1SYZ2Mx-NeJ2bjmawooWyYSUXTcQV2XOTssVJhyKKkUU7NHphMHI8qGKChurnkjzYMMd-0Z_GlH6guJwP7S9U6HiIbldRpO_CJ9CiQ04f7Bsu_l2X" />
+<link rel="stylesheet" media="all" href="//fonts.googleapis.com/css?family=Lato:300,400,700,900|Montserrat:200,300,400,700,900" />
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_y7McIObFvvdPXednwPV-9xv3rdc4Mw-WKyeLHV0z22U.css?delta=3&amp;language=en&amp;theme=usni_bootstrap&amp;include=eJxljt0KwyAMhV_Izas9j0RNS6gmJcko7ulX1jGE3Z0_-A7U6gI8InzFfVFhD1nEzRX2R8xgOPu1SYZ2Mx-NeJ2bjmawooWyYSUXTcQV2XOTssVJhyKKkUU7NHphMHI8qGKChurnkjzYMMd-0Z_GlH6guJwP7S9U6HiIbldRpO_CJ9CiQ04f7Bsu_l2X" />
+
+    <script src="/modules/contrib/ad_entity/js/base.js?tmx13e" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/modules/contrib/ad_entity/js/common/googletag/gpt-init.js?tmx13e" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="//securepubads.g.doubleclick.net/tag/js/gpt.js" async="async" type="72566257631ddcb161c29334-text/javascript"></script>
+
+    <!-- Google AdSense verificaton -->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="72566257631ddcb161c29334-text/javascript"></script>
+    <script type="72566257631ddcb161c29334-text/javascript">
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2483890369734377",
+        enable_page_level_ads: true
+      });
+    </script>
+
+            
+    <link rel="apple-touch-icon" sizes="180x180" href="/themes/custom/usni_bootstrap/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/themes/custom/usni_bootstrap/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/themes/custom/usni_bootstrap/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/themes/custom/usni_bootstrap/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/themes/custom/usni_bootstrap/favicons/safari-pinned-tab.svg" color="#192f5b">
+    <link rel="shortcut icon" href="/themes/custom/usni_bootstrap/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#192f5b">
+    <meta name="msapplication-config" content="/themes/custom/usni_bootstrap/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+  </head>
+  <body class="page-route-system-404 path-well-known has-glyphicons">
+
+    
+  <a href="#main-content" class="visually-hidden focusable skip-link">
+      Skip to main content
+    </a>
+    <div data-sitewide-alert aria-live="polite"></div>
+
+      <div class="dialog-off-canvas-main-canvas d-flex flex-column h-100" data-off-canvas-main-canvas>
+    
+<div class='content-wrapper-for-sticky-footer'>
+        <header  class='header'>
+  <a href="/">
+    <img class='header-logo header-logo-xs d-sm-none' src='/themes/custom/usni_bootstrap/dist/images/usni_logo_text_white.svg' alt='USNI Logo'>
+    <img class='header-logo header-logo-sm d-none d-sm-block d-lg-none' src='/themes/custom/usni_bootstrap/dist/images/usni_logo_minimized.svg' alt='USNI Logo'>
+    <img class='header-logo d-none d-lg-block' src='/themes/custom/usni_bootstrap/dist/images/usni_logo_full.svg' alt='USNI Logo'>
+  </a>
+  <nav class='right-side-nav'>
+    <a href='/foundation' class='right-side-nav-donate'><span>Donate</span></a>
+    <ul class='nav navbar-nav'>
+      <li>  <div class="region region-cart-button">
+    <div id="block-usnicartbutton" class="block block-usni-cart-button">
+  
+    
+      <a href='/cart' class='right-side-nav-cart'><span class='right-side-nav-label hide-for-sticky-header'>Cart</span></a>
+
+  </div>
+
+  </div>
+</li>
+      <li>
+        <a href='/user/login?destination=/system/404' class='right-side-nav-join'>
+          <span class='right-side-nav-label hide-for-sticky-header'>Join or Log In</span>
+        </a>
+      </li>
+      <li><a href='/search' class='right-side-nav-search'><span class='right-side-nav-label hide-for-sticky-header'>Search</span></a></li>
+    </ul>
+  </nav>
+  <button class='header-menu-collapse btn btn-secondary d-md-none collapsed' data-bs-toggle='collapse' data-bs-target='#main-menu-collapse'>
+    <span>Collapse</span>
+  </button>
+        <div class="region region-menu">
+    <nav role="navigation" id="main-nav" aria-labelledby="block-mainnavigation-menu" id="block-mainnavigation" class="main-nav">
+              <span class="sr-only" id="block-mainnavigation-menu">Main navigation</span>
+
+      
+    <div class='main-nav-collapse-wrapper'>
+                  <ul data-block="menu" block="block-mainnavigation" class="menu nav navbar-nav main-menu collapse"  data-block="menu" block="block-mainnavigation" class="menu nav navbar-nav main-menu collapse" id="main-menu-collapse">
+                                      <li>
+          <a href="/about-us/mission-and-vision" data-drupal-link-system-path="node/30">About Us</a>
+                        </li>
+                                <li>
+          <a href="/join" data-drupal-link-system-path="node/65777">Membership</a>
+                        </li>
+                                <li>
+          <a href="/press/books" data-drupal-link-system-path="press/books">Books &amp; Press</a>
+                        </li>
+                                <li>
+          <a href="https://news.usni.org/">USNI News</a>
+                        </li>
+                                <li>
+          <a href="/magazines/proceedings" data-drupal-link-system-path="node/1">Proceedings</a>
+                        </li>
+                                <li>
+          <a href="/magazines/naval-history-magazine" data-drupal-link-system-path="node/74">Naval History</a>
+                        </li>
+                                <li>
+          <a href="/archives/about" data-drupal-link-system-path="node/52">Archives</a>
+                        </li>
+                                <li>
+          <a href="/events" data-drupal-link-system-path="node/73">Events</a>
+                        </li>
+                                <li>
+          <a href="/donate" data-drupal-link-system-path="node/54">Donate</a>
+                        </li>
+            </ul>
+      </div>
+
+
+
+  </nav>
+
+  </div>
+
+  </header>
+  
+      <header id='sticky-header' class='header'>
+  <a href="/">
+    <img class='header-logo header-logo-xs d-sm-none' src='/themes/custom/usni_bootstrap/dist/images/usni_logo_text_white.svg' alt='USNI Logo'>
+    <img class='header-logo header-logo-sm d-none d-sm-block d-lg-none' src='/themes/custom/usni_bootstrap/dist/images/usni_logo_minimized.svg' alt='USNI Logo'>
+    <img class='header-logo d-none d-lg-block' src='/themes/custom/usni_bootstrap/dist/images/usni_logo_full.svg' alt='USNI Logo'>
+  </a>
+  <nav class='right-side-nav'>
+    <a href='/foundation' class='right-side-nav-donate'><span>Donate</span></a>
+    <ul class='nav navbar-nav'>
+      <li>  <div class="region region-cart-button">
+    <div id="block-usnicartbutton" class="block block-usni-cart-button">
+  
+    
+      <a href='/cart' class='right-side-nav-cart'><span class='right-side-nav-label hide-for-sticky-header'>Cart</span></a>
+
+  </div>
+
+  </div>
+</li>
+      <li>
+        <a href='/user/login?destination=/system/404' class='right-side-nav-join'>
+          <span class='right-side-nav-label hide-for-sticky-header'>Join or Log In</span>
+        </a>
+      </li>
+      <li><a href='/search' class='right-side-nav-search'><span class='right-side-nav-label hide-for-sticky-header'>Search</span></a></li>
+    </ul>
+  </nav>
+  <button class='header-menu-collapse btn btn-secondary d-md-none collapsed' data-bs-toggle='collapse' data-bs-target='#main-menu-sticky-collapse'>
+    <span>Collapse</span>
+  </button>
+        <div class="region region-sticky-header">
+    <nav role="navigation" id="main-nav-sticky" aria-labelledby="block-mainnavigation-sticky-menu" id="block-mainnavigation-sticky" class="main-nav">
+            <h2 class="sr-only" id="block-mainnavigation-sticky-menu">Main navigation (Sticky)</h2>
+
+      
+    <div class='main-nav-sticky-collapse-wrapper'>
+                  <ul data-block="sticky_header" block="block-mainnavigation-sticky" class="menu nav navbar-nav collapse"  data-block="sticky_header" block="block-mainnavigation-sticky" class="menu nav navbar-nav collapse" id="main-menu-sticky-collapse">
+                                      <li>
+          <a href="/about-us/mission-and-vision" data-drupal-link-system-path="node/30">About Us</a>
+                        </li>
+                                <li>
+          <a href="/join" data-drupal-link-system-path="node/65777">Membership</a>
+                        </li>
+                                <li>
+          <a href="/press/books" data-drupal-link-system-path="press/books">Books &amp; Press</a>
+                        </li>
+                                <li>
+          <a href="https://news.usni.org/">USNI News</a>
+                        </li>
+                                <li>
+          <a href="/magazines/proceedings" data-drupal-link-system-path="node/1">Proceedings</a>
+                        </li>
+                                <li>
+          <a href="/magazines/naval-history-magazine" data-drupal-link-system-path="node/74">Naval History</a>
+                        </li>
+                                <li>
+          <a href="/archives/about" data-drupal-link-system-path="node/52">Archives</a>
+                        </li>
+                                <li>
+          <a href="/events" data-drupal-link-system-path="node/73">Events</a>
+                        </li>
+                                <li>
+          <a href="/donate" data-drupal-link-system-path="node/54">Donate</a>
+                        </li>
+            </ul>
+      </div>
+
+
+
+  </nav>
+
+  </div>
+
+  </header>
+  
+    
+        
+  
+    <div class='sub-menu-wrapper'>
+    <div class='container'>
+                <div class="region region-sub-menu">
+    
+  </div>
+
+          </div>
+  </div>
+
+          <div class="region region-help">
+    <div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+
+  
+  <main role="main" class="main-container">
+              
+    
+    <div class="main-content-and-sidebar--wrapper container">
+      <div class="row">
+                                  
+                          <div class="col-12">
+              <div class="region region-main-content">
+    <div id="block-usni-bootstrap-content" class="block block-system block-system-main-block">
+  
+    
+      The requested page could not be found.
+  </div>
+
+  </div>
+
+          </div>
+        
+                      </div>
+    </div>
+
+              
+              
+    
+              
+      </main>
+</div>
+
+    <div class="region region-footer-top">
+    <div class='container'>
+      <div class='row'>
+        <div class='col-12'>
+          <h3>Quicklinks</h3>
+        </div>
+        <nav role="navigation" aria-labelledby="block-usni-bootstrap-footer-menu" id="block-usni-bootstrap-footer" class="col-md-6 col-lg-8">
+            
+  <h2 class="visually-hidden" id="block-usni-bootstrap-footer-menu">Footer menu</h2>
+  
+
+        
+      <ul data-block="footer_top" block="block-usni-bootstrap-footer" class="menu menu--footer nav">
+                        <li>
+        <a href="/about-us/mission-and-vision" data-drupal-link-system-path="node/30">About the Naval Institute</a>
+                  </li>
+                        <li>
+        <a href="/press/books" data-drupal-link-system-path="press/books">Books &amp; Press</a>
+                  </li>
+                        <li>
+        <a href="/naval-history-magazine">Naval History</a>
+                  </li>
+                        <li>
+        <a href="https://news.usni.org">USNI News</a>
+                  </li>
+                        <li>
+        <a href="/proceedings-magazine">Proceedings</a>
+                  </li>
+                        <li>
+        <a href="/press/oral-histories" data-drupal-link-system-path="press/oral-histories">Oral Histories</a>
+                  </li>
+                        <li>
+        <a href="/events" data-drupal-link-system-path="node/73">Events</a>
+                  </li>
+                        <li>
+        <a href="/donate" data-drupal-link-system-path="node/54">Naval Institute Foundation</a>
+                  </li>
+                        <li>
+        <a href="https://photos.usni.org/">Photos &amp; Historical Prints</a>
+                  </li>
+                        <li>
+        <a href="https://www.usni.org/advertise-us" title="Advertise With Us">Advertise With Us</a>
+                  </li>
+                        <li>
+        <a href="/archives/about" data-drupal-link-system-path="node/52">Naval Institute Archives</a>
+                  </li>
+                        <li>
+        <a href="https://www.usni.org/us-naval-institutes-ships-store">Shop Our Ship&#039;s Store</a>
+                  </li>
+        </ul>
+  
+
+  </nav>
+<section id="block-footernewslettersignup" class="block block-block-content block-block-contentf878ff6c-d9dd-40f7-815f-a4b8747c0f39 clearfix pe-3 col-md-6 col-lg-4">
+    
+  
+  
+
+
+    <div class='signup-block'>
+  <h4 class="signup-block--header">Receive the Newsletter</h4>
+  <div class="signup-block--content"><p>Sign up to get updates about new releases and event invitations.</p></div>
+  <div class="signup-block--primary-links"><a href="/email-signup">Sign Up Now</a></div>
+  <div class='signup-block--links'><a href="https://mailchi.mp/usni/happy-birthday-naval-institute">Example Newsletter</a><a href="/privacy-policy">Privacy Policy</a></div>
+</div>
+
+  </section>
+
+
+      </div>
+    </div>
+  </div>
+
+
+    <footer class="footer region region--footer">
+    <div id="block-usni-bootstrap-usnifooterbranding" class="block block-block-content block-block-content91f71c7e-bff3-4bb8-b70f-0607267ecd13">
+  
+    
+          
+        <div class="container">
+    <div class="row">
+        <div class="col-md-8">
+          <div class="footer-image">            
+            <div class="image-pattern">
+    <img loading="lazy" src="/sites/default/files/logo-white.png" width="1017" height="285" alt="USNI Logo White" typeof="foaf:Image" class="img-fluid" />
+
+
+  </div>
+
+
+</div>
+          <div class="footer-middle-section">
+            <span class="footer-copyright">Copyright © 2026 U.S. Naval Institute</span>
+            <span class="footer-links"><a href="/privacy-policy">Privacy Policy</a><a href="/terms-use">Terms of Use</a><a href="/contact-us">Contact Us</a><a href="/advertise-us">Advertise With Us</a><a href="/faq">FAQ</a><a href="/content-license">Content License</a><a href="/media-inquiries">Media Inquiries</a></span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="footer-links">
+            
+          </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+  </footer>
+
+
+  </div>
+
+    <script type="72566257631ddcb161c29334-text/javascript">(function(src){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src=src;var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})("https:\/\/experience.piano.io\/xbuilder\/experience\/load?aid=R3X6V4aopu");</script>
+
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"theme_breakpoints":"[{\u0022name\u0022:\u0022screen-xs-max\u0022,\u0022mediaQuery\u0022:\u0022all and (max-width: 767px)\u0022,\u0022multipliers\u0022:[\u00221x\u0022,\u00222x\u0022]},{\u0022name\u0022:\u0022screen-sm-min\u0022,\u0022mediaQuery\u0022:\u0022all and (min-width: 768px)\u0022,\u0022multipliers\u0022:[\u00221x\u0022,\u00222x\u0022]},{\u0022name\u0022:\u0022screen-md-min\u0022,\u0022mediaQuery\u0022:\u0022all and (min-width: 992px)\u0022,\u0022multipliers\u0022:[\u00221x\u0022,\u00222x\u0022]},{\u0022name\u0022:\u0022screen-lg-min\u0022,\u0022mediaQuery\u0022:\u0022all and (min-width: 1200px)\u0022,\u0022multipliers\u0022:[\u00221x\u0022,\u00222x\u0022]}]","sitewideAlert":{"refreshInterval":20000,"automaticRefresh":false,"showCount":false,"serverSideRender":false},"user":{"uid":0,"permissionsHash":"e2f8d21f8c7dece4c6158c68d73bcc92c11f4754daba0e4d4fb80a7d9d1baa2e"}}</script>
+<script src="/core/assets/vendor/once/once.min.js?v=1.0.1" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/core/misc/drupalSettingsLoader.js?v=11.4.10" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/core/misc/drupal.js?v=11.4.10" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/core/misc/drupal.init.js?v=11.4.10" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/themes/contrib/bootstrap5/dist/bootstrap/5.3.8/dist/js/bootstrap.bundle.js?v=5.3.8" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="https://static.addtoany.com/menu/page.js" defer type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/modules/contrib/addtoany/js/addtoany.js?v=11.4.10" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/modules/contrib/sitewide_alert/js/init.js?v=11.4.10" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/modules/contrib/theme_breakpoints_js/js/breakpointsLoader.js?tmx13e" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/themes/custom/usni_bootstrap/js/custom-js.js?tmx13e" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="https://js.adsrvr.org/up_loader.1.1.0.js" type="72566257631ddcb161c29334-text/javascript"></script>
+<script src="/themes/custom/usni_bootstrap/js/ttd-tracking.js?v=1.1.0" type="text/plain" data-categories="advertising"></script>
+
+  <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="72566257631ddcb161c29334-|49" defer></script></body>
+</html>

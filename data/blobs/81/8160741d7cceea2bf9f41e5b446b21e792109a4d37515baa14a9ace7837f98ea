@@ -1,0 +1,818 @@
+<!DOCTYPE html><html lang="tr-TR" xml:lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1, user-scalable=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><script id="cky-onetrust-migration">!function(){try{var __ckyMigrationResult=(function migrateOneTrustConsentToCookieYes(doc, isSecure, nowMs, cookieDomain) {
+  var COOKIEYES_COOKIE = "cookieyes-consent";
+  var ONETRUST_CONSENT_COOKIE = "OptanonConsent";
+  var ONETRUST_CLOSED_COOKIE = "OptanonAlertBoxClosed";
+  var CONSENT_VALIDITY_MS = 365 * 24 * 60 * 60 * 1e3;
+  function trim(value2) {
+    return value2.replace(/^\s+|\s+$/g, "");
+  }
+  function safeDecode(value2) {
+    try {
+      return decodeURIComponent(value2);
+    } catch (e) {
+      return value2;
+    }
+  }
+  function readCookie(name) {
+    var parts = (doc.cookie || "").split(";");
+    for (var i = 0; i < parts.length; i++) {
+      var part = parts[i];
+      var eq = part.indexOf("=");
+      if (eq < 0) continue;
+      if (trim(part.slice(0, eq)) === name) return trim(part.slice(eq + 1));
+    }
+    return "";
+  }
+  function readCookieYesAction() {
+    var raw = readCookie(COOKIEYES_COOKIE);
+    if (!raw) return "";
+    var pairs = safeDecode(raw).split(",");
+    for (var i = 0; i < pairs.length; i++) {
+      var kv = pairs[i].split(":");
+      if (trim(kv[0]) === "action") return trim(kv[1] || "");
+    }
+    return "";
+  }
+  function parseOneTrustConsent(raw) {
+    var result = { groups: null, awaitingReconsent: false, consentId: "" };
+    var params = raw.split("&");
+    for (var i = 0; i < params.length; i++) {
+      var param = params[i];
+      var eq = param.indexOf("=");
+      if (eq < 0) continue;
+      var key = trim(param.slice(0, eq));
+      var value2 = safeDecode(param.slice(eq + 1));
+      if (key === "groups") {
+        var groups = {};
+        var items = value2.split(",");
+        for (var j = 0; j < items.length; j++) {
+          var kv = items[j].split(":");
+          var groupId = trim(kv[0] || "");
+          if (!groupId) continue;
+          groups[groupId] = trim(kv[1] || "") === "1";
+        }
+        result.groups = groups;
+      } else if (key === "AwaitingReconsent") {
+        result.awaitingReconsent = trim(value2).toLowerCase() === "true";
+      } else if (key === "consentId") {
+        result.consentId = trim(value2);
+      }
+    }
+    return result;
+  }
+  function toBase64Id(source) {
+    if (!source) return "";
+    try {
+      if (typeof btoa === "function") return btoa(source).replace(/=+$/, "");
+    } catch (e) {
+    }
+    return "";
+  }
+  function randomId() {
+    var alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var out = "";
+    for (var i = 0; i < 32; i++) out += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    return toBase64Id(out) || out;
+  }
+  function yesNo(value2) {
+    return value2 ? "yes" : "no";
+  }
+  var existingAction = readCookieYesAction();
+  if (existingAction === "yes" || existingAction === "no") return "skipped:cookieyes-decision-exists";
+  var closedAtRaw = readCookie(ONETRUST_CLOSED_COOKIE);
+  var oneTrustRaw = readCookie(ONETRUST_CONSENT_COOKIE);
+  if (!closedAtRaw || !oneTrustRaw) return "skipped:no-onetrust-decision";
+  var decidedAtMs = Date.parse(safeDecode(closedAtRaw));
+  if (isNaN(decidedAtMs)) return "skipped:invalid-decision-date";
+  var expiresAtMs = decidedAtMs + CONSENT_VALIDITY_MS;
+  if (expiresAtMs <= nowMs) return "skipped:consent-expired";
+  var oneTrust = parseOneTrustConsent(oneTrustRaw);
+  if (oneTrust.awaitingReconsent) return "skipped:awaiting-reconsent";
+  if (!oneTrust.groups) return "skipped:no-onetrust-groups";
+  var performance = oneTrust.groups["C0002"] === true;
+  var functional = oneTrust.groups["C0003"] === true;
+  var targeting = oneTrust.groups["C0004"] === true;
+  var anyOptional = performance || functional || targeting;
+  var value = [
+    "consentid:" + (toBase64Id(oneTrust.consentId) || randomId()),
+    "consent:" + yesNo(anyOptional),
+    "action:yes",
+    "necessary:yes",
+    "functional:" + yesNo(functional),
+    "analytics:" + yesNo(performance),
+    "performance:" + yesNo(performance),
+    "advertisement:" + yesNo(targeting),
+    "other:" + yesNo(performance && functional && targeting)
+  ].join(",");
+  doc.cookie = COOKIEYES_COOKIE + "=" + value + "; expires=" + new Date(expiresAtMs).toUTCString() + "; path=/" + (cookieDomain ? "; domain=" + cookieDomain : "") + "; SameSite=Strict" + (isSecure ? "; Secure" : "");
+  return "migrated";
+})(document,location.protocol==='https:',Date.now(),"");window.__ckyOneTrustMigration=__ckyMigrationResult}catch(e){window.__ckyOneTrustMigration='failed'}}();</script><script id="cky-google-consent-defaults">!function(){try{(function initGoogleConsentDefaults(win, doc) {
+  var TRACKING_CATEGORIES = ["analytics", "performance", "advertisement"];
+  function trim(value) {
+    return value.replace(/^\s+|\s+$/g, "");
+  }
+  function readCookieYesConsent() {
+    var result = { action: "", categories: {} };
+    var parts = (doc.cookie || "").split(";");
+    for (var i2 = 0; i2 < parts.length; i2++) {
+      var part = parts[i2];
+      var eq = part.indexOf("=");
+      if (eq < 0 || trim(part.slice(0, eq)) !== "cookieyes-consent") continue;
+      var raw = trim(part.slice(eq + 1));
+      try {
+        raw = decodeURIComponent(raw);
+      } catch (e) {
+      }
+      var pairs = raw.split(",");
+      for (var j = 0; j < pairs.length; j++) {
+        var kv = pairs[j].split(":");
+        var key = trim(kv[0] || "");
+        var value = trim(kv[1] || "");
+        if (!key) continue;
+        if (key === "action") result.action = value;
+        else result.categories[key] = value;
+      }
+      break;
+    }
+    return result;
+  }
+  win.dataLayer = win.dataLayer || [];
+  if (typeof win.gtag !== "function") {
+    win.gtag = function() {
+      ;
+      win.dataLayer.push(arguments);
+    };
+  }
+  var consent = readCookieYesConsent();
+  var decided = consent.action === "yes";
+  var trackingValues = [];
+  for (var i = 0; i < TRACKING_CATEGORIES.length; i++) {
+    var categoryValue = consent.categories[TRACKING_CATEGORIES[i]];
+    if (categoryValue === "yes" || categoryValue === "no") trackingValues.push(categoryValue);
+  }
+  var rejectedAllTracking = decided && trackingValues.length > 0;
+  for (var k = 0; k < trackingValues.length; k++) {
+    if (trackingValues[k] !== "no") rejectedAllTracking = false;
+  }
+  var tracking = rejectedAllTracking ? "denied" : "granted";
+  var functional = decided && consent.categories["functional"] === "no" ? "denied" : "granted";
+  win.gtag("consent", "default", {
+    ad_storage: tracking,
+    ad_user_data: tracking,
+    ad_personalization: tracking,
+    analytics_storage: tracking,
+    functionality_storage: functional,
+    personalization_storage: functional,
+    security_storage: "granted"
+  });
+  return tracking;
+})(window,document)}catch(e){}}();</script><script id="cky-banner-customizations">!function(){try{(function initCookieYesBannerCustomizations(doc, win) {
+  var REJECT_LABEL = "Reddet";
+  var BANNER_ROOT_SELECTOR = ".cky-consent-container";
+  var NOTICE_DESCRIPTION_SELECTOR = ".cky-notice-des";
+  var REJECT_BUTTON_SELECTOR = ".cky-btn-reject";
+  var MARKED_REJECT_LINK_SELECTOR = 'a[data-cky-reject-link="true"]';
+  var SAVE_PREFERENCES_SELECTOR = '[data-cky-tag="detail-save-button"], [data-cky-tag="detail-category-preview-save-button"], [data-cky-tag="detail-accept-button"]';
+  var BANNER_CHECK_INTERVAL_MS = 500;
+  var BANNER_CHECK_MAX_ATTEMPTS = 20;
+  var hasRejected = false;
+  function normalizeLabel(text) {
+    return (text || "").replace(/\s+/g, " ").trim();
+  }
+  function isRejectLink(link) {
+    return !!link && normalizeLabel(link.textContent) === REJECT_LABEL;
+  }
+  function getEventTarget(event) {
+    var target = event.target;
+    if (!target) return null;
+    if (target.nodeType === 1) return target;
+    return target.parentElement;
+  }
+  function callBannerAction(action) {
+    try {
+      if (typeof win.performBannerAction === "function") {
+        win.performBannerAction(action);
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+  function isConsentCompleted() {
+    try {
+      if (typeof win.getCkyConsent === "function") {
+        var consent = win.getCkyConsent();
+        return !!(consent && consent.isUserActionCompleted);
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+  function getNoticeRejectLink(target) {
+    if (!target || !target.closest) return null;
+    var markedLink = target.closest(MARKED_REJECT_LINK_SELECTOR);
+    if (markedLink) return markedLink;
+    if (!target.closest(NOTICE_DESCRIPTION_SELECTOR)) return null;
+    var link = target.tagName === "A" ? target : target.closest("a");
+    if (!link || !isRejectLink(link)) return null;
+    return link;
+  }
+  function sanitizeNoticeRejectLink(link) {
+    if (link.tagName !== "A") return;
+    link.setAttribute("data-cky-reject-link", "true");
+    link.classList.add("ozel-reddet-link");
+    link.setAttribute("href", "#");
+    link.setAttribute("role", "button");
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+  }
+  function sanitizeRejectElement(element) {
+    if (element.tagName !== "A") return;
+    var href = element.getAttribute("href");
+    if (href && href !== "#" && href.indexOf("javascript:") !== 0) {
+      element.setAttribute("data-original-href", href);
+      element.setAttribute("href", "#");
+    }
+  }
+  function handleNoticeRejectClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (hasRejected || isConsentCompleted()) return;
+    rejectAllCookies();
+  }
+  function bindNoticeRejectLinks() {
+    var links = doc.querySelectorAll(NOTICE_DESCRIPTION_SELECTOR + " a");
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      if (!isRejectLink(link)) continue;
+      sanitizeNoticeRejectLink(link);
+      if (link.getAttribute("data-cky-reject-bound") === "true") continue;
+      link.setAttribute("data-cky-reject-bound", "true");
+      link.addEventListener("click", handleNoticeRejectClick, true);
+    }
+  }
+  function sanitizeRejectElements() {
+    bindNoticeRejectLinks();
+    var buttons = doc.querySelectorAll(REJECT_BUTTON_SELECTOR);
+    for (var i = 0; i < buttons.length; i++) sanitizeRejectElement(buttons[i]);
+  }
+  function getRejectButton() {
+    return doc.querySelector(".cky-notice-btn-wrapper " + REJECT_BUTTON_SELECTOR) || doc.querySelector(REJECT_BUTTON_SELECTOR);
+  }
+  function removeRejectListener() {
+    doc.removeEventListener("click", handleRejectInteraction, true);
+  }
+  function rejectAllCookies() {
+    if (hasRejected || isConsentCompleted()) return false;
+    hasRejected = true;
+    sanitizeRejectElements();
+    if (callBannerAction("reject")) {
+      removeRejectListener();
+      return true;
+    }
+    var rejectButton = getRejectButton();
+    if (rejectButton) {
+      removeRejectListener();
+      rejectButton.click();
+      return true;
+    }
+    hasRejected = false;
+    return false;
+  }
+  function isRejectInteraction(event) {
+    var target = getEventTarget(event);
+    if (!target || !target.closest) return false;
+    return !!(getNoticeRejectLink(target) || target.closest(REJECT_BUTTON_SELECTOR));
+  }
+  function handleRejectInteraction(event) {
+    if (!isRejectInteraction(event)) return;
+    if (hasRejected || isConsentCompleted()) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    rejectAllCookies();
+  }
+  function isSavePreferencesTrigger(target) {
+    return !!(target && target.closest && target.closest(SAVE_PREFERENCES_SELECTOR));
+  }
+  function handleSavePreferences(event) {
+    var target = getEventTarget(event);
+    if (!isSavePreferencesTrigger(target) || !event.isTrusted) return;
+    if (typeof win.performBannerAction !== "function") return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    win.performBannerAction("accept_partial");
+  }
+  function initBanner() {
+    sanitizeRejectElements();
+  }
+  function observeBanner() {
+    var bannerRoot = doc.querySelector(BANNER_ROOT_SELECTOR);
+    if (!bannerRoot || typeof win.MutationObserver === "undefined") return;
+    var observer = new win.MutationObserver(function() {
+      bindNoticeRejectLinks();
+    });
+    observer.observe(bannerRoot, { childList: true, subtree: true });
+  }
+  doc.addEventListener("click", handleRejectInteraction, true);
+  doc.addEventListener("click", handleSavePreferences, true);
+  doc.addEventListener("cookieyes_banner_load", function() {
+    initBanner();
+    observeBanner();
+  });
+  var bannerCheckAttempts = 0;
+  var bannerCheckInterval = win.setInterval(function() {
+    bannerCheckAttempts += 1;
+    if (hasRejected || bannerCheckAttempts > BANNER_CHECK_MAX_ATTEMPTS) {
+      win.clearInterval(bannerCheckInterval);
+      return;
+    }
+    if (doc.querySelector(BANNER_ROOT_SELECTOR)) {
+      win.clearInterval(bannerCheckInterval);
+      initBanner();
+    }
+  }, BANNER_CHECK_INTERVAL_MS);
+})(document,window)}catch(e){}}();</script><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-PPNXR7C');</script><!-- End Google Tag Manager --><script>
+    window.__ckyConsent = {
+        implied: true,
+        bannerCustomizations: true,
+        gtmId: 'GTM-PPNXR7C',
+        gtmDeferred: false
+    };
+</script><script>/**
+ * CookieYes runtime (homepage-nextjs hooks paritesi, vanilla JS).
+ * Flags: window.__ckyConsent = { implied, bannerCustomizations, gtmId, gtmDeferred }
+ */
+(function () {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return
+
+  var cfg = window.__ckyConsent || {}
+  var TRACKING = ['analytics', 'performance', 'advertisement']
+  var BANNER_SELECTOR = '.cky-consent-container, .cky-modal, [data-cky-tag]'
+  var NON_NAV = { javascript: 1, data: 1, vbscript: 1, mailto: 1, tel: 1 }
+  var DEFAULT_OFF = ['analytics', 'performance', 'functional', 'advertisement']
+
+  function parseConsentCookie() {
+    var match = /(?:^|;\s*)cookieyes-consent=([^;]*)/.exec(document.cookie || '')
+    if (!match) return null
+    var raw = match[1]
+    try {
+      raw = decodeURIComponent(raw)
+    } catch (e) {}
+    var isUserActionCompleted = false
+    var categories = {}
+    raw.split(',').forEach(function (pair) {
+      var parts = pair.split(':')
+      var key = (parts[0] || '').replace(/^\s+|\s+$/g, '')
+      var value = (parts[1] || '').replace(/^\s+|\s+$/g, '')
+      if (!key) return
+      if (key === 'action') {
+        isUserActionCompleted = value === 'yes'
+        return
+      }
+      if (key === 'consentid' || key === 'consent') return
+      if (value === 'yes' || value === 'no') categories[key] = value === 'yes'
+    })
+    return { isUserActionCompleted: isUserActionCompleted, categories: categories }
+  }
+
+  function getConsent() {
+    if (typeof window.getCkyConsent === 'function') {
+      try {
+        var result = window.getCkyConsent()
+        if (result) {
+          return {
+            isUserActionCompleted: result.isUserActionCompleted === true,
+            categories: result.categories || {},
+          }
+        }
+      } catch (e) {}
+    }
+    return parseConsentCookie()
+  }
+
+  function isLoaded() {
+    return typeof window.getCkyConsent === 'function'
+  }
+
+  function isCompleted() {
+    var c = getConsent()
+    return !!(c && c.isUserActionCompleted)
+  }
+
+  function hasTrackingConsent() {
+    var c = getConsent()
+    if (!c || !c.isUserActionCompleted) return false
+    return TRACKING.some(function (slug) {
+      return c.categories[slug] === true
+    })
+  }
+
+  function hasRejectedAllTracking() {
+    var c = getConsent()
+    if (!c || !c.isUserActionCompleted) return false
+    return TRACKING.every(function (slug) {
+      return c.categories[slug] !== true
+    })
+  }
+
+  function pushConsentUpdate(signals) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', signals)
+      return true
+    }
+    window.dataLayer = window.dataLayer || []
+    var dl = window.dataLayer
+    var pushAsArguments = function () {
+      dl.push(arguments)
+    }
+    pushAsArguments('consent', 'update', signals)
+    return true
+  }
+
+  function grantTracking() {
+    return pushConsentUpdate({
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted',
+    })
+  }
+
+  function revokeTracking() {
+    return pushConsentUpdate({
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+    })
+  }
+
+  function acceptAll() {
+    if (typeof window.performBannerAction === 'function') {
+      window.performBannerAction('accept_all')
+      return true
+    }
+    var btn = document.querySelector('.cky-btn-accept, [data-cky-tag="accept-button"]')
+    if (btn) {
+      btn.click()
+      return true
+    }
+    return false
+  }
+
+  function isBannerElement(target) {
+    return !!(target && target.closest && target.closest(BANNER_SELECTOR))
+  }
+
+  function isBannerVisible() {
+    var container = document.querySelector('.cky-consent-container')
+    if (!container || container.classList.contains('cky-hide')) return false
+    var notice = container.querySelector('[data-cky-tag="notice"]')
+    if (notice && notice.classList.contains('cky-hide')) return false
+    var style = window.getComputedStyle(container)
+    if (style.display === 'none' || style.visibility === 'hidden') return false
+    if (notice) {
+      var ns = window.getComputedStyle(notice)
+      if (ns.display === 'none' || ns.visibility === 'hidden') return false
+    }
+    return true
+  }
+
+  function isNavigatingLinkClick(event) {
+    if (event.defaultPrevented) return false
+    if (event.button !== 0) return false
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false
+    var target = event.target
+    if (!(target instanceof Element)) return false
+    if (isBannerElement(target)) return false
+    var anchor = target.closest('a')
+    var href = anchor && anchor.getAttribute('href')
+    if (!href || href === '#' || href.charAt(0) === '#') return false
+    var scheme = href.split(':')[0].replace(/^\s+|\s+$/g, '').toLowerCase()
+    if (href.indexOf(':') !== -1 && NON_NAV[scheme]) return false
+    return true
+  }
+
+  var CATEGORY_CHECKBOX_ID_PREFIXES = ['ckySwitch', 'ckyCategoryDirect']
+  var PREFERENCES_BUTTON_SELECTOR = '[data-cky-preferences-button]'
+  var SETTINGS_TRIGGER_SELECTOR =
+    '.cky-btn-customize, [data-cky-tag="settings-button"], ' + PREFERENCES_BUTTON_SELECTOR
+
+  function findCategoryCheckboxBySwitch(category) {
+    var inputs = document.querySelectorAll('.cky-switch input[type="checkbox"]')
+    for (var i = 0; i < inputs.length; i++) {
+      var input = inputs[i]
+      var id = (input.id || '').toLowerCase()
+      var name = (input.getAttribute('name') || '').toLowerCase()
+      var value = (input.getAttribute('value') || '').toLowerCase()
+      var dataCategory = (
+        input.getAttribute('data-cky-category') ||
+        (input.closest('[data-cky-category]') && input.closest('[data-cky-category]').getAttribute('data-cky-category')) ||
+        ''
+      ).toLowerCase()
+      if (id === 'ckyswitch' + category || name === category || value === category || dataCategory === category) {
+        return input
+      }
+    }
+    return null
+  }
+
+  function findCategoryCheckboxes(category) {
+    var byId = []
+    for (var i = 0; i < CATEGORY_CHECKBOX_ID_PREFIXES.length; i++) {
+      var el = document.getElementById(CATEGORY_CHECKBOX_ID_PREFIXES[i] + category)
+      if (el && el.tagName === 'INPUT') byId.push(el)
+    }
+    if (byId.length) return byId
+    var fallback = findCategoryCheckboxBySwitch(category)
+    return fallback ? [fallback] : []
+  }
+
+  /** cookieyes-consent içinde action:yes|no varsa kullanıcı karar vermiştir. */
+  function hasDecisionInCookie() {
+    var match = /(?:^|;\s*)cookieyes-consent=([^;]*)/.exec(document.cookie || '')
+    if (!match) return false
+    var raw = match[1]
+    try {
+      raw = decodeURIComponent(raw)
+    } catch (e) {}
+    var pairs = raw.split(',')
+    for (var i = 0; i < pairs.length; i++) {
+      var kv = pairs[i].split(':')
+      var key = (kv[0] || '').replace(/^\s+|\s+$/g, '')
+      var value = (kv[1] || '').replace(/^\s+|\s+$/g, '')
+      if (key === 'action') return value === 'yes' || value === 'no'
+    }
+    return false
+  }
+
+  function uncheckDefaults() {
+    if (hasDecisionInCookie()) return true
+    var boxes = []
+    for (var i = 0; i < DEFAULT_OFF.length; i++) {
+      var found = findCategoryCheckboxes(DEFAULT_OFF[i])
+      for (var k = 0; k < found.length; k++) boxes.push(found[k])
+    }
+    if (!boxes.length) return false
+    for (var j = 0; j < boxes.length; j++) {
+      if (boxes[j].disabled || !boxes[j].checked) continue
+      boxes[j].click()
+    }
+    return true
+  }
+
+  function ensureGtm() {
+    var id = cfg.gtmId || 'GTM-PPNXR7C'
+    if (document.querySelector('script[src*="googletagmanager.com/gtm.js"]')) return
+    if (document.getElementById('cky-gtm-script')) return
+    if (window.google_tag_manager) return
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+    var s = document.createElement('script')
+    s.id = 'cky-gtm-script'
+    s.async = true
+    s.src = 'https://www.googletagmanager.com/gtm.js?id=' + id
+    document.head.appendChild(s)
+  }
+
+  // --- Çerez politikası "Çerez Tercihleri" butonu: CookieYes yüklenince görünür, tıklanınca tercih penceresini açar ---
+  // Default toggles click listener'ından önce kayıtlı olmalı: pencere açıldıktan sonra uncheckDefaults çalışsın.
+  var showPreferencesButtons = function () {
+    if (typeof window.revisitCkyConsent !== 'function') return
+    var buttons = document.querySelectorAll(PREFERENCES_BUTTON_SELECTOR)
+    for (var i = 0; i < buttons.length; i++) buttons[i].hidden = false
+  }
+  document.addEventListener('DOMContentLoaded', showPreferencesButtons)
+  document.addEventListener('cookieyes_banner_load', showPreferencesButtons)
+  document.addEventListener('click', function (event) {
+    var target = event.target
+    if (!(target instanceof Element) || !target.closest(PREFERENCES_BUTTON_SELECTOR)) return
+    if (typeof window.revisitCkyConsent !== 'function') return
+    event.preventDefault()
+    window.revisitCkyConsent()
+  })
+
+  // --- GTM gate (implied): reddeden kullanıcıda head GTM basılmaz; kabul sonrası yüklenir ---
+  if (cfg.implied) {
+    var evaluateGtm = function () {
+      if (!hasRejectedAllTracking()) ensureGtm()
+    }
+    evaluateGtm()
+    document.addEventListener('cookieyes_banner_load', evaluateGtm)
+    document.addEventListener('cookieyes_consent_update', evaluateGtm)
+  }
+
+  // --- Default toggles (implied): karar yokken "Tercihler"e tıklanınca kapat ---
+  // Banner yüklenirken kapatmak yetmez; CookieYes setTimeout(0) ile defaultConsent'e göre yeniden işaretler.
+  if (cfg.implied) {
+    document.addEventListener('click', function (event) {
+      var target = event.target
+      if (!(target instanceof Element) || !target.closest(SETTINGS_TRIGGER_SELECTOR)) return
+      window.setTimeout(uncheckDefaults, 0)
+    })
+  }
+
+  // --- Implicit accept (implied) ---
+  if (cfg.implied) {
+    var handled = false
+    var bannerReady = false
+    var syncGoogle = function () {
+      if (!isCompleted()) {
+        grantTracking()
+        return
+      }
+      if (hasTrackingConsent()) grantTracking()
+      else revokeTracking()
+    }
+    var implicitlyAccept = function () {
+      if (handled) return
+      if (isCompleted()) {
+        handled = true
+        return
+      }
+      if (!bannerReady || !isBannerVisible()) return
+      handled = acceptAll()
+    }
+    document.addEventListener('cookieyes_banner_load', function () {
+      bannerReady = true
+      if (isCompleted()) handled = true
+      syncGoogle()
+    })
+    document.addEventListener('cookieyes_consent_update', function () {
+      if (isCompleted()) handled = true
+      syncGoogle()
+    })
+    document.addEventListener(
+      'submit',
+      function (event) {
+        if (!(event.target instanceof HTMLFormElement)) return
+        implicitlyAccept()
+      },
+      true
+    )
+    document.addEventListener(
+      'click',
+      function (event) {
+        if (handled) return
+        if (!isNavigatingLinkClick(event)) return
+        implicitlyAccept()
+      },
+      true
+    )
+    window.addEventListener('popstate', implicitlyAccept)
+    if (isLoaded()) {
+      bannerReady = true
+      if (isCompleted()) handled = true
+      syncGoogle()
+    }
+  }
+
+  // --- Accept-all button (bannerCustomizations) ---
+  if (cfg.bannerCustomizations) {
+    var CONTENT_SELECTOR = '.cky-preference-content-wrapper'
+    var SWITCH_SELECTOR = '.cky-preference-center .cky-switch input[type="checkbox"]'
+    var BUTTON_ID = 'cky-custom-accept-all-btn'
+    var WRAPPER_CLASS = 'cky-custom-accept-all-wrapper'
+    var ACTIVE_COLOR = '#1578F7'
+
+    var injectAcceptAll = function () {
+      var contentWrapper = document.querySelector(CONTENT_SELECTOR)
+      if (!contentWrapper) return false
+      if (document.getElementById(BUTTON_ID) && document.getElementById(BUTTON_ID).isConnected) return false
+      var stale = contentWrapper.nextElementSibling
+      if (stale && stale.classList && stale.classList.contains(WRAPPER_CLASS)) stale.parentNode.removeChild(stale)
+      var wrapper = document.createElement('div')
+      wrapper.className = WRAPPER_CLASS
+      var button = document.createElement('button')
+      button.id = BUTTON_ID
+      button.className = 'cky-btn cky-custom-accept-all-btn'
+      button.type = 'button'
+      button.setAttribute('aria-label', 'Tümüne İzin Ver')
+      button.textContent = 'Tümüne İzin Ver'
+      button.addEventListener('click', function (event) {
+        event.preventDefault()
+        event.stopPropagation()
+        var boxes = document.querySelectorAll(SWITCH_SELECTOR)
+        for (var i = 0; i < boxes.length; i++) {
+          if (boxes[i].disabled || boxes[i].checked) continue
+          boxes[i].checked = true
+          boxes[i].style.backgroundColor = ACTIVE_COLOR
+          boxes[i].dispatchEvent(new Event('change', { bubbles: true }))
+        }
+        acceptAll()
+      })
+      wrapper.appendChild(button)
+      contentWrapper.insertAdjacentElement('afterend', wrapper)
+      return true
+    }
+
+    var syncButton = function () {
+      injectAcceptAll()
+    }
+    document.addEventListener('cookieyes_banner_load', syncButton)
+    document.addEventListener(
+      'click',
+      function (event) {
+        var target = event.target
+        if (!(target instanceof Element) || !target.closest(SETTINGS_TRIGGER_SELECTOR)) return
+        ;[0, 150, 400].forEach(function (delay) {
+          window.setTimeout(syncButton, delay)
+        })
+      },
+      true
+    )
+    if (document.body) {
+      var btnObserver = new MutationObserver(syncButton)
+      btnObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class'],
+      })
+    }
+    syncButton()
+    var btnInterval = window.setInterval(function () {
+      if (document.querySelector(CONTENT_SELECTOR)) syncButton()
+    }, 500)
+    window.setTimeout(function () {
+      window.clearInterval(btnInterval)
+    }, 15000)
+  }
+})()
+</script><script>
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function setOneTrust(domainScript) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.async = true;
+        script.setAttribute("charset", "UTF-8");
+        script.src = "https://cdn.cookielaw.org/scripttemplates/otSDKStub.js";
+        script.dataset.domainScript = domainScript;
+        script.dataset.documentLanguage = "true";
+        document.getElementsByTagName("head")[0].appendChild(script);
+
+        var autoBlock = document.createElement("script");
+        autoBlock.type = "text/javascript";
+        autoBlock.async = true;
+        autoBlock.src = "https://cdn.cookielaw.org/consent/" + domainScript + "/OtAutoBlock.js";
+        document.getElementsByTagName("head")[0].appendChild(autoBlock);
+    }
+
+    function setCookieYes(clientId) {
+        var script = document.createElement("script");
+        script.id = "cookieyes";
+        script.type = "text/javascript";
+        script.async = true;
+        script.src = "https://cdn-cookieyes.com/client_data/" + clientId + "/script.js";
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+
+    var cookieValue = getCookie("cookieAlert");
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var path = '/.well-known/gpc.json';
+        var isMobileApp = '';
+        if (path != '/iletisim/' && (path == '/aydinlatma-metni/' || cookieValue !== "true") && isMobileApp != '1') {
+                            setCookieYes('e1546ffbdccd0ccbc77dfae48279e76d');
+                    }
+    });
+</script><title>Enuygun.com - Aradığınız sayfa bulunamadı : Not Found</title><meta name="description" content="Aradığınız sayfayı Enuygun.com'da bulamadık, lütfen menülerimizi kullanarak gezinmeye devam edin"><meta name="verify-v1" content="Q9cicz+OXuil2DfB+nvQ0qO50g+JNQNMf775qDB5Ovk="><meta name="google-site-verification" content="dDxuyzMQ-fLPb5Ktc-49Soh13sdozrajrAAfO86tLf4"><meta property="fb:app_id" content="166275857694"><meta property="og:type" content="website"><meta property="og:title" content="Enuygun.com - Aradığınız sayfa bulunamadı : Not Found"><meta property="og:description" content="Aradığınız sayfayı Enuygun.com&#039;da bulamadık, lütfen menülerimizi kullanarak gezinmeye devam edin"><meta property="og:image" content="https://cdn.enuygun.com/v-e8eb2/bundles/enuygunwebui/img/og-image.jpg"><meta property="og:locale" content="tr_TR"><meta name="robots" content="noyaca"><meta http-equiv="content-language" content="tr"><meta name="apple-itunes-app" content="app-id=669210250" app-argument="https://apps.apple.com/tr/app/id669210250"><meta name="google-play-app" content="app-id=com.mobilatolye.android.enuygun" /><meta name="yandex-verification" content="6161a3314312399d" /><link rel="manifest" href="/manifest.json"><link rel="dns-prefetch" href="//www.enuygun.com/"><link rel="dns-prefetch" href="//cdn.enuygun.com/"><link rel="dns-prefetch" href="//cdn2.enuygun.com/"><link rel="dns-prefetch" href="//cdn2.enuygun.com/"><link rel="shortcut icon" href="https://cdn.enuygun.com/v-e8eb2/bundles/enuygunwebui/img/favicon.ico?v=3"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" type="text/css" href="https://cdn.enuygun.com/v-e8eb2/bundles/enuygunwebui/css/page.min.css"/><script>
+          window.config = {
+            server_hostname: '',
+            environment: '',
+            backend_cookie_id: ''
+          };
+
+        </script><!-- this code request to route of affiliate_tracking_pixel for count to affiliate's score --><script type="text/javascript">
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                    var cookieNames = ["notice","error","success"];
+
+                    for( var i = 0; i < cookieNames.length; i++) {
+                        document.cookie = cookieNames[i] + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+                    }
+
+                    var parameters = [];
+                    var affiliate = getParameterByName('affiliate');
+                    var gclid = getParameterByName('gclid');
+
+                    if (document.referrer && document.referrer.

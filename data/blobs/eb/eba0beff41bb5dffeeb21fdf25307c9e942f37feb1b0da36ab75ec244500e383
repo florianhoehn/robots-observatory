@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bad Link</title>
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css' />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style type="text/css">
+    body {
+      font-family: "Open Sans", sans-serif;
+      color: #666;
+    }
+
+    .content {
+      padding: 50px 10px 50px 10px;
+      margin: 0 auto 0 auto;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    a, a:link, a:visited, a:hover, a:active {
+      color: #00b9ee;
+    }
+
+    h1, h2, h3 {
+      font-weight: 300;
+    }
+
+
+    .badlink {
+      word-wrap: break-word;
+      font-size: 80%;
+      line-height: 1.5em;
+      margin: 0 0 0 1.2em;
+      padding-left: 1.2em;
+      border-left: 4px solid #c44;
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-top: 25px;
+    }
+
+    .logo-area {
+      margin: 0 auto 50px auto;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class='content'>
+    <h1>Sorry, that isn't a valid geni.us link.</h1>
+    <div id="details">
+        <p>
+            The link you followed appears to be incorrect or misspelled:
+            <p class="badlink">
+                <em id="badLink"></em>
+            </p>
+        </p>
+    </div>
+
+    <h2>Are you the publisher?</h2>
+    <p>
+        Most links fail due to a misspelling in a parameter name or extra characters added to the end of the URL. If everything looks good to you and the link still is not working try clearing your cache or using a different browser or device.  Try testing the link one last time and if all else fails then <a id="mailtolink" href="mailto:help@geni.us?subject=Bad%20Link">contact us</a>.
+    </p>
+
+    <div class='logo-area'>
+        <img src="/geniuslink.png" class="logo" />
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    document.getElementById("mailtolink").href = "mailto:help@geni.us?subject=" + encodeURIComponent("Bad Link: " + location.href);    
+</script>
+
+</body>
+</html>

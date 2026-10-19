@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /json/
+Disallow: /xml/
+Disallow: /admin/
+Disallow: /error/
+Disallow: /mirrors/mirmon/
+Disallow: /ctan-portal/
+Disallow: /search

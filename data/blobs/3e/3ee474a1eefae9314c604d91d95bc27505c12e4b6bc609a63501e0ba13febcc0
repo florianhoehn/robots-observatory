@@ -1,0 +1,34 @@
+user-agent: *
+#
+#control parameterization on scientific monitoring pages
+Disallow: *scientific-monitoring.html?*
+Disallow: *veille-scientifique.html?*
+#
+#control calendar indexation
+Disallow: *calendar-deseve.html?*
+Disallow: *calendar-va114.html?*
+#
+#control search spam
+Disallow: /search.html?search-mode=*
+#
+#disallow crawling of old events pages - 2021 & 2022 still produce traffic
+disallow: /cuevents/*/200*
+disallow: /cuevents/*/201*
+disallow: /cuevents/*/2020/*
+Disallow: /ucactualites/*/200*
+Disallow: /ucactualites/*/201*
+Disallow: /ucactualites/*/2020/*
+#
+#Control crawling of errant social media site URLs being appended to all-groups.html 
+Disallow: */all-groups.html*.com
+#
+#Block empty root faculty page from crawling so primary faculty page ranks
+Disallow: /faculty.html$
+
+Disallow: /news/newsletters/*
+Disallow: /services/profile/attachment*
+Disallow: /etc/designs/concordia/resources*
+
+User-Agent: Googlebot-news
+Disallow: /profiles/
+Disallow: /content/shared/en/profiles/*

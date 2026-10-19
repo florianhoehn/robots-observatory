@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title class="notranslate">Swayam Central</title>
+<!-- Swayam CSS -->
+<link rel="icon" href="https://storage.googleapis.com/swayam2_central/assets/img/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="152x152" href="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/ico/152x152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/ico/167x167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/ico/180x180.png">
+<link rel="icon" type="image/png" sizes="196x196" href="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/ico/196x196.png">
+<link href="https://storage.googleapis.com/swayam2_central/assets/css/swayam_css/bootstrap.min.css" rel="stylesheet">
+<link href="https://storage.googleapis.com/swayam2_central/assets/css/swayam_css/main.css" rel="stylesheet">
+<link href="https://storage.googleapis.com/swayam2_central/assets/css/swayam_css/header_css.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<link rel="stylesheet" href="https://storage.googleapis.com/swayam2_central/assets/css/course-card/course-card.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Restrict CSS/JS loading from external CDN. Reverting to cloudflare as its not working from our CDN. Check this later -->
+<!--link rel="stylesheet" href="https://storage.googleapis.com/swayam2_central/assets/css/swayam_css/font-awesome.min.css" -->
+<style>
+        .overlay_popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 2000;
+            display: none;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            min-width: 80%;
+        }
+
+        .popupContent {
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background-color: white;
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: red;
+        }
+
+        .close-btn::before {
+            transform: rotate(45deg);
+        }
+
+        .close-btn::after {
+            transform: rotate(-45deg);
+        }
+
+        .close-btn:hover {
+            background-color: #f8f8f8;
+        }
+
+        @media (max-width: 768px) {
+            .popup {
+                max-width: 100%;
+                max-height: 100%;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border-radius: 0;
+            }
+            .close-btn {
+                top: 10px;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+            }
+        }
+.blink_notice{
+    color:red;
+    animation: blink 2s ease infinite;
+}
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.goog-te-combo {
+	display: inline-block;
+	position: relative;
+	width: 47px;
+	/* Set the width of your image */
+	height: 22px;
+	/* Set the height of your image */
+	background: url("https://storage.googleapis.com/swayam2_central/assets/img/languages.svg");
+	/* Set the image path */
+	background-size: cover;
+	/* Adjust image sizing */
+	cursor: pointer;
+	border: unset;
+	background-color: transparent;
+    color: transparent;
+}
+.notification-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.red-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+@media (min-width: 1000px) {
+    .header-padding {
+        padding: 8px;
+    }
+}
+
+.course_recommendation{
+    bottom: 5%;
+    right: 2%;
+    position: fixed;
+    z-index: 1000;
+    border:2px;
+    border-radius:10px;
+    background-color:white;
+    padding:2px;
+    display:flex;
+    gap:12px;
+    border-style: solid;
+    border-color: white;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+    @media (min-width: 980px) and (max-width: 1150px) {
+	.course_recommendation {
+	  bottom: 0% !important;
+	}
+}
+
+    .course_recommendation_image{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    }
+
+    .tooltip-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+.tooltip-box {
+    position: absolute;
+    bottom: 100%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 6px 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #1a237e;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: none;
+    white-space: nowrap;
+    left: 2%;
+    border: 1px solid #a76f92; border-radius: 20px;
+}
+
+.tooltip-box .tooltip-tail {
+    position: absolute;
+    top: 100%;
+    left: 80%;
+    transform: translateX(-50%);
+    height: 12px;
+    width: auto;
+}
+
+.tooltip-wrapper:hover .tooltip-box {
+    display: block;
+}
+
+.robot-img {
+    display: block;
+    height: 125px;
+    width: 125px;
+}
+
+.robot-tail {
+    width: 104px;
+    height: auto;
+    margin-top: -24px;
+    opacity: 0.8;
+}
+
+.tooltip-text {
+    padding: 12px 28px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.course_recommendation_image{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.course_recommendation{
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    display: inline-block;
+}
+
+.course_recommendation_image {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.course-recommendation-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1999;
+	display: none;
+}
+
+.course-recommendation-popup {
+	min-height: 150px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	z-index: 2000;
+	display: none;
+	max-width: 90%;
+	max-height: 90%;
+	overflow: auto;
+	min-width: 80%;
+}
+
+@media (max-width: 1000px) {
+	.course-recommendation-popup {
+		max-width: 100%;
+		max-height: 100%;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		transform: none;
+		border-radius: 0;
+	}
+
+	.cr-close-btn {
+		top: 10px;
+		right: 10px;
+		width: 30px;
+		height: 30px;
+	}
+}
+
+</style>
+<!-- Swayam JS -->
+<script src="https://storage.googleapis.com/swayam2_central/assets/js/swayam_js/jquery.js"></script>
+<script src="https://storage.googleapis.com/swayam2_central/assets/js/swayam_js/bootstrap.min.js"></script>
+<script type="text/javascript">
+var idleTime = 0;
+var current_user_email = 'None';
+$(document).ready(function () {
+    //home page modal triggered here based on session storage check
+    let popUpFlagVal = sessionStorage.getItem("popUpFlag");
+    if(popUpFlagVal !== "true" || popUpFlagVal === "undefined"){
+     
+        //     $("#homePageModal").modal({
+        //     show: true,
+        //     backdrop: 'static',
+        //     keyboard: false
+        // });
+     
+ 
+        sessionStorage.setItem("popUpFlag", "true");
+    }
+    //Increment the idle time counter every minute.
+    var currentUserEmail = 'None'
+
+    if (currentUserEmail != "None"){
+       var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+    }
+
+
+    //Zero the idle timer on mouse movement.
+    $(this).mousemove(function (e) {
+        idleTime = 0;
+    });
+    $(this).keypress(function (e) {
+        idleTime = 0;
+    });
+});
+
+function timerIncrement() {
+    idleTime = idleTime + 1;
+
+    if (idleTime > 119) { // 120 minutes
+        window.location.replace("None");
+    }
+}
+</script>
+</head>
+<body class="homepage HeaderMargin">
+<div class="container">
+    <div class="modal fade notranslate" id="ConfirmPopupModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <div class="pop_up_container">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" style="color: #fff ;opacity: 1;" data-dismiss="modal" type="button">&times;</button>
+                            <h4 id="popup-title" class="modal-title" style="color:#fff ;font-size: 20px;text-align: left;"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="popup-question" style="font-size: 20px; padding-bottom: 10px"></p>
+                            <a id="popup-link" target="newWin">
+                                <button class="btn" onclick="close_modal();">Continue</button>
+                            </a>
+                            <button class="btn" data-dismiss="modal">Close</button>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal-dialog {
+    width: 800px;
+}
+@media (max-width: 768px) {
+  .modal-dialog.modal-sm {
+    width: 300px;
+    margin: 30px auto;
+  }
+}
+</style>
+
+<script>
+function redirect_confirmation(title, text, link) {
+    $("#popup-title").text(title);
+    $("#popup-question").text(text);
+    $("#popup-link").attr('href', link);
+    return false; // To avoid refreshing page
+}
+
+function close_modal() {
+    $(".close").click();
+}
+</script>
+<header id="header">
+  <!--Top Bar [START]-->
+    <div class="row" style="background: #003987">
+        <div class="container">
+            <div style="width: 100%; height: 100%;">
+                <div class="top-section">
+                    An initiative by Ministry of Education (Govt. of India)
+                </div>
+            </div>
+        </div>
+    </div>
+  <div class="container modified-container notranslate">
+    <div class="row display-flex-space-btn header-padding">
+      <div class="col-2 custome-width header_align mv-swayam-image-wrap" style="--w:12%">
+          <a href="/" class="mv-swayam-logo">
+        <img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_logo.png" alt="swayam-logo" class="mv-swayam-image" style="max-width:85% !important">
+              </a>
+
+          <!-- MobileView Sign Register BTn  -->
+          
+              <li>
+                  <a href=https://swayam-sso.swayam2.ac.in/signin?response_type=code&amp;client_id=swayam-central-production&amp;redirect_uri=%2F&amp;state=QRpUw5EOzPErE0Wm9pSyYY1i51fTF0 style="padding-top:0px;" tabindex="-1" class="mv-btn-tag">
+                      <button type="submit" name="submit" class="btn btn-primary-v2 mv-signin-btn mv-display"
+                              style="margin: 0px;">
+                          Sign-In / Register
+                      </button>
+                  </a>
+              </li>
+          
+
+      </div>
+      <div class="col-8 custome-width header_align" style="padding:8px;">
+
+          <!-- <div class="navbar-header"> -->
+              <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                      data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+          </div> -->
+          <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
+              <div class="HeaderBanner" style="margin-top:10px">
+                  <a href="/about">About Swayam</a>|
+                  <a href="/explorer">All Courses</a>|
+                  <a href="/nc_details/">National Coordinator</a>|
+                  <a href="https://nptel.ac.in/LocalChapter/" data-toggle="modal" data-target="#ConfirmPopupModal"
+                     onClick="return redirect_confirmation('LOCAL CHAPTERS', 'You are being redirected to a different site. Do you want to continue?',
+                    'https://nptel.ac.in/LocalChapter/');">Local Chapters</a> |
+                  <a href="/faq">FAQ</a> |
+                  
+                  
+                  
+                  <div id="google_translate_element" style="display:inline-flex;height:33px"></div>
+                  <!-- Asynchronous Google Translate load -->
+                        <script type="text/javascript">
+                            function googleTranslateElementInit() {
+                              new google.translate.TranslateElement({
+                                pageLanguage: 'en',
+                                includedLanguages: 'en,hi,bn,gu,ml,mr,kn,ta,te'
+                              },
+                              'google_translate_element');
+                            }
+                            var googleTranslateScript = document.createElement('script');
+                            googleTranslateScript.type = 'text/javascript';
+                            googleTranslateScript.async = true;
+                            googleTranslateScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(googleTranslateScript);
+                        </script>
+                  <!-- End script Asynchronous Google Translate load -->
+              </div>
+          <!-- </div> -->
+      </div>
+      <div class="col-2 custome-width header_align web-display" style="padding-top:10px;--w:15%">
+          
+        <li>
+          <a href=https://swayam-sso.swayam2.ac.in/signin?response_type=code&amp;client_id=swayam-central-production&amp;redirect_uri=%2F&amp;state=QRpUw5EOzPErE0Wm9pSyYY1i51fTF0 style="padding-top:0px;" tabindex="-1">
+            <button type="submit" name="submit" class="btn btn-primary-v2 dv-hide" style="margin: 0px;font-size: 11px;">
+                Sign-In / Register
+            </button>
+          </a>
+        </li>
+
+           
+
+    </div>
+      </div>
+  </div>
+
+</header>
+
+
+<script>
+
+function handleSearch(event) {
+    event.preventDefault();
+    const searchQuery = document.getElementById('header-search-query').value;
+    const elasticSearchEnabled = false;
+
+    if (elasticSearchEnabled) {
+        document.location = `/search_courses?searchText=${encodeURIComponent(searchQuery)}`;
+    } else {
+        document.location = `/explorer?searchText=${encodeURIComponent(searchQuery)}`;
+    }
+    return false;
+}
+
+function redirectToCatalogWithSearchQuery(event) {
+    if (event.type === "click") {
+        handleSearch(event);
+    }
+}
+
+  function toggle_dropdownmenu(ul_id){
+     const menuHeight = $('#' + ul_id).outerHeight();
+     $('#' + ul_id).toggle();
+     $('#' + ul_id).css('min-height', menuHeight);
+  }
+
+  document.getElementById('dropdownMenuButton').addEventListener('click', function () {
+    var redDot = document.querySelector('.red-dot');
+    if (redDot) {
+        redDot.style.display = 'none';
+    }
+});
+
+course_recommendation = $('#course_recommendation');
+    if (course_recommendation.length) {
+        window.onscroll = function() {
+            scrollFunction();
+        };
+    }
+
+    function scrollFunction() {
+        if (window.innerHeight + window.scrollY + 50 >= document.body.offsetHeight)  {
+            course_recommendation.css('display', 'none');
+        } else {
+            course_recommendation.css('display', 'flex');
+        }
+    }
+    const show_course_recommendation = document.getElementById('course_recommendation');
+    const cr_popup = document.getElementById("course_recommendation_popup");
+    const cr_overlay = document.getElementById("course_recommendation_overlay");
+    const popupContent = document.getElementById("popupContent");
+    const course_recommendation_third_party_url = document.getElementById('course_recommendation_third_party_url');
+    if (show_course_recommendation) {
+        show_course_recommendation.addEventListener('click', function() {
+            cr_popup.style.display = "block";
+            cr_overlay.style.display = "block";
+
+            popupContent.innerHTML = `
+                <div id="learn-search">
+                </div>
+            `;
+            const scriptUrl = course_recommendation_third_party_url.value;
+            const script = document.createElement("script");
+            script.src = scriptUrl;
+
+            script.onerror = () => {
+                popupContent.innerHTML = `<p>Error loading component.</p>`;
+            };
+            document.body.appendChild(script);
+        });
+
+        cr_close.addEventListener('click', function() {
+            cr_popup.style.display = "none";
+            cr_overlay.style.display = "none";
+        });
+
+        cr_overlay.addEventListener('click', function() {
+            cr_popup.style.display = "none";
+            cr_overlay.style.display = "none";
+        });
+    }
+</script>
+
+<div class="container paddingTop100">
+  <div class="row">
+    <div class="col-sm-2 col-xs-0">
+    </div>
+    <div class="col-sm-4 col-xs-12">
+      <div class="err1">Oops. . .</div>
+      <div class="err2">Unable to find requested page.</div>
+      <button class="btn btn-outline btn-lg" onclick="goBack()">GO BACK</button>
+    </div>
+    <div class="col-sm-4 col-xs-12">
+      <img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/error.png" />
+    </div>
+    <div class="col-sm-2 col-xs-0">
+    </div>
+</div>
+</div>
+
+<section class="main" style="position:inherit;">
+<section id="social">
+  <div class="container">
+
+      <div class="row appcontainer">
+        <!--<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="padding-top:12px"> <img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/social_GOI.jpg" /> </div>-->
+        <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+          <img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/mhrd_logo.png" alt="Ministry of Education logo"  style="margin-top:18px;" />
+          <img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/swayam_logo.png" alt="Swayam logo" style="margin-top: 12px;margin-left: 20px;" />
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12" style="font-size:11px; color:#666666; line-height:14px;">
+        <h4>DOWNLOAD APP</h4>
+        <!--<div><a href="https://itunes.apple.com/in/app/swayam-online-education/id1146833429?mt=8"><img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/download_app_store_logo.png" /></a></div>-->
+        <div><a href="https://play.google.com/store/apps/details?id=in.gov.swayam.app"><img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/download_google_play_logo.png" alt="Go to Google play" /></a></div>
+        <!--<div><a href="https://www.microsoft.com/en-in/store/p/swayam/9nblggh4xxml"><img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/download_windows_store_logo.png" /></a></div>-->
+
+         </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-7 col-xs-12 notranslate">
+          <h4>FOLLOW US</h4>
+          <!--<img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/social.jpg" />-->
+          <ul class="social_icons">
+            <li><a href="https://www.facebook.com/swayammoocs/"><img src="https://storage.googleapis.com/swayam2_central/assets/images/icon_social/facebook_icon.png" width="35px" alt="Go to Facebook" class="facebook"/></a></li>
+            <li><a href="https://www.instagram.com/swayammhrd/"><img src="https://storage.googleapis.com/swayam2_central/assets/images/icon_social/instagram_icon.png" width="35px" alt="Go to Instagram" class="instagram"/></a></li>
+            <!--<li><a href="#"><img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/icon_social/icon_linkedin_selected.png" class="linkedin"/></a></li>-->
+            <li><a href="https://twitter.com/SWAYAMMHRD"><img src="https://storage.googleapis.com/swayam2_central/assets/images/icon_social/twitter_icon.png" width="35px" alt="Go to Twitter" class="twitter"/></a></li>
+            <!--<li><a href="#"><img src="https://storage.googleapis.com/swayam2_central/assets/img/swayam_images/icon_social/icon_youtube_selected.png" class="youtube"/></a></li>-->
+          </ul>
+        </div>
+      </div>
+
+  </div>
+</section>
+
+<section id="legal">
+  <div class="container">
+
+  <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+
+  <a href="/privacy_policy">Privacy Policy</a>   <span>|</span>   <a href="/terms_of_use">Terms of Use</a>   <span>|</span>   <a href="/honor_code">Honor Code</a> <span style="display:none">|</span>   <a href="#" style="display:none">FAQs</a></div>
+
+  <div class="col-md-6 col-sm-6 col-xs-12 helpline">   <a href="#" onClick="email_form()" id="support_popup"><span class="notranslate"> SWAYAM </span> Helpline / Support</a> </div>
+
+  </div>
+  </div>
+</section>
+<!--/#bottom-->
+<footer id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6"> &copy;  <span class="notranslate"> SWAYAM </span>. All rights reserved. </div>
+      <div class="col-sm-6">
+        <div class="pull-right"> Initiative by : Ministry of Education (Govt of India) </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!--/#footer-->
+<!--Popup form for support-->
+<div id="myModal" class="modal custom-modal notranslate">
+    <div class="modal-content custom-modal-content">
+        <div class="custom-modal-header">
+            <span class="close custom-close">&times;</span>
+            <h4 class="modal-title" style="color:#FFFFFF;font-size: 20px">SWAYAM SUPPORT</h4>
+        </div>
+        <div class="custom-modal-body">
+            <div class="form-group" style="text-align:center;">
+                <p>Please choose the SWAYAM National Coordinator for support.<span class="text-danger">*</span> :</p>
+                <select id="nc_drop_down" onchange="display_nc_refer_text()" style="width:150px;">
+                    <option disabled selected>select</option>
+                    <option value="CEC">CEC</option>
+                    <option value="IIMB">IIMB</option>
+                    <option value="IGNOU">IGNOU</option>
+                    <option value="NCERT">NCERT</option>
+                    <option value="NITTTR">NITTTR</option>
+                    <option value="NIOS">NIOS</option>
+                    <option value="AICTE">AICTE</option>
+                    <option value="NPTEL">NPTEL</option>
+                    <option value="UGC">UGC</option>
+                    <option value="INI">INI</option>
+                </select>
+                <br><br>
+                <div id="nc_refer_text" style="font-size: 18px;margin-left: -20px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.custom-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.custom-modal-content {
+    margin: 5% auto;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+}
+
+.custom-modal-header {
+    padding: 10px 16px;
+    background-color: #003366;
+    color: white;
+}
+
+.custom-close {
+    color: white;
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.custom-close:hover,
+.custom-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#nc_drop_down {
+    width: 100%;
+    padding: 5px;
+}
+.custom-modal-body{
+    padding:20px;
+}
+</style>
+
+<script>
+function email_form() {
+    document.getElementById('myModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('myModal').style.display = 'none';
+}
+
+function display_nc_refer_text() {
+    var nc = document.getElementById("nc_drop_down").value;
+    var ncLink = '<a target="_blank" href="/nc_details/' + encodeURIComponent(nc) + '">' + nc + '</a>';
+    document.getElementById("nc_refer_text").innerHTML = "Please refer <b>" + ncLink + "</b> regarding your queries / issues";
+}
+
+window.onclick = function(event) {
+    var modal = document.getElementById('myModal');
+    if (event.target == modal || event.target.className == 'custom-close') {
+        closeModal();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var closeBtn = document.querySelector('.custom-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+});
+</script>
+</section>
+<style>
+  .main{
+   bottom: 0px;
+   width: 100%;
+   }
+   @media (max-width: 767px) {
+   body{
+   padding-bottom: 400px;
+   }
+   }
+   @media (min-width: 768px) and (max-width: 991px) {
+   body{
+   padding-bottom: 240px;
+   }
+   }
+   @media (min-width: 992px) {
+   body{
+   padding-bottom: 175px;
+   }
+   }
+
+</style>
+
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function() {
+
+  $(".CheckboxContainer .container").click(function(){
+
+      $("input[type='checkbox']").click(function(e){
+
+          $div = $(this).parent();
+          text = $div[0].firstChild.nodeValue;
+          id_text = text.replace(/\s+/g, "");
+          id_text = id_text.replace("&", "_");
+
+          if($(this).prop("checked") == true){
+            $(".sf-filtertags ul").prepend("<li>"+text+"<a href='#' name='"+text+"' id='"+id_text+"' onclick='removeTagAndUncheck(this.id,this.name)'> X </a></li>");
+          }
+          else{
+            $("#"+id_text).parent().remove();
+          }
+
+          clearAllShowHide();
+          e.stopImmediatePropagation();
+        });
+    });
+
+    $('.dropdown-submenu a.submenu').on("click", function(e){
+        $.each($(".dropdown-submenu div.dropdown-menu"), function(){
+            if($(this).is(":visible")) {
+                if( $( "div" ).index( $(this).parent() ) != $( "div" ).index( $(e.target).next('div.dropdown-menu').parent() ) ){
+                    $(this).css("display","none");
+                    $(this).parent().find("i").removeClass("fa-angle-right");
+                    $(this).parent().find("i").addClass("fa-angle-down");
+                }
+            }
+        });
+
+        $(e.target).next('div').toggle();
+
+        if(($(e.target).next('div')).is( ":visible" )){
+            $(e.target).find("i").removeClass("fa-angle-down");
+            $(e.target).find("i").addClass("fa-angle-right");
+        }
+        else{
+            $(e.target).find("i").removeClass("fa-angle-right");
+            $(e.target).find("i").addClass("fa-angle-down");
+        }
+        e.stopPropagation();
+        e.preventDefault();
+    });
+
+    $(".dropdown").on("show.bs.dropdown", function(event){
+        $( event.target).find("div.dropdown-menu").css("display","table") ;
+        $(event.target).find("i").removeClass("fa-angle-right");
+        $(event.target).find("i").addClass("fa-angle-down");
+    });
+    $(".dropdown").on("shown.bs.dropdown", function(){
+        $('.dropdown-submenu a.submenu').next('div').toggle();
+    });
+    $(".dropdown").on("hide.bs.dropdown", function(event){
+        $( event.target).find("div.dropdown-menu").css("display","none") ;
+    });
+});
+
+function clearAllShowHide(){
+  if ( $('.sf-filtertags ul li').length > 2 ) {
+    $("#clearAllTags").css("visibility","visible");
+  }else{
+    $("#clearAllTags").css("visibility","hidden");
+  }
+}
+
+function removeTagAndUncheck(id, name){
+  $("input[name='"+name.trim()+"']:checkbox").prop('checked', false);
+  $("#"+id).parent().remove();
+  clearAllShowHide();
+}
+
+function clearAllTags(){
+  $('.sf-filtertags ul').empty();
+  $('.sf-filtertags ul').prepend('<li id="clearAllTags" style="border:none;visibility: hidden;" onclick="clearAllTags()"><a href="#">Clear All</a></li>');
+  $('input:checkbox').removeAttr('checked');
+  clearAllShowHide();
+}
+
+//Hide Dropdown popover on out-focus
+$(document).on("focusin", function(event){
+    var $trigger = $(".dropdown");
+    if($trigger !== event.target && !$trigger.has(event.target).length){
+        $(".dropdown-menu").slideUp("fast");
+    }
+});
+
+$(window).click(function() {
+    $(".dropdown-menu").slideUp("fast");
+});
+</script>
+
+<script>
+$('a').click(function(){
+    if($(this).text().trim() == 'Show More' ){
+        $(this).html('Show Less <i class="fa fa-chevron-up"></i>');
+    }
+    else if($(this).text().trim() == 'Show Less' ){
+         $(this).html('Show More <i class="fa fa-chevron-down"></i>');
+    }
+});
+</script>
+</body>
+</html>
+
+
+<style>
+  .err1{
+    font-family: Roboto-Thin;
+    font-size: 36px;
+    line-height: 48px;
+    color: #ee4411;
+    margin-bottom: 20px;
+  }
+  .err2{
+    font-family: Roboto-Regular;
+    font-size: 18px;
+    line-height: 24px;
+    color: #999999;
+    margin-bottom: 5px;
+  }
+  .err3{
+    font-family: Roboto-Thin;
+    font-size: 18px;
+    line-height: 24px;
+    color: #999999;
+    margin-bottom: 15px;
+  }
+  @media (min-width: 768px) {
+    .paddingTop100{
+      padding-top: 203px;
+      padding-bottom: 135px;
+    }
+  }
+
+ .btn-outline {
+    padding: 5px 20px 5px 20px;
+    min-width: 90px;
+    background: #FFFFFF;
+    border-radius: 50px;
+    font-size: 12px;
+    margin: 15px 12px 15px 0px;
+    border: #0099cc 1px solid;
+    color: #0099cc;
+    text-transform: uppercase;
+    font-style: normal;
+    letter-spacing: 2px;
+}
+img {
+	max-width: 117%;
+}
+</style>
+
+<script>
+  function goBack() {
+      window.history.back();
+  }
+</script>
+
+
+

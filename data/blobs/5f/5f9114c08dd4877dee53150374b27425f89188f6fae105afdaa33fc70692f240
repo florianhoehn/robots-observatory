@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html lang="en" class="no-js ie ie7"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js ie ie8"><![endif]-->
+<!--[if IE 9]><html lang="en" class="no-js ie ie9"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>SIA-Maintenance Page</title>
+	<style>
+		@font-face {
+			font-family: 'proxima-nova';
+			src: url("/Maintenance/WAF_Custom_Deny/proximanova-regular-webfont.eot");
+			src: url("/Maintenance/WAF_Custom_Deny/proximanova-regular-webfont.eot?#iefix") format("embedded-opentype"),url("/Maintenance/WAF_Custom_Deny/proximanova-regular-webfont.woff") format("woff"),url("/Maintenance/WAF_Custom_Deny/proximanova-regular-webfont.woff2") format("woff2"),url("/Maintenance/WAF_Custom_Deny/proximanova-regular-webfont.ttf") format("truetype"),url("/Maintenance/WAF_Custom_Deny/proximanova-regular-webfont.svg") format("svg");
+			font-weight: normal;
+			font-style: normal
+		}
+		@font-face {
+			font-family: 'proxima-nova';
+			src: url("/Maintenance/WAF_Custom_Deny/proximanova-bold-webfont.eot");
+			src: url("/Maintenance/WAF_Custom_Deny/proximanova-bold-webfont.eot?#iefix") format("embedded-opentype"),url("/Maintenance/WAF_Custom_Deny/proximanova-bold-webfont.woff") format("woff"),url('/Maintenance/WAF_Custom_Deny/proximanova-bold-webfont.woff2') format('woff2'),url("/Maintenance/WAF_Custom_Deny/proximanova-bold-webfont.ttf") format("truetype"),url("/Maintenance/WAF_Custom_Deny/proximanova-bold-webfont.svg") format("svg");
+			font-weight: bold;
+			font-style: normal
+		}
+		@font-face {
+			font-family: 'baker-signet-web';
+			src: url("/Maintenance/WAF_Custom_Deny/sigvar_serial-regular-webfont.eot");
+			src: url("/Maintenance/WAF_Custom_Deny/sigvar_serial-regular-webfont.eot?#iefix") format("embedded-opentype"),url('/Maintenance/WAF_Custom_Deny/sigvar_serial-regular-webfont.woff2') format('woff2'),url("/Maintenance/WAF_Custom_Deny/sigvar_serial-regular-webfont.woff") format("woff"),url("/Maintenance/WAF_Custom_Deny/sigvar_serial-regular-webfont.ttf") format("truetype"),url("/Maintenance/WAF_Custom_Deny/sigvar_serial-regular-webfont.svg") format("svg");
+			font-weight: normal;
+			font-style: normal
+		}
+		* {
+			-webkit-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			box-sizing: content-box;
+			-webkit-font-smoothing: antialiased;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+		}
+		article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+			display: block;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-family: "baker-signet-web",serif;
+			margin: 0;
+			font-weight: normal;
+			letter-spacing: .02em;
+		}
+		h1 {
+			font-weight: 300;
+			font-size: 33px;
+		}
+		.hidden {
+			display: none!important;
+			visibility: hidden!important;
+		}
+		a {
+			text-decoration: none;
+			-webkit-transition: color 400ms ease 0s;
+			-moz-transition: color 400ms ease 0s;
+			transition: color 400ms ease 0s;
+			background: transparent;
+			color: #0073fa;
+			cursor: pointer;
+			text-decoration: none;
+			font-family: "Proxima Nova Regular";
+		}
+		img {
+			vertical-align: middle;
+			border: 0;
+		}
+		b, strong {
+			font-weight: bold;
+		}
+		html {
+			font-family: sans-serif;
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%;
+			min-height: 100%;
+		}
+		body {
+			font-size: 14px;
+			font-weight: 400;
+			font-family: "proxima-nova","Open Sans","Arial","Helvetica",sans-serif;
+			min-width: 1.875em;
+			color: #444;
+			background-color: #f7f7f7;
+			width: 100%;
+			-webkit-font-smoothing: antialiased;
+			margin: 0;
+		}
+		body.home-page {
+			background-color: #f7f7f7;
+		}
+		.main-container {
+			margin-left: 0;
+			position: relative;
+			min-width: 767px;
+		}
+		.header {
+			position: relative;
+			background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAABIAQMAAAAEZ60UAAAAA1BMVEUAJmu+xAYuAAAAC0lEQVQIHWMYZAAAAJAAATvnojAAAAAASUVORK5CYII=) repeat-x 0 0;
+			height: 82px;
+			z-index: 12;
+			background-color: #00266b;
+		}
+		.header > .header-inner {
+			zoom: 1;
+			margin: 0 auto;
+			padding-right: 0;
+			max-width: 988px;
+		}
+		.header .logo {
+			display: block;
+			float: left;
+			line-height: 68px;
+		}
+		.header .logo img {
+			display: none;
+		}
+		.header .logo .img-1 {
+			display: inline-block;
+		}
+		.clearfix::after {
+			content: "";
+			clear: both;
+			display: table;
+		}
+		.header > .header-inner:after {
+			content: "";
+			visibility: hidden;
+			display: block;
+			height: 0;
+			clear: both;
+		}
+		.main-inner {
+			margin: 55px auto 100px;
+			max-width: 988px;
+			padding: 0 15px;
+		}
+		p:empty {
+			display: none;
+		}
+		.footer {
+			background-color: #fff;
+			padding: 0 20px;
+		}
+		.footer-bottom {
+			overflow: hidden;
+			width: 100%;
+			max-width: 1080px;
+			margin: 0 auto;
+		}
+		.left {
+			float: left;
+		}
+		.right {
+			float: right;
+		}
+		.footer-bottom-item img {
+			display: inline-block;
+		}
+		@media screen and (max-width: 1023px) {
+			.header {
+				height: 81px;
+			}
+			.header .logo .img-1 {
+				height: 50px;
+				width: 137px;
+			}
+		}
+		@media screen and (min-width: 988px) {
+			.header > .header-inner {
+				max-width: 988px;
+			}
+		}
+		@media screen and (max-width: 987px) {
+			.header > .header-inner {
+				height: 60px;
+				padding: 13px 20px 0;
+				margin-top: -1px;
+			}
+			.header .logo {
+				float: right;
+				line-height: 1;
+			}
+			.footer-bottom {
+				padding-top: 0;
+			}
+		}
+		@media screen and (min-width: 992px) {
+			*:before, *:after {
+				-webkit-box-sizing: inherit;
+				-moz-box-sizing: inherit;
+				box-sizing: inherit;
+			}
+		}
+		@media (min-width: 767px) and (max-width: 991px) {
+			.main-container {
+				min-width: 0;
+			}
+		}
+		@media print {
+			.header, .footer {
+				display: none !important;
+			}
+		}
+	</style>
+</head>
+<body class="home-page">
+	<div id="container" class="main-container">
+		<header class="header">
+			<div class="header-inner clearfix">
+				<h1 class="hidden">Singapore Airline</h1><a class="logo"><img src="data:image/png;base64,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" alt="Singapore Airline Logo" longdesc="img-desc.html" class="img-1"></a>
+			</div>
+		</header>
+		<div class="main-inner">
+			<p class="highlight__text"><p><strong>Oops! Something went wrong.<br><br></strong>Reference error code: <strong>0.1e690317.1792439176.43b0caa4</strong><br><br>You may wish to contact your local Singapore Airlines Office should you require urgent assistance.<br><br>Your understanding is much appreciated, and we apologize for any inconvenience caused.<br><br>Yours sincerely,<br>Singapore Airlines</p></p>
+		</div>
+		<footer class="footer">
+			<div class="footer-inner"><div class="footer-bottom"><a class="footer-bottom-item right"><div class="item-desc"></div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMEAAAAcCAMAAADvPCtfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAASBQTFRFnJybKyspHR0bdXV0PT07ysrJHh4cSEhH5OTjsrKxISEf2trah4eGJSUjZGRjnZ2cMzMxV1ZW7+/v+/v76+rqWFdX0tLSmJiYX15e29vbz8/OsLCv8/Pzq6uqYmFhZGNj6Ojo3t7dpaWkvLy7w8PCwcHB8vLymZiYgYCAysrKb25up6emenp5oaGgZ2dn1tbWo6OilJST4eHh1NTU19fXWllZvr69fn59pqamn5+etbW0i4qK3Nzcj46OYF9f0dHRxsbGs7KyqKio39/fd3Z2k5KS1NTT9vb2xsXFb29ux8fH09PT6+vrmZmYbGxrlpaVaGdneXh4iIiIkJCPjo6NtbW1v7+/cG9vxcXF0NDPXVxcjIuLtLSzqampVVVT////JOY3LgAAAGB0Uk5T//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8Ac23kQwAAAzpJREFUeNrsl4WS5CAQhiGQECMyvrPufqvn7u5u8P5vcU0DuZnbJ8jVpLayodP28TfZWqLbfpEZwYxgRtA2gu69hXYTdOd+rbeaoDuXrV1vMwEAjMtypcUEL39/ePe6XO9cmV9pJ0Fvr1/XyyeLnexBub86TZB7jrBQimmi8DJLdDGL3AckDG0hLpTNgeFFqJsIY8iVMiabDN2ZTZJDBl9BJWgqiA6NoYjBy79q4szVgUvrzztLo8edbHxYlvMLoWJhbgniiDqASBAmFRRNuUnCA/NaUUiVKpeKBiarssyB5TDvSGDv3Bm4ZDmPEq140wmNYl8tcG0GWNnEkhQMlQQv7l7BXUQO4dtRBtfuwDxvZYM3y/Xlc2hCpJZA8dQ2REy+RJhixhAGnDcNNpDWdoGAKtMfkVGBBiZjzOw9kSA1qVVKfSD8xsoS9scWCFxpn9svzg6/ZIPty3aRbdf1pZ4ZBOI0iBJGXXuVYkkTqXhs9kBxQnLpNOAqNJ1eICARvDKgScSMocJhi70GloCBfnHEvAbgEpgFg+23GlAxoQEhhKV+jI7LT6N6aJ/vjvo/p04yi5QIbEexGSCvQRxxJTluGqWRdQgDgQN1gYBLVUUoFQkgiaY48yGbIiCgn+BkkkCnuU6JJxCwOw0BVJXS93lWHtRL7vnmXm/6W5QKGECOR81sXBw4AiUhE+wa1ndNcGrL/EsQRuArGc4CAyV1UeEJraamiIQBCUIyOUUgAMig/BRB3akpkk30/kH//Il7fvXw+yQBk3i8jFwkykPCqSPAbefCNs+wI+tGC60K0DhBpUkMDhzPSmr7KOBgxrIiRJmTXKCPa08FtlcMJNhmCvobAgmGAjaMuoCpc6D1wvvhyotFeHh6mmXj40kCgXornNu8olSYaiLRCcoSVlYZu8pRCSI0A4lhaM2dJuBAcV6rBD8DWkBErCjlcKaY9dE2aUxj/FSgEUjgJ+cofoIZoWHhAlCTv19x3dO3xuW8vr+ZZUdri638i7aVZWW5MYTv0O3yRisJTrPBSVmuXuvXy+VGKwnmdr/Wd66+1c9+1B9X20jQ3RzVS4+G5kO683z2X+aMYEbwnxH8EWAA8JjtrsDzpZIAAAAASUVORK5CYII=" alt="The alliance star image" longdesc="img-desc.html"></a></div></div>
+		</footer>
+	</div>
+</body>
+<script>document.cookie = "AKAMAI_HOME_PAGE_ACCESSED=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";</script>
+</html>

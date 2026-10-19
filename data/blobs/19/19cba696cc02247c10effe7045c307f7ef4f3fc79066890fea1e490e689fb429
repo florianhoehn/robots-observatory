@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-version="35.145592694" data-app-mode="golang-static-spa">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="https://static.ddog-gov.com/static/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="https://static.ddog-gov.com/static/apple-touch-icon-precomposed.png">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+    <link rel="preload" as="script" crossorigin="anonymous" href="https://static.ddog-gov.com/static/v/35.145592694/js/polyfills-rspack.min.js" />
+    <link rel="preload" as="script" crossorigin="anonymous" href="https://static.ddog-gov.com/static/v/35.145592694/js/spa-federated/spa-federated.min.js" />
+    <link rel="preload" as="fetch" crossorigin="anonymous" href="/config" >
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @viewport {
+            width: device-width;
+            initial-scale: 1;
+        }
+
+        body.dark-mode {
+            background-color: #222126;
+        }
+    </style>
+</head>
+
+<body>
+    
+    
+<style>
+  [data-dd-browser-warning] {
+    position: relative;
+    z-index: 2147483647;
+    margin: 0;
+    padding: 8px 16px;
+    background: #b34900;
+    color: #fff;
+    font:
+      1rem/1.25 system-ui,
+      sans-serif;
+    text-align: center;
+  }
+  @supports (
+      (content-visibility: auto) and (font-palette: normal)
+    )
+    or (selector(:nth-child(1 of *)) and (text-justify: auto))
+    or selector(:popover-open) {
+    [data-dd-browser-warning] {
+      display: none !important;
+    }
+  }
+</style>
+<p data-dd-browser-warning>
+  Datadog requires an up-to-date browser. Please upgrade to the latest version
+  of Chrome, Firefox, Safari, or Edge.
+</p>
+
+    <script >
+        const addScript = url => {
+            const script = document.createElement('script');
+            script.setAttribute('crossorigin', 'anonymous'); // `.crossorigin` = doesn't set `crossorigin` in the HTML
+            script.type = 'text/javascript';
+            script.src = url;
+            script.async = false;
+            document.body.appendChild(script);
+        };
+
+        const addField = (name, value) => {
+            const el = document.createElement('input');
+            el.type = 'hidden';
+            el.name = name;
+            el.id = name;
+            el.value = value;
+            document.body.appendChild(el);
+        };
+
+        const lastUserId = sessionStorage.getItem('user_id');
+        sessionStorage.setItem('user_id', -1);
+
+        // the browser can serve the cached config from the previous user
+        // this is fixed by re-fetching the config explicitely without cache
+        const headers = new Headers();
+        if (lastUserId !== -1) {
+            headers.append('pragma', 'no-cache');
+            headers.append('cache-control', 'no-cache');
+        }
+
+        Promise.all([
+            fetch('/config', {
+                method: 'GET',
+                headers
+            })
+                .then(res => res.json())
+                .catch(() => Promise.resolve({ featured_flags: [], permissions: {} })),
+            fetch('/api/ui/feature-flags/get-active-feature-flags', {
+                method: 'GET',
+                headers
+            })
+                .then(res => res.json())
+                .catch(() => Promise.resolve({ active_feature_flags: [], user_status: "not-logged-in" })),
+        ])
+            .then(([config, featureFlags]) => {
+                addField('_authentication_token', '');
+                addField('config-init', JSON.stringify(config));
+                addField('feature-flags-init', JSON.stringify(featureFlags));
+                addField('_current_user_json', '');
+
+                window.DD_version = '35.145592694';
+                addScript('https://static.ddog-gov.com/static/v/35.145592694/js/polyfills-rspack.min.js');
+                addScript('https://static.ddog-gov.com/static/v/35.145592694/js/spa-federated/spa-federated.min.js');
+            });
+    </script>
+    <script >
+        /*
+        This checks if the system mode is selected
+        and if the user has their computer in dark-mode.
+        If so, it will add the className `.dark-mode` to the body
+        */
+        try {
+            if (
+                document.cookie.includes('datadog-theme=dark') ||
+                (
+                    document.cookie.includes('datadog-theme=system') &&
+                    matchMedia('(prefers-color-scheme: dark)').matches
+                )
+            ) {
+                document.body.classList.add('dark-mode');
+            }
+        } catch (e) { }
+    </script>
+
+    <input id="public-path" name="public-path" type="hidden" value="&#34;https://static.ddog-gov.com&#34;" />
+    <script id="spa-versions" type="application/json" >{"host":"35.145592694","remotes":{"mf_apm_runtime_app":"35.134257744"}}</script>
+</body>
+</html>

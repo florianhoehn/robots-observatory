@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /forum/
+Disallow: /print.html
+Disallow: /send.html
+Disallow: /welcome.php
+Disallow: /redir
+Disallow: /search
+Disallow: /subscribe
+Disallow: /agregator
+Disallow: /preview
+Disallow: /tags/*/p*
+Disallow: /inc/
+Host: https://vz.ru
+Sitemap: https://vz.ru/google_sitemap.xml

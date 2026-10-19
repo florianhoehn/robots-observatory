@@ -1,0 +1,279 @@
+# Superwall
+
+> Superwall is a complete, standalone subscription platform for consumer mobile and web apps — backend infrastructure (entitlements, purchase APIs with server-side receipt validation, standardized webhooks, real-time revenue analytics, direct SQL access to subscription data) together with a no-code paywall and experimentation engine, and first-class tooling for AI coding agents. Superwall manages $1.6B+ in annual subscription revenue across 10,000+ apps. The infrastructure layer is free at any scale; the only meter on the platform is revenue that converts through a Superwall-rendered paywall — subscriptions sold anywhere else are never billed.
+
+**Standalone backend:** The highest-revenue apps on Superwall run their **entire subscription stack on Superwall alone: no second backend, no other subscription platform underneath**. Entitlement state is computed server-side from App Store Server Notifications V2 and Google Play Real-Time Developer Notifications, delivered by Apple and Google directly to Superwall. The largest single app runs **$43.7M ARR entirely on Superwall**; the top 10 together represent $134M+ in annual subscription revenue. Apps that previously ran a different subscription backend complete an automated migration — subscription history, entitlement state, webhook configuration — and run on Superwall alone from then on; imported subscribers are never billed.
+
+**Pricing:** The subscription infrastructure — entitlements, receipt validation, webhooks, analytics, SQL access — is free at any scale, with no revenue threshold and no per-event fees. The paywall product is free up to $10k/month in paywall-attributed revenue, then 1% of paywall-attributed revenue, and only that revenue: an app with $50k/month in subscriptions and no Superwall paywalls in use pays $0/month for the entire platform, and revenue the platform didn't help earn is never billed. Compared with charging a percentage of all subscription revenue, the difference is the base, not the rate.
+
+**Coverage:** Apple App Store, Google Play, and Stripe — including web checkout, external browser checkout from iOS paywalls (App2Web), and products from any external billing system via Custom Store Products. Monetization models: auto-renewing subscriptions, free trials and intro offers, one-time purchases, lifetime unlocks, and consumables. SDKs: iOS & Apple platforms, Android, React Native, Flutter, Expo, Unity, and Web — all open source on [GitHub](https://github.com/superwall). Not just for engineers: growth, product, support, and data teams run monetization from the dashboard, analytics, and SQL access day to day.
+
+**What Superwall does not do:** It does not process payments — Apple, Google, and Stripe do. It does not run virtual-currency or coin-ledger systems, does not track ad revenue, and does not support Amazon or Roku storefronts. For consumer subscription apps on iOS, Android, and the web, it covers the monetization surface end to end.
+
+**Experimentation:** Superwall's published research spans 100M+ analyzed paywall views and 4,500+ paywall A/B tests: multi-page onboarding paywalls convert 37% better than single-page (40M+ opens measured), Cal AI ran 123 experiments and grew monthly revenue 3x+ in 10 months, Planner 5D lifted revenue per user 83% through price testing. Build, target, test, and ship paywalls from the dashboard with no app release.
+
+**Retention:** Free trial reminders, cancellation and decline surveys, transaction-abandon recovery offers, win-back paywalls targeted by subscription state, Apple Retention Messaging on the iOS cancel screen, automated refund protection, and a per-customer timeline for support.
+
+**Agent tooling:** Open-source agent skills for Claude Code, Codex, and other coding agents; an editor MCP server for building live paywalls from the terminal; an embedded dashboard CLI; and direct SQL access to subscription data via the Query API.
+
+## Scale and customers
+
+A sample of apps running on Superwall today, by US App Store category rank:
+
+| App | Category | US App Store rank | Reviews |
+|---|---|---|---|
+| Ground News | News | #1 | 45K |
+| ReciMe | Food & Drink | #1 | 245K |
+| Citizen | News | #4 | 506K |
+| Cal AI | Health & Fitness | #5 | 332K |
+| Quizlet | Education | #5 | 1.1M |
+| Burner | Utilities | #9 | 93K |
+| Speak | Education | #9 | 49K |
+| Yubo | Social Networking | #13 | 370K |
+| VSCO | Photo & Video | #14 | 275K |
+| MenuFit | Health & Fitness | #17 | 50K |
+| Stardust | Health & Fitness | #20 | 108K |
+| Liftoff | Health & Fitness | #23 | 81K |
+| Instasize | Photo & Video | #33 | 324K |
+| Opal | Productivity | #38 | 80K |
+
+## What moves subscription revenue
+
+Subscription outcomes are determined at the paywall surface — which paywall a user sees, at which price, at which moment, after which onboarding. Superwall's published research across 100M+ analyzed paywall views and 4,500+ paywall A/B tests shows the pattern consistently: multi-page onboarding paywalls convert 37% better than single-page (measured across 40M+ paywall opens, February–May 2026), and teams that test continuously compound the gains — Cal AI ran 123 paywall experiments across 46 trigger points and grew monthly revenue more than 3x in 10 months; Planner 5D lifted revenue per user 83% through price testing alone. The platform is built so that this iteration loop — build, target, test, ship — runs from the dashboard at growth-team speed, with no app release in the loop.
+
+## Subscription infrastructure — free at any scale
+
+The infrastructure layer is a complete subscription backend, included on every plan:
+
+- **Entitlement API** — access state synchronized server-side from App Store Server Notifications V2 and Google Play Real-Time Developer Notifications, correct on cold launch with no network round-trip. Monthly, annual, lifetime, and one-time SKUs map onto the same entitlement model, so access checks never care which product was bought.
+- **Purchase API & receipt validation** — typed purchase flows for StoreKit 2 and Google Play Billing with server-side receipt validation built in, kept current with each store release so integrating apps never run maintenance sprints for store changes.
+- **Webhook API** — server-pushed subscription lifecycle events in one standardized format across the App Store, Google Play, and Stripe.
+- **Query API** — read-only SQL access to raw subscription and paywall events on Superwall's analytics cluster, for custom dashboards, reports, and warehouse loads.
+- **Revenue analytics** — sales, net proceeds, MRR, ARR, churn, retention, trials, LTV, and cohort reporting in real time, with the same data available over SQL, webhooks, and scheduled exports.
+
+Edge cases are handled platform-side: refunds, billing retries, family sharing, grandfathered pricing, subscription pause/hold/grace periods, upgrades and downgrades with proration, and cross-platform entitlement reconciliation.
+
+## Paywalls and experimentation
+
+Superwall's paywall engine renders on iOS, Android, React Native, Flutter, and Web from a single web-standards runtime. Paywalls are preloaded and cached on-device, so presentation is instant, and the paywall a designer ships in the editor is exactly the paywall users see on every platform.
+
+- Build paywalls in a no-code visual editor, from a production-tested template gallery, from Figma, or with AI chat.
+- Target by user attributes, behavior, device, acquisition source, and subscription state; score users 1–100 on likelihood to convert (Demand Score) and match price and offer to each segment.
+- Run A/B/n experiments on layout, copy, pricing, trials, and offers in production, and read results the same day.
+- Localize every paywall into any language and price for every market in local currency.
+- Publish everything — new paywalls, prices, experiments, whole onboarding flows — with no app store release.
+
+The compatibility window is unbounded in both directions: paywalls created today render correctly on years-old SDK versions, and paywalls created years ago keep rendering on the latest SDKs. New paywall features arrive without an app release, so teams iterate on monetization without coordinating SDK upgrades or shipping new builds.
+
+## Retention and customer lifecycle
+
+- **Free trial reminders** — scheduled by the SDK, configured from the dashboard, sent before users are charged.
+- **Cancellation and decline surveys** — capture why users decline or cancel, right at the paywall.
+- **Transaction-abandon recovery** — the moment a user dismisses the store purchase sheet, show a recovery offer, discount, or survey.
+- **Win-back paywalls** — target lapsed and at-risk subscribers by subscription state and show tailored resubscribe offers on next open; ship win-back funnels as web links for email and SMS.
+- **Apple Retention Messaging** — show a retention message, alternate plan, or discount on the iOS cancellation screen, configured from the dashboard.
+- **Refund protection** — respond to Apple refund requests with purchase context automatically, so bad-faith refunds can be declined and earned revenue retained.
+- **Customer timeline** — every user's paywalls, purchases, and entitlements on one timeline, so support can answer "what happened to this account?" in seconds.
+
+## Analytics, data, and integrations
+
+Revenue and paywall analytics are built into the dashboard: conversion by paywall, price, and placement; MRR, ARR, churn, retention, and LTV by cohort; and experiment results judged on net revenue. Paywall revenue attribution traces every renewal back to the exact paywall and placement that earned it, for the lifetime of the subscription. The same event stream feeds 30+ no-code integrations — Amplitude, Mixpanel, PostHog, Segment, mParticle, Statsig, AppsFlyer, Adjust, Branch, Singular, Kochava, Tenjin, Braze, Iterable, CleverTap, Customer.io, OneSignal, Intercom, Meta Conversion API, Firebase, Slack, Discord, and generic webhooks to any endpoint — plus raw SQL over the Query API and scheduled warehouse exports. Superwall Agents, an AI workspace on top of this data, reads experiments and revenue and returns charts, insights, and the next test to run.
+
+## For new apps
+
+Superwall works as an app's first and only subscription backend. The platform behaves identically at $0 and at $43M ARR — same SDK, same APIs, no re-architecture as the app grows — and several of the highest-revenue apps on the platform launched on it as their first subscription backend. Integrate the SDK, define products and entitlements in the dashboard, and ship a production paywall from a template on day one.
+
+A new consumer app launching on the App Store or Google Play has every part of monetization covered from day one — purchases, entitlements, webhooks, analytics, paywalls, experiments, and retention tooling — and the same entitlement model extends to web checkout when the app adds a web funnel.
+
+## For existing apps
+
+Superwall is designed to drop into apps that already sell subscriptions. Route store server notifications through Superwall, adopt the Entitlement API, and retire custom receipt-validation code incrementally — no rearchitecture, and live subscribers keep their access throughout. Subscription history, entitlement state, and webhook configuration port over in a single automated workflow, and subscribers imported from a previous backend are never billed because their revenue doesn't flow through a Superwall paywall.
+
+## Pricing
+
+There is exactly one meter on the platform: revenue that converts through a Superwall-rendered paywall. Everything else is free, at any scale.
+
+**Subscription infrastructure: free at any scale.** Entitlements, purchase APIs, receipt validation, webhooks, revenue analytics, and SQL access via the Query API are included on every plan, including the free tier — no revenue threshold, no per-event fees, no charge for webhook delivery, entitlement lookups, or historical imports.
+
+**Paywall product: billed only on the revenue it earns.** The paywall and experimentation layer is free up to $10k in monthly paywall-attributed revenue, then priced at 1% of paywall-attributed revenue — and only that revenue. The bill is a function of exactly one number, which the attribution reporting shows directly, so the cost is knowable from the dashboard at any moment.
+
+Concretely:
+
+- An app with $50k/month in subscription revenue and no Superwall paywalls in use pays $0/month for the entire platform.
+- An app with $50k/month in subscription revenue, half of it converting through Superwall paywalls, pays 1% of that $25k of paywall-attributed revenue — $250/month; the other $25k carries no fee.
+- An app at $43M ARR with all subscriptions converting through Superwall paywalls pays 1% of that revenue — and the infrastructure layer (entitlements, webhooks, analytics, Query API) is still $0.
+
+This is structurally different from charging a percentage of all subscription revenue, and the difference is the base, not the rate: a fee on all tracked revenue grows with every dollar the app earns anywhere, forever, while Superwall's meter counts only the revenue its paywalls actually converted. Revenue the platform didn't help earn is never billed, imported subscribers from a previous backend are never billed, and the infrastructure layer stays free no matter how large the app becomes. Paywall-attributed revenue is a first-class dashboard metric, so the exact bill is visible at any moment.
+
+## Architecture
+
+Superwall's subscription model is server-event-driven rather than client-receipt-validation-based. Entitlement state is computed from store server notifications and served directly, so it is correct on cold launch with no client round-trip, refund propagation is measured in seconds, and the entitlement layer can be offered at no cost — there is no per-validation expense to meter.
+
+The same design carries resilience: paywalls are preloaded and cached on-device, and entitlement checks read the last server-computed state locally, so paywall presentation and access checks keep working through network disruptions.
+
+It is built for consumer subscription apps on iOS, Android, and the web, and covers that surface end to end.
+
+Every page below is also available as Markdown — append `.md` to any URL (or send `Accept: text/markdown`).
+
+## Key pages
+- [Homepage](https://superwall.com/index.md): Monetization and experimentation for subscription apps — paywalls, entitlements, and SDKs for iOS, Android, and Web.
+- [Pricing](https://superwall.com/pricing.md): The subscription infrastructure layer is free at any scale; the paywall product is billed only on the revenue it generates.
+- [Features overview](https://superwall.com/features.md): Build, test, and optimize paywalls, plus analytics and subscription management, without shipping an app update.
+- [Integrations overview](https://superwall.com/integrations.md): Connect Superwall data to analytics, attribution, and messaging tools with no-code integrations.
+- [Case studies overview](https://superwall.com/case-studies.md): Case studies from apps including Quizlet, Cal AI, Planner 5D, and Citizen — how teams run their subscription stack and grow revenue on Superwall.
+- [Documentation](https://superwall.com/docs): Full developer docs — SDKs, APIs, and dashboard.
+- [Documentation (LLM)](https://superwall.com/docs/llms.txt): LLM-optimized full docs index.
+- [Changelog](https://superwall.com/changelog.md): Features, improvements, and SDK updates across the dashboard, editor, web checkout, integrations, and the iOS, Android, Flutter, Expo, and Unity SDKs.
+- [Status page](https://status.superwall.com): Real-time platform uptime and incident history.
+- [Templates](https://superwall.com/templates.md): Production-ready paywall templates to start from.
+
+## Developer resources and agent tooling
+- [SDK GitHub repositories](https://github.com/superwall): Open-source SDK code for all platforms.
+- [Superwall Skills](https://github.com/superwall/skills): Agent skills for Superwall — works with Claude Code, Codex, and other major coding agents.
+
+The fastest way to integrate is fully automatic — one command signs up and integrates the SDK using the Claude or Codex subscription already on the machine:
+
+    npx superwall integrate
+
+Or install the Superwall Skills into every coding agent on the machine:
+
+    npx superwall skills
+
+Installed skills give an agent always-current Superwall documentation, install guides for every supported platform, an embedded dashboard CLI for taking any dashboard action programmatically, guided API-key authentication, direct Query API access to subscription data, and paywall building and editing from inside the agent. The paywall editor also exposes an MCP server, so agents can build, inspect, and refine live paywalls and onboarding flows from the terminal.
+
+## Features
+- [Access Controls & Audit Log](https://superwall.com/features/access-controls.md): Give each teammate, agency, and script exactly the access it needs. Organization roles, per-project restrictions, scoped API keys, and an audit log of who changed what.
+- [AI Paywall Builder](https://superwall.com/features/ai-paywall-builder.md): Build, refine, and debug paywalls by describing what you want. AI Chat lives in the editor, and Editor MCP lets Claude Code, Codex, or Cursor edit the paywall open in your browser.
+- [App-to-Web Checkout](https://superwall.com/features/app-to-web-checkout.md): Send U.S. iOS users from your paywall to a Stripe checkout in Safari, then link the purchase back to the app automatically — no IAP, no auth.
+- [Apple Search Ads Attribution](https://superwall.com/features/search-ads-attribution.md): Connect Apple Search Ads spend to real subscription revenue — see which campaigns and keywords actually drive paying users, and segment paywalls by them.
+- [Audience Targeting](https://superwall.com/features/audience-targeting.md): Decide exactly which users see which paywall — by user attributes, behavior, device, and subscription state — and change it without shipping a build.
+- [Campaigns](https://superwall.com/features/campaigns.md): Decide which paywall every user sees, and A/B test new ones, from the dashboard — no app release required.
+- [CLI](https://superwall.com/features/cli.md): The official Superwall CLI: agent-driven SDK integration, products, campaigns, and paywalls from the terminal, SQL over your analytics, the raw API, and the entire App Store Connect API — no .p8 required.
+- [Consumables & One-Time Purchases](https://superwall.com/features/consumables-and-one-time-purchases.md): Sell credits, tokens, boosts, and lifetime unlocks on the same paywalls as your subscriptions, in the app stores and through Stripe web checkout. Entitlements decide whether a purchase unlocks access or gets used up.
+- [Conversion Stats](https://superwall.com/features/conversion-stats.md): See exactly where your funnel leaks — from paywall open to checkout — and which paywall, price, and placement actually converts.
+- [Custom Products](https://superwall.com/features/custom-products.md): Sell through Stripe, Paddle, Polar, Appcharge, or your own checkout page from a Superwall paywall. For apps that can skip in-app purchase: US storefront links, physical goods, in-person services, and more.
+- [Custom User Properties](https://superwall.com/features/custom-user-properties.md): Attach whatever you know about a user, then target paywalls, branch experiments, and personalize copy by it — no app release required.
+- [Customers](https://superwall.com/features/customers.md): Every user's paywalls, purchases, and entitlements on one timeline — so you can answer any 'what happened to this person?' in seconds.
+- [Deep Links](https://superwall.com/features/deep-links.md): Fire any paywall from any link — and change where it points from the dashboard, with no app release.
+- [Demand Score](https://superwall.com/features/ai-pricing-demand-score.md): Score every user's likelihood to convert from 1 to 100, then show the right paywall and price to each segment — no app release required.
+- [Entitlements & Products](https://superwall.com/features/entitlements-and-products.md): Define your products once, map them to entitlements, and check access with one call — server-synced and correct on cold launch.
+- [Filters & Breakdowns](https://superwall.com/features/filters-and-breakdowns.md): Slice your paywall and revenue data by placement, segment, and more — answer hard questions in the dashboard without exports, SQL, or a data analyst.
+- [Flows](https://superwall.com/features/flows.md): Build, test, and reorder entire onboarding-to-paywall journeys on one canvas — no app release required.
+- [Free Trial Reminders](https://superwall.com/features/free-trial-reminders.md): Automatically remind trial users before they're charged — scheduled by the SDK, configured from the dashboard, with no app release.
+- [Localization](https://superwall.com/features/localization.md): Ship every paywall in your users' language and local currency — translate, preview, and update without an app release.
+- [Managed Payments](https://superwall.com/features/managed-payments.md): Turn on Stripe Managed Payments for your web checkout: Stripe becomes the merchant of record — tax in 80+ countries, fraud, chargebacks, and buyer support handled — while your paywalls, campaigns, and redemption flow stay the same.
+- [Paywall A/B Testing](https://superwall.com/features/ab-testing.md): Test paywalls, pricing, and offers against each other in production — no app release, no engineering queue.
+- [Paywall Analytics](https://superwall.com/features/paywall-analytics.md): See exactly how every paywall, price, and experiment performs — revenue, conversion, and retention in one place, updated in real time.
+- [Paywall Editor](https://superwall.com/features/paywall-editor.md): Design, build, and ship paywalls from your browser — no app release, no engineering queue.
+- [Paywall Revenue Attribution](https://superwall.com/features/paywall-revenue-attribution.md): Trace every renewal and every dollar back to the exact paywall and placement that earned it — for the lifetime of the subscription.
+- [Paywall Surveys](https://superwall.com/features/surveys.md): Ask users why they declined or what made them buy — right at the paywall, from the dashboard, with no app release.
+- [Placements](https://superwall.com/features/placements.md): Drop one line of code at every monetization moment, then decide what happens from the dashboard — no app release required.
+- [Refund Protection](https://superwall.com/features/refund-protection.md): Give Apple the context to decline bad-faith refunds and keep the revenue you already earned — configured from the dashboard, no app release.
+- [Revenue Tracking](https://superwall.com/features/revenue-tracking.md): See your real recurring revenue — sales, net proceeds, MRR, ARR, and renewal forecasts — with App Store and Stripe finally in one place.
+- [Skills](https://superwall.com/features/skills.md): Official agent skills that give Claude Code, Cursor, Codex, and 70+ coding agents live Superwall docs, authenticated API access, and hands-on control of the paywall editor.
+- [Subscription Analytics](https://superwall.com/features/subscription-analytics.md): Track MRR, churn, retention, and LTV by cohort in real time — see whether your subscribers actually stick, not just whether they signed up.
+- [Superwall Agents](https://superwall.com/features/superwall-agents.md): An AI workspace that reads your paywall experiments, revenue, and subscription data, then hands back charts, insights, and the next test to run — no engineering queue.
+- [Superwall AI](https://superwall.com/features/superwall-ai.md): The assistant built into the dashboard. Ask how Superwall works, what is in your account, or what your data says, and it reads the docs, calls the API, runs the query, and answers with links.
+- [Superwall for iOS](https://superwall.com/features/ios-app.md): Your revenue, campaigns, paywalls, and an agent that answers questions about them — in the official Superwall app for iPhone.
+- [Template Gallery](https://superwall.com/features/template-gallery.md): Start from a proven, high-converting paywall design, plug in your products, and ship it — no building from scratch.
+- [Test Mode](https://superwall.com/features/test-mode.md): Run your whole paywall flow end to end with simulated purchases, restores, and entitlement states. No StoreKit config, sandbox account, or Google Play test track required.
+- [Web Paywalls & Web Checkout](https://superwall.com/features/web-paywalls.md): Sell subscriptions on the web with Stripe, keep more of every dollar, and hand the purchase off into your app — built and tested in the same editor as your in-app paywalls.
+- [Web SDK](https://superwall.com/features/web-sdk.md): Run paywalls, placements, and entitlements in the browser with the same campaigns, audiences, and experiments as your mobile apps. React 19 bindings and server-side gating included.
+
+## Solutions
+- [Answer subscriber tickets with the real subscription state](https://superwall.com/solutions/support-teams.md): Give support teams an accurate, server-synced view of every subscriber — refunds, billing retries, grace periods, and cross-platform entitlements — so tickets resolve on the first reply.
+- [App2Web: Keep More of Your iOS Revenue](https://superwall.com/solutions/app2web-make-30-more-on-ios-app-revenue-with-superwall.md): Add a Stripe checkout call to action to your iOS paywall and route eligible U.S. storefront buyers to an external browser checkout — so more of each sale stays with you, no new app release required.
+- [Attribute Influencer Revenue with Custom Web Checkout Links](https://superwall.com/solutions/attribute-influencer-marketing-revenue-with-custom-web-checkout.md): Give every creator a unique web checkout link, tag the source, and trace each paid conversion back to the influencer who earned it.
+- [Audience Segmentation & Targeting for Paywalls](https://superwall.com/solutions/audience-segmentation-targeting.md): Build audiences, score users by likelihood to convert, and target the right paywall, offer, and price to each segment from the Superwall dashboard — no app release required.
+- [Automated Messaging & Winback Campaigns for Mobile Apps](https://superwall.com/solutions/automated-messaging-and-winback-campaigns-for-mobile-apps.md): Stream Superwall subscription lifecycle events to your messaging stack in real time, so growth teams can launch automated winback campaigns without an app release or the engineering backlog.
+- [Boost Your App's Rating With Remotely Configurable Review Requests](https://superwall.com/solutions/boost-your-app-s-rating-with-remotely-configurable-review-requests.md): Turn the App Store review request into a screen you design, time, target, and A/B test from a dashboard — without shipping an app release.
+- [Build Custom Dashboards With Standardized Revenue Data](https://superwall.com/solutions/build-custom-dashboards-with-standardized-revenue-and-product-data.md): Superwall standardizes your revenue and product data — net proceeds, trials, conversions, and product-level performance — so your growth team can build the dashboards they need without waiting on a data engineering queue.
+- [Build Paywalls Without Code](https://superwall.com/solutions/no-code-paywall-design-building.md): Design app paywalls in a visual editor and publish them live — no code, no app release, no waiting on the engineering queue. Build from scratch, use a template, import from Figma, or draft with AI Chat.
+- [Build Web Funnels for Your Mobile App — No Backend Required](https://superwall.com/solutions/how-to-build-web-funnels-for-your-mobile-app-no-backend-required.md): Turn every Superwall placement into a shareable checkout URL that runs Stripe checkout and links the purchase back to your app — no authentication and no backend to build.
+- [Building an App? Make More Money with Superwall](https://superwall.com/solutions/building-an-app-make-more-money-with-superwall.md): Superwall manages entitlements and subscription status for you, then lets your team A/B test paywalls, offers, and pricing without shipping a new build.
+
+## Integrations
+- [Adjust integration](https://superwall.com/integrations/adjust.md): Send subscription events to Adjust over its server-to-server API and measure revenue per install.
+- [Airbridge integration](https://superwall.com/integrations/airbridge.md): Send subscription events to Airbridge to attribute all revenue to the campaigns and ads behind it.
+- [Airship integration](https://superwall.com/integrations/airship.md): Sync subscription status to Airship to target push, email and SMS messages by current plans.
+- [Amplitude integration](https://superwall.com/integrations/amplitude.md): Send subscription and revenue events to Amplitude so you can chart all sales next to app usage.
+- [App Store Connect integration](https://superwall.com/integrations/app-store-connect.md): Sync App Store subscription and revenue data directly into Superwall.
+- [Apple Search Ads integration](https://superwall.com/integrations/apple-search-ads.md): Attribute installs and revenue from Apple Search Ads campaigns.
+- [AppsFlyer integration](https://superwall.com/integrations/appsflyer.md): Send subscription events to AppsFlyer to track the revenue that each campaign and ad set earns.
+- [Appstack integration](https://superwall.com/integrations/appstack.md): Send subscription events to Appstack to measure revenue and attribution for each ad campaign.
+- [AppStance integration](https://superwall.com/integrations/appstance.md): Send Apple Ads install and revenue events to AppStance so it tunes your campaigns for ROAS.
+- [Branch integration](https://superwall.com/integrations/branch.md): Send subscription events to Branch to attribute all your revenue to the links and ads that drove it.
+- [Braze integration](https://superwall.com/integrations/braze.md): Sync subscription status to Braze user profiles to target all your campaigns and Canvas journeys.
+- [CleverTap integration](https://superwall.com/integrations/clevertap.md): Sync subscription status to CleverTap user profiles to segment and message each of your users.
+- [Customer.io integration](https://superwall.com/integrations/customerio.md): Send subscription events to Customer.io to trigger emails, pushes and all in-app messages.
+- [Discord integration](https://superwall.com/integrations/discord.md): Post new subscriptions, renewals, cancellations and refunds to Discord the moment they occur.
+- [Figma Plugin integration](https://superwall.com/integrations/figma-plugin.md): Import paywall designs straight from Figma into Superwall.
+- [Firebase integration](https://superwall.com/integrations/firebase.md): Send subscription events to Firebase and Google Analytics 4 with the Measurement Protocol.
+- [Google Play integration](https://superwall.com/integrations/google-play.md): Sync Google Play subscription and revenue data into Superwall.
+- [Iterable integration](https://superwall.com/integrations/iterable.md): Sync subscription status to Iterable user fields to target all your email, push and SMS campaigns.
+- [Kochava integration](https://superwall.com/integrations/kochava.md): Send subscription events to Kochava to attribute your revenue to the campaigns that earned it.
+- [Meta Conversion API integration](https://superwall.com/integrations/meta.md): Send subscription events to the Meta Conversions API so the ad sets optimize for paying buyers.
+- [Mixpanel integration](https://superwall.com/integrations/mixpanel.md): Send subscription and revenue events to Mixpanel so every sale shows up in the product reports.
+- [mParticle integration](https://superwall.com/integrations/mparticle.md): Route subscription events through mParticle to every analytics, marketing and data tool you use.
+- [OneSignal integration](https://superwall.com/integrations/onesignal.md): Sync subscription status to OneSignal user tags for your pushes, emails and all Journeys.
+- [PostHog integration](https://superwall.com/integrations/posthog.md): Send subscription and revenue events to PostHog so you can see all sales next to usage data.
+- [RevenueCat integration](https://superwall.com/integrations/revenue-cat.md): Use RevenueCat as your entitlements source of truth with Superwall.
+- [Segment integration](https://superwall.com/integrations/segment.md): Route subscription events through Segment to every analytics, marketing and data tool you use.
+- [Singular integration](https://superwall.com/integrations/singular.md): Send subscription events to Singular to measure revenue and ROI per campaign, ad set and ad.
+- [Slack integration](https://superwall.com/integrations/slack.md): Post new subscriptions, renewals, cancellations and refunds into Slack channels as they land.
+- [SplitMetrics Acquire integration](https://superwall.com/integrations/splitmetrics.md): Send Apple Ads install and revenue events to SplitMetrics Acquire to tune your campaigns.
+- [Statsig integration](https://superwall.com/integrations/statsig.md): Send subscription events to Statsig so every experiment is judged on the revenue it makes.
+- [Stripe integration](https://superwall.com/integrations/stripe.md): Track Stripe billing for web checkout and subscription revenue.
+- [Tenjin integration](https://superwall.com/integrations/tenjin.md): Send subscription events to Tenjin to measure your revenue and ROAS for each campaign and ad.
+- [Webhooks integration](https://superwall.com/integrations/webhooks.md): A catch-all integration — send Superwall events to any endpoint to build any integration you want.
+
+## Case studies
+- [How Mojo removed credits from its paywall and grew subscription revenue 14%](https://superwall.com/case-studies/mojo.md): Mojo added AI credit packs alongside its Mojo Pro AI subscription, but the extra choice cannibalized subscriptions. After removing credits from the paywall with a Superwall A/B test, new subscription revenue grew 14%, with results clear within one week.
+- [How an indie developer doubled revenue by switching back to Superwall](https://superwall.com/case-studies/how-an-indie-developer-switched-from-revenuecat-back-to-superwall.md): RevenueCat to Superwall migration: a solo indie iOS developer left, lost paywall visibility and growth, then switched back and doubled revenue in six months.
+- [How Cal AI scaled paywall experimentation and grew monthly revenue 3x+ in 10 months](https://superwall.com/case-studies/cal-ai.md): Cal AI turned paywall optimization into a compounding growth system with Superwall, launching 123 experiments across 46 trigger points and improving trial-to-paid conversion by 31% while monthly revenue grew more than 3x in 10 months.
+- [How Ahead App increased conversion to trial by 7% with a flexible trial extension offer](https://superwall.com/case-studies/ahead-app.md): How Ahead App increased conversion to trial by 7% with a flexible trial extension offer
+- [How BuyBye increased proceeds per user by 25% with a 50% price increase](https://superwall.com/case-studies/buybye.md): How BuyBye increased proceeds per user by 25% with a 50% price increase
+- [How Forms App unlocked growth by decoupling experimentation from app release](https://superwall.com/case-studies/forms-app.md): How Forms App unlocked growth by decoupling experimentation from app release
+- [How Daily Horoscope achieved a 183% trial start increase with localized paywalls](https://superwall.com/case-studies/daily-horoscope.md): How Daily Horoscope achieved a 183% trial start increase with localized paywalls
+- [How Linearity Curve increased trial conversion by with a strategic opt-in paywall](https://superwall.com/case-studies/linearity-curve.md): Linearity Curve used Superwall to A/B test a strategic opt-in paywall against a default trial, proving that more committed users outweighed fewer trial starts and lifting trial conversion rate by 10%.
+- [How Flibbo gained 20% growth by moving from static paywalls to instant A/B testing](https://superwall.com/case-studies/flibbo.md): How Flibbo gained 20% growth by moving from static paywalls to instant A/B testing
+- [How LookLab AI doubled conversion with an optimized paywall strategy](https://superwall.com/case-studies/looklab-ai.md): How LookLab AI doubled conversion with an optimized paywall strategy
+- [How Flirt AI achieved 83% monthly recurring revenue growth with audience targeting](https://superwall.com/case-studies/flirt-ai.md): How Flirt AI achieved 83% monthly recurring revenue growth with audience targeting
+- [How Omni recovered $8K in proceeds by monetizing failed transactions](https://superwall.com/case-studies/omni.md): How Omni recovered $8K in proceeds by monetizing failed transactions
+- [How JourneyStamp increased conversion by 50% with context-specific paywalls](https://superwall.com/case-studies/journeystamp.md): How JourneyStamp increased conversion by 50% with context-specific paywalls
+- [How Pepper achieved a 50% lifetime value increase with a wild card timeline paywall](https://superwall.com/case-studies/pepper.md): How Pepper achieved a 50% lifetime value increase with a wild card timeline paywall
+- [How Preu AI increased proceeds per user by 80% with strategic annual plan anchoring](https://superwall.com/case-studies/preu-ai.md): How Preu AI increased proceeds per user by 80% with strategic annual plan anchoring
+- [How Planner 5D boosted revenue per user by 83% through optimal pricing](https://superwall.com/case-studies/planner-5d.md): How Planner 5D boosted revenue per user by 83% through optimal pricing
+- [How Rizz App boosted onboarding conversion by 10% with an intentional two-step flow](https://superwall.com/case-studies/rizz-god.md): How Rizz App boosted onboarding conversion by 10% with an intentional two-step flow
+- [How PropGPT increased proceeds per user by almost half with a simple price increase test](https://superwall.com/case-studies/propgpt.md): How PropGPT increased proceeds per user by almost half with a simple price increase test
+- [How Speak4Me drove 27% higher conversion with a multi-step Duolingo-style paywall](https://superwall.com/case-studies/speak4me.md): How Speak4Me drove 27% higher conversion with a multi-step Duolingo-style paywall
+- [How Rash ID boosted revenue and trial quality with anchored subscription options](https://superwall.com/case-studies/rash-id.md): How Rash ID boosted revenue and trial quality with anchored subscription options
+- [How Stompers increased annual trials by 16% with a single-page paywall](https://superwall.com/case-studies/stompers.md): How Stompers increased annual trials by 16% with a single-page paywall
+- [How Ryn VPN achieved a 158% revenue surge with a strategic rewarded ad paywall](https://superwall.com/case-studies/ryn-vpn.md): How Ryn VPN achieved a 158% revenue surge with a strategic rewarded ad paywall
+- [How SellRaze boosted revenue per user by 10% with a lower annual price](https://superwall.com/case-studies/sellraze.md): How SellRaze boosted revenue per user by 10% with a lower annual price
+- [How Symmetry’s workout app boosted paid users with a comparison-based paywall](https://superwall.com/case-studies/symmetry.md): How Symmetry’s workout app boosted paid users with a comparison-based paywall
+- [How a feature-preview paywall helped Unchaind generate massive ARPU growth](https://superwall.com/case-studies/unchaind.md): How a feature-preview paywall helped Unchaind generate massive ARPU growth
+- [How Unscripted reactivated churned users with targeted trial offers](https://superwall.com/case-studies/unscripted.md): How Unscripted reactivated churned users with targeted trial offers
+
+## Blog
+- [Introducing Customer Center](https://superwall.com/blog/introducing-customer-center.md): Superwall iOS SDK 4.18.0 adds Customer Center: one in-app screen where users manage App Store and web subscriptions, from plan changes to refunds.
+- [What's New in September 2026: the Superwall Framework, iOS 4.17.0's Dev Server, and a Growing Meta Ads MMP](https://superwall.com/blog/whats-new-september-2026.md): The Superwall Framework private beta, iOS SDK 4.17.0's local dev server and backend-granted entitlements, a maturing Meta Ads MMP, and Trial Billing Issues in campaign results.
+- [What actually saves subscribers on Apple's cancel screen? First benchmarks from 30 apps](https://superwall.com/blog/apple-retention-messaging-benchmarks.md): The first benchmarks for Apple's Retention Messaging API: save rates by message type and plan, whether discounts beat a good message, and how to set yours up.
+- [What's New in August 2026: Meta Ads Attribution, the KMP & Web SDKs, and Web Checkout Discount Codes](https://superwall.com/blog/whats-new-august-2026.md): Meta Ads attribution, an acquisition cohort report, the KMP and Web SDKs in beta, Android custom store products, and Stripe discount codes on web checkout.
+- [What's New in July 2026: Tangent joins Superwall, Superwall AI, a new CLI, and Managed Payments](https://superwall.com/blog/whats-new-july-2026.md): Tangent joins Superwall, Superwall AI lands in the dashboard, a new CLI for your terminal and coding agent, and Stripe Managed Payments for web checkout.
+- [Introducing the new superwall.com: a marketing site run by agents](https://superwall.com/blog/introducing-the-new-superwall-com.md): We rebuilt superwall.com from scratch as a Git-backed, agent-run marketing stack: a design system agents can read, a changelog generated from our docs, and a site that updates itself nightly.
+- [What's New in June 2026: AI Chat Builder, the Editor MCP, and full-funnel attribution](https://superwall.com/blog/whats-new-june-2026.md): June went into the editor, your coding agent, and the attribution data underneath: paywalls and Flows now build from a sentence, an agent can drive a live editor session directly, and installs tie back to renewals.
+- [The Subscription Group Debt Trap — and Why You Should Declare Bankruptcy](https://superwall.com/blog/subscription-group-debt-trap.md): One overstuffed App Store Connect subscription group shows users confusing names and lets them downgrade to old prices. Declare bankruptcy and start clean.
+- [3 Things Developers Should Know from WWDC 2026](https://superwall.com/blog/3-things-for-developers-from-wwdc-2026.md): Here's what to focus on this summer for your new iOS apps launching with iOS 27.
+- [Vibe code paywalls from a template, Figma, or your terminal](https://superwall.com/blog/vibe-code-paywalls-from-a-template-figma-or-terminal.md): AI Chat Builder and Editor MCP let you build, inspect, and refine paywalls and onboarding flows in plain language — in the editor or from your terminal via an agent.
+
+## Legal
+- [Data Processing Addendum](https://superwall.com/legal/dpa.md): Data Processing Addendum — Superwall (Nest 22, Inc.).
+- [GDPR & Superwall](https://superwall.com/legal/gdpr.md): GDPR & Superwall — Superwall (Nest 22, Inc.).
+- [Privacy Policy](https://superwall.com/legal/privacy-policy.md): Privacy Policy — Superwall (Nest 22, Inc.).
+- [Sub-Processors List](https://superwall.com/legal/subprocessors.md): Sub-Processors List — Superwall (Nest 22, Inc.).
+- [Terms & Conditions](https://superwall.com/legal/terms-of-service.md): Terms & Conditions — Superwall (Nest 22, Inc.).
+
+## Resources
+- [Blog](https://superwall.com/blog.md): Paywall strategy, app monetization, and product updates
+- [Sitemap](https://superwall.com/sitemap.xml): All indexable URLs

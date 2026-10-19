@@ -1,0 +1,86 @@
+# For all robots - https://www.spotlightstores.com/en-au
+User-agent: *
+# Allow access to favicon and icons
+Allow: /_ui/responsive/theme-spotlight/images/favicon.png
+Allow: /_ui/responsive/theme-spotlight/images/spotlight-icon-76x76.png
+Allow: /_ui/responsive/theme-spotlight/images/spotlight-icon-120x120.png
+Allow: /_ui/responsive/theme-spotlight/images/spotlight-icon-152x152.png
+Allow: /_ui/responsive/theme-spotlight/images/spotlight-icon-57x57.png
+
+# Block access to specific groups of pages
+Disallow: /cart
+Disallow: /checkout
+Disallow: /my-account
+Disallow: /*/quickView
+Disallow: /login/pw/*
+Disallow: /vip-pos/*
+Disallow: /login/guest/
+Disallow: /welcome/guest/
+Disallow: /_ui/
+Disallow: /login/*
+Disallow: /rest/v1/*
+Disallow: /p/sizeGuideView/*
+Disallow: /search/autocompleteSecure
+Disallow: /search
+Disallow: */sale
+Disallow: */all
+Disallow: */hotbuys
+Disallow: */exclusive
+Disallow: */online-only
+Disallow: */bargainbuy
+Disallow: */new
+
+# Block access to special pages
+Disallow: /black-friday
+Disallow: /black-friday-nsw
+Disallow: /black-friday-vic
+
+# Allow search crawlers to discover the sitemap 
+Sitemap: https://www.spotlightstores.com/en-au/sitemap.xml
+
+# Block CazoodleBot as it does not present correct accept content headers 
+User-agent: CazoodleBot 
+Disallow: / 
+
+# Block MJ12bot as it is just noise 
+User-agent: MJ12bot 
+Disallow: / 
+
+# Block dotbot as it cannot parse base urls properly 
+User-agent: dotbot/1.0 
+Disallow: / 
+
+# Block Gigabot 
+User-agent: Gigabot 
+Disallow: /
+
+# Block Bazaarvoice
+User-agent: Bazaarvoice DCC Callback Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3738.0 Safari/537.36
+Disallow: /
+
+# Pinterestbot with crawl delay
+User-agent: Pinterestbot
+Crawl-delay: 0.2
+
+
+# Explicitly allow Google bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: Storebot-Google
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /

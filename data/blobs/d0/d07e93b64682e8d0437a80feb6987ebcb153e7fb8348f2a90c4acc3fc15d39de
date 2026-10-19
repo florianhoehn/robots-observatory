@@ -1,0 +1,528 @@
+<!doctype html><html lang="en"><head>
+	<script>
+		(function () {
+			const KEY = 'iadvize_lang_pref';
+			const GUARD = 'iadvize_lang_redirect_done';
+			const SUPPORTED = ['fr', 'en', 'es', 'de'];
+			const DEFAULT = 'fr';
+			const ua = navigator.userAgent || '';
+      const isBot = /bot|crawl|spider|slurp|google|bing|yandex|baidu|duckduck|lighthouse|inspectiontool|gptbot|claude|perplexity|facebookexternalhit/i.test(ua);
+      if (isBot) return;
+
+			var segments = window.location.pathname.split('/').filter(Boolean);
+			if (segments.length !== 1) return;
+			if (segments[0].toLowerCase() !== DEFAULT) return;
+
+			if (window.location.search.indexOf('nolangredirect') !== -1) return;
+
+			var target = null;
+			try { target = localStorage.getItem(KEY); } catch (e) {}
+			if (SUPPORTED.indexOf(target) === -1) target = null;
+
+			if (!target) {
+				var browser = navigator.languages || [navigator.language || ''];
+				for (var i = 0; i < browser.length; i++) {
+					var code = String(browser[i]).slice(0, 2).toLowerCase();
+					if (SUPPORTED.indexOf(code) !== -1) { target = code; break; }
+				}
+			}
+
+			if (!target || target === DEFAULT) return;
+
+			try {
+				if (sessionStorage.getItem(GUARD) === '1') return;
+				sessionStorage.setItem(GUARD, '1');
+			} catch (e) {}
+
+			window.location.replace('/' + target + '/' + window.location.search + window.location.hash);
+		})();
+	</script>
+    <meta charset="utf-8">
+    <title>Error 404 | Page not found</title>
+    <link rel="shortcut icon" href="https://www.iadvize.com/hubfs/iadvize25/iadvize-favicon.png">
+    <meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<script type="text/javascript">window.gdprAppliesGlobally=true;(function(){function n(e){if(!window.frames[e]){if(document.body&&document.body.firstChild){var t=document.body;var r=document.createElement("iframe");r.style.display="none";r.name=e;r.title=e;t.insertBefore(r,t.firstChild)}else{setTimeout(function(){n(e)},5)}}}function e(r,a,o,s,c){function e(e,t,r,n){if(typeof r!=="function"){return}if(!window[a]){window[a]=[]}var i=false;if(c){i=c(e,n,r)}if(!i){window[a].push({command:e,version:t,callback:r,parameter:n})}}e.stub=true;e.stubVersion=2;function t(n){if(!window[r]||window[r].stub!==true){return}if(!n.data){return}var i=typeof n.data==="string";var e;try{e=i?JSON.parse(n.data):n.data}catch(t){return}if(e[o]){var a=e[o];window[r](a.command,a.version,function(e,t){var r={};r[s]={returnValue:e,success:t,callId:a.callId};if(n.source){n.source.postMessage(i?JSON.stringify(r):r,"*")}},a.parameter)}}if(typeof window[r]!=="function"){window[r]=e;if(window.addEventListener){window.addEventListener("message",t,false)}else{window.attachEvent("onmessage",t)}}}e("__uspapi","__uspapiBuffer","__uspapiCall","__uspapiReturn");n("__uspapiLocator");e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");n("__tcfapiLocator");(function(e){var t=document.createElement("link");t.rel="preconnect";t.as="script";var r=document.createElement("link");r.rel="dns-prefetch";r.as="script";var n=document.createElement("link");n.rel="preload";n.as="script";var i=document.createElement("script");i.id="spcloader";i.type="text/javascript";i["async"]=true;i.charset="utf-8";var a="https://sdk.privacy-center.org/"+e+"/loader.js?target="+document.location.hostname;if(window.didomiConfig&&window.didomiConfig.user){var o=window.didomiConfig.user;var s=o.country;var c=o.region;if(s){a=a+"&country="+s;if(c){a=a+"&region="+c}}}t.href="https://sdk.privacy-center.org/";r.href="https://sdk.privacy-center.org/";n.href=a;i.src=a;var d=document.getElementsByTagName("script")[0];d.parentNode.insertBefore(t,d);d.parentNode.insertBefore(r,d);d.parentNode.insertBefore(n,d);d.parentNode.insertBefore(i,d)})("5d88b6cf-7fb2-426a-9943-0fb16d510581")})();</script>
+		
+		<style>
+			#hs-eu-cookie-confirmation,
+			#hs-banner-parent #hs-eu-cookie-confirmation {
+				display: none !important;
+			}
+		</style>
+		<!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N8MKQPX');</script>
+    <!-- End Google Tag Manager -->
+		
+				
+		<link rel="preconnect" href="https://app-eu1.hubspot.com">		
+		<link rel="dns-prefetch" href="//www.iadvize.com">
+		<link rel="dns-prefetch" href="https://www.google-analytics.com">
+		<link rel="dns-prefetch" href="https://connect.facebook.net">
+		<link rel="dns-prefetch" href="https://www.facebook.com">
+		<link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
+		<link rel="dns-prefetch" href="https://js.hs-analytics.net">
+		<link rel="dns-prefetch" href="https://perf.hsforms.com">
+		<link rel="dns-prefetch" href="https://static.hsappstatic.net">
+		<link rel="dns-prefetch" href="https://cdn2.hubspot.net">
+
+    <link href="https://www.iadvize.com/hubfs/hub_generated/template_assets/1/211371440659/1792415882730/template_critical.min.css" rel="stylesheet">
+	  <link rel="preload" href="https://www.iadvize.com/hubfs/hub_generated/template_assets/1/211371440680/1792415884886/template_main.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="https://www.iadvize.com/hubfs/hub_generated/template_assets/1/211371440680/1792415884886/template_main.min.css"></noscript>
+
+    
+    
+      
+    
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Organization",
+				"name": "iAdvize",
+				"url": "https://www.iadvize.com",
+				"logo": "https://www.iadvize.com/hubfs/iadvize25/iadvize%20Logo@3x.png",
+				"sameAs": [
+					"https://www.linkedin.com/company/iadvize/posts/?feedView=all",
+					"https://www.youtube.com/c/Iadvize-com",
+					"https://www.instagram.com/iadvize/"
+				]
+			}
+			</script>
+		
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:description" content="">
+    <meta property="og:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="">
+
+    
+
+    
+
+    <style>
+a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-box !important;box-sizing:content-box !important;vertical-align:middle}.hs-breadcrumb-menu{list-style-type:none;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px}.hs-breadcrumb-menu-item{float:left;padding:10px 0px 10px 10px}.hs-breadcrumb-menu-divider:before{content:'›';padding-left:10px}.hs-featured-image-link{border:0}.hs-featured-image{float:right;margin:0 0 20px 20px;max-width:50%}@media (max-width: 568px){.hs-featured-image{float:none;margin:0;width:100%;max-width:100%}}.hs-screen-reader-text{clip:rect(1px, 1px, 1px, 1px);height:1px;overflow:hidden;position:absolute !important;width:1px}
+</style>
+
+<link rel="stylesheet" href="https://www.iadvize.com/hubfs/hub_generated/template_assets/1/211370956129/1792415886735/template_system.min.css">
+
+    
+
+
+    
+    <link rel="canonical" href="https://www.iadvize.com/404">
+
+
+<meta property="og:url" content="https://www.iadvize.com/404">
+<meta name="twitter:card" content="summary">
+<meta http-equiv="content-language" content="en">
+
+
+
+
+
+
+  <meta name="generator" content="HubSpot"></head>
+  <body>
+		<noscript>
+			<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N8MKQPX" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+		</noscript>
+    <div class="body-wrapper   hs-content-id-0 hs-site-page page hs-content-path- hs-content-name-  ">
+      
+          <div data-global-resource-path="iAdvizeXGuerric/templates/partials/header-v2.html"><header class="header header--hmm">
+
+	
+
+	<a href="#main-content" class="header__skip reset-hover-button">Skip to content</a>
+
+	
+	
+	<div id="hs_cos_wrapper_header-v2" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="hmm__container">
+	<div class="hmm__container-inner">
+		
+		<a class="hmm__logo-link" href="//www.iadvize.com/en?hsLang=en">
+			<span class="show-for-sr">Back to Homepage</span>
+			<img src="https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=366&amp;height=84&amp;name=iadvize%20Logo@3x.png" alt="logo iAdvize" width="366" height="84" loading="eager" fetchpriority="high" class="hmm__logo" srcset="https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=183&amp;height=42&amp;name=iadvize%20Logo@3x.png 183w, https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=366&amp;height=84&amp;name=iadvize%20Logo@3x.png 366w, https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=549&amp;height=126&amp;name=iadvize%20Logo@3x.png 549w, https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=732&amp;height=168&amp;name=iadvize%20Logo@3x.png 732w, https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=915&amp;height=210&amp;name=iadvize%20Logo@3x.png 915w, https://www.iadvize.com/hs-fs/hubfs/iadvize25/iadvize%20Logo@3x.png?width=1098&amp;height=252&amp;name=iadvize%20Logo@3x.png 1098w" sizes="(max-width: 366px) 100vw, 366px">
+		</a>
+		<div class="hmm__menu-opener-container">
+			
+				
+    
+    
+    
+    
+    
+    
+    <a class="button-primary hmm__sticky-cta-mobile reset-hover-button  " href="https://www.iadvize.com/en/demo?hsLang=en">
+        
+            Demo
+        
+    </a>
+
+
+			
+			<button class="hmm__menu-opener reset-button-style">
+				<span class="show-for-sr">Open menu</span>
+				<i class="hmm__menu-opener-point" id="hmm__menu-opener--1"></i>
+				<i class="hmm__menu-opener-point" id="hmm__menu-opener--2"></i>
+				<i class="hmm__menu-opener-point" id="hmm__menu-opener--3"></i>
+			</button>	
+		</div>
+		
+		<div class="hmm__menus">
+			
+				<nav class="hmm__nav" aria-label="Navigation principale">
+					<ul class="hmm__nav-list semantic-list" role="list">
+						
+						<li class="hmm__nav-list-item">
+							
+							<button class="hmm__nav-list-item-link reset-button-style" aria-expanded="false" aria-haspopup="true">
+								
+								  <span class="hmm__submenu-list-item-link-label">Platform</span>
+								
+								<svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0_2440_2342" style="mask-type:alpha" maskunits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+										<rect width="16" height="16" fill="#D9D9D9" />
+									</mask>
+									<g mask="url(#mask0_2440_2342)">
+										<path d="M8.13546 9.7192L12.8848 4.97004C13.0891 4.76559 13.335 4.66459 13.6225 4.66704C13.9099 4.66948 14.1558 4.77287 14.3601 4.9772C14.5645 5.18154 14.6666 5.42898 14.6666 5.71954C14.6666 6.0102 14.5645 6.2577 14.3601 6.46204L9.38696 11.4374C9.20963 11.6147 9.01252 11.7461 8.79563 11.8315C8.57874 11.9171 8.35868 11.9599 8.13546 11.9599C7.91224 11.9599 7.69218 11.9171 7.47529 11.8315C7.2584 11.7461 7.06129 11.6147 6.88396 11.4374L1.90146 6.4547C1.69702 6.25037 1.59757 6.0057 1.60313 5.7207C1.60868 5.4357 1.71368 5.19104 1.91813 4.9867C2.12246 4.78226 2.3699 4.68004 2.66046 4.68004C2.95101 4.68004 3.19846 4.78226 3.40279 4.9867L8.13546 9.7192Z" fill="#3D3D38" />
+									</g>
+								</svg>
+							</button>
+							
+
+  <div class="hmm__submenu-container hmm__submenu-container--2">
+		<div class="hmm__submenu-container-outer">
+			<div class="hmm__submenu-container-inner">
+				
+					<div class="hmm__submenu hmm__submenu--list">
+						
+						  
+							
+  
+		
+		
+		<a href="https://www.iadvize.com/en/platform-overview?hsLang=en" class="hmm__submenu-header hmm__submenu-header--link">
+			
+  
+		<svg class="hmm__submenu-header-image" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="0 0 48 48" fill="none">
+			<path class="to-green" d="M0 12C0 5.37258 5.37258 0 12 0H36C42.6274 0 48 5.37258 48 12V36C48 42.6274 42.6274 48 36 48H12C5.37258 48 0 42.6274 0 36V12Z" fill="#0A0A09" />
+			 <g clip-path="url(#clip0_197_1842)">
+				<path class="to-black" d="M32.9206 11.1818C32.7259 10.4962 31.7942 10.4945 31.597 11.1794C30.7351 14.1731 30.6647 14.2448 27.6821 15.104C26.9987 15.3009 27 16.2402 27.6839 16.4352C30.6648 17.2849 30.7358 17.3579 31.5972 20.3491C31.7944 21.0339 32.7259 21.0323 32.9206 20.3468C33.7695 17.3579 33.8386 17.2845 36.8195 16.4352C37.5037 16.2403 37.505 15.3008 36.8214 15.1039C33.8386 14.245 33.7697 14.173 32.9206 11.1818Z" fill="#3BE1A4" />
+				<path class="to-black" d="M22.9628 16.3543C22.5705 14.9837 20.7016 14.9848 20.3105 16.3557C18.4054 23.0342 18.3483 23.0967 11.6935 24.9976C10.3254 25.3884 10.324 27.2731 11.6916 27.6655C18.3487 29.5758 18.4053 29.6288 20.3104 36.3046C20.7017 37.6754 22.5707 37.6766 22.9632 36.3061C24.8752 29.6298 24.9231 29.577 31.5775 27.6659C32.9449 27.2732 32.9434 25.3885 31.5755 24.9975C24.9219 23.0959 24.8745 23.0343 22.9628 16.3543Z" fill="#3BE1A4" />
+			</g>
+			<defs>
+				<clippath id="clip0_197_1842">
+				  <rect width="32" height="32" fill="white" transform="translate(8 8)" />
+				</clippath>
+			</defs>
+		</svg>
+  
+
+			<div class="hmm__submenu-header-content">
+				<p class="hmm__submenu-header-content-title">				
+					
+					  <span class="hmm__submenu-header-content-title-link">Platform Overview</span>
+					
+				</p>
+				<p class="hmm__submenu-header-content-subtitle">Launch a new storefront experience</p>
+			</div>
+		</a>
+  
+
+							
+								<ul class="hmm__submenu-list semantic-list">
+									
+										<li class="hmm__submenu-list-item">
+											
+											
+											<a href="https://www.iadvize.com/en/ai-shopping-assistant?hsLang=en" class="hmm__submenu-list-item-link">
+												
+	<div class="hmm__submenu-list-item-link-image-container">
+  
+		<svg class="hmm__submenu-list-item-link-image" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16" fill="none">
+			<path class="to-green" d="M5.79267 10.2638H3.57901C3.30989 10.2638 3.11245 10.1467 2.98667 9.91235C2.86078 9.67802 2.87778 9.44929 3.03767 9.22618L9.029 0.584015C9.13045 0.443015 9.25728 0.348682 9.4095 0.301015C9.56162 0.25346 9.71378 0.260626 9.866 0.322515C10.0181 0.37807 10.1393 0.477904 10.2297 0.622015C10.32 0.766238 10.3541 0.920015 10.3318 1.08335L9.66301 6.39352H12.4362C12.7164 6.39352 12.9151 6.51935 13.0323 6.77102C13.1494 7.02268 13.1225 7.25696 12.9515 7.47385L6.40067 15.3522C6.29923 15.4822 6.16967 15.5654 6.01201 15.6018C5.85423 15.6383 5.70167 15.6225 5.55434 15.5543C5.41323 15.4926 5.30345 15.3927 5.225 15.2547C5.14645 15.1168 5.11828 14.9631 5.1405 14.7935L5.79267 10.2638Z" fill="#3D3D38" />
+		</svg>
+  
+	</div>
+
+												<span>
+													
+													  <span class="hmm__submenu-list-item-link-label hmm__submenu-list-item-link-label-2">AI Shopping Assistant</span>
+													
+												</span>
+											</a>
+										</li>
+									
+										<li class="hmm__submenu-list-item">
+											
+											
+											<a href="https://www.iadvize.com/en/shopper-insights?hsLang=en" class="hmm__submenu-list-item-link">
+												
+	<div class="hmm__submenu-list-item-link-image-container">
+  
+    <svg class="hmm__submenu-list-item-link-image" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16" fill="none">
+      <path class="to-green" d="M11.6883 13.5688C11.4964 13.5688 11.3369 13.5052 11.2097 13.378C11.0824 13.2507 11.0188 13.0943 11.0188 12.9086V9.23263C11.0188 9.04696 11.0824 8.88896 11.2097 8.75863C11.3369 8.62819 11.4964 8.56296 11.6883 8.56296H12.9087C13.0943 8.56296 13.2523 8.62819 13.3827 8.75863C13.5131 8.88896 13.5783 9.04696 13.5783 9.23263V12.9086C13.5783 13.0943 13.5131 13.2507 13.3827 13.378C13.2523 13.5052 13.0943 13.5688 12.9087 13.5688H11.6883ZM7.38982 13.5688C7.20415 13.5688 7.04771 13.5052 6.92049 13.378C6.79326 13.2507 6.72965 13.0943 6.72965 12.9086V3.0913C6.72965 2.90563 6.79326 2.74763 6.92049 2.6173C7.04771 2.48685 7.20415 2.42163 7.38982 2.42163H8.61015C8.79582 2.42163 8.95226 2.48685 9.07949 2.6173C9.20671 2.74763 9.27032 2.90563 9.27032 3.0913V12.9086C9.27032 13.0943 9.20671 13.2507 9.07949 13.378C8.95226 13.5052 8.79582 13.5688 8.61015 13.5688H7.38982ZM3.09132 13.5688C2.90565 13.5688 2.74921 13.5052 2.62199 13.378C2.49476 13.2507 2.43115 13.0943 2.43115 12.9086V6.42463C2.43115 6.23896 2.49476 6.08096 2.62199 5.95063C2.74921 5.82019 2.90565 5.75496 3.09132 5.75496H4.32099C4.50665 5.75496 4.6631 5.82019 4.79032 5.95063C4.91754 6.08096 4.98115 6.23896 4.98115 6.42463V12.9086C4.98115 13.0943 4.91754 13.2507 4.79032 13.378C4.6631 13.5052 4.50665 13.5688 4.32099 13.5688H3.09132Z" fill="#0A0A09" />
+    </svg>
+  
+	</div>
+
+												<span>
+													
+													  <span class="hmm__submenu-list-item-link-label hmm__submenu-list-item-link-label-2">Shopper Insights</span>
+													
+												</span>
+											</a>
+										</li>
+									
+										<li class="hmm__submenu-list-item">
+											
+											
+											<a href="https://www.iadvize.com/en/support-desk?hsLang=en" class="hmm__submenu-list-item-link">
+												
+	<div class="hmm__submenu-list-item-link-image-container">
+  
+    <svg class="hmm__submenu-list-item-link-image" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16" fill="none">
+      <path class="to-green" d="M14.4117 14.1478C14.331 14.1478 14.2491 14.132 14.166 14.1003C14.0829 14.0687 14.0073 14.0188 13.9392 13.9507L12.3558 12.3673H5.19783C4.82583 12.3673 4.51277 12.2387 4.25866 11.9815C4.00455 11.7243 3.87749 11.4097 3.87749 11.0377V9.70433H11.0883C11.4541 9.70433 11.7656 9.57727 12.0228 9.32316C12.2801 9.06905 12.4087 8.75599 12.4087 8.38399V3.84933H13.742C14.114 3.84933 14.4286 3.97794 14.6858 4.23516C14.9432 4.49238 15.0718 4.80699 15.0718 5.17899V13.4877C15.0718 13.6934 15.0018 13.8549 14.8617 13.9722C14.7216 14.0893 14.5715 14.1478 14.4117 14.1478ZM1.59783 10.558C1.43161 10.558 1.27844 10.4994 1.13833 10.3822C0.998217 10.265 0.928162 10.1036 0.928162 9.89783V2.22966C0.928162 1.85766 1.05683 1.54305 1.31416 1.28583C1.57138 1.02861 1.88599 0.899994 2.25799 0.899994H10.0883C10.4541 0.899994 10.7656 1.02861 11.0228 1.28583C11.2801 1.54305 11.4087 1.85766 11.4087 2.22966V7.38399C11.4087 7.75599 11.2801 8.06905 11.0228 8.32316C10.7656 8.57727 10.4541 8.70433 10.0883 8.70433H3.70799L2.06083 10.3515C1.9865 10.4258 1.90933 10.4788 1.82933 10.5105C1.74933 10.5422 1.67216 10.558 1.59783 10.558Z" fill="#0A0A09" />
+    </svg>
+  
+	</div>
+
+												<span>
+													
+													  <span class="hmm__submenu-list-item-link-label hmm__submenu-list-item-link-label-2">Support Desk</span>
+													
+												</span>
+											</a>
+										</li>
+									
+								</ul>
+							
+						
+					</div>
+				
+					<div class="hmm__submenu hmm__submenu--items">
+						
+							
+								<ul class="hmm__submenu-elements semantic-list">
+									
+									  <li>
+										  
+  
+		
+		
+		<a href="https://www.iadvize.com/en/integrations?hsLang=en" class="hmm__submenu-header hmm__submenu-header--link">
+			
+  
+    <svg class="hmm__submenu-header-image" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="0 0 48 48" fill="none">
+			<path class="to-green" d="M0 12C0 5.37258 5.37258 0 12 0H36C42.6274 0 48 5.37258 48 12V36C48 42.6274 42.6274 48 36 48H12C5.37258 48 0 42.6274 0 36V12Z" fill="#0A0A09" />
+			<g clip-path="url(#clip0_197_1863)">
+			<path class="to-black" d="M19.7173 28.4333C17.3444 28.4333 15.3206 27.5959 13.6457 25.921C11.9708 24.2461 11.1333 22.2222 11.1333 19.8493C11.1333 19.4049 11.1729 18.9604 11.252 18.516C11.3313 18.0716 11.4473 17.6368 11.6 17.2117C11.7236 16.9517 11.8876 16.7473 12.092 16.5987C12.2964 16.4498 12.5238 16.3531 12.774 16.3087C13.0242 16.2642 13.2737 16.2761 13.5223 16.3443C13.7712 16.4123 13.9971 16.5478 14.2 16.7507L17.5493 20.1L19.9493 17.7L16.6 14.3507C16.3971 14.1478 16.2616 13.9188 16.1933 13.6637C16.1253 13.4086 16.1136 13.1622 16.158 12.9247C16.2024 12.6869 16.2959 12.4659 16.4383 12.2617C16.5808 12.0572 16.782 11.8932 17.042 11.7697C17.4671 11.6043 17.9113 11.4821 18.3747 11.403C18.838 11.3237 19.2856 11.284 19.7173 11.284C22.0902 11.284 24.111 12.1183 25.7797 13.787C27.4483 15.4557 28.2827 17.4764 28.2827 19.8493C28.2827 20.3227 28.2477 20.7746 28.1777 21.205C28.1074 21.6354 27.996 22.0729 27.8433 22.5173L34.897 29.5043C35.6546 30.2619 36.0333 31.1827 36.0333 32.2667C36.0333 33.3507 35.6546 34.2714 34.897 35.029C34.1397 35.7866 33.2158 36.1653 32.1253 36.1653C31.0351 36.1653 30.1112 35.7818 29.3537 35.0147L22.3667 27.9943C21.96 28.1343 21.5508 28.2426 21.139 28.319C20.7274 28.3952 20.2536 28.4333 19.7173 28.4333Z" fill="#3BE1A4" />
+			</g>
+			<defs>
+			<clippath id="clip0_197_1863">
+			<rect width="32" height="32" fill="white" transform="translate(8 8)" />
+			</clippath>
+			</defs>
+		</svg>
+	
+
+			<div class="hmm__submenu-header-content">
+				<p class="hmm__submenu-header-content-title">				
+					
+					  <span class="hmm__submenu-header-content-title-link">Integrations</span>
+					
+				</p>
+				<p class="hmm__submenu-header-content-subtitle">Connect with the stack you already run</p>
+			</div>
+		</a>
+  
+
+										</li>
+									
+									  <li>
+										  
+  
+		
+		
+		<a href="https://www.iadvize.com/en/technology-stack?hsLang=en" class="hmm__submenu-header hmm__submenu-header--link">
+			
+  
+		<svg class="hmm__submenu-header-image" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="0 0 48 48" fill="none">
+		<path class="to-green" d="M0 12C0 5.37258 5.37258 0 12 0H36C42.6274 0 48 5.37258 48 12V36C48 42.6274 42.6274 48 36 48H12C5.37258 48 0 42.6274 0 36V12Z" fill="#0A0A09" />
+		<g clip-path="url(#clip0_197_1870)">
+		<path class="to-black" d="M27.1666 36.3957C26.7637 36.3957 26.4101 36.352 26.1056 36.2647C25.8012 36.1771 25.5205 36.057 25.2636 35.9043V12.177C25.5623 11.9952 25.8855 11.8543 26.2333 11.7543C26.5813 11.6543 26.9644 11.6043 27.3826 11.6043C28.5286 11.6043 29.5212 11.9957 30.3603 12.7783C31.1994 13.5608 31.6962 14.525 31.8506 15.671C33.2262 15.7788 34.4092 16.338 35.3996 17.3487C36.3903 18.3596 36.8856 19.5803 36.8856 21.011C36.8856 21.6019 36.8032 22.1549 36.6383 22.67C36.4736 23.1849 36.244 23.6577 35.9493 24.0883C36.1937 24.5455 36.3826 25.0279 36.516 25.5357C36.6493 26.0432 36.716 26.5368 36.716 27.0163C36.716 28.553 36.2236 29.8277 35.239 30.8403C34.2545 31.853 33.044 32.3772 31.6073 32.413C31.4209 33.4546 30.9106 34.3788 30.0766 35.1857C29.2426 35.9923 28.2726 36.3957 27.1666 36.3957ZM20.8333 36.3957C19.7251 36.3957 18.7671 36.008 17.9593 35.2327C17.1515 34.4573 16.6482 33.5677 16.4493 32.5637C14.9622 32.5783 13.7044 32.0567 12.676 30.9987C11.6475 29.9407 11.1333 28.6149 11.1333 27.0213C11.1333 26.4736 11.2039 25.9478 11.345 25.444C11.4859 24.9402 11.6974 24.4585 11.9796 23.9987C11.6974 23.5736 11.4859 23.1125 11.345 22.6153C11.2039 22.1182 11.1333 21.5852 11.1333 21.0163C11.1333 19.6183 11.6226 18.4106 12.6013 17.393C13.5802 16.3754 14.7469 15.7951 16.1013 15.652C16.2337 14.5062 16.7212 13.5451 17.5636 12.7687C18.4063 11.9925 19.4124 11.6043 20.582 11.6043C21.0006 11.6043 21.3886 11.6508 21.746 11.7437C22.1035 11.8366 22.4399 11.974 22.755 12.156V35.9043C22.4832 36.057 22.1954 36.1771 21.8916 36.2647C21.5881 36.352 21.2353 36.3957 20.8333 36.3957Z" fill="#3BE1A4" />
+		</g>
+		<defs>
+		<clippath id="clip0_197_1870">
+		<rect width="32" height="32" fill="white" transform="translate(8 8)" />
+		</clippath>
+		</defs>
+		</svg>
+	
+
+			<div class="hmm__submenu-header-content">
+				<p class="hmm__submenu-header-content-title">				
+					
+					  <span class="hmm__submenu-header-content-title-link">iAdvize AI</span>
+					
+				</p>
+				<p class="hmm__submenu-header-content-subtitle">How we’re built for the shopper journey</p>
+			</div>
+		</a>
+  
+
+										</li>
+									
+								</ul>
+							
+						
+					</div>
+				
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+				
+			
+			
+				
+			
+			
+			
+			<div class="hmm__submenu-cta" style="--hmm-cta-bg: #D1D1CB;--hmm-cta-bg-hover: #D0FBF4;">
+			  
+    
+    
+    
+    
+        
+    
+    
+    <a class="hmm__submenu-cta-link button-arrow reset-hover-button show-desktop-only " href="https://www.iadvize.com/en/product-tour?hsLang=en" target="_blank" rel="noopener">
+        
+            iAdvize Product Tour
+        
+    </a>
+			</div>
+			
+		</div>
+		
+      
+  
+	
+	
+	<a href="https://changelog.iadvize.com/" target="_blank" rel="noopener" class="hmm__submenu-card only-desktop" style="--text_color:#0A0A09">
+			
+			
+			
+				<img class="hmm__submenu-card-image" src="https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=345&amp;height=290&amp;name=header-mega-menu-changelog-background.webp" alt="header-mega-menu-changelog-background" loading="lazy" width="345" height="290" srcset="https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=173&amp;height=145&amp;name=header-mega-menu-changelog-background.webp 173w, https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=345&amp;height=290&amp;name=header-mega-menu-changelog-background.webp 345w, https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=518&amp;height=435&amp;name=header-mega-menu-changelog-background.webp 518w, https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=690&amp;height=580&amp;name=header-mega-menu-changelog-background.webp 690w, https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=863&amp;height=725&amp;name=header-mega-menu-changelog-background.webp 863w, https://www.iadvize.com/hs-fs/hubfs/iAdvizeXGuerric/02-pages/header/header-mega-menu-changelog-background.webp?width=1035&amp;height=870&amp;name=header-mega-menu-changelog-background.webp 1035w" sizes="(max-width: 345px) 100vw, 345px">
+			
+			<div class="hmm__submenu-card-content">
+				<p class="hmm__submenu-card-content-tag">
+					<span>See what we shipped</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewbox="0 0 9 9" fill="none">
+						<path d="M6.48431 3.02065L1.50947 7.9955C1.33599 8.16898 1.12778 8.25572 0.884854 8.25572C0.642002 8.2558 0.433798 8.16906 0.260243 7.9955C0.0866875 7.82195 -5.05941e-05 7.61374 2.79785e-05 7.37089C2.79893e-05 7.12796 0.0867662 6.91976 0.260243 6.74628L5.23509 1.77143L1.13493 1.77131C0.884226 1.77139 0.674647 1.68548 0.506199 1.51357C0.33775 1.34182 0.253566 1.1306 0.253644 0.879887C0.261501 0.636957 0.349615 0.429578 0.517985 0.257751C0.686355 0.0859243 0.895933 1.10001e-05 1.14672 1.09749e-05L7.36926 1.09917e-05C7.49017 8.9548e-05 7.60461 0.0233057 7.71256 0.0696605C7.82051 0.116172 7.91479 0.179733 7.9954 0.260344C8.07601 0.340954 8.13957 0.435235 8.18609 0.543186C8.23244 0.651138 8.25566 0.765572 8.25574 0.886487L8.25562 7.12234C8.2557 7.3663 8.17092 7.57308 8.00129 7.74271C7.83175 7.91226 7.62327 7.99872 7.37586 8.0021C7.12515 8.00218 6.91388 7.91631 6.74206 7.74448C6.57023 7.57265 6.48432 7.36135 6.48432 7.11056L6.48431 3.02065Z" fill="#3D3D38" />
+					</svg>
+				</p>
+				<div class="hmm__submenu-card-content-inner">
+					<p class="hmm__submenu-card-content-title">Changelog</p>
+					<p class="hmm__submenu-card-content-text">New features, improvements, and fixes to the AI Shopping Assistant, updated as we release</p>
+				</div>
+			</div>
+		</a>
+  
+
+		
+  </div>
+
+
+							
+						</li>
+						
+						<li class="hmm__nav-list-item">
+							
+							<button class="hmm__nav-list-item-link reset-button-style" aria-expanded="false" aria-haspopup="true">
+								
+									<span class="hmm__submenu-list-item-link-label link-desktop">Solutions</span>
+									<span class="hmm__submenu-list-item-link-label link-mobile">Solutions</span>		
+								
+								<svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0_2440_2342" style="mask-type:alpha" maskunits="userSpaceOnUse" x="0" y="0" width="16" height="16">
+										<rect width="16" height="16" fill="#D9D9D9" />
+									</mask>
+									<g mask="url(#mask0_2440_2342)">
+										<path d="M8.13546 9.7192L12.8848 4.97004C13.0891 4.76559 13.335 4.66459 13.6225 4.66704C13.9099 4.66948 14.1558 4.77287 14.3601 4.9772C14.5645 5.18154 14.6666 5.42898 14.6666 5.71954C14.6666 6.0102 14.5645 6.2577 14.3601 6.46204L9.38696 11.4374C9.20963 11.6147 9.01252 11.7461 8.79563 11.8315C8.57874 11.9171 8.35868 11.9599 8.13546 11.9599C7.91224 11.9599 7.69218 11.9171 7.47529 11.8315C7.2584 11.7461 7.06129 11.6147 6.88396 11.4374L1.90146 6.4547C1.69702 6.25037 1.59757 6.0057 1.60313 5.7207C1.60868 5.4357 1.71368 5.19104 1.91813 4.9867C2.12246 4.78226 2.3699 4.68004 2.66046 4.68004C2.95101 4.68004 3.19846 4.78226 3.40279 4.9867L8.13546 9.7192Z" fill="#3D3D38" />
+									</g>
+								</svg>
+							</button>
+							
+
+  <div class="hmm__submenu-container hmm__submenu-container--1">
+		<div class="hmm__submenu-container-outer">
+			<div class="hmm__submenu-container-inner">
+				
+					<div class="hmm__submenu hmm__submenu--list">
+						
+						  
+							
+  
+		<div class="hmm__submenu-header">
+			
+  
+		<svg class="hmm__submenu-header-image" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewbox="0 0 48 48" fill="none">
+			<path class="to-green" d="M0 12C0 5.37258 5.37258 0 12 0H36C42.6274 0 48 5.37258 48 12V36C48 42.6274 42.6274 48 36 48H12C5.37258 48 0 42.6274 0 36V12Z" fill="#0A0A09" />
+			<mask id="mask0_197_1967" style="mask-type:alpha" maskunits="userSpaceOnUse" x="8" y="8" width="32" height="32">
+			<rect x="8" y="8" width="32" height="32" fill="#D9D9D9" />
+			</mask>
+			<g mask="url(#mask0_197_1967)">
+			<path class="to-black" d="M28.2204 24.997L22.9824 19.7463C22.825 19.5888 22.7029 19.4085 22.616 19.2056C22.5289 19.0028 22.4854 18.7962 22.4854 18.586C22.4854 18.3758 22.5289 18.1693 22.616 17.9666C22.7029 17.7638 22.8208 17.5879 22.9697 17.439L28.2204 12.1883C28.369 12.0396 28.5526 11.9193 28.771 11.8273C28.9895 11.7355 29.2038 11.6896 29.414 11.6896C29.6243 11.6896 29.8276 11.7355 30.024 11.8273C30.2207 11.9193 30.3934 12.0396 30.542 12.1883L35.7987 17.458C35.956 17.6155 36.0752 17.7926 36.156 17.9893C36.2367 18.1858 36.277 18.3891 36.277 18.5993C36.277 18.8095 36.2367 19.0161 36.156 19.219C36.0752 19.4219 35.9604 19.5976 35.8117 19.7463L30.561 24.997C30.4122 25.1459 30.2363 25.2693 30.0334 25.3673C29.8307 25.4655 29.6243 25.5146 29.414 25.5146C29.2038 25.5146 28.9895 25.4655 28.771 25.3673C28.5526 25.2693 28.369 25.1459 28.2204 24.997ZM11.123 21.352V13.9153C11.123 13.4626 11.2819 13.0756 11.5997 12.7543C11.9173 12.433 12.3024 12.2723 12.755 12.2723H20.173C20.6257 12.2723 21.0127 12.4312 21.334 12.749C21.6554 13.0665 21.816 13.4516 21.816 13.9043V21.3413C21.816 21.794 21.6572 22.181 21.3394 22.5023C21.0218 22.8234 20.6367 22.984 20.184 22.984H12.766C12.3134 22.984 11.9264 22.8252 11.605 22.5076C11.2837 22.1899 11.123 21.8046 11.123 21.352ZM25.016 35.245V27.827C25.016 27.3743 25.1748 26.9873 25.4924 26.666C25.8102 26.3446 26.1954 26.184 26.648 26.184H34.0847C34.5374 26.184 34.9244 26.3429 35.2457 26.6606C35.567 26.9782 35.7277 27.3633 35.7277 27.816V35.234C35.7277 35.6866 35.5688 36.0736 35.251 36.395C34.9335 36.7163 34.5484 36.877 34.0957 36.877H26.6587C26.206 36.877 25.819 36.7181 25.4977 36.4003C25.1766 36.0828 25.016 35.6976 25.016 35.245ZM11.123 35.245V27.827C11.123 27.3743 11.2819 26.9873 11.5997 26.666C11.9173 26.3446 12.3024 26.184 12.755 26.184H20.173C20.6257 26.184 21.0127 26.3429 21.334 26.6606C21.6554 26.9782 21.816 27.3633 21.816 27.816V35.234C21.816 35.6866 21.6572 36.0736 21.3394 36.395C21.0218 36.7163 20.6367 36.877 20.184 36.877H12.766C12.3134 36.877 11.9264 36.7181 11.605 36.4003C11.2837 36.0828 11.123 35.6976 11.123 35.245Z" fill="#3BE1A4" />
+			</g>
+		</svg>
+	
+
+			<div class="hmm__submenu-header-content">
+				<p class="hmm__submenu-header-content-title">
+					
+					  <span class="hmm__submenu-header-content-title-link link-desktop">Use cases</span>
+						<span class="hmm__submenu-header-content-title-link link-mobile">Use cases</span>		
+					
+				</p>
+				<p class="hmm__submenu-header-content-subtitle">See how leading brands are using the AI Shopping Assistant</p>
+			</div>
+		</div>
+  
+
+							
+								<ul class="hmm__submenu-list hmm__submenu-list--splited semantic-list">
+									
+										<li class="hmm__submenu-list-item">
+											
+											
+											<a href="https://www.iadvize.com/en/use-cases/improve-pdp-and-plp-performance?hsLang=en" class="hm

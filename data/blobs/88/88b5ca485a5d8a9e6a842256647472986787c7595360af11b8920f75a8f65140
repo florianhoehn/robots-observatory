@@ -1,0 +1,602 @@
+# Solana Documentation
+
+> Developer documentation for Solana, the high-performance blockchain.
+
+## Instructions
+
+- Every page below is available as raw Markdown by appending `.md` to its
+  URL (the links here already include it), or by requesting the page URL
+  with an `Accept: text/markdown` header.
+- The full corpus in a single file: https://solana.com/llms-full.txt
+- Scoped indexes exist per section, e.g.
+  https://solana.com/docs/finance/llms.txt,
+  https://solana.com/docs/payments/llms.txt or
+  https://solana.com/docs/tokenization/llms.txt - prefer these when
+  working on a single task to save context.
+- If you are a coding agent, install the official Solana skill for
+  current APIs and conventions: `npx skills add
+  https://github.com/solana-foundation/solana-dev-skill` (also served at
+  https://solana.com/SKILL.md).
+- Route financial tasks through /docs/finance: asset fundamentals are
+  under /docs/tokens, payments under /docs/payments, stablecoins and
+  tokenized assets under /docs/tokenization, and markets and DeFi under
+  /docs/defi. The JSON-RPC reference is under /docs/rpc; self-contained
+  code recipes under /developers/cookbook.
+- Code in the cookbook and task pages is sourced from tested example
+  files - prefer it over synthesizing API calls from memory.
+
+## Core documentation
+
+- [Start Here](https://solana.com/docs.md): Choose a quickstart, code with an AI agent, or learn how Solana works.
+- [Solana SDKs](https://solana.com/docs/clients.md): SDKs for building on Solana - TypeScript, Rust, Python, Java, Go, and game engines.
+- [Solana Gaming SDKs](https://solana.com/docs/clients/community/game-sdks.md): A list of Solana Gaming SDKs to get you started creating your first Solana Game
+- [Go SDK](https://solana.com/docs/clients/community/go.md): Learn how to interact with Solana using the Go SDK (gagliardetto/solana-go).
+- [Java SDK](https://solana.com/docs/clients/community/java.md): Learn how to interact with Solana using the Java SDK (sava-software/sava).
+- [Python SDK](https://solana.com/docs/clients/community/python.md): Learn how to interact with Solana using the Python SDK (michaelhly/solana-py).
+- [Typescript SDK](https://solana.com/docs/clients/official/javascript.md): Learn how to interact with Solana using the JavaScript/TypeScript client libraries.
+- [Rust SDK](https://solana.com/docs/clients/official/rust.md): Official Rust crates for building on Solana.
+- [Core Concepts](https://solana.com/docs/core.md): Solana's core building blocks, including accounts, programs, instructions, transactions, fees, program-derived addresses, and cross-program invocations.
+- [Accounts](https://solana.com/docs/core/accounts.md): Solana accounts are the fundamental data unit for storing state on the network. Account structure, addresses, types, rent, ownership, and modification rules.
+- [Account Runtime](https://solana.com/docs/core/accounts/account-runtime.md): How the Solana runtime loads and validates accounts before execution, and the serialization format used to pass account data to programs.
+- [Account Structure](https://solana.com/docs/core/accounts/account-structure.md): Account addresses, the five fields every Solana account contains — lamports, data, owner, executable, and rent_epoch — with interactive code walkthrough.
+- [Account Types](https://solana.com/docs/core/accounts/account-types.md): Solana account types — program accounts for executable code, data accounts for program state, system accounts owned by the System Program, and sysvars for cluster-wide state at predefined addresses.
+- [Modification Rules](https://solana.com/docs/core/accounts/modification-rules.md): Runtime-enforced rules for modifying Solana account lamports, data, owner, executable flag, and borrow semantics.
+- [Constants Reference](https://solana.com/docs/core/constants-reference.md): Centralized reference for all Solana runtime constants including accounts, transactions, instructions, programs, fees, compute units, PDAs, and CPIs.
+- [Cross Program Invocation](https://solana.com/docs/core/cpi.md): Cross Program Invocation (CPI) on Solana — how programs call other programs using invoke and invoke_signed, handle PDA signers, and compose onchain functionality.
+- [CPI Cost Model and Data Sync](https://solana.com/docs/core/cpi/cpi-cost-model.md): CPI compute costs, account data synchronization between caller and callee, PDA signing mechanics, and return data on Solana.
+- [CPI Execution and Privileges](https://solana.com/docs/core/cpi/cpi-execution.md): The 11-step CPI execution flow through the Solana runtime, privilege extension rules, reentrancy restrictions, and authorized program checks.
+- [CPIs with PDA Signers](https://solana.com/docs/core/cpi/cpi-with-pda.md): How to use the invoke_signed function for Cross-Program Invocations on Solana when the calling program needs to sign as a PDA, with Anchor CpiContext and Native Rust examples.
+- [CPIs without PDA Signers](https://solana.com/docs/core/cpi/cpi-without-pda.md): How to use the invoke function for Cross-Program Invocations on Solana when no PDA signing is required, with Anchor CpiContext and Native Rust examples.
+- [Fees](https://solana.com/docs/core/fees.md): Solana transaction fees consist of a base fee of 5,000 lamports per signature and an optional prioritization fee, priced in micro-lamports per compute unit for legacy and v0 transactions and as an absolute lamport total for v1. Fee calculation, distribution, and compute budget.
+- [Compute Budget](https://solana.com/docs/core/fees/compute-budget.md): Compute unit limits, ComputeBudgetInstruction variants, the scheduler cost model, block limits, and execution budget constants on Solana.
+- [Fee Structure](https://solana.com/docs/core/fees/fee-structure.md): How Solana transaction fees are calculated, including the base fee per signature, the prioritization fee formula, fee distribution, and how to set fees using compute budget instructions.
+- [Instructions](https://solana.com/docs/core/instructions.md): Solana instructions are the smallest unit of program execution. Each instruction targets one program and specifies accounts, data, and signer requirements.
+- [Instruction Introspection](https://solana.com/docs/core/instructions/instruction-introspection.md): How Solana programs inspect other instructions in the same transaction using the Instructions sysvar. Load instructions by absolute index or relative offset. CPI inner instructions are not accessible.
+- [Instruction Structure](https://solana.com/docs/core/instructions/instruction-structure.md): Solana instruction structure — program_id, accounts, and data fields, AccountMeta flags is_signer and is_writable, compiled instructions, and SOL transfer examples in TypeScript and Rust.
+- [Program Derived Addresses (PDAs)](https://solana.com/docs/core/pda.md): Solana Program Derived Addresses (PDAs) are deterministic, off-curve addresses derived from seeds and a program ID. No private key exists — only the deriving program can sign via invoke_signed.
+- [PDA Accounts](https://solana.com/docs/core/pda/pda-accounts.md): Create onchain accounts at Solana PDA addresses using invoke_signed and Anchor's init constraint. invoke_signed verification flow and Anchor PDA creation patterns with code examples.
+- [PDA Derivation](https://solana.com/docs/core/pda/pda-derivation.md): How Solana PDAs are derived using SHA-256 with seeds, bump values, and a program ID. Derivation algorithm, canonical bump search, compute costs, and SDK examples in TypeScript and Rust.
+- [Programs](https://solana.com/docs/core/programs.md): Solana programs are executable code stored onchain. Overview of program types, the sBPF execution model, deployment and upgrades, and the Anchor, Pinocchio, and native Rust development approaches.
+- [Core Programs](https://solana.com/docs/core/programs/builtin-programs.md): Solana core programs — System Program with instruction reference, Vote, Stake, Config, Compute Budget, Address Lookup Table, and ZK ElGamal Proof. Includes source links for all 7 programs.
+- [Precompiled Programs](https://solana.com/docs/core/programs/precompiles.md): Solana's precompiled programs for signature verification — Ed25519, Secp256k1, and Secp256r1 — that bypass the sBPF VM and run as native code within the validator.
+- [Program Deployment](https://solana.com/docs/core/programs/program-deployment.md): Deploying, upgrading, and verifying Solana programs.
+- [Program Execution](https://solana.com/docs/core/programs/program-execution.md): How Solana compiles and executes programs, including the sBPF VM, compute unit model, program cache, and syscalls.
+- [Syscall Reference](https://solana.com/docs/core/programs/syscall-reference.md): Complete reference for all sBPF syscalls available to Solana programs, including compute unit costs for hashing, cryptography, CPI, logging, memory operations, and more.
+- [Transactions](https://solana.com/docs/core/transactions.md): Solana transactions are the atomic unit of network interaction, containing signatures and a message with instructions. Transaction structure, blockhash expiry, versioned transactions, and durable nonces.
+- [Durable Nonces](https://solana.com/docs/core/transactions/durable-nonces.md): How durable nonces work on Solana for offline signing and delayed transaction submission, including nonce lifecycle, detection, validation, and failure behavior.
+- [Partial Signing](https://solana.com/docs/core/transactions/partial-signing.md): Build one immutable Solana transaction message, collect its signatures from independent signers, verify and merge them, then submit the transaction.
+- [Signing in Production](https://solana.com/docs/core/transactions/signing-in-production.md): Where signing keys live in a production Solana application, and how to choose between local keys, browser wallets, cloud KMS/HSM, and managed signing backends.
+- [Transaction Introspection](https://solana.com/docs/core/transactions/transaction-introspection.md): Decode and inspect a confirmed Solana transaction with @solana/transaction-introspection - resolve account indices and lookup-table addresses, walk outer and inner (CPI) instructions, and parse them with program clients.
+- [Transaction Pipeline](https://solana.com/docs/core/transactions/transaction-pipeline.md): How Solana transactions are processed from submission to commit, including the full 8-stage validation pipeline, reading transaction details from the network, and common validation errors.
+- [Transaction Structure](https://solana.com/docs/core/transactions/transaction-structure.md): Anatomy of a Solana transaction including signatures, message format, header, account addresses, blockhash, compiled instructions, binary encoding, and size budget.
+- [Versioned Transactions](https://solana.com/docs/core/transactions/versioned-transactions.md): Legacy, v0, and v1 transaction formats on Solana, including Address Lookup Tables (ALTs), version detection, the v1 transaction config, and resource limits.
+- [Markets & Trading](https://solana.com/docs/defi.md): Build trading systems, integrate DEXs and oracles, and run financial applications on the chain where DeFi settles in milliseconds for fractions of a cent.
+- [Delivery vs Payment (DvP) program](https://solana.com/docs/defi/dvp-program.md): The Solana Foundation's DvP program holds an asset leg and a cash leg in program-owned escrow until a settlement authority named in the trade settles both in one transaction. Covers the program ID, roles, account layout, errors, supported tokens, and step-by-step guides in TypeScript and Rust.
+- [Create a Trade](https://solana.com/docs/defi/dvp-program/create-a-trade.md): Set up the DvP program clients, derive the trade record and its two escrow accounts, and record the terms of a trade with CreateDvp.
+- [Fund the Legs](https://solana.com/docs/defi/dvp-program/fund-the-legs.md): Verify the stored terms of a DvP trade, then fund a leg with a plain TransferChecked into its escrow account.
+- [Settle the Trade](https://solana.com/docs/defi/dvp-program/settle-the-trade.md): The settlement authority re-checks the stored terms, creates the four recipient token accounts, and sends SettleDvp to move both legs of a funded trade in one transaction, then waits for finalized before recording it.
+- [Unwind a Trade](https://solana.com/docs/defi/dvp-program/unwind-a-trade.md): Take a leg back with Reclaim, unwind a trade with Cancel or Reject, and recover a deposit that landed after the trade closed with Recover.
+- [Add Solana to Your Exchange](https://solana.com/docs/defi/exchange.md): Learn how to integrate Solana into your exchange with this guide covering node setup and implementation details for deposits and withdrawals.
+- [MEV Protection with Jito DontFront](https://solana.com/docs/defi/mev-protection.md): Learn how to protect your Solana transactions from sandwich attacks using Jito's dontfront feature. This guide covers how sandwich attacks work, how dontfront prevents front-running, bundle ordering rules, tip strategies, and integration examples in TypeScript and Rust.
+- [A Guide to Stake-weighted Quality of Service on Solana](https://solana.com/docs/defi/stake-weighted-qos.md): Stake-weighted QoS (Quality-of-Service) is an implementation feature which, when enabled, allows leaders (block producers) to identify and prioritize transactions proxied through a staked validator as an additional sybil resistance mechanism.
+- [Finance on Solana](https://solana.com/docs/finance.md): Learn how Solana works, create and operate digital assets, build global payment systems, design private transaction flows, and integrate onchain markets and DeFi.
+- [Privacy](https://solana.com/docs/finance/privacy.md): Compare Confidential Balances, the Solana Privacy Rings, and Private Channels for financial applications on Solana.
+- [Frontend](https://solana.com/docs/frontend.md): Learn about building interfaces for Solana Programs.
+- [Kit client](https://solana.com/docs/frontend/client.md): Build a Solana client from Kit plugins for RPC, signing, and sending transactions.
+- [Messages & Auth](https://solana.com/docs/frontend/messages-and-auth.md): Sign messages with a Solana wallet to authenticate users, record consent, or authorize off-chain actions, using off-chain message signing with a fallback for wallets that don't support it yet.
+- [Next.js + Kit](https://solana.com/docs/frontend/nextjs-solana.md): Set up Solana wallet integration in Next.js with @solana/kit and @solana/react to send SOL transfers.
+- [React](https://solana.com/docs/frontend/react-hooks.md): Share a Kit client across your React app with @solana/react and the wallet plugin hooks.
+- [Migrating to Kit](https://solana.com/docs/frontend/web3-compat.md): How @solana/web3.js and wallet-adapter concepts map onto @solana/kit.
+- [Coding with agents](https://solana.com/docs/intro/coding-with-agents.md): Use Solana MCP and Agent Skills to give coding agents current Solana knowledge and reusable workflows.
+- [Local Installation](https://solana.com/docs/intro/installation.md): A quick installation guide that allows you to set up your local Solana development environment with a single command. Install Rust, the Solana CLI, and Anchor Framework on Windows (WSL), Linux, and Mac.
+- [Anchor CLI Basics](https://solana.com/docs/intro/installation/anchor-cli-basics.md): This section walks through some common Anchor CLI commands to get you started.
+- [Install Dependencies](https://solana.com/docs/intro/installation/dependencies.md): A guide to setting up your local Solana development environment. Learn how to install Rust, the Solana CLI, and Anchor Framework on Windows (WSL), Linux, and Mac.
+- [Solana CLI Basics](https://solana.com/docs/intro/installation/solana-cli-basics.md): This section walks through some common Solana CLI commands to get you started.
+- [Surfpool CLI Basics](https://solana.com/docs/intro/installation/surfpool-cli-basics.md): Learn essential Surfpool CLI commands for local Solana development, including starting a validator and using Surfpool Studio.
+- [Quick Start](https://solana.com/docs/intro/quick-start.md): Learn Solana development basics. Create your first program, understand accounts, send transactions, and explore PDAs and CPIs using Solana Playground - no installation required.
+- [Build Your First Program](https://solana.com/docs/intro/quick-start/build-first-program.md): Create a local Anchor program, build and test it, and walk through every file in the default counter program.
+- [Reading from Network](https://solana.com/docs/intro/quick-start/reading-from-network.md): Learn how to read data from the Solana blockchain network. This guide covers fetching wallet accounts, program accounts, and token mint accounts with JavaScript/TypeScript examples using Solana Kit.
+- [Writing to the Network](https://solana.com/docs/intro/quick-start/writing-to-network.md): Learn how to write data to the Solana network by sending transactions and instructions. Follow step-by-step examples to transfer SOL and create a token mint using Solana Kit.
+- [Payments](https://solana.com/docs/payments.md): Build global payment systems with instant settlement and fees under $0.001
+- [Accept Payments](https://solana.com/docs/payments/accept-payments.md): Accept stablecoin and token payments on Solana
+- [Indexing](https://solana.com/docs/payments/accept-payments/indexing.md): Production-grade transaction monitoring for high-volume payment systems
+- [Solana Pay](https://solana.com/docs/payments/accept-payments/solana-pay.md): Generate payment URLs, QR codes, and transactions
+- [Verification Tools](https://solana.com/docs/payments/accept-payments/verification-tools.md): Verify incoming stablecoin payments and reconcile them with your orders.
+- [Deferred Execution](https://solana.com/docs/payments/advanced-payments/deferred-execution.md): Sign transactions now, execute later—enabling approval workflows, treasury operations, and secure signing
+- [Spend Permissions](https://solana.com/docs/payments/advanced-payments/spend-permissions.md): Delegate token spending to third parties for automated and escrowed payments
+- [Agentic Payments](https://solana.com/docs/payments/agentic-payments.md): Let agents and applications pay for APIs and digital resources over HTTP with MPP or x402, settled on Solana.
+- [Machine Payments Protocol on Solana](https://solana.com/docs/payments/agentic-payments/mpp.md): Use Machine Payments Protocol challenges, credentials, and receipts for one-time charges or metered payment sessions on Solana.
+- [x402 on Solana](https://solana.com/docs/payments/agentic-payments/x402.md): Build a current x402 V2 client and resource server for payment-gated HTTP APIs settled with SPL tokens on Solana.
+- [Making an x402 Payment](https://solana.com/docs/payments/agentic-payments/x402/making-a-payment.md): Launch an agent with Pay and complete one x402 V2 payment against a local sandbox API without moving real funds.
+- [Payment Developer Tools](https://solana.com/docs/payments/developer-tools.md): SDKs, Solana payment tools, and services for building payment flows
+- [How Payments Work on Solana](https://solana.com/docs/payments/how-payments-work.md): Core concepts for sending and receiving payments on Solana
+- [Interacting with Solana](https://solana.com/docs/payments/interacting-with-solana.md): Connect to the network and explore blockchain data
+- [Pay.sh](https://solana.com/docs/payments/pay-sh.md): Accept pay-per-use and subscription payments for APIs with the Pay.sh command-line gateway.
+- [Quickstart: accept a payment](https://solana.com/docs/payments/quickstart.md): Add a working payment button to a React app in about five minutes and take your first stablecoin payment.
+- [Send Payments](https://solana.com/docs/payments/send-payments.md): Send stablecoin payments with instant settlement and fees under $0.001
+- [Basic Payment](https://solana.com/docs/payments/send-payments/basic-payment.md): Learn how to send a single token transfer between wallets.
+- [Payment Processing](https://solana.com/docs/payments/send-payments/payment-processing.md): Process payments at scale with gasless transactions and fee abstraction
+- [Batch Payments](https://solana.com/docs/payments/send-payments/payment-processing/batch-payments.md): Learn how to pay multiple recipients in a single transaction.
+- [Fee Abstraction](https://solana.com/docs/payments/send-payments/payment-processing/fee-abstraction.md): Learn how fee sponsorship works and implement fee abstraction with Kora.
+- [Payment with Memo](https://solana.com/docs/payments/send-payments/payment-with-memo.md): Learn how to attach invoice IDs or notes to a payment.
+- [Verify Address](https://solana.com/docs/payments/send-payments/verify-address.md): Learn how to verify addresses before sending payments on Solana to prevent fund loss.
+- [Close Subscription Authority](https://solana.com/docs/payments/subscriptions/close-subscription-authority.md): Guide for closing a user's Subscription Authority account.
+- [Create Subscription Authority](https://solana.com/docs/payments/subscriptions/create-subscription-authority.md): Guide for initializing a user's Subscription Authority account.
+- [Fixed Delegation](https://solana.com/docs/payments/subscriptions/fixed-delegation.md): Guide for setting up fixed delegation transactions.
+- [Overview](https://solana.com/docs/payments/subscriptions/overview.md): Overview of the Solana subscriptions program.
+- [Recurring Delegation](https://solana.com/docs/payments/subscriptions/recurring-delegation.md): Guide for setting up recurring delegation transactions.
+- [Revoke Abandoned Delegations And Subscriptions](https://solana.com/docs/payments/subscriptions/revoke-abandoned.md): Guide for reclaiming rent from a delegation or subscription whose Subscription Authority is gone.
+- [Subscription Plan](https://solana.com/docs/payments/subscriptions/subscription-plan.md): Guide for setting up subscription plan transactions.
+- [Anchor Events](https://solana.com/docs/programs/anchor-events.md): Define, emit, decode, subscribe to, version, and test Anchor events, with guidance for log truncation and CPI events.
+- [Generating Clients](https://solana.com/docs/programs/codama/clients.md): Complete guide to generating clients for Solana programs using the Codama CLI.
+- [Deploying Programs](https://solana.com/docs/programs/deploying.md): Complete guide to building, deploying, and managing Solana programs using the Solana CLI.
+- [Program Examples](https://solana.com/docs/programs/examples.md): A list of Solana program examples in different languages and frameworks, which can help you learn and use as reference for your own projects.
+- [IDL - an easy to use Program Interface](https://solana.com/docs/programs/idls.md): IDLs are a JSON representation of a program and let you decode the program's instructions and accounts, generate clients in different languages and lets people understand the program's interface without reading the source code.
+- [Limitations](https://solana.com/docs/programs/limitations.md)
+- [Rust Programs](https://solana.com/docs/programs/rust.md): Learn how to develop Solana programs using Rust, including step-by-step instructions for creating, building, testing, and deploying smart contracts on the Solana blockchain.
+- [Program Structure](https://solana.com/docs/programs/rust/program-structure.md): Learn how to structure Solana programs in Rust, including entrypoints, state management, instruction handling, and testing.
+- [Mollusk](https://solana.com/docs/programs/testing/mollusk.md): Comprehensive guide to testing Solana programs using Mollusk
+- [Verifying Programs](https://solana.com/docs/programs/verified-builds.md): Verified builds is a way to link your program to its source code and let everyone independently verify that the program was indeed built from that provided source code.
+- [RPC Endpoints](https://solana.com/docs/references/clusters.md): Learn about Solana's network clusters (Devnet, Testnet, and Mainnet), their public RPC endpoints, rate limits, and use cases. Learn how to connect to different Solana networks for development, testing, and production.
+- [Solana CLI Reference](https://solana.com/docs/references/solana-cli.md): Complete command index and practical examples for the Agave Solana command-line interface.
+- [SPL Token CLI Reference](https://solana.com/docs/references/spl-token-cli.md): Complete command index and practical examples for creating and managing SPL Token and Token-2022 mints and accounts.
+- [Staking](https://solana.com/docs/references/staking.md)
+- [Stake Accounts](https://solana.com/docs/references/staking/stake-accounts.md)
+- [Stake Programming](https://solana.com/docs/references/staking/stake-program.md)
+- [Terminology](https://solana.com/docs/references/terminology.md): Learn the essential terminology used throughout the Solana blockchain and development models.
+- [Solana RPC Overview](https://solana.com/docs/rpc.md): Intro and overview for the Solana RPC docs. Find cluster endpoints, HTTP and WebSocket references, and the shared structure reference pages.
+- [Removed RPC Methods](https://solana.com/docs/rpc/deprecated.md): Migrate from JSON-RPC methods removed in Agave v2.0 to supported Solana RPC methods and response shapes.
+- [confirmTransaction (removed)](https://solana.com/docs/rpc/deprecated/confirmtransaction.md): Migrate from the removed confirmTransaction RPC method to getSignatureStatuses.
+- [getConfirmedBlock (removed)](https://solana.com/docs/rpc/deprecated/getconfirmedblock.md): Migrate from getConfirmedBlock to getBlock.
+- [getConfirmedBlocks (removed)](https://solana.com/docs/rpc/deprecated/getconfirmedblocks.md): Migrate from getConfirmedBlocks to getBlocks.
+- [getConfirmedBlocksWithLimit (removed)](https://solana.com/docs/rpc/deprecated/getconfirmedblockswithlimit.md): Migrate from getConfirmedBlocksWithLimit to getBlocksWithLimit.
+- [getConfirmedSignaturesForAddress2 (removed)](https://solana.com/docs/rpc/deprecated/getconfirmedsignaturesforaddress2.md): Migrate from getConfirmedSignaturesForAddress2 to getSignaturesForAddress.
+- [getConfirmedTransaction (removed)](https://solana.com/docs/rpc/deprecated/getconfirmedtransaction.md): Migrate from getConfirmedTransaction to getTransaction.
+- [getFeeCalculatorForBlockhash (removed)](https://solana.com/docs/rpc/deprecated/getfeecalculatorforblockhash.md): Replace getFeeCalculatorForBlockhash with isBlockhashValid and getFeeForMessage.
+- [getFeeRateGovernor (removed)](https://solana.com/docs/rpc/deprecated/getfeerategovernor.md): Replace getFeeRateGovernor with message-specific fee calculation.
+- [getFees (removed)](https://solana.com/docs/rpc/deprecated/getfees.md): Replace getFees with getLatestBlockhash and getFeeForMessage.
+- [getRecentBlockhash (removed)](https://solana.com/docs/rpc/deprecated/getrecentblockhash.md): Replace getRecentBlockhash with getLatestBlockhash and getFeeForMessage.
+- [getSignatureConfirmation (removed)](https://solana.com/docs/rpc/deprecated/getsignatureconfirmation.md): Migrate the confirmations and status fields from getSignatureConfirmation to getSignatureStatuses.
+- [getSignatureStatus (removed)](https://solana.com/docs/rpc/deprecated/getsignaturestatus.md): Migrate the transaction result from getSignatureStatus to getSignatureStatuses.
+- [getSnapshotSlot (removed)](https://solana.com/docs/rpc/deprecated/getsnapshotslot.md): Migrate from getSnapshotSlot to getHighestSnapshotSlot.
+- [getStakeActivation (removed)](https://solana.com/docs/rpc/deprecated/getstakeactivation.md): Replace getStakeActivation by decoding stake state and deriving activation from current epoch data.
+- [Solana RPC HTTP Methods](https://solana.com/docs/rpc/http.md): Reference index for Solana RPC HTTP methods. Use this page to find request-response RPC methods by category, shared JSON-RPC request conventions, and links to detailed method pages.
+- [getAccountInfo](https://solana.com/docs/rpc/http/getaccountinfo.md): Returns the account state and metadata for a single address. Returns null if the account does not exist at the requested commitment.
+- [getAgGenesisCert](https://solana.com/docs/rpc/http/getaggenesiscert.md): Returns the Alpenglow genesis certificate, or null if the cluster has not migrated to Alpenglow consensus.
+- [getBalance](https://solana.com/docs/rpc/http/getbalance.md): Returns the lamport balance for a single account address at the requested commitment.
+- [getBlock](https://solana.com/docs/rpc/http/getblock.md): Returns a confirmed block for a slot, including block metadata and transaction data in the requested encoding.
+- [getBlockCommitment](https://solana.com/docs/rpc/http/getblockcommitment.md): Returns the stake-weighted commitment information recorded for a slot.
+- [getBlockHeight](https://solana.com/docs/rpc/http/getblockheight.md): Returns the block height the node sees at the requested commitment.
+- [getBlockProduction](https://solana.com/docs/rpc/http/getblockproduction.md): Returns block-production counts for validator identities in the requested slot range. If no range is provided, the RPC node returns counts for the current epoch.
+- [getBlocks](https://solana.com/docs/rpc/http/getblocks.md): Returns confirmed block slots in the inclusive range starting at startSlot and ending at endSlot, if provided.
+- [getBlocksWithLimit](https://solana.com/docs/rpc/http/getblockswithlimit.md): Returns up to limit confirmed block slots, starting at startSlot.
+- [getBlockTime](https://solana.com/docs/rpc/http/getblocktime.md): Returns the estimated production time for a block.
+- [getClusterNodes](https://solana.com/docs/rpc/http/getclusternodes.md): Returns network endpoints, shred version, feature set, and software version for known cluster nodes.
+- [getEpochInfo](https://solana.com/docs/rpc/http/getepochinfo.md): Returns the current epoch position and counters the node sees at the requested commitment.
+- [getEpochSchedule](https://solana.com/docs/rpc/http/getepochschedule.md): Returns the cluster's epoch schedule parameters.
+- [getFeeForMessage](https://solana.com/docs/rpc/http/getfeeformessage.md): Returns the lamports the cluster would charge to process a serialized message at the requested commitment.
+- [getFirstAvailableBlock](https://solana.com/docs/rpc/http/getfirstavailableblock.md): Returns the lowest confirmed block slot still available in this node's ledger.
+- [getGenesisHash](https://solana.com/docs/rpc/http/getgenesishash.md): Returns the genesis hash for the connected cluster.
+- [getHealth](https://solana.com/docs/rpc/http/gethealth.md): Returns whether this RPC node is healthy. The node reports healthy when it is within the configured slot distance of the cluster tip.
+- [getHighestSnapshotSlot](https://solana.com/docs/rpc/http/gethighestsnapshotslot.md): Returns the highest full snapshot slot and, if available, the highest incremental snapshot slot built on it.
+- [getIdentity](https://solana.com/docs/rpc/http/getidentity.md): Returns this RPC node's identity Pubkey.
+- [getInflationGovernor](https://solana.com/docs/rpc/http/getinflationgovernor.md): Returns the inflation governor parameters active at the requested commitment.
+- [getInflationRate](https://solana.com/docs/rpc/http/getinflationrate.md): Returns the current epoch's effective inflation rates.
+- [getInflationReward](https://solana.com/docs/rpc/http/getinflationreward.md): Returns the inflation reward credited to each supplied address for an epoch. Depending on the supplied address, this may be a staking reward or a voting reward.
+- [getLargestAccounts](https://solana.com/docs/rpc/http/getlargestaccounts.md): Returns the 20 largest accounts by lamport balance. Some RPC nodes may serve cached results for up to two hours.
+- [getLatestBlockhash](https://solana.com/docs/rpc/http/getlatestblockhash.md): Returns the latest recent blockhash and its last valid block height.
+- [getLeaderSchedule](https://solana.com/docs/rpc/http/getleaderschedule.md): Returns the leader schedule for the epoch that contains the supplied slot, or for the current epoch if no slot is supplied.
+- [getMaxRetransmitSlot](https://solana.com/docs/rpc/http/getmaxretransmitslot.md): Returns the highest slot this node has observed in retransmit.
+- [getMaxShredInsertSlot](https://solana.com/docs/rpc/http/getmaxshredinsertslot.md): Returns the highest slot for which this node has inserted shreds into blockstore.
+- [getMinimumBalanceForRentExemption](https://solana.com/docs/rpc/http/getminimumbalanceforrentexemption.md): Returns the lamports required to make an account of a given data size rent exempt.
+- [getMultipleAccounts](https://solana.com/docs/rpc/http/getmultipleaccounts.md): Returns account state and metadata for multiple addresses, in request order.
+- [getProgramAccounts](https://solana.com/docs/rpc/http/getprogramaccounts.md): Returns accounts owned by the specified program, optionally filtered by data content or size.
+- [getRecentPerformanceSamples](https://solana.com/docs/rpc/http/getrecentperformancesamples.md): Returns recent 60-second performance samples in reverse slot order. Each sample includes the number of transactions and slots recorded in that time window.
+- [getRecentPrioritizationFees](https://solana.com/docs/rpc/http/getrecentprioritizationfees.md): Returns recent prioritization-fee samples, optionally filtered to transactions that lock a set of writable accounts.
+- [getSignaturesForAddress](https://solana.com/docs/rpc/http/getsignaturesforaddress.md): Returns confirmed transaction signatures for transactions that reference the supplied address in accountKeys, newest first.
+- [getSignatureStatuses](https://solana.com/docs/rpc/http/getsignaturestatuses.md): Returns the current status for each supplied transaction signature. Each signature must be a txid, the first signature of a transaction.
+- [getSlot](https://solana.com/docs/rpc/http/getslot.md): Returns the highest slot reached at the requested commitment.
+- [getSlotLeader](https://solana.com/docs/rpc/http/getslotleader.md): Returns the validator identity scheduled to produce the slot at the requested commitment.
+- [getSlotLeaders](https://solana.com/docs/rpc/http/getslotleaders.md): Returns the validator identity for each slot in a contiguous slot range.
+- [getStakeMinimumDelegation](https://solana.com/docs/rpc/http/getstakeminimumdelegation.md): Returns the cluster's current minimum stake delegation, in lamports.
+- [getSupply](https://solana.com/docs/rpc/http/getsupply.md): Returns total, circulating, and non-circulating supply data.
+- [getTokenAccountBalance](https://solana.com/docs/rpc/http/gettokenaccountbalance.md): Returns the token balance for an SPL Token account.
+- [getTokenAccountsByDelegate](https://solana.com/docs/rpc/http/gettokenaccountsbydelegate.md): Returns SPL Token accounts whose approved delegate matches the supplied address.
+- [getTokenAccountsByOwner](https://solana.com/docs/rpc/http/gettokenaccountsbyowner.md): Returns SPL Token accounts whose owner matches the supplied address.
+- [getTokenLargestAccounts](https://solana.com/docs/rpc/http/gettokenlargestaccounts.md): Returns the 20 largest token accounts for an SPL Token mint.
+- [getTokenSupply](https://solana.com/docs/rpc/http/gettokensupply.md): Returns the current supply for an SPL Token mint.
+- [getTransaction](https://solana.com/docs/rpc/http/gettransaction.md): Returns a confirmed transaction by signature, or null if it is not found at the requested commitment.
+- [getTransactionCount](https://solana.com/docs/rpc/http/gettransactioncount.md): Returns the total number of transactions processed at the requested commitment.
+- [getVersion](https://solana.com/docs/rpc/http/getversion.md): Returns the node's software version string and optional feature set identifier.
+- [getVoteAccounts](https://solana.com/docs/rpc/http/getvoteaccounts.md): Returns vote accounts visible at the requested commitment, partitioned into current and delinquent.
+- [isBlockhashValid](https://solana.com/docs/rpc/http/isblockhashvalid.md): Returns whether a blockhash is still valid at the requested commitment.
+- [minimumLedgerSlot](https://solana.com/docs/rpc/http/minimumledgerslot.md): Returns the lowest slot still present in this node's local ledger.
+- [requestAirdrop](https://solana.com/docs/rpc/http/requestairdrop.md): Requests a faucet transaction that transfers lamports to the supplied Pubkey.
+- [sendTransaction](https://solana.com/docs/rpc/http/sendtransaction.md): Submits a signed transaction to the cluster and returns its first signature if the RPC accepts it.
+- [simulateTransaction](https://solana.com/docs/rpc/http/simulatetransaction.md): Simulates a signed transaction using the chain data available at the requested commitment, without broadcasting it.
+- [JSON Reference](https://solana.com/docs/rpc/json-structures.md)
+- [Choosing an RPC Provider](https://solana.com/docs/rpc/providers.md): Compare Solana RPC providers by method coverage, history, limits, regions, reliability, and operational fit.
+- [Solana RPC WebSocket Methods](https://solana.com/docs/rpc/websocket.md): Reference index for Solana RPC WebSocket methods. Use this page to find PubSub subscription methods by category, shared JSON-RPC WebSocket request conventions, and links to detailed method pages.
+- [accountSubscribe](https://solana.com/docs/rpc/websocket/accountsubscribe.md): Subscribe to notifications when an account's lamports or data change.
+- [accountUnsubscribe](https://solana.com/docs/rpc/websocket/accountunsubscribe.md): Cancel an accountSubscribe websocket subscription.
+- [blockSubscribe](https://solana.com/docs/rpc/websocket/blocksubscribe.md): Subscribe to block notifications as blocks reach confirmed or finalized commitment.
+- [blockUnsubscribe](https://solana.com/docs/rpc/websocket/blockunsubscribe.md): Cancel a blockSubscribe websocket subscription.
+- [logsSubscribe](https://solana.com/docs/rpc/websocket/logssubscribe.md): Subscribe to transaction log messages that match a log filter.
+- [logsUnsubscribe](https://solana.com/docs/rpc/websocket/logsunsubscribe.md): Cancel a logsSubscribe websocket subscription.
+- [programSubscribe](https://solana.com/docs/rpc/websocket/programsubscribe.md): Subscribe to notifications for accounts owned by a given program.
+- [programUnsubscribe](https://solana.com/docs/rpc/websocket/programunsubscribe.md): Cancel a programSubscribe websocket subscription.
+- [rootSubscribe](https://solana.com/docs/rpc/websocket/rootsubscribe.md): Subscribe to notifications when the validator sets a new root slot.
+- [rootUnsubscribe](https://solana.com/docs/rpc/websocket/rootunsubscribe.md): Cancel a rootSubscribe websocket subscription.
+- [signatureSubscribe](https://solana.com/docs/rpc/websocket/signaturesubscribe.md): Subscribe to status notifications for a transaction signature.
+- [signatureUnsubscribe](https://solana.com/docs/rpc/websocket/signatureunsubscribe.md): Cancel a signatureSubscribe websocket subscription.
+- [slotSubscribe](https://solana.com/docs/rpc/websocket/slotsubscribe.md): Subscribe to notifications when the validator processes a new slot.
+- [slotsUpdatesSubscribe](https://solana.com/docs/rpc/websocket/slotsupdatessubscribe.md): Subscribe to tagged slot lifecycle updates emitted by the validator.
+- [slotsUpdatesUnsubscribe](https://solana.com/docs/rpc/websocket/slotsupdatesunsubscribe.md): Cancel a slotsUpdatesSubscribe websocket subscription.
+- [slotUnsubscribe](https://solana.com/docs/rpc/websocket/slotunsubscribe.md): Cancel a slotSubscribe websocket subscription.
+- [voteSubscribe](https://solana.com/docs/rpc/websocket/votesubscribe.md): Subscribe to gossip vote notifications.
+- [voteUnsubscribe](https://solana.com/docs/rpc/websocket/voteunsubscribe.md): Cancel a voteSubscribe websocket subscription.
+- [Documentation tags](https://solana.com/docs/tags.md): Explore related Solana documentation, guides, and references grouped by topic.
+- [Asset Issuance & Tokenization](https://solana.com/docs/tokenization.md): Issue stablecoins, tokenize real-world assets, and run compliant token programs on Solana with built-in transfer controls, privacy, and settlement.
+- [Delivery vs Payment (DvP) using delegation](https://solana.com/docs/tokenization/dvp.md): Learn how to implement atomic Delivery vs Payment (DvP) for commercial paper and securities using SPL Token 2022 extensions and standard USDC, without writing custom Rust programs.
+- [NAV Strikes for Money Market Funds on Solana](https://solana.com/docs/tokenization/nav-strikes.md): Learn how to implement multiple daily NAV strikes for money market funds using SPL Token 2022 extensions, enabling institutional-grade subscription and redemption with atomic settlement.
+- [Quickstart: launch a token](https://solana.com/docs/tokenization/quickstart.md): Create a compliance-ready Token-2022 mint on a local network in about ten minutes - metadata, pausable transfers, permanent delegate, and frozen-by- default accounts.
+- [Permissioned Tokens with Token ACL (sRFC37)](https://solana.com/docs/tokenization/token-acl.md): Learn how to implement compliant, permissioned tokens on Solana using Token ACL and the ABL Gate Program. Enable allow/block lists without sacrificing user experience.
+- [Assets on Solana](https://solana.com/docs/tokens.md): Learn how digital assets are represented on Solana using Token Programs, mint accounts, token accounts, and Token-2022 extensions.
+- [Advanced Token Instructions](https://solana.com/docs/tokens/advanced.md): Batch multiple token operations into a single instruction, and recover SOL from token accounts, mints, and multisigs with the Token Program.
+- [Calling the Token Program via CPI](https://solana.com/docs/tokens/advanced/cpi.md): Invoke the Token Program from an on-chain program with a Cross Program Invocation (CPI) — transfer, mint, and burn tokens, sign with a PDA authority, and batch several token instructions into a single CPI.
+- [Unwrap Lamports](https://solana.com/docs/tokens/advanced/unwrap-lamports.md): Convert wrapped SOL back into lamports, fully or partially, without closing the token account.
+- [Withdraw Excess Lamports](https://solana.com/docs/tokens/advanced/withdraw-excess-lamports.md): Recover SOL above the rent-exempt minimum from token accounts, mints, and multisig accounts without changing token balances or supply.
+- [SPL Token Basics](https://solana.com/docs/tokens/basics.md): Learn the core Token Program instructions for creating mints and token accounts and managing token balances, authorities, and wrapped SOL on Solana.
+- [Approve Delegate](https://solana.com/docs/tokens/basics/approve-delegate.md): Authorize another address to transfer or burn a limited amount of tokens from a token account.
+- [Burn Tokens](https://solana.com/docs/tokens/basics/burn-tokens.md): Burn tokens from a token account and reduce the mint's total supply.
+- [Close Token Account](https://solana.com/docs/tokens/basics/close-account.md): Close a token account and return the account's lamports to a destination account.
+- [Create a Token Mint](https://solana.com/docs/tokens/basics/create-mint.md): Create a token mint and configure the mint's decimals, mint authority, and freeze authority.
+- [Create a Token Account](https://solana.com/docs/tokens/basics/create-token-account.md): Create token accounts and associated token accounts for a specific mint and owner.
+- [Freeze Account](https://solana.com/docs/tokens/basics/freeze-account.md): Freeze a token account with the mint's freeze authority to block transfers, burns, and delegate changes.
+- [Mint Tokens](https://solana.com/docs/tokens/basics/mint-tokens.md): Mint new token units to a token account with the mint authority.
+- [Revoke Delegate](https://solana.com/docs/tokens/basics/revoke-delegate.md): Remove a token account's current delegate and clear its remaining delegated allowance.
+- [Set Authority](https://solana.com/docs/tokens/basics/set-authority.md): Change or revoke authority roles on a mint or token account, including mint, freeze, owner, and close authority.
+- [Sync Native](https://solana.com/docs/tokens/basics/sync-native.md): Update a wrapped SOL token account amount after transferring SOL into the account.
+- [Thaw Account](https://solana.com/docs/tokens/basics/thaw-account.md): Thaw a frozen token account so transfers, burns, and delegate changes can resume.
+- [Transfer Tokens](https://solana.com/docs/tokens/basics/transfer-tokens.md): Move tokens between token accounts for the same mint with Token Program transfer instructions.
+- [Extensions](https://solana.com/docs/tokens/extensions.md): Learn about the Token Extensions Program (Token 2022) and how to use its extensions to add optional features to token mints and accounts.
+- [Close Mint](https://solana.com/docs/tokens/extensions/close-mint.md): Create a Token Extension Program mint with the MintCloseAuthority extension, then burn the remaining supply and close the mint.
+- [Confidential Balances](https://solana.com/docs/tokens/extensions/confidential-transfer.md): Learn about the Confidential Balances extension and how to use it to add optional features to token mints and accounts.
+- [Apply Pending Balance](https://solana.com/docs/tokens/extensions/confidential-transfer/apply-pending-balance.md): Learn how to apply pending balance to make funds available.
+- [Create a Token Mint](https://solana.com/docs/tokens/extensions/confidential-transfer/create-mint.md): Learn how to create a token mint with Confidential Balances enabled.
+- [Create a Token Account](https://solana.com/docs/tokens/extensions/confidential-transfer/create-token-account.md): Learn how to create a token account with Confidential Balances enabled.
+- [Deposit Tokens](https://solana.com/docs/tokens/extensions/confidential-transfer/deposit-tokens.md): Learn how to deposit tokens to confidential state.
+- [Confidential Balances Integration Guide](https://solana.com/docs/tokens/extensions/confidential-transfer/integration-guide.md): Learn how to integrate tokens that use Confidential Balances into wallets, explorers, exchanges, and other applications.
+- [Confidential Balances Issuer Guide](https://solana.com/docs/tokens/extensions/confidential-transfer/issuer-guide.md): Learn how to issue and operate a token that uses Confidential Balances, including approve policy, auditors, fees, and confidential mint and burn.
+- [Transfer Tokens](https://solana.com/docs/tokens/extensions/confidential-transfer/transfer-tokens.md): Learn how to transfer tokens privately from one token account to another.
+- [Withdraw Tokens](https://solana.com/docs/tokens/extensions/confidential-transfer/withdraw-tokens.md): Learn how to withdraw tokens from confidential state.
+- [CPI Guard](https://solana.com/docs/tokens/extensions/cpi-guard.md): Enable the CpiGuard account extension to block token instructions invoked through cross-program invocations.
+- [Default State](https://solana.com/docs/tokens/extensions/default-state.md): Configure a Token Extension Program mint so newly created token accounts start in a chosen default state, such as frozen.
+- [Dynamic metadata NFTs using Token Extensions](https://solana.com/docs/tokens/extensions/dynamic-metadata-nft.md): Using the metadata token extension it is possible to save dynamic metadata, like level and XP, directly in the mint of an NFT.
+- [Token Groups and Members](https://solana.com/docs/tokens/extensions/group-member.md): Create group and group member mints that store group data directly on the mint account using the GroupPointer, GroupMemberPointer, TokenGroup, and TokenGroupMember extensions.
+- [Immutable Owner](https://solana.com/docs/tokens/extensions/immutable-owner.md): Initialize a Token Extension Program token account with immutable ownership so its owner can never be reassigned.
+- [Interest Bearing Tokens](https://solana.com/docs/tokens/extensions/interest-bearing-tokens.md): Create a Token Extension Program mint with an onchain interest rate, update that rate, and convert token amounts into a UI amount with interest.
+- [Memo Transfer](https://solana.com/docs/tokens/extensions/memo-transfer.md): Require incoming transfers to include a memo by enabling the MemoTransfer account extension on a Token Extension Program token account.
+- [Metadata Pointer & Token Metadata](https://solana.com/docs/tokens/extensions/metadata.md): Create a mint that stores metadata directly on the mint account using the MetadataPointer and TokenMetadata extensions, then update, remove, and lock that metadata through the token-metadata interface.
+- [Non-Transferable Tokens](https://solana.com/docs/tokens/extensions/non-transferrable-tokens.md): Create a mint whose tokens can be minted, burned, and closed out, but cannot be transferred between token accounts.
+- [Pausable Mint](https://solana.com/docs/tokens/extensions/pausable.md): Create a Token-2022 mint with a pause authority, block transfers while the mint is paused, and resume activity later.
+- [Permanent Delegate](https://solana.com/docs/tokens/extensions/permanent-delegate.md): Create a Token Extension Program mint with a permanent delegate that can transfer or burn tokens from any account for that mint.
+- [Permissioned Burn](https://solana.com/docs/tokens/extensions/permissioned-burn.md): Create a Token-2022 mint with the permissioned burn extension so every burn requires a co-signature from a configured burn authority, then burn tokens with the permissioned burn instructions.
+- [Scaled UI Amount](https://solana.com/docs/tokens/extensions/scaled-ui-amount.md): Learn about the Scaled UI Amount extension and how to use it to scale the UI amount of a token.
+- [Scaled UI Amount Integration Guide](https://solana.com/docs/tokens/extensions/scaled-ui-amount/integration-guide.md): Learn how to integrate a token that uses the Scaled UI Amount extension in your application.
+- [Scaled UI Amount Issuer Guide](https://solana.com/docs/tokens/extensions/scaled-ui-amount/issuer-guide.md): Learn how to use the Scaled UI Amount extension to scale the UI amount of a token.
+- [Transfer Fees](https://solana.com/docs/tokens/extensions/transfer-fees.md): Create a mint with transfer fees, move withheld fees from token accounts to the mint, and withdraw them to a fee receiver token account.
+- [How to use the Transfer Hook extension](https://solana.com/docs/tokens/extensions/transfer-hook.md): The Transfer Hook extension and Transfer Hook Interface introduce the ability to create Mint Accounts that execute custom instruction logic on every token transfer.
+- [Transfer Hook Integration Guide](https://solana.com/docs/tokens/extensions/transfer-hook-integration.md): Learn how to integrate tokens that use the Transfer Hook extension into wallets, custodians, and dapps, including detecting the extension, resolving the extra accounts a hook requires, and handling simulation and execution failures.
+- [How to verify a token and make it appear in Solana Explorer](https://solana.com/docs/tokens/how-to-verify-a-token.md): How token verification works on Solana. Solana Explorer aggregates several independent verifiers (RugCheck, Jupiter, CoinGecko, Solflare, and Bluprynt). Getting verified by any one of them makes your token show up in Explorer search.
+- [Metaplex Metadata](https://solana.com/docs/tokens/metaplex.md): Learn how to add metadata to SPL Tokens using the Metaplex Token Metadata Program.
+- [Quickstart: create a token with the CLI](https://solana.com/docs/tokens/quickstart.md): Create a token, open a token account, mint supply, and transfer tokens using the SPL Token CLI on devnet.
+- [Developer Resources](https://solana.com/docs/tools.md): The full catalog of Solana developer resources - API references, SDKs, CLI, cookbook recipes, courses, and tools.
+- [Actions and Blinks](https://solana.com/docs/tools/actions.md): Solana Actions are APIs that return transactions for users to preview and sign. Blockchain links – or blinks – turn Actions into a shareable, metadata-rich link.
+- [AI tools and agents on Solana](https://solana.com/docs/tools/ai.md): This guide gives an overview of the AI tools available for Solana and how to get started with them.
+- [Attestations](https://solana.com/docs/tools/attestations.md): A public good program for associating offchain data with onchain accounts
+- [Attestations](https://solana.com/docs/tools/attestations/attestations.md): Verified claims or statements in the Solana Attestation System
+- [Credentials](https://solana.com/docs/tools/attestations/credentials.md): Attestation authorities in the Solana Attestation System
+- [Create Attestation](https://solana.com/docs/tools/attestations/instructions/create-attestation.md): Creates a new attestation under a specific credential and schema
+- [Create Credential](https://solana.com/docs/tools/attestations/instructions/create-credential.md): Creates a new credential that defines an attestation authority
+- [Create Schema](https://solana.com/docs/tools/attestations/instructions/create-schema.md): Creates a new schema that defines the structure for attestations
+- [Overview](https://solana.com/docs/tools/attestations/overview.md): Understand the architecture and concepts of Solana Attestations
+- [Quick Start Overview](https://solana.com/docs/tools/attestations/quickstart.md): Learn the basics of Solana Attestations with this quick start guide
+- [Installation](https://solana.com/docs/tools/attestations/quickstart/installation.md): Get started with Solana Attestations in your project
+- [Schemas](https://solana.com/docs/tools/attestations/schemas.md): Define structure and validation rules for attestations
+- [Commerce Kit](https://solana.com/docs/tools/commerce-kit.md): Commerce primitives for building Solana payment experiences
+- [Installation](https://solana.com/docs/tools/commerce-kit/quickstart/installation.md): Install Commerce Kit packages for your use case
+- [PaymentButton](https://solana.com/docs/tools/commerce-kit/quickstart/payment-button.md): Drop-in React component for Solana payments
+- [HeadlessPayment Flows](https://solana.com/docs/tools/commerce-kit/quickstart/payment-flows.md): Headless commerce primitives for any framework
+- [React Hooks](https://solana.com/docs/tools/commerce-kit/quickstart/react-hooks.md): Build custom payment UIs with Solana Commerce React hooks
+- [Solana Pay](https://solana.com/docs/tools/commerce-kit/quickstart/solana-pay.md): Generate Solana Pay URLs, QR codes, and payment transactions
+- [Wallet Connection](https://solana.com/docs/tools/commerce-kit/quickstart/wallet-connection.md): Connect Solana wallets using Wallet Standard
+- [Keychain](https://solana.com/docs/tools/keychain.md): Unified Solana signing across multiple key management backends
+- [Adding New Signers](https://solana.com/docs/tools/keychain/adding-signers.md): Guide for wallet service providers to integrate new key management solutions
+- [Choosing a backend](https://solana.com/docs/tools/keychain/choosing-a-backend.md): Pick a Keychain signing backend based on custody, existing infrastructure, approval controls, and whether you sign for your own app or provision wallets for end users.
+- [Go](https://solana.com/docs/tools/keychain/getting-started/go.md): Install and use solana-keychain in Go applications
+- [Python](https://solana.com/docs/tools/keychain/getting-started/python.md): Install and use solana-keychain in Python applications
+- [Rust](https://solana.com/docs/tools/keychain/getting-started/rust.md): Install and use solana-keychain in Rust applications
+- [TypeScript](https://solana.com/docs/tools/keychain/getting-started/typescript.md): Install and use @solana/keychain in TypeScript applications
+- [Production best practices](https://solana.com/docs/tools/keychain/production-best-practices.md): Operate Keychain signing backends safely in production, covering separation of duties, key rotation, least-privilege access, availability, transport security, monitoring, and audit.
+- [Kora](https://solana.com/docs/tools/kora.md): Solana Signing Infrastructure
+- [What's New in Kora v2.2.0-beta](https://solana.com/docs/tools/kora/beta.md): Overview of new features and changes in the Kora v2.2.0 beta release.
+- [Bundle & New RPC Methods](https://solana.com/docs/tools/kora/beta/bundle-methods.md): New RPC methods in Kora v2.2.0-beta — Jito bundles, version, and bundle fee estimation.
+- [New Configuration Options (Beta)](https://solana.com/docs/tools/kora/beta/configuration.md): New kora.toml configuration sections introduced in Kora v2.2.0-beta.
+- [Installation (Beta)](https://solana.com/docs/tools/kora/beta/installation.md): Install Kora v2.2.0-beta via Cargo or Docker.
+- [How to Implement Gasless Transaction Bundles with Jito and Kora](https://solana.com/docs/tools/kora/beta/jito-guide.md): This guide teaches you how to implement gasless Jito Bundles using Kora.
+- [SDK Changes (Beta)](https://solana.com/docs/tools/kora/beta/sdk-changes.md): TypeScript SDK changes in Kora v2.2.0-beta — new constructor, Kit plugin, and bundle methods.
+- [Adding New Signers to Kora](https://solana.com/docs/tools/kora/contributors/adding-a-signer.md): This guide is for wallet service providers who want to integrate their key management solution into Kora. By adding your signer to Kora, you'll enable node operators to use your service for secure transaction signing.
+- [Architecture](https://solana.com/docs/tools/kora/contributors/architecture.md): How a request travels through a Kora node, and where in the crate each stage lives. Start here before making your first change.
+- [Overview](https://solana.com/docs/tools/kora/getting-started.md): Understanding the Kora fee abstraction layer for Solana
+- [Installation](https://solana.com/docs/tools/kora/getting-started/installation.md): Install the Kora CLI, TypeScript SDK, and set up your development environment
+- [Kora Quick Start Guide](https://solana.com/docs/tools/kora/getting-started/quick-start.md): Create your first gasless transaction in 5 minutes
+- [Kora Full Transaction Flow](https://solana.com/docs/tools/kora/guides/full-demo.md): This guide teaches you how to implement a complete gasless transaction flow using Kora RPC, including payment instructions and transaction signing.
+- [Kit Client Integration](https://solana.com/docs/tools/kora/guides/kit-client.md): Build gasless transactions using createKitKoraClient with Kit's plugin architecture for automatic fee handling.
+- [x402 Integration with Kora](https://solana.com/docs/tools/kora/guides/x402.md): Use Kora as the policy-enforced Solana signer and fee payer behind an x402 V2 facilitator.
+- [JSON-RPC API Overview](https://solana.com/docs/tools/kora/json-rpc-api.md): Kora implements a JSON-RPC 2.0 interface for gasless transaction processing on Solana.
+- [Authentication](https://solana.com/docs/tools/kora/json-rpc-api/authentication.md): Secure your Kora RPC endpoint
+- [estimateTransactionFee](https://solana.com/docs/tools/kora/json-rpc-api/estimate-transaction-fee.md): Estimates the transaction fee in both lamports and the specified token.
+- [getBlockhash](https://solana.com/docs/tools/kora/json-rpc-api/get-blockhash.md): Gets the latest blockhash from the Solana RPC that the Kora server is connected to.
+- [getConfig](https://solana.com/docs/tools/kora/json-rpc-api/get-config.md): Retrieves the current Kora server configuration.
+- [getPayerSigner](https://solana.com/docs/tools/kora/json-rpc-api/get-payer-signer.md): Retrieves the payer signer and payment destination from the Kora server.
+- [getPaymentInstruction](https://solana.com/docs/tools/kora/json-rpc-api/get-payment-instruction.md): Creates a payment instruction to append to a transaction for fee payment to the Kora paymaster.
+- [getSupportedTokens](https://solana.com/docs/tools/kora/json-rpc-api/get-supported-tokens.md): Retrieves the list of tokens supported for fee payment.
+- [signAndSendTransaction](https://solana.com/docs/tools/kora/json-rpc-api/sign-and-send-transaction.md): Signs a transaction and immediately broadcasts it to the Solana network.
+- [signTransaction](https://solana.com/docs/tools/kora/json-rpc-api/sign-transaction.md): Signs a transaction with the Kora fee payer if the transaction includes necessary payment to the fee payer without broadcasting it.
+- [transferTransaction](https://solana.com/docs/tools/kora/json-rpc-api/transfer-transaction.md): Creates a token transfer transaction with Kora as the fee payer.
+- [Kora Operators Documentation](https://solana.com/docs/tools/kora/operators.md): Getting started as a Kora node operator
+- [Authentication](https://solana.com/docs/tools/kora/operators/authentication.md): Operator's reference guide to authentication
+- [CLI Reference](https://solana.com/docs/tools/kora/operators/cli.md): Complete reference for Kora command-line interface, including commands and flags.
+- [Configuration](https://solana.com/docs/tools/kora/operators/configuration.md): Complete kora.toml configuration reference
+- [Railway Deployment](https://solana.com/docs/tools/kora/operators/deployment/railway.md): One-click deploy to Railway
+- [Fees Reference](https://solana.com/docs/tools/kora/operators/fees.md): Complete reference for Kora fee calculation.
+- [Monitoring & Metrics](https://solana.com/docs/tools/kora/operators/monitoring.md): Monitor your Kora node with Prometheus and Grafana
+- [Signers](https://solana.com/docs/tools/kora/operators/signers.md): Set up and manage Kora signers
+- [Kora Node Providers](https://solana.com/docs/tools/kora/providers.md): Third-party providers offering hosted Kora node services
+- [Release Notes](https://solana.com/docs/tools/kora/release-notes.md): Kora release history for the CLI, library, and TypeScript SDK.
+- [Security Audits](https://solana.com/docs/tools/kora/security-audits.md)
+- [LiteSVM](https://solana.com/docs/tools/litesvm.md): Lightning-fast Solana program testing with an in-process VM. Test your programs faster without network overhead or validator processes.
+- [Quick Start](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-anchor-litesvm.md): Learn how to use anchor-litesvm for testing Anchor programs with simplified syntax
+- [Account Management](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-anchor-litesvm/account-management.md): Fetching and deserializing Anchor accounts with automatic discriminator handling
+- [Events](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-anchor-litesvm/events.md): Parse and assert Anchor events from transaction logs
+- [Program & Context](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-anchor-litesvm/program-and-context.md): Setting up test environments and building instructions with AnchorContext and Program
+- [Quick Start](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-litesvm-loader.md): Learn how to use the litesvm-loader crate for testing upgradeable program deployment
+- [Quick Start](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-litesvm-utils.md): Learn how to use the litesvm-utils crate for streamlined Solana program testing
+- [Assertions](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-litesvm-utils/assertions.md): Verify account states, balances, and ownership with assertion helpers
+- [Test Helpers](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-litesvm-utils/test-helpers.md): Account creation, token operations, PDA derivation, and slot management utilities
+- [Transaction Helpers](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-litesvm-utils/transactions.md): Execute transactions and analyze results with rich error handling
+- [Quick Start](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-spl-tokens.md): Learn how to use the litesvm-token crate for testing with SPL tokens
+- [Token Operations](https://solana.com/docs/tools/litesvm/additional-crates/testing-with-spl-tokens/token-operations.md): Working with token operations - minting, transfers, and account management
+- [API Reference](https://solana.com/docs/tools/litesvm/api-reference.md): Complete API reference for LiteSVM methods and configuration options
+- [Account Management](https://solana.com/docs/tools/litesvm/api-reference/account-management.md): Methods for managing accounts, balances, and rent
+- [Environment Configuration](https://solana.com/docs/tools/litesvm/api-reference/configuration.md): Builder pattern methods for configuring LiteSVM test environments
+- [Quick Reference](https://solana.com/docs/tools/litesvm/api-reference/quick-reference.md): Quick reference table and getting started guide
+- [Time & Sysvars](https://solana.com/docs/tools/litesvm/api-reference/time-and-sysvars.md): Methods for manipulating time and system variables
+- [Transactions](https://solana.com/docs/tools/litesvm/api-reference/transactions.md): Methods for handling transactions
+- [Why LiteSVM](https://solana.com/docs/tools/litesvm/core-concepts.md): Understand how LiteSVM works and why it's different
+- [Examples](https://solana.com/docs/tools/litesvm/examples.md): Complete test examples for common Solana testing scenarios
+- [Anchor Program Examples](https://solana.com/docs/tools/litesvm/examples/complete-examples.md): View linked projects that showcase how to use litesvm for anchor program testing
+- [Cross-Program Invocation](https://solana.com/docs/tools/litesvm/examples/cpi.md): How to test programs calling other programs
+- [Error Handling](https://solana.com/docs/tools/litesvm/examples/error-handling.md): How to test error conditions and edge cases
+- [PDA Creation](https://solana.com/docs/tools/litesvm/examples/pda-creation.md): How to create and interact with Program Derived Addresses
+- [Program Deployment](https://solana.com/docs/tools/litesvm/examples/program-deployment.md): How to deploy and call a simple program
+- [SOL Transfer](https://solana.com/docs/tools/litesvm/examples/sol-transfer.md): How to transfer SOL between accounts
+- [SPL Token Operations](https://solana.com/docs/tools/litesvm/examples/spl-tokens.md): How write tests with SPL tokens using litesvm-token
+- [Time-Based Testing](https://solana.com/docs/tools/litesvm/examples/time-based.md): Test features that depend on slots or timestamps
+- [Getting Started](https://solana.com/docs/tools/litesvm/getting-started.md): Install LiteSVM and write your first tests.
+- [API Reference](https://solana.com/docs/tools/litesvm/go/api-reference.md): Complete Go API reference for LiteSVM
+- [Account Management](https://solana.com/docs/tools/litesvm/go/api-reference/account-management.md): Methods for managing accounts, balances, and rent in Go
+- [Configuration](https://solana.com/docs/tools/litesvm/go/api-reference/configuration.md): Setter methods for configuring LiteSVM in Go
+- [Time & Sysvars](https://solana.com/docs/tools/litesvm/go/api-reference/time-and-sysvars.md): Clock manipulation and sysvar access in Go
+- [Transactions](https://solana.com/docs/tools/litesvm/go/api-reference/transactions.md): Execute and simulate transactions with LiteSVM in Go
+- [Examples](https://solana.com/docs/tools/litesvm/go/examples.md): Complete Go examples for LiteSVM
+- [Account Setup](https://solana.com/docs/tools/litesvm/go/examples/account-setup.md): Set up test accounts and state with litesvm-go
+- [Program Testing](https://solana.com/docs/tools/litesvm/go/examples/program-testing.md): Load and test custom Solana programs with litesvm-go
+- [SOL Transfer](https://solana.com/docs/tools/litesvm/go/examples/sol-transfer.md): Build and send a SOL transfer transaction with litesvm-go
+- [Time-Based Testing](https://solana.com/docs/tools/litesvm/go/examples/time-based.md): Test time-dependent logic with litesvm-go clock manipulation
+- [Getting Started](https://solana.com/docs/tools/litesvm/go/getting-started.md): Use LiteSVM from Go with litesvm-go for fast, in-process Solana testing
+- [Quick Start](https://solana.com/docs/tools/litesvm/testing-your-program.md): Learn how to test your Solana program with LiteSVM
+- [Deploying Programs](https://solana.com/docs/tools/litesvm/testing-your-program/deploy.md): Learn how to deploy programs to a LiteSVM test instance
+- [Executing Instructions](https://solana.com/docs/tools/litesvm/testing-your-program/executing-instructions.md): Learn how to call an instruction from a Solana program in your test
+- [API Reference](https://solana.com/docs/tools/litesvm/typescript/api-reference.md): Complete TypeScript API reference for LiteSVM
+- [Account Management](https://solana.com/docs/tools/litesvm/typescript/api-reference/account-management.md): Methods for managing accounts, balances, and rent in TypeScript
+- [Configuration](https://solana.com/docs/tools/litesvm/typescript/api-reference/configuration.md): Builder methods for configuring LiteSVM in TypeScript
+- [Time & Sysvars](https://solana.com/docs/tools/litesvm/typescript/api-reference/time-and-sysvars.md): Clock manipulation and sysvar access in TypeScript
+- [Transactions](https://solana.com/docs/tools/litesvm/typescript/api-reference/transactions.md): Execute and simulate transactions with LiteSVM in TypeScript
+- [Examples](https://solana.com/docs/tools/litesvm/typescript/examples.md): Complete TypeScript examples for LiteSVM
+- [Account Setup](https://solana.com/docs/tools/litesvm/typescript/examples/account-setup.md): Set up test accounts and state with LiteSVM
+- [Program Testing](https://solana.com/docs/tools/litesvm/typescript/examples/program-testing.md): Load and test custom Solana programs with LiteSVM
+- [SOL Transfer](https://solana.com/docs/tools/litesvm/typescript/examples/sol-transfer.md): Build and send a SOL transfer transaction with LiteSVM
+- [Time-Based Testing](https://solana.com/docs/tools/litesvm/typescript/examples/time-based.md): Test time-dependent logic with LiteSVM clock manipulation
+- [Getting Started](https://solana.com/docs/tools/litesvm/typescript/getting-started.md): Use LiteSVM with @solana/kit for fast, in-process Solana testing
+- [Token Testing](https://solana.com/docs/tools/litesvm/typescript/tokens.md): Test with SPL tokens using @solana-program/token and LiteSVM
+- [Private Channels](https://solana.com/docs/tools/private-channels.md): Enterprise app-layer for internet capital markets on Solana, providing private, instant, zero-fee token transfers in payment channels settled on-chain via a Sparse Merkle Tree proof.
+- [Concepts](https://solana.com/docs/tools/private-channels/concepts.md): Core concepts behind the Private Channels protocol
+- [Authentication & Roles](https://solana.com/docs/tools/private-channels/concepts/auth.md): JWT authentication and role-based access control in Private Channels
+- [Channel Lifecycle](https://solana.com/docs/tools/private-channels/concepts/channels.md): How private payment channels work, who the participants are, and when to use them
+- [Sparse Merkle Tree](https://solana.com/docs/tools/private-channels/concepts/smt.md): How Private Channels uses a Sparse Merkle Tree to prevent double-spend on withdrawals
+- [Instructions](https://solana.com/docs/tools/private-channels/instructions.md): On-chain instruction reference for the Private Channels Escrow and Withdraw programs
+- [AddOperator](https://solana.com/docs/tools/private-channels/instructions/add-operator.md): Provisions a new operator by creating their Operator PDA
+- [AllowMint](https://solana.com/docs/tools/private-channels/instructions/allow-mint.md): Permits an SPL token mint on the instance and creates the escrow ATA for that mint
+- [BlockMint](https://solana.com/docs/tools/private-channels/instructions/block-mint.md): Removes a previously allowed mint from the instance, preventing new deposits for that mint
+- [CreateInstance](https://solana.com/docs/tools/private-channels/instructions/create-instance.md): Creates the Instance PDA that anchors the Private Channels escrow
+- [Deposit](https://solana.com/docs/tools/private-channels/instructions/deposit.md): Transfers SPL tokens from a user's wallet into the Private Channels escrow
+- [Release Funds](https://solana.com/docs/tools/private-channels/instructions/release-funds.md): Releases tokens from escrow to a user's wallet after verifying an SMT exclusion proof
+- [RemoveOperator](https://solana.com/docs/tools/private-channels/instructions/remove-operator.md): Revokes an operator by closing their Operator PDA
+- [Reset SMT Root](https://solana.com/docs/tools/private-channels/instructions/reset-smt-root.md): Rotates the Sparse Merkle Tree, resetting the withdrawal root for a new tree epoch
+- [SetNewAdmin](https://solana.com/docs/tools/private-channels/instructions/set-new-admin.md): Transfers admin rights to a new wallet
+- [Withdraw Funds](https://solana.com/docs/tools/private-channels/instructions/withdraw-funds.md): Burns channel-side tokens to initiate a withdrawal back to the Solana mainnet escrow
+- [Operators](https://solana.com/docs/tools/private-channels/operators.md): Deploy and operate a Private Channels instance with Docker Compose
+- [Configuration Reference](https://solana.com/docs/tools/private-channels/operators/configuration.md): Environment variables, service inventory, and port assignments for all Private Channels services
+- [Overview](https://solana.com/docs/tools/private-channels/overview.md): Architecture and data flow of the Private Channels protocol
+- [Quickstart](https://solana.com/docs/tools/private-channels/quickstart.md): Deposit, transfer, and withdraw on Solana devnet in under 30 minutes
+- [Deposit Tokens](https://solana.com/docs/tools/private-channels/quickstart/deposit.md): Deposit SPL tokens into a Private Channels escrow instance on devnet
+- [Installation](https://solana.com/docs/tools/private-channels/quickstart/installation.md): Set up your environment and generate the Private Channels TypeScript clients
+- [Send a Transfer](https://solana.com/docs/tools/private-channels/quickstart/transfer.md): Send an off-chain SPL token transfer through the Private Channels gateway
+- [Withdraw Funds](https://solana.com/docs/tools/private-channels/quickstart/withdraw.md): Withdraw tokens from a Private Channels instance back to your Solana wallet
+- [Production Readiness](https://solana.com/docs/tools/production-readiness.md): Moving from devnet testing to mainnet deployment
+- [Solana Pay](https://solana.com/docs/tools/solana-pay.md): A standard protocol for decentralized payments on Solana
+- [Overview](https://solana.com/docs/tools/solana-pay/overview.md): Understanding the Solana Pay protocol and implementation
+- [Quick Start](https://solana.com/docs/tools/solana-pay/quickstart.md): Get started with Solana Pay integration
+- [Installation](https://solana.com/docs/tools/solana-pay/quickstart/installation.md): Install Solana Pay SDK and get started with payments
+- [QR Code Integration](https://solana.com/docs/tools/solana-pay/quickstart/qr-codes.md): Generate and customize QR codes for mobile wallet payments
+- [Transaction Requests](https://solana.com/docs/tools/solana-pay/quickstart/transaction-requests.md): Build interactive payment flows with server-side transaction creation
+- [Transfer Requests](https://solana.com/docs/tools/solana-pay/quickstart/transfer-requests.md): Create simple payment URLs for SOL and SPL token transfers
+- [Solana Pay Specification v1](https://solana.com/docs/tools/solana-pay/specification/version1.md): A standard protocol to encode Solana transaction requests within URLs
+- [Solana Pay Specification v1.1](https://solana.com/docs/tools/solana-pay/specification/version1-1.md): Latest version of the standard protocol to encode Solana transaction requests within URLs
+- [Surfpool](https://solana.com/docs/tools/surfpool.md): Surfpool is a drop-in replacement for solana-test-validator, purpose-built to offer the best possible experience for developers building on Solana.
+- [Getting Started with IaC](https://solana.com/docs/tools/surfpool/iac/getting-started.md): Use the txtx DSL to describe the deployments that surfpool manages.
+- [Language & Syntax](https://solana.com/docs/tools/surfpool/iac/language.md): Use the txtx DSL to describe the deployments that surfpool manages.
+- [Standard Actions](https://solana.com/docs/tools/surfpool/iac/std/actions.md): Actions available in the standard library
+- [Assertion Functions](https://solana.com/docs/tools/surfpool/iac/std/assertions.md): Standard library functions for testing and assertions
+- [Base58 Functions](https://solana.com/docs/tools/surfpool/iac/std/base58.md): Standard library functions for Base58 encoding and decoding
+- [Base64 Functions](https://solana.com/docs/tools/surfpool/iac/std/base64.md): Standard library functions for Base64 encoding and decoding
+- [Crypto Functions](https://solana.com/docs/tools/surfpool/iac/std/crypto.md): Standard library cryptographic functions
+- [Standard Functions](https://solana.com/docs/tools/surfpool/iac/std/functions.md): Utility functions available in the standard library
+- [Hash Functions](https://solana.com/docs/tools/surfpool/iac/std/hash.md): Standard library hash functions for computing cryptographic hashes
+- [Hex Functions](https://solana.com/docs/tools/surfpool/iac/std/hex.md): Standard library functions for hexadecimal encoding and decoding
+- [HTTP Actions](https://solana.com/docs/tools/surfpool/iac/std/http.md): Standard library HTTP actions for making web requests
+- [JSON Functions](https://solana.com/docs/tools/surfpool/iac/std/json.md): Standard library functions for JSON manipulation
+- [List Functions](https://solana.com/docs/tools/surfpool/iac/std/list.md): Standard library functions for list manipulation
+- [Operator Functions](https://solana.com/docs/tools/surfpool/iac/std/operators.md): Standard library operator functions for mathematical and logical operations
+- [Standard Library Overview](https://solana.com/docs/tools/surfpool/iac/std/overview.md): The standard library provides core functions and actions available to all Runbooks.
+- [SVM Actions](https://solana.com/docs/tools/surfpool/iac/svm/actions.md): Actions for Solana and SVM Compatible Blockchains
+- [SVM Functions](https://solana.com/docs/tools/surfpool/iac/svm/functions.md): Functions for Solana and SVM Compatible Blockchains
+- [SVM Addon Overview](https://solana.com/docs/tools/surfpool/iac/svm/overview.md): Add-on for Solana and SVM Compatible Blockchains (beta)
+- [SVM Signers](https://solana.com/docs/tools/surfpool/iac/svm/signers.md): Signers for Solana and SVM Compatible Blockchains
+- [Video Tutorials](https://solana.com/docs/tools/surfpool/resources/video-tutorials.md): Learn Surfpool through our video tutorial series
+- [Accounts](https://solana.com/docs/tools/surfpool/rpc/accounts.md): Query account states, balances, and token holdings on Surfnet
+- [Admin](https://solana.com/docs/tools/surfpool/rpc/admin.md): Administrative controls for managing the Surfnet instance
+- [Cheatcodes](https://solana.com/docs/tools/surfpool/rpc/cheatcodes.md): Powerful testing utilities unique to Surfpool for state manipulation
+- [Network](https://solana.com/docs/tools/surfpool/rpc/network.md): Access network-wide information like epoch data and performance metrics
+- [Node Health](https://solana.com/docs/tools/surfpool/rpc/node.md): Monitor node status, health checks, and cluster information
+- [Introducing Surfnet](https://solana.com/docs/tools/surfpool/rpc/overview.md): Learn about Surfnet, Surfpool's local Solana network simulator and RPC API
+- [Transactions](https://solana.com/docs/tools/surfpool/rpc/transactions.md): Send, simulate, and inspect transaction data on Surfnet
+- [WebSocket RPC Methods](https://solana.com/docs/tools/surfpool/rpc/websockets.md): Real-time WebSocket subscriptions for monitoring blockchain state changes
+- [Cheatcodes](https://solana.com/docs/tools/surfpool/sdk/cheatcodes.md): Skip transactions and directly mutate Surfnet state. Fund SOL and tokens, set arbitrary account data, reset upstream-cached accounts, and stream live mainnet accounts.
+- [Configuration](https://solana.com/docs/tools/surfpool/sdk/configuration.md): Configure a Surfnet at startup — remote RPC fallback, block production mode, slot timing, airdrops, feature gates, and custom payers.
+- [Runtime Events](https://solana.com/docs/tools/surfpool/sdk/events.md): Observe transactions, slot ticks, account streaming, and runtime errors from inside a test. Rust exposes a channel; JS exposes a drain method.
+- [Installation](https://solana.com/docs/tools/surfpool/sdk/installation.md): Install the Surfpool SDK for Rust or TypeScript. The JS package ships pre-built native binaries through napi-rs for macOS and Linux.
+- [JS API Reference](https://solana.com/docs/tools/surfpool/sdk/js-reference.md): Complete public API for the @solana/surfpool package — Surfnet class, config types, deploy options, and event shape.
+- [Kit Plugin](https://solana.com/docs/tools/surfpool/sdk/kit-plugin.md): Run an embedded Surfnet behind a Solana Kit client. One plugin gives you a pre-funded payer, the full RPC stack, and typed cheatcodes.
+- [Surfpool SDK](https://solana.com/docs/tools/surfpool/sdk/overview.md): Embed Surfpool in Rust and TypeScript tests. Start a local Surfnet, mutate account state, time travel, and deploy programs from code — without launching the CLI as a separate process.
+- [Deploying Programs](https://solana.com/docs/tools/surfpool/sdk/programs.md): Deploy Solana programs into a Surfnet from local artifacts. Auto-discover Anchor workspaces or pass an explicit .so path, raw bytes, and IDL.
+- [Rust API Reference](https://solana.com/docs/tools/surfpool/sdk/rust-reference.md): Complete public API for the surfpool-sdk crate — Surfnet, builder, cheatcodes, builders, errors, and re-exports.
+- [Time Travel](https://solana.com/docs/tools/surfpool/sdk/time-travel.md): Jump the Surfnet clock forward to an absolute slot, epoch, or Unix timestamp, or pause it outright. Useful for tests that exercise vesting schedules, lockups, expiration windows, or epoch boundaries.
+- [CLI Commands](https://solana.com/docs/tools/surfpool/toolchain/cli.md): Using the surfpool Command Line Interface (CLI)
+- [Getting Started](https://solana.com/docs/tools/surfpool/toolchain/getting-started.md): This guide will get you all set up and ready to install Surfpool.
+- [Terminal UI](https://solana.com/docs/tools/surfpool/toolchain/tui.md): Explore the interactive Terminal UI dashboard for Surfpool
+- [Become an x402 Facilitator](https://solana.com/docs/tools/x402-facilitator.md): Choose, integrate, and operate an x402 facilitator for Solana payment verification and settlement.
+- [Video Tutorials](https://solana.com/docs/video-guides.md): Build alongside Solana engineers. Follow comprehensive courses and hands-on projects.
+- [2026 Developer Bootcamp](https://solana.com/docs/video-guides/2026-developer-bootcamp.md): The full Solana Developer Bootcamp 2026 course — a project-based path from blockchain foundations through full-stack crypto development.
+- [Agent Payments](https://solana.com/docs/video-guides/agent-payments.md): A 4-part video series on the machine economy: how to monetize an API with HTTP 402, and how AI agents pay for APIs and services on Solana.
+- [Build DePin Projects](https://solana.com/docs/video-guides/building-depin-projects.md): Six hands-on builds connecting Solana programs to real-world hardware and physical infrastructure.
+- [Confidential Balances](https://solana.com/docs/video-guides/confidential-balances.md): How Confidential Balances brings private transfer amounts to Solana tokens, and where to go for the full technical deep dive.
+- [Pay.sh Course](https://solana.com/docs/video-guides/pay-sh-video-tutorials.md): A 12-part video series that walks through Pay.sh end to end, from installing the CLI to deploying and publishing a production-ready paid API gateway.
+- [Solana Crash Course](https://solana.com/docs/video-guides/solana-crash-course.md): An 11-part roadmap series covering Solana development end to end — from environment setup through building, storing data, and shipping real programs.
+
+## Cookbook
+
+- [Solana Cookbook](https://solana.com/developers/cookbook.md): The Solana Cookbook is a collection of code snippets, useful examples, and references for building on Solana.
+- [How to Calculate Account Creation Cost](https://solana.com/developers/cookbook/accounts/calculate-rent.md): Every time you create an account, that creation costs an amount of SOL. Learn how to calculate how much an account costs at creation.
+- [How to Create an Account](https://solana.com/developers/cookbook/accounts/create-account.md): Accounts are the basic building blocks of anything on Solana. Learn how to create accounts on the Solana blockchain.
+- [How to Get Account Balance](https://solana.com/developers/cookbook/accounts/get-account-balance.md): Every account on Solana has a balance of SOL stored. Learn how to retrieve that account balance on Solana.
+- [Physical Infrastructure (DePIN)](https://solana.com/developers/cookbook/depin.md): While each DePIN network has a unique product focus, most DePIN networks utilize Solana for a common set of use-cases. This guide is meant to help builders get oriented to common onchain DePIN use-cases.
+- [How to get Solana devnet SOL (including airdrops and faucets)](https://solana.com/developers/cookbook/development/airdrops-and-faucets.md): A list of the most common ways to get devnet and testnet SOL tokens for Solana development. Including: airdrop, web3.js, POW faucet, and more.
+- [Connecting to a Solana Environment](https://solana.com/developers/cookbook/development/connect-environment.md): Learn how to connect to a Solana environment.
+- [How to create a CRUD dApp on Solana](https://solana.com/developers/cookbook/development/crud-dapp.md): Solana developer quickstart guide to learn how to create a basic CRUD dApp on the Solana blockchain with a simple journal program and interact with the program via a UI.
+- [Load a local json file keypair](https://solana.com/developers/cookbook/development/load-keypair-from-file.md): Learn how to load a keypair from file.
+- [Subscribing to Events](https://solana.com/developers/cookbook/development/subscribing-events.md): Learn how to subscribe to events in the Solana network.
+- [Getting Test SOL](https://solana.com/developers/cookbook/development/test-sol.md): Learn how to get test SOL for development purposes by requesting an airdrop in your source code.
+- [Build an Energy System for Casual Games on Solana](https://solana.com/developers/cookbook/games/energy-system.md): Learn how to build an onchain energy system for a game, allowing players to expend energy to perform actions, refilling it over time.
+- [Solana Game Development Examples](https://solana.com/developers/cookbook/games/game-examples.md): A list of open source games and examples on Solana with tutorials to get you started.
+- [Getting started with game development on Solana](https://solana.com/developers/cookbook/games/getting-started-with-game-development.md): Learn how to build games on Solana. Solana is well built for web3 games of all genres utilizing speed, low fees, and more to create an amazing gaming experience
+- [Hello World for Solana Game Development](https://solana.com/developers/cookbook/games/hello-world.md): Get started building Solana games with a basic adventure game using the Anchor framework.
+- [How to interact with tokens in programs](https://solana.com/developers/cookbook/games/interact-with-tokens.md): Learn how to use tokens in Solana games with an onchain tutorial
+- [Using NFTs and Digital Assets in Games](https://solana.com/developers/cookbook/games/nfts-in-games.md): NFTs can be a powerful tool in blockchain games. Learn how to utilize NFTs in Solana games to their full potential.
+- [Port Anchor to Unity](https://solana.com/developers/cookbook/games/porting-anchor-to-unity.md): Using Anchor IDL you can interact with your program directly from unity
+- [Saving game state](https://solana.com/developers/cookbook/games/saving-game-state.md): How to save the state of a game in a Solana program
+- [Storing SOL in a PDA](https://solana.com/developers/cookbook/games/store-sol-in-pda.md): Using PDAs, you can reward SOL to players playing your game. Learn how to reward SOL from a PDA when players find chests in this game.
+- [How to Create a Token with Metadata](https://solana.com/developers/cookbook/tokens/create-token-with-metadata.md): Learn how to create an SPL Token with onchain metadata using the Metaplex Token Metadata Program.
+- [How to Fetch Token Metadata](https://solana.com/developers/cookbook/tokens/fetch-token-metadata.md): Learn how to fetch Metaplex token metadata including name, symbol, and URI for any SPL Token.
+- [How to Get All Token Accounts by Authority](https://solana.com/developers/cookbook/tokens/get-all-token-accounts.md): Learn how to retrieve Solana token accounts by owner, including all accounts or filtered by mint.
+- [How to Get a Token Account](https://solana.com/developers/cookbook/tokens/get-token-account.md): Learn how to retrieve Solana token account details, including owner, mint, and balance
+- [How to get a Token Account's Balance](https://solana.com/developers/cookbook/tokens/get-token-balance.md): Learn how to quickly retrieve a Solana token account's balance with a single call. Includes code examples in both TypeScript and Rust.
+- [How to Get a Token Mint](https://solana.com/developers/cookbook/tokens/get-token-mint.md): Learn how to retrieve Solana token mint information, including supply, authority, decimals, and metadata.
+- [How to Add a Memo to a Transaction](https://solana.com/developers/cookbook/transactions/add-memo.md): Transactions come with metadata information about what was transacted. Learn how to add a memo to your transactions on Solana.
+- [How to Add Priority Fees to a Transaction](https://solana.com/developers/cookbook/transactions/add-priority-fees.md): Learn how to increase your transaction priority with priority fees on Solana.
+- [How to Calculate Transaction Cost](https://solana.com/developers/cookbook/transactions/calculate-cost.md): Every transaction costs compute units and a fee in lamports to execute on Solana. Learn how to calculate the cost of a transaction on Solana.
+- [Confirmation & Expiration](https://solana.com/developers/cookbook/transactions/confirmation.md): Understand how Solana transaction confirmation and when a transaction expires (including recent blockhash checks).
+- [Durable & Offline Transaction Signing using Nonces](https://solana.com/developers/cookbook/transactions/durable-nonces.md): One-stop shop for Solana's Durable Nonces: an easy way to power your Solana dapps
+- [Fee Sponsorship](https://solana.com/developers/cookbook/transactions/fee-sponsorship.md): Learn about Solana's fee sponsorship, including how to sponsor fees for other users and how to get paid for sponsoring fees.
+- [Address Lookup Tables](https://solana.com/developers/cookbook/transactions/lookup-tables.md): Learn how to use Solana Address Lookup Tables (ALTs) to efficiently handle up to 64 addresses per transaction. Create, extend, and utilize lookup tables using web3.js.
+- [How to Protect Transactions from MEV with Jito](https://solana.com/developers/cookbook/transactions/mev-protection.md): Learn how to protect your Solana transactions from sandwich attacks using Jito's dontfront feature.
+- [Offline Transactions](https://solana.com/developers/cookbook/transactions/offline-transactions.md): Build and sign a transaction with independent or offline signers.
+- [How to Optimize Compute Requested](https://solana.com/developers/cookbook/transactions/optimize-compute.md)
+- [Pay Fees with Any Token](https://solana.com/developers/cookbook/transactions/pay-fees-with-any-token.md): Learn how to pay transaction fees with any token using Solana's native fee payer and batching features.
+- [Retrying Transactions](https://solana.com/developers/cookbook/transactions/retry.md): Learn how to handle dropped transactions and implement custom retry logic on Solana. This guide covers transaction rebroadcasting, preflight checks, and best practices for managing transaction retries to ensure reliable transaction processing on the Solana blockchain.
+- [How to Send SOL](https://solana.com/developers/cookbook/transactions/send-sol.md): The most common action on Solana is sending SOL. Learn how to send SOL on Solana.
+- [Versioned Transactions](https://solana.com/developers/cookbook/transactions/versions.md): Explore the core Solana concepts: transactions, versioned transactions, enabling additional functionality in the Solana runtime, address lookup tables, and more.
+- [How to auto approve transactions](https://solana.com/developers/cookbook/wallets/auto-approve.md): By auto approving transactions dApps and games can create a more fluid user experience. This is especially interesting for onchain games.
+- [How to Validate a Public Key](https://solana.com/developers/cookbook/wallets/check-publickey.md): Public keys on Solana can be validated with a small amount of code. Learn how to validate public keys on Solana.
+- [How to Connect a Wallet with React](https://solana.com/developers/cookbook/wallets/connect-wallet-react.md): Every application on Solana requires a connection with a user's wallet to use. Learn how to connect to wallets on Solana.
+- [How to Create a Keypair](https://solana.com/developers/cookbook/wallets/create-keypair.md): Every transaction requires a signature from a keypair on Solana. Learn how to create Keypairs on Solana.
+- [How to Generate Mnemonics for Keypairs](https://solana.com/developers/cookbook/wallets/generate-mnemonic.md): Mnemonics make it easy for users to store their keypair's secret. Learn how to use mnemonics on Solana.
+- [How to Generate a Vanity Address](https://solana.com/developers/cookbook/wallets/generate-vanity-address.md): Creating custom addresses that begin with specific characters. Learn how to create vanity addresses on Solana.
+- [How to Restore a Keypair from a Mnemonic](https://solana.com/developers/cookbook/wallets/restore-from-mnemonic.md): Learn how to restore keypairs from a mnemonic on Solana
+- [How to Restore a Keypair or Signer](https://solana.com/developers/cookbook/wallets/restore-keypair.md): Learn how to restore keypairs from a secret key on Solana.
+- [How to Sign and Verify a Message](https://solana.com/developers/cookbook/wallets/sign-message.md): Learn how to sign messages on Solana.
+- [How to Sign with a Keychain Backend](https://solana.com/developers/cookbook/wallets/sign-with-keychain.md): Sign Solana transactions through a key-management backend using @solana/keychain, so you can swap most signing providers without changing code.
+- [How to Authenticate Users with Solana Wallets Using Supabase](https://solana.com/developers/cookbook/wallets/supabase-auth.md): Step-by-step guide to implement Solana wallet authentication in your Next.js application using Supabase. Learn how to connect Phantom or Solflare wallets, authenticate users with wallet signatures, and protect routes. Perfect for developers building Solana dApps who want secure, passwordless authentication.
+- [How to Verify a Keypair](https://solana.com/developers/cookbook/wallets/verify-keypair.md): Learn how to verify keypairs on Solana match a given public address.
+
+## Bootcamp
+
+- [Bootcamp](https://solana.com/developers/bootcamp.md): Video-first Solana learning library featuring the 2026 bootcamp plus focused courses like Solana Crashcourse and DePIN.
+- [DePIN](https://solana.com/developers/bootcamp/depin.md): A hardware-focused course for builders connecting Raspberry Pi projects, AI workflows, and Solana data to real-world devices.
+- [Connect Your Raspberry Pi to the Solana Blockchain](https://solana.com/developers/bootcamp/depin/connect-your-raspberry-pi-to-the-solana-blockchain.md): Link the device to Solana so it can read chain data and participate in onchain flows.
+- [Connecting Smart Contract Events to Telegram](https://solana.com/developers/bootcamp/depin/connecting-smart-contract-events-to-telegram.md): Route smart contract events into Telegram so operators or devices can react in real time.
+- [Intro to Raspberry Pi and AI](https://solana.com/developers/bootcamp/depin/intro-to-raspberry-pi-and-ai.md): Understand the hardware setup and how AI can fit into a Solana-connected device workflow.
+- [Raspberry Pi Headless Wi-Fi Setup](https://solana.com/developers/bootcamp/depin/raspberry-pi-headless-wi-fi-setup.md): Provision a Raspberry Pi headlessly and get it online without attaching a display.
+- [Reading Solana Blockchain Transactions Out Loud](https://solana.com/developers/bootcamp/depin/reading-solana-blockchain-transactions-out-loud.md): Turn live transaction data into a hardware-driven output flow that speaks updates aloud.
+- [Solana Drink Dispenser](https://solana.com/developers/bootcamp/depin/solana-drink-dispenser.md): Build a connected dispenser flow that reacts to Solana-triggered logic in the physical world.
+- [Using Webhooks to Fetch Solana Transactions](https://solana.com/developers/bootcamp/depin/using-webhooks-to-fetch-solana-transactions.md): Use webhooks to capture transaction activity and drive device or application behavior.
+- [Foundations](https://solana.com/developers/bootcamp/foundations.md): Start with the bootcamp structure, learn the Solana mental model, set up the stack, and ship your first app.
+- [Bonus Lesson: AI Best Practices](https://solana.com/developers/bootcamp/foundations/ai-best-practices.md): Use AI effectively while keeping correctness, safety, and reproducibility in blockchain workflows.
+- [Bootcamp Intro](https://solana.com/developers/bootcamp/foundations/bootcamp-intro.md): Get oriented to the 2026 bootcamp structure, expectations, and companion workflow.
+- [Hello World](https://solana.com/developers/bootcamp/foundations/hello-world.md): Build and run your first Solana project from local setup to execution.
+- [Local Installation](https://solana.com/developers/bootcamp/foundations/local-installation.md): Install and verify the local environment required for Solana application development.
+- [Intro to Blockchain](https://solana.com/developers/bootcamp/foundations/quick-intro-to-blockchain.md): Understand the core blockchain model and how it maps to Solana development.
+- [Fullstack Applications](https://solana.com/developers/bootcamp/fullstack-apps.md): Pair onchain programs with app UX, integrations, and product-shaped Solana flows.
+- [Prediction Market](https://solana.com/developers/bootcamp/fullstack-apps/prediction-market.md): Ship a prediction market flow with market mechanics, user actions, and application-layer guardrails.
+- [Private Transfers](https://solana.com/developers/bootcamp/fullstack-apps/private-transfers.md): Build a fullstack flow for private transfers and reason about UX, state, and privacy tradeoffs.
+- [Real-World Assets](https://solana.com/developers/bootcamp/fullstack-apps/real-world-assets.md): Connect the bootcamp stack to a real-world asset use case and think through product constraints.
+- [x402](https://solana.com/developers/bootcamp/fullstack-apps/x402.md): Apply x402 patterns in a product context and map payment-triggered requests to onchain behavior.
+- [Program Patterns](https://solana.com/developers/bootcamp/program-patterns.md): Move from fundamentals into reusable onchain patterns for state, escrow, token flows, swaps, and security review.
+- [Escrow Application](https://solana.com/developers/bootcamp/program-patterns/escrow-application.md): Implement an escrow flow with explicit state transitions, authorities, and release conditions.
+- [Security](https://solana.com/developers/bootcamp/program-patterns/security.md): Review the patterns from earlier lessons through a security and threat-model lens.
+- [Stable Coin](https://solana.com/developers/bootcamp/program-patterns/stable-coin.md): Create a stable coin style token flow and understand mint, authority, and supply management decisions.
+- [Stable Swap](https://solana.com/developers/bootcamp/program-patterns/stable-swap.md): Work through a stable swap implementation and the mechanics behind pool behavior.
+- [Voting](https://solana.com/developers/bootcamp/program-patterns/voting.md): Build a voting app to practice state initialization, updates, and account design.
+- [Shipping & Production](https://solana.com/developers/bootcamp/shipping-production.md): Close the loop with indexing, production readiness, and the operational details required to ship.
+- [Bonus Lesson 2: Indexing](https://solana.com/developers/bootcamp/shipping-production/indexing.md): Add indexing so product surfaces can query and present onchain data reliably.
+- [Production Readiness](https://solana.com/developers/bootcamp/shipping-production/production-readiness.md): Review deployment, monitoring, security, and team process decisions that turn a prototype into a production app.
+- [Solana Crashcourse](https://solana.com/developers/bootcamp/solana-crashcourse.md): A quick-start course for builders who want the roadmap, a working environment, and a first deployed app on Solana without going through the full bootcamp.
+- [Build and Deploy an App on Solana in 5 Minutes](https://solana.com/developers/bootcamp/solana-crashcourse/build-and-deploy-an-app-on-solana-in-5-minutes.md): Go from zero to a deployed Solana app in a short end-to-end walkthrough.
+- [Solana Developer Roadmap](https://solana.com/developers/bootcamp/solana-crashcourse/developer-roadmap.md): Map the fastest path from first concepts to building and shipping on Solana.
+- [Set Up Your Solana Environment](https://solana.com/developers/bootcamp/solana-crashcourse/set-up-your-solana-environment.md): Install the Solana tools and validate a working local development setup.
+
+## Learn
+
+- [Exploring Solana Applications](https://solana.com/learn/exploring-solana-applications.md): Discover the diverse ecosystem of applications built on Solana - from financial services and gaming to social platforms and creative tools, all accessible with just your wallet.
+- [Getting Started with Solana](https://solana.com/learn/getting-started.md): Learn the basics of Solana and how to get started with digital transactions
+- [Introduction to DeFi on Solana](https://solana.com/learn/introduction-to-defi-on-solana.md): Learn about decentralized finance (DeFi) applications on Solana, including trading, lending, and yield opportunities.
+- [Introduction to Solana Tokens](https://solana.com/learn/introduction-to-solana-tokens.md): Learn about tokens - the different types of digital assets on Solana including stablecoins, wrapped tokens, and project tokens.
+- [Sending and Receiving SOL](https://solana.com/learn/sending-and-receiving-sol.md): Learn how to send and receive SOL tokens - the fundamental skill for interacting with the Solana network and its applications.
+- [Staying Safe on Solana](https://solana.com/learn/staying-safe-on-solana.md): Learn essential security practices to protect your assets and avoid common scams while using Solana applications.
+- [Understanding Solana Transaction Fees](https://solana.com/learn/understanding-solana-transaction-fees.md): Learn how transaction fees work on Solana, why they're low, and what this means for different use cases.
+- [What are NFTs?](https://solana.com/learn/what-are-nfts.md): Learn about Non-Fungible Tokens (NFTs) on Solana - unique digital assets that represent ownership of specific items like art, collectibles, and more.
+- [What is a Wallet?](https://solana.com/learn/what-is-a-wallet.md): Learn what a Solana wallet is, how it works, and how to set one up safely. Your wallet is the tool you'll use to interact with Solana applications.
+- [What is Solana?](https://solana.com/learn/what-is-solana.md): An introduction to Solana - a fast, low-cost network that enables new ways to transfer value, create applications, and interact online.
+- [What is Staking?](https://solana.com/learn/what-is-staking.md): Learn how staking works on Solana, how to earn rewards by helping secure the network, and what to consider when choosing validators.

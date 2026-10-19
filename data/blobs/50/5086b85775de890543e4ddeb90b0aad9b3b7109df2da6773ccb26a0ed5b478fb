@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Asaas - Login</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+
+
+    <meta name="robots" content="noindex, nofollow">
+
+
+
+        <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon/favicon-96x96-283980308f3502202563e842c1114c40.png"/>
+<link rel="icon" type="image/svg+xml" href="/assets/logo/favicon/favicon-31f24bc3deef955319875a4d1ee3552f.svg"/>
+<link rel="shortcut icon" type="image/x-icon" href="/assets/favicon-34cc334887c3fd840f19f079011dc968.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/favicon/apple-touch-icon-54449e9c59d655f1c3c4e050f41bbf69.png"/>
+<meta name="apple-mobile-web-app-title" content="Asaas"/>
+
+        
+        
+        <meta name="layout" content="atlasLogin"/>
+    
+
+        
+            
+        
+        <link rel="stylesheet" href="/assets/layout/base-layout-atlas-5c48171b753d5925104460eeedd9631b.css" />
+<link rel="dns-prefetch" href="https://atlas.asaas.com">
+
+
+    <link
+        rel="stylesheet"
+        href="https://atlas.asaas.com/v48.31.0/atlas.css"
+        integrity="sha256-welMGOivvfPhMDPPs6ZTGiRoLydFi7TO+NLLybi23sk="
+        crossorigin="anonymous"
+        fetchpriority="high">
+    <script
+        defer
+        src="https://atlas.asaas.com/v48.31.0/atlas.js"
+        integrity="sha256-Yij7NlkkPRfSsDAMICNPzmKfPxjm4cwC0iery8x+o4o="
+        crossorigin="anonymous"
+        fetchpriority="high"
+    ></script>
+
+
+<script nonce="">
+    document.addEventListener("AtlasContentLoaded", function() {
+        if (!window.DD_RUM) return;
+
+        var atlasContentLoadedTime = Date.now();
+        var firstFrameWithAtlasProducedTime;
+
+        runAfterFramePaint(function() {
+            firstFrameWithAtlasProducedTime = Date.now();
+
+            window.DD_RUM.onReady(function() {
+                window.DD_RUM.addTiming("atlas_content_loaded", atlasContentLoadedTime);
+                window.DD_RUM.addTiming("first_frame_with_atlas_produced", firstFrameWithAtlasProducedTime);
+            });
+        });
+    });
+
+    function runAfterFramePaint(callback) {
+        requestAnimationFrame(function() {
+            var messageChannel = new MessageChannel();
+            messageChannel.port1.onmessage = callback;
+            messageChannel.port2.postMessage(undefined);
+        });
+    }
+</script>
+<input type="hidden" class="js-current-environment" value="production" >
+
+<script nonce="" defer>
+    // Snippet do Segment não minificado - https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/quickstart/#step-2-copy-the-segment-snippet
+    (function(){
+        // Create a queue, but don't obliterate an existing one!
+        var analytics = window.analytics = window.analytics || [];
+        // If the real analytics.js is already on the page return.
+        if (analytics.initialize) return;
+        // If the snippet was invoked already show an error.
+        if (analytics.invoked) {
+            if (window.console && console.error) {
+                console.error('Segment snippet included twice.');
+            }
+            return;
+        }
+        // Invoked flag, to make sure the snippet
+        // is never invoked twice.
+        analytics.invoked = true;
+        // A list of the methods in Analytics.js to stub.
+        analytics.methods = [
+            'trackSubmit',
+            'trackClick',
+            'trackLink',
+            'trackForm',
+            'pageview',
+            'identify',
+            'reset',
+            'group',
+            'track',
+            'ready',
+            'alias',
+            'debug',
+            'page',
+            'once',
+            'off',
+            'on',
+            'addSourceMiddleware',
+            'addIntegrationMiddleware',
+            'setAnonymousId',
+            'addDestinationMiddleware'
+        ];
+        // Define a factory to create stubs. These are placeholders
+        // for methods in Analytics.js so that you never have to wait
+        // for it to load to actually record data. The `method` is
+        // stored as the first argument, so we can replay the data.
+        analytics.factory = function(method){
+            return function(){
+                var args = Array.prototype.slice.call(arguments);
+                args.unshift(method);
+                analytics.push(args);
+                return analytics;
+            };
+        };
+        // For each of our methods, generate a queueing stub.
+        for (var i = 0; i < analytics.methods.length; i++) {
+            var key = analytics.methods[i];
+            analytics[key] = analytics.factory(key);
+        }
+        // Define a method to load Analytics.js from our CDN,
+        // and that will be sure to only ever load it once.
+        analytics.load = function(key, options){
+            // Create an async script element based on your key.
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = true;
+            script.src = 'https://cdn.signal.asaas.com/analytics.js/v1/8e4l0kg3wg/analytics.min.js';
+            script.integrity = 'sha384-xZr5K9oX5LsRPJbfBnYKrFLcz+k3842p+zsxjeyo5it4IVN2o4EWCKkJDoTiWvfA';
+            script.crossOrigin = 'anonymous';
+            // Insert our script next to the first script element.
+            var first = document.getElementsByTagName('script')[0];
+            first.parentNode.insertBefore(script, first);
+            analytics._loadOptions = options;
+        };
+        analytics._writeKey = "8e4l0kg3wg"
+        // Add a version to keep track of what's in the wild.
+        analytics.SNIPPET_VERSION = '4.13.2';
+
+        // Load Analytics.js with your key, which will automatically
+        // load the tools you've enabled for your account. Boosh!
+        analytics.load("8e4l0kg3wg", {
+            integrations: {
+                "Segment.io": {  // Do not change! apiHost will revert to api.segment.io
+                    apiHost: "signal.asaas.com/com.segment/v1"
+                }
+            }
+        });
+
+        
+
+        // Make the first page call to load the integrations. If
+        // you'd like to manually name or tag the page, edit or
+        // move this call however you'd like.
+        if (true) {
+            analytics.page(null, null, {
+                asaasSource: "asaas",
+                environment: "production"
+            });
+        }
+    })();
+</script>
+
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lcx4EckAAAAAOHEAR8HYRmeGLJgto74uq5DucOY" nonce="" async defer></script>
+
+
+
+<meta name="script-manifest" content="{&quot;eager&quot;:[{&quot;id&quot;:&quot;RUM&quot;,&quot;loadType&quot;:&quot;PACKAGE&quot;,&quot;config&quot;:{&quot;sdkConfig&quot;:{&quot;clientToken&quot;:&quot;pub0bd4c6346f46c26e8ee3aa184a8872f1&quot;,&quot;applicationId&quot;:&quot;36db5ebf-84ff-462a-9148-cb69967bd3eb&quot;,&quot;site&quot;:&quot;datadoghq.com&quot;,&quot;service&quot;:&quot;asaas-frontend-prod&quot;,&quot;version&quot;:&quot;site-2026-10-19-15-46&quot;,&quot;env&quot;:&quot;prod&quot;,&quot;sessionSampleRate&quot;:3,&quot;sessionReplaySampleRate&quot;:0,&quot;trackUserInteractions&quot;:true,&quot;trackResources&quot;:true,&quot;trackLongTasks&quot;:true,&quot;defaultPrivacyLevel&quot;:&quot;mask&quot;,&quot;startSessionReplayRecordingManually&quot;:true},&quot;user&quot;:{&quot;customerPublicId&quot;:&quot;&quot;,&quot;userId&quot;:null},&quot;pagePath&quot;:&quot;login/auth&quot;,&quot;baseUrl&quot;:&quot;https://www.asaas.com&quot;}},{&quot;id&quot;:&quot;BROWSER_LOG&quot;,&quot;loadType&quot;:&quot;PACKAGE&quot;,&quot;config&quot;:{&quot;sdkConfig&quot;:{&quot;clientToken&quot;:&quot;pub0bd4c6346f46c26e8ee3aa184a8872f1&quot;,&quot;site&quot;:&quot;datadoghq.com&quot;,&quot;service&quot;:&quot;asaas-frontend-prod&quot;,&quot;version&quot;:&quot;site-2026-10-19-15-46&quot;,&quot;env&quot;:&quot;prod&quot;,&quot;sessionSampleRate&quot;:100,&quot;forwardErrorsToLogs&quot;:false,&quot;forwardConsoleLogs&quot;:[&quot;error&quot;]},&quot;user&quot;:{&quot;customerPublicId&quot;:&quot;&quot;,&quot;userId&quot;:null},&quot;baseUrl&quot;:&quot;https://www.asaas.com&quot;}}],&quot;lazy&quot;:[],&quot;onDemand&quot;:[]}">
+<script src='/assets/webpack/compiled/scriptManager/ScriptManagerGlobal.entry-b368a47d4182d61740b921c6a920d15c.js'></script>
+
+
+        <link rel="stylesheet" href="/assets/login/atlas/login-c71336b5242da65c2578d098ccac4e2c.css" />
+        <script type="text/javascript" src="/assets/utils/AsaasLogger-89e20a5c34008ad9683c4bc4d83f2879.js" ></script>
+    </head>
+
+    <body>
+        
+    <atlas-input 
+        type="hidden" 
+        class="js-atlas-flash-message" 
+        data-message="" 
+        data-type=""
+    ></atlas-input>
+
+    <script type="text/javascript" src="/assets/utils/AsaasMessagePrinterAtlas-9f4ce139a9e09a23cc42e78c97323133.js" ></script>
+
+
+        <atlas-screen
+            fullscreen
+            white
+        >
+            <atlas-page>
+                <atlas-page-content slot="content" fluid>
+                    <atlas-layout
+                        grid
+                        grid-cols="2"
+                        gap="7"
+                        fluid
+                    >
+                        <atlas-layout fluid hide-on-mobile class="login-side-banner">
+    <div class="login-side-content login-side-content-ian">
+        
+            <img
+                src="/assets/login/banner-login-ian-376abeeb17fd128cd798c88aa5cabc95.png"
+                alt="Ian, a IA do Asaas. O assistente que resolve o que você precisar pelo WhatsApp. Escaneie o QR Code para testar agora."
+                class="no-expand banner-login-img"
+            />
+        
+    </div>
+</atlas-layout>
+
+                        <atlas-layout fluid>
+                            <atlas-layout class="login-area-content" gap="9">
+                                <atlas-layout alignment="center">
+                                    <a class="login-logo-link" href="https://www.asaas.com" target="_blank" rel="noopener noreferrer">
+                                        <img src="/assets/logo/asaas-blue-bec7e1ca4a3d931d56007e2d69de916a.svg" alt="Logomarca Asaas" title="Asaas Gestão Financeira" class="login-logo no-expand"/>
+                                    </a>
+                                </atlas-layout>
+                                
+        <atlas-form class="js-login-form" method="POST" action="/login/authenticate">
+            <atlas-input type="hidden" class="js-jwt-token" name="j_jwt_token"></atlas-input>
+            <atlas-input type="hidden" class="js-url-check-cell" value="/login/checkCell"></atlas-input>
+            <atlas-input type="hidden" class="js-url-error-check-cell" value="/login/auth?login_error=1"></atlas-input>
+
+            <atlas-layout gap="7">
+                <atlas-layout gap="6">
+                    <atlas-heading size="h5" alignment="left">
+                        
+                            Acesse sua conta
+                        
+                    </atlas-heading>
+
+                    <atlas-layout gap="4">
+                        <atlas-masked-input-light-dom
+                            data-testid="e2e-login-email-atlas-input"
+                            mask-alias="email"
+                            label="E-mail"
+                            name="j_username"
+                            value=""
+                            autofocus
+                            class="js-email"
+                            size="lg"
+                            required
+                            enable-password-managers
+                        ></atlas-masked-input-light-dom>
+
+                        <atlas-password-input-light-dom
+                            data-testid="e2e-login-password-atlas-input"
+                            label="Senha"
+                            type="password"
+                            name="j_password"
+                            size="lg"
+                            required
+                            enable-password-managers
+                        ></atlas-password-input-light-dom>
+
+                        <atlas-layout inline alignment="left">
+                            <atlas-link class="js-forgot-password-link" href="/register/forgotPassword" size="sm">
+                                Esqueci minha senha
+                            </atlas-link>
+                        </atlas-layout>
+
+                        
+
+
+    
+    <atlas-input type="hidden" class="js-recaptcha-v3-key" value="6Lcx4EckAAAAAOHEAR8HYRmeGLJgto74uq5DucOY"></atlas-input>
+    <atlas-input type="hidden" class="js-recaptcha-v3-token" name="recaptchaToken" value=""></atlas-input>
+
+
+
+
+                    </atlas-layout>
+
+                    <atlas-layout gap="4">
+                        <atlas-button
+                            data-testid="e2e-login-access-account-atlas-button"
+                            description="Acessar conta"
+                            block
+                            size="lg"
+                            class="js-submit-button"
+                            data-atlas-form-submit
+                        ></atlas-button>
+                    </atlas-layout>
+                </atlas-layout>
+
+                
+                    <atlas-layout gap="1" inline mobile-inline justify="center">
+    <atlas-text theme="secondary" size="sm">Primeira vez por aqui?</atlas-text>
+    <atlas-link
+        href="/onboarding/createAccount?customerSignUpOriginChannel="
+        size="sm"
+    >
+        Crie sua conta
+    </atlas-link>
+</atlas-layout>
+
+                
+            </atlas-layout>
+        </atlas-form>
+
+        <script src='/assets/webpack/compiled/login/LoginController.entry-0cfc034482308f0cbdd524f1431f3958.js'></script>
+    
+                            </atlas-layout>
+                        </atlas-layout>
+                    </atlas-layout>
+                </atlas-page-content>
+            </atlas-page>
+        </atlas-screen>
+    </body>
+</html>

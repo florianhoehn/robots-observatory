@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="en" style="font-size: 10px;">
+    <head>
+    
+
+
+    <meta name="content-page-ref" content="GySW2M32-dQWDo-qCDfU4D-7iOou4D02AjHJGjJtMsSea5ZaX8-IOpNLzMD6rCA9"/>
+<script defer="defer" type="text/javascript" src="/.rum/@adobe/helix-rum-js@%5E2/dist/micro.js"></script>
+<script>
+    const pageUrlPath = window.location.href;
+    const typeValue = pageUrlPath.split('.com').length > 1 ? pageUrlPath.split('.com')[1].split('/')[1] : 'Homepage';
+    let pageTypeVal = '';
+
+    if (typeValue !== null && typeValue !== undefined) {
+        pageTypeVal = typeValue;
+    } else {
+        pageTypeVal = 'Homepage';
+    }
+
+    const getUserType = () => {
+        if (document.cookie.indexOf("testSlice=1") > -1) {
+            return "Assessment User";    
+        } else if (document.cookie.indexOf("ajs_user_id") > -1 && 
+                   document.cookie.indexOf("ajs_user_id=null") === -1 && 
+                   document.cookie.indexOf("midCheckout=1") == -1) {
+            return "customer"; // logged in currently   
+        } else {
+            return "prospect";   
+        }
+    };
+
+    window.appEventData = window.appEventData || [];
+    appEventData.push({
+        "event": "Page Load Started",
+        "page": {
+            "name": "Pluralsight",
+            "type": pageTypeVal
+        }
+    });
+
+    window.appEventData.push({
+        "event": "User Detected",
+        "user": {
+            "custKey": "",
+            "hashedEmail": "",
+            "loginStatus": "",
+            "segment": "",
+            "type": getUserType(),
+            "userHandle": ""
+        }
+    });
+
+    // Click tracking for all buttons and <a> tags
+    document.addEventListener("DOMContentLoaded", function () {
+        document.body.addEventListener("click", function (event) {
+            const target = event.target;
+            const isHeaderNav = target.closest(".g3p-main-nav-right") || target.closest('#mobileMainModal') || target.closest(".g3p-main-nav-left");
+            const isFooterNav = target.closest(".footer-wrapper");
+            let clickedElement = target.closest("a");
+            if (!clickedElement) return;
+            let isDownload = false;
+            let linkId = clickedElement.innerText.trim() || clickedElement.getAttribute("aria-label") || "";
+            let linkDestination = clickedElement.tagName === "A" ? clickedElement.href : null;
+            const downloadExtensions = /\.(avi|css|csv|doc|docx|eps|exe|jpg?|js|m4v|mov|mp3|pdf|png|ppt|pptx|rar|svg|tab|txt|vsd|vxd|wav|wma|wmv|xls|xlsx|xml|zip)$/i;
+            if (downloadExtensions.test(target.href)) {
+                isDownload = true;
+            }
+
+            if (isDownload) {
+                const fileHrefLength = linkDestination.split('/').length;
+                appEventData.push({
+                    "event": "Download Link Clicked",
+                    "linkInfo": {
+                        "fileName": linkDestination.split('/')[fileHrefLength-1],
+                        "fileType": linkDestination.split('.').pop().split(/[#?]/)[0],
+                        "linkContainer": "",
+                        "linkId": linkId,
+                        "linkRegion": "",
+                        "linkDestination": linkDestination
+                    }
+                });
+            } else if(!isHeaderNav && !isFooterNav) {
+                appEventData.push({
+                    "event": "CTA Link Clicked",
+                    "linkInfo": {
+                        "linkContainer": "",
+                        "linkId": linkId,
+                        "linkPage": pageTypeVal,
+                        "linkRegion": "",
+                        "linkDestination": linkDestination,
+                        "type": "cta"
+                    },
+                });
+            }
+        });
+    });
+</script>
+
+    
+
+    
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+
+
+
+<meta name="keywords"/>
+<meta name="description" content="Expert-led tech and creative training to master your craft. Unlimited and online."/>
+<meta property="og:description" content="Expert-led tech and creative training to master your craft. Unlimited and online."/>
+<meta name="twitter:description" content="Expert-led tech and creative training to master your craft. Unlimited and online."/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="@pluralsight"/>
+<meta property="og:image" content="https://www.pluralsight.com/content/dam/rebrand2025/hp_images/Pluralsight_socialShare.webp"/>
+<meta name="twitter:image" content="https://www.pluralsight.com/content/dam/rebrand2025/hp_images/Pluralsight_socialShare.webp"/>
+
+
+
+
+    <meta name="robots" content="noindex, nofollow"/>
+
+
+
+   
+<!-- be_ixf, sdk, gho-->
+<meta name="be:sdk" content="java_sdk_1.6.13" />
+<meta name="be:timer" content="56ms" />
+<meta name="be:norm_url" content="https://www.pluralsight.com/404" />
+<meta name="be:capsule_url" content="https://ixfd1-api.bc0a.com/api/ixf/1.0.0/get_capsule/f00000000322974/648083663" />
+<meta name="be:api_dt" content="pny_2026; pnm_01; pnd_13; pnh_10; pnmh_35; pn_epoch:1768329357266" />
+<meta name="be:mod_dt" content="pny_1969; pnm_12; pnd_31; pnh_16; pnmh_00; pn_epoch:0" />
+<meta name="be:orig_url" content="https://www.pluralsight.com/404" />
+<meta name="be:messages" content="26" />
+<script>
+(function() {
+    var beschemascript = document.createElement('script');
+    beschemascript.type = "text/javascript";
+    beschemascript.async = true;
+    beschemascript.setAttribute("id", "be-schema-script");
+    beschemascript.setAttribute("data-customerid", "f00000000322974");
+    beschemascript.setAttribute("data-testmode", "false");
+    beschemascript.setAttribute("data-overwrite", "true");
+    beschemascript.setAttribute("src", "https://schema-cf.bc0a.com/corejs/be-schema-v4.js");
+    var head = document.head || document.getElementsByTagName("head")[0];
+    head.appendChild(beschemascript);
+})();
+</script>
+
+
+    
+
+
+    <meta name="content-type" content="Other"/>
+    <meta name="categories" content="generic"/>
+    <meta name="cludo:category" content="generic"/>
+
+
+
+<meta name="unified-tags"/>
+
+    <link rel="canonical" href="https://www.pluralsight.com/404"/>
+    <script type="text/javascript">window.is404 = true;</script>
+    
+  <script data-cfasync="false" data-prompt='auto' data-privacy-policy="https://www.pluralsight.com/privacy" src="https://transcend-cdn.com/cm/b8abd831-c4a2-4a4f-8fe7-475bb37be895/airgap.js"></script>
+
+
+
+<script data-cfasync="false">window.wcmmodedisabled = true;</script>
+<script data-cfasync="false">
+function getParameterByName(e,n){n||(n=window.location.href),e=e.replace(/[\[\]]/g,"\\$&");var o=new RegExp("[?&]"+e+"(=([^&#]*)|&|#|$)").exec(n);return o&&o[2]?decodeURIComponent(o[2].replace(/\+/g," ")):""}function changeHistoryQueryParam(e,n,o,t,a){if(history.pushState){var i=""==window.location.search?"?":window.location.search;if(-1!==decodeURIComponent(i).indexOf(e+"=")){var d=getParameterByName(e);if(t)if(o){var c=(p=d.split(",")).indexOf(n);if(c>-1&&p.splice(c,1),0===p.length){var r=new RegExp("&?"+e+"=[^&]*","g");i=i.replace(r,"")}else i=i.replace(e+"="+encodeURIComponent(d),e+"="+encodeURIComponent(p.join(",")))}else{var p=[];d?p=d.split(","):d="",-1===p.indexOf(n)&&(p.push(n),i=i.replace(e+"="+encodeURIComponent(d),e+"="+encodeURIComponent(p.join(","))))}else if(o){r=new RegExp("&?"+e+"=[^&]*","g");i=i.replace(r,"")}else i=i.replace(e+"="+encodeURIComponent(d),e+"="+encodeURIComponent(n))}else o||(i+="?"==i?e+"="+encodeURIComponent(n):"&"+e+"="+encodeURIComponent(n));var s=window.location.protocol+"//"+window.location.host+window.location.pathname+(a?decodeURIComponent(i):i);window.history.pushState({path:s},"",s)}}function dtmEventTrigger(e,n){var o=new CustomEvent(e,{bubbles:!0,cancelable:!1,detail:n});document.querySelector("body").dispatchEvent(o)}window.loadRemoteScript=function(e,n,o,t,a){var i=document.createElement("script");i.type=n||"text/javascript",i.id=t||null,1==o&&(i.async=o||1),i.readyState?i.onreadystatechange=function(){"loaded"!=i.readyState&&"complete"!=i.readyState||(i.onreadystatechange=null,a())}:i.onload=function(){a()},i.src=("https:"==document.location.protocol?"https://":"http://")+e,document.getElementsByTagName("head")[0].appendChild(i)};var doNotTrack=document.cookie.indexOf("ps_optout=1")>-1||document.URL.indexOf("dnt=true")>-1,oneHour=36e5,oneYear=24*oneHour*365,trkDate=new Date(Date.now()+oneHour);document.cookie="ps_trk="+(doNotTrack?"0":"1")+"; expires="+trkDate.toUTCString()+"; path=/"+(document.URL.indexOf("pluralsight.com")>-1?"; domain=pluralsight.com":"");var firstVisit=-1==document.cookie.indexOf("fv=");document.cookie="fv="+(firstVisit?"1":"0")+"; expires="+new Date(Date.now()+oneYear).toUTCString()+"; path=/"+(document.URL.indexOf("pluralsight.com")>-1?"; domain=pluralsight.com":""),window.dnbData={},document.cookie.indexOf("ps_trk=1")>-1&&"undefined"!=typeof dnbvid&&dnbvid.getData("api7831","json","T",function(e){window.dnbData=e,window.promoCheck&&!window.promoCheckRan&&window.promoCheck()}),document.addEventListener("at-content-rendering-succeeded",function(){window.targetFinished=!0},!1),document.addEventListener("at-content-rendering-failed",function(){window.targetFinished=!0},!1),document.addEventListener("at-content-rendering-no-offers",function(){window.targetFinished=!0},!1);
+</script>
+
+<meta name="featureFlags" content="consentautoprompt|munchkin|b2c_cart|b2b_cart|unified|verbosesearch"/>
+
+    <script data-cfasync="false" src="/etc.clientlibs/pluralsight/clientlibs/clientlib-main/resources/js/separates/jquery.min.js"></script>
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/pluralsight/clientlibs/clientlib-uber.lc-7a4ca1340100c69d673f28e05f2b5d10-lc.min.css" type="text/css">
+
+
+
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/pluralsight/clientlibs/clientlib-reskin.lc-ee9965e4c7bf014caefec79f01163537-lc.min.css" type="text/css">
+
+
+
+    
+
+
+
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6847e251bfa7c9001322718a&product=inline-share-buttons&source=platform" async="async"></script>
+    <script data-cfasync="false">
+var appHost=("www-stage.pluralsight.com"==window.location.host||"www-dev.pluralsight.com"==window.location.host||"www-qa.pluralsight.com"==window.location.host)?"https://app-stage.pluralsight.com":"https://app.pluralsight.com",pagePath=window.location.pathname,redirectPath="",appRedirectTag=document.head.querySelector("[name~='appRedirectPath'][content]");if(appRedirectTag&&(redirectPath=appRedirectTag.content.toString()),!window.is404){if(0==pagePath.indexOf("/product/channels")&&(redirectPath="/channels",document.URL.indexOf("cid=")>-1&&(redirectPath="/channels/details/"+getParameterByName("cid"))),pagePath.indexOf("/achievements")>-1&&"URLSearchParams"in window){var urlParams=new URLSearchParams(window.location.search),badgeID=urlParams.get("badge");redirectPath="/achievements/badges/"+badgeID}if(document.cookie.indexOf("www-status-production=")>-1&&-1==document.cookie.indexOf("midCheckout")&&("www.pluralsight.com"==window.location.host||"beta.www.pluralsight.com"==window.location.host)||document.cookie.indexOf("www-status-staging=")>-1&&-1==document.cookie.indexOf("midCheckout")&&("www-stage.pluralsight.com"==window.location.host||"beta.www-stage.pluralsight.com"==window.location.host)){var aidParam=getParameterByName("aid"),vidParam=getParameterByName("vid"),paramsString="";""!==aidParam&&(paramsString+=(paramsString.indexOf("?")>-1?"&":"?")+"aid="+aidParam),""!==vidParam&&(paramsString+=(paramsString.indexOf("?")>-1?"&":"?")+"vid="+vidParam),""!==redirectPath&&-1===document.URL.indexOf("show=home")?window.location=appHost+redirectPath+paramsString:jQuery(document).ready(function(){var a=appHost+"/id/dashboard",t=jQuery(".header_sign_up_link");t.text("My Dashboard"),t.attr("href",a),t.attr("title","My Dashboard"),jQuery(".header_sign_in_link").attr("style","display: none !important")})}else 0!=pagePath.indexOf("/customer/")||"www-stage.pluralsight.com"!=window.location.host&&"beta.www-stage.pluralsight.com"!=window.location.host&&"www.pluralsight.com"!=window.location.host&&"beta.www.pluralsight.com"!=window.location.host||-1!=document.cookie.indexOf("midCheckout")?""!=redirectPath?jQuery(document).ready(function(){jQuery(".sign_in_link").attr("href",appHost+"/id?redirectTo="+encodeURIComponent(redirectPath))}):jQuery(document).ready(function(){jQuery(".sign_in_link").attr("href",appHost+"/id?")}):window.location=appHost+"/id?redirectTo="+encodeURIComponent(document.URL)}
+</script>
+
+    
+
+
+
+<meta data-customer-type="no-type"/>
+<meta data-customer-type-ignore="false"/>
+
+<script data-cfasync="false">
+  document.cookie.indexOf("ps_si=")>-1&&(window.selectedInterest=document.cookie.split("ps_si=")[1].split(";")[0]),document.cookie.indexOf("ps_sct=")>-1&&(window.selectedConsumerType=document.cookie.split("ps_sct=")[1].split(";")[0]);var customerType,customerTypeTag=document.head.querySelector("meta[data-customer-type]").getAttribute("data-customer-type"),customerTypeIgnore=document.head.querySelector("meta[data-customer-type-ignore]").getAttribute("data-customer-type-ignore");customerTypeTag&&"true"!==customerTypeIgnore&&"string"==typeof customerTypeTag&&("pluralsight-customer-type:individual"===customerTypeTag?customerType="individual":"pluralsight-customer-type:business"===customerTypeTag&&(customerType="business"),customerType&&"pluralsight-customer-type:escape"!==customerTypeTag&&setSelectedConsumerType(customerType));function setSelectedInterest(e){var t=new Date;t.setTime(t.getTime()+6048e5),document.cookie="ps_si="+e+"; expires="+t.toUTCString()+"; path=/",window.selectedInterest=e}function setSelectedConsumerType(e){var t=new Date;t.setTime(t.getTime()+6048e5),document.cookie="ps_sct="+e+"; expires="+t.toUTCString()+"; path=/",window.selectedConsumerType=e}function setSelectedBusinessType(e){var t=new Date;t.setTime(t.getTime()+6048e5),document.cookie="ps_sbt="+e+"; expires="+t.toUTCString()+"; path=/",window.selectedBusinessType=e}if(document.URL.indexOf("b2c-price=true")>-1?setSelectedConsumerType("individual"):document.URL.indexOf("b2b-price=true")>-1&&setSelectedConsumerType("business"),document.cookie.indexOf("ps_sbt=")>-1&&(window.selectedBusinessType=document.cookie.split("ps_sbt=")[1].split(";")[0]),-1==document.cookie.indexOf("drift_ab")){var driftAbDate=new Date;driftAbDate.setTime(driftAbDate.getTime()+6048e5);var driftAb=0==Math.floor(2*Math.random())?"A":"B";document.cookie="drift_ab="+driftAb+"; expires="+driftAbDate.toUTCString()+"; path=/"}var inflDate=new Date;inflDate.setTime(inflDate.getTime()+18e5);var visNumDate=new Date;if(visNumDate.setTime(visNumDate.getTime()+31536e6),document.cookie.indexOf("ps_infl")>-1){var infl=document.cookie.split("ps_infl=")[1].split(";")[0];document.cookie="ps_infl="+infl+"; expires="+inflDate.toUTCString()+"; path=/"}else{var visNum=1;document.cookie.indexOf("ps_visNum")>-1&&(visNum=parseInt(document.cookie.split("ps_visNum=")[1].split(";")[0])+1),document.cookie="ps_visNum="+visNum+"; expires="+visNumDate.toUTCString()+"; path=/",getParameterByName("aid")||getParameterByName("vid")||""!=document.referrer&&-1==document.referrer.indexOf("pluralsight.com")?document.cookie="ps_infl=1; expires="+inflDate.toUTCString()+"; path=/":document.cookie="ps_infl=0; expires="+inflDate.toUTCString()+"; path=/"}!function(e,a,n,t){var i=e.head;if(i){if(a)return;var o=e.createElement("style");o.id="alloy-prehiding",o.innerText=n,i.appendChild(o),setTimeout(function(){o.parentNode&&o.parentNode.removeChild(o)},t)}}(document,document.location.href.indexOf("mboxEdit")!==-1,"body { opacity: 0 !important }",3000);
+</script>
+
+
+
+
+
+
+    <script src="https://assets.adobedtm.com/08e39cddbedb/96a8f910572c/launch-02adf5c4ef47.min.js" async></script>
+
+
+
+
+
+
+    
+
+     <link rel="icon" sizes="192x192" href="/etc.clientlibs/ps/clientlibs/clientlib-site/resources/ps-favicon.svg" type="image/svg+xml">
+     <link rel="apple-touch-icon" href="/etc.clientlibs/ps/clientlibs/clientlib-site/resources/ps-favicon.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>Pluralsight</title>
+<meta property="og:title" content="Pluralsight"/>
+<meta name="twitter:title" content="Pluralsight"/>
+<meta name="cludo:content-path" content="/content/pluralsight/en/404"/>
+</head>
+    
+
+<body class="mode-disabled error-template font-loading">
+    <div class="site-wrap">
+        <div class="nav-context ">
+          
+    
+
+          <div id="site-promo" style="display:none;">
+  <div id="site-promo-content"></div>
+  <div class="promo-close-button">&times;</div>
+</div>
+<script>
+  var noDBpromo=true;function showPromoIfPermitted(){if(document.cookie.indexOf("site-promo-closed=1")==-1||window.blockPromoHide){if(jQuery("#site-promo .promo-wrapper-contents").length>-1&&jQuery("#site-promo .promo-wrapper-contents").html()!=undefined&&jQuery("#site-promo .promo-wrapper-contents").html().trim()!=""){jQuery("#site-promo").slideDown(300)}jQuery("#site-promo .promo-close-button").click(function(){var d=new Date();d.setTime(d.getTime()+(12*60*60*1000));document.cookie="site-promo-closed=1; expires="+d.toUTCString()+"; path=/";jQuery("#site-promo").slideUp(300)});window.promoShown=true;if(window.setStickies){window.setStickies()}dtmEventTrigger("ps.promoShown",{})}}function promoCheck(){window.promoCheckRan=true;if(document.URL.indexOf("b2b=true")>-1||document.URL.indexOf("nopromos=true")>-1){var d=new Date();d.setTime(d.getTime()+(7*24*60*60*1000));document.cookie="nopromos=1; expires="+d.toUTCString()+"; path=/; domain=pluralsight.com"}if(document.cookie.indexOf("nopromos=1")==-1&&(window.location.host=='www.pluralsight.com'||window.location.host=='www-preview.pluralsight.com'||window.location.host=='www-dev.pluralsight.com'||window.location.host=='www-qa.pluralsight.com'||window.location.host=='www-stage.pluralsight.com'||window.location.host=='learn.pluralsight.com'||window.location.host=='learn-stage.pluralsight.com'||window.location.host=='learn-dev.pluralsight.com'||window.location.host=='www.javascript.com'||window.location.host=='www-stage.javascript.com'||window.location.host=='www-dev.javascript.com'||window.location.host=='www-preview.javascript.com')){var isStage=false;if(window.location.host.indexOf("-stage.")>-1){isStage=true}var company="none";var audience="none";var mstime=(new Date()).valueOf();if(!noDBpromo&&dnbData.companyName){company=dnbData.companyName;audience=dnbData.industryNaics}jQuery.ajax({url:"/discounts/api/global-promo?company="+encodeURIComponent(company)+"&audience="+encodeURIComponent(audience)+"&time="+mstime,headers:{authorization:"aem"}}).done(function(promoData){if(promoData.campaignId||window.forceCampaignCode){window.globalPromos=promoData.promos;window.campaignCode=window.forceCampaignCode||promoData.campaignId;jQuery.ajax({url:"/content/pluralsight/en/global/promos/"+campaignCode+".html?time="+mstime}).done(function(bannerPage){var domainTransform=function(urlString){if(window.location.host=='learn.pluralsight.com'||window.location.host=='learn-stage.pluralsight.com'||window.location.host=='learn-dev.pluralsight.com'||window.location.host=='www.javascript.com'||window.location.host=='www-preview.javascript.com'||window.location.host=='www-dev.javascript.com'||window.location.host=='www-stage.javascript.com'){if(urlString.indexOf("/jscom")==0&&window.location.hostname.indexOf("javascript.com")>-1){urlString=urlString.substring(6,urlString.length)}else if(urlString.indexOf("/landing-pages")==0&&(window.location.hostname=="learn.pluralsight.com"||window.location.hostname=="learn-stage.pluralsight.com"||window.location.hostname=="learn-dev.pluralsight.com")){urlString=urlString.substring(14,urlString.length)}else{urlString="////";}}return urlString};var blockedPaths=jQuery(bannerPage).find(".promo-block-filters").data("blockedpaths");var blockedPathsArray=blockedPaths?blockedPaths.split(","):[];var isBlocked=false;for(i in blockedPathsArray){var blockedPath=blockedPathsArray[i].trim();if(blockedPath.indexOf("=")==0){blockedPath=blockedPath.substring(1,blockedPath.length);if(window.location.pathname==domainTransform(blockedPath)){isBlocked=true;if(isStage){console.log("Promo banners blocked on page.")}}}else if(window.location.pathname.indexOf(domainTransform(blockedPath))==0){isBlocked=true;if(isStage){console.log("Promo banners blocked on page.")}}}if(!isBlocked){var $banners=jQuery(bannerPage).find(".promo-wrapper-filter");var bannerFound=false;jQuery.each($banners,function(key,item){var allowedPaths=jQuery(item).data("allowedpaths");var allowedPathsArray=allowedPaths?allowedPaths.split(","):[];var isAllowed=false;for(i in allowedPathsArray){var allowedPath=allowedPathsArray[i].trim();if(allowedPath.indexOf("=")==0){allowedPath=allowedPath.substring(1,allowedPath.length);if(window.location.pathname==domainTransform(allowedPath)){isAllowed=true}}else if(window.location.pathname.indexOf(domainTransform(allowedPath))==0){isAllowed=true}}if(isAllowed){$content=jQuery(item);jQuery("#site-promo-content").empty().append($content);jQuery("#site-promo-content img[data-lazysrc], #site-promo-content .lazy-bg").each(function(index,item){if(typeof loadLazysrc!="undefined"){loadLazysrc(item)}});window.blockPromoHide=jQuery(item).data("blockhiding");showPromoIfPermitted();bannerFound=true;return false}});if(!bannerFound){if(isStage){console.log("No allowed banner found on promo config page.")}}}}).fail(function(){if(isStage){console.log("No promo page found for campaign code "+campaignCode)}});window.promoTriggered=true;dtmEventTrigger("ps.promoTriggered",{})}window.promoCheckCompleted=true})}}if(window.dnbData.status||noDBpromo){promoCheck()}setTimeout(function(){if(!window.promoCheckRan){window.promoCheck()}},3000);
+</script>
+
+            
+
+
+
+    <div class="xfpage--base xfpage page basicpage">
+
+    
+    <div id="container-521bd93bec" class="cmp-container">
+        
+
+
+<div class="aem-Grid aem-Grid--12 aem-Grid--default--12 ">
+    
+    <div class="banner aem-GridColumn aem-GridColumn--default--12"><div id="banner-7607077b93" data-banner-wrapper data-banner-delay="3" data-banner-size="0">
+  
+</div>
+
+
+  
+    
+<link rel="stylesheet" href="/etc.clientlibs/ps/components/custom/banner/clientlibs/banner.lc-b5290f726a0c4fb37cf95679ea32350b-lc.min.css" type="text/css">
+<script src="/etc.clientlibs/ps/components/custom/banner/clientlibs/banner.lc-5c177901aeff561d828925b2840cd902-lc.min.js"></script>
+
+
+
+
+
+
+    
+</div>
+<div class="free-form-component aem-GridColumn aem-GridColumn--default--12">
+  
+
+  <style>
+      body {
+  &.nav-height--margin::before {
+    @media screen and (min-width: 1248px) {
+      content: "";
+      display: block;
+      height: 13.1rem;
+    }
+
+    @media screen and (max-width: 1248px) {
+      content: "";
+      display: block;
+      height: 6.6rem;
+    }
+  }
+  &.nav-height--margin--less::before {
+    @media screen and (max-width: 1248px) {
+      content: "";
+      display: block;
+      height: 6.5rem;
+    }
+  }
+}
+
+.free-form-component.has-g3p-nav {
+  top: 0;
+  position: fixed;
+  z-index: 1000;
+  width: 100% !important;
+}
+
+.free-form-component .mobile-tab-position--fixed {
+  top: 0;
+  width: 100% !important;
+
+  @media screen and (max-width: 1248px) and (min-width: 640px) {
+    position: fixed;
+  }
+}
+
+.free-form-component.has-g3p-nav__top__promo__scroll {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100% !important;
+  transition: top 0.3s ease, position 0.3s ease;
+}
+.g3p-main-nav-header {
+  display: flex;
+  padding: 10px 50px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  background: var(--Surface-Strong, #fff);
+
+  @media screen and (max-width: 1248px) {
+    display: none !important;
+  }
+
+  .g3p-search-signin-wrapper {
+    display: flex;
+    align-items: center;
+
+    .g3p-search-wrapper {
+      display: flex;
+      width: 598px;
+      height: 40px;
+      padding: 0px 20px;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      .g3p-search-button {
+        display: flex;
+        padding: 10px 20px;
+        align-items: center;
+        gap: 10px;
+        align-self: stretch;
+        border-radius: 999px;
+        background: #383461;
+
+        .g3p-search-button-text {
+          color: var(--Tertiary-Dark-text-medium, #a5aacf);
+          text-align: center;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+          width: 100%;
+        }
+      }
+
+      .g3p-search-button:focus-within {
+        background: white;
+      }
+    }
+
+    .g3p-signin-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+
+      .g3p-signin-button {
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+
+        .g3p-signin-text {
+          color: var(--Links-Neutral, #45424d);
+          font-size: var(--size-text-sm, 14px);
+          font-style: normal;
+          font-weight: 400;
+          line-height: var(--line-height-text-sm, 22px); /* 157.143% */
+          letter-spacing: var(--letter-spacing-text, 0);
+          a.menu-dropdown-skills {
+            text-decoration: none;
+            color: var(--Links-Neutral, #45424d);
+            &:hover {
+              color: #130f25;
+            }
+          }
+        }
+
+      }
+
+      .g3p-signin-button:hover,
+      .g3p-signin-button:active {
+        .g3p-signin-text {
+          color: #130f25;
+        }
+        .g3p-signin-caret {
+          svg path {
+            fill: #130f25;
+          }
+        }
+      }
+    }
+
+    .g3p-signin-wrapper:focus-visible {
+      outline: none;
+      border-radius: 4px;
+      border: 2px solid var(--Links-Pink, #e7005e);
+    }
+  }
+}
+
+#psMainLogo {
+  line-height: 0;
+  display: flex;
+  width: 143px;
+  height: 35px;
+  padding: 0 2.513px 0 0.144px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+a#psMainLogo:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  border: 2px solid var(--Links-Pink, #e7005e);
+}
+
+.nav-search {
+  #header_searchForm,
+  #mobile_header_searchForm {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .nav-search-result {
+    @media screen and (max-width: 1024px) {
+      padding: 0 16px;
+      background: #fff;
+      border-radius: 0 0 20px 20px;
+    }
+    .header_dropdown--lists {
+      padding-left: 0px;
+      margin: 0;
+      list-style-type: none;
+
+      li {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        a {
+          display: flex;
+          padding: var(--padding-8, 8px) var(--padding-12, 12px);
+          align-items: center;
+          gap: 8px;
+          flex: 1 0 0;
+          text-decoration: none;
+          color: var(--Tertiary-Light-text, #45424d);
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 18px;
+          transition: none;
+        }
+      }
+    }
+
+    .header_dropdown--lists > li:last-of-type > a.header_dropdown--resultInfoTitle {
+      padding: var(--padding-8, 8px) var(--padding-12, 12px) var(--padding-16, 16px) var(--padding-12, 12px);
+    }
+  }
+}
+
+.g3p-main-nav-header {
+  .g3p-search-signin-wrapper {
+    .nav-search {
+      #header_tabs--search {
+        .header_tabs_content--container.g3p_header_tabs_content--container {
+          .header_nav--menu.header_nav_search {
+            .header_search {
+              input[type="text"] {
+                color: var(--Text-Weak, #555) !important;
+                font-size: 14px !important;
+                width: 100% !important;
+                background: #fff !important;
+                border: none !important;
+                outline: none !important;
+                margin-left: 10px !important;
+                font-style: normal !important;
+                font-weight: 400 !important;
+                line-height: 20px !important;
+                -webkit-appearance: unset;
+                box-shadow: none;
+                display: unset;
+                height: unset;
+                margin: 0px;
+                padding: 0;
+                transition: unset;
+              }
+
+              input[type="text"]::placeholder {
+                color: var(--Text-Weak, #555) !important;
+              }
+
+              input[type="text"]:focus {
+                background-color: white !important;
+                color: #4e6583 !important;
+                outline: none !important;
+              }
+            }
+          }
+          &:hover {
+            background-color: #f7f5f4;
+            .header_nav--menu.header_nav_search {
+              .header_search {
+                input[type="text"] {
+                  background-color: #f7f5f4 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.g3p-nav-mobile--container.g3p-nav-mobile_view {
+  #mobileMainModal {
+    .nav-search {
+      #mobile_header_tabs--search {
+        .header_tabs_content--container.g3p_header_tabs_content--container {
+          .header_nav--menu.header_nav_search {
+            .header_search {
+              input[type="text"] {
+                width: 100% !important;
+                background: #fff !important;
+                border: none !important;
+                outline: none !important;
+                margin-left: 10px !important;
+                color: var(--Tertiary-Dark-text-medium, #555) !important;
+                font-size: 14px !important;
+                font-style: normal !important;
+                font-weight: 400 !important;
+                line-height: 20px !important;
+                -webkit-appearance: unset;
+                box-shadow: none;
+                display: unset;
+                height: unset;
+                margin: 0px;
+                padding: 0;
+                transition: unset;
+              }
+
+              input[type="text"]::placeholder {
+                color: #555 !important;
+              }
+
+              input[type="text"]:focus {
+                background-color: white !important;
+                color: #4e6583 !important;
+                outline: none !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.header_nav--menu.header_nav_search {
+  position: relative;
+}
+
+#header-search-results-all {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid #130f25;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 12px 16px 0px;
+  padding: 0 var(--margin-16, 16px);
+  align-items: flex-start;
+  align-self: stretch;
+  display: block;
+  background: var(--Button-Surface-Outlined, #fff);
+  border-top: 0px;
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  right: 0%;
+  width: 598px;
+  display: none;
+}
+
+#mobile_header-search-results-all {
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  right: 0%;
+  width: 100%;
+  display: none;
+  border-radius: 0 0 20px 20px;
+  outline: none;
+  box-shadow: -1px 0 0 0 #130f25, 1px 0 0 0 #130f25, 0 1px 0 0 #130f25;
+  border-top: 0;
+}
+
+#header_dropdown--resultList {
+  border-top: 1px solid var(--Tertiary-Light-border, #130f25);
+  width: 100%;
+}
+
+.header_dropdown--resultInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_dropdown--resultInfo {
+  position: relative;
+}
+
+.header_dropdown--resultInfoTitle:hover {
+  color: var(--CTAs-Text-Link-On-Light, #130f25) !important;
+  background: var(--Tertiary-Light-surface-weak, #f7f5f4);
+  border-radius: 8px;
+  padding-right: 30px;
+  /* Add space for the arrow */
+  background-image: url("/content/dam/ps-nav-assets/g3p-nav-updates/Arrow2.png");
+  background-repeat: no-repeat;
+  background-position: right 2% center;
+  /* Position the arrow to the right */
+}
+.header_dropdown--resultInfoTitle:focus-within {
+  outline: none;
+  border-radius: 4px;
+  outline: 2px solid var(--Links-Pink, #e7005e);
+}
+
+.nav-search.section {
+  @media screen and (min-width: 1248px) {
+    position: relative;
+    margin-right: 20px;
+  }
+
+  #header_tabs--search,

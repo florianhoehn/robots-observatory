@@ -1,0 +1,190 @@
+<!-- При изменений кода в данном файле, нужно внести эти же изменения в коде нового Матча -->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Страница не найдена</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-type" content="text/html">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="application-name" content="МатчТВ">
+		<meta name="msapplication-TileColor" content="#FFFFFF">
+		<meta name="theme-color" content="#C59F56"/>
+		<link rel="icon" href="/assets/4721/images/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/assets/4721/images/favicon.ico" type="image/x-icon">
+		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/4721/images/favicon/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/4721/images/favicon/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/4721/images/favicon/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/4721/images/favicon/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/assets/4721/images/favicon/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/assets/4721/images/favicon/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/assets/4721/images/favicon/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/assets/4721/images/favicon/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/assets/4721/images/favicon/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="196x196" href="/assets/4721/images/favicon/favicon-196x196.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/assets/4721/images/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/assets/4721/images/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/assets/4721/images/favicon/favicon-16x16.png">
+		<link rel="icon" type="image/png" sizes="128x128" href="/assets/4721/images/favicon/favicon-128.png">
+
+		<script>
+			// HTML tag loader
+
+			function loadTag(type, attr, parent, path, callback) {
+				var tag = document.createElement(type);
+				var container = document.querySelector(parent);
+
+				tag.setAttribute(attr, path);
+
+				if (type == 'link') {
+					tag.setAttribute('rel','stylesheet');
+				} else if (type == 'script') {
+					tag.setAttribute('type','text/javascript');
+					tag.setAttribute('async','false');
+				}
+
+				if (callback) {
+					tag.onload = callback;
+				}
+
+				container.appendChild(tag);
+			}
+
+			// Setting a css file with page styles
+
+			(function() {
+				var cssRelativePath = '/build/not-found.acc75d2c.css';
+
+				var hostname = window.location.hostname;
+
+				if (hostname === 'matchtv.ru') {
+					var ccsAbsolutePath = 'https://cdn-assets.matchtv.ru' + cssRelativePath;
+
+					loadTag('link', 'href', 'head', ccsAbsolutePath);
+				} else {
+					loadTag('link', 'href', 'head', cssRelativePath);
+				}
+			})();
+		</script>
+	</head>
+
+	<body>
+		<main class="not-found__main">
+			<div class="not-found__block">
+				<div class="grid-base">
+					<h1 class="not-found__title">
+						Что-то потерялось....
+					</h1>
+					<h3 class="not-found__subtitle">
+						Не&nbsp;нашли что искали?
+						<br>
+						Возможно, вас заинтересует:
+					</h3>
+				</div>
+			</div>
+			<div class="grid-base page__content">
+				<div class="not-found__swiper"></div>
+			</div>
+		</main>
+
+		<footer class="not-found__footer">
+			<div class="grid-base">
+				<p class="not-found__footer-text">
+					Вы&nbsp;можете перейти&nbsp;на
+					<a href="/" class="not-found__footer-link reset-link">главную страницу</a>, или
+					<a href="/feedback" class="not-found__footer-link reset-link">написать нам</a>.
+					<br>
+					© 2022 ООО «Национальный спортивный телеканал»
+				</p>
+			</div>
+		</footer>
+
+		<script>
+			// Setting the background
+
+			var imageRelativePath = '/build/assets/images/404.7a38d8a6.png';
+
+			var block = document.querySelector('.not-found__block');
+
+			var hostname = window.location.hostname;
+
+			if (hostname === 'matchtv.ru') {
+				var imageAbsolutePath = 'https://cdn-assets.matchtv.ru' + imageRelativePath;
+
+				block.style.backgroundImage = 'url(' + imageAbsolutePath + ')';
+			} else {
+				block.style.backgroundImage = 'url(' + imageRelativePath + ')';
+			}
+
+			// Request top broadcast
+
+			(function() {
+				var http_request = new XMLHttpRequest();
+				http_request.onreadystatechange = function() {
+					if (http_request.readyState === XMLHttpRequest.DONE && http_request.status === 200) {
+						var slider = JSON.parse(http_request.responseText);
+						var block = slider.result.content;
+						if (block) {
+							loadTag('link', 'href', 'head', slider.result.css[0], function() {
+								document.querySelector('.not-found__swiper').insertAdjacentHTML('beforeend', block);
+								loadTag('script', 'src', 'body', slider.result.js[0], function() {
+									loadTag('script', 'src', 'body', slider.result.js[1]);
+								});
+							});
+						}
+					}
+				};
+				http_request.open('GET', '/top-broadcasts-feed');
+				http_request.send();
+			})();
+		</script>
+
+		<!-- tns-counter.ru -->
+		<noscript>
+			<img src="//www.tns-counter.ru/V13a****matchtvsite_ru/ru/UTF-8/tmsec=matchtvsite_total/" width="0" height="0" alt="" />
+		</noscript>
+		<!--/ tns-counter.ru -->
+
+		<!-- TnsCounter -->
+		<script type="text/javascript">
+			(function(win, doc, cb){
+				(win[cb] = win[cb] || []).push(function() {
+					try {
+						tnsCounterMatchtvsite_ru = new TNS.TnsCounter({
+							'account':'matchtvsite_ru',
+							'tmsec': 'matchtvsite_total'
+						});
+					} catch(e){}
+				});
+
+				var tnsscript = doc.createElement('script');
+				tnsscript.type = 'text/javascript';
+				tnsscript.async = true;
+				tnsscript.src = ('https:' == doc.location.protocol ? 'https:' : 'http:') +
+					'//www.tns-counter.ru/tcounter.js';
+				var s = doc.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(tnsscript, s);
+			})(window, this.document,'tnscounter_callback');
+		</script>
+		<!--/ TnsCounter -->
+
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript" >
+		(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+		m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+		(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+		ym(37616380, "init", {
+				clickmap:true,
+				trackLinks:true,
+				accurateTrackBounce:true,
+				webvisor:true
+		});
+		</script>
+
+		<noscript>
+			<div><img src="https://mc.yandex.ru/watch/37616380" style="position:absolute; left:-9999px;" alt="" /></div>
+		</noscript>
+		<!-- /Yandex.Metrika counter -->
+	</body>
+</html>

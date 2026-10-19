@@ -1,0 +1,14 @@
+User-Agent: *
+Disallow: /tilda/form*
+Disallow: /tilda/rec*
+Disallow: /tilda/click*
+Disallow: /tilda/scroll*
+Disallow: /tilda/popup*
+Disallow: /tilda/cart*
+Disallow: /tilda/product*
+Disallow: /tilda/event*
+Disallow: /*_escaped_fragment_*
+Disallow:
+Clean-param: editionuid&from&utm_referer&r&ref&rs&yhid&keyword&sub1
+Sitemap: http://project4349315.tilda.ws/sitemap.xml
+Host: project4349315.tilda.ws

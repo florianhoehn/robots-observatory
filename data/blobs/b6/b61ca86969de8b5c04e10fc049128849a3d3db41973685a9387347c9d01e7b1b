@@ -1,0 +1,190 @@
+# ============================================================
+# Vagaro robots.txt
+# Last updated: 2026-05-06
+#
+# Strategy:
+#   Allowlist approach. Every legitimate bot is named explicitly;
+#   anything unknown falls through to the wildcard at the bottom
+#   and is blocked.
+#
+#   AI crawlers are split into three buckets controlled separately:
+#     1. Search / citation bots (allowed)  - drive traffic
+#     2. User-initiated fetchers (allowed) - act on behalf of a
+#        human, similar to a browser
+#     3. Model-training crawlers (blocked) - prevent ingestion
+#        into LLM training datasets
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Major search engines + AI search & user-fetch bots
+# Allowed, but blocked from private / transactional paths.
+# ------------------------------------------------------------
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-Mobile
+User-agent: Googlebot-News
+User-agent: AdsBot-Google
+User-agent: Mediapartners-Google
+User-agent: bingbot
+User-agent: msnbot
+User-agent: BingPreview
+User-agent: Applebot
+User-agent: DuckDuckBot
+User-agent: Slurp
+User-agent: YandexBot
+User-agent: SeznamBot
+# --- AI search / citation bots ---
+User-agent: OAI-SearchBot
+User-agent: PerplexityBot
+User-agent: Claude-SearchBot
+User-agent: Amazonbot
+User-agent: DuckAssistBot
+User-agent: YouBot
+# --- AI user-initiated fetchers (act on behalf of a human) ---
+User-agent: ChatGPT-User
+User-agent: ChatGPT-User/2.0
+User-agent: ChatGPT-Agent
+User-agent: Perplexity-User
+User-agent: Claude-User
+User-agent: Google-Agent
+User-agent: Gemini-Deep-Research
+User-agent: MistralAI-User
+User-agent: Meta-ExternalFetcher
+Disallow: /websiteapi/
+Disallow: /changepassword/
+Disallow: /addbusiness/
+Disallow: /ffinvitation/
+Disallow: /appleclip/
+Disallow: /trainingsalon
+Disallow: /trainingsalon/
+Disallow: */cl/
+Disallow: *.aspx?enc
+Disallow: */myaccount
+Disallow: /on/
+Disallow: /r/
+Disallow: /t/
+Disallow: /n/
+Disallow: /e/
+Disallow: /u/
+Disallow: /c/
+Disallow: */o/
+Disallow: /l/
+Disallow: /s/
+Disallow: /a/
+Disallow: /i/
+Disallow: /al/
+Disallow: /p/
+Disallow: /is/
+Disallow: /sitemapindex-salon-coupons.xml
+Disallow: /sitemapindex-salon-appointment.xml
+Disallow: */book-now
+Disallow: /g/
+Disallow: /y/
+Disallow: /salons/
+Disallow: /salon-appointment/
+Disallow: */online-scheduling
+Disallow: /salon-stylist/
+Disallow: /salon-coupons/
+Disallow: /_next/image
+Disallow: /_Incapsula_Resource
+Disallow: /invoicewarning
+Disallow: /vagaroinc1
+Disallow: /us02/vagaroinc1
+Disallow: /ns/
+Disallow: /sa/
+Disallow: /ty/
+Disallow: /yl/
+
+
+# ------------------------------------------------------------
+# Social / link-preview bots
+# Needed for unfurls on Facebook, X, LinkedIn, Slack, Discord,
+# iMessage, WhatsApp, Pinterest, Telegram.
+# ------------------------------------------------------------
+User-agent: facebookexternalhit
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: TelegramBot
+User-agent: Slackbot
+User-agent: Slackbot-LinkExpanding
+User-agent: Discordbot
+User-agent: WhatsApp
+User-agent: Pinterestbot
+Disallow:
+
+
+# ------------------------------------------------------------
+# AI model-training crawlers - BLOCKED
+# These bots collect content to train large language models.
+# Note: GPTBot (training) is distinct from ChatGPT-User above
+# (user-initiated fetches), which is allowed.
+# ------------------------------------------------------------
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+User-agent: Google-Extended
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: ByteSpider
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: FacebookBot
+User-agent: Diffbot
+User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
+User-agent: Omgilibot
+User-agent: Omgili
+User-agent: PetalBot
+User-agent: Timpibot
+User-agent: ImagesiftBot
+User-agent: AI2Bot
+User-agent: AI2Bot-Dolma
+User-agent: ICC-Crawler
+User-agent: Webzio-Extended
+User-agent: PanguBot
+User-agent: Kangaroo Bot
+User-agent: Sidetrade indexer bot
+User-agent: VelenPublicWebCrawler
+User-agent: Scrapy
+Disallow: /
+
+
+# ------------------------------------------------------------
+# SEO / audit tools - allowed
+# ------------------------------------------------------------
+User-agent: AhrefsBot
+User-agent: AhrefsSiteAudit
+User-agent: SemrushBot
+User-agent: SemrushBot-SA
+User-agent: SemrushBot-BA
+User-agent: SemrushBot-SI
+User-agent: SemrushBot-SWA
+User-agent: SemrushBot-CT
+User-agent: SemrushBot-BM
+User-agent: SearchmetricsBot
+User-agent: rogerbot
+User-agent: Sitebulb
+User-agent: Screaming Frog SEO Spider
+User-agent: DeepCrawl
+User-agent: STC-bot
+User-agent: ScoutJet
+User-agent: archive.org_bot
+User-agent: ia_archiver
+Disallow:
+
+
+# ------------------------------------------------------------
+# Default - block all unlisted crawlers.
+# Add new bots above as they emerge.
+# ------------------------------------------------------------
+User-agent: *
+Disallow: /
+
+
+# ------------------------------------------------------------
+# Sitemaps
+# ------------------------------------------------------------
+Sitemap: https://www.vagaro.com/pro/sitemap.xml
+ 

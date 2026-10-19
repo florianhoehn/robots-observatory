@@ -1,0 +1,660 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Session Expired</title>
+        <link href="resources/css/home.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/defaultDashboard.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/theme_1.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        
+        <div class="dashboard_div">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <noscript>
+            <meta http-equiv="refresh" content="0; URL=/JSInstruction.jsp">
+        </noscript>
+
+
+<script src="/resources/js/jQuery/jquery-1.4.3.min.js"  type="text/javascript"></script>
+<script src="/resources/js/jQuery/jquery-ui-1.8.5.custom.min.js"  type="text/javascript"></script>
+<script src="/resources/js/jQuery/jquery.alerts.js" type="text/javascript"></script>
+<link href="/resources/js/jQuery/jquery-ui-1.8.6.custom.css" rel="stylesheet" type="text/css" />
+<link href="/resources/js/jQuery/jquery.alerts.css" rel="stylesheet" type="text/css" />
+<!--Header Table-->
+<link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
+
+
+<script type="text/javascript">
+    var $j = jQuery.noConflict();
+    var langType = 'en_US';
+    $j(function() {
+        $j( "#lang-dialog-message" ).dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            width: 500,
+            buttons: {
+                    Ok: function() {
+                        $j( this ).dialog( "close" );
+                    }
+            }
+        });
+
+        $j( "#lang-dialog-message" ).bind( "dialogclose", function(event, ui) {
+            updateLanguage(langType);
+        });
+
+        $j( "#tender-dialog-message" ).dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            width: 500,
+            buttons: {
+                    Ok: function() {
+                        $j( this ).dialog( "close" );
+                    }
+            }
+        });
+
+        $j( "#tender-dialog-message" ).bind( "dialogclose", function(event, ui) {
+
+          location.href = window.location.protocol+'//'+window.location.host+'/resources/common/SearchTenderOffline.jsp';
+        });
+        $j( "#awarded-dialog-message" ).dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            width: 500,
+            buttons: {
+                    Ok: function() {
+                        $j( this ).dialog( "close" );
+                    }
+            }
+        });
+
+        $j( "#awarded-dialog-message" ).bind( "dialogclose", function(event, ui) {
+
+          location.href = window.location.protocol+'//'+window.location.host+'/resources/common/SearchAwardedContractOffline.jsp';
+        });
+    });
+
+    function changelanguage(language)
+    {
+        langType = language;
+        if(language=="bn_IN")
+        {
+            $j("#lang-dialog-message").dialog( "open");
+        }
+        else
+        {
+            updateLanguage(langType);
+        }
+    }
+
+    function popupMsg()
+    {
+        var flag = alert("Dear User, \nThis is applicable for offline tender. \nTo view details of tender notice information, " +
+            "please click on 'View' link.\n" +
+            "If you need to buy tender document, please contact with concerned PE Office for offline tendering.");
+        return flag;
+    }
+
+    function awardedMessage()
+    {
+       // langType = language;
+       // if(language=="bn_IN")
+       // {
+            $j("#awarded-dialog-message").dialog( "open");
+       // }
+       // else
+       // {
+       //     updateLanguage(langType);
+      //  }
+    }
+    function tenderMessage()
+    {
+       // langType = language;
+       // if(language=="bn_IN")
+       // {
+            $j("#tender-dialog-message").dialog( "open");
+       // }
+       // else
+       // {
+       //     updateLanguage(langType);
+      //  }
+    }
+
+    function updateLanguage(langType)
+    {
+       // alert(document.URL);
+        if(document.URL.indexOf('?lang=') > 0)
+        {
+            location.href = document.URL.substring(0,document.URL.indexOf('?lang='))+'?lang='+langType
+        }
+        else if(document.URL.indexOf("Index.jsp") == -1)
+        {
+            //location.href = document.URL+'Index.jsp?lang='+langType;
+            location.href = window.location.protocol+'//'+window.location.host+'/Index.jsp?lang='+langType;
+        }
+        else// if(document.URL.indexOf("Index.jsp") == -1)
+        {
+            location.href = document.URL+'?lang='+langType;
+        }
+        //alert(location.href);
+
+          
+    }
+
+
+    function navigateSearch()
+    {
+        var url=""
+        var kword = document.getElementById('txtKeyword').value;
+        if (kword == '' || kword == 'Type your Keyword here') {
+          //$j("#msg").html('Please Enter Search Keyword').fadeIn(2000);
+          document.getElementById('txtKeyword').value = "";
+        }
+      //  else
+        //{
+            var url="";
+            var crntTab=$j('#crntTab').val();
+
+            if(crntTab == "tenderTab")
+            {
+                url+='/resources/common/StdTenderSearch.jsp?h=t';
+            }
+            else if(crntTab == "appTab")
+                url+='/resources/common/StdSearch.jsp';//changed from SearchAPP to StdSearch
+            else if(crntTab == "noaTab")
+                url+='/resources/common/SearchNOA.jsp';
+            else if(crntTab == "ecmsTab")
+                url+='/resources/common/SearcheCMS.jsp';
+
+            var srchForm=document.getElementById("stdSrchFrm");
+            srchForm.action=url;
+            srchForm.submit();
+       // }
+    }
+    $j(document).ready(function() {
+        $j('#btnKeyword').click(function() {
+            navigateSearch();
+        });
+    });
+</script>
+<script type="text/javascript">
+    function onChangeOfCombo(cmbObj){
+        var selectedTab = cmbObj.value;
+        chngTab(selectedTab);
+    }
+
+    function chngTab(tabNo)
+    {
+        var cmbObj = document.getElementById("cmbSearchTab");
+        var url="";
+        if(tabNo == 1)
+        {
+            //$j("#tenderTab").addClass("sMenu");
+            //$j("#appTab").removeClass("sMenu");
+            //$j("#noaTab").removeClass("sMenu");
+            cmbObj.options[0].selected = true;
+            cmbObj.options[1].selected = false;
+            cmbObj.options[2].selected = false;
+            cmbObj.options[3].selected = false;
+
+            $j("#crntTab").val("tenderTab");
+            url+="/resources/common/AllTenders.jsp?h=t";
+            $j("#advSrch").attr('href', url);
+        }
+        else if(tabNo == 2)
+        {
+            //$j("#tenderTab").removeClass("sMenu");
+            //$j("#appTab").addClass("sMenu");
+            //$j("#noaTab").removeClass("sMenu");
+            cmbObj.options[0].selected = false;
+            cmbObj.options[1].selected = true;
+            cmbObj.options[2].selected = false;
+            cmbObj.options[3].selected = false;
+
+            $j("#crntTab").val("appTab");
+            url+="/resources/common/AdvAPPSearch.jsp";
+            $j("#advSrch").attr('href', url);
+        }
+        else if(tabNo == 3)
+        {
+            //$j("#tenderTab").removeClass("sMenu");
+            //$j("#appTab").removeClass("sMenu");
+            //$j("#noaTab").addClass("sMenu");
+            cmbObj.options[0].selected = false;
+            cmbObj.options[1].selected = false;
+            cmbObj.options[2].selected = true;
+            cmbObj.options[3].selected = false;
+
+            $j("#crntTab").val("noaTab");
+            url+="/resources/common/AdvSearchNOA.jsp";
+            $j("#advSrch").attr('href', url);
+        }
+        else if(tabNo == 4)
+        {
+            //$j("#tenderTab").removeClass("sMenu");
+            //$j("#appTab").removeClass("sMenu");
+            //$j("#noaTab").addClass("sMenu");
+            cmbObj.options[0].selected = false;
+            cmbObj.options[1].selected = false;
+            cmbObj.options[2].selected = false;
+            cmbObj.options[3].selected = true;
+
+            $j("#crntTab").val("ecmsTab");
+            url+="/resources/common/SearcheCMS.jsp?v=advSearch";
+            $j("#advSrch").attr('href', url);
+        }
+    }
+</script>
+        
+
+        <div class="topTitle">
+            National e-Government Procurement (e-GP) Portal of the Government of the People's Republic of Bangladesh  
+        </div>
+        
+<!--Logo Panel Table-->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="t_space">
+    <tr valign="top">
+        <td width="250" align="center" valign="middle" style="padding-left: 17px;">
+            <a href="/Index.jsp" >
+                <img src="/resources/images/cptuEgpLogo.gif" alt="eGP" style="margin-top: 15px;" />
+            </a>
+            <div class="timeCss" id="lblTime"></div></td>
+        <td class="contentArea_2 t-align-left">
+            
+            <table border="0" width="100%" cellspacing="0" cellpadding="0" class="headerCss" style="background-image: none;
+padding: 0px;">
+                <tr>
+                    <td align="right" valign="top">
+                        
+                            
+                            <a href="/Index.jsp">Home Page </a>&nbsp; | &nbsp;
+                            
+                        
+                        
+                        <a href="/aboutUs.jsp">About e-GP</a>&nbsp; | &nbsp;
+                        
+                        
+                        <a href="/contactUs.jsp">Contact Us</a>
+                        
+                        &nbsp;|&nbsp;
+                        <a href="/SubscribeToRSS.jsp">RSS Feed</a>
+
+                      <!--  <a target="blank" href="/RSS/RSS_eGP.xml" style="text-align: center;">
+                        <img src="/resources/images/rss.gif" width="36" height="14">&nbsp;&nbsp;
+                        </a>-->
+                        &nbsp;|&nbsp; Language&nbsp;
+                        <select name="namelanguage" id="idlanguage" onchange="changelanguage(this.value);" style="width:70px;">
+                            <option value="en_US"selected>English</option>
+                            <option value="bn_IN">Bangla</option>
+                        </select>
+                        
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="tabPanelArea_top" valign="middle" style="vertical-align: middle;">
+                        <table width="100%" border="0" cellspacing="5" cellpadding="0">
+                            <form id="stdSrchFrm" onsubmit="navigateSearch()" method="post">
+                                <tr>
+                                    <td width="40%" height="30" valign="middle">
+                                        <input name="keyword" type="text" id="txtKeyword" class="txtSearchBox" style="width: 99%" value="Type your Keyword here" onclick="this.value='';"/>
+                                    </td>
+                                    <td width="30%" height="30" valign="middle">
+                                        <select id="cmbSearchTab" name="cmbSearchTab" onchange="onChangeOfCombo(this);" class="txtSearchBox" style="padding: 1px;width: 99%">
+                                            
+                                            <option value="1">eTenders</option>
+                                            <option value="2">Annual Procurement Plans</option>
+                                            <option value="3">eContracts</option>
+                                            <option value="4">eExperience</option>
+                                        </select>
+                                    </td>
+                                    <td width="5%" height="30" valign="middle">
+                                        <label
+                                        
+                                            class="btnSearch" 
+                                            
+                                            style="width:96%">
+                                            <input name="keyword" id="btnKeyword" type="button" value="Search" />
+                                        </label>
+                                        <div class="msg" id="msg" style="color: red"></div>
+                                        <input type="hidden" id="curDate" value="Tuesday, October 20, 2026 2:05:17 AM"/>
+                                        <input type="hidden" name="crntTab" id="crntTab" value="tenderTab"/>
+                                        <input type="hidden" id="fromHome" value="true"/>
+                                    </td>
+                                    <td width="25%" class="serchTxt" align="left" valign="middle">
+                                        <a id="advSrch" href="/resources/common/AllTenders.jsp?h=t" style="font-weight:bold; text-align: left;">Advance Search</a>
+                                    </td>
+                                </tr>
+                            </form>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="30" style="border-left: 1px solid #77a850; border-right: 1px solid #77a850; border-bottom: 1px solid #77a850; background-color: #e4fad0;">
+                        <table border="0" cellspacing="5" cellpadding="0" class="atxt_2" style="vertical-align: top;"><!--970-->
+                            <tr>
+                                <td align="left" style="vertical-align: top; padding-right: 5px">
+                                    <span class="ff" style="color:#333;">Go To 
+                                        <img src="/resources/images/Dashboard/gotoIcn.png" class="linkIcon_2" alt="Go To" style="vertical-align: middle;"/>
+                                    </span>
+                                </td>
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                    <img src="/resources/images/Dashboard/DocIcn.png" alt="Tender" class="linkIcon_2"/>
+                                    
+                                    <a href="/resources/common/StdTenderSearch.jsp?h=t">eTenders  </a>
+                                    
+                                </td>
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                    <img src="/resources/images/Dashboard/SpredSheet.png" alt="APP" class="linkIcon_2"/>
+<!--                                    <a href="/resources/common/StdSearch.jsp?keyword"> Annual Procurement Plans</a></td>-->
+                                     
+                                        <a href="/resources/common/SearchAPP.jsp">Annual Procurement Plans</a>
+                                     
+                                </td>
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                    <img src="/resources/images/Dashboard/trophyIcn.png" alt="Awarded Contracts" class="linkIcon_2"/>
+                                     
+                                    <a href="/resources/common/SearchNOA.jsp">eContracts  </a>
+                                     
+                                </td>
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                   <img class="linkIcon_2" alt="eCMS" src="/resources/images/Dashboard/ecms.png">
+                                   
+                                        <a href="/resources/common/SearcheCMS.jsp" >eExperience</a>
+                                   
+
+                                </td>
+
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                    <img src="/resources/images/Dashboard/DebIcn.png" alt="Debarred Tenderers" class="linkIcon_2"/>
+                                    <a href="/resources/common/DebarmentRpt.jsp">Debarred Tenderers</a>
+
+                                    
+                                </td>
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                    <img src="/resources/images/Report_one.png" alt="Reports" class="linkIcon_2"/>
+                                     
+                                     <a href="/RegistrationDetails.jsp">Reports </a>
+                                     
+                                </td>
+                                <!--Menu item for offline tender n AwardedContractOffline -->
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                    <!--<a onclick="tenderMessage();" style="cursor: pointer"  >Offline Tenders</a>
+                                    <a href="/resources/common/SearchTenderOffline.jsp" onclick="return popupMsg()">Offline Tenders</a>-->
+
+                                    <img class="linkIcon_2" alt="Offline Tender" src="/resources/images/Dashboard/DocIcn.png">
+
+                                    
+                                        <a href="/resources/common/SearchTenderOffline.jsp" onclick="return popupMsg()">Offline Tenders </a>
+                                    
+
+                                </td>
+                                
+                                <td align="left" style="vertical-align: top; padding: 0px 5px 0px 5px">
+                                   
+                                   <!--<a href="/resources/common/SearchAwardedContractOffline.jsp">Offline Awarded Contracts</a>-->
+
+                                   <img class="linkIcon_2" alt="Awarded Offline Contracts" src="/resources/images/Dashboard/trophyIcn.png">
+                                   
+                                        <a href="/resources/common/SearchAwardedContractOffline.jsp" >Offline Contracts </a>
+                                   
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin-top: 5px;">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Marquee Display Page</title>
+        <!--<link href="../css/home.css" rel="stylesheet" type="text/css" />
+        <link href="../css/defaultDashboard.css" rel="stylesheet" type="text/css" />
+        <link href="../css/theme_1.css" rel="stylesheet" type="text/css" />-->
+
+    </head>
+    <body>
+
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td width="79%">
+                    
+                    <marquee behavior=scroll scrollamount="5" style="height:25px; line-height:25px; color:#ff0000; font-size: 14px; font-weight: bold;">
+                    
+                    
+                    
+                </marquee>
+                </td>
+                <td width="1%"></td>
+                <td width="20%" align="right" >
+                    <div class="ReadMore">
+                        
+                        
+                        <strong><a href="/ViewMarquee.jsp">View All Notifications</a>&nbsp;</strong>
+                    
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+</body>
+</html>
+
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="lang-dialog-message" title="Instruction" style="display:none;">
+<p>
+Dear User,
+</p><br />
+<p>
+To view the content of this website in Bangla properly, you need to have 'Proper Bangla Font' installed in your computer. You can install Bangla font by:
+</p><br />
+<ul style="padding-left: 15px;">
+    <li>
+        Downloading Bangla font which is available as a link under "Downloads" on the left hand side of home page.
+    </li>
+    <li>
+        Windows vista onwards users: Right click on the font file and click on 'Install' Option.
+    </li>
+    <li>
+        Windows XP/2003 users: copy the downloaded font and paste it to your Windows/Fonts folder.
+    </li>
+    <li>
+        Refresh the page.
+    </li>
+</ul>
+</div>
+<div id="tender-dialog-message" title="Instruction" style="display:none;">
+<p>
+Dear User,
+</p><br />
+<p>
+This tender is manual tender and you need to buy the tender document from Procuring Entity Office. To view the details tender notice click on "View" link.
+Same information you can get from BPPA web site.
+<br />
+www.bppa.gov.bd
+</p>
+
+
+</div>
+<div id="awarded-dialog-message" title="Instruction" style="display:none;">
+<p>
+Dear User,
+</p><br />
+<p>
+This Contract Awarded is manual Contract and you need to buy the tender document from Procuring Entity Office. To view the details information click on "View" link.
+Same information you can get from BPPA web site.
+<br />
+www.bppa.gov.bd
+</p>
+<br />
+
+</div>
+<script type="text/javascript" src="/resources/js/DatenTime.js"></script>
+<script type="text/javascript">
+    Start();
+</script>
+
+            <!--Middle Content Table Start-->
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr valign="top">
+                    <td class="contentArea_1">
+                        <!--Page Content Start-->
+                        <fieldset class="sessionTimeOut">
+                            <legend class="heading-text"><img src="/resources/images/Dashboard/Warning.png" width="16" height="16" /> &nbsp;Dear User, Your session has been expired.
+                            </legend>
+                            <div class="reason">Your session is expired due to any of the following reasons :</div>
+                            <ul>
+                                <li>You might have kept your browser window idle for more than 30 minutes.</li>
+                                <li>Change in URL.</li>
+                            </ul>
+                            <div class="t_space">
+                                <a href="Index.jsp">Go to login page.</a>
+                            </div>
+                        </fieldset>
+
+                        <!--Page Content End-->
+                    </td>
+                </tr>
+            </table>
+            
+            <!--Middle Content Table End-->
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="footerCss">
+    <tr valign="top">
+        <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <td align="center" style="padding-top: 10px;">
+                    
+                        <a href="/Index.jsp">Home</a> &nbsp;|&nbsp;
+                    
+
+                    
+                        <a href="/aboutUs.jsp">About e-GP</a> &nbsp;|&nbsp;
+                    
+
+                    
+                        <a href="/contactUs.jsp">Contact Us</a> &nbsp;|&nbsp;
+                    
+
+                    <a href="/SubscribeToRSS.jsp">RSS Feed</a> &nbsp;|&nbsp;
+
+                    
+                        <a href="/TermsNConditions.jsp">Terms and Conditions</a> &nbsp;|&nbsp;
+                    
+                    
+                        <a href="/ServiceLevel.jsp">Service Level </a> 
+                     &nbsp;|&nbsp;
+                    
+                        <a href="/PrivacyPolicy.jsp">Disclaimer and Privacy Policy </a>
+                    
+                    
+                     &nbsp;|&nbsp; 
+                        <a href="/NewFeature.jsp">New Features</a>
+                    
+                   
+
+                </td>
+            </tr>
+            
+            <tr>
+                <td align="center" style=" line-height: 16px;">
+                    <div class="msg">
+                        Best viewed in 1024 x 768 and above resolution. Browsers Tested & Certified by BPPA: Microsoft Edge 109.x or above and Mozilla Firefox 113.x or above and Google Chrome 109.x or above
+                    </div>
+                </td>
+            </tr>
+            
+           <tr>
+                <td height="10"></td>
+            </tr>
+            <tr>
+                <td width="64%" align="center" style="padding-bottom: 0px; padding-top: 0px; font-weight: normal; line-height: 18px;">
+                         <strong> Copyright &copy; 2011 Bangladesh Public Procurement Authority (BPPA). All Rights Reserved. </strong><br />
+                     IMED, Ministry of Planning, Government of the People's Republic of Bangladesh
+                </td>
+            </tr>
+            <tr>
+                <td height="10"></td>
+            </tr>
+
+        </table></td>
+        <td width="100">
+        
+        </td>
+    </tr>
+</table>
+
+
+
+
+        </div>
+    </body>
+</html>

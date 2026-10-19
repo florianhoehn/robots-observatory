@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+    <script>
+
+    window.setDeviceId = function (deviceId) {
+        try {
+            window.localStorage.setItem('deviceId', deviceId);
+            window.deviceId = deviceId;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    window.getDeviceId = {
+        // 请求次数统计
+        index: 0,
+        // 初始化
+        init: function() {
+            var deviceId =  window.localStorage.getItem('deviceId');
+            if (deviceId) {
+                // 如果缓存有ID，直接发送
+                window.setDeviceId(deviceId);
+            } else {
+                // 没有ID，请求接口获取
+                this.getId();
+            }
+        },
+        loadJs: function(url, fnError) {
+            var _self = this;
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = false;
+            script.src = url;
+            if (document.head.prepend) {
+                document.head.prepend(script);
+            } else {
+                var _script = document.getElementsByTagName('script')[0];
+                _script.parentNode.insertBefore(script, _script);
+            }
+            script.onerror = function () {
+                fnError && fnError();
+            }
+        },
+        getId: function() {
+            var _self = this;
+            _self.loadJs('https://web-device-id.banggood.com/deviceId', function () {
+                _self.reGetId();
+                var userAgent = (window.navigator && window.navigator.userAgent) || '';
+                _self.loadJs('https://www.tieszhu.com/e.html?__key=custom_event&event_label=manage&deviceIdPort=pc&deviceIdError=1&deviceIdIndex=' + _self.index + '&deviceIdUserAgent=' + userAgent);
+            });
+        },
+        // 如果请求失败，重新请求3次
+        reGetId: function() {
+            if (this.index >= 3) return;
+            this.index++;
+            this.getId();
+        }
+    };
+    window.getDeviceId.init();
+
+</script><meta name="referrer" content="no-referrer-when-downgrade"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="canonical" href="https://www.banggood.com/llms.txt" />
+<title>Page Not Found - Banggood.com</title>
+<meta name="description" content="" />
+<meta name="norton-safeweb-site-verification" content="4p71n-uarrm9rds-9o6rtwu2tffleogqmwmcv15qn5gclx6p534xcr8u-ch3mqrjfauohaqw7-j52svb294owid-3xd4lwvqbo4mdt9c5140m1uylbk-zcotf98i5cf8" />
+<meta name="keywords" content="" />
+        <meta content="index,follow" name="robots"/>
+    <meta content="no" http-equiv="imagetoolbar"/>
+<meta content="Banggood.com" name="author"/>
+<meta property="fb:admins" content="100003030824546" />
+<meta property="fb:app_id" content="246353225430376" />
+<meta property="fb:pages" content="1623589344611931">
+<meta property="fb:pages" content="127807294481877">
+<meta property="fb:pages" content="438886816177979">
+<meta name="google-site-verification" content="tu-6TOxLPIBswTWq201AYf_oRDGv4kzLgZaR6fP7TNU" />
+<meta name="google-site-verification" content="RXBF1Xqow_YkWM76VBOo6bDgV_J4MOz-TAlNph9PppE" />
+
+<meta name="yandex-verification" content="f3e11528b33f4328" />
+
+
+<meta name="msvalidate.01" content="3A526414F02AB11F2538095D656BECC5" />
+
+
+<link rel="preload" as="font" crossorigin="anonymous" type="font/woff2" href="//s.staticbg.com/web/src/fonts/mem8YaGs126MiZpBA-UFVZ0b-min.48fd188.woff2">
+
+    				<link rel="alternate" hreflang="en" media="only screen and (max-width: 640px)" href="https://m.banggood.com/llms.txt" />
+		        <link rel="alternate" href="android-app://com.banggood.client/http/www.banggood.com/"/>
+
+            <link rel="alternate" hreflang="en-us" href="https://usa.banggood.com/llms.txt" />
+    <link rel="alternate" hreflang="en-gb" href="https://uk.banggood.com/llms.txt" />
+    <link rel="alternate" hreflang="en-in" href="https://www.banggood.in/llms.txt" />
+    <link rel="alternate" hreflang="en" href="https://www.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="ru-ru" href="https://ru.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="es-es" href="https://es.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="it-it" href="https://it.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="fr-fr" href="https://fr.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="pt-pt" href="https://pt.banggood.com/llms.txt" />
+    <link rel="alternate" hreflang="pt-br" href="https://br.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="pl-pl" href="https://pl.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="de-de" href="https://de.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="ja-jp" href="https://jp.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="nl-nl" href="https://nl.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="ar" href="https://ar.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="tr-tr" href="https://tr.banggood.com/llms.txt" />
+				<link rel="alternate" hreflang="el-el" href="https://gr.banggood.com/llms.txt" />
+				<link rel="alternate" hreflang="hu-hu" href="https://hu.banggood.com/llms.txt" />
+        <link rel="alternate" hreflang="x-default" href="https://www.banggood.com/llms.txt" />
+<link rel="icon" href="https://www.banggood.com/favicon.ico" type="image/x-icon" >
+<link rel="Shortcut Icon" href="https://www.banggood.com/favicon.ico" >
+<link rel="Bookmark" href="https://www.banggood.com/favicon.ico">
+<!-- dns-prefetch -->
+<meta http-equiv="X-dns-prefetch-control" content="on" />
+<link rel="dns-prefetch" href="//css.banggood.com">
+<link rel="dns-prefetch" href="//img.staticbg.com" />
+<link rel="dns-prefetch" href="//www.banggood.in" />
+<link rel="dns-prefetch" href="//br.banggood.com" />
+<link rel="dns-prefetch" href="//sea.banggood.com" />
+<link rel="dns-prefetch" href="//ar.banggood.com" />
+<link rel="dns-prefetch" href="//fr.banggood.com" />
+<link rel="dns-prefetch" href="//de.banggood.com" />
+<link rel="dns-prefetch" href="//connect.facebook.net" />
+<link rel="dns-prefetch" href="//dccss.banggood.com" />
+<link rel="dns-prefetch" href="//www.googleadservices.com" />
+<link rel="dns-prefetch" href="//www.google-analytics.com" />
+<script>
+	window.spm_version='1.4.54'</script>
+<script>
+
+window.ISBGPC = 1;
+window.bgdInfoData = {};
+window.onVisitBefore = function(sessionId, userId, customersId, unionId) {
+	bgdInfoData.sessionId = sessionId;
+	bgdInfoData.userId = userId;
+	bgdInfoData.customersId = customersId;
+	bgdInfoData.unionId = unionId;
+	if (window._RdAndDc_Store_arr) {
+		window._RdAndDc_Store_arr.forEach(function(fn) {
+			fn && fn();
+		});
+		delete window._RdAndDc_Store_arr;
+	}
+};
+
+</script>
+
+
+<script>
+var GL = {
+    'homeUrl': 'https:' != document.location.protocol ? 'http://www.banggood.com/' : 'https://www.banggood.com/',   	'limitUrl': 'https://trans.banggood.com/forwards/',
+    'withLangHomeUrl': 'https://www.banggood.com/',     'lang': 'en-GB',           'isWwwpre': '',
+    'runEnv': 'online',
+    'showGoogleTranslate': '1',
+    'isPageReverse': "0",        'emptyImg': '/templates/black/web/dev/static/img/empty.gif',      'isReqRecKey': "1",       'comName': 'shopcart',            'search': {          'rec': "",
+        'def': "Enter product keywords",
+        'act': "",
+        'cur': "Enter product keywords",
+        'del': "Delete",
+        'history': "Clear history",
+        'recent': "Recent searches",
+        'hot': "Hot Searches:"
+    },
+    'is_ordinary_user': "0",  
+    'language': {          LJ_ASK_18_TITLE: "Are you over 18?",
+        LJ_ASK_18_TXT: "This section of our website contains adult content, please answer the following questions before you access to this area.",
+        LJ_ASK_18_YES: "Yes",
+        LJ_ASK_18_NO: "Not yet",
+        LJ_IS_MARRIED: "I have been married.",
+        LJ_IS_MARRIED_TXT: "This section of our website contains adult content, please answer the following questions before you access to this area.",
+        LJ_FOR_MORE_EXCLUSIVE_OFFERS_BY: "For more exclusive offers by",
+        LJ_CLICKING_HERE: "clicking here",
+        LP_CANCEL: "Cancel",
+        LP_YES: "Yes",
+        LP_NO: "No",
+        LP_U_HAVE_SELECTED_NO_ITEMS: "You have selected no items !",
+        LP_TRACKING_NUMBER_NO: "No tracking",
+        LA_COOKIE_DISABLE_TIPS: "The cookie has been closed. We use cookies to provides you with a customized, responsive,and a personalized experience,if you continue to use our website, we will assume that you agree to us using cookies in accordance with cookie atatement. Please open the cookie and refresh the page.",
+				LA_NOT_YOU: "Not you?",
+		LA_PC_SUBSCRIBE_WHATSAPP_BTN: "Subscribe",
+		LA_WHATSAPP_ALERT_DESC4: "Please enter a valid phone number.",
+		LA_CHOOSE_COUNTRY_TIP: "Please choose your Country/Region.",
+		LA_SIDE_WA_CYEXH: "Claim You Exclusive Coupons Here",
+		LA_SIDE_WA_STYWA: "Send To Your WhatsApp",
+		LA_SIDE_WA_EC: "Exclusive Coupons",
+		LA_SIDE_WA_OS: "Order Status",
+		LA_SIDE_WA_PR: "Price Drop Reminder",
+		LA_SIDE_WA_WA: "WhatsApp",
+		LA_HELP_CENTER_SV: "Survey",
+				LA_COOKIE_ALLOW_CLOSE:"Allow and Close",
+		LA_COOKIE_SETTINGS:"Cookie Settings",
+		LA_COOKIE_CONFIRM_CHOICES:"Confirm My Choices",
+		LA_COOKIE_ALLOW_ALL:"Allow All",
+    },
+
+    LA_QRCODE_DRI1_1: "Download App to get",
+    LA_QRCODE_DRI1_2: "US$3",
+    LA_QRCODE_DRI1_3: "off coupon.",
+    LA_QRCODE_DRI2_1: "Download App to get max",
+    LA_QRCODE_DRI2_2: "US$25",
+    LA_QRCODE_DRI2_3: "off allowances.",
+    LA_QRCODE_DRI3_1: "Download App to get",
+    LA_QRCODE_DRI3_2: "50%",
+    LA_QRCODE_DRI3_3: "off new user allowance.",
+    LA_QRCODE_DRI4_1: "Shop on Banggood app and get items for",
+    LA_QRCODE_DRI4_2: "$0",
+    LA_QRCODE_DRI4_3: "!",
+
+				LA_SUBSCRIBE_PHONE: "Your phone number",
+		LA_SUBSCRIBE_POLICY: "I agree to the %a and %b.",
+		LA_SUBSCRIBE_POLICY_1: "Privacy Policy",
+		LA_SUBSCRIBE_POLICY_2: "Terms of Service",
+
+    'ship_lang_usa': {
+        LC_SHIPMENT_IPA_IPA:"IPA international Mail",
+    },
+
+    'ship_lang_uk': {
+        LC_SHIPMENT_UK_B2C_EU :"B2C Europe",
+        LC_SHIPMENT_UKPLI_UKPLI :"PLI International Mail",
+        LC_SHIPMENT_ROYAL3_ROYAL3 :"Uk Standard International Shipping",
+        LC_SHIPMENT_UKDHLGM_UKDHLGM :"DHL Global Mail",
+        LC_SHIPMENT_ROYAL5_ROYAL5 :"Royal Mail Second Class",
+        LC_SHIPMENT_ROYAL1_ROYAL1 :"UK Standard Shipping"
+    },
+    'G_SWITCH_CONFIG': "switch config",       'errList': [],
+    'version': "20260603",
+    'cssDomain': "//s.staticbg.com",
+    'jsDomain': "//s.staticbg.com",
+    'fbCapiJson': null,       'tikTokPixel': null,       'kwaiPixel': null,   	'currentLang':"en-GB",//当前语言
+    isCartPage : '',
+    addressBookLang: {
+        name: 'Please enter %s characters instead of Arabic numerals',
+        namelang: 'Please enter %s characters in %d instead of Arabic numerals',
+        telephone: 'Please enter a %m digit telephone number',
+        telephonelang: 'Please enter a %m digit telephone number that starts with the number %p',
+        address: 'Please enter %s characters that include %i',
+        addresslang: 'Please enter %s characters in %d that include %i',
+        city: 'Please enter %s characters',
+        citylang: 'Please enter %s characters in %d',
+        street: 'Please enter %s characters',
+        streetlang: 'Please enter %s characters in %d',
+        postcode: 'Please enter %s characters',
+        postcodeSuch: 'Please enter %s characters, such as %b-%a',
+        sensitiveWords: 'Please exclude %d',
+        langDistrict: 'District is required',
+        langLength: 'Please enter %s characters',
+        langSupport: 'Please enter characters using only %d',
+        langUnsupport: 'Please enter characters that exclude %d',
+        langMustType: 'Please enter characters that include %d',
+        langSenswords: 'Please exclude %d',
+        lang: {
+					en: "English",
+					es: "Español",
+					pt: "Português",
+					ru: "Русский",
+					fr: "Français",
+					it: "Italiano",
+					de: "Deutsch",
+					jp: "日本語",
+					nl: "Nederlands",
+					tr: "Türkçe",
+					kr: "한국어",
+					ar: "العربية",
+					th: "ไทย",
+					sv: "Svenska",
+					no: "norsk Språk",
+					id: "bahasa indonesia",
+					da: "dansk",
+					cs: "čeština",
+					hi: "हिन्दी",
+					pl: "język polski",
+					iw: "עברית",
+					vn: "Tiếng việt",
+					el: "Ελληνικά",
+					hu: "Magyar",
+					sk: "slovenský jazyk"
+				}
+    }
+};
+
+window.addEventListener && window.addEventListener('error', function(ev) {
+    GL.errList.push(ev)
+}, true)
+
+
+
+if (window.top.window.location.host == 'bi.banggood.com') {
+    document.domain = 'banggood.com'
+}
+if (document.domain.indexOf('banggood') < 0) {
+	window.location.href = 'https://www.banggood.com'
+}
+
+</script>
+
+<script>
+    window.webPushStatus =  0 ;
+    window.wareImgMap = {"CN":"https:\/\/img.staticbg.com\/warehouse\/Earth.png","HK":"https:\/\/img.staticbg.com\/warehouse\/Earth.png","CNBY":"https:\/\/img.staticbg.com\/warehouse\/Earth.png","GWTR":"https:\/\/img.staticbg.com\/warehouse\/Earth.png","USA":"https:\/\/img.staticbg.com\/warehouse\/US.png","US":"https:\/\/img.staticbg.com\/warehouse\/US.png","AE":"https:\/\/img.staticbg.com\/warehouse\/AE.png","AU":"https:\/\/img.staticbg.com\/warehouse\/AU.png","BR":"https:\/\/img.staticbg.com\/warehouse\/BR.png","CL":"https:\/\/img.staticbg.com\/warehouse\/CL.png","JP":"https:\/\/img.staticbg.com\/warehouse\/JP.png","MX":"https:\/\/img.staticbg.com\/warehouse\/MX.png","RU":"https:\/\/img.staticbg.com\/warehouse\/RU.png","SA":"https:\/\/img.staticbg.com\/warehouse\/SA.png","UK":"https:\/\/img.staticbg.com\/warehouse\/UK.png","ZA":"https:\/\/img.staticbg.com\/warehouse\/ZA.png","EU":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png","FR":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png","ES":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png","CZ":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png","PL":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png","NL":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png","IT":"https:\/\/img.staticbg.com\/warehouse\/OUMENG.png"};
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3113667545361330" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="//s.staticbg.com/web/src/css/common.css?v=2024082220260528"/>
+
+    <link rel="stylesheet" type="text/css" href="//s.staticbg.com/web/src/css/404.css?v=2024082211"/>
+    <script type="text/javascript">
+        window.ErrorTime404 = ''
+    </script>
+</head>
+<body >
+
+        <header id="header">     
+    <div data-spm="0000000aN" class="header-main header-main-new">     <div data-spm="0000000aO" class="header-main-wrap">
+        <div data-spm="0000000aP" class="header-mid-wrap header-logo">
+            <h1 data-spm="0000000aQ">
+                <a data-spm="0000000aR" href="https://www.banggood.com/" dpid="top_banggood_image_170412|home|1100100144" title="Banggood">
+                </a>
+            </h1>
+        </div>
+
+        <div data-spm="0000000aS" class="header-mid-wrap header-mid hotfix">
+            <form data-spm="0000000aT" class="header-form" action="https://www.banggood.com/index.php" method="get">
+				                <input data-spm="0000000aU" name="keywords" class="header-search" dpid="top_search_text_170412|home|1100100147" type="text" autocomplete="off" maxlength="150" value="" />
+                <label data-spm="0000000aV" for="header-submit" class="header-submit">
+                    <i data-spm="0000000aW" class="iconfont icon-search_new"></i>
+                    <input data-spm="0000000aX" type="submit" name="header-submit" data-hinit-search="top_hintSearch_button_190729|home|19204014542||en-GB|system" data-userentry-search="top_search_button_170412|home|1100100148" dpid="top_search_button_170412|home|1100100148" value="search" />
+                </label>
+                <div data-spm="0000000aY" class="header-search-tips">
+                                    </div>
+                <input data-spm="0000000aZ" type="hidden" name="com" value="search" />
+                <input data-spm="0000000b0" type="hidden" name="from" value="nav" />
+                <input data-spm="0000000b1" type="hidden" name="hint_search_active" value="0" />
+                <input data-spm="0000000b2" type="hidden" name="hint_search_tagname" value="" />
+                <input data-spm="0000000b3" type="hidden" name="hint_search_url" value="" />
+            </form>
+                        <dl data-spm="0000000b4" class="header-search-words">
+                <dt data-spm="0000000b5">Online Shopping:</dt>
+                <div data-spm="0000000b6" class="header-search-hot-wrap">
+                                    </div>
+            </dl>
+        </div>
+
+								<div data-spm="0000004Yv" class="header-mid-wrap header-download-app">
+					<div data-spm="0000004Yw" class="app-entry app-drainage-entry-hover" data-position="1">
+						<div data-spm="0000004Yx" class="app-icon">
+							<i data-spm="0000004Yy" class="iconfont icon-qrcode_new"></i>
+						</div>
+						<div data-spm="0000004Yz" class="app-content">
+							<div data-spm="0000004YA" class="app-title">Download the</div>
+							<div data-spm="0000004YB" class="app-sub">Banggood App</div>
+						</div>
+					</div>
+					<div data-spm="0000004YC" class="app-pop">
+						<div data-spm="0000004YD" class="app-pop-inner">
+							<div data-spm="0000004YE" class="qrcode">
+								<span data-spm="0000004YF" class="img"></span>
+							</div>
+
+							<div data-spm="0000004YG" class="app-pop-content">
+								<div data-spm="0000004YS" class="app-pop-title">Download App to get</div>
+								<div data-spm="0000004YT" class="app-pop-sub"><span data-spm="0000004YU" class="app-pop-price">US$3</span><span data-spm="0000004YV"> off coupon</span></div>
+								<div data-spm="0000004YH" class="app-pop-foot">
+									<a data-spm="0000004YI" class="app-pop-btn app-drainage-link" href="https://banggood.onelink.me/zMT7/bgwww001?install_source=www&bid=84847&drainage_position=1" data-position="1" data-type="ios" target="_blank">
+										<span data-spm="0000004YJ" class="iconfont icon-iOS_new"></span>
+										<span data-spm="0000004YK">iOS</span>
+									</a>
+									<a data-spm="0000004YL" class="app-pop-btn app-drainage-link" href="https://banggood.onelink.me/zMT7/bgwww001?install_source=www&bid=84847&drainage_position=1" data-position="1" data-type="android" target="_blank">
+										<span data-spm="0000004YM" class="iconfont icon-Android_new"></span>
+										<span data-spm="0000004YN">Android</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+        <div data-spm="0000000b7" class="header-mid-wrap header-shipto">
+            <div data-spm="0000000b8" class="header-shipto-title"></div>             <div data-spm="0000000b9" class="header-shipto-dropmenu loading">
+
+                                  <label data-spm="0000000ba" class="shipto-addr">
+                    <strong data-spm="0000000bb">Shipping to:</strong>
+                    <div data-spm="0000000bc" class="shipto-title" dpid="top_country_datalist_210806|home|21235045934">
+                        <div data-spm="0000000bd" class="shipto-input country-flags ns">
+                                                    </div>
+                        <i data-spm="0000000be" class="arrow1"></i>
+                    </div>
+                    <div data-spm="0000000bf" class="shipto-downWrap">
+                        <div data-spm="0000000bg" class="shipto-search">
+                            <input data-spm="0000000bh" type="text" autocomplete="off" placeholder="Quick Find"/>
+                        </div>
+                        <div data-spm="0000000bi" class="shipto-listWrap">
+                            <ul data-spm="0000000bj" class="shipto-list country-flags"></ul>
+                        </div>
+                        <div data-spm="0000000bk" class="shipto-barWrap">
+                            <div data-spm="0000000bl" class="shipto-bar"></div>
+                        </div>
+                    </div>
+                </label>
+
+                                <label data-spm="0000000bm" class="shipto-addr2"  style="display: none;">
+                    <div data-spm="0000000bn" class="shipto-title2">
+                        <div data-spm="0000000bo" class="shipto-input2 ns"></div>
+                        <i data-spm="0000000bp" class="arrow1"></i>
+                    </div>
+                    <div data-spm="0000000bq" class="shipto-downWrap2">
+                        <div data-spm="0000000br" class="shipto-search2">
+                            <input data-spm="0000000bs" type="text" autocomplete="off" placeholder="Quick Find"/>
+                        </div>
+                        <div data-spm="0000000bt" class="shipto-listWrap2">
+                            <ul data-spm="0000000bu" class="shipto-list2"></ul>
+                        </div>
+                        <div data-spm="0000000bv" class="shipto-barWrap2">
+                            <div data-spm="0000000bw" class="shipto-bar2"></div>
+                        </div>
+                    </div>
+                </label>
+
+								<label data-spm="0000000bx" class="shipto-countryWebsite country-website">
+                    <strong data-spm="0000000by" class="country-text">Language:</strong>
+                    <div data-spm="0000000bz" class="country-website-title" dpid="top_selectLanguage_datalist_170412|home|1100100143">
+                        <div data-spm="0000000bA" class="country-website-input">
+						</div>
+                        <i data-spm="0000000bB" class="arrow1"></i>
+                    </div>
+                    <div data-spm="0000000bC" class="shipto-country-dropWrap">
+						<div data-spm="0000000bD" class="language-search">
+                            <input data-spm="0000000bE" type="text" autocomplete="off" placeholder="Quick Find"/>
+                        </div>
+                        <div data-spm="0000000bF" class="shipto-country-listWrap">
+                            <ul data-spm="0000000bG" class="shipto-country-list">
+                            </ul>
+                        </div>
+                        <div data-spm="0000000bH" class="shipto-country-barWrap">
+                            <div data-spm="0000000bI" class="shipto-country-bar"></div>
+                        </div>
+                    </div>
+                </label>
+
+                                <label data-spm="0000000bJ" class="shipto-currency">
+                    <strong data-spm="0000000bK">Currency:</strong>
+                    <div data-spm="0000000bL" class="currency-title" dpid="top_Currency_datalist_210806|home|21235050027">
+                        <div data-spm="0000000bM" class="currency-input ns">
+                                                    </div>
+                        <i data-spm="0000000bN" class="arrow1"></i>
+                    </div>
+                    <div data-spm="0000000bO" class="currency-downWrap">
+						<div data-spm="0000000bP" class="currency-search">
+                            <input data-spm="0000000bQ" type="text" autocomplete="off" placeholder="Quick Find"/>
+                        </div>
+                        <div data-spm="0000000bR" class="currency-listWrap">
+                            <ul data-spm="0000000bS" class="currency-list cf"></ul>
+                        </div>
+                        <div data-spm="0000000bT" class="currency-barWrap">
+                            <div data-spm="0000000bU" class="currency-bar"></div>
+                        </div>
+                    </div>
+                </label>
+
+                                <div data-spm="0000000bV" class="btns">
+                    <input data-spm="0000000bW" type="button" class="confirm" value="Save" data-refresh="0"/>
+                </div>
+            </div>
+        </div>
+
+        <div data-spm="0000000bX" class="header-mid-wrap header-user-wrap">
+            <ul data-spm="0000000bY" class="header-account">
+                <li data-spm="0000000bZ" class="header-user">
+                    <div data-spm="0000000c0" class="header-user-title">
+                        <i data-spm="0000000c1" class="header-user-icon sp"></i>
+                        <span data-spm="0000000c2" class="header-user-door">
+                            <a data-spm="0000000c3" class="hello" href="javascript:void(0);">Hello</a>
+                            <a data-spm="0000000c4" class="header-user-sign" href="https://www.banggood.com/login.html">Sign in</a>
+                            <a data-spm="0000000c5" class="header-user-join" href="https://www.banggood.com/login.html?pannel=register">Join</a>
+                        </span>
+                                            </div>
+                    <div data-spm="0000000c6" class="header-user-info">
+                        <a data-spm="0000000c7" class="header-user-signBtn" dpid="top_SignIn_button_180104|home|182202735" href="https://www.banggood.com/login.html">Sign in</a>
+                        <a data-spm="0000000c8" class="header-user-joinBtn only-home-page" dpid="top_StartHere_button_180104|home|182202736" href="https://www.banggood.com/login.html?pannel=register">Join us</a>
+                        <div data-spm="0000000c9" class="header-user-joinText2">New customer?
+                            <a data-spm="0000000ca" href="javascript:void(0);" dpid="top_StartHere_button_180104|home|182202736">Start here.</a>
+                        </div>
+                        <ul data-spm="0000000cb" class="header-user-entry">
+                            <li data-spm="0000000cc"><a data-spm="0000000cd" dpid="top_MyAccount_button_180104|home|182202737" href="https://www.banggood.com/index.php?com=account" rel="nofollow">My Account</a></li>
+                            <li data-spm="0000000ce"><a data-spm="0000000cf" dpid="top_MyOrders_button_180104|home|182202738" href="https://www.banggood.com/index.php?com=account&t=ordersList" rel="nofollow">My Orders</a></li>
+                            <li data-spm="0000000cg"><a data-spm="0000000ch" dpid="top_MyWishlist_button_180104|home|182202739" href="https://www.banggood.com/index.php?com=account&amp;t=wishlist" rel="nofollow">My Wishlist</a></li>
+                            <li data-spm="0000000ci"><a data-spm="0000000cj" dpid="top_MyCoupon_button_180104|home|182202740" href="https://www.banggood.com/index.php?com=account&amp;t=myCoupons" rel="nofollow">My Coupons</a></li>
+                            <li data-spm="0000000ck"><a data-spm="0000000cl" dpid="top_MyReferrals_button_180104|home|182202742" href="https://www.banggood.com/allowaceinvite.html" rel="nofollow">Refer & Get US$10</a></li>
+                                                                                </ul>
+                    </div>
+                </li>
+                <li data-spm="0000000cq" class="header-cart">
+                    <a data-spm="0000000cr" class="header-cart-title" dpid="top_shopCart_button_170412|home|1100100155" href="https://www.banggood.com/shopping_cart.html" rel="nofollow">
+                        <i data-spm="0000000cs" class="header-cart-num">0</i>
+                        <i data-spm="0000000ct" class="header-cart-icon iconfont icon-cart_new"></i>
+                    </a>
+                    <div data-spm="0000000cu" class="header-cart-info">                      </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</header>
+
+<div class="common-gdpr-container">
+		<div data-spm="0000001Bk" class="modal-cookie" style="display: none;">
+		<div data-spm="0000001Bl" class="cookie-pop-main">
+			<div data-spm="0000001Bm" class="cookie-pop-content">
+				<p data-spm="0000001Bn" class="cookie-content-1">
+					At Banggood, we uses cookies and other similar technologies to provide you with essential functionalities and for aggregated statistics.
+				</p>
+				<p data-spm="0000001Bo" class="cookie-content-2">
+					We also use optional cookies for a better experience with:
+				</p>
+				<ul data-spm="0000001Bp" class="cookie-content-3">
+					<li data-spm="0000001Bq">
+						·Optimise your navigation experience
+					</li>
+					<li data-spm="0000001Br">
+						·Measure and analyse the performance of our sites
+					</li>
+					<li data-spm="0000001Bs">
+						·Show you personalised content
+					</li>
+				</ul>
+				<div data-spm="0000001Bt"  class="cookie-content-4">
+					<p data-spm="0000001Bv">
+						You can choose not to allow some types of cookies via"Cookie Settings".</br>If you want to learn more about it, you can swipe to the bottom of the page to see the <a href="/help_center/question_category.html?catid=196&artid=2426" class="rule-prp" target="_blank">Privacy Policy</a>
+					</p>
+				</div>
+			</div>
+			<button data-spm="0000001Bw" class="cookie-setting">Cookie Settings</button>
+			<button data-spm="0000001Bx" class="confirm">Allow and Close</button>
+		</div>
+	</div>
+
+		<div data-spm="0000001By" class="modal modal-setting-cookie" style="display: none;">
+		<div data-spm="0000001Bz" class="setting-pop-main">
+			<h1 data-spm="0000001BA" class="setting-content-1">Welcome to Banggood,</h1>
+			<i data-spm="0000001BB" class="iconfont close2_new icon-close_new1 cookie-setting-close"></i>
+			<div data-spm="0000001BC" class="setting-content">
+			<p data-spm="0000001BD" class="setting-content-2">When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.</p>
+			<p data-spm="0000001BE" class="setting-content-2">Because we respect your right to privacy, you can choose not to allow some types of cookies. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.</p>
+			<h1 data-spm="0000001BF" class="setting-content-3">You Allow:</h1>
+			<div data-spm="0000001BG" class="checkbox">
+				<div data-spm="0000001BH" class="no-select">
+					<div data-spm="0000001BI" class="checkboxes iconfont icon-Select-new" name="strictly" id="strictly" ></div>
+				</div>
+				<div data-spm="0000001BJ" class="setting-content-4">
+					Strictly Necessary Cookies(Required)
+				</div>
+			</div>
+			<div data-spm="0000001BK" class="setting-content-5">
+				These cookies are necessary for you to browse our website and use its fundamental services,and they don't require your consent.These cookies allow us to offer you the essential functions of the website(account access,language used,order played,payment etc),and can also be used for identity verification and security.If you disable them,we will not able to fulfill your basic request.
+			</div>
+			<div data-spm="0000001BL" class="checkbox">
+				<div data-spm="0000001BM" class="checkboxes" name="statistics" id="statistics" ></div>
+				<div data-spm="0000001BN" class="setting-content-4">
+					Statistics Cookies
+				</div>
+			</div>
+			<div data-spm="0000001BO" class="setting-content-5">
+				These cookies collect anonymous information on your online operation behaviors that help us improve website construction. If you reject these cookies, you may not be able to use certain features of our websites and services.
+			</div>
+			<div data-spm="0000001BP" class="checkbox">
+				<div data-spm="0000001BQ" class="checkboxes" name="preferences" id="preferences" ></div>
+				<div data-spm="0000001BR" class="setting-content-4">
+					Preferences  Cookies
+				</div>
+			</div>
+			<div data-spm="0000001BS" class="setting-content-5">
+				These cookies allow us to remember the choices you have made about your preferences, such as what language you prefer. If you reject these cookies, you may feel that the efficiency of browsing the web has decreased.
+			</div>
+			<div data-spm="0000001BT" class="checkbox">
+				<div data-spm="0000001BU" class="checkboxes" name="marketing" id="marketing" ></div>
+				<div data-spm="0000001BV" class="setting-content-4">
+					Marketing  Cookies
+				</div>
+			</div>
+			<div data-spm="0000001BW" class="setting-content-5">
+				These cookies carry out personalized activities to advertise products and services which you are interested. If you reject these cookies, you will still see advertisements that are not much relevant to your interest or demand.
+			</div>
+			</div>
+			<div data-spm="0000001BX" class="setting-button">
+				<button data-spm="0000001BY" class="cancel">Confirm My Choices</button>
+				<button data-spm="0000001BZ" class="confirm">Allow All</button>
+			</div>

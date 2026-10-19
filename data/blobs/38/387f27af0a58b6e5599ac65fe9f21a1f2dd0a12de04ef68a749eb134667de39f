@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><script async="" id="dh-gpt-script" crossorigin="anonymous" src="https://www.googletagservices.com/tag/js/gpt.js"></script><title data-next-head="">404: This page could not be found</title><meta name="robots" content="max-image-preview:large"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="48x48" href="/_assets/img/favicon-48.png"/><link rel="icon" type="image/png" sizes="96x96" href="/_assets/img/favicon-96.png"/><link rel="icon" type="image/png" sizes="144x144" href="/_assets/img/favicon-144.png"/><link rel="icon" type="image/png" sizes="192x192" href="/_assets/img/favicon-192.png"/><link rel="apple-touch-icon" href="/_assets/img/favicon-192.png"/><link rel="preconnect" href="https://assets-news-bcdn.dailyhunt.in"/><link rel="dns-prefetch" href="https://assets-news-bcdn.dailyhunt.in"/><link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin="anonymous"/><link rel="preconnect" href="https://www.googletagservices.com" crossorigin="anonymous"/><link rel="dns-prefetch" href="https://securepubads.g.doubleclick.net"/><link rel="dns-prefetch" href="https://www.googletagservices.com"/><link rel="preload" as="script" href="https://www.googletagservices.com/tag/js/gpt.js" crossorigin="anonymous" fetchPriority="high"/><link rel="preload" href="/_dh/_next/static/css/e8ec406ffa02ebe8.css" as="style"/><script>window.googletag=window.googletag||{cmd:[]};</script><script>window.__DH_ATF_AD__={"divId":"div-gpt-ad-billboard-common-header","slotKey":"billboard","device":"desktop","adUnitPath":"/83414793/DH_web_desktop_billboard","adSize":[970,250],"targeting":{"lang":"en"},"auctionTimeoutMs":1200,"waitForOpenWrap":false};</script><script>
+(function () {
+  var a = window.__DH_ATF_AD__;
+  if (!a || !a.adUnitPath) return;
+  window.googletag = window.googletag || { cmd: [] };
+  var S = (window.__dhAtf = {
+    id: a.divId,
+    defined: false,
+    refreshed: false,
+    slot: null,
+    marks: {
+      gptCmd: null,
+      divFound: null,
+      owReady: null,
+      refresh: null,
+      timeout: null,
+      reason: null
+    },
+    summary: function () {
+      var m = S.marks || {};
+      return {
+        id: S.id,
+        defined: S.defined,
+        refreshed: S.refreshed,
+        reason: m.reason,
+        gptCmdMs: m.gptCmd,
+        divFoundMs: m.divFound,
+        owReadyMs: m.owReady,
+        refreshMs: m.refresh,
+        timeoutMs: m.timeout,
+        auctionStartMs: m.refresh,
+        waitForOpenWrap: a.waitForOpenWrap !== false
+      };
+    }
+  });
+  var waitTimer = null;
+  var pollTimer = null;
+  var waitForOpenWrap = a.waitForOpenWrap !== false;
+
+  function mark(key) {
+    try { S.marks[key] = Math.round(performance.now()); } catch (e) {}
+  }
+
+  function clearWait() {
+    if (waitTimer) {
+      try { clearTimeout(waitTimer); } catch (e) {}
+      waitTimer = null;
+    }
+    if (pollTimer) {
+      try { clearInterval(pollTimer); } catch (e) {}
+      pollTimer = null;
+    }
+  }
+
+  function isOwReady() {
+    return !!(window.owpbjs && window.owpbjs.libLoaded === true);
+  }
+
+  /**
+   * Single completion path: refresh exactly once.
+   * OpenWrap's hooked pubads.refresh runs auction + targeting when OW is on.
+   */
+  function finish(reason) {
+    if (S.refreshed) return;
+    clearWait();
+    window.googletag.cmd.push(function () {
+      if (S.refreshed) return;
+      try { S.marks.reason = reason || 'unknown'; } catch (e) {}
+      S.refreshed = true;
+      mark('refresh');
+      if (!S.slot) return;
+      try { window.googletag.pubads().refresh([S.slot]); } catch (e) {}
+    });
+  }
+
+  function runAuction() {
+    if (S.refreshed) return;
+
+    // PubMatic off: do not burn auctionTimeoutMs waiting for owpbjs.
+    if (!waitForOpenWrap) {
+      finish('no-ow');
+      return;
+    }
+
+    if (isOwReady()) {
+      mark('owReady');
+      finish('ow-ready');
+      return;
+    }
+
+    window.PWT = window.PWT || {};
+    if (!window.PWT.__dhAtfJsLoadedHooked) {
+      window.PWT.__dhAtfJsLoadedHooked = true;
+      var prev = window.PWT.jsLoaded;
+      window.PWT.jsLoaded = function () {
+        if (typeof prev === 'function') {
+          try { prev(); } catch (e) {}
+        }
+        runAuction();
+      };
+    }
+
+    if (!waitTimer) {
+      waitTimer = setTimeout(function () {
+        waitTimer = null;
+        mark('timeout');
+        finish('timeout');
+      }, a.auctionTimeoutMs || 1200);
+    }
+
+    if (!pollTimer) {
+      pollTimer = setInterval(function () {
+        if (S.refreshed) {
+          clearWait();
+          return;
+        }
+        if (isOwReady()) runAuction();
+      }, 100);
+    }
+  }
+
+  window.googletag.cmd.push(function () {
+    mark('gptCmd');
+    var pubads = window.googletag.pubads();
+    try {
+      pubads.disableInitialLoad();
+      pubads.enableSingleRequest();
+      pubads.collapseEmptyDivs();
+      if (a.targeting) {
+        for (var k in a.targeting) {
+          if (Object.prototype.hasOwnProperty.call(a.targeting, k)) {
+            pubads.setTargeting(k, String(a.targeting[k]));
+          }
+        }
+      }
+      window.googletag.enableServices();
+      var slot = window.googletag.defineSlot(a.adUnitPath, a.adSize, a.divId);
+      if (!slot) return;
+      slot.addService(pubads);
+      S.slot = slot;
+      S.defined = true;
+    } catch (e) { return; }
+
+    var tries = 0;
+    (function fire() {
+      if (S.refreshed) return;
+      if (document.getElementById(a.divId)) {
+        mark('divFound');
+        try { window.googletag.display(a.divId); } catch (e) {}
+        runAuction();
+        return;
+      }
+      if (tries++ > 40) return; // ~1s; early body shell should exist immediately
+      setTimeout(fire, 25);
+    })();
+  });
+})();
+</script><script>
+              (function() {
+                function removeDuplicateViewport() {
+                  if (typeof document === 'undefined') return;
+                  var viewportTags = document.querySelectorAll('meta[name="viewport"]');
+                  if (viewportTags.length > 1) {
+                    var keptOne = false;
+                    viewportTags.forEach(function(tag) {
+                      var content = tag.getAttribute('content') || '';
+                      if (content.indexOf('initial-scale=1') !== -1) {
+                        if (!keptOne) keptOne = true;
+                        else tag.remove();
+                      } else {
+                        tag.remove();
+                      }
+                    });
+                  }
+                }
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', removeDuplicateViewport);
+                } else {
+                  removeDuplicateViewport();
+                }
+              })();
+            </script><script>
+(function() {
+  try {
+    var manualMode = false;
+    var cookieStr = typeof document !== 'undefined' && document.cookie;
+    if (cookieStr) {
+      var match = cookieStr.match(/\bisDefaultSetting=([^;]*)/);
+      manualMode = match && match[1] === 'false';
+    }
+    var stored = typeof localStorage !== 'undefined' && localStorage.getItem('isDarkTheme');
+    var isDark;
+    var systemMatches = null;
+    if (manualMode && stored !== null && stored !== undefined) {
+      isDark = stored === 'true' || stored === true;
+    } else {
+      var q = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+      systemMatches = q ? q.matches : false;
+      isDark = systemMatches;
+    }
+    if (isDark) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+    document.cookie = 'isDarkTheme=' + isDark + '; path=/; max-age=31536000';
+  } catch (e) {}
+})();
+</script><script>
+            window.adRenderComplete = function(data) {
+              var adWrapperId = data.targetId;
+              var appW = document.getElementById("app") || document.getElementById("app2") || document.getElementById("__next");
+              if (!appW) return;
+              var event = new CustomEvent("HTMLEvents",
+                {detail: {adHeight:data.height,width:data.width,id:adWrapperId && adWrapperId.replace("ad_",""),data:data}});
+              event.initEvent("HTMLEvents", true, true);
+              appW.dispatchEvent(event);
+            };
+            window.addEventListener('adRendered', function(evt) {
+              var data = evt && evt.detail;
+              var adId = data.targetId;
+              var appWrap = document.getElementById("app") || document.getElementById("app2") || document.getElementById("__next");
+              if (!appWrap) return;
+              var event = new CustomEvent("HTMLEventsCheckEmpty",
+                {detail: {checkEmpty:data.isEmpty,id:adId && adId.replace("ad_",""),}});
+              if (data && data.isEmpty) {
+                event.initEvent("HTMLEventsCheckEmpty", true, true);
+                appWrap.dispatchEvent(event);
+              }
+            });
+          </script><link rel="stylesheet" href="/_dh/_next/static/css/e8ec406ffa02ebe8.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/_dh/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/_dh/_next/static/chunks/webpack-b6424d2aeeb8efef.js" defer=""></script><script src="/_dh/_next/static/chunks/framework-c609f9f01ad508c0.js" defer=""></script><script src="/_dh/_next/static/chunks/main-1b83081f771d651f.js" defer=""></script><script src="/_dh/_next/static/chunks/pages/_app-82834b8bfad42116.js" defer=""></script><script src="/_dh/_next/static/chunks/pages/_error-e7b0b376baa12f08.js" defer=""></script><script src="/_dh/_next/static/f7bfdea0f98de784a3bd48f022babc4957f8f08c/_buildManifest.js" defer=""></script><script src="/_dh/_next/static/f7bfdea0f98de784a3bd48f022babc4957f8f08c/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div style="font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="line-height:48px"><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}</style><h1 class="next-error-h1" style="display:inline-block;margin:0 20px 0 0;padding-right:23px;font-size:24px;font-weight:500;vertical-align:top">404</h1><div style="display:inline-block"><h2 style="font-size:14px;font-weight:400;line-height:28px">This page could not be found<!-- -->.</h2></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404,"hostname":"localhost"},"adSlotsConfig":{"adSlots":{"mrec_2":{"provider":"GAM"},"mrec_1":{"provider":"GAM"},"feed_pp1":{"provider":"GAM"},"skyscraper_left":{"provider":"GAM"},"slot_1x1":{"provider":"GAM"},"storypage4":{"provider":"GAM"},"billboard":{"provider":"GAM"},"feed_floating":{"provider":"GAM"},"feed_p1":{"provider":"GAM"},"leaderboard":{"provider":"GAM"},"feed_p0":{"provider":"GAM"},"supplement1":{"provider":"GAM"},"storypage3":{"provider":"GAM"},"storypage2":{"provider":"GAM"},"detail_floating":{"provider":"GAM"},"storypage1":{"provider":"GAM"},"skyscraper_right":{"provider":"GAM"},"sticky":{"provider":"GAM"}}},"adSlotsDevice":"desktop"},"page":"/_error","query":{},"buildId":"f7bfdea0f98de784a3bd48f022babc4957f8f08c","assetPrefix":"/_dh","isFallback":false,"isExperimentalCompile":false,"gip":true,"appGip":true,"scriptLoader":[]}</script></body></html>

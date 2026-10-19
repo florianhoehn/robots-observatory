@@ -1,0 +1,66 @@
+# Served synthetically at the CloudFront edge (JD-872); replaces the monolith
+# robots_www.txt on the visitor/listing hosts. Content subdomains (blog,
+# ugyfelszolgalat, karrier, sugo) are passthrough — they serve their own file.
+
+User-agent: CariBot
+Disallow: /
+
+# AI/LLM TRAINING crawlers: banned from the ad pages (listing/adview/landing),
+# allowed on the static content pages (decision 2026-07-03). Content
+# subdomains are not affected — this file is not served there.
+#
+# What stays here is the training/corpus side. The ANSWER-TIME agents are
+# deliberately absent (JD-1695): OAI-SearchBot, ChatGPT-User, PerplexityBot,
+# Perplexity-User, Claude-SearchBot and Claude-User cite the page and send a
+# real visitor, which is the opposite of a training scrape. Naming no group for
+# them is intentional — they fall through to `User-agent: *` below and get
+# exactly Googlebot's rules, including every parameter and pagination
+# restriction. Do NOT give them their own group: robots.txt groups do not
+# inherit, so a separate block would silently open the whole filtered URL space.
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: Claude-Web
+User-agent: ClaudeBot
+User-agent: GPTBot
+User-agent: Google-Extended
+User-agent: Meta-ExternalAgent
+User-agent: anthropic-ai
+User-agent: cohere-ai
+User-agent: meta-externalagent
+Disallow: /
+Allow: /adathalaszat
+Allow: /atlathatosagi-jelentes
+Allow: /informaciok-nyilatkozatokrol
+Allow: /nyilatkozatok
+
+User-agent: *
+Disallow: /aw
+Disallow: /aw/
+Disallow: /aw?
+Disallow: /aw/?
+Disallow: /pg
+Disallow: /pg/
+Disallow: /pg?
+Disallow: /pg/?
+# The parameter space is kept out of the index by `noindex, follow` on the page
+# itself (JD-1696), not from here. A `Disallow` cannot remove a URL Google has
+# already indexed — it only stops the re-crawl that would let Google SEE the
+# noindex, so the URL stays in the index without content. That is what put
+# 255,173 URLs in GSC's "Indexed, though blocked by robots.txt" bucket, still
+# climbing when it was measured (220k eleven days earlier).
+#
+# Removing these lines is therefore the point: Googlebot fetches the filtered,
+# keyword and paginated variants, reads `noindex` and drops them. The
+# deep-pagination pair below (`Disallow: /*?o=` plus the `?o=1..9` Allow list)
+# went with them — dominion noindexes EVERY page past the first, so blocking
+# the deeper ones only froze them in the index.
+#
+# Precondition, verified before this shipped: every visitor host must serve the
+# listing from dominion, because that is the only place `shouldNoindexListing`
+# is wired in. A monolith-served host answers with `noarchive` alone, so
+# unblocking it would make its parameter space crawlable AND indexable.
+#
+Allow: /sitemap.xml
+
+Sitemap: https://www.jofogas.hu/sitemap.xml

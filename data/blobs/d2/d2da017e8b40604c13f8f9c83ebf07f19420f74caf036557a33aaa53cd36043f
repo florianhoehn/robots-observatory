@@ -1,0 +1,688 @@
+<!doctype html>
+
+<html lang="en-US" class="no-js">
+<head>
+	<meta name="msvalidate.01" content="298C4E16EC469EBD498A4C5940ED3C5F" />
+	<link rel="preconnect" href="//consent.cookiefirst.com" />
+	<link rel="preconnect" href="//staticsite.cookiefirst.com" />
+	<link rel="dns-prefetch" href="//edge.cookiefirst.com" />
+	<link rel="dns-prefetch" href="//api.cookiefirst.com" />
+	<link rel="dns-prefetch" href="//staticsite.cookiefirst.com" />
+
+<!-- SignalStream -->
+<script>
+  window.SignalStreamConfig = {
+    siteId: 'b5d0c4f8-5ded-44d9-a514-078d9e90a6d7',
+    endpoint: 'https://data.cookiefirst.com',
+    signingSecret: 'a1c3bf15faae6c2aebf55cca7b8f858cc3c6dbe922f0e99743f15767da68742c',
+    cmpType: 'cookiefirst'
+  };
+  (function(w){
+var p=[],uid=function(){return crypto.randomUUID?crypto.randomUUID():
+([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){
+return(c^(crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4)).toString(16)})};
+function patch(q,cmds,idx,key){
+if(!q||!q.length)return;
+for(var i=0;i<q.length;i++){
+var e=q[i];if(!e||e.length<2)continue;
+if(cmds.indexOf(e[0])<0)continue;
+if(!e[idx])e[idx]={};
+if(!e[idx][key]){var id=uid();e[idx][key]=id;
+if(e.length<=idx)e.length=idx+1;
+p.push({n:e[1],id:id,d:e[2]||{}})}
+}
+}
+function hookPush(q,cmds,idx,key){
+if(!q)return;
+var orig=q.push;
+q.push=function(){
+for(var a=0;a<arguments.length;a++){
+var e=arguments[a];
+if(e&&e.length>=2&&cmds.indexOf(e[0])>=0){
+if(!e[idx])e[idx]={};
+if(!e[idx][key]){var id=uid();e[idx][key]=id;
+if(e.length<=idx)e.length=idx+1;
+p.push({n:e[1],id:id,d:e[2]||{}});
+w.__ssInterceptedEvents=p}
+}
+}
+return orig.apply(q,arguments)};
+}
+function patchFbq(f){
+if(!f)return;
+patch(f.queue,['track','trackCustom'],3,'eventID');
+hookPush(f.queue,['track','trackCustom'],3,'eventID');
+}
+function patchOther(){
+var t=w.ttq;if(t&&Array.isArray(t))patch(t,['track'],3,'event_id');
+var s=w.snaptr;if(s)patch(s.queue,['track'],2,'event_id');
+var n=w.pintrk;if(n)patch(n.queue,['track'],2,'event_id');
+}
+var f=w.fbq;
+if(f){patchFbq(f);patchOther()}
+else{
+var val;
+Object.defineProperty(w,'fbq',{configurable:true,
+get:function(){return val},
+set:function(v){val=v;
+if(typeof v==='function'){
+Promise.resolve().then(function(){patchFbq(w.fbq);patchOther();
+if(p.length)w.__ssInterceptedEvents=p});
+Object.defineProperty(w,'fbq',{value:v,writable:true,configurable:true})}}});
+}
+if(p.length)w.__ssInterceptedEvents=p;
+})(window);
+</script>
+<script src="https://data.cookiefirst.com/sdk.js" async></script>
+
+	<script>
+		(function () {
+  var MSCLKID_KEY = "msclkid";
+  var MSCLKID_VALUE = new URL(window.location).searchParams.get(MSCLKID_KEY);
+  if (!MSCLKID_VALUE) {
+    return;
+  }
+  function docReady(fn) {
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
+      setTimeout(fn, 1);
+    } else {
+      document.addEventListener("DOMContentLoaded", fn);
+    }
+  }
+
+  docReady(function () {
+    var links = document.querySelectorAll('a[href*="cookiefirst.com"]');
+    links.forEach(function (link) {
+      if (link.href.indexOf(MSCLKID_VALUE) < 0) {
+        var href = new URL(link.href);
+        href.searchParams.set(MSCLKID_KEY, MSCLKID_VALUE);
+        link.href = href.toString();
+      }
+    });
+  });
+})();
+	
+	</script>
+	<script src="//cookiefirst.com/wp-content/themes/cookiefirst/scripts/track.js"></script>
+<script src="https://consent.cookiefirst.com/sites/cookiefirst.com-5ba84e88-816a-41b8-88b3-e8ec9218d098/consent.js"></script>	
+	
+<!-- Remove cookies after withdrawal -->
+	<script>
+	(function () {
+  window.cf_delete_cookie =
+    window.cf_delete_cookie ||
+    function (cookie) {
+      var name = cookie.unmasked_name || cookie.name;
+      var path = cookie.path || "/";
+      var domain = cookie.host_key || "";
+      //console.log("cookie for removal", { name });
+      document.cookie = `${name}= ; expires = Thu, 01 Jan 1970 00:00:00 GMT; path= ${path}; domain=${domain};`;
+      if (window.localStorage.getItem(name)) {
+        window.localStorage.removeItem(name);
+      }
+      if (window.sessionStorage.getItem(name)) {
+        window.sessionStorage.removeItem(name);
+      }
+    };
+
+  function remove_cookies(consent = {}) {
+    if (typeof consent !== "object") {
+      throw new Error("Uknnown error");
+    }
+
+    window.CookieFirst.fetchLatestScan()
+      .then(function (result) {
+        if (!result || !Array.isArray(result.cookies)) {
+          return;
+        }
+
+        result.cookies.forEach(function (cookie) {
+          // category accepted or cookie is http_only
+          if (consent[cookie.cat] || cookie.http_only) {
+            return;
+          }
+
+          window.cf_delete_cookie(cookie);
+        });
+      })
+      .catch(console.log);
+  }
+
+  function handle_consent_event(e) {
+    var consent = e.detail || { necessary: true };
+    if (!window.CookieFirst) {
+      window.addEventListener("cf_init", function () {
+        remove_cookies(consent);
+      });
+      return;
+    }
+
+    remove_cookies(consent);
+  }
+
+  window.addEventListener("cf_consent", handle_consent_event);
+  window.addEventListener("cf_consent_loaded", handle_consent_event);
+})();
+	</script>
+<!-- End of helper script to remove cookies -->		
+
+		
+<script type="text/plain" data-cookiefirst-category="functional" data-src="https://script.tapfiliate.com/tapfiliate.js"></script>
+<script defer type="text/plain" data-cookiefirst-category="functional">
+      (function(t,a,p){t.TapfiliateObject=a;t[a]=t[a]||function(){
+      (t[a].q=t[a].q||[]).push(arguments)}})(window,'tap');
+      tap('create', '12250-689ed4', { integration: "stripe" });
+      tap('detect');
+</script>
+
+		
+	
+
+
+
+	
+<!-- Meta Tags -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=1" />
+	
+
+<!--Shortcut icon-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name='robots' content='noindex, follow' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	
+	<!-- This site is optimized with the Yoast SEO Premium plugin v26.9 (Yoast SEO v26.9) - https://yoast.com/product/yoast-seo-premium-wordpress/ -->
+	<title>Page not found - CookieFirst - Cookie Consent Management</title>
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:title" content="Page not found - CookieFirst - Cookie Consent Management" />
+	<meta property="og:site_name" content="CookieFirst - Cookie Consent Management" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://cookiefirst.com/#website","url":"https://cookiefirst.com/","name":"CookieFirst - Cookie Consent Management","description":"GDPR, CCPA and ePrivacy Compliance made easy","publisher":{"@id":"https://cookiefirst.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cookiefirst.com/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://cookiefirst.com/#organization","name":"CookieFirst","url":"https://cookiefirst.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://cookiefirst.com/#/schema/logo/image/","url":"https://cookiefirst.com/wp-content/uploads/2026/03/cookiefirst-iubenda-blue-2026x2-1.png","contentUrl":"https://cookiefirst.com/wp-content/uploads/2026/03/cookiefirst-iubenda-blue-2026x2-1.png","width":500,"height":133,"caption":"CookieFirst"},"image":{"@id":"https://cookiefirst.com/#/schema/logo/image/"},"sameAs":["https://x.com/cookie_first"],"legalName":"Digital Data Solutions BV"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="CookieFirst - Cookie Consent Management &raquo; Feed" href="https://cookiefirst.com/feed/" />
+<link rel="preload" href="https://cookiefirst.com/wp-content/themes/salient/css/fonts/icomoon.woff?v=1.4" as="font" type="font/woff" crossorigin="anonymous"><style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<link rel='stylesheet' id='betterdocs-blocks-category-slate-layout-css' href='https://cookiefirst.com/wp-content/plugins/betterdocs/assets/blocks/category-slate-layout/default.css?ver=4.3.6' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='font-awesome-css' href='https://cookiefirst.com/wp-content/themes/salient/css/font-awesome.min.css?ver=4.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='parent-style-css' href='https://cookiefirst.com/wp-content/themes/salient/style.css?ver=15.0.8' type='text/css' media='all' />
+<link rel='stylesheet' id='salient-grid-system-css' href='https://cookiefirst.com/wp-content/themes/salient/css/build/grid-system.css?ver=15.0.8' type='text/css' media='all' />
+<link rel='stylesheet' id='main-styles-css' href='https://cookiefirst.com/wp-content/themes/salient/css/build/style.css?ver=15.0.8' type='text/css' media='all' />
+<style id='main-styles-inline-css' type='text/css'>
+
+		@font-face{
+		     font-family:'Open Sans';
+		     src:url('https://cookiefirst.com/wp-content/themes/salient/css/fonts/OpenSans-Light.woff') format('woff');
+		     font-weight:300;
+		     font-style:normal; font-display: swap;
+		}
+		 @font-face{
+		     font-family:'Open Sans';
+		     src:url('https://cookiefirst.com/wp-content/themes/salient/css/fonts/OpenSans-Regular.woff') format('woff');
+		     font-weight:400;
+		     font-style:normal; font-display: swap;
+		}
+		 @font-face{
+		     font-family:'Open Sans';
+		     src:url('https://cookiefirst.com/wp-content/themes/salient/css/fonts/OpenSans-SemiBold.woff') format('woff');
+		     font-weight:600;
+		     font-style:normal; font-display: swap;
+		}
+		 @font-face{
+		     font-family:'Open Sans';
+		     src:url('https://cookiefirst.com/wp-content/themes/salient/css/fonts/OpenSans-Bold.woff') format('woff');
+		     font-weight:700;
+		     font-style:normal; font-display: swap;
+		}
+
+		#error-404{
+		  text-align:center;
+		  padding: 10% 0;
+		  position: relative;
+		  z-index: 10;
+		}
+		body.error {
+		  padding: 0;
+		}
+		body #error-404[data-cc="true"] h1,
+		body #error-404[data-cc="true"] h2,
+		body #error-404[data-cc="true"] p {
+		  color: inherit;
+		}
+		body.error404 .error-404-bg-img,
+		body.error404 .error-404-bg-img-overlay {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  background-size: cover;
+		  background-position: 50%;
+		  z-index: 1;
+		}
+		body.error404 .error-404-bg-img-overlay {
+		  opacity: 0.8;
+		}
+		body #error-404 h1,
+		body #error-404 h2 {
+		  font-family: "Open Sans";
+		  font-weight:700
+		}
+		body #ajax-content-wrap #error-404 h1 {
+		  font-size:250px;
+		  line-height:250px;
+		}
+		body #ajax-content-wrap #error-404 h2 {
+		  font-size:54px;
+		}
+		body #error-404 .nectar-button {
+		  margin-top: 50px;
+		}
+
+		@media only screen and (max-width : 690px) {
+
+			body .row #error-404 h1,
+			body #ajax-content-wrap #error-404 h1 {
+				font-size: 150px;
+				line-height: 150px;
+			}
+
+			body #ajax-content-wrap #error-404 h2 {
+				font-size: 32px;
+			}
+
+			body .row #error-404 {
+				margin-bottom: 0;
+			}
+		}
+		
+</style>
+<link rel='stylesheet' id='responsive-css' href='https://cookiefirst.com/wp-content/themes/salient/css/build/responsive.css?ver=15.0.8' type='text/css' media='all' />
+<link rel='stylesheet' id='select2-css' href='https://cookiefirst.com/wp-content/themes/salient/css/build/plugins/select2.css?ver=4.0.1' type='text/css' media='all' />
+<link rel='stylesheet' id='skin-original-css' href='https://cookiefirst.com/wp-content/themes/salient/css/build/skin-original.css?ver=15.0.8' type='text/css' media='all' />
+<link rel='stylesheet' id='salient-wp-menu-dynamic-css' href='https://cookiefirst.com/wp-content/uploads/salient/menu-dynamic.css?ver=44568' type='text/css' media='all' />
+<link rel='stylesheet' id='dynamic-css-css' href='https://cookiefirst.com/wp-content/themes/salient/css/salient-dynamic-styles.css?ver=88903' type='text/css' media='all' />
+<style id='dynamic-css-inline-css' type='text/css'>
+@media only screen and (min-width:1000px){body #ajax-content-wrap.no-scroll{min-height:calc(100vh - 116px);height:calc(100vh - 116px)!important;}}@media only screen and (min-width:1000px){#page-header-wrap.fullscreen-header,#page-header-wrap.fullscreen-header #page-header-bg,html:not(.nectar-box-roll-loaded) .nectar-box-roll > #page-header-bg.fullscreen-header,.nectar_fullscreen_zoom_recent_projects,#nectar_fullscreen_rows:not(.afterLoaded) > div{height:calc(100vh - 115px);}.wpb_row.vc_row-o-full-height.top-level,.wpb_row.vc_row-o-full-height.top-level > .col.span_12{min-height:calc(100vh - 115px);}html:not(.nectar-box-roll-loaded) .nectar-box-roll > #page-header-bg.fullscreen-header{top:116px;}.nectar-slider-wrap[data-fullscreen="true"]:not(.loaded),.nectar-slider-wrap[data-fullscreen="true"]:not(.loaded) .swiper-container{height:calc(100vh - 114px)!important;}.admin-bar .nectar-slider-wrap[data-fullscreen="true"]:not(.loaded),.admin-bar .nectar-slider-wrap[data-fullscreen="true"]:not(.loaded) .swiper-container{height:calc(100vh - 114px - 32px)!important;}}.admin-bar[class*="page-template-template-no-header"] .wpb_row.vc_row-o-full-height.top-level,.admin-bar[class*="page-template-template-no-header"] .wpb_row.vc_row-o-full-height.top-level > .col.span_12{min-height:calc(100vh - 32px);}body[class*="page-template-template-no-header"] .wpb_row.vc_row-o-full-height.top-level,body[class*="page-template-template-no-header"] .wpb_row.vc_row-o-full-height.top-level > .col.span_12{min-height:100vh;}@media only screen and (max-width:999px){.using-mobile-browser #nectar_fullscreen_rows:not(.afterLoaded):not([data-mobile-disable="on"]) > div{height:calc(100vh - 116px);}.using-mobile-browser .wpb_row.vc_row-o-full-height.top-level,.using-mobile-browser .wpb_row.vc_row-o-full-height.top-level > .col.span_12,[data-permanent-transparent="1"].using-mobile-browser .wpb_row.vc_row-o-full-height.top-level,[data-permanent-transparent="1"].using-mobile-browser .wpb_row.vc_row-o-full-height.top-level > .col.span_12{min-height:calc(100vh - 116px);}html:not(.nectar-box-roll-loaded) .nectar-box-roll > #page-header-bg.fullscreen-header,.nectar_fullscreen_zoom_recent_projects,.nectar-slider-wrap[data-fullscreen="true"]:not(.loaded),.nectar-slider-wrap[data-fullscreen="true"]:not(.loaded) .swiper-container,#nectar_fullscreen_rows:not(.afterLoaded):not([data-mobile-disable="on"]) > div{height:calc(100vh - 63px);}.wpb_row.vc_row-o-full-height.top-level,.wpb_row.vc_row-o-full-height.top-level > .col.span_12{min-height:calc(100vh - 63px);}body[data-transparent-header="false"] #ajax-content-wrap.no-scroll{min-height:calc(100vh - 63px);height:calc(100vh - 63px);}}.screen-reader-text,.nectar-skip-to-content:not(:focus){border:0;clip:rect(1px,1px,1px,1px);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important;}.row .col img:not([srcset]){width:auto;}.row .col img.img-with-animation.nectar-lazy:not([srcset]){width:100%;}
+.gform_wrapper .gfield_required {
+    display:none;
+}
+.gform_wrapper input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+#call-to-action span {
+    font-size:25px!important;
+    line-height:30px!important;
+}
+.CookieWidgetContent_text__1XPft p:last-child {
+    font-size:12px!important;
+}
+</style>
+<link rel='stylesheet' id='salient-child-style-css' href='https://cookiefirst.com/wp-content/themes/cookiefirst/style.css?ver=15.0.8' type='text/css' media='all' />
+<script type="text/javascript" src="https://cookiefirst.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://cookiefirst.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<link rel="https://api.w.org/" href="https://cookiefirst.com/wp-json/" /><script type="text/javascript"> var root = document.getElementsByTagName( "html" )[0]; root.setAttribute( "class", "js" ); </script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress."/>
+<link rel="icon" href="https://cookiefirst.com/wp-content/uploads/2019/08/cropped-favicon-1-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://cookiefirst.com/wp-content/uploads/2019/08/cropped-favicon-1-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://cookiefirst.com/wp-content/uploads/2019/08/cropped-favicon-1-180x180.png" />
+<meta name="msapplication-TileImage" content="https://cookiefirst.com/wp-content/uploads/2019/08/cropped-favicon-1-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			@import url(https://fonts.bunny.net/css?family=source-sans-pro:300,300i,400,400i,600,600i,700,700i);
+
+/* Mobile menu */
+
+
+#slide-out-widget-area {
+    background-color:#f4f5f7;
+}
+
+#slide-out-widget-area .inner .off-canvas-menu-container li a {
+    color:#100160 !important;
+    line-height:25px;
+}
+
+#slide-out-widget-area.slide-out-from-right .off-canvas-menu-container li {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+body #slide-out-widget-area .slide_out_area_close .icon-default-style {
+    color:#100160!important;
+}
+
+
+/* Header styles */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 700;
+font-style: normal;
+}
+.page-submenu li a {
+	font-family: 'Source Sans Pro', Open Sans, sans-serif!important;
+	font-weight: 600;
+	font-size:14px;
+}
+#page-header-bg .subheader {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+
+@media (max-width:480px) {
+#page-header-bg .subheader {
+font-size:20px;
+ }
+} 
+
+p, body {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 400;
+font-style: normal;
+	font-size:15px;
+}
+
+.bold, strong, b {
+		font-family: 'Source Sans Pro', 'Arial', sans-serif;
+font-weight: 600;
+}
+
+span {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
+h2.blue {
+	color:#0d56c9;
+}
+
+h3.blue {
+	color:#0d56c9;
+}
+
+h4.blue {
+	color:#0d56c9;
+}
+
+#page-header-bg h1, body h1, body .row .col.section-title h1, .full-width-content .nectar-recent-posts-slider .recent-post-container .inner-wrap h2, body #error-404 h1 {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 700;
+font-style: normal;
+	letter-spacing:0px;
+}
+
+.toggle>.toggle-title a {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 700;
+font-style: normal;
+}
+
+
+
+#call-to-action span {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+
+header#top nav ul li a {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 600;
+font-style: normal;
+}
+
+img.size-50 {
+    width:50px!important;
+    height:auto;
+}
+
+/* Navigation Desktop */
+
+header#top nav ul li a {
+	color:#222;
+}
+
+@media (min-width:1000px) {
+#header-outer[data-box-shadow="small"] {
+	box-shadow:none;
+-webkit-box-shadow: none;
+}
+}
+
+.small-nav {
+	box-shadow: 0 0 3px 0 rgba(0,0,0,0.22)!important;
+-webkit-box-shadow: 0 0 3px 0 rgba(0,0,0,0.22)!important;
+}
+
+body[data-header-color="light"]:not([data-header-format="left-header"]) #header-outer:not(.transparent) .sf-menu >li ul {
+	background:#f2f2f2;
+}
+
+/* Nav Mobile */
+
+#slide-out-widget-area .menuwrapper li {
+	margin-bottom: 15px;
+}
+
+#slide-out-widget-area .inner .off-canvas-menu-container li a {
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+font-weight: 600;
+font-style: normal;
+	font-size: 20px;
+color: #100160 !important;
+}
+
+#slide-out-widget-area.slide-out-from-right .inner .off-canvas-menu-container li a {
+	opacity:1;
+}
+
+#slide-out-widget-area .menuwrapper li:nth-child(6) {
+	margin-bottom:35px!important;
+}
+
+@media (max-width:1000px) {
+#header-outer {
+box-shadow: rgba(0, 0, 0, 0.22) 0px 0px 3px 0px!important;
+}
+	.lang-item {
+		display:inline!important;
+	}
+	.lang-item a img {
+		width:20px;
+		height:14px;
+		margin-right:15px;
+	} 
+}
+
+/* Language Switch */
+
+.pll-parent-menu-item img {
+	margin-bottom:0px!important;
+}
+
+.row .col img:not([srcset]) {
+	margin-bottom:0;
+}
+
+@media (min-width:1000px){
+	.lang-item a img {
+		width:16px!important;
+		height:11px!important;
+		margin-right:0px;
+	}
+}
+
+.subscribeCTA {
+	text-align:center;
+}
+
+/* Pink CTA */
+
+#call-to-action .container span {
+	margin-bottom:20px;
+}
+
+/* CTA */
+
+@media(max-width:768px) {
+	#subscribe {
+	padding-top:20px!important;
+		padding-bottom:10px!important;
+	}
+} 
+
+@media (min-width:768px) {
+	.plans-button-cta {
+		margin-left:10px;
+	}
+}
+
+/* CTA bottom */
+
+#call-to-action .container a {
+margin-left:auto;
+margin-right:auto;
+}
+
+#call-to-action .container span {
+padding-left: 15px;
+padding-right: 15px;
+}
+
+/* Home page */
+
+.nectar-fancy-box[data-style="color_box_hover"] .box-inner-wrap {
+	padding:10% 12%;
+}
+
+/* Landing pages */
+
+@media (max-width:1000px) {
+	body:not(.single-post) #page-header-bg[data-padding-amt="low"]:not(.fullscreen-header) {
+		padding-top:20%;
+		padding-bottom:5%;
+	}
+}
+
+@media (min-width:480px) {
+.padded-top {
+    padding-top:80px!important;
+}
+	.top-content-container {
+		padding-top:80px!important;
+		padding-bottom:80px!important;
+	}
+}
+
+@media (max-width:480px) {
+    .padded-top {
+    padding-top:20px!important;
+}
+	#page-header-bg[data-text-effect="rotate_in"] > div:not(.nectar-particles) .span_6 .inner-wrap > :not(.top-heading) {
+		font-size: 18px;
+line-height: 18px;
+	}
+	.top-content-container {
+		padding-top:20px!important;
+		padding-bottom:20px!important;
+	}
+}
+
+/* Pricing section */
+
+/* .pricing-column-content ul li:nth-child(10) {
+display:none;
+} */
+
+.pricing-table[data-style="flat-alternative"].four-cols .pricing-column, body .pricing-table[data-style="flat-alternative"].four-cols .pricing-column.highlight {
+	padding:30px;
+}
+
+.pricing-table[data-style="flat-alternative"] .nectar-button {
+width: 100%;
+text-align: center;
+}
+
+table.comparison td {
+	width:20%;
+font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
+table.comparison td {
+	text-align:center;
+	vertical-align:middle;
+	line-height:18px;
+}
+
+table.comparison th {
+	text-align:center!important;
+	font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
+table.comparison td:nth-child(1) {
+	text-align:right;
+}
+
+table.comparison img {
+	width:35px;
+	height:35px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.comparison-wrapper {
+	margin-bottom:0px;
+}
+
+@media (max-width:480px) {
+	.comparison-wrapper {
+		overflow-x: auto;
+	}
+	table.comparison {
+		width: 600px!important;
+	}
+}
+
+@media (min-width:480px) {
+	.swipetable{
+		display:none;
+	}
+}
+
+@keyframes animate-1 {
+  0%, 100% { 
+		transform: translatex(30px); 
+		opacity: 1;
+	}
+	
+  40%, 50% { 
+		transform: translateY(0);
+		opacity: 0;
+	}
+}
+
+.swipetable {
+		animation: animate-1 3s infinite;
+	margin-bottom:8px!important;
+}
+
+.legend {
+	width:480px!important;
+}
+
+.legend-icon,

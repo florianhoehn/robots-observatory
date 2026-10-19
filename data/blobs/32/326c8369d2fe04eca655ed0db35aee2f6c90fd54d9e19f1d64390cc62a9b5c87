@@ -1,0 +1,21 @@
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-login.php
+Disallow: /page/*
+Disallow: /amp/page/*
+Disallow: /author/*
+Disallow: /slide-2*
+Disallow: /sin-categoria*
+Disallow: /sample-feature-request*
+Disallow: /aeol-vivir-mas*
+Disallow: /simuladores-de-conduccion/
+Disallow: /simuladores-para-autoescuelas/
+Disallow: /sitemap/
+Disallow: /wp-content/plugins/asesor-cookies-para-la-ley-en-espana/*
+Disallow: /tablon-de-anuncios/*
+Disallow: /?s=*
+Disallow: /como-conseguir-claves-test-aeol-cloud-gratis/whatsapp-image-20160714/
+Disallow: /promo-loteria-navidad-aeol/whatsapp-image-2016-11-21-at-09-54-32/
+
+Sitemap: https://aeolservice.es/sitemap.xml

@@ -1,0 +1,141 @@
+# robots.txt for https://www.weatherbug.com/
+user-agent: *
+
+# Disallow: /ad/ #Container for ad files
+Disallow: /O.*Z #Fix for robots thinking alert IDs are links
+# Disallow: /api/ #block Api crawling
+Disallow: /corporate/ #Fix for old corporate links
+
+# Default: block /markdown
+Disallow: /markdown/weather-forecast/10-day-weather/*
+
+# Limit local page exposure
+Allow: /maps/*
+Disallow: /privacyfeedback
+
+# Allow national pages
+Allow: ****************************************************************************************/alerts$
+Allow: ****************************************************************************************/alerts/weather$
+Allow: ****************************************************************************************/alerts/lightning$
+Allow: ****************************************************************************************/alerts/hurricane$
+Allow: ****************************************************************************************/alerts/fire$
+Allow: ****************************************************************************************/alerts/pollen$
+Allow: ****************************************************************************************/alerts/air-quality$
+Allow: ****************************************************************************************/alerts/severe-storm-risk$
+Allow: ****************************************************************************************/life/pollen$
+Allow: ****************************************************************************************/life/cold-flu$
+Allow: ****************************************************************************************/life/outdoor-sports$
+Allow: ****************************************************************************************/air-quality$
+
+
+# Disallow specific localized pages 
+Disallow: *********************************************************/alerts/weather/*
+Disallow: *********************************************************/life/travel/*
+
+# Allow specific localized alerts pages
+Allow: *********************************************************/alerts/* 
+Allow: *********************************************************/alerts/air-quality/*
+Allow: *********************************************************/alerts/pollen/*
+Allow: *********************************************************/alerts/severe-storm-risk/*
+Allow: *********************************************************/alerts/hurricane/*
+Allow: *********************************************************/alerts/fire/*
+Allow: *********************************************************/alerts/lightning/*
+
+# Allow specific localized Life pages
+Allow: *********************************************************/life/pollen/*
+Allow: *********************************************************/life/outdoor-sports/*
+
+# Allow localized Air quality pages
+Allow: *********************************************************/air-quality/*
+
+Allow: *******************************/*-ak-*
+Allow: *******************************/*-al-*
+Allow: *******************************/*-ar-*
+Allow: *******************************/*-az-*
+Allow: *******************************/*-ca-*
+Allow: *******************************/*-co-*
+Allow: *******************************/*-ct-*
+Allow: *******************************/*-de-*
+Allow: *******************************/*-dc-*
+Allow: *******************************/*-fl-*
+Allow: *******************************/*-ga-*
+Allow: *******************************/*-hi-*
+Allow: *******************************/*-id-*
+Allow: *******************************/*-il-*
+Allow: *******************************/*-in-*
+Allow: *******************************/*-ia-*
+Allow: *******************************/*-ks-*
+Allow: *******************************/*-ky-*
+Allow: *******************************/*-la-*
+Allow: *******************************/*-me-*
+Allow: *******************************/*-md-*
+Allow: *******************************/*-ma-*
+Allow: *******************************/*-mi-*
+Allow: *******************************/*-mn-*
+Allow: *******************************/*-ms-*
+Allow: *******************************/*-mo-*
+Allow: *******************************/*-mt-*
+Allow: *******************************/*-ne-*
+Allow: *******************************/*-nv-*
+Allow: *******************************/*-nh-*
+Allow: *******************************/*-nj-*
+Allow: *******************************/*-nm-*
+Allow: *******************************/*-ny-*
+Allow: *******************************/*-nc-*
+Allow: *******************************/*-nd-*
+Allow: *******************************/*-oh-*
+Allow: *******************************/*-ok-*
+Allow: *******************************/*-or-*
+Allow: *******************************/*-pa-*
+Allow: *******************************/*-ri-*
+Allow: *******************************/*-sc-*
+Allow: *******************************/*-sd-*
+Allow: *******************************/*-tn-*
+Allow: *******************************/*-tx-*
+Allow: *******************************/*-ut-*
+Allow: *******************************/*-vt-*
+Allow: *******************************/*-va-*
+Allow: *******************************/*-wa-*
+Allow: *******************************/*-wv-*
+Allow: *******************************/*-wi-*
+Allow: *******************************/*-wy-*
+
+
+# Sitemap: https://www.weatherbug.com/sitemap.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/usa-hour-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/usa-sixhour-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/usa-threehour-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/usa-twentyfourhour-sitemap-index.xml
+
+Sitemap: https://www.weatherbug.com/seo-sitemaps/nonusa-hour-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/nonusa-sixhour-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/nonusa-threehour-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/nonusa-twentyfourhour-sitemap-index.xml
+
+Sitemap: https://www.weatherbug.com/seo-sitemaps/news-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/hurricane-sitemap-index.xml
+Sitemap: https://www.weatherbug.com/seo-sitemaps/video-sitemap-index.xml
+
+
+# AI bot access for /markdown/ markdown alternates
+
+# OpenAI - search and user-initiated retrieval only
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic - search and user-initiated retrieval only
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity - index and user-initiated retrieval only
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity‑User
+Allow: /

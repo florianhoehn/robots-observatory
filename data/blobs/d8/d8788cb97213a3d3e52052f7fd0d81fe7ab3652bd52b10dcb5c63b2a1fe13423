@@ -1,0 +1,244 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "BuiltWith",
+  "description": "BuiltWith is a website technology intelligence agent with API-key access and accountless x402 v2 access paid in USDC on Base. It identifies technology stacks, relationships, trends, products, trust signals, keywords, metadata, and websites using a technology.",
+  "url": "https://api.builtwith.com/mcp",
+  "preferredTransport": "HTTP+JSON",
+  "iconUrl": "https://builtwith.com/favicon.ico",
+  "version": "1.4.0",
+  "documentationUrl": "https://api.builtwith.com/llms.txt",
+  "provider": {
+    "organization": "BuiltWith Pty Ltd",
+    "url": "https://builtwith.com"
+  },
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "defaultInputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "securitySchemes": {
+    "builtwithApiKey": {
+      "type": "http",
+      "scheme": "bearer",
+      "description": "Bring your own BuiltWith API key. Send it as: Authorization: Bearer YOUR_BUILTWITH_API_KEY. Get a key at https://builtwith.com/api."
+    },
+    "x402Payment": {
+      "type": "http",
+      "scheme": "x402",
+      "description": "Accountless x402 v2 payment using USDC on Base. For one-off HTTP calls, answer PAYMENT-REQUIRED with PAYMENT-SIGNATURE. For repeated MCP calls, purchase lookup units and use the returned creditKey. See https://api.builtwith.com/x402-api."
+    }
+  },
+  "security": [
+    {
+      "builtwithApiKey": []
+    },
+    {
+      "x402Payment": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "x402-usdc-access",
+      "name": "Accountless x402 USDC access",
+      "description": "Run fixed-price BuiltWith lookups without an account or API key. Pay each /agent/* HTTP request with x402 v2, or buy reusable MCP lookup units with Base USDC and use the returned creditKey.",
+      "tags": [
+        "x402",
+        "USDC",
+        "Base",
+        "pay-per-call",
+        "accountless"
+      ],
+      "examples": [
+        "Use USDC to look up the technologies on example.com without a BuiltWith account",
+        "Discover BuiltWith's x402 pay-per-call API",
+        "Buy reusable BuiltWith MCP lookup units with Base USDC"
+      ],
+      "inputModes": [
+        "text/plain",
+        "application/json"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "domain-technology-profile",
+      "name": "Domain technology profile",
+      "description": "Look up the full technology stack detected on a website, including current and historical technologies, first/last detected dates, categories, and metadata.",
+      "tags": [
+        "technology-lookup",
+        "tech-stack",
+        "domain",
+        "metadata"
+      ],
+      "examples": [
+        "What technologies does shopify.com use?",
+        "Show the full tech profile and metadata for stripe.com",
+        "When did example.com start using Cloudflare?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "technology-changes",
+      "name": "Technology change tracking",
+      "description": "Report technologies added, dropped, or changed on a website over time, and the redirects associated with a domain.",
+      "tags": [
+        "change-tracking",
+        "added",
+        "dropped",
+        "redirects"
+      ],
+      "examples": [
+        "What technologies has airbnb.com added or dropped recently?",
+        "Show the redirect history for example.com"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "website-relationships",
+      "name": "Website relationships",
+      "description": "Discover relationships between websites — shared analytics, advertising, hosting, and tracking identifiers that link domains to the same owner or network.",
+      "tags": [
+        "relationships",
+        "ownership",
+        "connected-sites"
+      ],
+      "examples": [
+        "What other websites are related to example.com?",
+        "Find sites that share the same Google Analytics account as example.com"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "technology-lists-and-trends",
+      "name": "Technology lists and trends",
+      "description": "List and rank the websites using a specific technology, with adoption trends over time, market share, and tag-based segmentation.",
+      "tags": [
+        "lists",
+        "trends",
+        "market-share",
+        "adoption"
+      ],
+      "examples": [
+        "List the most popular websites using Klaviyo",
+        "Show the adoption trend for Next.js over the last year",
+        "Which ecommerce platforms are gaining market share?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "company-and-firmographics",
+      "name": "Company and firmographics",
+      "description": "Resolve a company name to its primary website, and retrieve firmographic, financial, social, traffic, and trust signals for a domain.",
+      "tags": [
+        "company",
+        "firmographics",
+        "financial",
+        "social",
+        "trust",
+        "traffic"
+      ],
+      "examples": [
+        "What is the website for the company 'Patagonia'?",
+        "Give me the financial and social profile for shopify.com",
+        "Is example.com a trustworthy website?"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "keywords-and-recommendations",
+      "name": "Keywords and recommendations",
+      "description": "Retrieve the keywords a website ranks for, search websites by keyword, and get technology recommendations for a domain.",
+      "tags": [
+        "keywords",
+        "search",
+        "recommendations"
+      ],
+      "examples": [
+        "What keywords does example.com rank for?",
+        "Find websites about 'sustainable fashion'",
+        "Recommend technologies for example.com"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    },
+    {
+      "id": "natural-language-site-discovery",
+      "name": "Natural-language site discovery",
+      "description": "Answer free-form questions that find and rank lists of websites by technology, concept, or attribute, returning structured results.",
+      "tags": [
+        "ask",
+        "discovery",
+        "semantic-search",
+        "vector"
+      ],
+      "examples": [
+        "Find US-based Shopify stores selling outdoor gear that also use Klaviyo",
+        "List SaaS companies using Stripe and Intercom"
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json"
+      ]
+    }
+  ],
+  "supportsAuthenticatedExtendedCard": false,
+  "additionalInterfaces": [
+    {
+      "url": "https://api.builtwith.com/mcp",
+      "transport": "HTTP+JSON"
+    },
+    {
+      "url": "https://api.builtwith.com/openapi.json",
+      "transport": "HTTP+JSON"
+    }
+  ],
+  "x402": {
+    "documentation": "https://api.builtwith.com/x402-api",
+    "discovery": "https://api.builtwith.com/.well-known/x402",
+    "openapi": "https://api.builtwith.com/openapi.json",
+    "network": "eip155:8453",
+    "asset": "USDC"
+  }
+}

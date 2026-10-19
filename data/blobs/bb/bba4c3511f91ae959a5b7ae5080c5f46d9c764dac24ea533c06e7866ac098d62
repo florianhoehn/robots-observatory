@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blibli.com</title>
+  <style>
+      *{
+          box-sizing: border-box;
+      }
+      .error-state {
+          height: 90vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          margin-top: 15px;
+      }
+      .error-state__title {
+          text-align: center;
+          color: #19222a;
+          font-family: "blibli demi bold", -apple-system, segoe ui, roboto, helvetica, arial, sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 28px;
+          margin: 24px 0 0 0;
+      }
+      .error-state__info {
+          text-align: center;
+          color: rgba(25, 34, 42, 0.4);
+          font-family: "blibli", -apple-system, segoe ui, roboto, helvetica, arial, sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 20px;
+          margin: 8px 16px 24px;
+      }
+      .not-found-button {
+          color: #fff;
+          background-color: #0072ff;
+          border-color: #0072ff;
+          border-radius: 24px;
+          position: relative;
+          font: 16px / 20px "blibli demi bold", -apple-system, segoe ui, roboto, helvetica, arial, sans-serif;
+          text-decoration: none;
+          transition: color .4s, background-color .4s, border-color .6s;
+          white-space: nowrap;
+          height: 48px;
+          padding: 0;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      }
+      .not-found-button:before {
+          box-sizing: inherit;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 1;
+          opacity: 0;
+          transition: .4s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: background-color, opacity;
+          content: " ";
+      }
+      .not-found-ripple {
+          width: 100%;
+          height: 100%;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -webkit-box-align: center;
+          padding: 0 12px;
+      }
+  </style>
+</head>
+<body>
+<div class="error-state">
+  <img src="https://www.static-src.com/siva/asset/10_2024/not-found.png"
+       alt="not-found">
+  <h5 class="error-state__title">Wah, salah jalan</h5>
+  <p class="error-state__info">
+    Tujuanmu tidak ditemukan.<br>
+    Kita balik ke beranda, yuk!
+  </p>
+  <a
+    type="button"
+    href="https://www.blibli.com"
+    class="blu-btn b-full-width b-secondary not-found-button">
+    <div class="blu-ripple not-found-ripple">
+      Kembali ke beranda
+    </div>
+  </a>
+</div>
+</body>
+</html>

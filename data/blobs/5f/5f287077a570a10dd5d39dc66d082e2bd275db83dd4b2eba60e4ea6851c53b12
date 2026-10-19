@@ -1,0 +1,388 @@
+# ============================================================
+# robots.txt - Blocage massif de bots inutiles / scraping / IA
+# Objectif : protéger le crawl, limiter le scraping, réduire charge
+# Attention : robots.txt n'est pas un "mur", certains bots ignorent
+# ============================================================
+
+
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+User-agent: SemrushBot
+Crawl-delay: 60
+#Disallow: /
+
+User-agent: br-crawler
+Disallow: /
+
+User-agent: petalbot
+Crawl-delay: 30
+
+# ============================================================
+# Limitation des robots d'IA (scraping pour entraînement LLM)
+# Crawl-delay: 30 secondes entre chaque requête
+# Dernière mise à jour : 2025
+# ============================================================
+
+# --- OpenAI (ChatGPT) ---
+User-agent: GPTBot
+Crawl-delay: 30
+
+# --- OpenAI (résumés ChatGPT) ---
+User-agent: ChatGPT-User
+Crawl-delay: 30
+
+# --- OpenAI (SearchGPT) ---
+User-agent: OAI-SearchBot
+Crawl-delay: 30
+
+# --- Anthropic (Claude) ---
+User-agent: ClaudeBot
+Crawl-delay: 30
+
+# --- Anthropic (Claude.ai) ---
+User-agent: Claude-Web
+Crawl-delay: 30
+
+# --- Google (Gemini / Bard) ---
+User-agent: Google-Extended
+Crawl-delay: 30
+
+# --- Meta (Llama) ---
+User-agent: FacebookBot
+Crawl-delay: 30
+
+# --- Meta AI ---
+User-agent: meta-externalagent
+Crawl-delay: 30
+
+# --- Apple (AppleBot pour Siri/IA) ---
+User-agent: Applebot-Extended
+Crawl-delay: 30
+
+# --- Amazon (Alexa AI) ---
+User-agent: Amazonbot
+Crawl-delay: 30
+
+# --- Cohere ---
+User-agent: cohere-ai
+Crawl-delay: 30
+
+# --- Perplexity AI ---
+User-agent: PerplexityBot
+Crawl-delay: 30
+
+# --- You.com ---
+User-agent: YouBot
+Crawl-delay: 30
+
+# --- Mistral AI ---
+User-agent: MistralAI-User
+Crawl-delay: 30
+
+# --- Common Crawl (source de données pour de nombreux LLM) ---
+User-agent: CCBot
+Crawl-delay: 30
+
+# --- Diffbot (extraction de données pour IA) ---
+User-agent: Diffbot
+Crawl-delay: 30
+
+# --- Bytespider (TikTok / ByteDance) ---
+User-agent: Bytespider
+Crawl-delay: 30
+
+# --- Omgili / Webz.io (agrégation de données) ---
+User-agent: omgili
+Crawl-delay: 30
+User-agent: omgilibot
+Crawl-delay: 30
+
+# --- DataForSeo (scraping données SEO/IA) ---
+User-agent: DataForSeoBot
+Crawl-delay: 30
+
+# --- ImagesiftBot ---
+User-agent: ImagesiftBot
+Crawl-delay: 30
+
+# --- Timpibot ---
+User-agent: Timpibot
+Crawl-delay: 30
+
+
+# -----------------------------
+# SCRAPERS / ASPIRATEURS
+# -----------------------------
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WinHTTrack
+Disallow: /
+
+User-agent: WebCopy
+Disallow: /
+
+User-agent: SiteSucker
+Disallow: /
+
+User-agent: CopyRightCheck
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: Wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: Curl
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: Python-urllib
+Disallow: /
+
+User-agent: urllib
+Disallow: /
+
+User-agent: aiohttp
+Disallow: /
+
+User-agent: httpx
+Disallow: /
+
+User-agent: Go-http-client
+Disallow: /
+
+User-agent: libwww-perl
+Disallow: /
+
+User-agent: LWP::Simple
+Disallow: /
+
+User-agent: Java
+Disallow: /
+
+User-agent: Apache-HttpClient
+Disallow: /
+
+User-agent: okhttp
+Disallow: /
+
+User-agent: HeadlessChrome
+Disallow: /
+
+User-agent: PhantomJS
+Disallow: /
+
+User-agent: Puppeteer
+Disallow: /
+
+User-agent: Playwright
+Disallow: /
+
+User-agent: Selenium
+Disallow: /
+
+# -----------------------------
+# SCANNERS / OUTILS D'ATTAQUE
+# -----------------------------
+
+User-agent: sqlmap
+Disallow: /
+
+User-agent: nikto
+Disallow: /
+
+User-agent: nmap
+Disallow: /
+
+User-agent: masscan
+Disallow: /
+
+User-agent: zgrab
+Disallow: /
+
+User-agent: zmap
+Disallow: /
+
+User-agent: Nessus
+Disallow: /
+
+User-agent: OpenVAS
+Disallow: /
+
+User-agent: Acunetix
+Disallow: /
+
+User-agent: Netsparker
+Disallow: /
+
+User-agent: WPScan
+Disallow: /
+
+User-agent: wpscan
+Disallow: /
+
+User-agent: DirBuster
+Disallow: /
+
+User-agent: gobuster
+Disallow: /
+
+User-agent: ffuf
+Disallow: /
+
+User-agent: Hydra
+Disallow: /
+
+User-agent: Metasploit
+Disallow: /
+
+User-agent: Nuclei
+Disallow: /
+
+User-agent: Jaeles
+Disallow: /
+
+User-agent: Zao
+Disallow: /
+
+User-agent: BlackWidow
+Disallow: /
+
+# -----------------------------
+# BOTS SEO / BACKLINKS (souvent agressifs)
+# (à bloquer si vous voulez limiter le crawl concurrent)
+# -----------------------------
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: SEOkicks-Robot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: linkdexbot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: MegaIndex.ru
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: SEOdiver
+Disallow: /
+
+User-agent: XoviBot
+Disallow: /
+
+User-agent: SeznamBot
+Disallow: /
+
+# -----------------------------
+# BOTS RUSSES (souvent inutiles en FR)
+# (Ne pas bloquer si vous ciblez la Russie)
+# -----------------------------
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: YandexImages
+Disallow: /
+
+User-agent: YandexVideo
+Disallow: /
+
+User-agent: YandexMedia
+Disallow: /
+
+User-agent: YandexMetrika
+Disallow: /
+
+User-agent: Mail.RU_Bot
+Disallow: /
+
+User-agent: SputnikBot
+Disallow: /
+
+# -----------------------------
+# BOTS DOUTEUX / DIVERS (souvent bruyants)
+# -----------------------------
+
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: Trendictionbot
+Disallow: /
+
+User-agent: SeobilityBot
+Disallow: /
+
+User-agent: Rogerbot
+Disallow: /
+
+User-agent: Screaming Frog SEO Spider
+Disallow: /
+
+User-agent: UptimeRobot
+Disallow: /
+
+User-agent: Pingdom
+Disallow: /
+
+User-agent: GTmetrix
+Disallow: /
+
+# -----------------------------
+# FIN
+# -----------------------------

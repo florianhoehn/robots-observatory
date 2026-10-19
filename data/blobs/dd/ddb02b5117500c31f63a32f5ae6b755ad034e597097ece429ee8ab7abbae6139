@@ -1,0 +1,553 @@
+# Version:   2.0
+# Stand:     2026-09-25
+# Herausgeber: dlv Deutscher Landwirtschaftsverlag GmbH
+#
+# Aenderungsprotokoll
+# 2.0  2026-09-25  Neustrukturierung in Policies 0 bis 10 nach
+#                  Crawler-Kategorien, Ergaenzung aktueller KI-, Such-
+#                  und Agenten-Crawler, rechtlicher Nutzungsvorbehalt
+#                  nach Paragraf 44b UrhG, Anhang mit Eintraegen der
+#                  Vorfassung ohne dokumentiertes Crawler-Token
+# 1.0  (ohne Datum) Vorfassung: Drupal-Standard plus Einzelbloecke
+#                  fuer KI-Bots und Dienste
+#
+# ======================================================================
+# AUFBAU
+# ======================================================================
+#
+# Policy 0  Standard fuer alle Crawler (Suchmaschinen etc.)
+# Policy 1  KI-Training und Modellentwicklung
+# Policy 2  KI-Suche und KI-Antwortsysteme
+# Policy 3  KI-Assistenten und KI-Agenten (nutzerausgeloest)
+# Policy 4  Datenanbieter, Scraping-Dienste und Datensatz-Tools
+# Policy 5  Media-Monitoring, Presseclipping, Social Listening
+# Policy 6  Finanz-, Markt- und Wirtschaftsdatendienste
+# Policy 7  Feedreader und News-Aggregatoren
+# Policy 8  Web-Archive
+# Policy 9  SEO-, Monitoring- und Pruefwerkzeuge
+# Policy 10 Offline-Downloader und generische HTTP-Clients
+# ANHANG: Anbieter ohne oeffentlich dokumentierten Crawler
+#
+# ======================================================================
+# POLICY 0: Standard fuer alle Crawler
+# ======================================================================
+
+User-agent: *
+# CSS, JS, Images
+Allow: /core/*.css$
+Allow: /core/*.css?
+Allow: /core/*.js$
+Allow: /core/*.js?
+Allow: /core/*.avif
+Allow: /core/*.gif
+Allow: /core/*.jpg
+Allow: /core/*.jpeg
+Allow: /core/*.png
+Allow: /core/*.svg
+Allow: /core/*.webp
+Allow: /profiles/*.css$
+Allow: /profiles/*.css?
+Allow: /profiles/*.js$
+Allow: /profiles/*.js?
+Allow: /profiles/*.avif
+Allow: /profiles/*.gif
+Allow: /profiles/*.jpg
+Allow: /profiles/*.jpeg
+Allow: /profiles/*.png
+Allow: /profiles/*.svg
+Allow: /profiles/*.webp
+# Directories
+Disallow: /core/
+Disallow: /profiles/
+# Files
+Disallow: /README.md
+Disallow: /composer/Metapackage/README.txt
+Disallow: /composer/Plugin/ProjectMessage/README.md
+Disallow: /composer/Plugin/Scaffold/README.md
+Disallow: /composer/Plugin/VendorHardening/README.txt
+Disallow: /composer/Template/README.txt
+Disallow: /modules/README.txt
+Disallow: /sites/README.txt
+Disallow: /themes/README.txt
+# Paths (clean URLs)
+Disallow: /admin/
+Disallow: /comment/reply/
+Disallow: /filter/tips
+Disallow: /node/add/
+Disallow: /search/
+Disallow: /search?
+Disallow: /user/register
+Disallow: /user/password
+Disallow: /user/login
+Disallow: /user/logout
+Disallow: /media/oembed
+Disallow: /*/media/oembed
+# Paths (no clean URLs)
+Disallow: /index.php/admin/
+Disallow: /index.php/comment/reply/
+Disallow: /index.php/filter/tips
+Disallow: /index.php/node/add/
+Disallow: /index.php/search/
+Disallow: /index.php/search?
+Disallow: /index.php/user/password
+Disallow: /index.php/user/register
+Disallow: /index.php/user/login
+Disallow: /index.php/user/logout
+Disallow: /index.php/media/oembed
+Disallow: /index.php/*/media/oembed
+
+# ======================================================================
+# POLICY 1: KI-Training und Modellentwicklung
+# ======================================================================
+
+# OpenAI
+User-agent: GPTBot
+# Anthropic
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+# Google (reine KI-Tokens, kein Einfluss auf Google Search)
+User-agent: Google-Extended
+User-agent: GoogleOther
+User-agent: GoogleOther-Image
+User-agent: GoogleOther-Video
+User-agent: Google-CloudVertexBot
+User-agent: CloudVertexBot
+# Apple
+User-agent: Applebot-Extended
+# Meta
+User-agent: FacebookBot
+User-agent: meta-externalagent
+# Amazon
+User-agent: Amazonbot
+User-agent: amazon-kendra
+User-agent: bedrockbot
+# Mistral
+User-agent: MistralAI-Training
+# Cohere
+User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
+# ByteDance
+User-agent: Bytespider
+User-agent: TikTokSpider
+User-agent: DoubaoBot
+# DeepSeek, Alibaba, Baidu, Moonshot, Huawei, Yandex
+User-agent: DeepSeekBot
+User-agent: QwenBot
+User-agent: ERNIEBot
+User-agent: KimiBot
+User-agent: PanguBot
+User-agent: YandexAdditional
+User-agent: YandexAdditionalBot
+# Allen Institute for AI
+User-agent: AI2Bot
+User-agent: Ai2Bot-Dolma
+User-agent: AI2Bot-DeepResearchEval
+# Common Crawl
+User-agent: CCBot
+# Webz.io
+User-agent: Webzio-Extended
+# Forschung und sonstige Trainingscrawler
+User-agent: Cotoyogi
+User-agent: ICC-Crawler
+User-agent: SBIntuitionsBot
+User-agent: Kangaroo
+User-agent: Timpibot
+User-agent: Linguee
+User-agent: Sidetrade
+User-agent: Poseidon
+User-agent: aiHitBot
+User-agent: ISSCyberRiskCrawler
+User-agent: Factset_spyderbot
+Disallow: /
+
+# ======================================================================
+# POLICY 2: KI-Suche und KI-Antwortsysteme
+# ======================================================================
+
+# OpenAI
+User-agent: OAI-SearchBot
+# Anthropic
+User-agent: Claude-SearchBot
+# Perplexity
+User-agent: PerplexityBot
+# Apple (Achtung: betrifft auch Siri, Spotlight und Safari-Vorschlaege)
+User-agent: Applebot
+# Meta
+User-agent: meta-webindexer
+# Amazon
+User-agent: Amzn-SearchBot
+# Mistral
+User-agent: MistralAI-Index
+# Moonshot
+User-agent: Kimi-SearchBot
+# Huawei
+User-agent: PetalBot
+# DuckDuckGo KI-Antworten (nicht die DuckDuckGo-Suche)
+User-agent: DuckAssistBot
+# Weitere KI-Suchmaschinen und Antwortdienste
+User-agent: YouBot
+User-agent: PhindBot
+User-agent: Andibot
+User-agent: iaskspider
+User-agent: iAskBot
+User-agent: LinerBot
+User-agent: AddSearchBot
+User-agent: AIWebIndex
+User-agent: AzureAI-SearchBot
+User-agent: Anomura
+User-agent: Channel3Bot
+User-agent: Aranet-SearchBot
+User-agent: ZanistaBot
+User-agent: Cloudflare-AutoRAG
+User-agent: Bravebot
+Disallow: /
+
+# ======================================================================
+# POLICY 3: KI-Assistenten und KI-Agenten (nutzerausgeloest)
+# ======================================================================
+
+# OpenAI
+User-agent: ChatGPT-User
+User-agent: ChatGPT-Agent
+User-agent: Operator
+# Anthropic
+User-agent: Claude-User
+# Perplexity
+User-agent: Perplexity-User
+# Google
+User-agent: Google-Agent
+User-agent: Google-GeminiNotebook
+User-agent: Google-NotebookLM
+User-agent: Gemini-Deep-Research
+User-agent: GoogleAgent-Mariner
+User-agent: GoogleAgent-URLContext
+User-agent: Google-Firebase
+# Meta
+User-agent: meta-externalfetcher
+# Amazon
+User-agent: Amzn-User
+User-agent: amazon-QBusiness
+User-agent: AmazonBuyForMe
+User-agent: NovaAct
+# Mistral
+User-agent: MistralAI-User
+# Moonshot, Alibaba, Baidu
+User-agent: Kimi-User
+User-agent: TongyiBot
+User-agent: YiyanBot
+# Weitere Assistenten und Agenten
+User-agent: Manus-User
+User-agent: Devin
+User-agent: bigsur.ai
+User-agent: QualifiedBot
+User-agent: kagi-fetcher
+User-agent: TwinAgent
+User-agent: Diffbot-User
+User-agent: Shap-User
+Disallow: /
+
+# ======================================================================
+# POLICY 4: Datenanbieter, Scraping-Dienste und Datensatz-Tools
+# ======================================================================
+
+User-agent: Diffbot
+User-agent: omgili
+User-agent: omgilibot
+User-agent: webzio
+User-agent: Brightbot
+User-agent: ApifyBot
+User-agent: ApifyWebsiteContentCrawler
+User-agent: FirecrawlAgent
+User-agent: Crawl4AI
+User-agent: Crawlspace
+User-agent: TavilyBot
+User-agent: ExaBot
+User-agent: ExaSearchBot
+User-agent: LinkupBot
+User-agent: ShapBot
+User-agent: Scrapy
+User-agent: TerraCotta
+User-agent: Panscient
+User-agent: panscient.com
+User-agent: VelenPublicWebCrawler
+User-agent: Datenbank
+User-agent: netEstate
+User-agent: img2dataset
+User-agent: LAIONDownloader
+User-agent: laion-huggingface-processor
+User-agent: ImagesiftBot
+User-agent: imageSpider
+User-agent: ChatGLM-Spider
+User-agent: newsai
+User-agent: newsai-bot
+User-agent: EchoboxBot
+User-agent: Echobot
+User-agent: FriendlyCrawler
+User-agent: Thinkbot
+User-agent: QuillBot
+User-agent: quillbot.com
+User-agent: Make
+Disallow: /
+
+# ======================================================================
+# POLICY 5: Media-Monitoring, Presseclipping, Social Listening
+# ======================================================================
+
+# Meltwater (Crawler: MeltwaterNews; YaK stammt von Linkfluence, heute Meltwater)
+User-agent: Meltwater
+User-agent: MeltwaterNews
+User-agent: YaK
+# Talkwalker (Crawler-Token: trendictionbot)
+User-agent: Talkwalker
+User-agent: trendictionbot
+# Brandwatch (Crawler-Token: magpie-crawler)
+User-agent: Brandwatch
+User-agent: magpie-crawler
+# Awario
+User-agent: Awario
+User-agent: AwarioRssBot
+User-agent: AwarioSmartBot
+# Cision (Crawler: WISEbot)
+User-agent: Cision
+User-agent: WISEbot
+# Hypefactors (Crawler: Buck)
+User-agent: Buck
+# Ubermetrics (Crawler-Familie um-*)
+User-agent: um-ANS
+User-agent: um-CC
+User-agent: um-FC
+User-agent: um-IC
+User-agent: um-LN
+# Weitere Monitoring- und Clipping-Dienste
+User-agent: Mediatoolkitbot
+User-agent: Sprinklr
+User-agent: Synthesio
+User-agent: linkfluence
+User-agent: Digimind
+User-agent: VISIBRAIN
+User-agent: SentiBot
+User-agent: SentiOne
+User-agent: RankurBot
+User-agent: MuckRack
+User-agent: Launchmetrics
+User-agent: Opoint
+User-agent: PressEngineBot
+User-agent: Augure
+User-agent: Sindup
+User-agent: Knowings
+User-agent: Innguma
+User-agent: Gnowit
+User-agent: GnowitNewsbot
+User-agent: MONITIO
+User-agent: Sociallymap
+User-agent: spotter
+User-agent: squirrobot
+User-agent: trendybuzz
+User-agent: trendeo
+User-agent: Jetbot
+User-agent: kbcrawl
+User-agent: 5erue
+User-agent: 5emeRue
+User-agent: adequat
+User-agent: adequat-systems
+User-agent: coexel
+User-agent: leadbox
+User-agent: mention
+User-agent: mytwip
+User-agent: opinion-tracker
+User-agent: proxem
+User-agent: score3
+User-agent: vecteurplus
+User-agent: verticalsearch
+User-agent: vsw
+User-agent: winello
+User-agent: k2spider
+User-agent: auramundi
+User-agent: Liana
+User-agent: Paqlebot
+User-agent: PriberamBot
+User-agent: CikisiBot
+User-agent: semantic-visions.com
+User-agent: telpress.it
+User-agent: Newzbin
+# Ask n read
+User-agent: asknread.com
+User-agent: scoop.it
+User-agent: scoopit
+User-agent: scoopit-crawler
+User-agent: scpitspi-rs
+Disallow: /
+
+# ======================================================================
+# POLICY 6: Finanz-, Markt- und Wirtschaftsdatendienste
+# ======================================================================
+
+# S&P Global:
+User-agent: SPGlobalWebBot
+# Dun & Bradstreet, D&B Hoovers
+User-agent: DnBCrawler
+User-agent: DnBCrawler-Analytics
+# Northern Light
+User-agent: NLCrawler
+# Newstex
+User-agent: NewsCrawler
+# Weitere Finanz- und Wirtschaftsdatendienste
+User-agent: AlphaSense
+User-agent: Dataminr
+User-agent: Dealogic
+User-agent: FactSet
+User-agent: RavenPack
+User-agent: Koyfin
+User-agent: YCHARTS
+User-agent: TradingView
+User-agent: TraderPlanet
+User-agent: Tradingcharts.com
+User-agent: Barchart.com
+User-agent: QuoteMedia
+User-agent: MarketWatch
+User-agent: MarketWise
+User-agent: MarketResearch.com
+User-agent: ReportLinker
+User-agent: MORNINGSTAR
+User-agent: STOCKBOARD
+User-agent: smartkarma
+User-agent: BattleFin
+User-agent: bluematrix
+User-agent: BLP_bbot
+User-agent: DirectFN
+User-agent: ArgClrInt
+User-agent: Corporama
+User-agent: ellisphere
+User-agent: ecoresearch
+User-agent: LexisNexis
+User-agent: Statista
+User-agent: Orbis
+User-agent: moduleQ
+User-agent: AmiSoftware
+User-agent: Moreover
+User-agent: ConveraCrawler
+Disallow: /
+
+# ======================================================================
+# POLICY 7: Feedreader und News-Aggregatoren
+# ======================================================================
+
+User-agent: flipboard
+User-agent: Feedspot
+User-agent: Inoreader
+User-agent: FeedReader
+User-agent: FeedCheck
+User-agent: Netvibes
+User-agent: NewsNow
+User-agent: Newslitbot
+User-agent: news-api.org
+User-agent: Briefcase.news
+User-agent: Youmag
+User-agent: Zite
+User-agent: Freshbot
+User-agent: AgentTimes
+Disallow: /
+
+# ======================================================================
+# POLICY 8: Web-Archive
+# ======================================================================
+
+User-agent: archive.org_bot
+User-agent: ia_archiver
+User-agent: Archive-It
+Disallow: /
+
+# ======================================================================
+# POLICY 9: SEO-, Monitoring- und Pruefwerkzeuge
+# ======================================================================
+
+User-agent: SemrushBot
+User-agent: SemrushBot-OCOB
+User-agent: SemrushBot-SWA
+User-agent: UptimeRobot
+User-agent: TurnitinBot
+User-agent: Blackboard
+User-agent: MoodleBot
+User-agent: sitecheck.internetseer.com
+Disallow: /
+
+# ======================================================================
+# POLICY 10: Offline-Downloader und generische HTTP-Clients
+# ======================================================================
+
+User-agent: wget
+User-agent: libwww
+User-agent: libwww-perl
+User-agent: Fetch
+User-agent: grub-client
+User-agent: Teleport
+User-agent: TeleportPro
+User-agent: WebCopier
+User-agent: WebStripper
+User-agent: Offline
+User-agent: MSIECrawler
+User-agent: Zealbot
+User-agent: infoseek
+Disallow: /
+
+# ======================================================================
+# ANHANG: Anbieter ohne oeffentlich dokumentierten Crawler
+# ======================================================================
+
+# Frueher lange Namensvarianten (Token jetzt in Policy 1 bis 10)
+User-agent: Kangaroo Bot
+User-agent: Offline Explorer
+User-agent: Datenbank Crawler
+User-agent: netEstate Imprint Crawler
+User-agent: PressEngineBot D
+User-agent: Blackboard Safeassign
+User-agent: Make/production
+User-agent: semantic-visions.com crawler
+# Frueher Firmennamen oder Tippfehler (korrektes Token jetzt in Policy 1 bis 10)
+User-agent: Talkwater
+User-agent: D&B Hoovers
+User-agent: Dun & Bradstreet
+User-agent: Dun & Bradstreet - D&B ESG Intelligence
+User-agent: Dun & Bradstreet Data Marketplace
+User-agent: S&P Capital IQ
+User-agent: S&P Global Market Intelligence
+User-agent: S&P Global Marketplace
+User-agent: Northern Light
+User-agent: ImageSift
+User-agent: CCBo
+User-agent: Ask n read
+# Anbieter ohne bekanntes Crawler-Token
+User-agent: ACQUIRE MEDIA
+User-agent: ACTIV Financial (CME Group)
+User-agent: Bernin IT
+User-agent: Comtex News Network
+User-agent: Copyright Licensing Agency
+User-agent: Data Expression
+User-agent: Data Observer
+User-agent: Eagle Alpha
+User-agent: Fitch Solutions
+User-agent: Founder Apabi
+User-agent: Ground News
+User-agent: ICE Connect Desktop Solution
+User-agent: ICE Data Services
+User-agent: IHS Markit
+User-agent: InMedia Technologies
+User-agent: ISI Emerging Markets
+User-agent: KB Crawl SAS
+User-agent: Markit Digital
+User-agent: Moody's
+User-agent: Press Monitor Europe
+User-agent: Qwam content intelligence
+User-agent: Research & Markets
+User-agent: Signal Insights
+User-agent: Thomson Reuters
+User-agent: Thomson Reuters WestLaw
+User-agent: Transform Your API
+User-agent: Vable Ltd
+Disallow: /
+
+# Internet Archive, Sondervariante (Startseite erlaubt)
+User-agent: ia_archiver-web.archive.org
+Allow: /$
+Disallow: /*

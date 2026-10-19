@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Page Not Found &mdash; MxToolbox</title>
+<!--
+  SYS-736 not-found page. Served for CloudFront 404 responses.
+
+  Everything is inline on purpose: when this page renders, mxtoolbox.com may be
+  serving nothing, so a single external reference would leave the page bare. Do
+  not add a stylesheet link, a font import, an <img src>, or a script tag.
+
+  The navigation is a HAND-MAINTAINED STATIC COPY of the live top menu. On the
+  real site that menu is rendered client-side by
+  Public/templates/mx-top-menu/mx-top-menu.js (MxNew) against a jsRender
+  template, pulling Bootstrap, Font Awesome and images.mxtoolbox.com -- none of
+  which can be relied on here. The link list below is transcribed from
+  GetPrimaryMenu() and GetSecondaryMenu_Supertool() in that file. When the real
+  menu changes, this does not follow automatically; re-transcribe it.
+
+  Dropdowns (the SUPERTOOL site picker, the Resources sub-menu) need JavaScript,
+  so they are flattened to single links rather than faked.
+
+  Deliberately light-only, unlike the maintenance page: this reproduces the
+  site's own chrome, and a dark repaint of half the page would read as broken.
+
+  Unlike the other pages here, a 404 means the site is HEALTHY and one URL is
+  missing, so the navigation above is the whole point -- it is the visitor's way
+  out. Derived from ServerError.html; keep the chrome in step.
+-->
+<style>
+  :root {
+    --ink: #1c1f23;
+    --muted: #5c636b;
+    --rule: #e2e5e9;
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --accent: #4a5560;
+    --accent-soft: #eef1f4;
+    --brand: #d98a37;
+    --nav-ink: #333333;
+    --link: #337ab7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Site chrome: a static stand-in for the JS-rendered top menu ---- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    padding: 10px 20px;
+    background: linear-gradient(to bottom, rgb(214,214,214) 0%, rgba(255,255,255,1) 100%);
+  }
+  .brand { display: flex; align-items: baseline; gap: 14px; }
+  .brand .logo { color: #000; display: block; width: 172px; height: auto; }
+  .brand .site {
+    color: var(--brand);
+    font-size: 10pt;
+    font-weight: 500;
+    letter-spacing: .2rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .primary { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .primary a {
+    color: var(--nav-ink);
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .primary a:hover { color: #999999; }
+  .primary a.active { color: #d38336; font-weight: 700; }
+  .primary a.login {
+    color: var(--link);
+    padding-left: 20px;
+    border-left: 1px solid #cccccc;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    padding: 0 20px;
+    background: #222222;
+    min-height: 52px;
+  }
+  .toolbar nav { display: flex; flex-wrap: wrap; }
+  .toolbar a {
+    color: #cfd3d7;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 15px 12px;
+    white-space: nowrap;
+  }
+  .toolbar a:hover { color: #ffffff; background: #000000; }
+
+  /* ---- Error card ---- */
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    max-width: 560px;
+    width: 100%;
+    padding: 40px 40px 32px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 12px 32px rgba(0,0,0,.06);
+  }
+  .badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  h1 { font-size: 28px; line-height: 1.25; margin: 14px 0 0; letter-spacing: -0.01em; }
+  .lead { font-size: 17px; margin: 14px 0 0; }
+  .detail { color: var(--muted); font-size: 15px; margin: 12px 0 0; }
+  .retry {
+    display: inline-block;
+    margin: 24px 0 0;
+    padding: 11px 22px;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--card);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .foot {
+    margin: 28px 0 0; padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    color: var(--muted); font-size: 14px;
+  }
+  .foot a { color: #a35f00; }
+
+  @media (max-width: 700px) {
+    .brand .logo { width: 140px; }
+    .primary { gap: 14px; }
+    .primary a { font-size: 13px; }
+    .toolbar a { padding: 10px 9px; font-size: 13px; }
+    .card { padding: 30px 24px 26px; border-radius: 12px; }
+    h1 { font-size: 23px; }
+    main { padding: 32px 16px; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <a href="/" aria-label="MxToolbox home">
+          <svg class="logo" viewBox="0 0 2009.41 475.21" role="img" aria-label="MxToolbox" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="mxLogoGrad" cx="935.09" cy="501.04" r="211.22" gradientTransform="matrix(1, 0, 0, -1, -81.88, 756.73)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#e8ddce"/><stop offset="0.89" stop-color="#e88b00"/>
+              </radialGradient>
+            </defs>
+            <g>
+              <circle cx="853.21" cy="255.69" r="211.22" fill="url(#mxLogoGrad)" stroke="#fff" stroke-width="14" stroke-miterlimit="10"/>
+              <polygon fill="#fff" points="975.35 143.65 898.93 143.65 858.17 200.09 817.41 143.65 740.99 143.65 819.96 253.01 740.99 362.37 817.41 362.37 858.17 305.93 898.93 362.37 975.35 362.37 896.38 253.01 975.35 143.65"/>
+              <circle cx="853.21" cy="255.69" r="218.02" fill="none" stroke="currentColor" stroke-width="3" stroke-miterlimit="10"/>
+            </g>
+            <g fill="currentColor">
+              <path d="M766.83,479.8A232.31,232.31,0,0,1,811,123.28V64H583.12l-42.41,78.61L498.29,64H270.38V479.8H458.82V288l81.89,156.71L622.59,288V479.8Z" transform="translate(-81.88 -63.98)"/>
+              <path d="M1176.34,273.88h109.81l-17,24.8h-31.79V400.94h-29.23V298.68h-31.79Z" transform="translate(-81.88 -63.98)"/>
+              <path d="M1336.46,400.94c-36.31,0-65.87-26.33-65.87-63.62s29.56-63.44,65.87-63.44c36.49,0,65.5,26.16,65.5,63.44S1372.77,400.94,1336.46,400.94Zm0-27.57c20.44,0,33.75-14.31,33.75-36.05,0-22.09-13.31-36.05-33.75-36.05-20.8,0-33.94,14-33.94,36.05C1302.52,359.06,1315.66,373.37,1336.46,373.37Z" transform="translate(-81.88 -63.98)"/>
+              <path d="M1475.52,400.94c-36.31,0-65.87-26.33-65.87-63.62s29.56-63.44,65.87-63.44c36.49,0,65.5,26.16,65.5,63.44S1511.83,400.94,1475.52,400.94Zm0-27.57c20.43,0,33.75-14.31,33.75-36.05,0-22.09-13.32-36.05-33.75-36.05-20.8,0-33.94,14-33.94,36.05C1441.58,359.06,1454.72,373.37,1475.52,373.37Z" transform="translate(-81.88 -63.98)"/>
+              <path d="M1800.93,400.94c-36.31,0-65.87-26.33-65.87-63.62s29.56-63.44,65.87-63.44c36.49,0,65.51,26.16,65.51,63.44S1837.24,400.94,1800.93,400.94Zm0-27.57c20.44,0,33.76-14.31,33.76-36.05,0-22.09-13.32-36.05-33.76-36.05-20.8,0-33.94,14-33.94,36.05C1767,359.06,1780.13,373.37,1800.93,373.37Z" transform="translate(-81.88 -63.98)"/>
+              <path d="M1584.2,273.88V377.05h41.45v23.89h-73.09V273.88Z" transform="translate(-81.88 -63.98)"/>
+              <path d="M1690,400.94h-55.89V273.88h54c24.45,0,39,12.85,39,32.94,0,15.39-8.72,25.34-20.34,29,14,3.08,23.07,16.11,23.07,30.59C1729.81,387.37,1715.28,400.94,1690,400.94Zm-7.52-102.26h-19.14v26.6h19.14c9.58,0,14.87-4.52,14.87-13.21S1692,298.68,1682.46,298.68Zm2,49.23h-21.19v28h21.54c9.74,0,15.38-4.7,15.38-13.75S1694.26,347.91,1684.51,347.91Z" transform="translate(-81.88 -63.98)"/>
+              <polygon points="1847.77 273.34 1891.77 209.81 1855.77 209.81 1829.77 247.35 1803.77 209.81 1767.77 209.81 1811.77 273.34 1767.77 336.87 1803.77 336.87 1829.77 299.33 1855.77 336.87 1891.77 336.87 1847.77 273.34"/>
+              <path d="M1976.21,307.79c0-17.42,12.49-29.63,29.91-29.63s29.77,12.21,29.77,29.63-12.35,29.63-29.77,29.63S1976.21,325.07,1976.21,307.79Zm8.23,0c0,13,8.37,21.95,21.68,21.95s21.67-8.92,21.67-21.95-8.5-22-21.67-22S1984.44,294.62,1984.44,307.79Zm29.63,2.88,7,11.25h-11.25l-5.49-10.15h-.82v10.15h-9.87V292.83h15.22c6.31,0,10.56,3.71,10.56,9.47A8.91,8.91,0,0,1,2014.07,310.67Zm-10.7-9.6v4h3.85c1.23,0,2.19-.54,2.19-2.05s-1-1.92-2.19-1.92Z" transform="translate(-81.88 -63.98)"/>
+              <polygon points="61.01 174.16 61.01 157.11 176.47 157.11 176.47 130.19 61.01 130.19 61.01 113.15 0 113.15 0 174.16 61.01 174.16"/>
+              <polygon points="1948.4 348.91 1948.4 365.96 1059.43 365.96 1041.94 392.88 1948.4 392.88 1948.4 409.92 2009.4 409.92 2009.4 348.91 1948.4 348.91"/>
+            </g>
+          </svg>
+        </a>
+        <a class="site" href="/SuperTool.aspx">SuperTool</a>
+      </div>
+
+      <nav class="primary" aria-label="Main">
+        <a href="/c/products/matrixdos?feature=no-feature-selected&amp;source=pricing">Pricing</a>
+        <a class="active" href="/SuperTool.aspx">Tools</a>
+        <a href="https://delivery.mxtoolbox.com">Delivery Center</a>
+        <a href="/monitoring">Monitoring</a>
+        <a href="/c/mxtoolboxproducts">Products</a>
+        <a href="https://blog.mxtoolbox.com?source=greynav">Resources</a>
+        <a class="login" href="/Public/Login.aspx">Login</a>
+      </nav>
+    </div>
+
+    <div class="toolbar">
+      <nav aria-label="Tools">
+        <a href="/SuperTool.aspx">SuperTool</a>
+        <a href="/MXLookup.aspx">MX Lookup</a>
+        <a href="/blacklists.aspx">Blacklists</a>
+        <a href="/dmarc.aspx">DMARC</a>
+        <a href="/diagnostic.aspx">Diagnostics</a>
+        <a href="/emailhealth">Email Health</a>
+        <a href="/DnsLookup.aspx">DNS Lookup</a>
+        <a href="/EmailHeaders.aspx">Analyze Headers</a>
+      </nav>
+      <nav aria-label="More">
+        <a href="/NetworkTools.aspx">All Tools</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <span class="badge">Page not found</span>
+      <h1>We couldn&rsquo;t find that page.</h1>
+      <p class="lead">The address may be mistyped, or the page may have moved.</p>
+      <p class="detail">Check the URL, or pick a tool from the menu above &mdash; everything we offer is still there. If you got here by following a link on our own site, let us know and we&rsquo;ll fix it.</p>
+      <a class="retry" href="/">Go to the home page</a>
+      <p class="foot">Live status and updates: <a href="https://mxtoolbox.statuspage.io">mxtoolbox.statuspage.io</a><br>
+      Need a hand? <a href="https://knowledgebase.mxtoolbox.com/home">Search our Knowledge Base</a> or call <a href="tel:+18666986652">(866)-MXTOOLBOX / (866)-698-6652</a>.</p>
+    </div>
+  </main>
+
+</body>
+</html>

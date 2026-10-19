@@ -1,0 +1,305 @@
+# ============================================================
+
+# italki robots.txt Version 1.4.2
+
+# Last updated: 2026-09-03
+
+# ============================================================
+
+# ------------------------------------------------------------
+
+# Policy
+
+# - Allow public pages to be crawled by search engines and
+
+# answer engines.
+
+# - Block private, account-specific, logged-in, and transactional
+
+# areas.
+
+# - Separately control AI training, bulk data collection, and
+
+# non-user-triggered scraping.
+
+# - Do not rely on robots.txt for security. Private content must
+
+# require authentication and server-side authorization.
+
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+
+# Shared private-path rules
+
+# These rules block root-level and locale-prefixed private areas.
+
+# ------------------------------------------------------------
+
+# ------------------------------------------------------------
+
+# Default rules  public crawl allowed, private areas blocked
+
+# ------------------------------------------------------------
+
+User-agent: *
+Disallow: /user/*
+Disallow: /*/user/*
+Disallow: /notebook/*
+Disallow: /*/notebook/*
+Disallow: /dashboard
+Disallow: /*/dashboard
+Disallow: /settings
+Disallow: /*/settings
+Disallow: /messages
+Disallow: /*/messages
+Disallow: /message/*
+Disallow: /*/message/*
+Disallow: /lessons
+Disallow: /*/lessons
+Disallow: /finance
+Disallow: /*/finance
+Disallow: /calendar
+Disallow: /*/calendar
+Disallow: /contacts
+Disallow: /*/contacts
+Disallow: /following
+Disallow: /*/following
+Disallow: /followers
+Disallow: /*/followers
+Disallow: /signin
+Disallow: /*/gs/ccm/collect
+Disallow: /api/v2/common/server_time
+
+# ------------------------------------------------------------
+
+# Core search engines  public crawl allowed, private areas blocked
+
+# These crawlers receive the same private-path restrictions as *.
+
+# Explicit grouping keeps the intended search policy auditable.
+
+# ------------------------------------------------------------
+
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: Baiduspider
+User-agent: YandexBot
+User-agent: Sogou
+User-agent: Ecosia-Bot
+Disallow: /user/*
+Disallow: /*/user/*
+Disallow: /notebook/*
+Disallow: /*/notebook/*
+Disallow: /dashboard
+Disallow: /*/dashboard
+Disallow: /settings
+Disallow: /*/settings
+Disallow: /messages
+Disallow: /*/messages
+Disallow: /message/*
+Disallow: /*/message/*
+Disallow: /lessons
+Disallow: /*/lessons
+Disallow: /finance
+Disallow: /*/finance
+Disallow: /calendar
+Disallow: /*/calendar
+Disallow: /contacts
+Disallow: /*/contacts
+Disallow: /following
+Disallow: /*/following
+Disallow: /followers
+Disallow: /*/followers
+Disallow: /signin
+Disallow: /*/gs/ccm/collect
+Disallow: /api/v2/common/server_time
+
+# ------------------------------------------------------------
+
+# Google search utility crawlers  public crawl allowed,
+
+# private areas blocked
+
+# ------------------------------------------------------------
+
+User-agent: Googlebot-Image
+User-agent: Googlebot-Video
+User-agent: GoogleOther
+User-agent: Google-InspectionTool
+Disallow: /user/*
+Disallow: /*/user/*
+Disallow: /notebook/*
+Disallow: /*/notebook/*
+Disallow: /dashboard
+Disallow: /*/dashboard
+Disallow: /settings
+Disallow: /*/settings
+Disallow: /messages
+Disallow: /*/messages
+Disallow: /message/*
+Disallow: /*/message/*
+Disallow: /lessons
+Disallow: /*/lessons
+Disallow: /finance
+Disallow: /*/finance
+Disallow: /calendar
+Disallow: /*/calendar
+Disallow: /contacts
+Disallow: /*/contacts
+Disallow: /following
+Disallow: /*/following
+Disallow: /followers
+Disallow: /*/followers
+Disallow: /signin
+Disallow: /*/gs/ccm/collect
+Disallow: /api/v2/common/server_time
+
+# ------------------------------------------------------------
+
+# AI search and user-triggered answer engines  public crawl
+
+# allowed, private areas blocked
+
+# ------------------------------------------------------------
+
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: DuckAssistBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: YouBot
+User-agent: BraveBot
+User-agent: KagiBot
+User-agent: Qwantify
+User-agent: MojeekBot
+User-agent: MistralAI-User
+Disallow: /user/*
+Disallow: /*/user/*
+Disallow: /notebook/*
+Disallow: /*/notebook/*
+Disallow: /dashboard
+Disallow: /*/dashboard
+Disallow: /settings
+Disallow: /*/settings
+Disallow: /messages
+Disallow: /*/messages
+Disallow: /message/*
+Disallow: /*/message/*
+Disallow: /lessons
+Disallow: /*/lessons
+Disallow: /finance
+Disallow: /*/finance
+Disallow: /calendar
+Disallow: /*/calendar
+Disallow: /contacts
+Disallow: /*/contacts
+Disallow: /following
+Disallow: /*/following
+Disallow: /followers
+Disallow: /*/followers
+Disallow: /signin
+Disallow: /*/gs/ccm/collect
+Disallow: /api/v2/common/server_time
+
+# ------------------------------------------------------------
+
+# AI training, content-use controls, and bulk data crawlers 
+
+# blocked
+
+# ------------------------------------------------------------
+
+User-agent: CCBot
+User-agent: Diffbot
+User-agent: Bytespider
+User-agent: cohere-ai
+Disallow: /
+
+# ------------------------------------------------------------
+
+# SEO, research, and crawler tools  blocked
+
+# ------------------------------------------------------------
+
+User-agent: SemrushBot
+User-agent: FirecrawlAgent
+Disallow: /
+
+# ------------------------------------------------------------
+
+# Monitor-only / unverified AI and answer-engine user agents
+
+# Public crawl allowed, private areas blocked.
+
+# Keep these grouped separately until verified in server logs
+
+# or against official crawler documentation.
+
+# ------------------------------------------------------------
+
+User-agent: AndiBot
+User-agent: ExaBot
+User-agent: PhindBot
+User-agent: Amazonbot
+User-agent: Claude-Web
+User-agent: xAI-Grok
+User-agent: Grok-DeepSearch
+User-agent: GoogleAgent-Mariner
+User-agent: OpenAI-GPT
+User-agent: Manus-user
+Disallow: /user/*
+Disallow: /*/user/*
+Disallow: /notebook/*
+Disallow: /*/notebook/*
+Disallow: /dashboard
+Disallow: /*/dashboard
+Disallow: /settings
+Disallow: /*/settings
+Disallow: /messages
+Disallow: /*/messages
+Disallow: /message/*
+Disallow: /*/message/*
+Disallow: /lessons
+Disallow: /*/lessons
+Disallow: /finance
+Disallow: /*/finance
+Disallow: /calendar
+Disallow: /*/calendar
+Disallow: /contacts
+Disallow: /*/contacts
+Disallow: /following
+Disallow: /*/following
+Disallow: /followers
+Disallow: /*/followers
+Disallow: /signin
+Disallow: /*/gs/ccm/collect
+Disallow: /api/v2/common/server_time
+
+# ------------------------------------------------------------
+
+# Internet Archive  fully blocked
+
+# ------------------------------------------------------------
+
+User-agent: ia_archiver
+Disallow: /
+
+# ------------------------------------------------------------
+
+# Sitemaps  root indexs
+
+# ------------------------------------------------------------
+
+Sitemap: https://www.italki.com/sitemaps/core/index.xml
+Sitemap: https://www.italki.com/sitemaps/teachers/index.xml
+Sitemap: https://www.italki.com/sitemaps/group_class/index.xml
+Sitemap: https://www.italki.com/sitemaps/how-to-learn/index.xml
+Sitemap: https://www.italki.com/sitemaps/blog/index.xml
+Sitemap: https://www.italki.com/sitemaps/community/index.xml
+Sitemap: https://support.italki.com/hc/sitemap.xml

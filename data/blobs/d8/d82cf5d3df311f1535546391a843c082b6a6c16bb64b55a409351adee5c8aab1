@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /feature/
+Noindex: /feature/
+Disallow: /signup-b/
+Noindex: /signup-b/
+Disallow: /tag/
+Disallow: /5e3a728225507ce63f3ee8d2f8f702cf
+Disallow: /monitor/
+Disallow: /demo-request/
+Disallow: /contact-sales/

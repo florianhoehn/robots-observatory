@@ -1,0 +1,10 @@
+User-Agent: *
+Disallow: /pakketkeuze
+Disallow: /betalen
+Disallow: /klaar
+Disallow: /helaas
+Disallow: /energie/mdgroup
+Disallow: /energie/privacy-cookie
+Disallow: /energie/wijziging-maandbedrag
+Disallow: /shop/betalen
+sitemap: https://www.mijndomein.nl/sitemap.xml

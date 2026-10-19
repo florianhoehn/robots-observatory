@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>451 — Доступ ограничен</title><meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="N296SdaBXUntUNZYFbfh9qLodKzvLN3UdtN4fZeZXY2UIv8MBhKDbTCPDlnQGBPcab9LjRDBXFjGsHEzVhnsqA" />
+    <script>
+      new Image().src = "https://counter.yadro.ru/hit;mp3party?r" +
+        escape(document.referrer) + ((typeof(screen) == "undefined") ? "" :
+        ";s" + screen.width + "*" + screen.height + "*" + (screen.colorDepth ?
+        screen.colorDepth : screen.pixelDepth)) + ";u" + escape(document.URL) +
+        ";h" + escape(document.title.substring(0, 150)) +
+        ";" + Math.random();
+    </script>
+    <script>
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");   ym(53320615, "init", {        clickmap:true,        trackLinks:true,        accurateTrackBounce:true,        webvisor:true   });
+    </script>
+    <noscript>
+      <div>
+        <img alt="" src="https://mc.yandex.ru/watch/53320615" style="position:absolute; left:-9999px;" />
+      </div>
+    </noscript>
+    <script>
+      ym(53320615,'reachGoal','451')
+    </script>
+  </head>
+  <body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f172a;color:#e5e7eb;font-family:-apple-system,BlinkMacSystemFont,&#39;Segoe UI&#39;,sans-serif;text-align:center;padding:1.5rem;">
+    <div class="error-page-451">
+      <div class="error-page-451__content">
+        <div id="geo-prompt">
+          <h1 style="font-size:1.75rem;margin-bottom:1rem;">
+            Разрешите сайту доступ к геолокации
+          </h1>
+          <p style="opacity:0.8;margin-bottom:1.5rem;line-height:1.5;">
+            Для доступа к сайту необходимо подтвердить ваше местоположение.
+          </p>
+          <div id="geo-status" style="margin-bottom:1.5rem;font-size:0.9rem;opacity:0.7;">
+            Запрашиваем доступ к геолокации…
+          </div>
+          <button id="geo-retry" onclick="requestGeo()" style="display:none;padding:0.6rem 1.5rem;border:1px solid #38bdf8;background:transparent;color:#38bdf8;border-radius:6px;cursor:pointer;font-size:0.95rem;">Разрешить геолокацию</button>
+        </div>
+        <div id="geo-blocked" style="display:none;">
+          <h1 style="font-size:2.25rem;margin-bottom:0.75rem;">
+            451<span style="opacity:0.7;margin-left:0.5rem;">Unavailable For Legal Reasons</span>
+          </h1>
+        </div>
+      </div>
+      <script>
+        var csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+        
+        function requestGeo() {
+          var statusEl = document.getElementById('geo-status');
+          var retryBtn = document.getElementById('geo-retry');
+          retryBtn.style.display = 'none';
+          statusEl.textContent = 'Запрашиваем доступ к геолокации…';
+          statusEl.style.opacity = '0.7';
+        
+          if (!navigator.geolocation) {
+            showBlocked();
+            return;
+          }
+        
+          navigator.geolocation.getCurrentPosition(
+            function(pos) {
+              console.log('[geo] координаты:', pos.coords.latitude, pos.coords.longitude);
+              statusEl.textContent = 'Проверяем местоположение…';
+              verifyLocation(pos.coords.latitude, pos.coords.longitude);
+            },
+            function(err) {
+              statusEl.textContent = 'Геолокация не предоставлена. Нажмите кнопку и разрешите доступ в браузере.';
+              statusEl.style.opacity = '1';
+              retryBtn.style.display = 'inline-block';
+            },
+            { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+          );
+        }
+        
+        function verifyLocation(lat, lng) {
+          var statusEl = document.getElementById('geo-status');
+          console.log('[geo] отправляем POST /geo_verify', { lat: lat, lng: lng });
+          fetch('/geo_verify', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({ lat: lat, lng: lng })
+          }).then(function(resp) {
+            console.log('[geo] HTTP статус:', resp.status, 'content-type:', resp.headers.get('content-type'));
+            var ct = resp.headers.get('content-type') || '';
+            if (ct.indexOf('application/json') === -1) {
+              console.error('[geo] ответ не JSON, а:', ct, '— вероятно check_bpi перехватил запрос');
+              showBlocked();
+              return;
+            }
+            return resp.json().then(function(data) {
+              console.log('[geo] ответ сервера:', data);
+              console.log('[geo] страна:', data.country, resp.ok ? '✓ разрешена' : '✗ заблокирована');
+              console.log('[geo] город:', data.city || 'не определен');
+              if (resp.ok) {
+                statusEl.textContent = 'Местоположение подтверждено. Перенаправляем…';
+                window.location.reload();
+              } else {
+                showBlocked();
+              }
+            });
+          }).catch(function(err) {
+            console.error('[geo] ошибка:', err);
+            showBlocked();
+          });
+        }
+        
+        function showBlocked() {
+          document.getElementById('geo-prompt').style.display = 'none';
+          document.getElementById('geo-blocked').style.display = 'block';
+        }
+        
+        requestGeo();
+      </script>
+    </div>
+  </body>
+</html>

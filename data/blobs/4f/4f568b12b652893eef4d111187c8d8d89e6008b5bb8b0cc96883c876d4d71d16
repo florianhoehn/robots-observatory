@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>A página que você procura não foi encontrada</title>
+    <script type="text/cjs">(function(w){w.__productAnalyticsEventQueue=w.__productAnalyticsEventQueue||[];if(typeof w.trackAnalyticsEvent!=="function"){w.trackAnalyticsEvent=function(payload){w.__productAnalyticsEventQueue.push(payload);};}})(window);</script>
+    <script>
+        (function () {
+            window.dataLayer = window.dataLayer || [];
+
+            var originalPush = window.dataLayer.push;
+
+            window.dataLayer.push = function () {
+                for (var i = 0; i < arguments.length; i++) {
+                    var obj = arguments[i];
+
+                    if (
+                        obj &&
+                        typeof obj === "object" &&
+                        Object.prototype.hasOwnProperty.call(obj, "ecommerce")
+                    ) {
+                        originalPush.call(window.dataLayer, { ecommerce: null });
+                    }
+                }
+
+                var pushResult = originalPush.apply(window.dataLayer, arguments);
+
+                try {
+                    for (var j = 0; j < arguments.length; j++) {
+                        var paObj = arguments[j];
+
+                        if (
+                            paObj &&
+                            typeof paObj === "object" &&
+                            typeof paObj.event === "string" &&
+                            paObj.event.indexOf("gtm.") !== 0
+                        ) {
+                            var paProps = {};
+                            var paKey;
+                            for (paKey in paObj) {
+                                if (Object.prototype.hasOwnProperty.call(paObj, paKey) && paKey !== 'event') {
+                                    paProps[paKey] = paObj[paKey];
+                                }
+                            }
+                            var paPayload = { event_name: paObj.event.replace(/_ga4$/, ''), properties: paProps };
+                            if (typeof window.trackAnalyticsEvent === 'function') {
+                                window.trackAnalyticsEvent(paPayload);
+                            } else {
+                                window.__productAnalyticsEventQueue = window.__productAnalyticsEventQueue || [];
+                                window.__productAnalyticsEventQueue.push(paPayload);
+                            }
+                        }
+                    }
+                } catch (paErr) {
+                    // Product Analytics mirroring must never break the GA/GTM dataLayer.push
+                }
+
+                return pushResult;
+            };
+        })();
+    </script>
+    <script type="text/javascript">
+    (function () {
+        var track = window.trackAnalyticsEvent;
+        if (typeof track !== 'function') return;
+        track({
+            event_name: 'page_view',
+            properties: {
+                page_type: "cmspage",
+                page_path: window.location.pathname,
+            },
+        });
+    })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script type="text/javascript">
+        (function() {
+            window.dataLayer = window.dataLayer || [];
+
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+            const cookieValue = getCookie('customer_info_social_media');
+            if (!cookieValue) return;
+
+            let decodedValue;
+            try {
+                decodedValue = decodeURIComponent(cookieValue);
+            } catch (decodeErr) {
+                console.error('Error decoding customer_info_social_media cookie.');
+                return;
+            }
+
+            function containsDangerousKeys(obj) {
+                const dangerousKeys = ['__proto__', 'constructor', 'prototype'];
+                if (obj && typeof obj === 'object') {
+                    for (const key in obj) {
+                        if (dangerousKeys.includes(key)) {
+                            return true;
+                        }
+                        if (typeof obj[key] === 'object' && obj[key] !== null) {
+                            if (containsDangerousKeys(obj[key])) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+            try {
+                const customerInfo = JSON.parse(decodedValue);
+                const isPlainObject =
+                    customerInfo &&
+                    typeof customerInfo === 'object' &&
+                    !Array.isArray(customerInfo);
+                if (
+                    isPlainObject &&
+                    !containsDangerousKeys(customerInfo) &&
+                    ('id' in customerInfo || 'name' in customerInfo || 'email' in customerInfo)
+                ) {
+                    window.dataLayer.push({
+                        customer_info_social: customerInfo
+                    });
+                } else {
+                    console.warn('customer_info_social_media cookie structure invalid or contains dangerous keys.');
+                }
+            } catch (parseErr) {
+                console.error('Error parsing customer_info_social_media cookie.');
+            }
+        })();
+    </script>
+
+    <script type="text/javascript">
+        function ga_data() {
+            const storeData = {
+                'store_country': 'br'
+            };
+            dataLayer.push(storeData);
+
+            const device_uuid = ('; ' + document.cookie).split(`; feature_flag_uuid=`).pop().split(';')[0];
+            if (device_uuid) {
+              const deviceData = {
+                'device_uuid': device_uuid
+              }
+              dataLayer.push(deviceData);
+            }
+
+            const id_customer = ('; ' + document.cookie).split(`; customer=`).pop().split(';')[0];
+            if (id_customer) {
+                const userData = {
+                    'user_id': id_customer
+                };
+                dataLayer.push(userData);
+            }
+
+            if (window.dataLayer) {
+                const socialInfo = window.dataLayer.find && window.dataLayer.find(function(item) {
+                    return item.hasOwnProperty('customer_info_social');
+                });
+                if (socialInfo && socialInfo.customer_info_social) {
+                    dataLayer.push({
+                        'customer_info_social': socialInfo.customer_info_social
+                    });
+                }
+            }
+        }
+
+        ga_data();
+    </script>
+
+
+    <script type="text/javascript">
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-DVWD');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <meta name="description" content="" />    <meta name="robots" content="noindex,follow" />    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+    
+    
+            
+<link rel="canonical" href="https://www.dafiti.com.br/404/.well-known/agent-card.json" />
+    
+    
+
+    
+    
+<link rel="icon" href="https://static.dafiti.com.br/images/favicon-32x32.1.ico" type="image/x-icon" />
+    
+<link rel="shortcut icon" href="https://static.dafiti.com.br/images/favicon-32x32.1.ico" type="image/x-icon" />
+
+    
+    <meta name="google-play-app" content="app-id=br.com.dafiti">
+    <meta name="msvalidate.01" content="1CAFA4D16E91B33BB9A4C0D7315B052F" />
+
+    
+    <!-- head desk -->
+    
+<link rel="manifest" href="/manifest.json">
+
+    <!-- Preconnect -->
+    
+<link rel="preconnect" href="//static.dafiti.com.br" />
+    
+<link rel="preconnect" href="//s3.amazonaws.com" />
+    
+<link rel="preconnect" href="//www.googletagmanager.com.br" />
+    
+<link rel="preconnect" href="//securepubads.g.doubleclick.net">
+    
+<link rel="preconnect" href="//adservice.google.com" />
+    
+<link rel="preconnect" href="//bidder.criteo.com" />
+    
+<link rel="preconnect" href="//static.criteo.net" />
+    
+<link rel="preconnect" href="//selo.clearsale.com.br" />
+    
+<link rel="preconnect" href="//selo.compreeconfie.com.br" />
+
+    <!-- Prefetch fallback -->
+    
+<link rel="dns-prefetch" href="//static.dafiti.com.br" />
+    
+<link rel="dns-prefetch" href="//www.googletagmanager.com.br" />
+    
+<link rel="dns-prefetch" href="https://securepubads.g.doubleclick.net">
+    
+<link rel="dns-prefetch" href="//adservice.google.com" />
+    
+<link rel="dns-prefetch" href="//bidder.criteo.com" />
+    
+<link rel="dns-prefetch" href="//static.criteo.net" />
+    
+<link rel="dns-prefetch" href="//s3.amazonaws.com" />
+    
+<link rel="dns-prefetch" href="//selo.clearsale.com.br" />
+    
+<link rel="dns-prefetch" href="//selo.compreeconfie.com.br" />
+
+    <meta name="google-site-verification" content="Jgzmneva15GOroL4l28ob_ZeUIsNoEis0wtR7Pp0Txk" />
+    <meta name="google-site-verification" content="zjIreYJD2wAs0cQBiXTBrnMGq-8wWARUm-DubgxUyig" />
+
+    <meta property="fb:admins" content="141304895927080" />
+
+    <script type="text/javascript">
+        var callGa = function() {
+            var customerId = cookieControl.readCookie("is_client");
+            if (typeof(ga) === "undefined") {
+                (function(i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function() {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+                if (customerId) {
+                    ga('create', "UA-20348534-2", 'auto', {
+                        'name': 'ga_dafiti',
+                        'cookieDomain': 'dafiti.com.br',
+                        'userId': customerId
+                    });
+                } else {
+                    ga('create', "UA-20348534-2", 'auto', {
+                        'name': 'ga_dafiti',
+                        'cookieDomain': 'dafiti.com.br'
+                    });
+                }
+                                    ga("ga_dafiti.set", ">m", "GTM-DVWD");
+                            }
+        }
+    </script>
+
+
+    
+
+    <!-- All pages -->
+    
+<link rel="alternate" media="only screen and (max-device-width: 767px)" href="https://m.dafiti.com.br/404/.well-known/agent-card.json" /> 
+
+<!-- Marketing-->
+<script src="https://static.dafiti.com.br/dist/lib/fingerprintjs.min.js?v3.4.5" defer=""></script>
+<script src="https://static.dafiti.com.br/dist/lib/vanilla.js?v0.0.9" defer=""></script>
+<script src="https://static.dafiti.com.br/dist/mkt/dftfp.js?v0.0.9" defer=""></script>
+<script src="https://static.dafiti.com.br/dist/mkt/surf.js?v0.0.12" defer=""></script>    <!-- Configcat and dependencies in order of execution -->
+    <script type="text/javascript">
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  window.configcat = window.configcat || {};
+
+  var userObject = {};
+  var userObjectUuid = {};
+  var configCatClient = undefined;
+
+  window.configCatReady = new Promise((resolve, reject) => {
+    var ccScript = document.createElement('script');
+    ccScript.src = 'https://cdn.jsdelivr.net/npm/configcat-js@latest/dist/configcat.min.js';
+    ccScript.async = true;
+    ccScript.onload = function() {
+      const customer_id = getCookie("id_customer");
+      const uuid = getCookie('feature_flag_uuid');
+
+      const initClient = function(userId) {
+
+        try {
+          // only one dependencie... window.env.CONFIGCAT_SDKKEY
+          configCatClient = configcat.getClient("configcat-sdk-1/2MXcCNKvNkyH5p1GsJIFQQ/eHKYGGImZUag2r3tH0V5Ag");
+          userObject = new configcat.User(userId);
+          userObjectUuid = new configcat.User(uuid);
+          resolve();
+        } catch (e) {
+          const msg = 'Fail to get configcat client'
+          reject(msg)
+        }
+
+      }
+
+      if (customer_id) {
+        initClient(customer_id);
+      } else {
+        var fpScript = document.createElement('script');
+        fpScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.js';
+        fpScript.async = true;
+        fpScript.onload = function() {
+          Fingerprint2.get({}, function(components) {
+            const values = components.map(component => component.value);
+            const fingerprint = Fingerprint2.x64hash128(values.join(""), 31);
+            initClient(fingerprint);
+          })
+        }
+        document.head.appendChild(fpScript);
+      }
+    }
+    ccScript.onerror = function() {
+      const msg = 'Fail to load configcat bundle';
+      reject(msg)
+    }
+    document.head.appendChild(ccScript);
+  })
+</script>
+    <script>
+    (function (h, o, u, n, d) {
+        h = h[d] = h[d] || { q: [], onReady: function (c) { h.q.push(c) } }
+        d = o.createElement(u); d.async = 1; d.src = n
+        n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
+    })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js', 'DD_RUM')
+    window.DD_RUM.onReady(function () {
+        window.DD_RUM.init({
+            clientToken: 'pub16a7b093526ff2b1c1e0aacbfa475ec7',
+            applicationId: '28183bd9-dfac-4a19-b550-79bc2138b15d',
+            env: 'live',
+            site: 'datadoghq.com',
+            service: 'alice-br',
+            sessionSampleRate: 3,
+            sessionReplaySampleRate: 1,
+            trackBfcacheViews: true,
+            defaultPrivacyLevel: 'mask-user-input',
+            trackSessionAcrossSubdomains: true,
+        });
+    })
+</script>
+    <script type="text/javascript">
+    let timesWaitingPageView = 0;
+    const maxTimesWaitingPageView = 3;
+    const waitForPageViewEvent = new Promise(resolve => {
+        const observer = setInterval(() => {
+            timesWaitingPageView++;
+            if (findPageView() || timesWaitingPageView >= maxTimesWaitingPageView) {
+                clearInterval(observer);
+                resolve();
+            }
+        }, 1000);
+    });
+
+    function eventAbTeste(name, variant) {
+        waitForPageViewEvent.then(() => {
+            window.dataLayer = window.dataLayer ? window.dataLayer : [];
+            const eventData = {
+                event: "ab_test_event_ga4",
+                ab_test_name: name,
+                ab_test_variant: name + "_" + variant,
+            };
+            window.dataLayer.push(eventData);
+        })
+    }
+
+    function findPageView() {
+        window.dataLayer = window.dataLayer ? window.dataLayer : [];
+        if (typeof window.dataLayer === 'undefined' || window.dataLayer.length === 0) {
+            return false;
+        }
+        const hasFound = window.dataLayer.filter(item => item.event == "page_view_ga4");
+        return hasFound.length > 0;
+    }
+
+    function isMobile() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Check for common mobile platforms
+        if (/android/i.test(userAgent)) {
+            return true; // Android
+        }
+
+        if (/iPhone|iPad|iPod/i.test(userAgent)) {
+            return true; // iOS
+        }
+
+        // Check for other mobile platforms like Windows Phone
+        if (/windows phone/i.test(userAgent)) {
+            return true; // Windows Phone
+        }
+
+        return false; // Not a mobile device
+    }
+
+    function rolloutEventsGa(rollout, rolloutValue) {
+        const channel = isMobile() ? 'msite' : 'desktop';
+
+        try {
+            eventAbTeste(rollout + "_" + channel, rolloutValue);
+        } catch (e) {
+            console.error("Fail to send rollout ab test to ga: ", rollout, channel, rolloutValue, e);
+        }
+    }
+</script>
+    <script type="text/javascript">
+    if (setCookieDomain == undefined) {
+        function setCookieDomain(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                expires = "; expires=" + date.toUTCString();
+            }
+            var domain =
+                "." +
+                location.hostname.substring(
+                    location.hostname.indexOf("dafiti"),
+                    location.hostname.length
+                );
+            document.cookie =
+                name + "=" + (value || "") + expires + "; path=/; domain=" + domain;
+        }
+    }
+
+    function configCatCallBack(promise, cookieName, generalToggle, rolloutToggle) {
+        promise.then(function() {
+                try {
+                    configCatClient
+                        .getValueAsync(generalToggle, false, userObjectUuid)
+                        .then(function(generalToggleValue) {
+                            if (generalToggleValue) {
+                                var currentCookieValue = getCookie(cookieName);
+                                if (currentCookieValue == undefined || currentCookieValue == '') {
+                                    configCatClient
+                                        .getValueAsync(
+                                            rolloutToggle,
+                                            false,
+                                            userObjectUuid
+                                        )
+                                        .then(function(rolloutValue) {
+                                            if (rolloutValue) {
+                                                currentCookieValue = "ligado"
+                                            } else {
+                                                currentCookieValue = "desligado"
+
+                                            }
+                                            setCookieDomain(
+                                                cookieName,
+                                                currentCookieValue,
+                                                3
+                                            );
+                                            if (rolloutEventsGa != undefined) {
+                                                rolloutEventsGa(cookieName, currentCookieValue);
+                                            }
+                                        }, function(error) {
+                                            console.error(`An error has occur on ${cookieName} ${generalToggle} ${rolloutToggle}`, e);
+                                            window.ineum(`reportEvent', 'Rollout Reject ${cookieName} ${generalToggle} ${rolloutToggle}`);
+                                            rolloutEventsGa(cookieName, 'configcat_rollout_reject');
+                                        }).catch(function(e) {
+                                            window.ineum(
+                                                `reportEvent', 'ConfigCat Rollout Flag Error ${cookieName} ${generalToggle} ${rolloutToggle}`
+                                            );
+                                            rolloutEventsGa(cookieName, 'flag_null');
+                                        });
+                                } else {
+                                    rolloutEventsGa(cookieName, currentCookieValue);
+                                }
+                            } else {
+                                //Clear cookie when abtest is disabled
+                                setCookieDomain(cookieName, "", -1);
+                            }
+                        }, function(error) {
+                            console.error(`An error has occur on ${cookieName} ${generalToggle} ${rolloutToggle}`, e);
+                            window.ineum(`reportEvent', 'Toggle Reject ${cookieName} ${generalToggle} ${rolloutToggle}`);
+                            rolloutEventsGa(cookieName, 'configcat_toggle_reject');
+                        }).catch(function(e) {
+                            window.ineum(
+                                `reportEvent', 'ConfigCat Toggle Flag Error ${cookieName} ${generalToggle} ${rolloutToggle}`
+                            );
+                            rolloutEventsGa(cookieName, 'toggle_null');
+                        });
+                } catch (e) {
+                    console.error(`An error has occur on ${cookieName} ${generalToggle} ${rolloutToggle}`, e);
+                    window.ineum(`reportEvent', 'ConfigCat General Error ${cookieName} ${generalToggle} ${rolloutToggle}`);
+                    rolloutEventsGa(cookieName, 'configcat_general_error');
+                }
+            }, function(error) {
+                console.error(`An error has occur on ${cookieName} ${generalToggle} ${rolloutToggle}`, e);
+                window.ineum(`reportEvent', 'ConfigCat Refect ${cookieName} ${generalToggle} ${rolloutToggle}`);
+                rolloutEventsGa(cookieName, 'configcat_refect');
+            })
+            .catch(function(error) {
+                window.ineum(`reportEvent', 'ConfigCat not ready ${cookieName} ${generalToggle} ${rolloutToggle}`);
+                rolloutEventsGa(cookieName, 'configcat_not_ready');
+            });
+    }
+
+    function configCatSetCookie(promise, cookieName, configName) {
+        promise.then(function() {
+            try {
+                configCatClient
+                    .getValueAsync(configName, false, userObject)
+                    .then(function(value) {
+                        if (value) {
+                            setCookieDomain(cookieName, true, 1);
+                        } else {
+                            setCookieDomain(cookieName, false, -1);
+                        }
+                    });
+            } catch (e) {
+                console.error("An error has occur on: ", cookieName, "and:", configName, e);
+
+                window.ineum(`reportEvent', 'ConfigCat setCookie Error ${cookieName} ${configName}`);
+                rolloutEventsGa(cookieName, 'setcookie_error');
+            }
+        }, function(error) {
+            console.log("ConfigCat not ready : Reject", error);
+            window.ineum(`reportEvent', 'ConfigCat not ready : Reject ${cookieName} ${configName}`);
+            rolloutEventsGa(cookieName, 'not_ready');
+        });
+    }
+
+    configCatSetCookie(window.configCatReady, 'carrinho_alterado_PCJ', 'installmentsitem');
+    configCatSetCookie(window.configCatReady, 'milkrun_v2', 'milkrun_v2');
+
+    // configCatSetCookie(window.configCatReady, 'x-config', 'xconfig');
+    configCatCallBack(window.configCatReady, 'new_cart_web', 'togglecart', 'rolloutnewcart');
+    configCatCallBack(window.configCatReady, 'x-config', 'xconfig', 'rollout_min_parcela');
+    configCatCallBack(window.configCatReady, 'customer_phone_flag', 'customerphone', 'phone-on-register-flag');
+    configCatCallBack(window.configCatReady, 'customer_phone_required_flag', 'phone-on-register-flag', 'phone-required-register');
+</script>
+    <!-- End Configcat and dependencies in order of execution -->
+
+    <!-- End All pages -->
+
+
+    <script>
+        (function(s, t, a, n) {
+            s[t] || (s[t] = a, n = s[a] = function() {
+                    n.q.push(arguments)
+                },
+                n.q = [], n.v = 2, n.l = 1 * new Date)
+        })(window, "InstanaEumObject", "ineum");
+
+        ineum('reportingUrl', 'https://eum-orange-saas.instana.io');
+        ineum('key', 'J3wg6I6xTWSn3ab7CrKPaQ');
+        ineum('user', '', '82.39.15.43, 185.59.221.122');
+        ineum('trackSessions');
+    </script>
+    <script defer crossorigin="anonymous" src="https://eum.instana.io/eum.min.js"></script>
+
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+
+    <script type="text/javascript">
+        var UA = function(e, t) {
+            "use strict";
+
+            function r(e) {
+                return function() {
+                    return e.test(n)
+                }
+            }
+            var n = e.navigator && t.userAgent || "";
+            return {
+                isMobile: r(/(iphone|ipod|ipad|android|blackberry|nokia)/i),
+                isDesktop: function() {
+                    return !this.isMobile()
+                },
+                getDevice: function() {
+                    if (this.isMobile()) {
+                        return 'mobile';
+                    } else {
+                        return 'desktop';
+                    }
+                },
+                whoami: function() {
+                    return n
+                }
+            }
+        }(window, navigator);
+
+        (function() {
+            if (UA) {
+                var href = window.location.pathname + window.location.search;
+                var domain = window.location.hostname;
+                var subDomains = ['dftstores', 'rider', 'cartago', 'grendha', 'zaxy', 'ipanema', 'grendenekids'];
+                var separator = '.';
+                subDomains.forEach(function(item) {
+                    if (domain.search(item) >= 0) {
+                        separator = '-';
+                    }
+                });
+                var mainDomain = domain.replace(/^((secure|www|m|t)[\.\-])/, '');
+                var mobileDomain = 'm' + separator + mainDomain;
+                var tabletDomain = 't' + separator + mainDomain;
+
+                if (window.location.pathname != '/checkout/success/') {
+                    if (UA.isMobile() && domain != mobileDomain) {
+                        window.location = location.protocol + "//" + mobileDomain + href;
+                    } else if (UA.isDesktop() && (domain === mobileDomain || domain === tabletDomain)) {
+                        window.location = location.protocol + "//" + mainDomain + href;
+                    }
+                }
+            }
+        }());
+    </script>
+    <!--[if IE]>
+<style>
+@import "https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/cssl/index/404-2014-1909e30d.css?1792439600";
+</style>
+<!-- <![endif]-->
+<!--[if !IE]> -->
+
+
+<link rel="stylesheet" href="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/cssl/index/404-2014-1909e30d.css?1792439600" /><!-- <![endif]-->
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/js/header-javascript.min-dd1ae50d.js"></script>
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/components/accordion/js/accordion-component.js"></script>
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/components/input-search/js/input-search-component.js"></script>
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/components/checkbox/js/checkbox-component.js"></script>
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/components/button/js/button-component.js"></script>
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/components/toggle-switch/js/toggle-switch-component.js"></script>
+            <script type="text/javascript" src="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/components/input-title/js/input-title-component.js"></script>
+        <script type="text/javascript">
+    window.dft = {};
+</script>
+        <script type="text/cjs" data-cjssrc="https://static.dafiti.com.br/vendor/dafiti/bootstrap/dist/js/javascript.min-9b0e3d93.js"></script>
+    
+    <script type="text/javascript">
+        if (window.addEventListener)
+            window.addEventListener("load", CJS.start, false);
+        else if (window.attachEvent)
+            window.attachEvent("onload", CJS.start);
+        else window.onload = CJS.start;
+    </script>
+
+            <script type="text/javascript">
+        var placeHolderImage = 'https://static.dafiti.com.br/images/placeholder/placeholder.jpg';
+        var baseUrl = '';
+        var secureUrl = 'https://secure.dafiti.com.br';
+        var csrfToken = '5864c3272dccf72b1aae4444dda3af3f62a83c32';
+        var cookieDomain = '.dafiti.com.br';
+    </script>
+    <script type="text/javascript">
+        (function() {
+            var script = document.createElement('script');
+            script.src = 'https://tracking.dafiti.ads.global-fashion-group.com/static/gap.js';
+            script.async = true;
+            script.onload = function() {
+                if (!window.abg && typeof CitrusAd != 'undefined') {
+                    window.abg = CitrusAd.init('https://tracking.dafiti.ads.global-fashion-group.com/v1', {
+                        disableTracking: false,
+                    });
+                }
+            }
+            document.head.appendChild(script);
+        })();
+    </script>
+    <script type="text/cjs">window.__productAnalyticsBootstrap={"apiUrl":"https://product-analytics-api.eks.live.dafiti.io","apiKey":"dev-secret-api-key","platform":"alice","origin":"web","navigationExperiments":[{"experiment_id":"lean_pdp","variant":"control"},{"experiment_id":"lean_pdp_product_analytics","variant":"off"}]};</script><script type="text/cjs" data-cjssrc="https://static.dafiti.com.br/js/product-analytics.js?v=1335543610"></script></head>
+
+
+<body  data-marreco-stats="1" data-sid="" data-uid="" data-env="live" data-route="index/404" data-fixed-header class="no-touch desktop ">
+
+
+
+    <script sync type="text/javascript">
+dataLayer.push({
+'pageName': 'Static.404well-knownagent-cardjson',
+'ET': 'cmspage',
+'googleRemarketingLabel' : 'UWWxCIyIlAIQ5NyG1gM'
+});
+</script>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-DVWD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager -->
+<script type="text/cjs">
+$(document).ready(function(){
+$('img[data-jsrc].load-async-imgs').each(function() {
+    if ($(this).data("jsrc")) {
+    var i = window.location.toString().search("https://") >= 0 ? $(this).data("jsrc").replace("https://static.dafiti.com.br","https://static.dafiti.com.br") : $(this).data("jsrc");
+        $(this).attr("src", i);
+    }
+});
+
+        $("img[data-src]").not('.lazy-mini').each(function(){
+            if ($(this).data("src")) {
+                $(this).attr("src", $(this).data("src"));
+            }
+        });
+})
+</script>    <input id="push-menu-active" type="checkbox" style="display: none;" />
+    <input id="catalog-search-active" type="checkbox" style="display: none;" />
+    <input id="catalog-refine-sort" name="catalog-refine" type="radio" style="display: none;" />
+    <input id="catalog-refine-filter" name="catalog-refine" type="radio" checked="checked" style="display: none;" />
+
+     <div id="backdrop"></div>
+<div id="mobile-detector" class="show-mobile"></div>
+<div id="tablet-detector" class="show-tablet"></div>
+<div id="wrapper" class="l-wrapper" >
+    <!-- TELESALES -->
+    
+    <!-- HEADER -->
+    
+    <script>
+        window.addEventListener("load", function(event) {
+            document.querySelector(".l-header-menu").innerHTML = '';
+            document.querySelector(".l-header-menu").innerHTML = decodeURIComponent(escape(atob("PGRpdiBjbGFzcz0ibWVudS1ncm91cCBjbGVhcmZpeCI+ICA8ZGl2IGNsYXNzPSJjb250YWluZXIiPiAgPGRpdiBjbGFzcz0icm93Ij4gIDxkaXYgY2xhc3M9ImNvbC1tZC04IGNvbC1zbS05Ij4gIDx1bCBjbGFzcz0ibWVudSBzdWItbWVudSI+ICA8bGkgY2xhc3M9Im1lbnUtaXRlbSI+ICA8YSBocmVmPSJodHRwczovL3d3dy5kYWZpdGkuY29tLmJyL2ZlbWluaW5vLyIgY2xhc3M9Im1lbnUtbGluayAiPjxzcGFuPkZlbWluaW5vPC9zcGFuPjwvYT4gIDxkaXYgY2xhc3M9Im1lbnUtZHJvcGRvd24gcm93IHN1Ym5hdmlnYXRpb24tRmVtaW5pbm8iPiAgPGRpdiBjbGFzcz0iY29sLW1kLTIiPiAgPHVsIGNsYXNzPSJtZW51LWRyb3Bkb3duLWl0ZW1zIj4gIDxsaSBjbGFzcz0ibWVudS1kcm9wZG93bi1pdGVtIj48YSBjbGFzcz0ibWVudS1kcm9wZG93bi1saW5rIiBocmVmPSJodHRwczovL3d3dy5kYWZpdGkuY29tLmJyL3JvdXBhcy1mZW1pbmluYXMvIj48c3Ryb2

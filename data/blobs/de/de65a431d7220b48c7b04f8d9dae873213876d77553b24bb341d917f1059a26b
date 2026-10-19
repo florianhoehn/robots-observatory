@@ -1,0 +1,14 @@
+<!doctype html><html><script>
+fetch("/404/index.html").then(r => r.text()).then(t => {
+  const href = t.match(/href="([^"]*bundle\.[^"]+\.css)"/)[1];
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  link.onload = link.onerror = () => {
+    document.open();
+    document.write(t);
+    document.close();
+  };
+  document.head.appendChild(link);
+});
+</script></html>

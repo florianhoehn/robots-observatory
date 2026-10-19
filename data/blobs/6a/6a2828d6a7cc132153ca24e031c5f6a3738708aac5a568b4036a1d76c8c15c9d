@@ -1,0 +1,32 @@
+# ===========================================
+# 🕷️ Robots.txt for sattakingy.in
+# Last Updated: 28 Oct 2025
+# ===========================================
+
+User-agent: *
+
+# --- Block all query-string URLs (to prevent duplicate content)
+Disallow: /*?
+Disallow: /*&
+
+# --- Block fake nested PHP paths (e.g. /page.php/abc.php)
+Disallow: /*.php/
+
+# --- Block sensitive or irrelevant directories
+Disallow: /chart/
+Disallow: /cgi-bin/
+Disallow: /cpanel/
+Disallow: /webmail/
+Disallow: /tmp/
+Disallow: /test/
+Disallow: /admin/
+Disallow: /backup/
+Disallow: /subdomain/
+
+# --- Allow main PHP pages + homepage + sitemap
+Allow: /*.php$
+Allow: /$
+Allow: /sitemap.xml
+
+# --- Sitemap location
+Sitemap: https://sattakingy.in/sitemap.xml

@@ -1,0 +1,508 @@
+<!DOCTYPE html> 
+<html lang="en-US" class="anonymous-visitor">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script id="ketch-consent-bootstrap">!function(){if(!(/(?:^|;\s*)tnet_ketch=on(?:;|$)/.test(document.cookie)||/[?&]tnet_ketch=on(?:&|$)/.test(location.search)))return;window.semaphore=window.semaphore||[],window.ketch=function(){window.semaphore.push(arguments)};var e=document.createElement("script");e.type="text/javascript",e.src="https://global.ketchcdn.com/web/v3/config/xometry/thomasnet_com/boot.js",e.defer=e.async=!0,document.getElementsByTagName("head")[0].appendChild(e)}();</script>
+<script id="ketch-consent-bridge">!function(){if("function"!=typeof window.ketch)return;var C="Segment Consent Preference Updated";function w(p){var h=location.hostname,l=h.split("."),b=(/\.[a-z]{2,}$/i.test(h)&&l.length>1?"; Domain=."+l.slice(-2).join("."):"")+"; Path=/; SameSite=Lax"+("https:"===location.protocol?"; Secure":"");document.cookie=Object.keys(p).length?"tnet_ketch_consent="+encodeURIComponent(JSON.stringify(p))+b+"; Max-Age=2592000":"tnet_ketch_consent="+b+"; Max-Age=0"}window.ketchConsent=window.ketchConsent||{},window.ketch("on","identities",function(i){window.ketchIdentities=i||{}}),window.ketch("on","consent",function(n){var p=n&&n.purposes||{};if(window.ketchConsent=p,w(p),Object.keys(p).length){var a=window.tnetAnalytics||window.analytics||(window.tnetAnalytics=[]);Array.isArray(a)?a.push(["track",C]):a.track(C)}})}();</script>
+<script id="ketch-segment-wire">
+(function () {
+    var CONSENT_COOKIE = "tnet_ketch_consent";
+    var CONSENT_TIMEOUT_MS = 3000;
+
+    function hasPurposes(purposes) {
+        return !!purposes && Object.keys(purposes).length > 0;
+    }
+
+    // Twin of applyKetchConsent(): stamps consent on the outbound payload.
+    // Every event is sent; Segment Consent Management routes it by the stamp.
+    // Leaves payloads unstamped until Ketch resolves purposes or a saved
+    // consent cookie exists (an empty categoryPreferences means deny-all to
+    // Segment).
+    function applyKetchConsent(payload, purposes, identities) {
+        if (identities && Object.keys(identities).length > 0) {
+            payload.context = Object.assign({}, payload.context, { cmp_identities: Object.assign({}, identities) });
+        }
+        if (!hasPurposes(purposes)) return;
+        var optOutTraits = {};
+        Object.keys(purposes).forEach(function (code) {
+            optOutTraits["ketch_" + code + "_optout"] = !purposes[code];
+        });
+        var context = payload.context || {};
+        payload.context = Object.assign({}, context, {
+            consent: { categoryPreferences: Object.assign({}, purposes) },
+            traits: Object.assign({}, context.traits, optOutTraits)
+        });
+        // identify carries traits at the top level, not under context.
+        if (payload.type === "identify") {
+            payload.traits = Object.assign({}, payload.traits, optOutTraits);
+        }
+    }
+
+    // Twin of readSavedKetchConsent(): the purposes the bridge saved on an
+    // earlier page, or undefined when missing, empty or malformed.
+    function readSavedKetchConsent(cookieHeader) {
+        var prefix = CONSENT_COOKIE + "=";
+        var raw;
+        cookieHeader.split(";").forEach(function (part) {
+            part = part.trim();
+            if (raw === undefined && part.indexOf(prefix) === 0) raw = part.slice(prefix.length);
+        });
+        if (!raw) return undefined;
+        try {
+            var parsed = JSON.parse(decodeURIComponent(raw));
+            if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) return undefined;
+            var keys = Object.keys(parsed);
+            if (keys.length === 0) return undefined;
+            for (var i = 0; i < keys.length; i++) {
+                if (typeof parsed[keys[i]] !== "boolean") return undefined;
+            }
+            return parsed;
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+    // Twin of wireKetchSegment(). Call once with the snippet's analytics stub
+    // in place of analytics.load(...); pass that call as load, merging the
+    // options it receives ({ disableClientPersistence }) into the load options.
+    // Segment always loads; Ketch's analytics purpose only decides client
+    // persistence, which analytics.js reads once, at load.
+    window.tnetKetchWire = function (analytics, load) {
+        if (analytics.__tnetKetchWired) return;
+        analytics.__tnetKetchWired = true;
+
+        // window.ketchConsent stays {} (from the head script's window.ketch stub)
+        // until Ketch's first consent event, which never comes if Ketch is
+        // blocked. Segment can load before that, from the saved cookie, so while
+        // Ketch is enabled but has not reported, stamp from the saved cookie;
+        // the live value wins once it has purposes.
+        analytics.addSourceMiddleware(function (ctx) {
+            var live = window.ketchConsent;
+            applyKetchConsent(
+                ctx.payload.obj,
+                hasPurposes(live) || typeof window.ketch !== "function"
+                    ? live
+                    : readSavedKetchConsent(document.cookie),
+                window.ketchIdentities
+            );
+            ctx.next(ctx.payload);
+        });
+
+        // The snippet stub is itself an array, so expose a plain object for the
+        // bridge: a raw push onto the stub stops being read once Segment loads,
+        // while the stub's methods forward to the loaded library.
+        var queued = window.tnetAnalytics;
+        window.tnetAnalytics = {
+            track: function () { return analytics.track.apply(analytics, arguments); }
+        };
+        if (Array.isArray(queued)) {
+            queued.forEach(function (call) {
+                if (!Array.isArray(call)) return;
+                var fn = analytics[call[0]];
+                if (typeof fn === "function") fn.apply(analytics, call.slice(1));
+            });
+        }
+
+        // Without Ketch on the page (opt-in off), load now with persistence, as
+        // before. With Ketch: consent saved on an earlier page decides now;
+        // otherwise wait for Ketch's first consent event, or load without
+        // persistence after the timeout. Calls made before that stay queued.
+        if (typeof window.ketch !== "function") {
+            load({ disableClientPersistence: false });
+            return;
+        }
+        var persisted;
+        var resetDone = false;
+        var timer;
+        function loadOnce(purposes) {
+            if (persisted !== undefined) return;
+            if (timer !== undefined) clearTimeout(timer);
+            persisted = !!purposes && purposes.analytics === true;
+            load({ disableClientPersistence: !persisted });
+        }
+        var saved = readSavedKetchConsent(document.cookie);
+        if (hasPurposes(saved)) {
+            loadOnce(saved);
+        } else if (hasPurposes(window.ketchConsent)) {
+            loadOnce(window.ketchConsent);
+        } else {
+            timer = setTimeout(function () { loadOnce(undefined); }, CONSENT_TIMEOUT_MS);
+        }
+
+        // Revoked after loading with persistence: reset() once per revoke clears
+        // the stored ids; the next page loads without persistence. A grant on a
+        // page that loaded without persistence takes effect on the next page.
+        window.ketch("on", "consent", function (consent) {
+            var purposes = consent && consent.purposes;
+            if (!hasPurposes(purposes)) return;
+            if (persisted === undefined) {
+                loadOnce(purposes);
+                return;
+            }
+            if (purposes.analytics === true) {
+                resetDone = false;
+            } else if (purposes.analytics === false && persisted && !resetDone) {
+                resetDone = true;
+                analytics.reset();
+            }
+        });
+    };
+})();
+</script>
+<link rel="preconnect" href="https://global.ketchcdn.com">
+	<meta name="y_key" content="6e6d842e318a7ef3" />
+	<meta name="verify-v1" content="M4H4OjcbjuyLj4ldOLvskMOd5DHwVIZlVgVTHugDWu4=" />
+	<meta name="msvalidate.01" content="3087D2E5C9F20872C96C4030C1BB0093" />		<link rel="manifest" href="https://www.thomasnet.com/manifest.json">
+
+        <link rel="stylesheet" type="text/css" href="https://cdn40.thomasnet.com/css/style.v1792168499.css">
+	<link href="https://assets.xometry.com/normalize.css" rel="stylesheet" />
+	<link href="https://assets.xometry.com/fonts.css" rel="stylesheet" />
+	<link href="https://assets.xometry.com/base.css" rel="stylesheet" />
+	<link href="https://assets.xometry.com/loft/loft@1.7.7/loft.css" rel="stylesheet" />
+	<link href="https://assets.xometry.com/loft/loft@1.7.7/utility-classes.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="https://cdn40.thomasnet.com/css/supplier-services-frontend-components.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn40.thomasnet.com/css/legacy.v1792168499.css">
+	<meta name="apple-mobile-web-app-title" content="Thomasnet">
+	<meta name="application-name" content="Thomasnet">
+	<link rel="shortcut icon" href="https://www.thomasnet.com/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="57x57" href="https://www.thomasnet.com/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="https://www.thomasnet.com/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="https://www.thomasnet.com/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="https://www.thomasnet.com/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="https://www.thomasnet.com/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="https://www.thomasnet.com/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="https://www.thomasnet.com/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="https://www.thomasnet.com/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="https://www.thomasnet.com/apple-touch-icon-180x180.png">
+
+	<title>Thomasnet&reg; - Page Not Found</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="Robots" content="noindex,follow" />
+	<meta name="referrer" content="unsafe-url" />
+	<link href="https://cdn40.thomasnet.com/css/style.v1792168499.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="https://cloud.typography.com/7875216/7361192/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript">
+		var cb2017 = 1;
+	</script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.4/purify.min.js" integrity="sha512-Y1p/STLW/B+l+MPJ5K5OdILMwJa2gMFXXmC/qsyDuGH9uc1MZMUo6/8YQUg9Ut4ns8KGCrCtt+58UwmNFFiVvA==" crossorigin="anonymous"></script>
+	<script src="https://cdn40.thomasnet.com/js/modernizr.dev.js"></script>
+	<script src="//cdn.thomasnet.com/javascript/jquery-1.10.2.min.js"></script>
+	<script src="/javascript/jquery.colorbox.1.4.33_2017.min.v1792168517.js"></script>
+	<script src="//cdn.thomasnet.com/javascript/jquery.cookie.min.js"></script>
+	<script src="/javascript/fontawesome.83643d97c7.v1792168517.js"></script>
+	<script src="/javascript/tnet.v1792168517.js"></script>
+	<script src="/javascript/litereg.v1792168517.js"></script>
+<script type="text/javascript">
+	$.cookie('ctsrc', 'direct', { path: '/', domain: '.thomasnet.com' });
+	var tinid = '';
+	var loggedin = '';
+</script>
+<script type="application/javascript" src="//ced.sascdn.com/tag/3249/smart.js" async></script>
+<script type="application/javascript">
+	var sas = sas || {};
+	sas.cmd = sas.cmd || [];
+	
+	sas.cmd.push(function() {
+		sas.setup({
+			networkid: 3249,
+			domain: "//www14.smartadserver.com",
+			async: true
+		});
+	});
+</script>
+<script>
+    !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="YOUR_WRITE_KEY";;analytics.SNIPPET_VERSION="5.2.1";
+        tnetKetchWire(analytics, function (opts) { analytics.load("wYRYVAcFUcC1fmwFSXEw8Zw5WFLLPCX2", Object.assign({ integrations: { "Segment.io": { apiHost: "analytics.thomasnet.io/v1" }}}, opts)); });
+        analytics.page();
+		setTimeout(()=>{var{audience:audience,annual_sales:annual_sales,b2b:b2b,b2c:b2c,city:city,country:country,company_name:company_name,employee_count:employee_count,industry:industry,information_level:information_level,latitude:latitude,longitude:longitude,marketing_alias:marketing_alias,phone:phone,primary_sic:primary_sic,registry_latitude:registry_latitude,registry_longitude:registry_longitude,registry_country_code:registry_country_code,state:state,street_address:street_address,sub_industry:sub_industry,web_site:web_site,zip:zip}=window.Demandbase.IP.CompanyProfile,dbData={"company":{"name":company_name,"employee_count":employee_count,"industry":industry},"website":web_site,"phone":phone,"annual_sales":annual_sales,"audience":audience,"is_detailed_info":"Detailed"===information_level,"address":{"street":street_address,"city":city,"state":state,"postalCode":zip,"country":country||registry_country_code},"geolocation":{"latitude":latitude||registry_latitude,"longitude":longitude||registry_longitude},"marketing_alias":marketing_alias,"primary_sic":primary_sic,"sub_industry":sub_industry,"target_audience":{"b2b":b2b,"b2c":b2c}};console.log("Sending Data...",dbData.audience); analytics.identify(dbData); },5000);
+    }}();
+</script>
+</head> 
+<body class="logged-out" data-search-type="search-suppliers" data-eval-weblinks="1">
+
+
+<div data-thcomponent="regwall-modal"></div>
+	<script type="text/javascript">
+		var useTlm = 1;
+
+		function tlmLink(el) {
+			if (useTlm == 1) {
+				var d = $(el).data();
+				utag.link(d);
+			}
+		}
+
+		function initAsyncTlm() {
+			if (useTlm == 1) {
+				console.log(`Deprecated: initAsyncTlm()`);
+			}
+		}
+
+		$(document).ready(function() {
+			if (useTlm == 1) {
+				$(document).on("click", '[data-event_type]', function() {
+					var $this = $(this);
+					var d = $this.data();
+					var eventType = d['event_type'];
+
+					switch (eventType) {
+						case "link":
+							utag.link(d);
+							break;
+						case "ilink":
+							document.cookie = "ad_click=" + escape(d['ad_click']) + '; domain=.thomasnet.com' + '; path=/';
+							break;
+						case "vlink":
+							utag.view(d);
+							break;
+						case "alink":
+							utag.link(d);
+							break;
+					}
+				});
+			}
+		});
+	</script>
+<script type="text/javascript">
+// delete WTLOPTOUT cookie
+if (document.cookie.indexOf("WTLOPTOUT=") != -1) {
+	var dCur = new Date();
+	var dExp = new Date(dCur.getTime() - 315360000000);
+	var expiry = "; expires=" + dExp.toGMTString();
+	var path = "; path=/";
+	var domain = "; domain=.thomasnet.com";
+	document.cookie = "WTLOPTOUT=1" + expiry + path + domain;
+}
+</script>
+
+
+<script src="/javascript/regwall.v1792168517.js" type="text/javascript"></script>
+<div id="tnettooltip"></div>
+<script language="JavaScript" type="text/javascript" src="//cdn.thomasnet.com/javascript/tnettooltip.js"> </script>  
+
+
+<div class="site-wrap ">
+<!--Site Header (SSFC)-->
+<header class="site-header site-header--ssfc" role="banner" data-thdoc="S1">
+	<div
+		data-thcomponent="ssfc-navbar"
+		 data-thomas-base-url="https://www.thomasnet.com" data-business-url="https://business.thomasnet.com" data-help-url="https://help.thomasnet.com"		style="min-height:4rem"
+	></div>
+	<noscript>
+		<a href="https://www.thomasnet.com" class="site-header__logo">
+			<img src="https://cdn40.thomasnet.com/img40/thomas-logo-blue-x.svg" alt="Thomas Logo">
+		</a>
+	</noscript>
+</header>
+<section class="page-utility"> <div class="container"> <nav aria-label="breadcrumb"> <ol class="breadcrumb">
+<li class="breadcrumb-item "><a ad="BC" data-ad_click="BC" data-event_type="ilink" href="https://www.thomasnet.com">Home</a></li>
+<li class="breadcrumb-item active">Page Not Found</li>
+ </ol> </nav> <div id="utillinks"></div> </div> </section>
+
+
+
+<section class="legacy-content" data-thdoc="S0">
+<div class="container">
+<div id="tnet_body" class="tnet_wrap">
+		<div id="tnet_content" class="logged-out">
+
+<style type="text/css">
+table.p404 { width:100%; }
+</style>
+
+<table  style="width:100%">
+<tr>
+	<td colspan="2">
+	<h1 class="np">The page you were looking for can't be found.</h1>
+	Did you try searching? Maybe we can help. Here are some popular searches on <a href="https://www.thomasnet.com">Thomasnet</a>.
+	</td>
+	<td rowspan="2" style="width:33%">
+	<img src="//cdn.thomasnet.com/images/images/404-yellow-sticky.jpg" style="width:100%;max-width:323px">
+			<ol start="80">
+			<li><a href="https://www.thomasnet.com/suppliers/usa/cnc-swiss-screw-machine-products-turned-parts-71871008">CNC Swiss Screw Machine Products &amp; Turned Parts</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/pipe-fittings-29860202">Pipe Fittings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/aircraft-aerospace-cnc-machining-96098827">Aircraft &amp; Aerospace CNC Machining</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/expansion-joints-41642950">Expansion Joints</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/carrying-cases-10950202">Carrying Cases</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/powdered-metal-parts-62466008">Powdered Metal Parts</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/castings-11421203">Castings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/magnets-49490402">Magnets</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/brushes-8352403">Brushes</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/dust-collecting-systems-24980609">Dust Collecting Systems</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/sewing-contractors-73940603">Sewing Contractors</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/wire-94200409">Wire</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/thermoformed-plastics-61020202">Plastic Thermoforming</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/centrifugal-pumps-64322407">Centrifugal Pumps</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/plastic-containers-17810805">Plastic Containers</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/forgings-30793608">Forgings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/glass-34661207">Glass</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/aluminum-1261809">Aluminum</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/adhesives-393009">Adhesives</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/worm-gears-34411801">Worm Gears</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/casters-11240207">Casters</a></li>
+		</ol>
+	</td>
+</tr>
+<tr>
+	<td style="width:33%">		<ol start="1">
+			<li><a href="https://www.thomasnet.com/suppliers/usa/screw-machine-products-turned-parts-71800205">Screw Machine Products &amp; Turned Parts</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/metal-stampings-78560109">Metal Stampings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/injection-molded-plastics-60310604">Plastic Injection Molding Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/tube-fabrication-bending-services-88330600">Tube Fabrication &amp; Bending Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/laser-cutting-services-43277201">Laser Cutting Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/cnc-machining-45330503">CNC Machining</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/bearings-3650207">Bearings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/aluminum-castings-11520202">Aluminum Castings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/molded-rubber-goods-69890200">Rubber Goods Molding Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/deep-drawn-stampings-78370400">Deep Drawn Stampings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/compression-springs-77610202">Compression Springs</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/stainless-steel-tubing-88672423">Stainless Steel Tubing</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/metal-fabrication-50550409">Metal Fabrication</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/springs-77211605">Springs</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/tapes-83541409">Tapes</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/fasteners-27541200">Fasteners</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/roll-forming-68832203">Roll Forming</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/custom-injection-molded-plastics-95958385">Custom Plastic Injection Molding Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/special-custom-designers-builders-manufacturers-machinery-48630404">Special &amp; Custom Machinery (Designers, Builders &amp; Manufacturers)</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/plastic-bags-2722403">Plastic Bags</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/die-cutting-22510804">Die Cutting</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/metal-spinning-76720408">Metal Spinning</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/wire-forms-95171104">Wire Forms</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/stainless-steel-80230204">Stainless Steel</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/industrial-vacuum-cleaners-89931000">Industrial Vacuum Cleaners</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/ball-valves-90370206">Ball Valves</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/heat-treating-services-37380805">Heat Treating Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/linear-actuators-330209">Linear Actuators</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/orings-68041003">O-Rings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/sheet-metal-fabrication-74351008">Sheet Metal Fabrication</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/investment-castings-12260402">Investment Castings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/precision-machining-45620408">Precision Machining</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/waterjet-cutting-services-21533906">Waterjet Cutting Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/tanks-82700600">Tanks</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/ball-bearings-3740800">Ball Bearings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/adhesive-tapes-83541805">Adhesive Tapes</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/valves-90052002">Valves</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/pumps-64020605">Pumps</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/gaskets-32900409">Gaskets</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/electric-heaters-37530201">Electric Heaters</a></li>
+		</ol>
+</td>
+	<td style="width:33%">		<ol start="41">
+			<li><a href="https://www.thomasnet.com/suppliers/usa/labels-42362004">Labels</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/plastic-bottles-7053200">Plastic Bottles</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/contract-packaging-55610604">Contract Packaging Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/plastic-tubing-88661822">Plastic Tubing</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/heat-exchangers-26621409">Heat Exchangers</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/swiss-screw-machine-products-turned-parts-72200504">Swiss Screw Machine Products &amp; Turned Parts</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/hinges-38101804">Hinges</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/cable-assemblies-9631805">Cable Assemblies</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/electronic-contract-manufacturing-17873050">Electronic Contract Manufacturing</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/pressure-vessels-91721001">Pressure Vessels</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/vacuum-pumps-65021602">Vacuum Pumps</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/automation-equipment-2250603">Automation Equipment</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/aluminum-extrusions-26890400">Aluminum Extrusions</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/plastic-extrusions-26900407">Plastic Extrusions</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/gears-33560400">Gears</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/steel-fabrication-79941605">Steel Fabrication</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/solenoid-valves-91272203">Solenoid Valves</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/dc-motors-52411113">DC Motors</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/general-machining-45340403">Machining</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/custom-injection-molding-96014733">Custom Injection Molding Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/material-handling-equipment-50140409">Material Handling Equipment</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/bolts-6214803">Bolts</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/stampings-78191608">Stampings</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/contract-manufacturing-17871203">Contract Manufacturing</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/nameplates-53412607">Nameplates</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/stainless-steel-tanks-83330209">Stainless Steel Tanks</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/check-valves-90461807">Check Valves</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/coating-services-15602204">Coating Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/packaging-55550206">Packaging</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/conveyor-systems-18890608">Conveyor Systems</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/calibration-services-10021202">Calibration Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/powder-coating-services-62441357">Powder Coating Services</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/precision-sheet-metal-fabrication-74361007">Precision Sheet Metal Fabrication</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/emi-rfi-shielding-74850207">EMI/RFI Shielding</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/abrasives-30403">Abrasives</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/washers-92143403">Washers (Fasteners &amp; Hardware)</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/foam-30674956">Foam</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/laboratory-equipment-supplies-42730408">Laboratory Equipment &amp; Supplies</a></li>
+			<li><a href="https://www.thomasnet.com/suppliers/usa/custom-cases-10981108">Custom Cases</a></li>
+		</ol>
+</td>
+</tr>
+</table>
+
+</div> <!-- tnet_content -->
+</div> <!-- tnet_body -->
+
+</div></div>
+</section>
+<section class="newsletter-signup inverted-section" data-thdoc="S9" data-thcomponent="newsletter-signup">
+
+    <div class="container newsletter-signup__container">
+        <div class="newsletter-signup__body">
+            <h2 class="newsletter-signup__title">Thomas Industry Update</h2>
+            <div class="newsletter-signup__mid-wrap">
+                <figure class="newsletter-signup__logo">
+                <img src="https://cdn40.thomasnet.com/img40/thomas-logo-blue-vertical.svg" alt="Thomas For Industry">
+                </figure>
+                <p class="newsletter-signup__text">Stay up to date on industry news and trends, product announcements and the latest innovations.</p>
+            </div>
+            <div class="newsletter-signup__form">
+                <form class="">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                    <div class="newsletter-signup__input-wrap">
+                        <input type="email" class="ui-autocomplete-input site-intro-search__input form-control form-control-lg" maxlength="100" autocomplete="off" placeholder="Email Address" value="" >
+                    </div>
+                    <div class="newsletter-signup__submit-wrap">
+                        <button type="button" class="btn btn-lg btn-primary"><span>Subscribe</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+
+</section>
+<footer class="site-footer site-footer--ssfc" role="contentinfo" data-thdoc="S2">
+	<div
+		data-thcomponent="ssfc-footer"
+		 data-thomas-base-url="https://www.thomasnet.com" data-business-url="https://business.thomasnet.com" data-help-url="https://help.thomasnet.com"		style="min-height:12rem"
+	></div>
+</footer>
+
+<div class="cookie-banner__section inactive ">
+    <div class="cookie-banner__header">
+        <div class="cookie-banner__header-title">Cookie Policy</div>
+        <div class="gdpr-ico-close">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" class="icon"><title>Close</title><path d="M11.213 16L4.414 9.2a1 1 0 0 1 0-1.413l3.373-3.373a1 1 0 0 1 1.414 0l6.799 6.8 6.8-6.8a1 1 0 0 1 1.413 0l3.373 3.373a1 1 0 0 1 0 1.414L20.786 16l6.8 6.8a1 1 0 0 1 0 1.413l-3.373 3.373a1 1 0 0 1-1.414 0L16 20.786l-6.8 6.8a1 1 0 0 1-1.413 0l-3.373-3.373a1 1 0 0 1 0-1.414l6.8-6.799z" fill="currentColor" fill-rule="evenodd"/></svg>
+        </div>
+    </div>
+    <div class="cookie-banner__content">
+        Thomas uses cookies to ensure that we give you the best experience on our website. By using this site, you agree to our <a href="https://www.thomasnet.com/privacy" target="_blank">Privacy Statement</a> and our <a href="https://www.thomasnet.com/terms" target="_blank">Terms of Use</a>.<br>
+        <span id="gdpr-btn-accept" class="btn btn-primary">Accept</span>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+var utag_data = {
+    "client_ip": "82.39.15.43",
+    "hierarchy_1": "TNET",
+    "hierarchy_2": "404",
+    "servercallhost": "www.thomasnet.com"
+};
+
+var AD = {
+	source: 'data-ad_click',
+	destination: 'ad_impression',
+	exists: function(A) {  return typeof A != 'undefined'; },
+	contains: function(A, B) {
+		for (var i = 0; i < A.length; i++) {
+			if (A[i] == B)
+			return true;
+		}
+		return false;
+	},
+	add: function(A, B) { if (this.exists(B) && !this.contains(A, B)) A.push(B); },
+	getCookie: function (name){
+		var pos=document.cookie.in

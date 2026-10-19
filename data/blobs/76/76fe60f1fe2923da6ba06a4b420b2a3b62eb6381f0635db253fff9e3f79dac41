@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>404 - 頁面不存在 | JAVSB</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta id="meta-k" name="keywords" content="高清AV, 免費AV, JAV線上看, 免費JAV, 手機AV">
+  <meta id="meta-d" name="description" content="免費高清AV線上看，無需下載看到飽。">
+
+  <style>
+    :root { --bg:#0b0e14; --card:#111827; --muted:#9aa4b2; --brand:#60a5fa; --text:#e5e7eb; --accent:#1f2937; }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",Arial,sans-serif}
+    a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
+    .container{max-width:980px;margin:0 auto;padding:24px}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+    .badge{font-size:12px;color:#94a3b8;border:1px solid #334155;border-radius:999px;padding:2px 8px}
+    .card{background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:28px}
+    .title{font-size:28px;margin:0 0 8px}
+    .desc{color:var(--muted);margin:0 0 18px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;border:1px solid #2a2f3a;background:#0f172a;color:var(--text)}
+    .btn:hover{background:#111827}
+    .search{display:flex;gap:8px;margin-top:14px}
+    .search input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #2a2f3a;background:#0f172a;color:var(--text)}
+    .search button{padding:10px 16px;border-radius:10px;border:1px solid #2a2f3a;background:#0f172a;color:var(--text);cursor:pointer}
+    .links{margin-top:28px}
+    .links h3{margin:0 0 8px;font-size:18px}
+    .friend a{color:#9ca3af} .friend a:hover{color:#e5e7eb}
+    .footer{color:#6b7280;margin-top:26px;font-size:13px;text-align:center}
+    @media (max-width:640px){ .title{font-size:24px} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <span>JAVSB</span>
+        <span class="badge">404</span>
+      </div>
+      <div><a id="btn-home-top" href="/" class="btn">回首頁</a></div>
+    </header>
+
+    <main class="card">
+      <h1 id="t" class="title">頁面不存在</h1>
+      <p id="d" class="desc">抱歉，您造訪的連結可能已移除、重新命名或暫時不可用。</p>
+
+      <div class="actions">
+        <a id="btn-home" class="btn" href="/">回到首頁</a>
+        <a id="btn-latest" class="btn" href="/label/rank/by/time.html">最新影片</a>
+        <a id="btn-actresses" class="btn" href="/actresses/">女優一覽</a>
+        <a id="btn-genres" class="btn" href="/genres/">分類索引</a>
+      </div>
+
+      <form id="search" class="search" action="/vod/search.html" method="get">
+        <input id="wd" type="text" name="wd" placeholder="搜尋片名 / 代碼 / 女優…" aria-label="搜尋">
+        <button id="btn-search" type="submit">搜尋</button>
+      </form>
+
+      <div class="links">
+        <h3 id="friends-h3">友站連結</h3>
+        <p class="friend">
+          <a href="https://jav.rs/" target="_blank" rel="nofollow noopener" title="JAVRS">JAVRS</a>
+        </p>
+      </div>
+    </main>
+
+    <div class="footer">© <span id="y"></span> JAVSB</div>
+  </div>
+
+  <script>
+  (function(){
+    // 支援語言與前綴（zh-Hant 放根目錄）
+    const supported = ["zh-Hant","en","ja","ko","ms","th","fr","vi","fil"];
+    const prefixMap = { "zh-Hant":"", "en":"en","ja":"ja","ko":"ko","ms":"ms","th":"th","fr":"fr","vi":"vi","fil":"fil" };
+
+    // 頁內文案（UI）
+    const i18n = {
+      "zh-Hant": { title:"頁面不存在", desc:"抱歉，您造訪的連結可能已移除、重新命名或暫時不可用。",
+        homeTop:"回首頁", home:"回到首頁", latest:"最新影片", actresses:"女優一覽", genres:"分類索引",
+        ph:"搜尋片名 / 代碼 / 女優…", search:"搜尋", friends:"友站連結" },
+      "en": { title:"Page not found", desc:"Sorry, the page you requested may have been removed, renamed, or is temporarily unavailable.",
+        homeTop:"Home", home:"Back to Home", latest:"Latest Videos", actresses:"Actresses", genres:"Genres",
+        ph:"Search title / code / actress…", search:"Search", friends:"Friend Links" },
+      "ja": { title:"ページが見つかりません", desc:"申し訳ありません。お探しのページは削除・名称変更、または一時的に利用できません。",
+        homeTop:"ホーム", home:"ホームへ戻る", latest:"最新動画", actresses:"女優一覧", genres:"ジャンル",
+        ph:"作品名 / 品番 / 女優名を検索…", search:"検索", friends:"友だちリンク" },
+      "ko": { title:"페이지를 찾을 수 없습니다", desc:"요청하신 페이지가 삭제되었거나 이름이 변경되었거나 일시적으로 사용할 수 없습니다.",
+        homeTop:"홈", home:"홈으로", latest:"최신 영상", actresses:"여배우 목록", genres:"장르",
+        ph:"제목 / 코드 / 배우 검색…", search:"검색", friends:"친구 사이트" },
+      "ms": { title:"Halaman tidak ditemui", desc:"Maaf, halaman yang diminta mungkin telah dibuang, dinamakan semula, atau tidak tersedia sementara.",
+        homeTop:"Laman Utama", home:"Kembali ke Laman Utama", latest:"Video Terbaru", actresses:"Senarai Pelakon", genres:"Genre",
+        ph:"Cari tajuk / kod / pelakon…", search:"Cari", friends:"Pautan Rakan" },
+      "th": { title:"ไม่พบหน้า", desc:"ขออภัย หน้าที่คุณร้องขออาจถูกลบ เปลี่ยนชื่อ หรือไม่พร้อมให้บริการชั่วคราว",
+        homeTop:"หน้าแรก", home:"กลับหน้าแรก", latest:"วิดีโอล่าสุด", actresses:"รายชื่อนักแสดงหญิง", genres:"หมวดหมู่",
+        ph:"ค้นหาชื่อเรื่อง / โค้ด / นักแสดง…", search:"ค้นหา", friends:"ลิงก์เพื่อน" },
+      "fr": { title:"Page introuvable", desc:"Désolé, la page demandée a pu être supprimée, renommée ou est temporairement indisponible.",
+        homeTop:"Accueil", home:"Retour à l’accueil", latest:"Vidéos récentes", actresses:"Actrices", genres:"Genres",
+        ph:"Rechercher titre / code / actrice…", search:"Rechercher", friends:"Liens partenaires" },
+      "vi": { title:"Không tìm thấy trang", desc:"Rất tiếc, trang bạn yêu cầu có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng.",
+        homeTop:"Trang chủ", home:"Về trang chủ", latest:"Video mới nhất", actresses:"Diễn viên nữ", genres:"Thể loại",
+        ph:"Tìm tên phim / mã / diễn viên…", search:"Tìm kiếm", friends:"Liên kết bạn bè" },
+      "fil": { title:"Hindi natagpuan ang pahina", desc:"Paumanhin, maaaring inalis, pinalitan ng pangalan, o pansamantalang hindi magamit ang pahina.",
+        homeTop:"Home", home:"Bumalik sa Home", latest:"Pinakabagong Mga Video", actresses:"Listahan ng Aktres", genres:"Mga Genre",
+        ph:"Maghanap ng title / code / aktres…", search:"Hanapin", friends:"Friend Links" }
+    };
+
+    // SEO 文案（head，品牌 JAVSB）
+    const seo = {
+      "zh-Hant": { title:"404 - 頁面不存在 | JAVSB", kw:"高清AV, 免費AV, JAV線上看, 免費JAV, 手機AV", desc:"免費高清AV線上看，無需下載看到飽。" },
+      "en":      { title:"404 - Page not found | JAVSB", kw:"JAV, free JAV, HD JAV online, Japanese AV, mobile AV", desc:"Watch free HD JAV online, no downloads required." },
+      "ja":      { title:"404 - ページが見つかりません | JAVSB", kw:"JAV, 無料, 無料AV, HD, スマホAV", desc:"無料でHDのJAVをオンライン視聴。ダウンロード不要。" },
+      "ko":      { title:"404 - 페이지를 찾을 수 없습니다 | JAVSB", kw:"JAV, 무료 AV, HD 온라인, 일본 AV, 모바일 AV", desc:"HD JAV를 무료로 온라인에서 시청하세요. 다운로드 불필요." },
+      "ms":      { title:"404 - Halaman tidak ditemui | JAVSB", kw:"JAV, AV percuma, HD dalam talian, AV Jepun, mudah alih", desc:"Tonton JAV HD percuma dalam talian tanpa muat turun." },
+      "th":      { title:"404 - ไม่พบหน้า | JAVSB", kw:"JAV, AV ฟรี, HD ออนไลน์, AV ญี่ปุ่น, มือถือ", desc:"ดู JAV ความคมชัดสูงฟรีออนไลน์ ไม่ต้องดาวน์โหลด" },
+      "fr":      { title:"404 - Page introuvable | JAVSB", kw:"JAV, JAV gratuit, HD en ligne, AV japonais, mobile", desc:"Regardez des JAV HD gratuits en ligne, sans téléchargement." },
+      "vi":      { title:"404 - Không tìm thấy trang | JAVSB", kw:"JAV, JAV miễn phí, HD trực tuyến, AV Nhật, di động", desc:"Xem JAV HD miễn phí trực tuyến, không cần tải về." },
+      "fil":     { title:"404 - Hindi natagpuan ang pahina | JAVSB", kw:"JAV, libreng JAV, HD online, Japanese AV, mobile", desc:"Manood ng libreng HD JAV online, walang download." }
+    };
+
+    // 由 URL 或瀏覽器語言決定語言（支援 /en /ja /ko /ms /th /fr /vi /fil）
+    const m = (location.pathname || "").match(/^\/(en|ja|ko|ms|th|fr|vi|fil)(\/|$)/i);
+    let lang = null;
+    if (m) {
+      lang = m[1].toLowerCase();
+    } else {
+      const prefs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]).map(s=>s.toLowerCase());
+      const pick = (p)=>{
+        if (p.startsWith("zh") || p.includes("hant")) return "zh-Hant";
+        const base = p.split("-")[0];
+        for (const s of supported) { if (s===base) return s; }
+        return null;
+      };
+      for (const p of prefs) { lang = pick(p); if (lang) break; }
+      if (!lang) lang = "zh-Hant";
+    }
+
+    // 套用 head 與頁內 UI
+    const ui  = i18n[lang] || i18n["zh-Hant"];
+    const s   = seo[lang]  || seo["zh-Hant"];
+    const pre = prefixMap[lang] ? ("/" + prefixMap[lang]) : "";
+
+    // 正確設定 <html lang>
+    document.documentElement.lang = lang;
+
+    document.title = s.title;
+    var mk = document.getElementById("meta-k"); if (mk) mk.setAttribute("content", s.kw);
+    var md = document.getElementById("meta-d"); if (md) md.setAttribute("content", s.desc);
+
+    const $ = id => document.getElementById(id);
+    $("t").textContent = ui.title;
+    $("d").textContent = ui.desc;
+    $("btn-home-top").textContent = ui.homeTop;
+    $("btn-home").textContent     = ui.home;
+    $("btn-latest").textContent   = ui.latest;
+    $("btn-actresses").textContent= ui.actresses;
+    $("btn-genres").textContent   = ui.genres;
+    $("wd").placeholder           = ui.ph || $("wd").placeholder || "Search…";
+    $("btn-search").textContent   = ui.search;
+    $("friends-h3").textContent   = ui.friends;
+
+    // join() 去重斜線
+    const join = (p)=>{
+      const url = (pre ? (pre + (p.startsWith("/") ? p : ("/"+p))) : p);
+      return url.replace(/\/{2,}/g, '/');
+    };
+
+    $("btn-home-top").href = pre || "/";
+    $("btn-home").href     = pre || "/";
+    $("btn-latest").href   = join("/label/rank/by/time.html");
+    $("btn-actresses").href= join("/actresses/");
+    $("btn-genres").href   = join("/genres/");
+    const form = $("search");
+    form.action = join("/vod/search.html");  // /{lang}/vod/search.html?wd=...
+    form.addEventListener("submit", function(e){
+      if(!$("wd").value.trim()){ e.preventDefault(); }
+    });
+
+    // 動態輸出 hreflang（404 可留著也可關）
+    (function buildHreflang(){
+      const head = document.getElementsByTagName('head')[0];
+      const m2 = (location.pathname || "").match(/^\/(en|ja|ko|ms|th|fr|vi|fil)(\/|$)/i);
+      const relPath = m2 ? location.pathname.replace(/^\/(en|ja|ko|ms|th|fr|vi|fil)/i,'') : location.pathname;
+      const norm = p => p.replace(/\/{2,}/g,'/');
+      supported.forEach(l => {
+        const prefix = prefixMap[l] ? ("/" + prefixMap[l]) : "";
+        const href = norm(location.origin + prefix + relPath);
+        const link = document.createElement('link');
+        link.setAttribute('rel','alternate');
+        link.setAttribute('hreflang', l); // zh-Hant / en / ja / ...
+        link.setAttribute('href', href);
+        head.appendChild(link);
+      });
+      const x = document.createElement('link');
+      x.setAttribute('rel','alternate');
+      x.setAttribute('hreflang','x-default');
+      x.setAttribute('href', norm(location.origin + relPath));
+      head.appendChild(x);
+    })();
+
+    document.getElementById('y').textContent = new Date().getFullYear();
+  })();
+  </script>
+  <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(99027070, 'init', {clickmap:true, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99027070" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body>
+</html>

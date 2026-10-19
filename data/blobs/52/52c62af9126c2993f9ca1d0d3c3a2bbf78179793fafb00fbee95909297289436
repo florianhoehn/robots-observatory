@@ -1,0 +1,121 @@
+# =============================================================
+# IntechOpen — robots.txt
+# OPTION A: Full block for AI training bots (all pages)
+# Last updated: April 2026
+# =============================================================
+
+Sitemap: https://www.intechopen.com/sitemap-v2/sitemap.xml
+
+# =============================================================
+# DEFAULT: Allow all standard crawlers
+# =============================================================
+User-agent: *
+Allow: /
+Disallow: /_preview
+
+# =============================================================
+# AI SEARCH CRAWLERS — Allow
+# These bots surface content in AI-powered search results
+# and cite sources with backlinks. Allowing them increases
+# discoverability for researchers using AI search tools.
+# =============================================================
+
+# OpenAI — ChatGPT Search (retrieval only, does NOT train models)
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity AI Search (always cites sources with links)
+User-agent: PerplexityBot
+Allow: /
+
+# Google — AI Overviews / Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Apple Intelligence (search/retrieval only)
+User-agent: Applebot-Extended
+Allow: /
+
+# Amazon — Alexa AI / Rufus
+User-agent: Amazonbot
+Allow: /
+
+# You.com AI Search
+User-agent: YouBot
+Allow: /
+
+# =============================================================
+# AI TRAINING SCRAPERS — Block ALL pages
+#
+# These bots collect content to train AI models.
+# OPTION A blocks access to the entire site.
+# NOTE: robots.txt is advisory — not legally binding.
+# For stronger protection, combine with Terms of Service
+# and server-side IP blocking.
+# =============================================================
+
+# OpenAI — GPTBot (training crawler; ChatGPT Search uses OAI-SearchBot)
+User-agent: GPTBot
+Disallow: /
+
+# Common Crawl (dataset used to train many open-source LLMs)
+User-agent: CCBot
+Disallow: /
+
+# Anthropic — ClaudeBot (training crawler)
+User-agent: ClaudeBot
+Disallow: /
+
+# ByteDance / TikTok
+User-agent: Bytespider
+Disallow: /
+
+# Diffbot — commercial AI data extraction
+User-agent: Diffbot
+Disallow: /
+
+# Meta / Facebook (training crawlers)
+User-agent: FacebookBot
+Disallow: /
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+# Omgili / Webz.io — content aggregation
+User-agent: omgili
+Disallow: /
+
+# Applebot (training; Applebot-Extended above handles Apple Search)
+User-agent: Applebot
+Disallow: /
+
+# Allen Institute for AI — AI2Bot
+User-agent: AI2Bot
+Disallow: /
+
+# Cohere AI training crawler
+User-agent: cohere-ai
+Disallow: /
+
+# PetalBot — Huawei (also used for ML training datasets)
+User-agent: PetalBot
+Disallow: /
+
+# Timpi — content aggregator / training data
+User-agent: Timpibot
+Disallow: /
+
+# DataForSeo — data aggregation service
+User-agent: DataForSeoBot
+Disallow: /
+
+# Magpie Crawler — content harvesting
+User-agent: magpie-crawler
+Disallow: /
+
+# ImagesiftBot — image training data collector
+User-agent: ImagesiftBot
+Disallow: /
+
+# Scrapy — generic scraping framework commonly used for ML datasets
+User-agent: Scrapy
+Disallow: /

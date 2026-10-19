@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Error 404 - Colombia.com</title>
+<link rel="preconnect" href="https://cdn.colombia.com"><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="dns-prefetch" href="https://cdn.colombia.com">
+<link rel="stylesheet" href="https://www.colombia.com/css/vendor/bootstrap/bootstrap-4.5.3.min.css">
+<link rel="stylesheet" href="https://www.colombia.com/css/v2/globales-0.0.30.min.css">
+<link rel="icon" href="https://www.colombia.com/favicon.ico">
+<link rel="stylesheet" href="https://www.colombia.com/css/v2/mapa/error-404-0.0.1.min.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1LFMK3Q1K1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1LFMK3Q1K1');
+</script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-blue-dark sticky-top justify-content-center">
+	<a href="https://www.colombia.com/">
+		<img src="https://cdn.colombia.com/images/v2/logos/V1.1/colombiacom-movil.png" alt="Colombia.com" width="90" height="40">
+	</a>
+</nav>
+  <div class="container">
+    <div class="row">
+        <div class="col-12 my-3">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="caja-error">                
+                        <div class="expresion">¡Ooops!</div>
+                        <div class="text-complemento">
+                            Algo salió mal<br>
+                            Error: página no encontrada
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="buscador-error">
+                        Busca aquí más contenido
+                        <div class="buscador mt-4">
+                            <form class="form-inline" action="https://www.colombia.com/buscador/">
+                                <div class="form-group">
+                                    <input type="text" name="q" class="form-control" placeholder="Buscar" autocomplete="off">
+                                </div>
+                                <button type="submit" class="btn" aria-label="Buscar">
+                                        <svg version="1.1" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xml:space="preserve" class="pb-1" width="20">
+<path class="st0" d="M19.8,5.8C14.3,2.1,6.7,3.5,2.9,9c-3.8,5.5-2.3,13.1,3.2,16.9c4.9,3.4,11.5,2.6,15.5-1.5c0.2,0.4,0.5,0.8,0.9,1.1l8,5.5c1.2,0.8,2.8,0.5,3.6-0.7c0.8-1.2,0.5-2.8-0.7-3.6l-8-5.5C25,21,24.5,20.8,24,20.8C26.4,15.6,24.7,9.2,19.8,5.8L19.8,5.8z M20.4,21c-2.8,4.1-8.5,5.2-12.6,2.4c-4.1-2.8-5.2-8.5-2.4-12.6c2.8-4.1,8.5-5.2,12.6-2.4C22.2,11.2,23.2,16.8,20.4,21L20.4,21z M20.4,21"/></svg>
+                                        <div class="ripple-container"></div>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row articulo-relacionados mb-3 d-none" id="pan_contenido_noticias_scroll_control" style="min-height:337px">
+                <div class="col-12">
+                    <h2 class="title-seccion text-uppercase mt-3" id=""> <span> Artículos</span></h2>
+                </div>
+            </div>
+<h2 class="bt-ver-noticias text-uppercase d-none" id="btn_contenido_noticias_scroll_control">
+    <a href="javascript:;;" onclick="SDIScroll(); return false;">ver más artículos +</a>
+</h2>
+        </div>
+    </div>
+</div>
+<script>
+var var_contenido_noticias_scroll_control = 1;
+var var_registros = 3;
+function SDIScroll() {
+	return fetch('/tools/v2/libreria.ashx', { method:"POST", headers:{contentType:"application/json; charset=utf-8"}, body:JSON.stringify({T:"S",A:"S",P:{Tipo:'R',Registros:var_registros,ZonaID:0,TagID:0,Version:2,Desde:var_contenido_noticias_scroll_control}}) })
+		.then(function (response) {
+			return response.json().then(function(obj) {
+				if (obj.Respuesta == 0) {
+					document.getElementById('pan_contenido_noticias_scroll_control').innerHTML += obj.Html;
+					if (obj.VerMas == false)
+						document.getElementById('btn_contenido_noticias_scroll_control').className += ' d-none';
+					else
+						document.getElementById('btn_contenido_noticias_scroll_control').className = document.getElementById('btn_contenido_noticias_scroll_control').className.replace('d-none', '');
+					var_contenido_noticias_scroll_control += var_registros;
+					document.getElementById('pan_contenido_noticias_scroll_control').className = document.getElementById('pan_contenido_noticias_scroll_control').className.replace('d-none', '');
+					var_registros = 6;
+				}
+				else {
+					document.getElementById('btn_contenido_noticias_scroll_control').className += ' d-none';
+					console.log('Error: ' + obj.MensajeError);
+				}
+			});
+		})
+		.catch(function (error) {
+			document.getElementById('btn_contenido_noticias_scroll_control').className += ' d-none';
+			console.log('Error: ' + error.message);
+		});
+}
+window.addEventListener("load", function() {
+	SDIScroll();
+});
+</script>
+</body>
+</html>

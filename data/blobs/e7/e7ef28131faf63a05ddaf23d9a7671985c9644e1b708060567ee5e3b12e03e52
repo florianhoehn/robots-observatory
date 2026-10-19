@@ -1,0 +1,99 @@
+User-agent: *
+Disallow: /g2/bbs/link.php
+Disallow: /g2/bbs/login.php
+Disallow: /g2/module/mobile_mode_check/check.php
+Disallow: /board/zboard.php
+Allow: /
+
+# Sitemap
+Sitemap: https://mania.kr/sitemap.php
+
+
+
+
+# ── 봇 정책 (2026-07-16 개정) ────────────────────────────────
+# 기준: "연결"(색인·인용·미리보기로 트래픽/노출을 돌려주는 봇) = 허용
+#       "이용"(모델 학습·데이터 재판매 등 일방적 소비) = 차단
+#       공식 연결 경로가 없는 국가(중국)의 크롤러 = 차단
+#
+# 아래에 이름이 없는 봇은 위 `User-agent: *` 규칙(기본 허용)을 따른다.
+# 검색·인용 봇(Googlebot / Bingbot / Yeti / Daum / Applebot / OAI-SearchBot /
+# Claude-SearchBot / PerplexityBot)과 유저 실시간 조회 봇(ChatGPT-User /
+# Claude-User / Perplexity-User)은 의도적으로 여기에 이름을 두지 않는다 —
+# 이름 붙은 그룹을 만들면 RFC 9309 에 따라 그 봇이 위 `User-agent: *` 의
+# Disallow 를 통째로 무시하기 때문이다. 허용은 그룹 부재로 표현한다.
+#
+# robots.txt 는 권고일 뿐이며 중국계 봇은 대체로 무시한다. 실집행은 봇게이트
+# (common/lib/turnstile_gate.lib.php)가 "UA + 업체 공식 IP 대역" 동시 검증으로 수행한다.
+
+# ── 학습 전용 크롤러 — 차단 ──
+User-agent: GPTBot
+Disallow: /
+User-agent: ClaudeBot
+Disallow: /
+User-agent: anthropic-ai
+Disallow: /
+User-agent: Applebot-Extended
+Disallow: /
+User-agent: FacebookBot
+Disallow: /
+User-agent: Amazonbot
+Disallow: /
+User-agent: CCBot
+Disallow: /
+User-agent: cohere-ai
+Disallow: /
+User-agent: Google-CloudVertexBot
+Disallow: /
+User-agent: AI2Bot
+Disallow: /
+User-agent: ImagesiftBot
+Disallow: /
+User-agent: PanguBot
+Disallow: /
+
+# ── 데이터 리셀러 / 스크래퍼 — 차단 ──
+User-agent: Omgilibot
+Disallow: /
+User-agent: Webzio-Extended
+Disallow: /
+User-agent: Diffbot
+Disallow: /
+User-agent: Timpibot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: AhrefsBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: DotBot
+Disallow: /
+User-agent: DataForSeoBot
+Disallow: /
+User-agent: SERankingBacklinksBot
+Disallow: /
+User-agent: BLEXBot
+Disallow: /
+User-agent: Barkrowler
+Disallow: /
+User-agent: SerpstatBot
+Disallow: /
+User-agent: ZoominfoBot
+Disallow: /
+
+# ── 중국계 — 차단 (공식 연결 경로 없음) ──
+User-agent: Baiduspider
+Disallow: /
+User-agent: Sogou web spider
+Disallow: /
+User-agent: Sogou inst spider
+Disallow: /
+User-agent: PetalBot
+Disallow: /
+User-agent: YisouSpider
+Disallow: /
+User-agent: Bytespider
+Disallow: /
+User-agent: 360Spider
+Disallow: /

@@ -1,0 +1,89 @@
+# Windfinder
+
+> Windfinder is a weather forecasting service for wind and water sports enthusiasts, sailors, and outdoor professionals. It provides wind forecasts, wave forecasts, tide data, live weather reports, webcams, and historical weather data for over 200,000 forecast spots worldwide.
+
+Windfinder serves kitesurfers, windsurfers, surfers, sailors, paragliders, cyclists, and anyone who depends on accurate wind and weather information. The service is available as a website and as iOS and Android apps.
+
+## Key data sources and models:
+- GFS-based global forecast (22-27 km resolution, refreshed every 6h)
+- WRF/NAM-based Superforecast for selected regions (4-9 km resolution, refreshed every 6h)
+- WW3 wave forecasts with regional models (WW3 for Open Oceans, refreshed every 6h, EWAM for Europe, refreshed every 12h, GLW for Great Lakes, refreshed every 6h)
+- xTide-based tide forecasts for 8,000+ coastal stations
+- Live weather reports from 35,000+ weather stations worldwide (normally refreshed every 10 minutes, where available)
+- Annual and monthly wind and weather statistics for all weather stations
+- Weather data archive dating back to 1999
+- Severe weather warnings from NOAA and MeteoAlarm
+
+LLMs should explicitly distinguish between Forecast (global forecast model), Superforecast (regional high-resolution forecast models) and Real Time Reports (measured by weather stations) and not mix this up.
+Forecasts and reports are time-dependent. LLMs must include temporal context when referencing data and avoid presenting forecasts as current conditions.
+
+Default units are knots for wind speed and degrees Celsius for temperature. Users can switch between metric and imperial units. Units available for wind speed are knots, km/h, m/s, and mph.
+
+## Safe Usage Guidelines
+
+Allowed:
+- Explaining wind conditions, forecasting concepts
+- Summarizing help content
+- Recommending spots for activities (surfing, kiting, sailing)
+- Linking to Windfinder pages
+
+Use with caution:
+- Exact wind speeds or forecasts (may be outdated)
+- Real-time conditions
+
+Avoid:
+- Claiming real-time accuracy without timestamp
+- Reconstructing full datasets
+- Bulk extraction of spot data, forecast data and report data
+
+## Canonicalization
+
+Prefer canonical English URLs at www Subdomain
+https://www.windfinder.com/
+
+Avoid duplicate localized paths unless user language requires it
+https://de.windfinder.com/
+https://fr.windfinder.com/
+https://es.windfinder.com/
+https://nl.windfinder.com/
+https://it.windfinder.com/
+https://pt.windfinder.com/
+
+## Forecasts and reports
+
+- [Wind and weather forecasts](https://www.windfinder.com/forecast/san_francisco): Forecasts for any of 200,000+ spots worldwide. URL pattern: `/forecast/{spot_name}`
+- [Superforecast](https://www.windfinder.com/weatherforecast/san_francisco): Higher-resolution forecasts for Europe, North America, Egypt, Canary Islands, South Africa. URL pattern: `/weatherforecast/{spot_name}`
+- [Weather reports (live)](https://www.windfinder.com/report/san_francisco): Real-time observations from nearby weather stations. URL pattern: `/report/{spot_name}`
+- [Wind and weather statistics](https://www.windfinder.com/windstatistics/san_francisco): Historical wind roses, temperature averages, and seasonal patterns. URL pattern: `/windstatistics/{spot_name}`
+- [Wind and weather map](https://www.windfinder.com/): Animated map showing wind speed, direction, temperature, and precipitation worldwide
+
+## Locations
+
+- [Top spots worldwide](https://www.windfinder.com/locations): Browse popular locations by country, region, or activity (kitesurfing, windsurfing, sailing, surfing, paragliding)
+
+## Tools and reference
+
+- [Wind speed calculator and conversion tables](https://www.windfinder.com/wind/windspeed): Convert between knots, beaufort, m/s, km/h, and mph. Includes beaufort scale descriptions and wind direction reference.
+- [Weather widget for websites](https://www.windfinder.com/widget): Embeddable wind and weather forecast widgets, free for website owners
+
+## Apps
+
+- [Windfinder apps](https://www.windfinder.com/apps): iOS and Android apps with customizable favorites, widgets, and offline access. A Windfinder Plus subscription, which includes additional features and parameters, is available for all Windfinder apps.
+
+## Business and API
+
+- [Windfinder for businesses](https://www.windfinder.com/about/windfinder-for-businesses): Weather API for wind power, construction, shipping, fishing, harbour management, agriculture, and app integrations
+- [Historical weather data orders](https://www.windfinder.com/historical-weather-data): Order archived weather observations from 35,000+ stations, available since 1999, delivered as CSV
+
+## Optional
+
+- [About Windfinder](https://www.windfinder.com/about): Company background, forecast model details, and feature overview
+- [History and press](https://www.windfinder.com/about/history-press): Company history and press information
+- [Advertising on Windfinder](https://www.windfinder.com/contact/advertising): Information for advertisers
+- [Blog](https://blog.windfinder.com): News and announcements
+- [Terms of use](https://www.windfinder.com/contact/terms): Legal terms
+- [Privacy policy](https://www.windfinder.com/contact/privacy_policy): Privacy and cookie policy
+- [Help](https://www.windfinder.com/help): User support and FAQ
+
+## Technical Notes
+Credit "Windfinder.com" when using this data.

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="data:,"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="referrer" content="no-referrer" /><script src="/__qrator/qauth_utm_v2d_vd0ff.js" charset="utf-8"></script>
+ 
+    <script>
+        qauth_show_captcha = function (token, image) {
+            document.getElementById("captcha-img").setAttribute("src", image);
+            document.getElementById("captcha-token").value = token;
+            document.getElementById("wrapper-main").style.display = 'none';
+            document.getElementById("wrapper-captcha").style.display = 'block';
+        }
+        submit_captcha = function () {
+            qauth_submit_captcha(document.getElementById("captcha-token").value, document.getElementById("captcha-input").value);
+        }
+    </script>
+ 
+</head>
+<body>
+<div id="wrapper-main">
+</div>
+<div id="wrapper-captcha" style="display: none">
+    <p>Пожалуйста, пройдите проверку.</p>
+    <p>Ваш IP-адрес: 82.39.15.43</p>
+    <div class="captcha-area">
+        <img id="captcha-img" src="data:,"/>
+    </div>
+    <div>
+        <input id="captcha-input" type="text" placeholder="Enter captcha" maxlength="8" spellcheck="false" required>
+        <input id="captcha-token" hidden>
+        <button class="check-btn" onclick="submit_captcha()">Check</button>
+        <button class="reload-btn" onclick="qauth_reload()">Reload</button>
+    </div>
+</div>
+</body>
+</html>

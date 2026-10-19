@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+
+	<title>Leaflet - a JavaScript library for interactive maps</title>
+
+	<meta charset="utf-8" />
+
+	
+	<meta property="og:title" content="Leaflet — an open-source JavaScript library for interactive maps" />
+	<meta property="og:description" content="Leaflet is a modern, lightweight open-source JavaScript library for mobile-friendly interactive maps." />
+	<meta property="og:image" content="docs/images/logo.png" />
+	<meta property="og:image:alt" content="Leaflet">
+	<meta itemprop="name" content="Leaflet">
+	<meta itemprop="description" content="Leaflet — a modern, lightweight open-source JavaScript library for mobile-friendly interactive maps.">
+	<meta itemprop="image" content="docs/images/logo.png">
+	
+
+	
+	<link rel="canonical" href="/index.html"/>
+	<meta http-equiv="refresh" content="0;url=/index.html" />
+	
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	
+
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+	<link href="https://leafletjs.com/atom.xml" type="application/atom+xml" rel="alternate" title="Leaflet Dev Blog Atom Feed" />
+
+	<link rel="stylesheet" href="docs/css/normalize.css" />
+	<link rel="stylesheet" href="docs/css/main.css" />
+	
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,300' rel='stylesheet' type='text/css'>
+
+	<script src="docs/highlight/highlight.pack.js"></script>
+	<link rel="stylesheet" href="docs/highlight/styles/github-gist.css" />
+
+	<!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+	
+
+	<script>
+		ACCESS_TOKEN = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+		MB_ATTR = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+		MB_URL = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + ACCESS_TOKEN;
+		OSM_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+		OSM_ATTRIB = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+	</script>
+</head>
+<body>
+
+<header>
+	<h1><a href="https://leafletjs.com/"><img src="docs/images/logo.png" alt="Leaflet" width="300" /></a></h1>
+	<p class="tagline">an open-source JavaScript library<br> for mobile-friendly interactive maps</p>
+</header>
+
+<nav>
+	<ul class="nav">
+		<li>
+			
+				<span>Overview</span>
+			
+		</li>
+		<li>
+			
+				<a href="examples.html">Tutorials</a>
+			
+		</li>
+		<li>
+			
+				<a href="reference.html">Docs</a>
+			
+		</li>
+		<li>
+			
+				<a href="download.html">Download</a>
+			
+		</li>
+		<li>
+			
+				<a href="plugins.html">Plugins</a>
+			
+		</li>
+		<li>
+			
+				<a href="blog.html">Blog</a>
+			
+		</li>
+	</ul>
+</nav>
+
+<main>
+	<div class="container">
+		<h2>Redirecting...</h2>
+<a href="/index.html">Click here if you are not redirected.</a>
+<script>
+location = '/index.html' + (location.hash || '');
+</script>
+
+	</div>
+</main>
+
+<footer class="container">
+	<div class="footer">
+		<p>&copy; 2010–2026 <a href="https://agafonkin.com">Volodymyr Agafonkin</a>. Maps &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
+	</div>
+
+	<nav class="ext-links">
+	  <a class="ext-link twitter" href="https://twitter.com/LeafletJS" title="Follow LeafletJS on X"><img alt="Follow LeafletJS on X" src="docs/images/x-round.svg" width="46" /></a>
+	  <a class="ext-link github" href="http://github.com/Leaflet/Leaflet" title="View Source on GitHub"><img alt="View Source on GitHub" src="docs/images/github-round.svg" width="46" /></a>
+	  <a class="ext-link forum" href="https://stackoverflow.com/questions/tagged/leaflet" title="Ask for help on Stack Overflow"><img alt="Leaflet questions on Stack Overflow" src="docs/images/forum-round.svg" width="46" /></a>
+	</nav>
+
+	<button id="back-to-top" title="Scroll back to top">
+		<svg viewBox="0 0 16 16">
+			<path d="M7.3,3.3c0.4-0.4,1-0.4,1.4,0l6,6c0.4,0.4,0.4,1,0,1.4s-1,0.4-1.4,0L8,5.4l-5.3,5.3c-0.4,0.4-1,0.4-1.4,0s-0.4-1,0-1.4L7.3,3.3L7.3,3.3z"/>
+		</svg>
+	</button>
+</footer>
+
+<script>
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-4147697-4' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+
+<script src="dialog/dialog.js"></script>
+<script src="docs/js/docs.js"></script>
+
+</body>
+</html>

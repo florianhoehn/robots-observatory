@@ -1,0 +1,60 @@
+# Robots.txt
+User-agent: Mediapartners-Google 
+Disallow:
+
+User-agent: *
+# AI preferences (contentsignals.org): no model training, but search and
+# AI answers may use and cite pages. Advisory only; nothing enforces it.
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+Disallow: /outgoing/
+Disallow: /admin/
+Disallow: /share/
+Disallow: /user/
+Disallow: /tag/
+Disallow: /UserEdit.aspx
+Disallow: /Manage/
+Disallow: /manage-item/
+Disallow: /manage-add-alternative/
+Disallow: /manage/
+Disallow: /account/
+Disallow: /hello/
+Disallow: /hello
+Disallow: /discussions/
+Disallow: /list/EditCustomItemList/
+Disallow: /list/save/
+Disallow: /browse/search/
+Disallow: /auth/
+Disallow: /api/auth/
+Disallow: /api/
+Disallow: /cdn-cgi/
+Disallow: /_next/data/*.json*
+Disallow: /_next/static/chunks/modern-filter-bar*
+Disallow: /*?*mf=*
+Disallow: /*?*lw=*
+Disallow: /*?*nw=*
+Disallow: /*?*page=*
+Disallow: /*?*sort=*
+# Lists with apps hidden by the visitor (#1419); noindex too.
+Disallow: /*?*hide=*
+# Countries hidden from a list (#1458); noindex too.
+Disallow: /*?*hideorigin=*
+# A signed-in person's saved filters switched off (#1458); noindex too.
+Disallow: /*?*saved=*
+# News archive search (/news/all/?q=). The pages are noindex too, but noindex is
+# only seen after the fetch, and each fetch is a full scan of the article table.
+# `q` is not used anywhere else on the site.
+Disallow: /*?*q=*
+Disallow: /login/
+# Block if 'feature' has 2+ values (one comma)
+Disallow: /*feature=*,*
+# Block if 'platform' has 2+ values (one comma)
+Disallow: /*platform=*,*
+# Block if 'feature' has 2+ values (one commas)
+Disallow: /*feature=*%2C*
+# Block if 'platform' has 2+ values (one commas)
+Disallow: /*platform=*%2C*
+
+
+Sitemap: https://alternativeto.net/sitemaps-ssl/sitemap-map.xml
+
+

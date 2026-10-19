@@ -1,0 +1,33 @@
+User-agent: *
+Disallow: /search/query/
+Disallow: /unsubscribe-from-applet/
+Disallow: /unsubscribe
+Disallow: /missing_link
+Disallow: /create/api/
+Disallow: /dri/
+
+# Amazonbot crawls /join and /login ~200K times a day — 28% of every request ifttt.com
+# serves — and Amazon states it feeds their products and AI model training rather than a
+# search engine that refers traffic back to us. It honors per-agent disallow but not
+# crawl-delay, so scoping it off the two auth pages is the only lever robots.txt gives us.
+#
+# Search and AI crawlers that DO refer traffic keep full access via User-agent: * above.
+# /login ranks at position 1.8 for "ifttt login" and /join for "ifttt free"/"ifttt account";
+# together they earn ~90 organic clicks a day. Do not move these two rules into the
+# wildcard group — see web#10531, which removed a disallow near /join for the same reason.
+#
+# A crawler that matches a named group ignores User-agent: * entirely, so this group has
+# to repeat every wildcard rule above. Adding a rule there means adding it here too.
+User-agent: Amazonbot
+Disallow: /search/query/
+Disallow: /unsubscribe-from-applet/
+Disallow: /unsubscribe
+Disallow: /missing_link
+Disallow: /create/api/
+Disallow: /dri/
+Disallow: /join
+Disallow: /login
+
+Sitemap: https://ifttt.com/sitemap.xml
+
+# LLM-readable index: https://ifttt.com/llms.txt

@@ -1,0 +1,277 @@
+# Updated 2026-04-14 Doug Twyman — added form/functional Disallows; added AI crawler Allow sections
+# DEPLOY NOTE: after pushing, purge CF cache for https://lasvegassun.com/robots.txt
+
+# === Search engines ===
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+User-agent: MicrosoftPreview
+Allow: /
+
+User-agent: AdIdxBot
+Allow: /
+
+User-agent: msnbot-media
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-news
+Allow: /
+
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Baiduspider-video
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexNews
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# === AI crawlers — explicitly welcome ===
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# === 3rd party services ===
+User-agent: Chartbeat
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-webindexer
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: meta-externalads
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Telegrambot
+Allow: /
+
+User-agent: Feedly/1.0
+Allow: /
+
+User-agent: Feedspot/1.0
+Allow: /
+
+User-agent: BufferLinkPreviewBot/1.0
+Allow: /
+
+# === All crawlers — functional/form pages blocked ===
+User-agent: *
+#Crawl-delay: 10
+# Added 2026-08-07 — WHY: /sitemap.xml was a static file from a third-party
+# online generator: section fronts only, no article URLs, every lastmod frozen
+# at 2024-11. It is now CMS-generated (a sitemap index over per-month article
+# sitemaps), and this second line declares the Google News sitemap, which did
+# not exist at all. Without it Google had no discovery path to new articles.
+# See ellington/news/views/sitemaps.py.
+# DEPLOY NOTE: after pushing, purge CF cache for https://lasvegassun.com/robots.txt
+# DEACTIVATED: 2026-08-07 — do not restore until the nginx alias
+#   location /sitemap.xml { alias .../templates/lvsun/sitemap.xml; }
+#   is deactivated on app02 and app04. Until then this URL still serves the
+#   stale third-party-generated file (section fronts only, lastmod 2024-11),
+#   and declaring it here points Google straight at it. /sitemap-index.xml
+#   below is the same CMS-generated sitemap index on a path nginx does not
+#   shadow, so it works on a code deploy alone.
+# Sitemap: https://lasvegassun.com/sitemap.xml
+Sitemap: https://lasvegassun.com/sitemap-index.xml
+Sitemap: https://lasvegassun.com/sitemap_news.xml
+Disallow: /restaurants/search/
+Disallow: *reminder/
+Disallow: *ufcsn
+Disallow: /:
+Disallow: /:/
+Disallow: /*rawhtml*
+Disallow: /702show*
+Disallow: /accounts*
+Disallow: /accounts/login*
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /comments*
+Disallow: /alerts/
+Disallow: /community/press-releases/submit/
+Disallow: /compare/
+Disallow: /compare/
+Disallow: /contact/
+Disallow: /content/
+Disallow: /dossier*
+Disallow: /events/search/?category=*
+Disallow: /events/search/
+Disallow: /events/submit/
+Disallow: /feedback/
+Disallow: /fileadmin/
+Disallow: /flag/
+Disallow: /mailform/
+Disallow: /mailfriend*
+Disallow: /mailfriend/
+Disallow: /mma-sn/
+Disallow: /r/
+Disallow: /search/
+Disallow: /staff/*/contact/
+Disallow: /slideshow_xml/
+Disallow: /sun/dossier*
+Disallow: /sunbin*
+Disallow: /sunbin/
+Disallow: /ufc-sn/
+Disallow: /ufc-video-sn/
+Disallow: /users/
+Disallow: /wec-sn/
+Disallow: */cdn-cgi/l/email-protection*
+Disallow:*/slideshow_xml/
+Disallow: */xml/
+Disallow: *inlines/
+Disallow: *cdn-cgi/
+Disallow: */drudged/
+
+#specific URLS to block
+Disallow: *charges-fly-among-las-vegas-nightclub-investors*
+Disallow: *scaled.0325_met_health03*
+
+#other user agents
+User-agent: Directcrawler
+Disallow: /
+User-agent: VoilaBot
+Disallow: /
+User-agent: Java/1.5.0_11
+Disallow: /
+User-agent: Java/1.4.1_04
+Disallow: /
+User-agent: gsa-crawler
+Disallow: /
+#User-agent: ia_archiver-web.archive.org
+#Disallow: /
+User-agent: ShopWiki
+Disallow: /
+User-agent: weborama-fetcher
+Disallow: /
+User-agent: Krzana bot
+Disallow: /
+User-agent: Clickagy Intelligence Bot v2
+Disallow: /
+User-agent: SputnikBot/2.3
+Disallow: /
+
+#images
+User-agent: Googlebot-Image
+Disallow: /*?
+Disallow: /*_t12*
+Disallow: /*_t18*
+Disallow: /*_t19*
+Disallow: /*_t20*
+Disallow: /*_t27*
+Disallow: /*_t30*
+Disallow: /*_t37*
+Disallow: /*_t60*
+Disallow: /*_t61*
+Disallow: /*_t65*
+Disallow: /*_t96*
+Disallow: /*_r45x*
+Disallow: /*_r50x*
+Disallow: /*_r90x*
+Disallow: /*_r60x*
+Disallow: /*_r100x*
+Disallow: /*_r104x*
+Disallow: /*_r180x*
+Disallow: /*_r340x*
+Disallow: /*_r415x*
+Disallow: /*_tx50*
+
+# Twitterbot handled above in the explicit allow section

@@ -1,0 +1,127 @@
+# HackMD
+
+> HackMD is a real-time collaborative Markdown workspace and knowledge base for individuals, classrooms, and teams. Every public note has a permanent URL with a plain-markdown alternate, designed so that humans, search engines, and LLM agents can all read the same content.
+
+This file follows the [llms.txt](https://llmstxt.org/) convention. For machine-readable API discovery see [`/.well-known/api-catalog`](https://hackmd.io/.well-known/api-catalog) (RFC 9727). For crawl boundaries see [`/robots.txt`](https://hackmd.io/robots.txt) (RFC 9309).
+
+## Reading notes as plain markdown
+
+To read any public HackMD note as raw Markdown — avoiding heavy HTML parsing — use either of these methods:
+
+- **URL suffix**: append `.md` to any note URL (e.g. `https://hackmd.io/@<user>/<slug-or-id>.md`)
+- **HTTP header**: send a `GET` request to the bare URL with `Accept: text/markdown`
+
+The HTML view also advertises this via `<link rel="alternate" type="text/markdown" href="…">`.
+
+A `.md?no-meta` variant returns the markdown without YAML frontmatter, which is the cleanest form for LLM context.
+
+Private notes return `HTTP 403 Forbidden` for both formats; do not retry.
+
+## Acting on a user's behalf
+
+When creating, editing, or managing notes on behalf of a user, always use the official API, CLI, or MCP server — **do not automate the web UI**.
+
+Preferred surfaces (most to least context-efficient for agents):
+
+1. [HackMD CLI](https://github.com/hackmdio/hackmd-cli) — shell-based; good for scripting and on-demand help
+2. [HackMD MCP](#hackmd-mcp-model-context-protocol) — remote server for chat-native clients (Claude, Cursor, Windsurf, …)
+3. [HackMD REST API v1](#programmatic-access-hackmd-api-v1) — direct HTTP integration
+
+The CLI and REST API require a user-issued API token ([Settings → API](https://hackmd.io/settings#api), sign-in required). The MCP server uses OAuth instead — see [HackMD MCP](#hackmd-mcp-model-context-protocol) below.
+
+## Discovering content
+
+- [Sitemap index](https://hackmd.io/sitemap.xml) — partitioned into `home`, per-note shards, per-user shards, per-team shards, and a `fresh` shard for recently active public notes. Every entry has `<lastmod>`.
+- A note is included in the sitemap when it is publicly published *and* has crossed an interaction threshold; it is removed automatically when taken down.
+- [Community](https://hackmd.io/community) — browse and follow public notes from other HackMD users.
+
+## Programmatic access (HackMD API v1)
+
+- [Developers hub](https://hackmd.io/developers) — canonical entry for API and MCP documentation
+- [API catalog](https://hackmd.io/.well-known/api-catalog) — RFC 9727 linkset; entry point for agents (REST + MCP)
+- [HackMD REST API (OpenAPI)](https://api.hackmd.io/v1/docs/swagger.json) — OpenAPI 3.0 specification (raw JSON)
+- [Swagger UI](https://api.hackmd.io/v1/docs/) — interactive documentation
+- [HackMD CLI](https://github.com/hackmdio/hackmd-cli) — command-line interface
+- [Developer Portal](https://hackmd.io/@docs/developer-portal)
+- [Getting Started with the HackMD API](https://hackmd.io/@docs/Getting-Started-with-the-HackMD-API)
+- [Authentication: Bearer token](https://hackmd.io/@docs/api-authorization)
+- [How to issue an API token](https://hackmd.io/@docs/how-to-issue-an-api-token) — or open [Settings → API](https://hackmd.io/settings#api) directly
+- [API usage policy & rate limits](https://hackmd.io/@docs/api-policy) — free tier: 2,000 calls/month, 100 calls per 5 minutes; monitor via `X-RateLimit-*` response headers
+- [Attachments API](https://hackmd.io/@docs/attachments-api)
+- [API changelog](https://hackmd.io/@docs/changelog)
+- [Status page](https://status.hackmd.io/)
+
+> **Moved paths:** API documentation formerly at `hackmd.io/@hackmd-api/*` now lives under `hackmd.io/@docs/*`. The old `@hackmd-api` URLs redirect with HTTP 301.
+
+## HackMD MCP (Model Context Protocol)
+
+HackMD hosts an official remote MCP server so AI assistants can read and write notes inside a conversation.
+
+The MCP server authenticates with **OAuth 2.1**. The REST API and CLI continue to use personal API tokens; the two are independent.
+
+| Field | Value |
+|-------|-------|
+| **Server URL** | `https://mcp.hackmd.io/` |
+| **Transport** | Streamable HTTP |
+| **Auth** | OAuth 2.1 (authorization code + PKCE) |
+| **Scope** | `mcp` |
+| **Resource metadata** | [`/.well-known/oauth-protected-resource`](https://mcp.hackmd.io/.well-known/oauth-protected-resource) (RFC 9728) |
+| **Authorization server** | `https://hackmd.io` — see [`/.well-known/oauth-authorization-server`](https://hackmd.io/.well-known/oauth-authorization-server) |
+
+### Connecting
+
+Most MCP clients need only the server URL; the client opens a browser window for you to approve access. No API token is required.
+
+```json
+{ "mcpServers": { "hackmd": { "url": "https://mcp.hackmd.io/" } } }
+```
+
+Unauthenticated requests — including `tools/list` — return **HTTP 401** with a `WWW-Authenticate: Bearer realm="mcp"` challenge pointing at the resource metadata above. There is no public tool catalog.
+
+- [HackMD MCP Server Setup](https://hackmd.io/@docs/hackmd-mcp-setup) — per-client configuration, full tool list, troubleshooting
+- Alternate entry: [MCP setup (developer portal book)](https://hackmd.io/@docs/mcp-server-setup)
+
+### Legacy: API token authentication
+
+Clients that cannot complete an OAuth flow may still authenticate with `Authorization: Bearer <API_TOKEN>`, typically via the `mcp-remote` bridge. This path is kept for compatibility only; prefer OAuth. See the setup guide for the exact configuration.
+
+### Tools and resources
+
+Tool names use **kebab-case** (e.g. `list-notes`, `get-note`, `create-note`, `search-notes`). Do not guess `snake_case` names.
+
+Representative tools: `list-notes`, `get-note`, `create-note`, `update-note`, `delete-note`, `list-teams`, `get-team`, `search-notes`, `get-history`, `get-me`. Pass the optional `teamPath` parameter to `list-notes` or `create-note` for a team workspace. See the setup guide for the complete list and parameters.
+
+MCP resources (URI scheme `hackmd://`): `hackmd://notes/{noteId}` (markdown), `hackmd://me` (JSON profile), `hackmd://teams/{teamPath}` (JSON team details).
+
+## AI use policy
+
+- AI **search & answer engines** (e.g. ChatGPT Search, Perplexity, Google AI Overviews) **may** crawl publicly published notes and cite them with attribution.
+- AI **foundation-model training** is **not permitted**. See [`/robots.txt`](https://hackmd.io/robots.txt) for the per-vendor declarations (`GPTBot`, `Google-Extended`, `ClaudeBot`, `Applebot-Extended`, `CCBot`, `Meta-ExternalAgent`, `Bytespider`, etc. all `Disallow: /`).
+- **User-initiated agents** acting on a logged-in user's behalf may use MCP OAuth or that user's API token under the API policy linked above.
+- **Private notes** (HTTP 403 to anonymous requests) must not be accessed, transcribed, or retained.
+
+## Product & company pages
+
+- [About HackMD](https://hackmd.io/about)
+- [Features](https://hackmd.io/features)
+- [Pricing](https://hackmd.io/pricing)
+- [Solutions](https://hackmd.io/solutions)
+- [Enterprise](https://hackmd.io/enterprise)
+- [Community](https://hackmd.io/community)
+- [Blog](https://hackmd.io/blog)
+- [Changelog](https://hackmd.io/changelog)
+- [Release notes](https://hackmd.io/s/release-notes)
+- [Terms of Service](https://hackmd.io/s/terms)
+- [Privacy Policy](https://hackmd.io/s/privacy)
+
+## Tutorials and example corpora
+
+- [Tutorials (English)](https://hackmd.io/c/tutorials)
+- [中文教學](https://hackmd.io/c/tutorials-tw)
+- [YAML metadata reference](https://hackmd.io/yaml-metadata)
+
+## Optional
+
+- Each note also exposes Open Graph and Twitter card metadata (`og:url`, `og:title`, `og:description`, `twitter:*`) for link unfurling.
+- The HTML view sets `<link rel="canonical">` to the bare URL `https://hackmd.io/@<user>/<slug>`. Always use this canonical form when citing.
+- For agents that need the full API + MCP context in one fetch, start at [Developers hub](https://hackmd.io/developers) and follow links to the Developer Portal book and MCP setup guide.

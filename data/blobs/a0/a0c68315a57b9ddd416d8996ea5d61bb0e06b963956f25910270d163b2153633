@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head prefix="og: http://ogp.me/ns#">
+		<meta charset="utf-8">
+		<title>Zoom Earth | Weather Map & Hurricane Tracker</title>
+		<meta name="description" content="Interactive weather & radar map. Track hurricanes, cyclones, storms. View LIVE satellite images, rain maps, forecast maps of wind, temperature for your location.">
+		<meta name="author" content="Neave Interactive">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+		<meta name="referrer" content="origin">
+		<meta name="google" content="notranslate">
+		<meta name="robots" content="max-image-preview:large">
+		<meta name="application-name" content="Zoom Earth">
+		<meta name="apple-mobile-web-app-title" content="Zoom Earth">
+		<meta name="theme-color" content="#000">
+		<meta name="darkreader-lock" content="yes">
+		<meta name="chrome" content="nointentdetection">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://zoom.earth/">
+		<meta property="og:site_name" content="Zoom Earth">
+		<meta property="og:title" content="Zoom Earth | Weather Map & Hurricane Tracker">
+		<meta property="og:description" content="Interactive weather & radar map. Track hurricanes, cyclones, storms. View LIVE satellite images, rain maps, forecast maps of wind, temperature for your location.">
+		<meta property="og:image" content="https://zoom.earth/assets/images/icon-400.8.jpg">
+		<meta property="fb:app_id" content="1011362420143738">
+		<link rel="me" href="https://mapstodon.space/@zoom_earth">
+		<link rel="me" href="https://www.threads.com/@zoom_earth">
+		<link rel="shortcut icon" href="https://zoom.earth/assets/images/icon-16.3.png">
+		<link rel="icon" sizes="16x16" href="https://zoom.earth/assets/images/icon-16.3.png">
+		<link rel="icon" sizes="32x32" href="https://zoom.earth/assets/images/icon-32.3.png">
+		<link rel="icon" sizes="48x48" href="https://zoom.earth/assets/images/icon-48.1.png">
+		<link rel="icon" sizes="96x96" href="https://zoom.earth/assets/images/icon-96.1.png">
+		<link rel="icon" sizes="100x100" href="https://zoom.earth/assets/images/icon-100.7.jpg">
+		<link rel="icon" sizes="200x200" href="https://zoom.earth/assets/images/icon-200.8.jpg">
+		<link rel="icon" sizes="400x400" href="https://zoom.earth/assets/images/icon-400.8.jpg">
+		<link rel="image_src" href="https://zoom.earth/assets/images/icon-400.8.jpg">
+		<link rel="apple-touch-icon-precomposed" href="https://zoom.earth/assets/images/icon-apple.3.jpg">
+		<link rel="preconnect" href="https://tiles.zoom.earth" crossorigin="anonymous">
+		<link rel="dns-prefetch" href="https://tiles.zoom.earth">
+		<link rel="dns-prefetch" href="https://api.zoom.earth">
+		<link rel="dns-prefetch" href="https://account.zoom.earth">
+		<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+		<link rel="dns-prefetch" href="https://tpc.googlesyndication.com">
+		<link rel="preload" href="/assets/css/app.1a43efdb.css" as="style">
+		<link rel="stylesheet" href="/assets/css/app.1a43efdb.css">
+		<link rel="preload" href="/assets/fonts/museo-sans-cyrl-500.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="/assets/fonts/museo-sans-cyrl-700.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="/assets/fonts/museo-sans-cyrl-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+	</head>
+	<body>
+		<main class="layer-satellite ui-blur ui-blur-dark ui-clock ui-time-24">
+			<section id="map" tabindex="0"></section>
+			<div class="hit">
+				<div class="hit-title"></div>
+				<div class="hit-bottom-right"></div>
+				<div class="hit-timeline"></div>
+				<div class="hit-clock"></div>
+				<div class="hit-footer"></div>
+			</div>
+			<div class="footer-coordinate">
+				<div class="lat"></div>
+				<div class="lon"></div>
+			</div>
+			<div class="scale-line"><div></div></div>
+			<aside class="notices"></aside>
+			<div class="legend">
+				<div class="wrap primary">
+					<div class="first"></div>
+					<div class="last"></div>
+					<div class="pad">
+						<div class="bar">
+							<div class="unit"></div>
+							<div class="values"></div>
+						</div>
+					</div>
+				</div>
+				<div class="wrap secondary">
+					<div class="bar">
+						<div class="unit"></div>
+					</div>
+				</div>
+			</div>
+			<button class="model" aria-label="Forecast models">
+				<span class="text icon"><span class="name">ICON</span><span class="title">Model</span></span>
+				<span class="text gfs"><span class="name">GFS</span><span class="title">Model</span></span>
+				<span class="close"></span>
+			</button>
+			<nav class="panel model" aria-label="Forecast models">
+				<form>
+					<div>
+						<h4>Forecast Models</h4>
+						<div>
+							<input type="radio" name="model" id="model-icon" checked>
+							<label for="model-icon" class="icon"><span class="item"><span class="name">ICON</span><span class="resolution"> 13 km</span></span></label>
+						</div>
+						<div>
+							<input type="radio" name="model" id="model-gfs">
+							<label for="model-gfs" class="gfs"><span class="item"><span class="name">GFS</span><span class="resolution"> 22 km</span></span></label>
+						</div>
+					</div>
+				</form>
+			</nav>
+			<div class="group overlays">
+				<button class="radar" aria-label="Rain and snow detected by radar" data-state="off">
+					<span class="menu-icon radar"></span>
+				</button>
+				<button class="coverage" aria-label="Areas with radar coverage" data-state="off">
+					<span class="menu-icon coverage"></span>
+				</button>
+				<button class="clouds" aria-label="Clouds" data-state="off">
+					<span class="menu-icon clouds"></span>
+				</button>
+				<button class="isolines" aria-label="Pressure Isobars" data-state="off">
+					<span class="menu-icon isolines"></span>
+				</button>
+				<button class="wind-animation" aria-label="Wind animation" data-state="off">
+					<span class="menu-icon wind-animation"></span>
+				</button>
+				<button class="heat" aria-label="Fires and heat spots" data-state="off">
+					<span class="menu-icon heat"></span>
+				</button>
+				<button class="more" aria-label="More map overlays&hellip;">
+					<span class="menu-icon more"></span>
+					<span class="close"></span>
+				</button>
+			</div>
+			<nav class="panel overlays">
+				<form>
+					<div>
+						<h4>Map Overlays</h4>
+					</div>
+				</form>
+			</nav>
+			<button class="layers-dropdown empty" aria-label="Live Maps, Forecast Maps">
+				<span class="menu-icon"></span>
+				<span class="text"></span><span class="arrow"></span>
+			</button>
+			<button class="layers" aria-label="Live Maps, Forecast Maps">
+				<span class="menu-icon"></span>
+				<span class="close"></span>
+			</button>
+			<nav class="panel layers">
+				<form>
+					<div>
+						<div class="live">
+							<h4>Live Maps</h4>
+						</div>
+						<div class="forecast">
+							<h4>Forecast Maps</h4>
+						</div>
+					</div>
+					<button class="arrow" aria-label="Live Maps, Forecast Maps">
+						<span class="icon"></span>
+					</button>
+				</form>
+			</nav>
+			<div class="panel time timeline loading" tabindex="0">
+				<div class="scroll">
+					<div class="pad">
+						<div class="times"></div>
+						<div class="recent-indicator"></div>
+					</div>
+				</div>
+				<div class="time-indicator"></div>
+				<div class="time-tooltip">
+					<div class="anchor"></div>
+					<div class="text">&nbsp;</div>
+				</div>
+				<svg class="progress">
+					<circle cx="50%" cy="50%" r="15.9155" stroke="#fff" stroke-width="2.5" fill="none" class="track"/>
+					<circle cx="50%" cy="50%" r="15.9155" stroke="#fff" stroke-width="2.5" fill="none" class="bar"/>
+				</svg>
+				<button class="pause" aria-label="Pause animation"><span></span></button>
+				<button class="play" aria-label="Play animation"><span></span></button>
+				<button class="recent latest" aria-label="Latest time" disabled><span></span></button>
+				<button class="recent now" aria-label="Reset to now" disabled><span></span></button>
+			</div>
+			<div class="panel time clock">
+				<nav class="clock-live">
+					<svg class="progress">
+						<circle cx="50%" cy="50%" r="15.9155" stroke="#fff" stroke-width="2.5" fill="none" class="track"/>
+						<circle cx="50%" cy="50%" r="15.9155" stroke="#fff" stroke-width="2.5" fill="none" class="bar"/>
+					</svg>
+					<button class="pause" aria-label="Pause animation"><span></span></button>
+					<button class="play" aria-label="Play animation"><span></span></button>
+					<div class="date">
+						<div class="text"></div>
+						<button class="up" aria-label="Next day" disabled><span></span></button>
+						<button class="down" aria-label="Previous day" disabled><span></span></button>
+					</div>
+					<div class="text colon">:</div>
+					<div class="hour">
+						<div class="text"></div>
+						<button class="up" aria-label="Next hour" disabled><span></span></button>
+						<button class="down" aria-label="Previous hour" disabled><span></span></button>
+					</div>
+					<div class="text am-pm"></div>
+					<div class="text utc">UTC</div>
+					<div class="minute">
+						<div class="text"></div>
+						<button class="up" aria-label="Next time" disabled><span></span></button>
+						<button class="down" aria-label="Previous time" disabled><span></span></button>
+					</div>
+				</nav>
+				<nav class="clock-hd">
+					<div class="year">
+						<div class="text"></div>
+						<button class="up" aria-label="Next year" disabled><span></span></button>
+						<button class="down" aria-label="Previous year" disabled><span></span></button>
+					</div>
+					<div class="month">
+						<div class="text"></div>
+						<button class="up" aria-label="Next month" disabled><span></span></button>
+						<button class="down" aria-label="Previous month" disabled><span></span></button>
+					</div>
+					<div class="day">
+						<div class="text"></div>
+						<button class="up" aria-label="Next day" disabled><span></span></button>
+						<button class="down" aria-label="Previous day" disabled><span></span></button>
+					</div>
+					<div class="am-pm">
+						<div class="text"></div>
+						<button class="up" aria-label="Next time" disabled><span></span></button>
+						<button class="down" aria-label="Previous time" disabled><span></span></button>
+					</div>
+				</nav>
+				<button class="recent latest" aria-label="Latest time" disabled><span></span></button>
+				<button class="recent now" aria-label="Reset to now" disabled><span></span></button>
+			</div>
+			<button class="search" aria-label="Search">
+				<span class="icon"></span>
+				<span class="close"></span>
+			</button>
+			<button class="settings" aria-label="Settings">
+				<span class="icon"></span>
+				<span class="close"></span>
+			</button>
+			<button class="about" aria-label="About">
+				<span class="icon"></span>
+				<span class="close"></span>
+			</button>
+			<button class="share" aria-label="Share">
+				<span class="icon"></span>
+				<span class="close"></span>
+			</button>
+			<button class="geolocation" aria-label="Show your location">
+				<span class="icon"></span>
+			</button>
+			<button class="title" aria-label="Zoom Earth">
+				<span class="icon"></span>
+				<span class="logo"></span>
+			</button>
+			<div class="title-badge">
+				<div class="panel"></div>
+			</div>
+			<nav class="panel title">
+				<form>
+					<div>
+						<h1>Zoom Earth</h1>
+						<div class="menu-item settings"><label><span class="menu-icon"></span>Settings</label></div>
+						<div class="menu-item about"><label><span class="menu-icon"></span>About</label></div>
+						<div class="menu-item share"><label><span class="menu-icon"></span>Share</label></div>
+						<div class="menu-item distance"><label><span class="menu-icon"></span>Measure Distance</label></div>
+						<div class="menu-item area"><label><span class="menu-icon"></span>Measure Area</label></div>
+					</div>
+				</form>
+			</nav>
+			<div class="group measure">
+				<button class="distance" aria-label="Measure distance">
+					<span class="icon"></span>
+					<span class="close"></span>
+				</button>
+				<button class="area" aria-label="Measure area">
+					<span class="icon"></span>
+					<span class="close"></span>
+				</button>
+			</div>
+			<div class="panel measure">
+				<h4 class="distance">Measure Distance</h4>
+				<h4 class="area">Measure Area</h4>
+				<p class="no-touch">Click on the map to add points. Double&#8209;click to finish.</p>
+				<p class="touch">Tap on the map to add points.</p>
+				<div class="actions">
+					<button class="dialog cancel"><span class="text">Cancel</span></button>
+					<button class="dialog undo"><span class="text">Undo</span></button>
+					<button class="dialog accent done"><span class="text">Done</span></button>
+				</div>
+			</div>
+			<div class="group zoom">
+				<button class="in" aria-label="Zoom in">
+					<span class="icon"></span>
+				</button>
+				<button class="out" aria-label="Zoom out">
+					<span class="icon"></span>
+				</button>
+			</div>
+			<aside class="panel search notranslate">
+				<header class="search">
+					<h3>Search</h3>
+					<button class="close" aria-label="Close"><span></span></button>
+					<div>
+						<form>
+							<input name="q" type="search" enterkeyhint="search" placeholder="Find a place, storm, or fire&hellip;" aria-label="Search" maxlength="255" autocorrect="off" autocapitalize="off" autocomplete="off">
+						</form>
+						<button class="geolocation-search" aria-label="Show Your Location"><span class="icon"></span><span class="text locate">Show Your Location</span><span class="text locating">Locating&hellip;</span></button>
+						<button class="geolocation-remove" aria-label="Remove"><span></span></button>
+					</div>
+				</header>
+				<section class="news">
+					<div class="results user"></div>
+					<div class="results remote"></div>
+				</section>
+				<section class="query">
+					<div class="results"></div>
+				</section>
+			</aside>
+			<aside class="panel settings">
+				<header>
+					<div class="icon"></div><h3>Settings</h3>
+					<button class="close" aria-label="Close"><span></span></button>
+				</header>
+				<form name="settings">
+					<div>
+						<h4>Time</h4>
+						<section class="bubble">
+							<div class="bar2">
+								<p><span class="menu-icon time-zone"></span>Time Zone<kbd class="hotkey">Z</kbd></p>
+								<div>
+									<input type="radio" name="time-zone" id="setting-time-zone-local" value="local" checked><label for="setting-time-zone-local">Local</label>
+									<input type="radio" name="time-zone" id="setting-time-zone-utc" value="utc"><label for="setting-time-zone-utc">UTC</label>
+								</div>
+							</div>
+							<div class="bar2">
+								<p><span class="menu-icon time-format"></span>Time Format<kbd class="hotkey">T</kbd></p>
+								<div>
+									<input type="radio" name="time-format" id="setting-time-format-hour12" value="hour12" checked><label for="setting-time-format-hour12">12-Hour</label>
+									<input type="radio" name="time-format" id="setting-time-format-hour24" value="hour24"><label for="setting-time-format-hour24">24-Hour</label>
+								</div>
+							</div>
+							<div class="bar2 time-control">
+								<p><span class="menu-icon time-control"></span>Time Control<kbd class="hotkey">J</kbd></p>
+								<div>
+									<input type="radio" name="time-control" id="setting-time-control-timeline" value="timeline" checked><label for="setting-time-control-timeline">Timeline</label>
+									<input type="radio" name="time-control" id="setting-time-control-clock" value="clock"><label for="setting-time-control-clock">Clock</label>
+								</div>
+							</div>
+							<div class="bar2">
+								<p><span class="menu-icon summary"></span>Forecast Summary<kbd class="hotkey">U</kbd></p>
+								<div>
+									<input type="radio" name="summary" id="setting-summary-daily" value="daily" checked><label for="setting-summary-daily">Daily</label>
+									<input type="radio" name="summary" id="setting-summary-hourly" value="hourly"><label for="setting-summary-hourly">Hourly</label>
+								</div>
+							</div>
+						</section>
+						<h4 class="custom">Customization</h4>
+						<section class="bubble custom">
+							<div class="bar2 appearance">
+								<p><span class="menu-icon appearance"></span>Appearance</p>
+								<div>
+									<input type="radio" name="appearance" id="setting-appearance-translucent" value="translucent" checked><label for="setting-appearance-translucent">Translucent</label>
+									<input type="radio" name="appearance" id="setting-appearance-opaque" value="opaque"><label for="setting-appearance-opaque">Opaque</label>
+								</div>
+							</div>
+							<div class="bar2 precipitation-theme">
+								<p><span class="menu-icon precipitation-theme"></span>Precipitation Theme<kbd class="hotkey">D</kbd></p>
+								<div>
+									<input type="radio" name="precipitation-theme" id="setting-precipitation-theme-light" value="light" checked><label for="setting-precipitation-theme-light">Light</label>
+									<input type="radio" name="precipitation-theme" id="setting-precipitation-theme-dark" value="dark"><label for="setting-precipitation-theme-dark">Dark</label>
+								</div>
+							</div>
+							<div class="bar2 precipitation-animation">
+								<p><span class="menu-icon precipitation-animation"></span>Precipitation Animation</p>
+								<div>
+									<input type="radio" name="precipitation-animation" id="setting-precipitation-animation-enabled" value="enabled" checked><label for="setting-precipitation-animation-enabled">Enabled</label>
+									<input type="radio" name="precipitation-animation" id="setting-precipitation-animation-disabled" value="disabled"><label for="setting-precipitation-animation-disabled">Disabled</label>
+								</div>
+							</div>
+							<div class="bar2 map-tooltip-setting">
+								<p><span class="menu-icon map-tooltip-setting"></span>Map Tooltip</p>
+								<div>
+									<input type="radio" name="map-tooltip" id="setting-map-tooltip-enabled" value="enabled" checked><label for="setting-map-tooltip-enabled">Enabled</label>
+									<input type="radio" name="map-tooltip" id="setting-map-tooltip-disabled" value="disabled"><label for="setting-map-tooltip-disabled">Disabled</label>
+								</div>
+							</div>
+						</section>
+						<h4>Animation</h4>
+						<section class="bubble">
+							<div class="bar3">
+								<p><span class="menu-icon animation-speed"></span>Animation Speed<kbd class="hotkey">A</kbd></p>
+								<div>
+									<input type="radio" name="animation-speed" id="setting-animation-slow" value="slow"><label for="setting-animation-slow">Slow</label>
+									<input type="radio" name="animation-speed" id="setting-animation-medium" value="medium" checked><label for="setting-animation-medium">Medium</label>
+									<input type="radio" name="animation-speed" id="setting-animation-fast" value="fast"><label for="setting-animation-fast">Fast</label>
+								</div>
+							</div>
+							<div>
+								<p><span class="menu-icon satellite"></span>Satellite Loop Duration</p>
+								<div>
+									<input type="radio" name="animation-duration" id="setting-animation-duration1" value="3" checked><label for="setting-animation-duration1">3 Hours</label>
+									<input type="radio" name="animation-duration" id="setting-animation-duration2" value="6"><label for="setting-animation-duration2">6 Hours</label>
+									<input type="radio" name="animation-duration" id="setting-animation-duration3" value="12"><label for="setting-animation-duration3">12 Hours</label>
+									<input type="radio" name="animation-duration" id="setting-animation-duration4" value="24"><label for="setting-animation-duration4">24 Hours</label>
+								</div>
+							</div>
+							<div class="bar2">
+								<p><span class="menu-icon satellite"></span>Satellite Animation Style</p>
+								<div>
+									<input type="radio" name="animation-style" id="setting-animation-style-fast" value="fast" checked><label for="setting-animation-style-fast">Fast</label>
+									<input type="radio" name="animation-style" id="setting-animation-style-smooth" value="smooth"><label for="setting-animation-style-smooth">Smooth</label>
+								</div>
+							</div>
+						</section>
+						<h4>Units</h4>
+						<section class="bubble">
+							<div class="bar3">
+								<p><span class="menu-icon precipitation"></span>Precipitation</p>
+								<div>
+									<input type="radio" name="precipitation-unit" id="setting-precipitation-mmh" value="mmh"><label for="setting-precipitation-mmh">mm/h</label>
+									<input type="radio" name="precipitation-unit" id="setting-precipitation-inh" value="inh" checked><label for="setting-precipitation-inh">in/h</label>
+									<input type="radio" name="precipitation-unit" id="setting-precipitation-dbz" value="dbz" checked><label for="setting-precipitation-dbz">dBZ</label>
+								</div>
+							</div>
+							<div class="bar5">
+								<p><span class="menu-icon wind"></span>Wind Speed</p>
+								<div>
+									<input type="radio" name="wind-unit" id="setting-wind-kmh" value="kmh"><label for="setting-wind-kmh">km/h</label>
+									<input type="radio" name="wind-unit" id="setting-wind-ms" value="ms"><label for="setting-wind-ms">m/s</label>
+									<input type="radio" name="wind-unit" id="setting-wind-mph" value="mph" checked><label for="setting-wind-mph">mph</label>
+									<input type="radio" name="wind-unit" id="setting-wind-knots" value="knots"><label for="setting-wind-knots">knots</label>
+									<input type="radio" name="wind-unit" id="setting-wind-beaufort" value="beaufort"><label for="setting-wind-beaufort">Bft</label>
+								</div>
+							</div>
+							<div class="bar2">
+								<p><span class="menu-icon wind-direction"></span>Wind Direction</p>
+								<div>
+									<input type="radio" name="wind-direction-unit" id="setting-wind-direction-compass" value="compass" checked><label for="setting-wind-direction-compass">compass</label>
+									<input type="radio" name="wind-direction-unit" id="setting-wind-direction-degrees" value="degrees"><label for="setting-wind-direction-degrees">degrees</label>
+								</div>
+							</div>
+							<div class="bar2">
+								<p><span class="menu-icon temperature"></span>Temperature</p>
+								<div>
+									<input type="radio" name="temperature-unit" id="setting-temperature-celsius" value="celsius"><label for="setting-temperature-celsius">°C</label>
+									<input type="radio" name="temperature-unit" id="setting-temperature-fahrenheit" value="fahrenheit" checked><label for="setting-temperature-fahrenheit">°F</label>
+								</div>
+							</div>
+							<div>
+								<p><span class="menu-icon pressure"></span>Atmospheric Pressure</p>
+								<div>
+									<input type="radio" name="pressure-unit" id="setting-pressure-hpa" value="hpa"><label for="setting-pressure-hpa">hPa</label>
+									<input type="radio" name="pressure-unit" id="setting-pressure-mb" value="mb" checked><label for="setting-pressure-mb">mb</label>
+									<input type="radio" name="pressure-unit" id="setting-pressure-mmhg" value="mmhg"><label for="setting-pressure-mmhg">mmHg</label>
+									<input type="radio" name="pressure-unit" id="setting-pressure-inhg" value="inhg"><label for="setting-pressure-inhg">inHg</label>
+								</div>
+							</div>
+							<div>
+								<p><span class="menu-icon measure-distance"></span>Distance</p>
+								<div>
+									<input type="radio" name="distance-unit" id="setting-distance-metric" value="metric"><label for="setting-distance-metric">km</label>
+									<input type="radio" name="distance-unit" id="setting-distance-imperial" value="imperial" checked><label for="setting-distance-imperial">miles</label>
+									<input type="radio" name="distance-unit" id="setting-distance-nautical" value="nautical"><label for="setting-distance-nautical" class="wide">nautical miles</label>
+								</div>
+							</div>
+							<div>
+								<p><span class="menu-icon measure-area"></span>Area</p>
+								<div>
+									<input type="radio" name="area-unit" id="setting-area-metric" value="metric"><label for="setting-area-metric">km²</label>
+									<input type="radio" name="area-unit" id="setting-area-imperial" value="imperial" checked><label for="setting-area-imperial">sq mi</label>
+									<input type="radio" name="area-unit" id="setting-area-acres" value="acres"><label for="setting-area-acres">acres</label>
+									<input type="radio" name="area-unit" id="setting-area-hectares" value="hectares"><label for="setting-area-hectares">hectares</label>
+								</div>
+							</div>
+							<div>
+								<p><span class="menu-icon fire-area"></span>Fire Burn Area</p>
+								<div>
+									<input type="radio" name="fire-area-unit" id="setting-fire-area-metric" value="metric"><label for="setting-fire-area-metric">km²</label>
+									<input type="radio" name="fire-area-unit" id="setting-fire-area-imperial" value="imperial"><label for="setting-fire-area-imperial">sq mi</label>
+									<input type="radio" name="fire-area-unit" id="setting-fire-area-acres" value="acres" checked><label for="setting-fire-area-acres">acres</label>
+									<input type="radio" name="fire-area-unit" id="setting-fire-area-hectares" value="hectares"><label for="setting-fire-area-hectares">hectares</label>
+								</div>
+							</div>
+							<div class="bar2">
+								<p><span class="menu-icon coordinate-system"></span>Coordinate System</p>
+								<div>
+									<input type="radio" name="coordinate-unit" id="setting-coordinate-dms" value="dms" checked><label for="setting-coordinate-dms">DMS</label>
+									<input type="radio" name="coordinate-unit" id="setting-coordinate-decimal" value="decimal"><label for="setting-coordinate-decimal">decimal degrees</label>
+								</div>
+							</div>
+						</section>
+					</div>
+				</form>
+			</aside>
+			<aside class="panel weather daily notranslate">
+				<header>
+					<button class="done"><span class="icon"></span></button>
+					<button class="save"><span class="icon"></span><span class="pulse"></span></button>
+					<h2></h2>
+					<form>
+						<input name="title" type="text" inputmode="text" enterkeyhint="done" maxlength="32" autocorrect="off" autocapitalize="sentences" autocomplete="off" spellcheck="false">
+					</form>
+					<button class="close" aria-label="Close"><span></span></button>
+				</header>
+				<section>
+					<table></table>
+				</section>
+			</aside>
+			<article class="panel storm-details" style="max-height: 100%;">
+				<header>
+					<h1></h1>
+					<p class="lastmod"></p>
+					<button class="close" aria-label="Close"><span></span></button>
+				</header>
+				<section>
+					<div class="text"></div>
+				</section>
+			</article>
+			<aside class="panel storm notranslate">
+				<header>
+					<h2></h2>
+					<button class="close" aria-label="Close"><span></span></button>
+				</header>
+				<section>
+					<table>
+						<thead>
+							<tr class="title">
+								<th class="date">Date</th>
+								<th class="time">Time</th>
+								<th class="type">Type</th>
+								<th class="wind">Wind</th>
+								<th class="pressure">Pressure</th>
+							</tr>
+							<tr class="units">
+								<td class="date" colspan="2">UTC</td>
+								<td class="type"></td>
+								<td class="wind changeable">mph</td>
+								<td class="pressure changeable">mb</td>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</section>
+				<footer>
+					<p class="text-type"></p>
+					<p class="text-alt"></p>
+					<p class="details"><span class="icon"></span><span class="text long">Latest Warnings and Information</span><span class="text medium">More Info</span><span class="text short">Info</span></p>
+				</footer>
+			</aside>
+			<aside class="panel share">
+				<header>
+					<h3>Share</h3>
+					<form>
+						<input name="url" type="text" readonly>
+						<button class="copy"><span class="text copy">Copy Link</span><span class="text copied">Copied!</span></button>
+					</form>
+				</header>
+				<div class="social">
+				</div>
+			</aside>
+			<aside class="panel about notranslate">
+				<header>
+					<div class="icon"></div>
+					<button class="close" aria-label="Close"><span></span></button>
+				</header>
+				<div class="content">
+					<div>
+						<header>
+							<div class="title-logo">
+								<div class="icon"></div>
+								<div class="title"></div>
+							</div>
+							<p>Interactive weather & radar map. Track hurricanes, cyclones, storms. View LIVE satellite images, rain maps, forecast maps of wind, temperature for your location.</p>
+						</header>
+						<h4 class="app-head">Mobile App</h4>
+						<section class="bubble app-links">
+							<a href="https://play.google.com/store/apps/details?id=com.neave.zoomearth" target="_blank" rel="nofollow noopener"><img src="/assets/images/icon-200.1.jpg" width="100" height="100" loading="lazy" alt="App" class="touch"></a>
+							<a href="/app/" rel="nofollow"><img src="/assets/images/qr-app.svg" width="145" height="145" loading="lazy" alt="QR" class="qr"></a>
+							<p class="touch">Download the <a href="https://play.google.com/store/apps/details?id=com.neave.zoomearth" target="_blank" rel="nofollow noopener"><strong>Zoom&nbsp;Earth</strong></a>&nbsp;app!</p>
+							<p class="qr"><strong>Scan the QR code</strong> with the camera on your mobile device to get the <strong>Zoom&nbsp;Earth</strong>&nbsp;app.</p>
+							<p>Available on the <a href="https://apps.apple.com/app/id1531561063" target="_blank" rel="nofollow noopener">App Store</a> for iPhone and iPad, and on <a href="https://play.google.com/store/apps/details?id=com.neave.zoomearth" target="_blank" rel="nofollow noopener">Google Play</a> for&nbsp;Android.</p>
+						</section>
+						<h4>Data Sources</h4>
+						<section class="bubble sources">
+							<p><span class="menu-icon precipitation"></span>Weather forecasts are continually updated with the latest global model data from DWD <a href="https://www.dwd.de/EN/research/weatherforecasting/num_modelling/01_num_weather_prediction_modells/icon_description.html" target="_blank" rel="nofollow noopener" title="Icosahedral Nonhydrostatic">ICON</a> and NOAA/NCEP/NWS <a href="https://www.emc.ncep.noaa.gov/emc/pages/numerical_forecast_systems/gfs.php" target="_blank" rel="nofollow noopener" title="Global Forecast System">GFS</a>.</p>
+							<p><span class="menu-icon radar"></span>Radar data is processed in real&nbsp;time from many meteorological <a href="https://zoom.earth/legal/radar/" target="_blank" rel="noopener">sources</a> around the world.</p>
+							<p><span class="menu-icon satellite"></span>Live satellite imagery is provided by <a href="https://www.nesdis.noaa.gov/our-satellites/currently-flying/geostationary-satellites" target="_blank" rel="nofollow noopener">NOAA GOES</a>, <a href="https://www.eumetsat.int/our-satellites/meteosat-series" target="_blank" rel="nofollow noopener">EUMETSAT Meteosat</a>, and <a href="https://www.jma.go.jp/jma/jma-eng/satellite/index.html" target="_blank" rel="nofollow noopener">JMA Himawari</a> geostationary satellites.</p>
+							<p><span class="menu-icon satellite"></span>HD satellite images are updated twice a day from NASA polar-orbiting satellites <a href="https://aqua.nasa.gov/" target="_blank" rel="nofollow noopener">Aqua</a> and <a href="https://terra.nasa.gov/" target="_blank" rel="nofollow noopener">Terra</a>, using services from <a href="https://earthdata.nasa.gov/gibs" target="_blank" rel="nofollow noopener" title="Global Imagery Browse Services">GIBS</a>, part of <a href="https://earthdata.nasa.gov/eosdis" target="_blank" rel="nofollow noopener" title="Earth Observing System Data and Information System">EOSDIS</a>.</p>
+							<p><span class="menu-icon storms"></span>Tropical system tracks are generated using the latest data from <a href="https://www.nhc.noaa.gov/" target="_blank" rel="nofollow noopener" title="National Hurricane Center">NHC</a>, <a href="https://www.metoc.navy.mil/jtwc/jtwc.html" target="_blank" rel="nofollow noopener" title="Joint Typhoon Warning Center">JTWC</a>, <a href="https://www.nrlmry.navy.mil/TC.html" target="_blank" rel="nofollow noopener" title="Naval Research Laboratory">NRL</a>, and <a href="https://www.ncdc.noaa.gov/ibtracs/" target="_blank" rel="nofollow noopener" title="International Best Track Archive for Climate Stewardship">IBTrACS</a>.</p>
+							<p><span class="menu-icon fires"></span>Active fire incident data is compiled from <a href="https://www.nifc.gov/" target="_blank" rel="nofollow noopener" title="National Interagency Fire Center">NIFC</a>, <a href="https://ciffc.net/" target="_blank" rel="nofollow noopener" title="Canadian Interagency Forest Fire Centre">CIFFC</a>, <a href="https://emergency.copernicus.eu/" target="_blank" rel="nofollow noopener" title="Copernicus Emergency Management Service">CEMS</a>, <a href="https://forest-fire.emergency.copernicus.eu/" target="_blank" rel="nofollow noo

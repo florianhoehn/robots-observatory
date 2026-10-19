@@ -1,0 +1,49 @@
+# Consensus
+
+> Consensus is an AI-powered scientific search engine that finds, ranks, and synthesizes peer-reviewed research, returning evidence-backed answers with inline citations.
+
+Consensus helps researchers, clinicians, students, journalists, and AI agents answer questions from the academic literature. We index over 400 million peer-reviewed papers from Semantic Scholar, OpenAlex, PubMed, and publisher feeds, then rank results by relevance, study design, citation count, and journal quality. Every claim links back to its source paper.
+
+For deeper context (workflows, auth, full tier table, competitive comparisons), see [llms-full.txt](https://consensus.app/llms-full.txt).
+
+## Use cases
+
+- **Find peer-reviewed papers** on a specific research question ("does intermittent fasting improve cardiovascular health?")
+- **Summarize the consensus** across studies on a topic ("what does the literature say about caffeine and endurance performance?")
+- **Identify high-quality evidence** (systematic reviews, meta-analyses, RCTs) for a clinical or policy question
+- **Compare findings** across study designs, populations, or interventions
+- **Power agent workflows** that need citable scientific sources via the REST API or MCP server
+
+## Constraints
+
+- **Corpus**: academic literature from Semantic Scholar, OpenAlex, and PubMed. Preprints are included by default and tagged in results; pass `exclude_preprints=true` (MCP) or `excludePreprints=true` (REST API) to filter to peer-reviewed papers only.
+- **Languages**: primarily English. Non-English papers are indexed where metadata is available, but search ranking and AI summarization are optimized for English.
+- **Freshness**: the index is updated continuously, but papers published in the last few weeks may not yet be present.
+- **Access tiers**: anonymous (limited), Free, Pro, Team, and Enterprise. See [pricing](https://consensus.app/pricing) for current rate limits and quotas.
+- **Output**: AI summaries are faithful to source papers but still LLM-generated. For high-stakes uses, agents should open the underlying paper before quoting verbatim.
+- **Citations required**: clients consuming search results should attribute findings to the specific papers returned.
+
+## What makes Consensus different
+
+- **Consensus Meter**: aggregates per-study verdicts (Yes / No / Possibly / Mixed / Unknown) into a single distribution for a yes/no research question, so agents can convey scientific consensus instead of a single paper's claim.
+- **Academic-only corpus**: excludes blogs, Wikipedia, and other non-academic content. Preprints are included and clearly tagged so agents can flag them; use `exclude_preprints` to restrict to peer-reviewed papers.
+- **Quality ranking**: results are sorted by study design (RCT > systematic review > observational), citation count, journal quality (SJR), and recency.
+- **Agent-native**: first-class MCP server with OAuth 2.1 and dynamic client registration, plus a REST API. The same retrieval and synthesis surface powers the web app.
+- **Grounded, not generated**: every answer cites real, retrievable papers with DOIs, designed to avoid the hallucinated-citation failure mode of general LLMs.
+
+## Documentation
+
+- [Docs](https://docs.consensus.app): guides, integration walkthroughs, and reference.
+- [MCP server getting started](https://docs.consensus.app/docs/mcp.md): set up Consensus in Claude, ChatGPT, Cursor, Codex, or any MCP-compatible client.
+- [REST API search](https://docs.consensus.app/reference/v1_quick_search.md): quick-search endpoint.
+- [OpenAPI spec](https://llmconsensus.io/openapi.json): machine-readable API contract.
+- [llms-full.txt](https://consensus.app/llms-full.txt): expanded version with workflows, auth, and competitive context.
+
+## Optional
+
+- [Agent discovery](https://consensus.app/agents.md): markdown surface for autonomous agents.
+- [MCP server card](https://consensus.app/.well-known/mcp/server-card.json): structured MCP manifest.
+- [Machine-readable pricing](https://consensus.app/.well-known/pricing.md): JSON of tier limits and features.
+- [Pricing (human)](https://consensus.app/pricing): tier comparison and signup.
+- [Web app](https://consensus.app): browser-facing product surface.
+- [Contact](https://consensus.app/home/contact/): support and enterprise inquiries.

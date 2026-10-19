@@ -1,0 +1,742 @@
+<!doctype html>
+<html prefix="og: http://ogp.me/ns#" lang="en-US">
+    <head>
+      <meta name="content-page-ref" content="vCbBS0eqJv5m8_kjvevb4L9oOs-FO6hCcKXBEgfy2YChD6J55XQjZp0Sc2vrB8uQTVZHOSG-4cf70PWyJZufKg"/>
+<script defer="defer" type="text/javascript" src="https://rum.hlx.page/.rum/@adobe/helix-rum-js@%5E2/dist/rum-standalone.js" data-routing="env=prod,tier=publish,ams=Dyson"></script>
+<link rel="preconnect" href="//assets.adobedtm.com"/>
+<link rel="preconnect" href="//dyson-h.assetsadobe2.com"/>
+
+<link rel="preconnect" href="//ssl.google-analytics.com"/>
+<link rel="preconnect" href="//gateway.foresee.com"/>
+<link rel="preconnect" href="//www.google-analytics.com"/>
+
+    <link rel="preconnect" href="//js-agent.newrelic.com"/>
+
+<link rel="preconnect" href="//apps.bazaarvoice.com"/>
+<link rel="preconnect" href="//assets.queue-it.net"/>
+<link rel="preconnect" href="//author.euro.confirmit.com"/>
+<link rel="preconnect" href="//cdn.attn.tv"/>
+<link rel="preconnect" href="//cdn.cookielaw.org"/>
+<link rel="preconnect" href="//cdn.decibelinsight.net"/>
+<link rel="preconnect" href="//cdn1.affirm.com"/>
+<link rel="preconnect" href="//collection.decibelinsight.net"/>
+<link rel="preconnect" href="//js.afterpay.com"/>
+<link rel="preconnect" href="//s.go-mpulse.net"/>
+<link rel="preconnect" href="//s.salecycle.com"/>
+<link rel="preconnect" href="//static.queue-it.net"/>
+<link rel="preconnect" href="//www.googletagmanager.com"/>
+<link rel="preconnect" href="//www.dyson.video"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet"/>
+
+        
+  
+
+    
+    <script type="text/javascript">
+        (function () {
+            var domain = getDomain(window.location.hostname);
+
+            // OptanonConsent collects the user consent status from the OptanonConsent URL parameter
+            // This determines the users accepted consent status
+            var urlOptanonConsent = getQueryParameter("ot_consent");
+            if (typeof (urlOptanonConsent) != "undefined" && urlOptanonConsent.length > 0) {
+                setCookie("OptanonConsent", urlOptanonConsent, 365, domain);
+            }
+
+            // OptanonAlertBoxClosed determines whether the OneTrust script will display the consent banner
+            var urlOptanonAlertBoxClosed = getQueryParameter("ot_abclosed");
+            if (typeof (urlOptanonAlertBoxClosed) != "undefined" && urlOptanonAlertBoxClosed.length > 0) {
+                setCookie("OptanonAlertBoxClosed", urlOptanonAlertBoxClosed, 365, domain);
+            }
+
+            // Get query parameter
+            function getQueryParameter(paramName) {
+                var url = window.location.href;
+                var noFragment = (url.indexOf("#") !== -1) ? url.split("#")[0] : url;
+                var queryParams = (noFragment.indexOf("?") !== -1) ? noFragment.split("?")[1] : noFragment;
+                var pairs = queryParams.split("&");
+
+                for (i = 0; i < pairs.length; i++) {
+                    var name = pairs[i].split("=")[0];
+                    var value = pairs[i].split("=")[1];
+
+                    if (name.indexOf(paramName) !== -1) {
+                        return value;
+                    }
+                }
+            }
+
+            function getDomain(hostname) {
+                var domainParts = hostname.split(".");
+                if (domainParts.length > 1) {
+                    var tld = "";
+
+                    // Handle multi-part TLDs
+                    if (domainParts.length > 2 && (domainParts[domainParts.length - 2] === "com" || domainParts[domainParts.length - 2] === "co")) {
+                        tld = domainParts[domainParts.length - 3] + "." + domainParts[domainParts.length - 2] + "." + domainParts[domainParts.length - 1];
+                    } else {
+                        // Handle single-part TLDs
+                        tld = domainParts[domainParts.length - 2] + "." + domainParts[domainParts.length - 1];
+                    }
+                    return tld;
+                }
+            }
+
+            // Set Cookie
+            function setCookie(name, value, days, domain) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + value + expires + ";domain=." + domain + "; path=/";
+            }
+        })();
+    </script>
+    
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-domain-script="cfdf7c72-bc40-49c3-81fc-56923c335982" data-document-language="true" type="text/javascript" charset="UTF-8" data-dlayer-name="dataLayerDynamic">
+        </script>
+    
+    
+    <script>
+        (function () {
+            var TIMEOUT_MS = 10000;
+            var ready = false;
+            // Preserve any existing wrapper
+            var prevWrapper = window.OptanonWrapper || function () { };
+            window.OptanonWrapper = function () {
+                prevWrapper();
+                ready = true;
+                console.log('OneTrust initialised');
+                handleConsentDecision();
+                document.dispatchEvent(new Event('OneTrustReady'));
+            };
+            // Guardrail if OneTrust never initialises
+            setTimeout(function () {
+                if (!ready) {
+                    console.log('OneTrust not initialised within timeout');
+                    document.dispatchEvent(new Event('OneTrustFailed'));
+                }
+            }, TIMEOUT_MS);
+
+            function handleConsentDecision() {
+                var groups = window.OnetrustActiveGroups || '';
+                var cookieAccepted = groups.indexOf('C0004') !== -1 && groups.indexOf('C0003') !== -1;
+                if (!window.ZoovuTrackingManager) return;
+                if (cookieAccepted) {
+                    if (typeof window.ZoovuTrackingManager.enableTracking === 'function') {
+                        window.ZoovuTrackingManager.enableTracking();
+                    }
+                } else {
+                    if (typeof window.ZoovuTrackingManager.disableTracking === 'function') {
+                        window.ZoovuTrackingManager.disableTracking();
+                    }
+                }
+            }
+        })();
+    </script>
+
+  
+
+
+    
+<script src="/etc.clientlibs/dyson/clientlibs/clientlib-vendor.min.47d77708cccde7e9dde5a8252fd9a255.js"></script>
+
+
+
+
+        
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    
+    
+	<meta property="og:url" content="https://www.dyson.com/error/404"/>
+	<meta property="og:locale" content="en_US"/>
+    
+    
+    
+    
+    
+    
+    
+    
+    <meta name="robots" content="noindex,nofollow"/>
+    
+
+    <meta name="apple-itunes-app" content="app-id=myAppStoreID, app-argument=myURL"/>
+
+    
+        <link rel="icon" type="image/x-icon" href="/apps/settings/wcm/designs/dyson-design/dyson-fav.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="/apps/settings/wcm/designs/dyson-design/dyson-fav.ico"/>
+	    <link rel="apple-touch-icon" href="/apps/settings/wcm/designs/dyson-design/dyson-fav.ico"/>
+    
+    
+    <link rel="canonical" href="https://www.dyson.com/error/404"/>
+
+    
+    
+
+    
+	<meta property="og:title" content="404 | Dyson"/>
+	<title>404 | Dyson</title>
+    
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, width=device-width"/>
+    <meta name="format-detection" content="telephone=no"/>
+    
+    <script>
+      window.queueIt = {
+        newRelicHeader: false,
+        queueItEnabled: true,
+        isCheckoutOrOrderConfirmation: false
+      };
+    </script>
+
+    
+
+    
+    
+        <script id="schemaorg_website" type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "WebSite",
+                "name": "Dyson United States",
+                "url": "https://www.dyson.com/error/404",
+                "potentialAction": {
+                    "query-input": "required name=search_term_string",
+                    "@type": "SearchAction",
+                    "target":{
+                        "@type": "EntryPoint",
+                        "urlTemplate":"https://www.dyson.com/search-results?query={search_term_string}&searchText={search_term_string}"
+                    }
+                }
+            }
+        </script>
+    
+
+
+
+    
+    <link rel="stylesheet" type="text/css" href="https://assets.sitescdn.net/answers-search-bar/v1.6/answers.css"/>
+    <script src="https://assets.sitescdn.net/answers-search-bar/v1.6/answerstemplates.compiled.min.js" defer></script>
+    <script>
+        function initAnswers() {
+            const searchFormNav = document.querySelector('.search-form-nav');
+            const searchFormOverlay = document.querySelector('.search-form-overlay');
+            const searchFormPage = document.querySelector('.search-form-page');
+            const searchPageOverlay = document.querySelector('.search-page-overlay');
+            const resultsPageUrl = window.location.origin + '/search-results';
+            if (typeof ANSWERS !== "undefined") {
+                new Promise((resolve, reject) => {
+                    ANSWERS.init({
+                        apiKey: "08908b0f85ed26aa8466d489d501bbd7",
+                        experienceKey: "answers-help-site",
+                        experienceVersion: "PRODUCTION",
+                        locale: "en",
+                        businessId: "1520577",
+                        templateBundle: TemplateBundle.default,
+                        onReady: function () {
+                            resolve("YEXT initialization success");
+                            if (searchFormNav) {
+                                const placeholderNav = searchFormNav.getAttribute('data-yext-placeholder');
+                                ANSWERS.addComponent("SearchBar", {
+                                    container: ".search-form-nav",
+                                    name: "search-bar-nav",
+                                    redirectUrl: resultsPageUrl,
+                                    placeholderText: placeholderNav,
+                                    customIconUrl: "/content/dam/dyson/search-icon-black.png",
+                                    autocomplete: {
+                                        disabled: true
+                                    },
+                                });
+                            }
+                            if (searchFormOverlay) {
+                                const placeholderOverlay = searchFormOverlay.getAttribute('data-yext-placeholder');
+                                ANSWERS.addComponent("SearchBar", {
+                                    container: ".search-form-overlay",
+                                    name: "search-bar-overlay",
+                                    redirectUrl: resultsPageUrl,
+                                    placeholderText: placeholderOverlay,
+                                    customIconUrl: "/content/dam/dyson/search-icon-white.png",
+                                    autocomplete: {
+                                        disabled: true
+                                    },
+                                });
+                            }
+                            if (searchFormPage) {
+                                const placeholderPage = searchFormPage.getAttribute('data-yext-placeholder');
+                                const iconUrl = document.querySelector('.search-authored').classList.contains('search-theme--dark') ? "/content/dam/dyson/search-icon-white.png" : "/content/dam/dyson/search-icon-black.png";
+                                ANSWERS.addComponent("SearchBar", {
+                                    container: ".search-form-page",
+                                    name: "search-bar-page",
+                                    redirectUrl: resultsPageUrl,
+                                    placeholderText: placeholderPage,
+                                    customIconUrl: iconUrl,
+                                    autocomplete: {
+                                        disabled: true
+                                    },
+                                });
+                            }
+                            if (searchPageOverlay) {
+                                const placeholderPage = searchPageOverlay.getAttribute('data-yext-placeholder');
+                                ANSWERS.addComponent("SearchBar", {
+                                    container: ".search-page-overlay",
+                                    name: "search-bar-pageOverlay",
+                                    redirectUrl: resultsPageUrl,
+                                    placeholderText: placeholderPage,
+                                    customIconUrl: "/content/dam/dyson/search-icon-white.png",
+                                    autocomplete: {
+                                        disabled: true
+                                    },
+                                });
+                            }
+                        },
+                        onError: function (error) {
+                            reject(error);
+                        }
+                    });
+                })
+                .then((msg) => {
+                    console.log(msg);
+                })
+                .catch((error) => {
+                    console.error("YEXT initialization failed ", error);
+                });
+            }
+        }
+    </script>
+    <script src="https://assets.sitescdn.net/answers-search-bar/v1.6/answers.min.js" onload="initAnswers()" defer></script>
+
+
+
+        
+
+
+
+
+    
+<script src="/etc.clientlibs/dyson/clientlibs/clientlib-all.min.5ab261fbbce0c1c253030bb324288f17.js"></script>
+
+
+
+
+
+
+    
+<script src="/etc.clientlibs/dyson/clientlibs/clientlib-common.min.15ebaa6d9b99e054416fbf85928b5574.js"></script>
+
+
+
+        
+
+
+
+
+    
+    
+<script src="/etc.clientlibs/dyson/clientlibs/clientlib-newrelic/newrelic-prod.min.4a262a8ef7552ba5ca32c06e58c5a0d3.js"></script>
+
+
+
+
+
+
+
+    
+<link rel="stylesheet" href="/etc.clientlibs/dyson/clientlibs/clientlib-head.min.2d378c8402e001354a8f677693515b72.css" type="text/css">
+
+
+
+
+    
+<script src="/etc.clientlibs/dyson/clientlibs/clientlib-head.min.c24da7d24de4ce6e196c4e988bbfa789.js"></script>
+
+
+
+
+
+
+    
+    <script type="text/javascript">
+        var dataLayer = {
+            "pageInfo": {
+                "pageType": "\/apps\/dyson\/templates\/page\u002Derror",
+                "pagePath": "/content/dyson/us/en/error/404",
+                "pageTitle": "404 | dyson",
+                "pageCountryCode":"us",
+                "pageLanguage":"en"
+            },
+            "oneTrustScriptEnabled": "true"
+        }
+    </script>
+
+
+
+
+    <script type="text/javascript" src="//assets.adobedtm.com/launch-EN6a77adac33bc4e988bfc30e73ee77a5f.min.js"></script>
+    
+        
+  
+    <link rel="preload" href="https://dyson-h.assetsadobe2.com/is/content/content/dam/dyson/services-and-support/chat1/Icons/purple_bubble_overlay.svg" as="image"/>
+    <style>
+        body #embeddedMessagingConversationButton{
+                --eswHeaderColor: transparent !important;
+                --eswSecondaryColor: transparent !important;
+                box-shadow: none;
+                background-image: url(https://dyson-h.assetsadobe2.com/is/content/content/dam/chat/Icons/v2_purple_bot.svg);
+                width: 65px;
+                height: 65px;
+                border-radius: 0;
+                box-shadow: 0;
+                bottom: 28px;
+                right: 33px;
+            }
+        body .embeddedMessagingConversationButton{background-color:transparent !important;}
+        body #embeddedMessagingIconContainer{
+            display:none;
+        }
+        .embeddedMessagingConversationButton:hover {
+        	  background-image: url(https://dyson-h.assetsadobe2.com/is/content/content/dam/dyson/services-and-support/chat1/Icons/purple_bubble_overlay.svg) !important;
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: unset !important;
+        }
+        .embeddedMessagingConversationButton:focus {
+          outline: 5px auto -webkit-focus-ring-color !important;
+          outline-offset: -2px;
+        }
+        .embeddedMessagingMinimizedNotification{
+          z-index:99;
+        }
+        body.has-sticky-atb .embeddedMessagingConversationButton {
+            bottom: 15% !important;
+        }
+        @media only screen and (min-width: 20em) and (max-width: 47.9375em){
+          .embedded-messaging > .embeddedMessagingFrame[class~="isMaximized"] {
+            bottom: 80px;
+          }
+        }
+        @media (max-height: 41.25em) {
+          #embeddedMessagingFrame {
+            height: 100vh;
+            max-height: calc(100vh - 13em);
+          }
+        }
+        .embeddedMessagingFrame.isMaximized {
+          z-index: 2147483647 !important
+        }
+        #hero-iframe-container div.hero-launcher-avatar-container {
+          bottom: 88px !important;
+          right: 22px !important;
+        }
+        #hero-iframe-container div.hero-launcher-push-container {
+          bottom: 160px !important;
+          right: 22px !important;
+        }
+        @media only screen and (min-width: 768px) {
+          #hero-iframe-container div.hero-plugin-container {
+            right: 105px !important;
+          }
+
+          body.has-sticky-atb .embeddedMessagingConversationButton {
+            bottom: 13%;
+          }
+        }
+         @media only screen and (max-width: 768px) {
+           body.has-sticky-atb .embeddedMessagingConversationButton {
+            bottom: 12%;
+          }
+        }
+    </style>
+    <script type='text/javascript'>
+      function getSfSiteIndex() {
+        const sfSiteIndex = "https://dysoncrm.my.site.com";
+        return (sfSiteIndex.substr(-1) === "/" ? sfSiteIndex : sfSiteIndex + "/");
+      }
+
+      function getSfLanguage (inputLang, paramValueList) {
+        paramValueList = paramValueList.replace(/[\[\]]/g, "").split(",");
+        const check = paramValueList.find((value) => value.includes(inputLang));
+        return check ? check.split(":")[1] : inputLang;
+      }
+
+      function initSFEmbeddedMessaging() {
+        try {
+              const inputLang = "en_us";
+              const enableWebChatLanguage = "";
+              const webChatBotLanguage = "";
+
+              const settingsLang = getSfLanguage(inputLang, "[da_dk:da, fi_fi:fi, nb_no:no, sv_se:sv, fr_fr:fr, de_de:de, it_it:it, es_es:es, en_ie:en\u002DUS]");
+              const botLang = getSfLanguage(inputLang, "[de_at:de, fr_be:fr, nl_be:nl_nl, da_dk:da, fi_fi:pt_br, nb_no:ru, sv_se:sv, fr_fr:fr, de_de:de, it_it:it, es_es:es, en_ie:en_us, fr_ch:fr, de_ch:de, it_ch:it, en_ca:en_gb, fr_ca:fr]");
+              const marketLang = getSfLanguage(inputLang, "[de_at:Austria, fr_be:Belgium, nl_be:Belgium, da_dk:Denmark, fi_fi:Finland, nb_no:Norway, pt_pt:Portugal, sv_se:Sweden, fr_fr:France, de_de:Germany, it_it:Italy, nl_nl:Netherlands, es_es:Spain, en_gb:United Kingdom, en_ie:Ireland, fr_ch:Switzerland, de_ch:Switzerland, it_ch:Switzerland, en_us:United States, en_ca:Canada, fr_ca:Canada]");
+
+              let minimizeSetting = window.innerWidth >= 320 && window.innerWidth <= 767 ? true : false
+              embeddedservice_bootstrap.settings.shouldMinimizeWindowOnNewTab = minimizeSetting;
+
+              embeddedservice_bootstrap.settings.language = settingsLang;
+              window.addEventListener("onEmbeddedMessagingReady", () => { 
+                embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields( { 
+                  "Bot_Language" : enableWebChatLanguage ? webChatBotLanguage : botLang,
+                  "Market" : marketLang
+                } );
+              });
+              embeddedservice_bootstrap.init(
+                    "00D1t000000p6uk",
+                    "WebChat_UnitedStates_English",
+                    getSfSiteIndex() + "ESWWebChatUnitedStatesE1705478349583",
+                    {
+                        scrt2URL: "https://dysoncrm.my.salesforce-scrt.com"
+                    }
+                );
+          } catch (err) {
+              console.error('Error loading Embedded Messaging: ', err);
+          }
+      };
+
+      function loadSFChatScript(SFChatScriptURL, authStatus){
+        var script = document.createElement('script');
+        script.onload = function () {
+          initSFEmbeddedMessaging();
+        };
+        script.src = SFChatScriptURL;
+        document.head.appendChild(script);
+      }
+
+      function handleChangeAltText() {
+        const iconAltText = "Want help? Let\x27s chat";
+        window.addEventListener("onEmbeddedMessagingReady", () => {
+          const interval = setInterval(() => {
+            if(document.getElementById("embeddedMessagingConversationButton")) {
+              const btnProp = document.getElementById("embeddedMessagingConversationButton")
+              btnProp.setAttribute("title", iconAltText);
+              btnProp.setAttribute("aria-label", iconAltText);
+              clearInterval(interval);
+            }
+          },100);
+          // To reposition the chat icon above the sticky payment button section in the new basket page
+          if(document.querySelector('.basket-main-v2') && window.innerWidth <= 1024) {
+            const intervalSticky = setInterval(() => {
+              const basketStickyContainerHeight = document.querySelector('.basket-aside__payment-container').offsetHeight;
+              if(basketStickyContainerHeight !== 0) {
+                const basketStickyButtons = basketStickyContainerHeight + 5;
+                const basketChatButton = document.getElementById("embeddedMessagingConversationButton");
+                basketChatButton.style.bottom = basketStickyButtons+"px";
+                basketChatButton.style.right = "15px";
+                clearInterval(intervalSticky);
+              }
+            },500)
+			    }
+        })
+      }
+      function openChatFallback() {
+			  const chatBtn = document.getElementById("embeddedMessagingConversationButton");
+			  if (chatBtn) {
+			    chatBtn.click();
+			  } else {
+			    // Wait until the chat button loads
+			    const interval = setInterval(() => {
+			      const btn = document.getElementById("embeddedMessagingConversationButton");
+			      if (btn) {
+			        btn.click();
+			        clearInterval(interval);
+			      }
+			    }, 300);
+			  }
+			}
+      var SFChat = {
+        init: function(){
+          const SFChatScriptURL = getSfSiteIndex() + "ESWWebChatUnitedStatesE1705478349583" + "/assets/js/bootstrap.min.js";
+          loadSFChatScript(SFChatScriptURL, false);
+          handleChangeAltText();
+        },
+		    openChat: function() {
+		      openChatFallback();
+		    }   
+      }
+      SFChat.init();
+    </script>
+  
+
+    
+
+
+
+
+    
+        
+
+    
+        
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script async type="text/javascript" src="https://apps.bazaarvoice.com/deployments/dysonglobal/main_site/production/en_US/bv.js"></script>
+
+
+
+
+    
+    <script type="text/javascript">
+        _affirm_config = {
+          public_api_key:  "P1FHP4C9V3ZGSE0Z",
+          script:          "https://cdn1.affirm.com/js/v2/affirm.js"
+        };
+        (function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document.createElement(f),n=document.getElementsByTagName(f)[0],k=function(a,b,c){return function(){a[b]._.push([c,arguments])}};c[e]=k(c,e,"set");d=c[e];c[a]={};c[a]._=[];d._=[];c[a][b]=k(c,a,b);a=0;for(b="set add save post open empty reset on off trigger ready setProduct".split(" ");a<b.length;a++)d[b[a]]=k(c,e,b[a]);a=0;for(b=["get","token","url","items"];a<b.length;a++)d[b[a]]=function(){};h.async=!0;h.src=g[f];n.parentNode.insertBefore(h,n);delete g[f];d(g);l[m]=c})(window,_affirm_config,"affirm","checkout","ui","script","ready");
+    </script>
+    
+
+
+
+
+
+    
+        
+                
+                        
+                            <script type="text/javascript">var user ={"uid":null,"name":null,"defaultAddress":null,"titleCode":null,"title":null,"firstName":null,"lastName":null,"currency":null,"language":null,"displayUid":null,"preferredName":null,"email":null,"phone":null,"byEmail":null,"byPhone":null,"byPost":null,"bySMS":null,"bySupport":null,"keepMeUpdated":null,"needMachineSupport":null,"defaultContactAddress":null,"password":null,"credentialID":"anonymous","sapConsumerID":null,"status":"success","reason":null,"message":null,"machines":null,"hashedEmail":null,"locale":null,"optIn":null}</script>
+                    
+            
+
+        
+                <script type="text/javascript">
+                    
+                    
+                </script>
+                
+            
+    
+
+        
+        
+        
+    </head>
+    <body data-esiurl="https://api.dyson.com/apiman-gateway/dyson/esi/1.0/us/user/?lang=en" data-validate-basket="https://api.dyson.com/apiman-gateway/dyson/cart/1.0/us/users/anonymous/carts/{{cartGuid}}?fields=VALIDATE&lang=en" data-decibel-enabled="false" data-spinner-url="https://dyson-h.assetsadobe2.com/is/content/content/dam/dyson/campaigns/plp-2024/preloader.gif" data-spinner-text-loading="The page is loading" data-spinner-text-loaded="The page is loaded" data-global-accessibility-error-text="Error:">
+          <div class="centralizedpopup js-centralized-overlay-component" id="js-centralized-popup" aria-hidden="true" hidden>
+  <div class="centralizedpopup__overlay" id="js-centralizedpopup-overlay">
+    <div class="centralizedpopup__container" id="js-centralizedpopup-container" role="dialog" aria-modal="true" tabindex="-1" data-analytics-component="pop up navigation-section">
+      <button class="centralizedpopup__close js-centralized-popup-close" id="js-centralizedpopup-close-overlay" aria-label="Close overlay" data-analytics-action-name="button~close" data-analytics-component="pop up navigation-section" data-analytics-action-title="pop up navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M14.5 2.64969L13.3544 1.5L8 6.85031L2.64969 1.5L1.5 2.64969L6.85438 8L1.5 13.3503L2.64969 14.5L8 9.14969L13.3544 14.5L14.5 13.3503L9.14969 8L14.5 2.64969Z" fill="#333333"/>
+        </svg>
+      </button>
+      <div class="centralizedpopup__content" aria-live="polite" aria-labelledby="js-centralizedpopup-title js-centralizedpopup-desc" id="js-centralized-popup-content" data-accessibility-alert="Please access the popup content using arrow keys">
+        <!-- dynamic content goes here -->
+      </div>
+    </div>
+  </div>
+</div>
+<script aria-hidden="true" class="js-line-always-on-prospect-modal-template" type="text/x-handlebars-template" data-replacement-for="publish">
+<div class="js-line-always-on-prospect line-always-on-prospect" data-analytics-component="line always on prospect" data-analytics-action-title="always on prospect">
+    
+</div></script>
+
+          <div class="js-add-to-basket-notification add-to-basket-notification">
+</div>
+<script id="js-add-to-basket-notification-pop-up-template" type="text/x-handlebars-template"><div hidden class="js-add-to-basket-notification add-to-basket-notification" id="js-add-to-basket-notification-pop-up-component">
+     <span class="sr-only js-overlay-accessibility-text" aria-live="polite"></span>
+     {{#unless res.hasThresholdError}}
+     <div class="centralizedpopup__title" id="js-centralizedpopup-title">
+          <div class="add-to-basket-notification__title">
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7227 4.5L8.5201 15.7513L4.27733 11.4946L2.25 13.5289L8.51313 19.8269L21.75 6.5343L19.7227 4.5Z" fill="#65A01B"/>
+               </svg>
+               <div class="add-to-basket-notification__title-text">Added to your basket </div>
+          </div>
+     </div>
+     {{/unless}}
+     {{#isEquals res.hasThresholdError true}}
+         <div class="centralizedpopup__title js-error-title error-title" id="js-centralizedpopup-title" tabindex="-1">
+			<div class="add-to-basket-notification__title-text"> 
+                    Error 
+               </div>
+         </div>
+      {{/isEquals}}
+    
+
+     <div class="centralizedpopup__description add-to-basket-notification" id="js-centralizedpopup-desc" data-modal-type="add-to-basket-notification">
+          {{#unless res.hasThresholdError}}
+          <div class="add-to-basket-notification__wrapper">
+               {{#each res.productData}}
+               <div class="add-to-basket-notification__outer col-xs-12 col-md-12 col-lg-12">
+                    <div class="add-to-basket-notification add-to-basket-notification__image-wrapper hidden-sm-down js-enable-href" data-analytics-nav-name="FG products ">
+                         
+                         {{#notEqual this.product.sapDivision 'SERVICES'}}
+                         {{#if ../this.product.primaryImageUrl}}
+                         
+  <div class="responsive-image js-responsive-image-container ">
+    <img id="line-item-image-{{../this.product.code}}-{{@index}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{{../this.product.primaryImageUrl}}?$responsive$&amp;fmt=png-alpha" data-breakpoints="767:cropPathE=mobile&amp;fit=stretch,1&amp;wid=220|1024:cropPathE=tablet&amp;fit=stretch,1&amp;wid=262|1440:cropPathE=desktop&amp;fit=stretch,1&amp;wid=288" class="responsive-image__image js-responsive-image fluidimage  " alt aria-hidden="true"/>
+    
+    
+    
+    
+  </div>
+
+                         {{else}}
+                         
+    <img class=" helper " alt src="https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/fallback-images/en/default_en.png" aria-hidden="true"/>
+    
+
+                         {{/if}}
+                         {{/notEqual}}
+                         {{#isEquals this.serviceType 'DYSON_TOTAL_RESTORE'}}
+                         {{#if ../this.product.primaryImageUrl}}
+                         
+  <div class="responsive-image js-responsive-image-container ">
+    <img id="line-item-image-{{../this.product.code}}-{{@index}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{{../this.product.primaryImageUrl}}?$responsive$&amp;fmt=png-alpha" data-breakpoints="767:cropPathE=mobile&amp;fit=stretch,1&amp;wid=220|1024:cropPathE=tablet&amp;fit=stretch,1&amp;wid=262|1440:cropPathE=desktop&amp;fit=stretch,1&amp;wid=288" class="responsive-image__image js-responsive-image fluidimage  " alt aria-hidden="true"/>
+    
+    
+    
+    
+  </div>
+
+                         {{else}}
+                         
+    <img class=" helper " alt src="https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/fallback-images/en/default_en.png" aria-hidden="true"/>
+    
+
+                         {{/if}}
+                         {{/isEquals}}
+                    </div>
+                    <!-- Adding mobile image as per new design -->
+                    
+                    <div class="add-to-basket-notification__col-2 add-to-basket-notification__image-wrapper hidden-md-up">
+                    <div class="add-to-basket-notification__image js-enable-href " data-analytics-nav-name="FG products ">
+                         {{#notEqual this.product.sapDivision 'SERVICES'}}
+                         {{#if ../this.product.primaryImageUrl}}
+                         
+  <div class="responsive-image js-responsive-image-container ">
+    <img id="basket-card-{{../this.product.code}}-{{@index}}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{{../this.product.primaryImageUrl}}?$responsive$&amp;fmt=png-alpha" data-breakpoints="767:cropPathE=mobile&amp;fit=stretch,1&amp;wid=220|1024:cropPathE=tablet&amp;fit=stretch,1&amp;wid=262|1440:cropPathE=desktop&amp;fit=stretch,1&amp;wid=288" class="responsive-image__image js-responsive-image fluidimage  " alt aria-hidden="false"/>
+    
+    
+    
+    
+  </div>
+
+                         {{else}}
+                         
+    <img class=" helper " alt src="https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/fallback-images/en/default_en.png" aria-hidden="false"/>
+    
+
+                         {{/if}}
+                         {{/notEqual}}
+                         {{#isEquals this.serviceType 'DYSON_TOTAL_RESTORE'}}
+                     

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="noindex,nofollow,noarchive,noimageindex" name="robots">
+    <meta content="text/html; charset=utf-8" httpequiv="Content-Type">
+    <meta content="IE=edge,chrome=1" httpequiv="X-UA-Compatible">
+    <meta content="no" httpequiv="imagetoolbar">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
+    <meta content="#ffffff" name="theme-color">
+    <meta content="yes" name="mobile-web-app-capable">
+    <title>Women's Luxury Fashion &amp; Designer Shopping | Mytheresa</title>
+    <link href="https://www.mytheresa.com/favicon.ico" rel="shortcut icon">
+    <link href="https://www.mytheresa.com/failover/failstyles.css" rel="stylesheet">
+    <script>
+      window.anData = []
+      window.isBotPage = true
+    </script>
+    <script type="text/javascript" src="https://www.mytheresa.com/shopm/js/anLib.js"></script>
+    <script type="text/javascript">
+      async function hashEmail(email) {
+        const encoder = new TextEncoder()
+        const data = encoder.encode(email.toLowerCase().trim())
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+        const hashArray = Array.from(new Uint8Array(hashBuffer))
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+
+        return hashHex
+      }
+
+      function getStoreInt(code) {
+        const stores = {
+          "at": 16,
+          "au": 13,
+          "ca": 21,
+          "ch": 7,
+          "cn": 17,
+          "de": 1,
+          "eu": 3,
+          "euro": 4,
+          "fr": 10,
+          "gb": 2,
+          "hk": 12,
+          "int": 6,
+          "it": 9,
+          "jp": 8,
+          "kr": 18,
+          "me": 11,
+          "mo": 20,
+          "nl": 15,
+          "sg": 14,
+          "tw": 19,
+          "us": 5
+        }
+
+        return stores[code] || 0
+      }
+
+      function getCookie(name) {
+        const value = `; ${document.cookie}`
+
+        if (value) {
+          const parts = value.split(`; ${name}=`)
+
+          if (parts.length === 2) {
+            const data = parts.pop().split(';').shift()
+
+            return decodeURI(data)
+          }
+        }
+        return 'na'
+      }
+
+      function getTextsFor(lang) {
+        const texts = {
+          'en': {
+            'headline': 'Something went wrong',
+            'desc': 'Please try again in a moment. Report the issue by clicking the button below.',
+            'report': 'REPORT ISSUE',
+            'thankYou': 'Thank you!'
+          },
+          'de': {
+            'headline': 'Etwas ist schiefgelaufen',
+            'desc': 'Bitte versuchen Sie es in Kürze erneut. Um den Fehler zu melden, klicken Sie bitte auf den untenstehenden Button.',
+            'report': 'FEHLER MELDEN',
+            'thankYou': 'Vielen Dank!'
+          },
+          'fr': {
+            'headline': 'Une erreur est survenue',
+            'desc': 'Veuillez réessayer dans quelques instants. Signalez le problème en cliquant sur le bouton ci-dessous',
+            'report': 'SIGNALER UN PROBLÈME',
+            'thankYou': 'Merci!'
+          },
+          'it': {
+            'headline': 'Si è verificato un errore',
+            'desc': 'Ti invitiamo a riprovare tra qualche minuto. Puoi segnalare il problema cliccando qui sotto',
+            'report': 'SEGNALA UN PROBLEMA',
+            'thankYou': 'Grazie!'
+          },
+          'es': {
+            'headline': 'Algo salió mal',
+            'desc': 'Por favor, inténtalo de nuevo en unos momentos. Puedes informar del error haciendo clic en el siguiente botón.',
+            'report': 'INFORMAR DE UN ERROR',
+            'thankYou': 'Gracias!'
+          },
+          'zh': {
+            'headline': '网页加载出现问题',
+            'desc': '请稍候再试。如需帮助，请点击下方按钮反馈问题。',
+            'report': '反馈问题',
+            'thankYou': '感谢'
+          },
+          'ko': {
+            'headline': '예기치 못한 오류가 발생했습니다',
+            'desc': '잠시 후 다시 시도해 주시기를 바랍니다. 도움이 필요하신 경우, 아래 버튼을 클릭해 문제를 신고하실 수 있습니다.',
+            'report': '문제 신고하기',
+            'thankYou': '감사합니다'
+          },
+          'ar': {
+            'headline': 'لقد حدث خطأ ما',
+            'desc': 'يرجى المحاولة مرة أخرى بعد قليل. أبلغوا عن المشكلة عبر النقر على الزر أدناه.',
+            'report': 'الإبلاغ عن المشكلة',
+            'thankYou': 'شكراً لكم'
+          }
+        }
+
+        return texts[lang] || texts.en
+      }
+
+      function placeTexts() {
+        const isoLang = navigator.language
+        const langCode = isoLang.split('-')[0]
+        const texts = getTextsFor(langCode)
+        const headline = texts.headline
+        const msg = texts.desc
+        const cta = texts.report
+        const headlineContainer = '.somethingwrong__wrapper__title'
+        const msgContainer = '.somethingwrong__wrapper__text'
+        const ctaContainer = '.button__text'
+
+        console.log(`setting texts for ${langCode}`)
+
+        document.querySelector(headlineContainer).innerText = headline
+        document.querySelector(msgContainer).innerText = msg
+        document.querySelector(ctaContainer).innerText = cta
+      }
+
+      function getReference() {
+        const refNumber = document.querySelector('#refid')
+        const refError = refNumber ? refNumber.innerText.split(': ')[1] : ''
+
+        return refError
+      }
+
+      function sendEvent(props) {
+        const department = getCookie('mt_department')
+        const polymere = getCookie('mt_polymere')
+        const geo = getCookie('mt_geo')
+        const view = getCookie('mt_view')
+        const country = view.split('|')[1] || 'na'
+        const storeCode = view.split('|')[0].split('-')[1] || 'na'
+        const store = getStoreInt(storeCode)
+        const lang = view.split('-')[0] || navigator.language.split('-')[0] || 'na'
+        const deviceType = (navigator.userAgentData.mobile) ? 'mobile' : 'desktop'
+        const environment = (window.location.host.includes('www')) ? 'prod' : 'dev'
+        const refError = getReference()
+
+        const trackingData = {
+          object: 'page',
+          action: 'view',
+          device: {
+            type: deviceType
+          },
+          platform: {
+            environment: environment,
+            store: store,
+            storeView: view,
+            version: 'na'
+          },
+          user: {
+            polymere: polymere,
+          },
+          page: {
+            country: country,
+            currencyCode: 'na',
+            department: department,
+            errorId: 'bot_management',
+            errorMsg: 'User targeted by bot management on www - bot detections rules',
+            language: lang,
+            languageCountry: lang,
+            name: 'branded-custom-deny-failover',
+            sitemap: 'branded-custom-deny',
+            type: 'error',
+          }
+        }
+
+        const errorData = {
+          object: 'custom_deny',
+          action: 'tracking',
+          denyForm: {
+            type: 'load',
+            source: 'www - bot detections rules',
+            refError: refError,
+            reason: 'bot_management'
+          },
+          url: {
+            host: window.location.href
+          }
+        }
+
+        const reportData = {
+          object: 'custom_deny',
+          action: 'tracking',
+          denyForm: {
+            type: 'submit',
+            source: 'www - bot detections rules',
+            refError: refError,
+            reason: 'bot_management',
+            email: props.hashedEmail
+          },
+          url: {
+            host: window.location.hostname
+          }
+        }
+
+        const data = (props.type === 'error') ? errorData : (props.type === 'report') ? reportData : trackingData
+        anData.push(data)
+      }
+
+      function redirectToHomepage() {
+        window.location.href = 'https://www.mytheresa.com/'
+      }
+
+      async function submitReport() {
+        const button = document.getElementsByClassName('button')[0]
+        const buttonText = document.getElementsByClassName('button__text')[0]
+        const email = document.getElementById('userEmail').value.trim()
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        if (!emailRegex.test(email)) return
+
+        const hashedEmail = await hashEmail(email)
+
+        sendEvent({ hashedEmail, type: 'report' })
+
+        const isoLang = navigator.language
+        const langCode = isoLang.split('-')[0]
+        const succeedText = getTextsFor(langCode).thankYou
+
+        button.classList.add('button--disabled')
+        buttonText.innerText = succeedText
+
+        setTimeout(() => {
+          redirectToHomepage()
+        }, 1000);
+      }
+
+      function initProcess() {
+        placeTexts()
+        sendEvent({ type: 'tracking' })
+        sendEvent({ type: 'error' })
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="somethingwrong">
+      <div class="somethingwrong__wrapper">
+        <div class="somethingwrong__wrapper__logo"></div>
+        <div class="somethingwrong__wrapper__title">...</div>
+        <div class="somethingwrong__wrapper__text">...</div>
+        <div class="somethingwrong__wrapper__input">
+          <input type="email" class="input"" id="userEmail" placeholder="your@email.com" required />
+          <div class="somethingwrong__wrapper__form__message" id="formMessage"></div>
+        </div>
+        <div class="somethingwrong__wrapper__cta">
+          <div class="button" onclick="submitReport()">
+            <div class="button__text">...</div>
+          </div>
+        </div>
+        <div id="refid" class="somethingwrong__wrapper__text">
+          Reference BOT: 0.17901002.1792444079.190e48c0
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        console.log('ready')
+        initProcess()
+      })
+    </script>
+  </body>
+</html>

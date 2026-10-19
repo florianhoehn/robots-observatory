@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+<style>
+html,body,#app,.main{margin:0;padding:0;width:100%;height:100%;}
+#app{display:flex;align-items:center;justify-content:center;}
+#app .main{position:relative;background-repeat:no-repeat;background-position:center;}
+.ip-info{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  background:transparent;
+  padding:0;
+  color:#666;
+  font-weight:normal;
+  text-align:center;
+  white-space: nowrap;
+  font-family: Arial, sans-serif;
+}
+@media(max-width:767px){
+  #app{background:#fff url('https://gogame-prod.skaov.com/temps/images/2025/07/10/686fbb6a64827108086934_b53651e1.jpg') no-repeat center top;background-size:100%;}
+  #app .main{background:url('https://gogame-prod.skaov.com/temps/images/2025/07/10/686fb88702cc0106400883_19df7aa1.png') no-repeat center;background-size:85% auto;}
+  .ip-info{
+    top:80%;
+    font-size:14px;
+    width:90%;
+  }
+}
+@media(min-width:768px){
+  #app{background:#f6f7fa;}
+  #app .main{background:url('https://gogame-prod.skaov.com/temps/images/2025/07/11/6870a8d5022d3265020453_c69e4a6a.png') no-repeat center;background-size:70% auto;}
+  .ip-info{
+    top:65%;
+    font-size:14px;
+    width:2.5%;
+  }
+}
+</style>
+</head>
+<body>
+<div id="app">
+<main class="main">
+<div class="ip-info" id="ip-info">Loading...</div>
+</main>
+</div>
+<script>
+fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
+    document.getElementById('ip-info').textContent = (d.ip||'N/A') + ' - ' + (d.country_name||d.country||'Unknown location');
+}).catch(()=>{
+    document.getElementById('ip-info').textContent='IP information not available';
+});
+</script>
+</body>
+</html>

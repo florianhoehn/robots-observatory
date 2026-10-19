@@ -1,0 +1,46 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /media/
+# Public blog media must stay crawlable for image previews, Discover, and JSON-LD images.
+Allow: /media/blog/
+Allow: /media/blog/authors/
+Allow: /media/static_resources/
+Disallow: /media/user_files/
+Disallow: /media/canvas_pdfs/
+Disallow: /media/canvas_docx/
+Disallow: /media/canvas_pptx/
+# Let crawlers fetch the exact /chat shell so they can read its noindex header.
+# Tokenized private chats stay blocked without matching /chatgpt-atlas.
+Disallow: /chat/
+# Block tracking parameters to prevent duplicate crawling
+# Disallow: /*?utm_
+# Disallow: /*&utm_
+# Disallow: /*?from_blog=
+# Disallow: /*&from_blog=
+
+# AI Crawlers
+User-agent: GPTBot
+Allow: /blog/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /blog/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: anthropic-ai
+Allow: /blog/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /blog/
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://gapgpt.app/sitemap.xml
+Sitemap: https://gapgpt.app/news-sitemap.xml

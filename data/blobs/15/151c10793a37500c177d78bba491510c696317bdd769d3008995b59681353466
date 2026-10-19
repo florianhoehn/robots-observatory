@@ -1,0 +1,215 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta content="width=device-width,initial-scale=1" name="viewport"><title>1GO.PLUS</title><link id="favicon_ios" href="/my/static/turntable/192.png" rel="apple-touch-icon"><link rel="Bookmark" href="favicon.ico"><meta property="og:image" content="/my/static/turntable/192.png"><link rel="stylesheet" href="/my/static/turntable/main.css"><link rel="icon" href="data:image/png;base64,iVBORw0KGgo="><meta property="og:url" content="https://1goplus.com/"><meta property="og:locale" content="en"><meta name="og:site_name" property="og:site_name" content="1GO.PLUS"><meta name="og:type" content="article"><meta name="og:title" content="1GO.PLUS - Instant Withdrawal | Provably Fair | 24/7 Customer Support"><meta name="og:description" content="Hunting for a secure, fair, and fast-withdrawal App that offers abundant rewards and 24/7 customer support? Look no further—join us now and dive into the ultimate gaming adventure!🚀"><meta name="og:url" content="https://1goplus.com/"><meta name="og:image" content="https://1goplus.com/og-1go.webp"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="1GO.PLUS - Instant Withdrawal | Provably Fair | 24/7 Customer Support"><meta name="twitter:description" content="Hunting for a secure, fair, and fast-withdrawal App that offers abundant rewards and 24/7 customer support? Look no further—join us now and dive into the ultimate gaming adventure!🚀"><meta name="twitter:url" content="https://1goplus.com/"><meta name="twitter:image" content="https://1goplus.com/og-1go.webp"><meta name="pinterest:url" content="https://1goplus.com/"><meta name="pinterest:description" content="Hunting for a secure, fair, and fast-withdrawal App that offers abundant rewards and 24/7 customer support? Look no further—join us now and dive into the ultimate gaming adventure!🚀"><meta name="pinterest:image" property="pinterest:image" content="https://1goplus.com/og-1go.webp"></head><body><div id="img_container" class="container" onclick="window.download()"><div class="top_header"><img src="/my/static/turntable/head_top.jpg" class="top_ic"></div><div class="btn_box"><div class="down_btn_box"><img src="/my/static/turntable/down_btn.png" class="btn_ic" id="down_btn_ic"> <img src="/my/static/turntable/down_btn_n.png" class="btn_ic" id="down_btn_none"> <span id="download-btn-text" class="down_load_text"></span> <img src="/my/static/turntable/finger.png" class="finger_ic" id="finger_ic"><div id="progress-btn"></div></div><img src="/my/static/turntable/banner_1.jpg"></div><div><img src="/my/static/turntable/banner_2.jpg"></div></div><script>
+(function() {
+ var a=(new URL(document.location)).searchParams;
+ var getCookie=function(n){var p=("; "+document.cookie).split("; "+n+"=");if(p.length===2)return p.pop().split(";").shift()};
+ var encReferrer=function(r){return encodeURIComponent(r).split("").map(function(c){return c.charCodeAt(0).toString(16).padStart(2,"0")}).join("")};
+ var decReferrer=function(r){try{var o="";for(var i=0;i+1<r.length;i+=2){var n=parseInt(r.slice(i,i+2),16);if(isNaN(n))return"";o+=String.fromCharCode(n)}return decodeURIComponent(o.replace(/\+/g,"%20"))}catch(e){return""}};
+ var qs=function(r){try{var d=decReferrer(r),m={},a,j,k,v;if(!d)return null;a=d.split("&");for(var i=0;i<a.length;i++){j=a[i].indexOf("=");k=j<0?a[i]:a[i].slice(0,j);v=j<0?"":a[i].slice(j+1);if(k)m[k]=v}return{raw:d,map:m}}catch(e){return null}};
+ var val=function(q,k){return q&&q.map?q.map[k]||"":""};
+ var hasJumpFields=function(q){var keys=["fbc","fbp","campaign","campaignId","adset","adsetId","ad","adId"];for(var i=0;i<keys.length;i++){if(val(q,keys[i]))return true}return false};
+ var randomNonce=function(){var chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",out="",bytes;if(window.crypto&&window.crypto.getRandomValues){bytes=new Uint8Array(9);window.crypto.getRandomValues(bytes);for(var i=0;i<bytes.length;i++)out+=chars[bytes[i]%chars.length];return out}for(var j=0;j<9;j++)out+=chars[Math.floor(Math.random()*chars.length)];return out};
+ var withNonce=function(r){var q=qs(r),a,parts=[],j,k;if(!q)return r;a=q.raw.split("&");for(var i=0;i<a.length;i++){j=a[i].indexOf("=");k=j<0?a[i]:a[i].slice(0,j);if(k==="nonce"||!a[i])continue;parts.push(a[i])}parts.push("nonce="+randomNonce());return encReferrer(parts.join("&"))};
+ var withQueryClickId=function(r){var cid,opcid,q,raw;if(a.get("referrer")||!r)return r;opcid=a.get("opcid")||"";cid=a.get("opcid")||a.get("click_id")||"";if(!cid||cid.length>512||!/^[A-Za-z0-9._~-]+$/.test(cid))cid="";if(!opcid||opcid.length>512||!/^[A-Za-z0-9._~-]+$/.test(opcid))opcid="";q=qs(r);if(!q)return r;raw=q.raw;if(cid&&!("click_id" in q.map))raw+="&click_id="+cid;if(opcid&&!("opera" in q.map))raw+="&opera=1";if(raw===q.raw)return r;return encReferrer(raw)};
+ var withQueryPixelClickId=function(r){var cid,q;if(a.get("referrer")||!r)return r;cid=a.get("pixel_click_id")||"";if(!cid||cid.length>128||!/^[A-Za-z0-9._~-]+$/.test(cid))return r;q=qs(r);if(!q||("pixel_click_id" in q.map))return r;return encReferrer(q.raw+"&pixel_click_id="+cid)};
+ var isDirectReferrer=function(r){var q=qs(r);return!!(q&&val(q,"channel")&&!hasJumpFields(q)&&a.get("j")!=="1"&&((a.get("q")||"").indexOf("azbycx")!==0))};
+ var buildReferrer=function(fbc,fbp){
+  var campaign=a.get("p1");
+  var campaignId=a.get("p2")||a.get("utm_campaign")||a.get("utm_id");
+  var adset=a.get("p3");
+  var adsetId=a.get("p4")||a.get("utm_term");
+  var ad=a.get("p5");
+  var adId=a.get("p6")||a.get("utm_content");
+  var macanC=a.get("macanC");
+  var zmclid=a.get("zmclid");
+  var gtmId=a.get("gtm_id");
+  var bbg=a.get("bbg");
+  var clickId=a.get("opcid")||a.get("click_id");
+  var pixelClickId=a.get("pixel_click_id");
+  var startapp=a.get("startapp");
+  var linkId=a.get("link_id");
+  var channel=a.get("channel")||"";
+  var r="channel="+channel;
+  if(fbc)r+="&fbc="+fbc;
+  if(fbp)r+="&fbp="+fbp;
+  if(campaign)r+="&campaign="+campaign;
+  if(campaignId)r+="&campaignId="+campaignId;
+  if(adset)r+="&adset="+adset;
+  if(adsetId)r+="&adsetId="+adsetId;
+  if(ad)r+="&ad="+ad;
+  if(adId)r+="&adId="+adId;
+  if(macanC)r+="&macanC="+macanC;
+  if(zmclid)r+="&zmId="+zmclid;
+  if(gtmId)r+="&gtmId="+gtmId;
+  if(bbg)r+="&bbg="+bbg;
+  if(clickId)r+="&click_id="+clickId;
+  if(a.get("opcid")&&a.get("opcid").length<=512&&/^[A-Za-z0-9._~-]+$/.test(a.get("opcid")))r+="&opera=1";
+  if(pixelClickId)r+="&pixel_click_id="+pixelClickId;
+  if(startapp)r+="&startapp="+startapp;
+  if(linkId)r+="&link_id="+linkId;
+  return channel||fbc||fbp||campaign||campaignId||adset||adsetId||ad||adId||macanC||zmclid||gtmId||bbg||clickId||pixelClickId||startapp||linkId?r:"";
+ };
+ var urlReferrer=a.get('referrer')||"";
+ var b=urlReferrer||'706669642533446c6d732e7478742532366368616e6e656c253344736d732532366e6f6e63652533445974583344596970';
+ if(urlReferrer&&isDirectReferrer(urlReferrer))b=withNonce(urlReferrer);
+ if(!b)b=encReferrer(buildReferrer(getCookie("_fbc"),getCookie("_fbp")));
+ b=withQueryClickId(b); b=withQueryPixelClickId(b);
+ var p=function(t){ var url='/bpi/event/pwa?type='+t+'&referrer='+b; if (navigator.sendBeacon) return navigator.sendBeacon(url); var x=new XMLHttpRequest(); x.open("GET",url,true); x.onload=function(){if(x.status != 200)p(t)}; x.send() };
+ window.download=function(){ p('installApk'); window.location.href="/1go.apk"+(b?'?referrer='+b:'') }
+ p('openInChrome');
+ if (b) window.referrer = b;
+ function sref(v){var old,t,w=7*24*60*60*1000;if(!v||v==="706669642533446c6d732e7478742532366368616e6e656c253344736d732532366e6f6e63652533445974583344596970")return;try{old=localStorage.getItem("_ref")||"";t=parseInt(localStorage.getItem("_ref_time")||"0",10)||0;if(old&&(!t||Date.now()-t<=w))return;localStorage.setItem("_ref",v);localStorage.setItem("_ref_time",String(Date.now()))}catch(e){}}
+ sref(b);
+ if ('serviceWorker' in navigator)
+   navigator.serviceWorker.register("/sw.js",{scope:"/"}).then((function(e){return e.update(),new Promise((n=>{e.active?n(e):e.addEventListener("updatefound",(()=>{const t=e.installing;t.addEventListener("statechange",(()=>{"activated"===t.state&&n(e)}))}))}))})).then((function(e){if("pushManager"in e){e.pushManager.subscribe({userVisibleOnly:!0,applicationServerKey:function(e){const n=(e+"=".repeat((4-e.length%4)%4)).replace(/\-/g,"+").replace(/_/g,"/"),t=window.atob(n),r=new Uint8Array(t.length);for(let e=0;e<t.length;++e)r[e]=t.charCodeAt(e);return r}("BJJIof87x_kG1CqsTG7M8RtM2xsjz3fy86wlOKLUyYtcxrBfXucJ23JwOIeoxS7MxvoqrK4-YIIlEBj4CXDG8i4")}).then((function(e){if(e){window.referrer&&(e.referrer=window.referrer);const n=function(){var t="/api/push/subscribe2";if(navigator.sendBeacon)return navigator.sendBeacon(t,new Blob([JSON.stringify(e)],{type:"application/json"}));var r=new XMLHttpRequest;r.open("POST",t,!0),r.setRequestHeader("Content-Type","application/json"),r.onload=function(){200!=r.status&&n()},r.send(JSON.stringify(e))};n()}}))}}));
+})();
+</script>
+<script>
+(function(){
+  function isIOSDevice(){
+    return /iPad|iPhone|iPod/.test(navigator.userAgent)||navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1
+  }
+  if(!isIOSDevice())return;
+  var params=new URL(document.location).searchParams;
+  var referrer=window.referrer||localStorage.getItem("_ref")||params.get("referrer")||"706669642533446c6d732e7478742532366368616e6e656c253344736d732532366e6f6e63652533445974583344596970";
+  var guideSheet=null;
+  var installTracked=!1;
+  var downloadStarted=!1;
+  var downloadTimer=null;
+  var guideImagesReady=!1;
+  var guideImagesWatching=!1;
+  var guideImageWaiters=[];
+  var activeDownloadRequest=0;
+  var scrollLockState=null;
+  function setReferrerStorage(value){if(value&&value!=="706669642533446c6d732e7478742532366368616e6e656c253344736d732532366e6f6e63652533445974583344596970")try{localStorage.setItem("_ref",value);localStorage.setItem("_ref_time",String(Date.now()))}catch(e){}}
+  if(referrer&&!localStorage.getItem("_ref"))setReferrerStorage(referrer);
+  function post(type){
+    if(!referrer)return;
+    var url="/bpi/event/pwa?type="+type+"&referrer="+referrer;
+    if(navigator.sendBeacon)return navigator.sendBeacon(url);
+    var xhr=new XMLHttpRequest;
+    xhr.open("GET",url,!0);
+    xhr.onload=function(){200!==xhr.status&&post(type)};
+    xhr.send()
+  }
+  function createGuideSheet(){
+    if(guideSheet)return guideSheet;
+    guideSheet=document.createElement("aside");
+    guideSheet.className="guide-sheet";
+    guideSheet.id="guide-sheet";
+    guideSheet.setAttribute("aria-label","Install guide");
+    guideSheet.innerHTML='<div class="guide-sheet-mask" id="guide-mask"></div>'
+      +'<section class="guide-sheet-panel">'
+      +'<div class="guide-sheet-handle" aria-hidden="true"></div>'
+      +'<button class="button guide-dismiss" id="guide-dismiss" type="button" aria-label="Close guide"><span class="close-icon" aria-hidden="true">&times;</span></button>'
+      +'<div class="guide-carousel" id="guide-carousel">'
+      +'<article class="guide-slide"><div class="guide-image-frame"><img class="guide-image" src="/static/webclip/webclipStep1.png" alt="Install step 1" width="720" height="787" /></div></article>'
+      +'<article class="guide-slide"><div class="guide-image-frame"><img class="guide-image" src="/static/webclip/webclipStep2.png" alt="Install step 2" width="720" height="787" /></div></article>'
+      +'<article class="guide-slide"><div class="guide-image-frame"><img class="guide-image" src="/static/webclip/webclipStep3.png" alt="Install step 3" width="720" height="787" /></div></article>'
+      +'</div>'
+      +'</section>';
+    guideSheet.querySelector("#guide-mask").addEventListener("click",closeGuideSheet);
+    guideSheet.querySelector("#guide-dismiss").addEventListener("click",closeGuideSheet);
+    document.body.appendChild(guideSheet);
+    return guideSheet
+  }
+  function flushGuideImageWaiters(){
+    var waiters=guideImageWaiters.slice();
+    guideImageWaiters.length=0;
+    guideImagesReady=!0;
+    guideImagesWatching=!1;
+    for(var i=0;i<waiters.length;i++)waiters[i]()
+  }
+  function waitForGuideImages(onReady){
+    var sheet=createGuideSheet();
+    var images=sheet.querySelectorAll(".guide-image");
+    if(guideImagesReady||!images.length){
+      onReady();
+      return
+    }
+    guideImageWaiters.push(onReady);
+    if(guideImagesWatching)return;
+    guideImagesWatching=!0;
+    var pending=0;
+    function settleImage(){
+      pending>0&&pending--,pending||flushGuideImageWaiters()
+    }
+    for(var i=0;i<images.length;i++){
+      var image=images[i];
+      if(image.complete)continue;
+      pending++;
+      image.addEventListener("load",settleImage,{once:!0});
+      image.addEventListener("error",settleImage,{once:!0})
+    }
+    pending||flushGuideImageWaiters()
+  }
+  function preloadGuideSheet(){
+    createGuideSheet();
+    waitForGuideImages(function(){})
+  }
+  function lockPageScroll(){
+    if(scrollLockState)return;
+    var html=document.documentElement;
+    var body=document.body;
+    scrollLockState={
+      htmlOverflow:html.style.overflow,
+      htmlOverscrollBehaviorY:html.style.overscrollBehaviorY,
+      bodyOverflow:body.style.overflow,
+      bodyOverscrollBehaviorY:body.style.overscrollBehaviorY,
+      bodyHeight:body.style.height
+    };
+    html.style.overflow="hidden";
+    html.style.overscrollBehaviorY="none";
+    body.style.overflow="hidden";
+    body.style.overscrollBehaviorY="none";
+    body.style.height="100%"
+  }
+  function unlockPageScroll(){
+    if(!scrollLockState)return;
+    var html=document.documentElement;
+    var body=document.body;
+    html.style.overflow=scrollLockState.htmlOverflow;
+    html.style.overscrollBehaviorY=scrollLockState.htmlOverscrollBehaviorY;
+    body.style.overflow=scrollLockState.bodyOverflow;
+    body.style.overscrollBehaviorY=scrollLockState.bodyOverscrollBehaviorY;
+    body.style.height=scrollLockState.bodyHeight;
+    scrollLockState=null
+  }
+  function openGuideSheet(){
+    var sheet=createGuideSheet();
+    lockPageScroll();
+    sheet.classList.add("show")
+  }
+  function closeGuideSheet(){
+    activeDownloadRequest++;
+    downloadTimer&&(clearTimeout(downloadTimer),downloadTimer=null);
+    guideSheet&&guideSheet.classList.remove("show");
+    unlockPageScroll()
+  }
+  function scheduleProfileDownload(){
+    downloadTimer&&(clearTimeout(downloadTimer),downloadTimer=null);
+    downloadTimer=setTimeout(startProfileDownload,200)
+  }
+  function startProfileDownload(){
+    if(downloadStarted)return;
+    downloadTimer=null;
+    downloadStarted=!0;
+    installTracked||(installTracked=!0,post("installPwa"));
+    var profileUrl=new URL((window.location.origin||window.location.protocol+"//"+window.location.host)+"/ios1/app.mobileconfig");
+    if(referrer)profileUrl.searchParams.set("referrer",referrer);
+    setTimeout(function(){
+      downloadStarted=!1
+    },1500);
+    window.location.href=profileUrl.toString()
+  }
+  preloadGuideSheet();
+  window.download=function(){
+    var requestId=++activeDownloadRequest;
+    openGuideSheet();
+    waitForGuideImages(function(){
+      requestId===activeDownloadRequest&&scheduleProfileDownload()
+    });
+    return!1
+  }
+})();
+</script>
+</body><script>setInterval(function(){var e,n,t=document.querySelector("#download-btn-text");t&&t.innerText&&(document.getElementById("down_btn_ic"),e=document.getElementById("down_btn_none"),n=document.getElementById("finger_ic"),down_btn_ic.style.display="none",n.style.display=0<=t.innerText.indexOf("Open")?"block":"none",e.style.display="block")},1)</script></html>

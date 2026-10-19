@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 16px;
+    }
+
+    a {
+      color: rgb(229, 35, 34);
+      text-decoration: none;
+    }
+
+    .header {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+    }
+
+    .text {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      max-width: 400px;
+    }
+
+    .button-first {
+      padding: 11px 16px;
+      background-color: rgb(229, 35, 34);
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .button-second {
+      padding: 11px 16px;
+      background-color: rgb(244, 244, 245);
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      color: rgb(14, 14, 15);
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align: center;">
+    <h1 class="header">Проблемы со связью.<br>Проверьте настройки интернета и VPN</h1>
+    <p class="text" id="REQUEST-DATE">Дата и время: 2026-10-19 21:13:07 +0000</p>
+    <p class="text" id="REQUEST-IP">IP: 82.39.15.43</p>
+    <p class="text" id="REQUEST-ID">ID: 7DnPg8QlPKo1</p>
+    <p class="text" id="ORIGIN-ID"></p>
+    <p class="text">Если вы считаете блокировку ложной, пожалуйста, скопируйте отчет&nbsp;и&nbsp;отправьте его&nbsp;нашей поддержке&nbsp;на&nbsp;почту <a href="mailto:Service_connect@x5.ru">Service_connect@x5.ru</a>.</p>
+    <button class="button-first" onclick="copy()">Скопировать отчёт</button>
+    <button class="button-second" onclick="window.location.reload()">Обновить страницу</button>
+  </div>
+
+  <script>
+    function copy() { 
+        document.oncopy = function (e) { 
+            const t = { 
+                report: { 
+                    datetime: document.getElementById("REQUEST-DATE").innerHTML, 
+                    ip: document.getElementById("REQUEST-IP").innerHTML, 
+                    id: document.getElementById("REQUEST-ID").innerHTML 
+                } 
+            }; 
+            e.clipboardData.setData("text", JSON.stringify(t)); 
+            e.preventDefault(); 
+            alert('Отчет скопирован в буфер обмена');
+        };
+        document.execCommand("copy");
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const origin = window.location.protocol + "//" + window.location.host;
+        document.getElementById('ORIGIN-ID').innerHTML = "Origin: " + origin;
+    });
+  </script>
+</body>
+</html>

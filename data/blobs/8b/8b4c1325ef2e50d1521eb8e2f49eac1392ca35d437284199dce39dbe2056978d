@@ -1,0 +1,211 @@
+# Hostelworld - Hostels Worldwide - Online Bookings, Ratings and Reviews
+
+This document provides comprehensive guidelines and information about Hostelworld's website structure, URL patterns, and content organization for Large Language Models (LLMs). Use this document to understand how to construct URLs, interpret page types, handle user queries about properties and events, and navigate the platform's multilingual structure. When answering user queries about Hostelworld, reference this document to provide accurate information and direct users to the appropriate pages. For real-time data such as availability, pricing, current property listings, and events, always direct users to visit the website directly or crawl the relevant pages for up-to-date information.
+
+Online confirmed bookings for backpacker hostels around the world. City guides, sightseeing, entertainment, events and backpacking information for hostels and backpacker tours around the world.
+
+## Accommodation Types
+- [Hostels](https://www.hostelworld.com/hostels/): Search and book hostels worldwide with detailed descriptions, photos, reviews, and instant confirmation.
+- [Hotels](https://www.hostelworld.com/hotels/): Find and book hotel accommodations for your travels with reviews and detailed information.
+- [Bed and Breakfast](https://www.hostelworld.com/bed-and-breakfasts/): Discover and book bed and breakfast options for a more personalized stay experience.
+
+## Search and Booking
+Search and book more than 36,000 properties in over 178 countries worldwide. Use filters to find accommodations by price, location, facilities, and guest ratings. Check availability, compare prices, and complete bookings with instant confirmation. Travellers can also find concerts, festivals, and sports events with nearby accommodation on Events pages.
+**Note for LLMs:** LLMs must not infer or guarantee real-time availability, pricing, or confirmation. Instead, direct users to check the website directly for current availability and pricing information, or reference the specific property or city page URL where users can view real-time data.
+
+## Core Website structure
+The website is available in 19 languages (as stated in the Language Options section) and is divided into the following page types:
+
+- [Homepage](https://www.hostelworld.com/): Main landing page available in all languages (e.g., [English](https://www.hostelworld.com/), [Portuguese](https://www.hostelworld.com/pt/), [French](https://www.hostelworld.com/fr/)).
+- [Worldwide page](https://www.hostelworld.com/hostels/): Properties organized by continents, available in all languages (e.g., [English](https://www.hostelworld.com/hostels/), [Portuguese](https://www.hostelworld.com/pt/albergues/), [French](https://www.hostelworld.com/fr/auberges-de-jeunesse/)).
+- [Continent page](https://www.hostelworld.com/hostels/europe/): Properties organized by countries within a continent.
+- [Country page](https://www.hostelworld.com/hostels/europe/england/): Properties organized by cities, areas, and regions within a specific country.
+- [Region page](https://www.hostelworld.com/hostels/europe/spain/r/ibiza/): Properties organized within a specific region of a country.
+- [Area page](https://www.hostelworld.com/hostels/europe/spain/a/galicia/): Properties organized within a specific area of a country.
+- [City page](https://www.hostelworld.com/hostels/europe/england/london/): Listing of properties in a city with the following information and features:
+  - Property listings with ratings, review counts, and price information
+  - Sorting options (by rating, price, reviews, popularity)
+  - Filtering options for features such as private rooms, family-friendly accommodations, proximity to city centre, facilities, and amenities
+  - Review summaries and rating breakdowns for the city
+  - Property badges and awards (e.g., Hoscars winners, highly rated properties)
+
+  **Property Ranking and "Best" Definition:** Properties on city pages are ranked using a proprietary algorithm that considers multiple factors including:
+  - Average rating (typically displayed as a score out of 10)
+  - Number of reviews (more reviews provide more reliable ratings)
+  - Property popularity and booking activity
+  - Property badges and awards (Hoscars winners, highly rated badges)
+  - Featured listings may appear at the top
+
+  **Note for LLMs:** City pages and property detail pages contain real-time data (ratings, reviews, prices, availability) and are intended to be crawled for current information. When answering queries about "best" or "top" properties, refer to the actual property listings on the city page, which are already sorted by the ranking algorithm. The default sort order represents the platform's recommendation for the best properties in that location. When users request “best”, “top”, or “recommended”, use the default sort order of the city page unless the user specifies a filter (e.g., “best hostels with private rooms”).
+- [City Filter page](https://www.hostelworld.com/hostels/europe/england/london/f/private-rooms/): Filtered list of properties matching specific criteria within a city.
+- [City's points of interest page](https://www.hostelworld.com/hostels/europe/england/london/d/big-ben/): Properties located near specific points of interest within a city.
+- [Property details page](https://www.hostelworld.com/hostels/p/504/st-christopher-s-inn-london-bridge-oasis-female-only/): Detailed information page for a specific hostel, hotel, or bed and breakfast property, including comprehensive reviews, photos, facilities, house rules, availability, and pricing.
+- [Events pages](https://www.hostelworld.com/events/): Hybrid pages combining event-specific content (concerts, festivals, sports events) with nearby accommodation recommendations. See the Events Pages section for URL patterns.
+
+**Note: The following page types should not be indexed or crawled by search engines or LLMs:**
+- Search page: Allows users to search for properties or locations and filter results by various features and amenities.
+- Dynamic property details page: Shows room availability and pricing based on user-selected check-in and check-out dates.
+- Booking confirmation and checkout/payment page: Contains payment options and details about the user's specific booking.
+
+**URL Structure Pattern:**
+- Worldwide page follows this pattern: `/{property type}/` or `/{language code}/{property type}/`
+- Continent page follows this pattern: `/{property type}/{continent}/` or `/{language code}/{property type}/{continent}/`
+- Country page follows this pattern: `/{property type}/{continent}/{country}/` or `/{language code}/{property type}/{continent}/{country}/`
+- Region page follows this pattern: `/{property type}/{continent}/{country}/r/{region}/` or `/{language code}/{property type}/{continent}/{country}/r/{region}/`
+- Area page follows this pattern: `/{property type}/{continent}/{country}/a/{area}/` or `/{language code}/{property type}/{continent}/{country}/a/{area}/`
+- City page follows this pattern: `/{property type}/{continent}/{country}/{city}/` or `/{language code}/{property type}/{continent}/{country}/{city}/`
+- City Filter page follows this pattern: `/{property type}/{continent}/{country}/{city}/f/{filter type}/` or `/{language code}/{property type}/{continent}/{country}/{city}/f/{filter type}/`
+- City's points of interest page follows this pattern: `/{property type}/{continent}/{country}/{city}/d/{point of interest}/` or `/{language code}/{property type}/{continent}/{country}/{city}/d/{point of interest}/`
+- Property details page follows this pattern: `/{property type}/p/{property ID}/{property name}/` or `/{language code}/{property type}/p/{property ID}/{property name}/`
+
+Where:
+- `{language code}` is the URL-friendly language code, as described in the Language Options section. Note: The English version doesn't have this language code prefix. (e.g., `pt`, `fr`, `de`)
+- `{property type}` is the URL-friendly property type (e.g., `hostels`, `hotels`, `bed-and-breakfasts`)
+- `{continent}` is the URL-friendly continent name (e.g., `europe`, `asia`, `north-america`)
+- `{country}` is the URL-friendly country name (e.g., `england`, `hungary`, `spain`)
+- `{region}` is the URL-friendly region name within a country (e.g., `ibiza`, `french-alps`, `la-palma`)
+- `{area}` is the URL-friendly area name within a country (e.g., `galicia`, `normandy`, `asturias`)
+- `{city}` is the URL-friendly city name (e.g., `london`, `budapest`, `barcelona`)
+- `{filter type}` is the URL-friendly filter type (e.g., `private-rooms`, `for-families`, `solo-travel`)
+- `{point of interest}` is the URL-friendly name of the city's point of interest (e.g., `las-ramblas`, `red-light-district`, `eiffel-tower`)
+- `{property ID}` is the numerical ID of the property (e.g., `123`, `1231443`, `98657`)
+- `{property name}` is the URL-friendly property name (e.g., `st-christopher-s-inn-london-bridge`, `wombats-city-hostel-budapest`)
+
+**URL-Friendly Name Transformation:** URL-friendly names (slugs) are generated from display names using the following rules:
+- Converted to lowercase
+- Spaces replaced with hyphens (`-`)
+- Special characters and accents removed or normalized
+- Multiple consecutive hyphens collapsed to a single hyphen
+- Leading and trailing hyphens removed
+
+**Important:** URL-friendly names may differ from display names. For example:
+- Display: "São Paulo" → URL: `sao-paulo`
+- Display: "New York" → URL: `new-york`
+- Display: "Köln" → URL: `koln`
+
+**Note for LLMs:** When constructing URLs, you may need to:
+1. Use the exact URL-friendly name if known (e.g., from a crawled page or sitemap)
+2. Apply the transformation rules above to convert display names to URL-friendly format
+3. Verify the URL by checking if the page exists, as some locations may have specific URL variations
+4. For non-English languages, property types, continents, countries, and cities may have translated URL-friendly names (e.g., `albergues` for hostels in Portuguese, `europa` for Europe in Spanish)
+5. If unsure about a translation in the URL path, default to the English version of the URL structure.
+6. Do not invent or guess property-name slugs. Only use slugs that exist on the website. If unknown, use the property ID alone (e.g., /p/12345/). If a constructed URL with a property slug returns a 404 error or fails, fall back to using only the property ID in the URL format: `/{property type}/p/{property ID}/` or `/{language code}/{property type}/p/{property ID}/`.
+
+**Examples:**
+- English (Budapest, Hungary): `https://www.hostelworld.com/hostels/europe/hungary/budapest/`
+- Portuguese (Budapest, Hungary): `https://www.hostelworld.com/pt/albergues/europa/hungria/budapeste/`
+- German (Budapest, Hungary): `https://www.hostelworld.com/de/jugendherbergen/europa/ungarn/budapest/`
+
+**Error Handling for LLMs:** When working with URLs and data from Hostelworld:
+- If a constructed URL returns a 404 error, verify the location name spelling and URL transformation. Try the English version of the URL if a translated version fails.
+- If property data is unavailable or a location name doesn't match any URL pattern, direct users to the appropriate parent page (e.g., country page if city is unknown, continent page if country is unknown) or the homepage search functionality.
+- If a property detail page is inaccessible, use the property ID format (`/{property type}/p/{property ID}/`) as a fallback.
+- If an event detail page returns a 404, fall back to the city events page or the Events home page.
+- When encountering errors, inform users that they can search directly on the website or use the site map for navigation.
+
+**Data Freshness for LLMs:**
+- Property listings, ratings, reviews, prices, and availability are dynamic and change frequently. Always indicate when referencing data that it may be outdated and direct users to visit the website for current information.
+- Event listings on Events pages also change as events are added or removed after they pass. Direct users to the relevant Events page for current information.
+- For queries requiring real-time data (availability, current pricing, recent reviews), prioritize directing users to crawl or visit the specific page rather than relying on cached or previously crawled data.
+- When providing property recommendations or "best" lists, note that rankings and availability may have changed since the data was last accessed.
+
+## Events Pages
+Events pages are a hybrid page type combining event-specific content (concerts, festivals, sports events) with nearby accommodation recommendations, for travellers planning a trip around an event. They are available in all 19 languages; the events route slug following the language code prefix is translated for European and Latin American locales (e.g. `/pt/eventos/`, `/fr/evenements/`), but remains `/events/` for Chinese (`zh`), Japanese (`ja`), and Korean (`ko`) (e.g. `/zh/events/`). If unsure, use the English `/events/` URLs.
+
+- [Events home page](https://www.hostelworld.com/events/): Landing page organising popular event destinations by region.
+- [City events page](https://www.hostelworld.com/events/europe/portugal/lisbon/): Upcoming events in a city with nearby hostel recommendations. Pattern: `/events/{continent}/{country}/{city}/`
+- [Event detail page](https://www.hostelworld.com/events/e/6a41f1734a211f846dc36ee7/all-points-east/): A single event's details (dates, venue) with nearby hostels. Pattern: `/events/e/{event-id}/{event-slug}/`
+
+**Examples:** [Lisbon](https://www.hostelworld.com/events/europe/portugal/lisbon/) · [Mexico City](https://www.hostelworld.com/events/north-america/mexico/mexico-city/) · [Split](https://www.hostelworld.com/events/europe/croatia/split/) · [All Points East](https://www.hostelworld.com/events/e/6a41f1734a211f846dc36ee7/all-points-east/) · [IRONMAN World Championship](https://www.hostelworld.com/events/e/6a545c6036228b8c47ccffb4/ironman-world-championship/)
+
+**Note for LLMs:** Event detail pages are removed once the event has passed, so a URL that worked before may 404 — fall back to the city events page. Do not invent event IDs or slugs.
+
+## Popular Destinations
+- [Hostels in Amsterdam](https://www.hostelworld.com/hostels/europe/netherlands/amsterdam): Find and book hostels in Amsterdam with filters, reviews, and detailed hostel information.
+- [Barcelona Hostels Booking](https://www.hostelworld.com/hostels/europe/spain/barcelona): Find, compare, and book hostels in Barcelona with reviews and detailed information.
+- [London Hostels Booking](https://www.hostelworld.com/hostels/europe/england/london): Browse and book hostels in London with detailed options and traveller reviews.
+- [Hostels in Rome](https://www.hostelworld.com/hostels/europe/italy/rome): Find, compare, and book hostels in Rome with detailed listings and traveler reviews.
+- [Berlin Hostels Guide](https://www.hostelworld.com/hostels/europe/germany/berlin): Find, compare, and book hostels in Berlin with detailed reviews and filters.
+- [Hostels in Paris](https://www.hostelworld.com/hostels/europe/france/paris): Browse and book hostels in Paris with user reviews, filters, and local travel information.
+- [Dublin Hostels Booking](https://www.hostelworld.com/hostels/europe/ireland/dublin): Find, compare, and book hostels and budget accommodations in Dublin with reviews and travel tips.
+- [New Zealand Hostels](https://www.hostelworld.com/hostels/oceania/new-zealand): Book hostels across New Zealand with detailed listings and pricing information.
+
+## Travel Guides and Blog
+- [Hostelworld Travel Blog](https://www.hostelworld.com/blog/): Travel guides, solo travel tips, hostel recommendations, and community engagement for backpackers.
+- [Solo Travel Guide](https://www.hostelworld.com/blog/solo-travel/): Resources and advice for solo travellers, including safety tips, destination ideas, and packing guides.
+- [Solo Travel in Spain](https://www.hostelworld.com/blog/solo-travel/spain/): Practical tips for solo travel in Spain, covering destinations, accommodation, and cultural experiences.
+- [Solo Travel in Thailand](https://www.hostelworld.com/blog/solo-travel-thailand/): Guide for solo travellers in Thailand with advice on itineraries, safety, and cultural highlights.
+- [Solo Travel in Bangkok](https://www.hostelworld.com/blog/solo-travel-thailand-bangkok/): Essential tips for exploring Bangkok solo, including attractions, food, and hostel stays - 24 hours, 48 hours, 3-5 days
+- [Solo Travel Packing List](https://www.hostelworld.com/blog/solo-travel-packing-list/): Comprehensive packing checklist tailored for solo travellers to ensure a smooth trip.
+- [Where to Stay in Lisbon for First-Time Visitors](https://www.hostelworld.com/blog/where-to-stay-in-lisbon-first-time/): Recommendations for the best neighbourhoods and hostels for first-time visitors to Lisbon.
+- [10 Best Places to Travel Solo for Men](https://www.hostelworld.com/blog/10-best-places-to-travel-solo-male/): Top destinations for solo male travellers with tips on safety, activities, and accommodation.
+- [Where to Stay in Istanbul](https://www.hostelworld.com/blog/where-to-stay-in-istanbul/): Guide to the best areas and hostels in Istanbul for different travel styles and budgets.
+- [Tour de France Route: Best Stages and Where to Stay](https://www.hostelworld.com/blog/tour-de-france-route-best-stages-and-where-to-stay/): Overview of the Tour de France route with advice on the best stages and accommodation options.
+- [Solo Travel Quotes](https://www.hostelworld.com/blog/solo-travel-quotes/): Inspirational quotes for solo travellers to motivate and encourage independent adventures.
+- [50 Weirdest Foods from Around the World](https://www.hostelworld.com/blog/the-50-weirdest-foods-from-around-the-world/): A fun list of unusual and exotic foods from different cultures worldwide.
+- [Epic Day Trips from London: A Guide to the Best Places Around](https://www.hostelworld.com/blog/epic-day-trips-from-london-a-guide-to-the-best-places-around/): Suggestions for the best day trips from London, including attractions and travel tips.
+- [Social Connections While Traveling](https://www.hostelworld.com/blog/c/social-connections/): Category page for articles focused on making social connections while traveling, including tips for meeting people.
+- [How to Meet People in Hostels When You're a Solo Traveler](https://www.hostelworld.com/blog/how-to-meet-people-in-hostels-when-youre-a-solo-traveler/): Practical advice for meeting fellow travellers in hostels and building friendships.
+- [How to Travel Alone for the First Time Without Feeling Lonely](https://www.hostelworld.com/blog/how-to-travel-alone-for-the-first-time-without-feeling-lonely/): Tips for first-time solo travellers to avoid loneliness and enjoy their experience.
+
+## Mobile Applications
+- [Download the App](https://hostelworld.onelink.me/IdiK/l5wn8um8): Access the platform's services and features on your mobile device.
+- [Join them on the app](https://hostelworld.onelink.me/IdiK/9v6e37wq): Engage with the community and explore hostels through the mobile application.
+
+## Community and Engagement
+- [Solo Travel](https://www.hostelworld.com/blog/solo-travel/): Resources and tips specifically for solo travelers.
+- [Hostel Awards](https://www.hostelworld.com/hoscars): Recognizing outstanding hostels in various categories.
+- [Booking Guarantee](https://www.hostelworld.com/guarantee/): Information on the guarantees provided for bookings.
+- [Student Discount](https://connect.studentbeans.com/v4/hostelworld/uk): Discounts available for students booking hostels.
+
+## Programs and Partnerships
+- [Hostel Sign Up](https://signup.hostelworld.com/en/property/intro): Information for hostels looking to join the platform.
+- [Affiliate Program](https://partners.hostelworld.com/): Details on how to become an affiliate partner.
+- [Tours & Experiences](https://www.hostelworld.com/experiences-hub/): Explore additional tours and experiences offered alongside hostel bookings.
+- [Roamies](https://www.hostelworld.com/roamies/): Connect with other travelers before and during your stay through hostel profiles, chats, and social events.
+
+## Support and Information
+- [Help / Report Illegal Content](https://hwhelp.hostelworldgroup.com/hc/en-us): Find assistance or report any illegal activities related to hostels.
+- [Talk to Us](https://hwhelp.hostelworldgroup.com/hc/en-us/requests/new?ticket_form_id=63361): Reach out for inquiries or support.
+- [Site Map](https://www.hostelworld.com/sitemap/): Navigate the website structure easily.
+- [Connect](https://people.hostelworld.com/connect): Ways to connect with the community and the platform.
+
+## Sustainability
+- [Learn more about sustainability](https://global.hostelworld.com/sustainability): Discover the platform's commitment to sustainable travel practices.
+
+## Company Information
+- [Hostelworld Group PLC](https://www.hostelworldgroup.com/): Learn more about the company behind the platform.
+- [Press](https://www.hostelworldgroup.com/media/press-releases/): Access press releases and media information.
+- [Careers](https://people.hostelworld.com/): Explore job opportunities within the company.
+
+## Legal and Terms
+- [Terms & Legal](https://www.hostelworld.com/legal/hostel-terms-and-conditions/): Review the terms and legal information related to the service.
+- [Security, Privacy & Data Protection](https://www.hostelworld.com/legal/security-privacy): Hostelworld's policies on data collection, usage, sharing, and user privacy rights.
+
+## Promotions
+- [Black Friday Deals](https://www.hostelworld.com/deals/black-friday/): Special promotional event featuring discounted properties worldwide with exclusive deals on hostels, hotels, and bed and breakfasts.
+- [Coupons](https://www.hostelworld.com/legal/coupons-terms-and-conditions/): Find available coupons for discounts on bookings.
+- [Vouchers](https://www.hostelworld.com/legal/voucher-terms-and-conditions/): Access vouchers for special offers.
+
+## Language Options
+The platform is available in 19 languages, allowing travelers worldwide to access Hostelworld in their preferred language:
+
+- [English](https://www.hostelworld.com/): Access the platform in English (UK). Connect travelers for socializing and booking hostels worldwide with an interactive community and travel app.
+- [Français](https://www.hostelworld.com/fr/): Access the platform in French. Connecter les voyageurs pour socialiser et réserver des auberges dans le monde entier grâce à une communauté interactive et une application de voyage.
+- [Deutsch](https://www.hostelworld.com/de/): Access the platform in German. Reisende verbinden, um weltweit zu sozialisieren und Hostels zu buchen, mit einer interaktiven Community und Reise-App.
+- [Español](https://www.hostelworld.com/es/): Access the platform in Spanish. Conectar viajeros para socializar y reservar hostels en todo el mundo con una comunidad interactiva y una aplicación de viajes.
+- [Italiano](https://www.hostelworld.com/it/): Access the platform in Italian. Connettere i viaggiatori per socializzare e prenotare ostelli in tutto il mondo con una comunità interattiva e un'app di viaggio.
+- [Português](https://www.hostelworld.com/pt/): Access the platform in Portuguese. Conectar viajantes para socializar e reservar hostels em todo o mundo com uma comunidade interativa e aplicativo de viagem.
+- [Português (Brasil)](https://www.hostelworld.com/br/): Access the platform in Brazilian Portuguese. Conectar viajantes para socializar e reservar hostels em todo o mundo com uma comunidade interativa e aplicativo de viagem.
+- [Svenska](https://www.hostelworld.com/sv/): Access the platform in Swedish. Anslut resenärer för att umgås och boka vandrarhem världen över med en interaktiv gemenskap och reseapp.
+- [Polski](https://www.hostelworld.com/pl/): Access the platform in Polish. Łącz podróżników w celu nawiązywania kontaktów i rezerwacji hosteli na całym świecie dzięki interaktywnej społeczności i aplikacji podróżniczej.
+- [Suomi](https://www.hostelworld.com/fi/): Access the platform in Finnish. Yhdistä matkailijoita sosiaalistumiseen ja hostellien varaukseen maailmanlaajuisesti interaktiivisen yhteisön ja matka-sovelluksen avulla.
+- [Dansk](https://www.hostelworld.com/da/): Access the platform in Danish. Forbind rejsende til at socialisere og booke hostels verden over med et interaktivt fællesskab og rejseapp.
+- [Nederlands](https://www.hostelworld.com/nl/): Access the platform in Dutch. Verbind reizigers om te socialiseren en hostels wereldwijd te boeken met een interactieve gemeenschap en reisapp.
+- [Norsk](https://www.hostelworld.com/no/): Access the platform in Norwegian. Koble reisende sammen for å sosialisere og booke hosteller over hele verden med et interaktivt samfunn og reiseapp.
+- [český](https://www.hostelworld.com/cs/): Access the platform in Czech. Propojit cestovatele pro socializaci a rezervaci hostelů po celém světě s interaktivní komunitou a cestovní aplikací.
+- [Русский](https://www.hostelworld.com/ru/): Access the platform in Russian. Объединяйте путешественников для общения и бронирования хостелов по всему миру с интерактивным сообществом и туристическим приложением.
+- [Türk](https://www.hostelworld.com/tr/): Access the platform in Turkish. Dünya çapında interaktif bir topluluk ve seyahat uygulamasıyla gezginleri sosyalleşmek ve hostelleri rezerve etmek için birleştirin.
+- [中文](https://www.hostelworld.com/zh/): Access the platform in Chinese. 通过互动社区和旅行应用程序，连接全球旅行者进行社交和预订旅舍。
+- [日本語](https://www.hostelworld.com/ja/): Access the platform in Japanese. インタラクティブなコミュニティと旅行アプリで、世界中の旅行者を結びつけ、社交とホステルの予約を可能にします。
+- [한국어](https://www.hostelworld.com/ko/): Access the platform in Korean. 인터랙티브 커뮤니티와 여행 앱을 통해 전 세계 여행객을 연결하여 사교 활동과 호스텔 예약을 제공합니다.

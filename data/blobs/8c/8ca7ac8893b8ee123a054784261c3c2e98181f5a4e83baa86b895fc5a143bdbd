@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><script src="https://cdn.signalfx.com/o11y-gdi-rum/latest/splunk-otel-web.js" crossorigin="anonymous"></script><script>
+              if (typeof SplunkRum !== 'undefined') {
+                SplunkRum.init({
+                  realm: 'us1',
+                  rumAccessToken: 'Pe8QLYjLon0Saaq4jSyyRg',
+                  applicationName: 'idp-dot-com',
+                  deploymentEnvironment: 'prod',
+                });
+              }
+            </script><link rel="preconnect" href="https://user-next.idpwebsite.prd.idp.com"/><link rel="preconnect"/><link rel="preconnect"/><link rel="preconnect"/><link rel="preconnect"/><script async="" type="text/javascript" src="//cdn-4.convertexperiments.com/v1/js/10047580-10049189.js"></script><script>!(function (e) {
+  var t = {};
+  function n(i) {
+    if (t[i]) return t[i].exports;
+    var r = (t[i] = { i: i, l: !1, exports: {} });
+    return e[i].call(r.exports, r, r.exports, n), (r.l = !0), r.exports;
+  }
+  (n.m = e),
+    (n.c = t),
+    (n.d = function (e, t, i) {
+      n.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: i });
+    }),
+    (n.r = function (e) {
+      "undefined" !== typeof Symbol &&
+        Symbol.toStringTag &&
+        Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
+        Object.defineProperty(e, "__esModule", { value: !0 });
+    }),
+    (n.t = function (e, t) {
+      if ((1 & t && (e = n(e)), 8 & t)) return e;
+      if (4 & t && "object" === typeof e && e && e.__esModule) return e;
+      var i = Object.create(null);
+      if (
+        (n.r(i),
+        Object.defineProperty(i, "default", { enumerable: !0, value: e }),
+        2 & t && "string" != typeof e)
+      )
+        for (var r in e)
+          n.d(
+            i,
+            r,
+            function (t) {
+              return e[t];
+            }.bind(null, r)
+          );
+      return i;
+    }),
+    (n.n = function (e) {
+      var t =
+        e && e.__esModule
+          ? function () {
+              return e.default;
+            }
+          : function () {
+              return e;
+            };
+      return n.d(t, "a", t), t;
+    }),
+    (n.o = function (e, t) {
+      return Object.prototype.hasOwnProperty.call(e, t);
+    }),
+    (n.p = "/"),
+    n((n.s = 471));
+})({
+  23: function (e, t, n) {
+    "use strict";
+    function i(e, t) {
+      if (!(e instanceof t))
+        throw new TypeError("Cannot call a class as a function");
+    }
+    n.d(t, "a", function () {
+      return i;
+    });
+  },
+  26: function (e, t, n) {
+    "use strict";
+    function i(e, t) {
+      for (var n = 0; n < t.length; n++) {
+        var i = t[n];
+        (i.enumerable = i.enumerable || !1),
+          (i.configurable = !0),
+          "value" in i && (i.writable = !0),
+          Object.defineProperty(e, i.key, i);
+      }
+    }
+    function r(e, t, n) {
+      return t && i(e.prototype, t), n && i(e, n), e;
+    }
+    n.d(t, "a", function () {
+      return r;
+    });
+  },
+  28: function (e, t, n) {
+    "use strict";
+    n.d(t, "b", function () {
+      return i;
+    }),
+      n.d(t, "a", function () {
+        return r;
+      });
+    var i = "FLYWIRE_INITIATE_AGENTS_INTEGRATION_EXP",
+      r = "FLYWIRE_CLOSE_AGENTS_INTEGRATION_EXP";
+  },
+  4: function (e, t, n) {
+    "use strict";
+    function i(e, t, n) {
+      return (
+        t in e
+          ? Object.defineProperty(e, t, {
+              value: n,
+              enumerable: !0,
+              configurable: !0,
+              writable: !0,
+            })
+          : (e[t] = n),
+        e
+      );
+    }
+    n.d(t, "a", function () {
+      return i;
+    });
+  },
+  471: function (e, t, n) {
+    "use strict";
+    n.r(t);
+    var i = n(4),
+      r = n(28),
+      o = n(23),
+      l = n(26),
+      a = { onClose: "onClose" },
+      s = function () {},
+      u = (function () {
+        function e(t) {
+          var n = this;
+          Object(o.a)(this, e),
+            (this.messageHandler = function (e) {
+              if (e.data && e.data.type)
+                switch (e.data.type) {
+                  case r.a:
+                    n.closeCallback();
+                }
+            }),
+            (this.closeCallback = t[a.onClose] || s),
+            this.init();
+        }
+        return (
+          Object(l.a)(e, [
+            {
+              key: "init",
+              value: function () {
+                window.addEventListener("message", this.messageHandler);
+              },
+            },
+            {
+              key: "destroy",
+              value: function () {
+                window.removeEventListener("message", this.messageHandler);
+              },
+            },
+          ]),
+          e
+        );
+      })(),
+      c = navigator.userAgent.indexOf("Chrome") > -1,
+      d = navigator.userAgent.indexOf("Safari") > -1,
+      f = function () {
+        return !!d && !c;
+      },
+      y = new (function () {
+        var e = this,
+          t = null,
+          n = null,
+          o = null,
+          l = null,
+          s = function () {
+            return 640;
+          },
+          c = function () {
+            return 690;
+          };
+        function d() {
+          (n.style.position = "static"),
+            (n.style.top = ""),
+            (n.style.bottom = ""),
+            (n.style.left = ""),
+            (n.style.right = ""),
+            (n.style.width = Math.min(s(), window.innerWidth) + "px"),
+            (n.style.height = Math.min(c(), window.innerHeight) + "px"),
+            (o.style.paddingRight = "0"),
+            (l.style.borderRadius = "6px");
+        }
+        (this.init = function () {
+          (t = (function () {
+            var e = document.createElement("div");
+            return (
+              (e.style.display = "flex"),
+              (e.style.alignItems = "center"),
+              (e.style.justifyContent = "center"),
+              (e.style.position = "fixed"),
+              (e.style.top = 0),
+              (e.style.bottom = 0),
+              (e.style.left = 0),
+              (e.style.right = 0),
+              (e.style.zIndex = 2147483647),
+              (e.style.backgroundColor = "rgba(56, 73, 91, 0.8)"),
+              e
+            );
+          })()),
+            (n = (function () {
+              var e = document.createElement("div");
+              return (
+                (e.style.display = "flex"),
+                (e.style.flexDirection = "column"),
+                e
+              );
+            })()),
+            (o = (function () {
+              var e = document.createElement("div");
+              (e.style.width = "2px"),
+                (e.style.height = "20px"),
+                (e.style.marginLeft = "10px"),
+                (e.style.backgroundColor = "white"),
+                (e.style.transform = "rotate(45deg)");
+              var t = document.createElement("div");
+              (t.style.width = "2px"),
+                (t.style.height = "20px"),
+                (t.style.backgroundColor = "white"),
+                (t.style.transform = "rotate(90deg)");
+              var n = document.createElement("a");
+              return (
+                (n.style.alignSelf = "flex-end"),
+                (n.style.boxSizing = "border-box"),
+                (n.style.width = "20px"),
+                (n.style.height = "40px"),
+                (n.style.padding = "10px 0"),
+                (n.style.cursor = "pointer"),
+                e.appendChild(t),
+                n.appendChild(e),
+                n.addEventListener("click", function () {
+                  return y.close();
+                }),
+                n
+              );
+            })()),
+            (l = (function () {
+              var e = document.createElement("iframe");
+              return (
+                e.setAttribute(
+                  "src",
+                  "https://agents-integration.flywire.com/"
+                ),
+                (e.style.width = "100%"),
+                (e.style.flexGrow = "1"),
+                (e.style.border = "none"),
+                (e.style.backgroundColor = "white"),
+                e
+              );
+            })()),
+            n.appendChild(o),
+            n.appendChild(l),
+            t.appendChild(n);
+        }),
+          (this.open = function (e, n) {
+            this.initCallbackEngine(n),
+              d(),
+              window.addEventListener("resize", d),
+              document.body.appendChild(t);
+            var i = "https://agents-integration.flywire.com/";
+            l.onload = function () {
+              l.contentWindow.focus(),
+                f
+                  ? setTimeout(function () {
+                      return l.contentWindow.postMessage(
+                        { type: r.b, data: e },
+                        i
+                      );
+                    }, 300)
+                  : l.contentWindow.postMessage({ type: r.b, data: e }, i);
+            };
+          }),
+          (this.initCallbackEngine = function (e) {
+            var t = this.computeMergedCallbacks(e);
+            this.cbEngine = new u(t);
+          }),
+          (this.close = function () {
+            window.removeEventListener("resize", d),
+              this.cbEngine.destroy(),
+              document.body.removeChild(t);
+          }),
+          (this.flywireCallbacks = Object(i.a)({}, a.onClose, function () {
+            e.close();
+          })),
+          (this.computeMergedCallbacks = function (t) {
+            var n = {},
+              i = function (i) {
+                var r = a[i];
+                n[r] = function () {
+                  "function" === typeof t[r] && t[r](),
+                    "function" === typeof e.flywireCallbacks[r] &&
+                      e.flywireCallbacks[r]();
+                };
+              };
+            for (var r in a) i(r);
+            return n;
+          });
+      })(),
+      p = y;
+    window.FlywireIntegration = new (function () {
+      return (
+        p.init(),
+        {
+          initiate: function (e) {
+            var t =
+              arguments.length > 1 && void 0 !== arguments[1]
+                ? arguments[1]
+                : {};
+            p.open(e, t);
+          },
+        }
+      );
+    })();
+  },
+});</script><script>        
+        // Define dataLayer and the gtag function. 
+        window.dataLayer = window.dataLayer || []; 
+        function gtag(){dataLayer.push(arguments)} 
+ 
+        // Default ad_storage to "granted" as per GA team requirements (JIRA : IDPWEB-452). 
+        gtag("consent", "default", {
+              "ad_storage": "granted", 
+              analytics_storage: "granted", 
+              functionality_storage: "granted", 
+              personalization_storage: "granted", 
+              security_storage: "granted",  
+              ad_user_data: "granted",
+              ad_personalization: "granted", 
+              'wait_for_update': 500 /* Note: Allows for the integration of asynchronous consent management platforms (CMPs) by applying a delay to tags firing based on consent*/
+        });
+        </script><script async="" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script><script>var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];</script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-TQ3H962')</script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-MHSG58J');</script><script type="text/javascript">function OptanonWrapper() </script><link rel="icon" type="image/x-icon" href="/images/favicon.ico"/><link rel="preload stylesheet" type="text/css" as="style" href="/css/main-new.css?id=KYpGslfv0dBTzh57Q9-Vx"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="https://cdn-apac.onetrust.com/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="9da5c84a-f861-498a-a0e8-6716ff5b27f5" defer="" data-nscript="beforeInteractive"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer="" data-nscript="beforeInteractive"></script><script src="/_next/static/chunks/webpack-05e2b7ef4c09ff3e.js" defer=""></script><script src="/_next/static/chunks/main-8a9aa25dade9a172.js" defer=""></script><script src="/_next/static/chunks/pages/_app-ec79e1fcc0305262.js" defer=""></script><script src="/_next/static/chunks/pages/404-226625f66fcc9543.js" defer=""></script><script src="/_next/static/KYpGslfv0dBTzh57Q9-Vx/_buildManifest.js" defer=""></script><script src="/_next/static/KYpGslfv0dBTzh57Q9-Vx/_ssgManifest.js" defer=""></script></head><body><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQ3H962" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHSG58J" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"><div id="root"><div class="hidden c-lg:flex bg-grey py-[12px] pr-[24px] flex-row pl-[16px] c-lg:px-[40px] top_nav"><div class="max-w-[1920px] w-full flex mx-auto"><nav class="w-full relative c-lg:justify-end flex items-center" aria-label="Top navigation"><ul class="flex flex-wrap items-center gap-x-[8px] c-lg:gap-[12px] w-full c-lg:w-auto"><li class="pr-[8px] c-lg:pr-[12px] relative after:content-[&#x27;&#x27;] after:absolute after:right-0 after:top-[50%] after:translate-y-[-50%] after:bg-grey-dark after:w-[1px] after:h-[20px] nav_border__right"><a href="/user-sign-in/" class="text-white text-small c-lg:text-para hover:underline block py-[8px] px-[16px]">Join IDP Community<span class="ms-[4px]"><span class="badge badge--darkOrange ">New</span></span></a></li><li class="pr-[8px] c-lg:pr-[12px] relative after:content-[&#x27;&#x27;] after:absolute after:right-0 after:top-[50%] after:translate-y-[-50%] after:bg-grey-dark after:w-[1px] after:h-[20px] nav_border__right"><a href="/blog/article-search/" class="text-white text-small c-lg:text-para hover:underline block py-[8px] px-[16px]">News and articles</a></li><li class="pr-[8px] c-lg:pr-[12px] relative after:content-[&#x27;&#x27;] after:absolute after:right-0 after:top-[50%] after:translate-y-[-50%] after:bg-grey-dark after:w-[1px] after:h-[20px] hover:before:content-[&#x27;&#x27;] hover:before:w-[calc(100%-20px)] hover:before:absolute hover:before:h-full hover:before:rounded-[8px] hover:before:left-0 hover:before:top-0 hover:before:bg-primary-petal focus:before:bg-primary-petal nav_border__right" tabindex="0"><span class="text-white text-small c-lg:text-para py-[8px] px-[16px] flex gap-[4px] cursor-pointer items-center relative">Find us<svg class="" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path></svg></span><div class="invisible opacity-0  absolute right-0 z-40 top-[32px] pt-[24px] top-nav__findus"><div class="max-h-[480px] w-[240px] c-lg:w-[260px] overflow-y-auto overflow-hidden rounded-[8px]"><div class="bg-grey text-white rounded-[8px] overflow-hidden transition-all"><div class="flex flex-col text-small"><div class="p-[16px]"><a href="/education-counsellor-office-finder/" class="btn btn--sm btn--white-outline text-center inline-block w-full">Find nearest IDP offices</a></div><a data-testid="site-switcher" href="/australia/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Australia</a><a data-testid="site-switcher" href="/middleeast/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Bahrain</a><a data-testid="site-switcher" href="/bangladesh/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Bangladesh</a><a data-testid="site-switcher" href="/cambodia/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Cambodia</a><a data-testid="site-switcher" href="/canada/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Canada</a><a data-testid="site-switcher" href="https://www.idp.cn/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP China</a><a data-testid="site-switcher" href="/egypt/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Egypt</a><a data-testid="site-switcher" href="/ghana/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Ghana</a><a data-testid="site-switcher" href="/hongkong/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Hong Kong</a><a data-testid="site-switcher" href="/india/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP India</a><a data-testid="site-switcher" href="/indonesia/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Indonesia</a><a data-testid="site-switcher" href="/iran/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Iran</a><a data-testid="site-switcher" href="/middleeast/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Jordan</a><a data-testid="site-switcher" href="/kenya/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Kenya</a><a data-testid="site-switcher" href="/korea/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Korea</a><a data-testid="site-switcher" href="/middleeast/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Kuwait</a><a data-testid="site-switcher" href="/middleeast/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Lebanon</a><a data-testid="site-switcher" href="/malaysia/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Malaysia</a><a data-testid="site-switcher" href="/mauritius/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Mauritius</a><a data-testid="site-switcher" href="/middleeast/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Middle East</a><a data-testid="site-switcher" href="/nepal/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Nepal</a><a data-testid="site-switcher" href="/newzealand/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP New Zealand</a><a data-testid="site-switcher" href="/nigeria/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Nigeria</a><a data-testid="site-switcher" href="/oman/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Oman</a><a data-testid="site-switcher" href="/pakistan/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Pakistan</a><a data-testid="site-switcher" href="/philippines/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Philippines</a><a data-testid="site-switcher" href="/saudiarabia/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Saudi Arabia</a><a data-testid="site-switcher" href="/singapore/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Singapore</a><a data-testid="site-switcher" href="/srilanka/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Sri Lanka</a><a data-testid="site-switcher" href="/taiwan/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Taiwan, China</a><a data-testid="site-switcher" href="/thailand/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Thailand</a><a data-testid="site-switcher" href="/turkey/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Turkey</a><a data-testid="site-switcher" href="/uae/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP UAE</a><a data-testid="site-switcher" href="/uzbekistan/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Uzbekistan</a><a data-testid="site-switcher" href="/vietnam/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Vietnam</a><a data-testid="site-switcher" href="https://careers.idp.com/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">IDP Corporate</a></div></div></div></div></li><li class="pr-[8px] c-lg:pr-[12px] relative after:content-[&#x27;&#x27;] after:absolute after:right-0 after:top-[50%] after:translate-y-[-50%] after:bg-grey-dark after:w-[1px] after:h-[20px] hover:before:content-[&#x27;&#x27;] hover:before:w-[calc(100%-20px)] hover:before:absolute hover:before:h-full hover:before:rounded-[8px] hover:before:left-0 hover:before:top-0 hover:before:bg-primary-petal focus:before:content-[&#x27;&#x27;] focus:before:w-[calc(100%-20px)] focus:before:absolute focus:before:h-full focus:before:rounded-[8px] focus:before:left-0 focus:before:top-0 focus:before:bg-primary-petal nav_border__right" tabindex="0"><span class="text-white text-small c-lg:text-para py-[8px] px-[16px] flex gap-[4px] cursor-pointer items-center relative">Social<svg class="" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path></svg></span><div class="invisible opacity-0 absolute right-0 z-40 top-[32px] pt-[24px] language_tooltip"><div class=" min-w-[174px] bg-grey text-white rounded-[8px] overflow-hidden transition-all"><div class=" flex flex-col text-small justify-between"><a data-testid="link-target" target="_blank" href="https://www.facebook.com/IDPstudyabroad" aria-label="Facebook" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline"><img class="w-[24px] h-[24px]" src="https://images.ctfassets.net/8bbwomjfix8m/7JHoUXkSiF8AoPi5E2DlmV/73791a5520fddd3c57c543960f811352/Social-Facebook.svg" alt="Facebook"/><p class="">Facebook</p></a><a data-testid="link-target" target="_blank" href="https://www.youtube.com/@idp_iran" aria-label="Youtube" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline"><img class="w-[24px] h-[24px]" src="https://images.ctfassets.net/8bbwomjfix8m/7IMnVOpUBN7m8AggK5Bwrr/60c88549c99281cefc389c453b521368/Social-Youtube.svg" alt="Youtube"/><p class="">Youtube</p></a><a data-testid="link-target" target="_blank" href="https://www.instagram.com/idp_iran/" aria-label="Instagram" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline"><img class="w-[24px] h-[24px]" src="https://images.ctfassets.net/8bbwomjfix8m/7bf5yM2cnsA8AVkQiTfxIE/4d9964d0798629e014b52c675a1a36d0/Social-Instagram.svg" alt="Instagram"/><p class="">Instagram</p></a><a data-testid="link-target" target="_self" href="https://www.tiktok.com/@idpeducation" aria-label="TikTok" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline"><img class="w-[24px] h-[24px]" src="https://images.ctfassets.net/8bbwomjfix8m/1wbXkcbFwLKGcojuO5fOzU/0d142071a8190c3060eee254f5d594c9/Social-Tiktok.svg" alt="TikTok"/><p class="">TikTok</p></a></div></div></div></li><li data-testid="language-switcher" class="pr-[8px] c-lg:pr-[12px] relative hover:before:content-[&#x27;&#x27;] hover:before:w-[calc(100%-16px)] hover:before:absolute hover:before:h-full hover:before:rounded-[8px] hover:before:left-0 hover:before:top-0 hover:before:bg-primary-petal focus:before:bg-primary-petal nav_border__right language-switcher" tabindex="0"><span class="text-white text-small c-lg:text-para py-[8px] px-[16px] flex gap-[4px] cursor-pointer items-center relative capitalize"><svg class="w-[14px] h-[14px]" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"></path></svg> <!-- -->English<svg class="" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path></svg></span><div class="invisible opacity-0 absolute right-0 z-40 top-[32px] pt-[24px] language_tooltip"><div class=" min-w-[174px] max-h-[480px] bg-grey text-white rounded-[8px] overflow-y-auto transition-all"><div class="flex flex-col text-small"><a href="/.well-known/agent.json/" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">English</a><a href="/.well-known/agent.json/?lang=km" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">ភាសាខ្មែរ</a><a href="/.well-known/agent.json/?lang=tw" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">繁體中文（台灣）</a><a href="/.well-known/agent.json/?lang=hk" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">繁體中文</a><a href="/.well-known/agent.json/?lang=zk" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">简体中文</a><a href="/.well-known/agent.json/?lang=id" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">Bahasa Indonesia</a><a href="/.well-known/agent.json/?lang=fa" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">فارسی</a><a href="/.well-known/agent.json/?lang=ko" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">한국어</a><a href="/.well-known/agent.json/?lang=ar" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">العربية</a><a href="/.well-known/agent.json/?lang=th" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">ไทย</a><a href="/.well-known/agent.json/?lang=tr" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">Türkçe</a><a href="/.well-known/agent.json/?lang=vn" class="flex items-center hover:bg-primary-petal p-[16px] gap-[8px] cursor-pointer transition-all text-white hover:no-underline ">Tiếng Việt</a></div></div></div></li></ul></nav></div></div><header id="header" data-testid="header-component" class="z-[35] h-[58px] c-lg:h-auto sticky top-0 px-[16px] c-xs:px-[24px] c-xl:px-[40px] flex items-center justify-center flex-row bg-white c-lg:px-[40px] shadow-custom-sm"><div class="max-w-[1920px] flex items-center justify-between flex-row w-full"><div class="flex flex-shrink-0 items-center"><a href="/" aria-label="Home"><img alt="IDP Education" loading="lazy" width="64" height="24" decoding="async" data-nimg="1" class="block h-auto w-[64px] c-xl:hidden ml-x-sm" style="color:transparent" src="https://images.ctfassets.net/8bbwomjfix8m/55AePSl50ZnwVBce2lROSW/ff063dcfbec1eb176c59e2179eef57e2/idp-logo.svg"/><img alt="IDP Education" loading="lazy" width="100" height="56" decoding="async" data-nimg="1" class="hidden h-auto w-[100px] c-xl:block" style="color:transparent" src="https://images.ctfassets.net/8bbwomjfix8m/55AePSl50ZnwVBce2lROSW/ff063dcfbec1eb176c59e2179eef57e2/idp-logo.svg"/><span class="sr-only">IDP Education</span></a></div><nav aria-label="primary navigation" class="-right-full max-w-container transition-all mx-auto w-full flex fixed h-full z-10 top-0 bg-white justify-start items-start flex-col c-lg:relative c-lg:justify-center c-lg:items-center c-lg:right-0 c-lg:bg-transparent flex-1"><div class="flex justify-between shadow-custom-10 w-full py-[16px] px-[24px] c-lg:hidden items-center"><img alt="IDP Education" loading="lazy" width="64" height="24" decoding="async" data-nimg="1" class="w-[64px] h-auto" style="color:transparent" src="https://images.ctfassets.net/8bbwomjfix8m/55AePSl50ZnwVBce2lROSW/ff063dcfbec1eb176c59e2179eef57e2/idp-logo.svg"/><button aria-label="Close navigation"><svg class="w-[16px] h-[16px]" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button></div><ul id="header-main-menu" class="flex overflow-y-auto c-lg:overflow-visible c-lg:flex-wrap c-lg:text-small gap-x-[20px] c-xl2:text-para c-xl2:gap-x-[32px] relative flex-col items-start c-lg:items-center w-full c-lg:flex-row c-lg:px-[40px] menu_bar c-lg:p-0 c-lg:px-[40p

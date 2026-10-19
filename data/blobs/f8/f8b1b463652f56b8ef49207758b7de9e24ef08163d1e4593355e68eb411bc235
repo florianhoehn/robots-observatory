@@ -1,0 +1,123 @@
+{
+  "protocolVersion": "0.3.0",
+  "name": "ActiveCampaign",
+  "description": "ActiveCampaign is a marketing automation and CRM platform for email marketing, marketing automation, CRM, and sales automation. Agent integration is provided over the Model Context Protocol (MCP), not A2A JSON-RPC — see `url` and `mcpServer` below for the callable surface. Use this card to discover what ActiveCampaign can do; use the MCP server to actually do it.",
+  "url": "https://developers.activecampaign.com/page/mcp",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "ActiveCampaign, LLC",
+    "url": "https://activecampaign.com"
+  },
+  "documentationUrl": "https://developers.activecampaign.com",
+  "iconUrl": "https://www.activecampaign.com/site/assets/site-icons/favicon-32x32.png",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["application/json"],
+  "securitySchemes": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Api-Token",
+      "description": "Per-user ActiveCampaign API token, found in Settings → Developer. Sent against the account-specific REST base URL https://{account}.api-us1.com/api/3."
+    }
+  },
+  "security": [{ "apiKey": [] }],
+  "skills": [
+    {
+      "id": "contact-management",
+      "name": "Contact Management",
+      "description": "Create, update, retrieve, and delete contacts. Sync contact data, manage contact lists, bulk import contacts, and view contact activity history.",
+      "tags": ["contacts", "crm", "leads", "subscribers", "email"],
+      "examples": [
+        "Create a new contact with email and custom fields",
+        "Find all contacts subscribed to a specific list",
+        "Sync contact data from an external system",
+        "Bulk import contacts from a CSV"
+      ]
+    },
+    {
+      "id": "list-and-tag-management",
+      "name": "List and Tag Management",
+      "description": "Manage contact lists and tags. Add or remove contacts from lists, create and apply tags, and segment contacts for targeted campaigns.",
+      "tags": ["lists", "tags", "segmentation", "audiences"],
+      "examples": [
+        "Add a contact to a marketing list",
+        "Create and apply a tag to a contact segment",
+        "Retrieve all contacts with a specific tag"
+      ]
+    },
+    {
+      "id": "email-campaign-management",
+      "name": "Email Campaign Management",
+      "description": "Create, edit, duplicate, and retrieve email campaigns. Manage campaign messages and send targeted email communications.",
+      "tags": ["campaigns", "email", "newsletters", "broadcasts"],
+      "examples": [
+        "Create a new email campaign",
+        "Duplicate an existing campaign for A/B testing",
+        "List all active email campaigns"
+      ]
+    },
+    {
+      "id": "marketing-automation",
+      "name": "Marketing Automation",
+      "description": "Manage automations and automation workflows. Enroll contacts in automations, list active automations, and monitor automation performance.",
+      "tags": ["automation", "workflows", "triggers", "sequences"],
+      "examples": [
+        "List all automations in the account",
+        "Enroll a contact in an automation sequence",
+        "Check which automations a contact is enrolled in"
+      ]
+    },
+    {
+      "id": "crm-and-deals",
+      "name": "CRM and Deal Management",
+      "description": "Manage deals, pipelines, deal stages, and sales activities. Create and track deals, assign contacts to deals, and move deals through pipeline stages.",
+      "tags": ["crm", "deals", "pipelines", "sales", "opportunities"],
+      "examples": [
+        "Create a new deal for a contact",
+        "Move a deal to the next pipeline stage",
+        "List all open deals in a pipeline",
+        "Add a task or note to a deal"
+      ]
+    },
+    {
+      "id": "custom-fields",
+      "name": "Custom Fields and Field Values",
+      "description": "Create and manage custom fields for contacts, deals, and accounts. Set and update custom field values for segmentation and personalization.",
+      "tags": ["custom-fields", "personalization", "data", "attributes"],
+      "examples": [
+        "Create a new custom field for contacts",
+        "Set a custom field value for a contact",
+        "Retrieve all custom fields in the account"
+      ]
+    },
+    {
+      "id": "account-management",
+      "name": "Account (Company) Management",
+      "description": "Create, update, and manage account (company) records and associate contacts with accounts.",
+      "tags": ["accounts", "companies", "organizations", "b2b"],
+      "examples": [
+        "Create a new company account",
+        "Associate a contact with an account",
+        "Retrieve all accounts in the CRM"
+      ]
+    }
+  ],
+  "mcpServer": {
+    "description": "ActiveCampaign provides a remote MCP server for direct agent integration. Users can find their personal Remote MCP URL in ActiveCampaign Developer Settings.",
+    "documentationUrl": "https://developers.activecampaign.com/page/mcp",
+    "toolsIndexUrl": "https://developers.activecampaign.com/page/mcp-available-tools/",
+    "serverCardUrl": "https://www.activecampaign.com/.well-known/mcp/server-card.json",
+    "authRequired": true,
+    "authType": "api-key-in-url"
+  },
+  "apiDocumentation": {
+    "llmsTxt": "https://developers.activecampaign.com/llms.txt",
+    "authGuide": "https://www.activecampaign.com/auth.md",
+    "restApiBase": "https://{account}.api-us1.com/api/3"
+  }
+}

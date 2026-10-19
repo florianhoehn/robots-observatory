@@ -1,0 +1,190 @@
+#robots_txt_lt_english.php
+
+User-agent: Twitterbot
+Disallow: 
+Allow: /work/book/*
+
+User-agent: 008
+Disallow: /
+
+User-agent: Sosospider
+Disallow: /
+
+User-agent: AccompanyBot
+Disallow: /
+
+User-agent: *
+Content-signal: search=yes, ai-train=no
+Crawl-delay: 2
+Disallow: /ajax_*
+Disallow: /ajaxinc_*
+Disallow: /api_*
+Disallow: /api-*
+Disallow: /api-*
+Disallow: /api/
+Disallow: /api/*
+Disallow: /catalog_bottom
+Disallow: /catalog_bottom*
+Disallow: /catalog_top
+Disallow: /catalog_top*
+Disallow: /catalog/
+Disallow: /catalog.php
+# Same member-catalog content as /catalog.php, different entry point. Venue pages alone emit
+# ~347 of these per page (catalog_resultset.php?view=&type=&id=), so it was a large crawlable
+# surface of parameterised member-catalog searches. Added 2026-09-19.
+Disallow: /catalog_resultset.php
+Disallow: /combine.php*
+Disallow: /combine.php
+Disallow: /author_split.php
+Disallow: /author_split.php*
+Disallow: /author_claim.php
+Disallow: /author_cloud.php
+Disallow: /authorlink.php
+Disallow: /authormerge.php
+Disallow: /dotimer.php
+Disallow: /files/
+# No rule for /lcc.php. It was a dev scratch page, deleted 2026-09-19; the URL now 404s.
+# A Disallow here would be counterproductive: a blocked URL is never fetched, so Google
+# would never see the 404 and the URL would sit in the index indefinitely. The real LCC
+# pages are /lcc and /lcc/{code} and are crawlable.
+Disallow: /inc_*
+Disallow: /ajaxinc_*
+Disallow: /ajax_*
+Disallow: /isbn/
+Disallow: /ISBN/
+Disallow: /ltw/
+Disallow: /ltw*
+Disallow: /m/
+# robots.txt path matching is CASE-SENSITIVE, so this rule only ever matched the uppercase
+# spelling. The site links, and the sitemap submits, the lowercase /mds/ form -- 150,000 codes
+# across three ddc_new_*.xml.gz files -- so MDS was never actually blocked, which is just as
+# well because it is meant to be indexed. The uppercase path serves the same page (200, no
+# redirect), so the rule was blocking a duplicate nothing links. Kept, and now paired with a
+# self-referencing canonical on the lowercase form in mds_controller.php. Reviewed 2026-09-19.
+Disallow: /MDS/
+Disallow: /readmessage.php*
+Disallow: /search_works*
+Disallow: /search*
+Disallow: /title/
+# Work pages: only the canonical /work/N/t/Slug form is crawlable. Longest rule wins,
+# so Allow (/work/*/t/, 10 chars) beats Disallow (/work/, 6) and the per-work
+# Disallow lines below (/work/NNNNNNNN, 14) still beat the Allow.
+Allow: /work/*/t/
+Disallow: /work/
+Disallow: /nseries/edit/
+Disallow: /nseries/related/
+Disallow: /nseries/descriptions/
+Disallow: /nseries/names/
+Disallow: /nseries/combine/
+Disallow: /nseries/works/
+Disallow: /nseries/relationship/
+Disallow: /nseries/history/
+Disallow: /nseries/groups/
+Disallow: /nseries/publisher/
+Disallow: /nseries/userhistory/
+Disallow: /nseries/allhistory
+Disallow: /author/*/stats
+Disallow: /author/*/readalikes
+Disallow: /author/*/names
+Allow: /author/*/main
+Disallow: /author/*/
+Disallow: /a/reviews/
+Disallow: /a/helperhub/
+Disallow: /a/workexplorer/
+Disallow: /a/charts/
+Disallow: /a/readalikes/
+Disallow: /a/names/
+Disallow: /a/common_knowledge/
+Disallow: /a/issues/
+Disallow: /a/annotations/
+Disallow: /a/stats/
+Disallow: /profile/*/recommendations
+Disallow: /profile/*/readalikes
+Disallow: /profile/*/recommendations/member
+Disallow: /profile/*/recommendations/memberbooks
+Disallow: /profile/*/recommendations/bymember
+Disallow: /profile/*/recommendations/unsuggester
+Disallow: /profile_reviews.php
+# /stats/ -- block REMOVED 2026-09-20, deliberately, and this needs explaining before anyone
+# puts it back.
+#
+# Member stats pages should not be in the index (decided 2026-09-20). They were blocked here,
+# and they are in the index anyway: /stats/unpetaling/overview, /stats/mb1066/genre,
+# /stats/notion/ddc and more, all live in Google right now. That is not a contradiction -- a
+# Disallow stops CRAWLING, not INDEXING. Google will hold a URL it found from links whether or
+# not it may fetch it, and while the block stands it can never read a noindex, because it can
+# never fetch the page. The block is what made the situation permanent.
+#
+# nstats_controller.php and yearinreview_controller.php now send noindex. For that to do
+# anything, these pages have to be crawlable. Expect a period of extra crawl on ~1M members x
+# ~20 stat types while Google reads the directive and drops them; once the index is clean the
+# block can be restored if crawl budget matters, and at that point it will be doing its actual
+# job (saving fetches) rather than freezing a bad state.
+#
+# Do not restore these three lines until the /stats/ URLs are gone from a site: search.
+#Disallow: /profile/*/stats/library
+#Disallow: /profile/*/stats/*
+#Disallow: /stats/
+Disallow: /profile/tagcloud/*
+Disallow: /profile/authorgallery/*
+Disallow: /profile/tagmirror/*
+Disallow: /review/
+Disallow: /connect
+Disallow: /tagcloud/*
+Disallow: /authorgallery.php
+Disallow: /home/*
+Disallow: /work-info.php
+Disallow: /work-info/
+Disallow: /rss/tags/
+Disallow: /commonknowledge/search.php*
+Disallow: /matrix/*
+Disallow: /la/*
+Disallow: /forlibraries/*
+Disallow: /profile/gravlady
+
+Disallow: /work/12275901
+Disallow: /work/15929672
+Disallow: /work/11923187
+Disallow: /work/14228188
+Disallow: /work/14228203
+Disallow: /work/14228209
+Disallow: /work/14228213
+Disallow: /work/14228218
+Disallow: /work/14228220
+Disallow: /work/14228224
+Disallow: /work/14228228
+Disallow: /work/14228229
+
+Disallow: /signup_twitter.php
+Disallow: /signup_fb.php
+Disallow: /signup_verify.php
+
+Disallow: /local/map/*
+Disallow: /local/place/*
+
+# REMOVED 2026-09-20: a `User-agent: bingbot` group containing only `Crawl-delay: 2`.
+#
+# A crawler obeys exactly ONE group -- the most specific one whose user-agent matches -- and
+# ignores every other group, including `User-agent: *`. So naming bingbot here did not ADD a
+# crawl delay to the site-wide rules; it gave Bing a group of its own with no Disallow lines in
+# it, exempting Bing from ALL ~90 exclusions below: /ajax_*, /catalog.php, /catalog_resultset.php,
+# the /a/ and /profile/ subpages, everything.
+#
+# The `Crawl-delay: 2` it contained is already in the `User-agent: *` group, so deleting the
+# group loses nothing and restores the exclusions for Bing.
+#
+# Same mechanism applies to the `User-agent: Twitterbot` group at the top of this file, which is
+# presumably deliberate (card fetching) -- but be aware it exempts Twitterbot from everything too.
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: AccompanyBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+
+
+Sitemap: https://sitemaps.librarything.com/sitemaps/siteindex_eng.xml	

@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /xmlui/bitstream/handle/nsu/1808/spr_8.pdf
+Disallow: /filf/rpha/lib/theory-method-history.pdf
+Disallow: /xmlui/bitstream/handle/nsu/9003/search.pdf
+Disallow: /xmlui/bitstream/handle/nsu/1808/spr_5.pdf
+Disallow: /xmlui/bitstream/handle/nsu/10124/Lavrinenko%2CBabina_fiziol%20krovi-%D0%9A%D0%A0%D0%98.pdf
+Disallow: /smk/files/idef.pdf
+Disallow: /xmlui/bitstream/handle/nsu/9054/tanenbaum_AC.pdf
+Disallow: /library/olga/songs/Berkovskiy3.htm

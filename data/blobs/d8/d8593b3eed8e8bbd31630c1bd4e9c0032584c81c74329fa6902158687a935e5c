@@ -1,0 +1,52 @@
+# ---------------------------------------------------------------
+# SITEMAP DECLARATIONS
+# ---------------------------------------------------------------
+Sitemap: https://www.essence.com/sitemaps.xml
+
+# ---------------------------------------------------------------
+# GLOBAL RULES - All crawlers
+# ---------------------------------------------------------------
+User-agent: *
+
+# --- Allow: content-critical assets ---
+Allow: /wp-content/uploads/
+Allow: /wp-content/themes/
+Allow: /wp-content/plugins/
+Allow: /wp-admin/admin-ajax.php
+
+# --- Block: WordPress admin and system paths ---
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /wp-cron.php
+Disallow: /xmlrpc.php
+
+# --- Block: feeds (prevents duplicate content crawling) ---
+Disallow: /feed/
+Disallow: /*/feed/
+Disallow: /comments/feed/
+
+# --- Block: tag archives (Optional: remove if tags drive good traffic) ---
+Disallow: /tag/
+Disallow: /tags/
+Disallow: /t/
+
+# --- Block: Affiliate Products 
+Disallow: /affiliate-product/
+
+# --- Block: search ---
+Disallow: /search/
+Disallow: /?s=
+Disallow: /?search=
+
+# --- Block: print / embed views ---
+Disallow: /*/print/
+Disallow: /*/embed/
+Disallow: /embed/
+Disallow: /print/
+
+# --- Block: core parameter waste (Let canonicals handle the rest) ---
+Disallow: /*?utm_
+Disallow: /*?replytocom=
+Disallow: /*?preview=

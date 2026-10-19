@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- <meta http-equiv="refresh" content="5;url=http://www.tianqi.com/"> -->
+	<script src="//static.tianqistatic.com/static/tianqi2018/js/404tongji.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="//static.tianqistatic.com/static/css/404.css" type="text/css">
+    <title>首页</title>
+	<style>
+		.hide{display: none !important;}
+	</style>
+</head>
+<body>
+<div class="blank40"></div>
+<div class="main">
+    <!-- 单页 -->
+    <div class="error">
+        <div class="blank50"></div>
+        <div class="blank70"></div>
+        <div class="ct1"><img src="//static.tianqistatic.com/static/images/error.png"></div>
+        <div class="blank50"></div>
+        <p>啊哦~一不小心闯进了未知领域，请点击下面按钮返回首页……</p>
+        <div class="blank50"></div>
+        <div class="time" id="time"><span id="totalSecond">3</span> 秒后将跳转到首页...</div>
+        <a class="btn" href="//www.tianqi.com">返回首页</a>
+        <div class="blank70"></div>
+    </div>
+    <!-- 单页 -->
+</div>
+<div class="blank50"></div>
+<div class="tongji" style="display:none;">
+	<script language="javascript" type="text/javascript">tongji404()</script>
+</div>
+<script language="javascript" type="text/javascript">
+    var second = totalSecond.innerText;
+    setInterval("redirect()", 1000);
+    function redirect(){
+        totalSecond.innerText=--second;
+        if(second<0) {
+            totalSecond.innerText=0;
+            location.href='//www.tianqi.com';
+        }
+    }
+</script>
+<!-- 尾部 -->
+<!-- 尾部 -->
+<script language="javascript" type="text/javascript">
+    function GetRequest2(key){
+		var url = location.search;  
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) 
+		{
+			var str = url.substr(1);
+			strs = str.split("&");
+			for (var i = 0; i < strs.length; i++) 
+			{
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			}
+		}
+		var value = theRequest[key];
+		return value;
+	 }
+	var str='err'
+	var page=GetRequest2(str);
+	if(page == undefined || page == null || page ==''){
+		setTimeout(function(){
+			window.location.href= '//www.tianqi.com?err=404'
+		},3000)
+	}else{
+		document.getElementById('time').style.cssText='display:none !important'
+	}
+</script>
+</body>
+</html>

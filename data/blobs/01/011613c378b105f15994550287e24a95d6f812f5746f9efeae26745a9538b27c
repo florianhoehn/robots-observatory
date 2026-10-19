@@ -1,0 +1,345 @@
+# Pair, combo and per-day URL classes that already serve noindex (robots meta tag or
+# X-Robots-Tag header). Search Console showed 3.6 million pair pages crawled (2026-09-18), 94% of
+# the most recently fetched noindex URLs, and a 2026-10-02 crawl-log sample still had 38 of 123
+# Googlebot fetches on the four /invest/ classes below. A noindex page still has to be fetched
+# to be seen, so only a Disallow returns that crawl budget. No sitemap URL matches any of these rules,
+# and none of these paths redirects to an indexable page.
+#   /profitability/{sym}/{metricA}/{metricB}
+#   /invest/technicalIndicator/{sym}--{indicatorA}--{indicatorB}
+#   /invest/symbolRatiosCompareOverTime/{sym}[?t={type} | ?r1={a}&r2={b}]
+#   /invest/pair-correlation/{symA}/{symB}/{names}
+#   /invest/trends/{metric}/{sym[,sym...]}
+#   /invest/history/{sym}--{name}-traded-on--{date}
+# =========================
+# DEFAULT: BLOCK EVERYTHING
+# =========================
+User-agent: *
+Disallow: /
+
+# Optional crawl pacing (non-Google bots)
+Crawl-delay: 15
+
+# Block noisy/internal endpoints
+Disallow: /*topSuggest*
+Disallow: /*act.ma*
+Disallow: /*.php*
+Disallow: /scripts/
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+Disallow: /*act.ma?*
+
+# =========================
+# ALLOW MAJOR SEARCH ENGINES
+# =========================
+
+# act.ma stays crawlable for Googlebot: pages such as /competition/ and
+# /correlations/ load their content through it, and blocking it left the
+# rendering crawler with empty 68-word pages sitewide.
+User-agent: Googlebot
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+# Google News uses the same validated v2 publication URLs as Search.
+User-agent: Googlebot-News
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+# /act.ma is the AJAX endpoint that /competition/, /executives/ and /correlations/ render
+# their content through. It was blocked for every crawler until 2026-07, which emptied those
+# pages for Google; the July fix opened it for Googlebot only. Open since 2026-09-20 for the
+# search engines and AI search crawlers below as well, so they see the full page. Applebot,
+# YandexBot and Slurp keep the block: Applebot alone is most of the verified-bot volume, so
+# opening it there is a server-load decision.
+# Bing reads Crawl-delay as one fetch per N-second window: 15 capped it at about 5,800 URLs a day;
+# 3 allows up to about 28,800 a day; prod served random profitability pages in ~0.4 s each (Oct 12 2026 sample).
+# Verified Bingbot passes the WAF before its rate rules (allow-verified-search-bots, priority 25).
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 3
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 15
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 15
+Disallow: /*topSuggest*
+Disallow: /*act.ma*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: Applebot
+Allow: /
+Crawl-delay: 15
+Disallow: /*topSuggest*
+Disallow: /*act.ma*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 15
+Disallow: /*topSuggest*
+Disallow: /*act.ma*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+# =========================
+# ALLOW AI SEARCH / RETRIEVAL AGENTS
+# (user-triggered fetchers and AI-search indexers - they cite and
+# link pages in AI answers; training crawlers stay blocked below)
+# =========================
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 15
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+# Google-Extended: lets Google use content for Gemini / Vertex AI grounding and citation
+# (does not affect Search ranking, which is governed by Googlebot above).
+User-agent: Google-Extended
+Allow: /
+Disallow: /*topSuggest*
+Disallow: /*act.ma*
+Disallow: /*.php*
+Disallow: /*.info*
+Disallow: /wp-content/
+Disallow: /*modern-ticker*
+Disallow: /profitability/*/*/
+Disallow: /invest/technicalIndicator/*--*--
+Disallow: /invest/symbolRatiosCompareOverTime/
+Disallow: /invest/pair-correlation/
+Disallow: /invest/trends/
+Disallow: /invest/history/
+
+# =========================
+# BLOCK AI TRAINING BOTS
+# =========================
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# =========================
+# BLOCK SEO / SCRAPERS
+# =========================
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: Screaming Frog SEO Spider
+Disallow: /
+
+# =========================
+# BLOCK BAIDU
+# =========================
+
+User-agent: Baiduspider
+Disallow: /
+
+# =========================
+# LEGACY BAD BOTS
+# =========================
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: larbin
+Disallow: /
+
+User-agent: libwww
+Disallow: /
+
+# =========================
+# SITEMAPS
+# The index lists every child sitemap (statement-row shards, per-axis
+# maps); listing children here as well let this file drift from the index.
+# =========================
+
+Sitemap: https://www.macroaxis.com/sitemap.xml

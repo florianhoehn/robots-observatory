@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Access Deny - 403 Forbidden</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Lato");
+
+    * {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Lato", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom right, #EEE, #AAA);
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #007bff;
+      color: white;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #output {
+      white-space: pre-wrap;
+      background: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+    }
+
+    h1 {
+      margin: 40px 0 20px;
+    }
+
+    .lock {
+      border-radius: 5px;
+      width: 55px;
+      height: 45px;
+      background-color: #333;
+      animation: dip 1s;
+      animation-delay: 1.5s;
+      animation-iteration-count: infinite;
+    }
+
+    .lock::before,
+    .lock::after {
+      content: "";
+      position: absolute;
+      border-left: 5px solid #333;
+      height: 20px;
+      width: 15px;
+      left: calc(50% - 12.5px);
+    }
+
+    .lock::before {
+      top: -30px;
+      border: 5px solid #333;
+      border-bottom-color: transparent;
+      border-radius: 15px 15px 0 0;
+      height: 30px;
+      animation: lock 2s, spin 2s;
+    }
+
+    .lock::after {
+      top: -10px;
+      border-right: 5px solid transparent;
+      animation: spin 2s;
+    }
+
+    @keyframes lock {
+      0% {
+        top: -45px;
+      }
+
+      65% {
+        top: -45px;
+      }
+
+      100% {
+        top: -30px;
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: scaleX(-1);
+        left: calc(50% - 30px);
+      }
+
+      65% {
+        transform: scaleX(1);
+        left: calc(50% - 12.5px);
+      }
+    }
+
+    @keyframes dip {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="lock"></div>
+  <h1>Access to this page is restricted</h1>
+  <p>Rule ID: 4dc548806b28ca96976b26de0a1b2d49b6d5255d</p>
+  <p>RAY ID: 647bff6b7c-cp5h4-640555e4-e195-4685-aa21-a02f5b73560a</p>
+  <div id="output">Loading...</div>
+  <div class="message">
+    <button id="copyButton">Copy to Clipboard</button>
+    <script>
+      const outputElement = document.getElementById('output');
+      const copyButton = document.getElementById('copyButton');
+
+      // Fetch trace data from Cloudflare
+      fetch('https://cloudflare.com/cdn-cgi/trace')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          outputElement.textContent = `Rule ID: 4dc548806b28ca96976b26de0a1b2d49b6d5255d\nRAY ID: 647bff6b7c-cp5h4-640555e4-e195-4685-aa21-a02f5b73560a\n\n${data}`;
+        })
+        .catch(error => {
+          outputElement.textContent = `Error: ${error.message}`;
+        });
+
+      // Copy to clipboard functionality
+      copyButton.addEventListener('click', () => {
+        const textToCopy = outputElement.textContent;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+        //  alert('Copied to clipboard!');
+        }).catch(err => {
+        //  alert('Failed to copy: ' + err);
+        });
+      });
+    </script>
+  </div>
+</body>
+
+</html>

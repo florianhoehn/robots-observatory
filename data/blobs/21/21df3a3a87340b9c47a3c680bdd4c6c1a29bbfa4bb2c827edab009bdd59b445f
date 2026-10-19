@@ -1,0 +1,49 @@
+<html><head><meta charset="utf-8"></head><body>
+        <div style="text-align:center;margin-top:100px;font-family:sans-serif;">
+            <h3>瀏覽器安全檢查中...</h3>
+            <p>Please wait while we verify your browser window.</p>
+        </div>
+        <script type="text/javascript">
+        (function(){
+            if (navigator.webdriver) return;
+
+            function buf2hex(buffer) {
+                return Array.prototype.map.call(new Uint8Array(buffer), x => ("00" + x.toString(16)).slice(-2)).join("");
+            }
+
+            async function solvePoW() {
+                var challenge = "0bb2fe071f5bd81fa602695618f0e750";
+                var ts = "1792442728";
+                var diff = 4;
+                var targetPrefix = "0".repeat(diff);
+                var nonce = 0;
+                
+                var encoder = new TextEncoder();
+                
+                while (true) {
+                    var text = challenge + "|" + ts + "|" + nonce;
+                    var data = encoder.encode(text);
+                    
+                    var hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                    var hashHex = buf2hex(hashBuffer);
+
+                    if (hashHex.startsWith(targetPrefix)) {
+
+                        var now = new Date();
+                        now.setTime(now.getTime() + 86400000);
+                        var g = "; expires=" + now.toGMTString() + "; path=/" + "; domain=.eyny.com" + "; SameSite=Lax";
+                        
+
+                        document.cookie = "ae920c0_n=" + nonce + g;
+                        document.cookie = "ae920c0_ts=" + ts + g;
+                        document.cookie = "ae920c0_ch=" + challenge + g;
+                        
+                        setTimeout(function(){ location.replace(location.href); }, 300);
+                        break;
+                    }
+                    nonce++;
+                }
+            }
+            try { solvePoW(); } catch(err) { location.reload(); }
+        })();
+        </script></body></html>

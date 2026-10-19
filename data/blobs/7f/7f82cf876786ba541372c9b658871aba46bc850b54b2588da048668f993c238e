@@ -1,0 +1,49 @@
+User-agent:*
+Allow: /.well-known/
+Disallow: /*zoomImages
+Disallow: /store/8480ui-dir/
+Disallow: /store-finder/gotostore?*CSRF*
+#Don't index the review pages
+Disallow: /p/writePowerReview
+Disallow: /p/securedWriteReview
+Disallow: /my-account$
+Disallow: /my-account/
+Disallow: /login$
+Disallow: /login/
+Disallow: /checkout/
+#Prevent doubled up invalid URLs
+Disallow: */p/*/c/*
+Disallow: */c/*/p/*
+Disallow: */c/*/c/*
+Disallow: */p/*/p/*
+#Don't index the cart page
+Disallow: /cart
+#Block all traffic going to dynatrace
+Disallow: */dynaTraceMonitor
+#Block thankyou pages
+Disallow: */thank-you
+Disallow: /trade/installer/thankyou
+Disallow: /book-consultation-thank-you
+Disallow: /thankyou
+Disallow: /tradepro/thank-you-new-customer
+#Block Error Pages
+Disallow: /error/*
+#Block Search Result Pages
+Disallow: /search?*
+Disallow: /search
+#Block Category Pages degrading website performance 
+Disallow: /*?category=tiling&sku
+Disallow: /*?category=paint&sku
+Disallow: /*?category=paving&sku
+Disallow: /*?category=paint_hub
+Disallow: /*?category=tiling_hub
+Disallow: /*?category=paving_hub
+Disallow: /*?olapicFilter=
+# Disallow 3 or more filters (Standard `:` syntax)
+Disallow: /*?q=*:*:*:*:*:*:*
+# Disallow 3 or more filters (Encoded `%3A` syntax)
+Disallow: /*?q=*%3A*%3A*%3A*%3A*%3A*%3A*
+Sitemap: https://www.wickes.co.uk/sitemap.xml
+Sitemap: https://www.wickes.co.uk/featured/th-sitemapIndex.xml.gz
+Allow: /Products/*?*q=*brandName*
+Disallow: /Products/*?*q=*brand*

@@ -1,0 +1,169 @@
+# =============================================================================
+# Content Signals Policy
+# As a condition of accessing this website, you agree to abide by the
+# following content signals:
+# (a) If a content-signal = yes, you may collect content for the
+#     corresponding use.
+# (b) If a content-signal = no, you may not collect content for the
+#     corresponding use.
+# (c) If the website operator does not include a content signal for a
+#     corresponding use, the website operator neither grants nor restricts
+#     permission via content signal with respect to the corresponding use.
+# The content signals and their meanings are:
+# search: building a search index and providing search results (e.g., returning
+#         hyperlinks and short excerpts from your website's contents). Search
+#         does not include providing AI-generated search summaries.
+# ai-input: inputting content into one or more AI models (e.g., retrieval
+#           augmented generation, grounding, or other real-time taking of
+#           content for generative AI search answers).
+# ai-train: training or fine-tuning AI models.
+# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF
+# RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
+# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
+#
+# NOTE: ai-train=yes is set intentionally. maurices has confirmed it wants its
+# content used for AI model training and scraping, so we are NOT opting out.
+# Legal should confirm the rights-reservation wording above before deploy.
+# =============================================================================
+# =============================================================================
+# maurices.com robots.txt
+# Last updated: July 2026
+#
+# HOW THIS FILE IS ORGANIZED
+# AI crawlers are named in purpose-built groups so their access is documented,
+# insulated from future edits to the wildcard block, and ready to change on its
+# own if the training decision is ever revisited. Naming them is deliberate and
+# is current best practice; the point is to control each type of AI system on
+# purpose rather than by accident.
+#
+# TWO KINDS OF EXCLUSIONS, HANDLED IN TWO PLACES
+#   1. Commerce and account plumbing (cart, checkout, sign-in, internal search,
+#      test). No crawler should index these, so the short, stable list is
+#      mirrored in the allow groups and the wildcard. It rarely changes.
+#   2. Crawl-budget hygiene (Endeca facets, Bazaarvoice params, ATG servlet).
+#      This matters only for the search engines whose ranking budget we protect,
+#      so it lives ONCE, in the wildcard block, and is not duplicated anywhere.
+#      This is the high-churn set, and keeping it in one place is what prevents
+#      the two-copies-drift problem.
+#
+# MAINTENANCE RULE
+#   Add a new plumbing path? Add it to both allow groups AND the wildcard.
+#   Add or change a faceted-parameter rule? Wildcard block only.
+#
+# Traditional search crawlers (Googlebot, Bingbot, Applebot) are NOT named on
+# purpose. They fall through to the wildcard and receive the full hygiene set,
+# which is exactly where their crawl-budget protection needs to live.
+# =============================================================================
+# -----------------------------------------------------------------------------
+# AI retrieval, citation, and user-fetch crawlers.
+# These power AI answers and citations (ChatGPT, Claude, Perplexity, and others)
+# and the live fetches that happen when a user asks an assistant to read a page.
+# Full access. Kept separate from training so each decision stands alone.
+# -----------------------------------------------------------------------------
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Amazonbot
+User-agent: DuckAssistBot
+User-agent: Meta-ExternalFetcher
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+Disallow: /search
+Disallow: /account/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /signin
+Disallow: /sign-in
+Disallow: /test/
+# -----------------------------------------------------------------------------
+# AI training crawlers.
+# maurices wants its content used for model training, so these are allowed.
+# Kept as a separate group so this single decision can be reversed on its own,
+# by flipping Allow to Disallow here, without touching retrieval access above.
+# -----------------------------------------------------------------------------
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Meta-ExternalAgent
+User-agent: cohere-ai
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+Disallow: /search
+Disallow: /account/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /signin
+Disallow: /sign-in
+Disallow: /test/
+# -----------------------------------------------------------------------------
+# Training opt-out tokens, intentionally NOT opted out.
+# Setting these to Allow keeps maurices in Google (Gemini/Vertex) and Apple
+# Intelligence training. Flip to Disallow: / only if the training stance changes.
+# -----------------------------------------------------------------------------
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+# -----------------------------------------------------------------------------
+# Blocked crawlers: data resellers and one aggressive scraper with no AI-
+# visibility value to maurices. These are not AI answer engines and do not feed
+# model training in any way maurices benefits from, so blocking them costs zero
+# presence in AI models or AI answers. Note: Bytespider (ByteDance) is known to
+# ignore robots.txt, so this line is a signal and a hook for WAF rules more than
+# an enforceable control.
+# -----------------------------------------------------------------------------
+User-agent: Bytespider
+User-agent: Omgilibot
+User-agent: DataForSeoBot
+Disallow: /
+# -----------------------------------------------------------------------------
+# OPTIONAL block: SEO and competitive-intelligence crawlers. These do not feed
+# AI models or answer engines; they gather backlink and competitive data. Left
+# OPEN by default. Uncomment to stop competitors pulling maurices' data, but
+# note it also stops your own team's tools if they rely on these platforms.
+# (Diffbot is intentionally left open: it feeds legitimate AI products and the
+# canonical guidance recommends allowing it.)
+# -----------------------------------------------------------------------------
+# User-agent: SemrushBot
+# User-agent: MJ12bot
+# User-agent: DotBot
+# User-agent: ZoominfoBot
+# User-agent: BLEXBot
+# Disallow: /
+# -----------------------------------------------------------------------------
+# All other crawlers, including Googlebot, Bingbot, Applebot, and any AI crawler
+# not named above. Full access with the complete crawl-budget hygiene set.
+# -----------------------------------------------------------------------------
+User-agent: *
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+Allow: /
+# Commerce and account plumbing (no crawl or citation value).
+# NOTE: anchored to real paths. Confirm the live on-site search path. The prior
+# /*search pattern matched "search" as a substring anywhere in a URL, not only
+# the intended search path.
+Disallow: /checkout
+Disallow: /checkout/
+Disallow: /checkout/confirmation
+Disallow: /checkout/confirmation/
+Disallow: /account
+Disallow: /account/
+Disallow: /login
+Disallow: /registration
+Disallow: /reset-password
+Disallow: /new-password-reset
+Disallow: /reset-password-callback
+Disallow: /passwordless-login-landing
+Disallow: /passwordless-login-callback
+Disallow: /social-callback
+Disallow: /order-status
+Disallow: /search
+# Bazaarvoice review-widget state parameters.
+Disallow: /*?bvroute=
+Disallow: /*?bvstate=
+# -----------------------------------------------------------------------------
+# Sitemap. Verify this resolves to valid XML (or a sitemap index) and NOT the
+# single-page-app shell before relying on it.
+# -----------------------------------------------------------------------------
+Sitemap: https://www.maurices.com/sitemap_index.xml

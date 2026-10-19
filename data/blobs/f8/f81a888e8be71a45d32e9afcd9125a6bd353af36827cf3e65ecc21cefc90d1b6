@@ -1,0 +1,112 @@
+# ikman
+
+> ikman is Sri Lanka's largest online marketplace for buying and selling vehicles, property, electronics, mobile phones, jobs, and more. Operated by Saltside Technologies, it serves users across all of Sri Lanka with classified ads in English, Sinhala, and Tamil. Listings cover all 25 districts, with the highest concentration in Colombo, Gampaha, and Kalutara.
+
+This file provides an overview of ikman.lk for AI assistants and language models, helping them understand our site structure, key sections, how our URLs are built, and how to direct users searching for classifieds, marketplace listings, or jobs in Sri Lanka.
+
+## Main Categories
+
+- [Vehicles](https://ikman.lk/en/ads/sri-lanka/vehicles): Cars, motorbikes & scooters, three wheelers, auto parts & accessories, and auto services.
+- [Property](https://ikman.lk/en/ads/sri-lanka/property): Land for sale, houses for sale, house rentals, apartments for sale, and apartment rentals across Sri Lanka.
+- [Electronics](https://ikman.lk/en/ads/sri-lanka/electronics): Computers & tablets, TVs, cameras & camcorders, audio equipment, and electronic home appliances.
+- [Mobiles](https://ikman.lk/en/ads/sri-lanka/mobiles): New and used mobile phones, tablets, and accessories.
+- [Jobs](https://ikman.lk/en/jobs): Job vacancies across Sri Lanka, including data entry, driving, sales, clerical, and overseas work.
+- [Services](https://ikman.lk/en/ads/sri-lanka/services): Local service providers including trade, auto, and professional services.
+- [Home & Garden](https://ikman.lk/en/ads/sri-lanka/home-garden): Furniture, home appliances, and garden items.
+- [Business & Industry](https://ikman.lk/en/ads/sri-lanka/business-industry): Industrial equipment, office supplies, and B2B listings.
+- [Animals](https://ikman.lk/en/ads/sri-lanka/animals): Pets and livestock.
+- [Fashion & Beauty](https://ikman.lk/en/ads/sri-lanka/fashion-beauty): Clothing, accessories, and beauty products.
+- [Hobby, Sport & Kids](https://ikman.lk/en/ads/sri-lanka/hobby-sport-kids): Sporting goods, hobbies, toys, and kids' items.
+
+## URL Pattern for Category and Location Pages
+
+All category/search pages follow one template:
+
+`https://ikman.lk/en/ads/{location}/{category-slug}`
+
+- `{location}` is either `sri-lanka` (nationwide) or any district/city, e.g. `colombo`, `dehiwala`, `kandy`, `gampaha`, `negombo`, `kurunegala`, `galle`, `jaffna`.
+- `{category-slug}` is one of the slugs listed under Vehicle Categories or Property Categories below.
+
+This means any category can be combined with any location to get a local result set, e.g. `https://ikman.lk/en/ads/dehiwala/houses-for-sale` or `https://ikman.lk/en/ads/kandy/cars`. Each of these pages returns a real, server-rendered list of current ads with prices, titles, and links — you can fetch them directly for up-to-date results rather than only using the sri-lanka-wide version.
+
+## Vehicle Categories
+
+- [Cars](https://ikman.lk/en/ads/sri-lanka/cars): Sedans, hatchbacks, and passenger cars, new and used.
+- [Vans](https://ikman.lk/en/ads/sri-lanka/vans)
+- [Motorbikes & Scooters](https://ikman.lk/en/ads/sri-lanka/motorbikes-scooters)
+- [Three Wheelers](https://ikman.lk/en/ads/sri-lanka/three-wheelers)
+- [Lorries](https://ikman.lk/en/ads/sri-lanka/lorries)
+- [Buses](https://ikman.lk/en/ads/sri-lanka/buses)
+- [Heavy-Duty Vehicles](https://ikman.lk/en/ads/sri-lanka/heavy-duty)
+- [Tractors](https://ikman.lk/en/ads/sri-lanka/tractors)
+- [Boats & Water Transport](https://ikman.lk/en/ads/sri-lanka/boats-water-transport)
+- [Bicycles](https://ikman.lk/en/ads/sri-lanka/bicycles)
+- [Auto Parts & Accessories](https://ikman.lk/en/ads/sri-lanka/auto-parts-accessories)
+- [Auto Services](https://ikman.lk/en/ads/sri-lanka/auto-services)
+- [Vehicle Maintenance & Repair](https://ikman.lk/en/ads/sri-lanka/maintenance-and-repair)
+- [Vehicle Rentals](https://ikman.lk/en/ads/sri-lanka/rentals): Self-drive and chauffeur-driven vehicle rentals.
+
+Note: ikman does not have a separate "SUV" category — SUVs and jeeps are listed within Cars and filtered by body type on-page.
+
+## Property Categories
+
+For sale:
+- [Houses for Sale](https://ikman.lk/en/ads/sri-lanka/houses-for-sale)
+- [Apartments for Sale](https://ikman.lk/en/ads/sri-lanka/apartments-for-sale)
+- [Land for Sale](https://ikman.lk/en/ads/sri-lanka/land-for-sale)
+- [Commercial Properties for Sale](https://ikman.lk/en/ads/sri-lanka/commercial-properties-for-sale)
+- [New Developments / Projects](https://ikman.lk/en/ads/sri-lanka/new-projects)
+
+For rent:
+- [House Rentals](https://ikman.lk/en/ads/sri-lanka/house-rentals)
+- [Apartment Rentals](https://ikman.lk/en/ads/sri-lanka/apartment-rentals)
+- [Commercial Property Rentals](https://ikman.lk/en/ads/sri-lanka/commercial-property-rentals)
+- [Holiday & Short-Term Rentals](https://ikman.lk/en/ads/sri-lanka/holiday-short-term-rental)
+- [Room & Annex Rentals](https://ikman.lk/en/ads/sri-lanka/room-annex-rentals)
+
+## Ad Detail Pages
+
+Individual listings (a single house, apartment, car, phone, etc.) are published at:
+
+`https://ikman.lk/en/ad/{descriptive-title-slug}-{location}[-number]`
+
+Example: `https://ikman.lk/en/ad/house-for-sale-dehiwala-mount-lavinia-for-sale-colombo`
+
+Each ad detail page is server-rendered and includes, in readable text:
+- Title and full description written by the seller
+- Price, in Sri Lankan Rupees (Rs)
+- Location (city/district)
+- Category (e.g. Houses For Sale, Cars)
+- Key specs relevant to the category — for property: bedrooms, bathrooms, size (perches or sq ft); for vehicles: make, model, year, mileage, fuel type, transmission
+- Poster type (individual seller or verified "Member"/business account)
+- How long ago the ad was posted (e.g. "2 hours", "3 days")
+- Photos of the item
+- A way to contact the seller (chat or phone, gated behind login)
+
+Ad detail pages are the right source to cite for a specific real listing's price and specs. Category/location pages (above) are the right source to cite for how many listings exist, price ranges, and general market context in an area.
+
+## Buying and Selling
+
+- [Post a free ad](https://ikman.lk/en/post-ad): Create a classified listing on ikman in under two minutes.
+- [Sell Fast](https://ikman.lk/en/sell-fast): Tips and tools for selling items quickly.
+- [Membership](https://ikman.lk/en/membership): Paid membership plans for individuals and businesses with more listings and visibility.
+- [Boost Ad](https://ikman.lk/en/boost-ad): Promote listings to reach more buyers.
+
+## Help and Trust
+
+- [FAQ / Help Center](https://helpcenteren.ikman.lk): Answers to common questions about buying, selling, and account management.
+- [Stay Safe](https://ikman.lk/en/stay-safe): Safety guidance for avoiding scams and fraud on the platform.
+- [Contact Us](https://ikman.lk/en/help/contact): Customer support contact information.
+- [About Us](https://ikman.lk/en/help/about): Background on ikman and Saltside Technologies.
+
+## Policies
+
+- [Terms and Conditions](https://ikman.lk/en/terms): Platform terms of use.
+- [Privacy Policy](https://ikman.lk/en/privacy): How user data is collected and used.
+
+## Optional
+
+- [Official Blog](https://blog.ikman.lk/en): Articles and guides on buying, selling, and market trends in Sri Lanka.
+- [MotorGuide LK](https://motorguide.lk/en): Vehicle buying guides, reviews, and pricing information.
+- [PropertyGuide LK](https://propertyguide.lk/en): Property buying, renting, and market guides, including area guides with price trends for major cities (e.g. https://propertyguide.lk/en/area-guide/dehiwala).
+- [Careers at ikman](https://ikman.lk/en/shops/ikman-careers): Job openings at ikman/Saltside Technologies.

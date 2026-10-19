@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+
+    <!-- Styles generated from theme -->
+    <link href="/api/internal/brand/theme/style-sheet?touch-point=SIGN_IN_PAGE&amp;v=a6c21e68ca75839cf8c4028494daf52edee96bf1dba03e8ca12efd80237acc40fa48c9eade84cb46b48708ae86bdb9c9" rel="stylesheet" type="text/css" />
+
+    <!-- Favicon from theme -->
+    <link rel="shortcut icon" href="https://ok2static2.oktacdn.com/bc/image/fileStoreRecord?id=fs0103mxs2lEQpytF0x8" type="image/x-icon" />
+
+    <title>The Walt Disney Company - Sign In</title>
+
+    <!-- Core widget js and css -->
+<script type="text/javascript"
+        src="https://ok2static2.oktacdn.com/assets/js/sdk/okta-signin-widget/7.50.0/js/okta-sign-in.min.js" integrity="sha384-jX2HA60PztQ56OuBrJOmUy9Z3SoZxDmpMVQeKR/Dk8xrfOEzDWQ0amcYtYtTqhsq" crossorigin="anonymous"></script>
+<link rel="stylesheet"
+      type="text/css"
+      href="https://ok2static2.oktacdn.com/assets/js/sdk/okta-signin-widget/7.50.0/css/okta-sign-in.min.css"
+      integrity="sha384-9U8L1RVnBthmKe5J3KIxrd6gWekqP7ChxtFciQXAK7XjkEmSo1cQssIbUxPp5h9s"
+      crossorigin="anonymous">
+
+<!-- Customizable css theme options. Link your own stylesheet or override styles inline. -->
+<link rel="stylesheet"
+      type="text/css" href="" integrity="" crossorigin="anonymous">
+
+<!-- styles for custom sign in -->
+<link rel="stylesheet" type="text/css" href="https://ok2static2.oktacdn.com/assets/loginpage/css/custom-signin.a91af2abfd04662e499bd3e151150dbf.css" integrity="sha384-BhMidK4jYIQaVFKNVHUvbfdgrt4NVlnlTZMsOMWLdWkme3j1JcshKDNQiMssd7sN" crossorigin="anonymous">
+
+
+<script type="text/javascript" nonce="0yoQ7_TOBS0xGNuh-nQzWw">
+    window.onerror = function (msg, _url, _lineNo, _colNo, error) {
+        if (window.console && window.console.error) {
+            if (error) {
+                console.error(error);
+            } else {
+                console.error(msg);
+            }
+        }
+
+        // Return true to suppress "Script Error" alerts in IE
+        return true;
+    };
+</script>
+     <style>
+      #okta-sign-in.auth-container.main-container {
+        border: none;
+        box-shadow: none;
+      }
+      
+      #okta-sign-in .authenticator-row .authenticator-usage-text {
+        font-style: italic;
+      }
+      
+      iframe {
+        border: none;
+      }
+      
+      #okta-sign-in {
+        margin-bottom: 0;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      
+      footer {
+        border-top: 1px solid #ddd;
+        color: #6c6c6c;
+        display: none;
+        font-family:
+          proxima nova,
+          Arial,
+          Helvetica,
+          sans-serif;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 1;
+        margin: auto;
+      }
+      
+      footer a {
+        color: #767676;
+        text-decoration: none;
+      }
+      
+      footer a:hover {
+        text-decoration: underline;
+      }
+      
+      footer p {
+        margin: 10px 0 0;
+      }
+      
+      footer .footer-container {
+        background-color: #efefef;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        padding: 30px 42px;
+      }
+      
+      .button-primary {
+        color: #fff !important;
+      }
+      
+      #languageSelector {
+        border-color: #bbbbbb;
+        border-radius: 3px;
+        width: 100%;
+      }
+      
+      .dropdownContainer {
+        margin-bottom: 20px;
+      }
+      
+      .dropdown {
+        margin-top: 10px;
+      }
+      
+      .form-label {
+        font-size: 14px;
+        font-weight: 600;
+      }
+      
+      select {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: white;
+        border-radius: 4px;
+        border: thin solid blue;
+        display: inline-block;
+        line-height: 1.5em;
+        margin: 0;
+        padding: 0.5em 3.5em 0.5em 1em;
+      }
+      
+      select.minimal {
+        background-image:
+          linear-gradient(45deg, transparent 50%, gray 50%),
+          linear-gradient(135deg, gray 50%, transparent 50%),
+          linear-gradient(to right, #ccc, #ccc);
+        background-position:
+          calc(100% - 15px) calc(1em + 0px),
+          calc(100% - 10px) calc(1em + 0px),
+          calc(100% - 2.5em) 0.5em;
+        background-repeat: no-repeat;
+        background-size:
+          5px 5px,
+          5px 5px,
+          1px 1.5em;
+      }
+      
+      select.minimal:focus {
+        background-image:
+          linear-gradient(45deg, #2196f3 50%, transparent 50%),
+          linear-gradient(135deg, transparent 50%, #2196f3 50%),
+          linear-gradient(to right, #ccc, #ccc);
+        background-position:
+          calc(100% - 10px) 1em,
+          calc(100% - 15px) 1em,
+          calc(100% - 2.5em) 0.5em;
+        background-size:
+          5px 5px,
+          5px 5px,
+          1px 1.5em;
+        background-repeat: no-repeat;
+        border-color: #2196f3;
+        outline: 0;
+      }
+      
+      select:-moz-focusring {
+        color: transparent;
+        text-shadow: 0 0 0 #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="login-bg-image tb--background"
+      style="background-image: url('https://ok2static2.oktacdn.com/fs/bco/7/fs0103mxs32uBQMM10x8')"
+    ></div>
+
+    <div id="okta-login-container"></div>
+
+    <footer>
+      <div class="footer-container">
+        <div class="dropdownContainer">
+          <label class="form-label" for="languageSelector">
+            Change Language
+          </label>
+          <div class="dropdown">
+            <select id="languageSelector" class="minimal">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="de">Deutsch</option>
+              <option value="fr">Français</option>
+              <option value="it">Italiano</option>
+              <option value="ja">日本語</option>
+              <option value="pl">Polski</option>
+              <option value="pt_BR">Português</option>
+              <option value="ru">Pусский</option>
+              <option value="zh_CN">简体中文</option>
+              <option value="zh_TW">繁體中文</option>
+              <option value="ko">한국어</option>
+              <option value="ht">Anglè</option>
+              <option value="vi">tiếng việt</option>
+            </select>
+          </div>
+        </div>
+        <div id="legal"></div>
+      </div>
+    </footer>
+
+    <style nonce="0yoQ7_TOBS0xGNuh-nQzWw">
+  /* CSP-compliant replacement for inline style="display:none" on
+     sibling templates (unsupportedCookieWarning, InactiveTab) and on
+     elements toggled by the OktaUtil JS below. The .hidden class name
+     matches the convention used in admin-overrides.css. */
+  .hidden { display: none !important; }
+</style>
+
+<div id="okta-sign-in" class="auth-container main-container unsupported-message-container hidden">
+    <div id="unsupported-cookie" class="unsupported-message hidden">
+        <h2 class="o-form-head">Cookies are required</h2>
+        <p>Cookies are disabled on your browser. Please enable Cookies and refresh this page.</p>
+        <a class="button button-primary" target="_blank" href=".">
+            Refresh
+        </a>
+    </div>
+</div>
+<div id="inactive-tab-main-div" class="hidden">
+    <div class="inactive-tab-container">
+        <div class="inactive-tab-header">
+            <img src="https://ok2static2.oktacdn.com/fs/bco/1/fs0103mxs2hl8ie170x8" alt="The Walt Disney Company" class="report-org-logo">
+            <div class="divider"></div>
+        </div>
+        <div class="inactive-tab-content">
+            <h2 class="inactive-tab-content-title">The page has timed out</h2>
+            <p class="inactive-tab-details">If this page does not reload automatically, please refresh your browser.</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" nonce="0yoQ7_TOBS0xGNuh-nQzWw">
+  // Expose CSP nonce so SIW Gen 3's webpack runtime can tag <style>/<script>
+  // elements that style-loader and runtime-chunk-loader inject dynamically.
+  window.cspNonce = "0yoQ7_TOBS0xGNuh-nQzWw";
+
+  var signInSuccessCallBackFunction;
+  var oktaData = {"redirectUri":"\x2Fapp\x2Fdisney_deetechnologyintranetsiteproduction_1\x2Fexk1brr8ey0yglO0o0x8\x2Fsso\x2Fsaml","isMobileSso":false,"orgSyncToAccountChooserEnabled":true,"fromUri":"","isMobileClientLogin":false,"requestContext":{"app":{"type":"object","value":{"name":"disney_deetechnologyintranetsiteproduction_1","id":"0oa1brr8ey1QbGUGR0x8","label":"DEE\x20Technology\x20Intranet\x20Site\x20\x2D\x20Production"}},"authentication":{"request":{},"protocol":{},"client":{"name":"disney_deetechnologyintranetsiteproduction_1","id":"0oa1brr8ey1QbGUGR0x8","label":"DEE\x20Technology\x20Intranet\x20Site\x20\x2D\x20Production"},"type":"object","value":{"request":{},"protocol":{}}},"target":{"clientId":"0oa1brr8ey1QbGUGR0x8","name":"disney_deetechnologyintranetsiteproduction_1","label":"DEE\x20Technology\x20Intranet\x20Site\x20\x2D\x20Production"}},"countryIso":"GB","inactiveTab":{"elementId":"inactive\x2Dtab\x2Dmain\x2Ddiv","avoidPageRefresh":true,"enabled":true},"signIn":{"logoText":"The\x20Walt\x20Disney\x20Company\x20logo","brandName":"The\x20Walt\x20Disney\x20Company","language":"en","consent":{"cancel":function(){window.location.href='https\x3A\x2F\x2Fsso.myid.disney.com\x2Flogin\x2Fstep\x2Dup\x2Fredirect\x3FstateToken\x3DeyJ6aXAiOiJERUYiLCJhbGlhcyI6ImVuY3J5cHRpb25rZXkiLCJ2ZXIiOiIxIiwib2lkIjoiMDBvMnFsbThiajFSeGxiWHIweDciLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiZGlyIn0..iLZ6yKw3DLc\x2DquIM.G1uf40nTcEcVBYHIftgBk2BgUfvsa4BGvjPv_ukQPcvIDI9gxONq18uYArk_uta3QPYcOPHkPKisKl0gX6mO3D4XMWoaRy6F_e1Pfk7w7vXH8TnYS2UVUvvwgx_SfTqP1t2hQZMRkCeOX6NXgAxJ_ufxfbzo4EF\x2DdBYgzjFpLM3MP2ph8DhTVXxnDE3eDwVJMo\x2D2c4UugJT9p2GSFf61_Bw7Gnck52Kzhv0xYA4MndKThaq5FWA5qJ0IewFxSHjzHGA17IZ5TXJZ\x2DD2PnNV92GgxC71bdyrREAbeJYqpNOunEPiyBcy\x2Dtk6hoOtoTuMNvXjnjUmSfRbOr2\x2DvzEcNwJL7asziKQKq1DONZ4_FvdJTXINUvoGWQlaDFMfrPojzIvqkK1vqXG3VQ_lVRqgY9rvnClwF9t1BtkHO3I4SdSLL\x2DzVTKK5BKdl4DR4TKVE\x2DeQdpmz8A4FDSNYubX_zYtxDwx9saaA3r2tB7rUMzaUGMTsbTjIcGybdGo53Jto8mVAYSLnpwjcPQZWwcIeCWF9N8wDDCTD3h0\x2DcGZvZbwGuDGKHahdo2lS8lSphRN0d_hAfHZVp9xQPt6KFsqQGWyVP8R8XH7tkbUTPknDqYPWxQ7pkZ6Ny2dqmHzTvnC6HQYbIYg9opYqO\x2Dv2_R6oA5L9eOaFvfTRNSaoxA7GNKdWFKFAv0aO9nZR0P9phkKZLQcQvohYXSuFI8UKVUkzIpRi3eAYyk0UMhDtXQVQvukTMbsRMYHl5oogWOZvBJp61gDAZowhhnbEfHKYqIpegPc99_iZfDpIOlIup_2lZIsom1UbYCmbiwovNKIOjmgULhjYQOP5e4FvKLNLEskCjyh72QTBEdstSwmOYAsX\x2DKzF25Jp5wCwWbcF_7vUvKsnN5Htsamby65oO4Z5mNupr6pRYg1xONNI\x2DjDLpMHuBLoDuIgB6H35TGqfS52spgIFgRgF\x2DgszrLVC7t9SXz7SpGDtRgTidQN4NaUoI7cXr4EgGadFBp\x2D__iy3A3s1_GzTZPbNxJBARmdX__FckHk\x2DjjvO4oxi\x2DdMysWBy5TXceP4G7s7pWle6l4qHkGtPqKq_QP89p8A0egVtlsq7UuttfaRbBvCy8vENjt4SbBJu6OqYBaIKuzBtvdWf1FLzVAHscMHUc8eXKOpQyhJdjVVZXiUHslZt2NRi0lzwFLwi8RGXZMs0KCyWKQLNA29JOjTM9mgQG_w3Fno8z\x2DpZZCMzkCbZy6E\x2DLNKi0RRqYieFe7MYQwiv5Fapt1sgEzo6Y7N_MGg76ehHoUwTgQPlz9HGSV2luIb_M9Z9oIikw5H7aOTmzrYEsfHkZBOowRjlnEgSOJ4HL6glY2qnVVdAc7efmlY1mC9j1pr7b3XNNioAkdEanPW_XP1kZYH1shEiu\x2DE5vbIvSGyABB0YvXRmurOwDF0C8rzCmrDuZ83r_rJOd9Dg4bf6Je9mvVuNPGU3ypX3JgckfiIuDENwFWbsR6DbKeco0ytn8EfIq3S6jSzdHIlwZf_oM7u0UPNhHTIfgHFrjU8yUbPKx9MVcQig6ICVpF9W5DIgts\x2DKD4eA5LOk3lLNBzZTS7b0m9L5jnrZwg_W3McErW4n0iJShfkeyVtuIG6Lyu_Je7nqgiOptH9RIatcNmE3PT4Gz4nSfUWmsrZbCmxWC0ry\x2Dyljn2nYQhZPDTA7PklA1wCUDZCeQoMT1ck_aBg02L1VZAaIkHbQwGJ8EsCxzcoXfhoNv4RkqpFoOOT\x2D9RFu2qpSHF8SOSNA\x2DIzhPSAIBlXjrYH7T5FVoa9hVJ1c84JtdIIvprUxrOgolFyfxCAD\x2Dn0Gh4Z9ZpuoAqV\x2DJCXELJ\x2D33nFrdHywJkqXftY06EZk\x2DhsFJIbmGXbUFmyXQlG4eZxqPwjIIuGS7ARupSTHD0__gshL_4X6CFIswsw035ioXMq\x2D1Ov4bbTpHVXmQVwUtiiBTQpesOlxcfUmA4TpImWk6QV5dtkz4Q0PtUNHcn4Fzu5hZWCWUXw2gn3uJxdZb2WnTtkxFQgT5ONyOSvr1q4hgZwzZXgW69PpGZdpRkgmiqbbfwqtXEp1l6SI_LpObwUKAd1IMXOphkfFtQRbMgIV4F1l0L5QLk_yHbwGHvu6I6EqblqGhpk4S_bXev0Duy4qBibPZk2TVnrKdJIEyjQPLs513SGpLr0VUBigYlTfUD5lsRHFUL72j8lcHYGGnkpsdQMfuHcHCnru6YnMMdvevbiFaV874OSlQ7lOyvhW3NZQoRkbQ970BoyV\x2D95138Or_jHQGpjiq4fmxdcGCaesN3nBJl8WJVdeQJKojoBxf5W13DV7y6kHVGWKgh01NhCY26_b9KJE3l6ZzE_Upht5U_f_Rzb0Ltb4eIf1J3MX1bLngho4nKtGKh3YDtVrDPU8Od2_KXxlsw_0ce6Unur2zHx0YnGwLLIgoOAzd9wmYr9SP4TdDNFKnEVB2q3LDnIzHcFAKTfXJ1YLTj0N0SDNrwKNI1_vrmRYMkV4AlrDbYbb5WFZn6ILRUmPCvqQRE8AcDC7oSa6j_8bO0BDm5yTxPmqlwNAui\x2Dh6maapm7_0tbtSBcTqpzLyYww\x2DnnNkOccaW3nr4x6oLhsXnHbZ6VU2UzLkPYyBHvZnnF6plrpDL6pk3HfqreaMegdYQCa6vIhCtIwXPqBJNIMew67Ll3AK7e3h_wQc8rV2OKkvmW_4SHjzs7rLLEEZyt4OXM4AhXFu5tufUGIxAn7uSY_OlKtso7Wb6X6zPLGIDsbtPH1CkpDIVg82YE54YKHA\x2D\x2D2sS5Vwtw9DYXZMp_3xc4Qc2uJmjg4tkQA8t9xGgq9L4OA60cp2tWhD7pCyL1mJ\x2DAQ8Oyfk7N4W\x2DJcQzDPDlNNqatfoNGDKdWD\x2D7F9r9V5NlY_8BhwYzP2DqqvZuVkaAw\x2Dgxs8gcO60ErwNDlZpP7G6Lfxs8mLgw2ksr5ItAMgr9kfQ8JaQGmPKqL9kPU\x2D4VTLmtYmo0v\x2DzNBfGPilmfz7q9BxyYXO\x2DwGsyjwMj22riyJ0XdUfA8wSDjaqUZz5WlQh_czNSCqVeE73WY_4WmyMEvQ9xFD\x2DuJkYaoPKyaYx5ZDPszb5W_zHhlxvBbkb2RBYLG8bo82YNSTEzzQrvOb7qQg_bRJy4W7ZWETIc6ca5yz32LySyFEFyYStkojLzVpMlDF_hZDpSiIUc2\x2Dk52Lt8byMo8Ng6KQnzTiQ5bpzRugKMicGFSUN18N7kCFaK2fWnNmnpQ_EJ03B\x2DR44EVrP\x2DDCDc9XNNTJgr59eEbVPHWboHorr5RzeVaUCKevHE99VwoJWUYSjv5ByjNMu1DzlO5OkwcDOJOENKzlfHiBYLnvZ0Wa3u7b8st3EO_wVHfxx3CPYq2k25A\x2DBB7xBmmDqQ6f55aCkRB1Bgg7_3vNNj9ukwdNQVNnYmm3IBOXA5liOtgOGO_wCFtK3o40G0bCfNBNMATm8fISsDsr_iV77LODu_F0EqxI9Sw\x2D477p94K_IZMzA5e8ugsRVidSZcy_wp1PtE87oGCLSId4XDqb4V1so_LDfQy0zNTMkl6FM8AwX74EDLj6XCTs\x2DjH_ZOjg6mG1tdhYf36E0mCGL0Bvwzc3VXmdEO\x2DysJ9KaJLUDAmvy1dDSsSjLBu656Yvh_XEAZtVpNSyVhrm0LHQlxty36Pwbt3dxYFly3UEvJZdKJSfB11Sf6vo1w68l8knTYoMwi29LpX5AcuHnmUK\x2DCJruGSnYlDsOiNxkP9tEsGTP914S5jEKSdPj7uNDQFkh5Zmd6LomncXHyIdzRTNYvr0AljYXhox\x2DDPdz\x2DcMXDuoxnhpZiT11qVUh41zF2sfrMg65mLH_39qGLopDOqUVXR6L6TVihuPXRyNjFueI80NbdcqjKt6tuB7u4pPm8\x2D4aGp2WJ2D\x2DB9ZiyX4okXgAll0Y51KtMCJ7KrKsqVEN05byTL_0f6G4EogjZ6M0RefDIUJfETd_aE5g1QpBZb_qfylUMokSJKmME56OmPLYeIniT_2wZgR1Up27lJ0_2XGGVrANZ4yWP69XXngfF8Fz_CC0K\x2DXY0OigaZttxi2bfTMv4rnqt2n4DX1v3vg1dqFkVX\x2DHAcuU2fbDWxRDMfR9rb85mUNjEsUgbPgKul08P2IT2dn5PD1P6\x2DCI7Eg4pBB4SKlEfKqY23lv\x2D6XHBcq5j8sSI1xDLgqT8kThGA5xIsVdNmo5gPCTGxC20dOTdjyAIibd7RUnZmCOwYwcyOv2afYD4vhDSRQ0Ih56pX7\x2Dqbvs1jEbJNdkJLQez7p39ste8Sy87i5gDKFdNmtqH\x2DKxZR7pJwLhoF48vhIqfElfm2Uc2et8yql77JvocOzbUW\x2DSjZM5vlKqhvwqDJ6AwK_Spj4SGvh\x2DkwH0TDAB7yqXvpcpGm\x2DsMFrSl4f8zP7VxTg8S1zKYpTpiz3YHLPcxgMgiXFWph7iovjDdGpD3S\x2Dn33CUYYUP4RmtHllELHZOn8GL9qB\x2Dij2Gh_JtUWsPxRSZvNo\x2Dllfel_Jwm35FsB91ePenhjfIR8vps4Z7SoAeHfGQOyNNK57Bif9O05C3nok4Ab9o3enKOSwfYD8zvcfzH2xvYmfcGSV7hQX9m0hrcSExwnbletaUsf_RIba5KyIF_vLjSve95y\x2Drc6SjgJHKFkQDGLdrvhGAivQA67r5u2jb0MrrFQkkOO\x2D1X\x2DmWPZy3yoxmpjvdwD_PAMa5MMYscqjpzh3OM8ATHL_jh0CxjEdM1i9CuB\x2D7JYvcR9rG40JFVuCmqdjEBMiUx2mJcQwrdwgeEZgKfxqhzOitIpEgQEtubJMUOsKkLg9AHDwVgUxaZ\x2DLYxzbsMXU2eAH\x2DaUkLE7s6vZ4cEKEXfTObFj0Qey_llwZOXrAoE\x2D5rKLu9yEteafFl96wfjGhi73Mz46obE8TO1rIHur8t\x2D7PBdnnll7EmyZk8myuRA4SHEECD3IM7KP492DPXKTUxgyYbYtdmvbStSm8ACvOzttNO2USATJSZ1XapdXlp_NeuRJ99GgQ_Xsern8wwjMGjvuCOl0u69BMEiJDCBev8zIg1QSh3NXJR96zeRMJtIyvZ2jpmgbjUgWoc\x2DjB6sMbUR7CYXOK5eUSIi9SttByo329nnZe9\x2DiiTsr4iT0eVMY1jVxwWIco6O6g8Bart4uwmk4TqSLqA_TQdygLq5ZMfE70hXWxPm89RWIwN9PufmQRG2l58js2CdPM7Bo6cll_VE78G6zS0MH5XuvFd91ADLat9hmkSyw0wCaECiT5q8K63T0FFgR1hV98Bc1qo4YAw\x2DKP\x2DBvACwkxdu892h2BuxwScbSW7N4UuFiwPCy3tiVHatAPQq6RqNaEKFSLPRGXdH9KpN64p\x2DCluvqEcHM_Y12s_ewJ7UG3cuk9vNcm5X8zsAt0bGEovqvwN\x2DAsN775dB4NT7OExlyvZwi\x2DV2A\x2DxwRiuwvzne\x2D0t4rFWEWSytxZjIBWPUjyghjAwZChcu7Gcx38wbAC8DzAHQjjD_Q5JXTa9n_rn34Qa1qssC\x2DU86OQq69kfHuYMK6J9HrZy6UEsf970\x2DEj9RDd73ey1i3rU_5rYFpvdtG2hmR3S\x2D7EVbTmZT8U0eLKQFKagzacgvaTIsJA\x2DjYIx5RR3yP_LPTujbsghAvtOhH5lzMI57ztRYtw\x2DMez48dSr90EjudH4tcH2pW183jIV7llpjtld47RHL26k8ao1e5MPnmWccrlu856mC0Z0VdBI2jHkfZWlMp2rtSEA86O6fEdF2lyqWqpTz0jh5DxFmi0wPbvvWHIEd79YqFNcaLcdv6W54Fn_kCLEWkuR\x2Dkyv8dOL\x2DBuAFbjn3DzGXP2NrdP89WnEK7mxLNh3JXRzwJWrs7dxsDnV4PpmoUBWhmfh1luZcvH_fO3P8F6fe_6sXC7k3e2HPpiT92o4VKP5\x2DFhbvMJKU5dS6cJL12hdIGFgeNc3hPyDw6lotvbyhQNEUteq2_S4a6U5iQ9jVWrBiAvEsABS3IS5kPqG7f4STpFop_1JQlV4itCpWSYLHMHfRlAPPCQ\x2DSQLkHTY1vS0J5kpQgQtCxnUJcH5tzTxJciVMOBSuYAnY7_kEVJ3GMZyi\x2DHIyKyw5okmNkiSbtc\x2DmjSVy71TkXV0RpDM3QggZbA7cbaMyD3w72s951epPbuHX90HCNokg35DWVPE3zRQjFm_6ToDY4SRlNr2JHRLkU3sUebZa_xyVSbqenPvzUkPP8fEScLJLmtZdsRIRR8RgSPrwoB6dPuvKplcdkOgxbzTs4jStDW6d_jv\x2D_ywMjHVt6uibowBTeP9LyzK\x2DaiZrtRRRUMOuOgbR\x2Dzl1dKRpmwSC_UHvJe50Ed1flInwwlU1rEbzTwITSV_dOz5CnyzIgrftzNXgnGgtmGprQt5WEAzSm6B8LhawdTpF50Dz1CiBk_EQPXf41Zk4zjkG6gSNd8bmuE8LCFr2L\x2DISLkS4130_PdE8M9QWZLDWn2kQVyuNuJV9FxZtGf2joc2dBUIGtRomBpqpj0umYVSISjKfqTzdPsgwHIcu0cpfZ7knTUk8XvUNv0HvO\x2DirHPqZQt_KFuHr5kSd6IA4E913OXEVGT3V9yUTCPV9zoQZaC8BYxH6Oh_w9gfuCS_SgEz6S7CneYNiCLy0ZyWFTQVlg95Uo8CWiqRzjAHMOZhtv32ZS9nXxFm8gb5zhoJ3ZrFPQXKAxtwxzXv7fzR\x2D5PIYl8x8qNBv_6ZCss1LzQNd7ZhifKqXHEq5VgiAOTL5BzpWi4C65UMvkE7wLBi2E4X6EExwPfFKs5z3_nGbLdYl4Iav7H7g5UTt0AmRZkL4Kp_fDbfG_OoFGwsXfds\x2DFDAjLnFE5B18QLGomDgvxGS3dGfOnYxPrLkS5bZF5hJoBlJv8ugDY5KeWtJevypVHNnHnd4QvZWgr3Nha8ecWBwFk5DTwaRsnemClWcge4CqDCIsRE1ycwXbGFMNA8vlqd10zzOgeR3JAch6\x2DW9WCB6K37SW9euXoA4zm5bw7IXHl9y3KfZKgy_cGC_ldFvjQ_x\x2D9JiHGIQR61eUiLPXglm\x2DhHtkuUYyzsml0BEHdv0xiLHxs6m8F\x2DQGiEtZIxGaAymCt\x2DaIVbKBvPVZcO8qRBsMKCuF9RI3okKwtORiwE1iTVx\x2D5bA61BYY4TfrmI7CuOVdXIP\x2DS8NMRbK6W0gEcZzZDWdgOji1UBXrCUOoByeZ_v_h66T83rFGFDooKbYPkt38ueuqKQ2go8pt0VZjcAjSIZFu8JSHLCXNpvD4L2HW3X\x2DeG5BZrHXjVgdAymjzh58RVjvlaZeuls_zQADFtFYviEIT8bFInvY70vhh1CkzKc77miDDVZgCop3Wq9yWH4g34a6nD9fprAzQ.KrGneXVJHl9mItGCauPngA';}},"i18n":{"en":{"account.unlock.email.or.username.placeholder":"Email\x20or\x20Username","oie.setup.required.soon.description":"When\x20the\x20deadline\x20passes,\x20you\x20won\x27t\x20be\x20able\x20to\x20sign\x20in\x20until\x20you\x20complete\x20setup.","forgotpassword":"Forgot\x20password\x3F","mfa.challenge.password.placeholder":"Password","help":"Help","password.forgot.email.or.username.tooltip":"Email\x20or\x20Username","needhelp":"Need\x20help\x20signing\x20in\x3F","primaryauth.username.placeholder":"Company\x20Email\x20or\x20ID","password.forgot.email.or.username.placeholder":"Email\x20or\x20Username","account.unlock.email.or.username.tooltip":"Email\x20or\x20Username","unlockaccount":"Unlock\x20account\x3F","primaryauth.password.placeholder":"Password","primaryauth.title":"Sign\x20In"}},"features":{"isBotProtectionEnabled":true,"hideSignOutLinkInMFA":false,"emailRecovery":true,"deviceFingerprinting":true,"showIdentifier":true,"consent":true,"useDeviceFingerprintForSecurityImage":true,"customExpiredPassword":true,"router":true,"showPasswordToggleOnSignInPage":true,"securityImage":true,"autoPush":true,"smsRecovery":false,"idpDiscovery":false,"selfServiceUnlock":false,"webauthn":true,"passwordlessAuth":true,"showPasswordRequirementsAsHtmlList":true,"registration":false,"rememberMe":true,"callRecovery":false,"multiOptionalFactorEnroll":true},"baseUrl":"https\x3A\x2F\x2Fsso.myid.disney.com","assets":{"baseUrl":"https\x3A\x2F\x2Fok2static2.oktacdn.com\x2Fassets\x2Fjs\x2Fsdk\x2Fokta\x2Dsignin\x2Dwidget\x2F7.50.0"},"customButtons":[],"idpDiscovery":{"requestContext":""},"logo":"https\x3A\x2F\x2Fok2static2.oktacdn.com\x2Ffs\x2Fbco\x2F1\x2Ffs0103mxs2hl8ie170x8","stateToken":"eyJ6aXAiOiJERUYiLCJhbGlhcyI6ImVuY3J5cHRpb25rZXkiLCJ2ZXIiOiIxIiwib2lkIjoiMDBvMnFsbThiajFSeGxiWHIweDciLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiZGlyIn0..iLZ6yKw3DLc\x2DquIM.G1uf40nTcEcVBYHIftgBk2BgUfvsa4BGvjPv_ukQPcvIDI9gxONq18uYArk_uta3QPYcOPHkPKisKl0gX6mO3D4XMWoaRy6F_e1Pfk7w7vXH8TnYS2UVUvvwgx_SfTqP1t2hQZMRkCeOX6NXgAxJ_ufxfbzo4EF\x2DdBYgzjFpLM3MP2ph8DhTVXxnDE3eDwVJMo\x2D2c4UugJT9p2GSFf61_Bw7Gnck52Kzhv0xYA4MndKThaq5FWA5qJ0IewFxSHjzHGA17IZ5TXJZ\x2DD2PnNV92GgxC71bdyrREAbeJYqpNOunEPiyBcy\x2Dtk6hoOtoTuMNvXjnjUmSfRbOr2\x2DvzEcNwJL7asziKQKq1DONZ4_FvdJTXINUvoGWQlaDFMfrPojzIvqkK1vqXG3VQ_lVRqgY9rvnClwF9t1BtkHO3I4SdSLL\x2DzVTKK5BKdl4DR4TKVE\x2DeQdpmz8A4FDSNYubX_zYtxDwx9saaA3r2tB7rUMzaUGMTsbTjIcGybdGo53Jto8mVAYSLnpwjcPQZWwcIeCWF9N8wDDCTD3h0\x2DcGZvZbwGuDGKHahdo2lS8lSphRN0d_hAfHZVp9xQPt6KFsqQGWyVP8R8XH7tkbUTPknDqYPWxQ7pkZ6Ny2dqmHzTvnC6HQYbIYg9opYqO\x2Dv2_R6oA5L9eOaFvfTRNSaoxA7GNKdWFKFAv0aO9nZR0P9phkKZLQcQvohYXSuFI8UKVUkzIpRi3eAYyk0UMhDtXQVQvukTMbsRMYHl5oogWOZvBJp61gDAZowhhnbEfHKYqIpegPc99_iZfDpIOlIup_2lZIsom1UbYCmbiwovNKIOjmgULhjYQOP5e4FvKLNLEskCjyh72QTBEdstSwmOYAsX\x2DKzF25Jp5wCwWbcF_7vUvKsnN5Htsamby65oO4Z5mNupr6pRYg1xONNI\x2DjDLpMHuBLoDuIgB6H35TGqfS52spgIFgRgF\x2DgszrLVC7t9SXz7SpGDtRgTidQN4NaUoI7cXr4EgGadFBp\x2D__iy3A3s1_GzTZPbNxJBARmdX__FckHk\x2DjjvO4oxi\x2DdMysWBy5TXceP4G7s7pWle6l4qHkGtPqKq_QP89p8A0egVtlsq7UuttfaRbBvCy8vENjt4SbBJu6OqYBaIKuzBtvdWf1FLzVAHscMHUc8eXKOpQyhJdjVVZXiUHslZt2NRi0lzwFLwi8RGXZMs0KCyWKQLNA29JOjTM9mgQG_w3Fno8z\x2DpZZCMzkCbZy6E\x2DLNKi0RRqYieFe7MYQwiv5Fapt1sgEzo6Y7N_MGg76ehHoUwTgQPlz9HGSV2luIb_M9Z9oIikw5H7aOTmzrYEsfHkZBOowRjlnEgSOJ4HL6glY2qnVVdAc7efmlY1mC9j1pr7b3XNNioAkdEanPW_XP1kZYH1shEiu\x2DE5vbIvSGyABB0YvXRmurOwDF0C8rzCmrDuZ83r_rJOd9Dg4bf6Je9mvVuNPGU3ypX3JgckfiIuDENwFWbsR6DbKeco0ytn8EfIq3S6jSzdHIlwZf_oM7u0UPNhHTIfgHFrjU8yUbPKx9MVcQig6ICVpF9W5DIgts\x2DKD4eA5LOk3lLNBzZTS7b0m9L5jnrZwg_W3McErW4n0iJShfkeyVtuIG6Lyu_Je7nqgiOptH9RIatcNmE3PT4Gz4nSfUWmsrZbCmxWC0ry\x2Dyljn2nYQhZPDTA7PklA1wCUDZCeQoMT1ck_aBg02L1VZAaIkHbQwGJ8EsCxzcoXfhoNv4RkqpFoOOT\x2D9RFu2qpSHF8SOSNA\x2DIzhPSAIBlXjrYH7T5FVoa9hVJ1c84JtdIIvprUxrOgolFyfxCAD\x2Dn0Gh4Z9ZpuoAqV\x2DJCXELJ\x2D33nFrdHywJkqXftY06EZk\x2DhsFJIbmGXbUFmyXQlG4eZxqPwjIIuGS7ARupSTHD0__gshL_4X6CFIswsw035ioXMq\x2D1Ov4bbTpHVXmQVwUtiiBTQpesOlxcfUmA4TpImWk6QV5dtkz4Q0PtUNHcn4Fzu5hZWCWUXw2gn3uJxdZb2WnTtkxFQgT5ONyOSvr1q4hgZwzZXgW69PpGZdpRkgmiqbbfwqtXEp1l6SI_LpObwUKAd1IMXOphkfFtQRbMgIV4F1l0L5QLk_yHbwGHvu6I6EqblqGhpk4S_bXev0Duy4qBibPZk2TVnrKdJIEyjQPLs513SGpLr0VUBigYlTfUD5lsRHFUL72j8lcHYGGnkpsdQMfuHcHCnru6YnMMdvevbiFaV874OSlQ7lOyvhW3NZQoRkbQ970BoyV\x2D95138Or_jHQGpjiq4fmxdcGCaesN3nBJl8WJVdeQJKojoBxf5W13DV7y6kHVGWKgh01NhCY26_b9KJE3l6ZzE_Upht5U_f_Rzb0Ltb4eIf1J3MX1bLngho4nKtGKh3YDtVrDPU8Od2_KXxlsw_0ce6Unur2zHx0YnGwLLIgoOAzd9wmYr9SP4TdDNFKnEVB2q3LDnIzHcFAKTfXJ1YLTj0N0SDNrwKNI1_vrmRYMkV4AlrDbYbb5WFZn6ILRUmPCvqQRE8AcDC7oSa6j_8bO0BDm5yTxPmqlwNAui\x2Dh6maapm7_0tbtSBcTqpzLyYww\x2DnnNkOccaW3nr4x6oLhsXnHbZ6VU2UzLkPYyBHvZnnF6plrpDL6pk3HfqreaMegdYQCa6vIhCtIwXPqBJNIMew67Ll3AK7e3h_wQc8rV2OKkvmW_4SHjzs7rLLEEZyt4OXM4AhXFu5tufUGIxAn7uSY_OlKtso7Wb6X6zPLGIDsbtPH1CkpDIVg82YE54YKHA\x2D\x2D2sS5Vwtw9DYXZMp_3xc4Qc2uJmjg4tkQA8t9xGgq9L4OA60cp2tWhD7pCyL1mJ\x2DAQ8Oyfk7N4W\x2DJcQzDPDlNNqatfoNGDKdWD\x2D7F9r9V5NlY_8BhwYzP2DqqvZuVkaAw\x2Dgxs8gcO60ErwNDlZpP7G6Lfxs8mLgw2ksr5ItAMgr9kfQ8JaQGmPKqL9kPU\x2D4VTLmtYmo0v\x2DzNBfGPilmfz7q9BxyYXO\x2DwGsyjwMj22riyJ0XdUfA8wSDjaqUZz5WlQh_czNSCqVeE73WY_4WmyMEvQ9xFD\x2DuJkYaoPKyaYx5ZDPszb5W_zHhlxvBbkb2RBYLG8bo82YNSTEzzQrvOb7qQg_bRJy4W7ZWETIc6ca5yz32LySyFEFyYStkojLzVpMlDF_hZDpSiIUc2\x2Dk52Lt8byMo8Ng6KQnzTiQ5bpzRugKMicGFSUN18N7kCFaK2fWnNmnpQ_EJ03B\x2DR44EVrP\x2DDCDc9XNNTJgr59eEbVPHWboHorr5RzeVaUCKevHE99VwoJWUYSjv5ByjNMu1DzlO5OkwcDOJOENKzlfHiBYLnvZ0Wa3u7b8st3EO_wVHfxx3CPYq2k25A\x2DBB7xBmmDqQ6f55aCkRB1Bgg7_3vNNj9ukwdNQVNnYmm3IBOXA5liOtgOGO_wCFtK3o40G0bCfNBNMATm8fISsDsr_iV77LODu_F0EqxI9Sw\x2D477p94K_IZMzA5e8ugsRVidSZcy_wp1PtE87oGCLSId4XDqb4V1so_LDfQy0zNTMkl6FM8AwX74EDLj6XCTs\x2DjH_ZOjg6mG1tdhYf36E0mCGL0Bvwzc3VXmdEO\x2DysJ9KaJLUDAmvy1dDSsSjLBu656Yvh_XEAZtVpNSyVhrm0LHQlxty36Pwbt3dxYFly3UEvJZdKJSfB11Sf6vo1w68l8knTYoMwi29LpX5AcuHnmUK\x2DCJruGSnYlDsOiNxkP9tEsGTP914S5jEKSdPj7uNDQFkh5Zmd6LomncXHyIdzRTNYvr0AljYXhox\x2DDPdz\x2DcMXDuoxnhpZiT11qVUh41zF2sfrMg65mLH_39qGLopDOqUVXR6L6TVihuPXRyNjFueI80NbdcqjKt6tuB7u4pPm8\x2D4aGp2WJ2D\x2DB9ZiyX4okXgAll0Y51KtMCJ7KrKsqVEN05byTL_0f6G4EogjZ6M0RefDIUJfETd_aE5g1QpBZb_qfylUMokSJKmME56OmPLYeIniT_2wZgR1Up27lJ0_2XGGVrANZ4yWP69XXngfF8Fz_CC0K\x2DXY0OigaZttxi2bfTMv4rnqt2n4DX1v3vg1dqFkVX\x2DHAcuU2fbDWxRDMfR9rb85mUNjEsUgbPgKul08P2IT2dn5PD1P6\x2DCI7Eg4pBB4SKlEfKqY23lv\x2D6XHBcq5j8sSI1xDLgqT8kThGA5xIsVdNmo5gPCTGxC20dOTdjyAIibd7RUnZmCOwYwcyOv2afYD4vhDSRQ0Ih56pX7\x2Dqbvs1jEbJNdkJLQez7p39ste8Sy87i5gDKFdNmtqH\x2DKxZR7pJwLhoF48vhIqfElfm2Uc2et8yql77JvocOzbUW\x2DSjZM5vlKqhvwqDJ6AwK_Spj4SGvh\x2DkwH0TDAB7yqXvpcpGm\x2DsMFrSl4f8zP7VxTg8S1zKYpTpiz3YHLPcxgMgiXFWph7iovjDdGpD3S\x2Dn33CUYYUP4RmtHllELHZOn8GL9qB\x2Dij2Gh_JtUWsPxRSZvNo\x2Dllfel_Jwm35FsB91ePenhjfIR8vps4Z7SoAeHfGQOyNNK57Bif9O05C3nok4Ab9o3enKOSwfYD8zvcfzH2xvYmfcGSV7hQX9m0hrcSExwnbletaUsf_RIba5KyIF_vLjSve95y\x2Drc6SjgJHKFkQDGLdrvhGAivQA67r5u2jb0MrrFQkkOO\x2D1X\x2DmWPZy3yoxmpjvdwD_PAMa5MMYscqjpzh3OM8ATHL_jh0CxjEdM1i9CuB\x2D7JYvcR9rG40JFVuCmqdjEBMiUx2mJcQwrdwgeEZgKfxqhzOitIpEgQEtubJMUOsKkLg9AHDwVgUxaZ\x2DLYxzbsMXU2eAH\x2DaUkLE7s6vZ4cEKEXfTObFj0Qey_llwZOXrAoE\x2D5rKLu9yEteafFl96wfjGhi73Mz46obE8TO1rIHur8t\x2D7PBdnnll7EmyZk8myuRA4SHEECD3IM7KP492DPXKTUxgyYbYtdmvbStSm8ACvOzttNO2USATJSZ1XapdXlp_NeuRJ99GgQ_Xsern8wwjMGjvuCOl0u69BMEiJDCBev8zIg1QSh3NXJR96zeRMJtIyvZ2jpmgbjUgWoc\x2DjB6sMbUR7CYXOK5eUSIi9SttByo329nnZe9\x2DiiTsr4iT0eVMY1jVxwWIco6O6g8Bart4uwmk4TqSLqA_TQdygLq5ZMfE70hXWxPm89RWIwN9PufmQRG2l58js2CdPM7Bo6cll_VE78G6zS0MH5XuvFd91ADLat9hmkSyw0wCaECiT5q8K63T0FFgR1hV98Bc1qo4YAw\x2DKP\x2DBvACwkxdu892h2BuxwScbSW7N4UuFiwPCy3tiVHatAPQq6RqNaEKFSLPRGXdH9KpN64p\x2DCluvqEcHM_Y12s_ewJ7UG3cuk9vNcm5X8zsAt0bGEovqvwN\x2DAsN775dB4NT7OExlyvZwi\x2DV2A\x2DxwRiuwvzne\x2D0t4rFWEWSytxZjIBWPUjyghjAwZChcu7Gcx38wbAC8DzAHQjjD_Q5JXTa9n_rn34Qa1qssC\x2DU86OQq69kfHuYMK6J9HrZy6UEsf970\x2DEj9RDd73ey1i3rU_5rYFpvdtG2hmR3S\x2D7EVbTmZT8U0eLKQFKagzacgvaTIsJA\x2DjYIx5RR3yP_LPTujbsghAvtOhH5lzMI57ztRYtw\x2DMez48dSr90EjudH4tcH2pW183jIV7llpjtld47RHL26k8ao1e5MPnmWccrlu856mC0Z0VdBI2jHkfZWlMp2rtSEA86O6fEdF2lyqWqpTz0jh5DxFmi0wPbvvWHIEd79YqFNcaLcdv6W54Fn_kCLEWkuR\x2Dkyv8dOL\x2DBuAFbjn3DzGXP2NrdP89WnEK7mxLNh3JXRzwJWrs7dxsDnV4PpmoUBWhmfh1luZcvH_fO3P8F6fe_6sXC7k3e2HPpiT92o4VKP5\x2DFhbvMJKU5dS6cJL12hdIGFgeNc3hPyDw6lotvbyhQNEUteq2_S4a6U5iQ9jVWrBiAvEsABS3IS5kPqG7f4STpFop_1JQlV4itCpWSYLHMHfRlAPPCQ\x2DSQLkHTY1vS0J5kpQgQtCxnUJcH5tzTxJciVMOBSuYAnY7_kEVJ3GMZyi\x2DHIyKyw5okmNkiSbtc\x2DmjSVy71TkXV0RpDM3QggZbA7cbaMyD3w72s951epPbuHX90HCNokg35DWVPE3zRQjFm_6ToDY4SRlNr2JHRLkU3sUebZa_xyVSbqenPvzUkPP8fEScLJLmtZdsRIRR8RgSPrwoB6dPuvKplcdkOgxbzTs4jStDW6d_jv\x2D_ywMjHVt6uibowBTeP9LyzK\x2DaiZrtRRRUMOuOgbR\x2Dzl1dKRpmwSC_UHvJe50Ed1flInwwlU1rEbzTwITSV_dOz5CnyzIgrftzNXgnGgtmGprQt5WEAzSm6B8LhawdTpF50Dz1CiBk_EQPXf41Zk4zjkG6gSNd8bmuE8LCFr2L\x2DISLkS4130_PdE8M9QWZLDWn2kQVyuNuJV9FxZtGf2joc2dBUIGtRomBpqpj0umYVSISjKfqTzdPsgwHIcu0cpfZ7knTUk8XvUNv0HvO\x2DirHPqZQt_KFuHr5kSd6IA4E913OXEVGT3V9yUTCPV9zoQZaC8BYxH6Oh_w9gfuCS_SgEz6S7CneYNiCLy0ZyWFTQVlg95Uo8CWiqRzjAHMOZhtv32ZS9nXxFm8gb5zhoJ3ZrFPQXKAxtwxzXv7fzR\x2D5PIYl8x8qNBv_6ZCss1LzQNd7ZhifKqXHEq5VgiAOTL5BzpWi4C65UMvkE7wLBi2E4X6EExwPfFKs5z3_nGbLdYl4Iav7H7g5UTt0AmRZkL4Kp_fDbfG_OoFGwsXfds\x2DFDAjLnFE5B18QLGomDgvxGS3dGfOnYxPrLkS5bZF5hJoBlJv8ugDY5KeWtJevypVHNnHnd4QvZWgr3Nha8ecWBwFk5DTwaRsnemClWcge4CqDCIsRE1ycwXbGFMNA8vlqd10zzOgeR3JAch6\x2DW9WCB6K37SW9euXoA4zm5bw7IXHl9y3KfZKgy_cGC_ldFvjQ_x\x2D9JiHGIQR61eUiLPXglm\x2DhHtkuUYyzsml0BEHdv0xiLHxs6m8F\x2DQGiEtZIxGaAymCt\x2DaIVbKBvPVZcO8qRBsMKCuF9RI3okKwtORiwE1iTVx\x2D5bA61BYY4TfrmI7CuOVdXIP\x2DS8NMRbK6W0gEcZzZDWdgOji1UBXrCUOoByeZ_v_h66T83rFGFDooKbYPkt38ueuqKQ2go8pt0VZjcAjSIZFu8JSHLCXNpvD4L2HW3X\x2DeG5BZrHXjVgdAymjzh58RVjvlaZeuls_zQADFtFYviEIT8bFInvY70vhh1CkzKc77miDDVZgCop3Wq9yWH4g34a6nD9fprAzQ.KrGneXVJHl9mItGCauPngA","helpLinks":{"help":"https\x3A\x2F\x2Fmyid.disney.com\x2Fservices\x2F","forgotPassword":"","unlock":"","custom":[]},"piv":{}},"accountChooserDiscoveryUrl":"https\x3A\x2F\x2Flogin.okta.com\x2Fdiscovery\x2Fiframe.html"};
+
+  var runLoginPage = function(fn) {
+    var mainScript = document.createElement('script');
+    mainScript.src = "https://ok2static2.oktacdn.com/assets/js/mvc/loginpage/initLoginPage.pack.d4f8b33efa60705220b2a7cf56e43e20.js";
+    mainScript.integrity = "sha384-xvT+v9DHCr9G8XFHtETRoFe6W2nuZH+aVDI3y+klzAqgVIjqSPRwlIOLTLkokjDK";
+    mainScript.crossOrigin = "anonymous";
+    document.getElementsByTagName('head')[0].appendChild(mainScript);
+    fn && mainScript.addEventListener('load', function () { setTimeout(fn, 1) });
+  };
+
+  var OktaUtil = {
+    _addClass: function(el, className) {
+      if(el) {
+        var elementClasses = el.className.split(" ");
+        if (elementClasses.indexOf(className) == -1) {
+          el.className += " " + className;
+        }
+      }
+    },
+
+    _removeElement: function(el) {
+      if(el) {
+        el.parentNode.removeChild(el);
+      }
+    },
+
+    _hideElement: function(el) {
+      if(el) {
+        el.classList.add('hidden');
+      }
+    },
+
+    _isDocumentVisible: function() {
+      return document.visibilityState === 'visible';
+    },
+
+    addLoginContainerClass: function () {
+      this._addClass(document.getElementById('okta-login-container'), 'login-container');
+    },
+
+    showUnsupportedCookieWarning: function () {
+      document.getElementById('okta-sign-in').classList.remove('hidden');
+      document.getElementById('unsupported-cookie').classList.remove('hidden');
+    },
+
+    removeUnsupportedCookieWarning: function () {
+      this._removeElement(document.getElementById('okta-sign-in'));
+    },
+
+    hideOktaLoginContainer: function () {
+      this._hideElement(document.getElementById('okta-login-container'));
+    },
+
+    isChromeOs:  function () {
+      return /\bCrOS\b/.test(navigator.userAgent);
+    },
+
+    addChromeOSScript: function() {
+      var chromeOSScript = document.createElement('script');
+      chromeOSScript.src = "/js/google/users-1.0.js";
+      document.getElementsByTagName('head')[0].appendChild(chromeOSScript);
+    },
+
+    getSignInWidgetConfig: function () {
+        if (oktaData.inactiveTab && oktaData.inactiveTab.enabled && !this._isDocumentVisible() && !oktaData.inactiveTab.avoidPageRefresh) {
+            // Show a loading state and wait for the visibility event
+            this.hideOktaLoginContainer();
+            // remove stateToken so SIW does not attempt a login flow
+            oktaData.signIn.stateToken = undefined;
+        }
+        return oktaData.signIn;
+    },
+
+    completeLogin: function (res) {
+      signInSuccessCallBackFunction(res);
+    },
+
+    getRequestContext: function () {
+      return oktaData.requestContext;
+    },
+
+    setRedirectUri: function (uri) {
+      oktaData.redirectUri = uri;
+    },
+
+    init: function () {
+      if (!navigator.cookieEnabled) {
+        this.showUnsupportedCookieWarning();
+        this.hideOktaLoginContainer();
+      } else {
+        this.removeUnsupportedCookieWarning();
+
+        if (oktaData.inactiveTab && oktaData.inactiveTab.enabled && !this._isDocumentVisible()) {
+          try {
+            oktaData.inactiveTab.renderFnBackup = OktaSignIn.prototype.renderEl;
+          } catch (err) {
+            // no op - graceful handling OktaSignIn undefined case
+          }
+
+          // pause render sign-in widget when browser tab is inactive
+          if (!oktaData.inactiveTab.renderFnBackup) {
+            // for older SIW, renderFnBackup is undefined, fallback to full page reload
+            oktaData.inactiveTab.fallbackFullPageReload = true;
+            // Show a loading state and wait for the visibility event
+            this.hideOktaLoginContainer();
+            // remove stateToken so SIW does not attempt a login flow
+            oktaData.signIn.stateToken = undefined;
+          } else {
+            // for newer SIW, override renderEl function so SIW does not attempt a login flow
+            OktaSignIn.prototype.renderEl = function () {
+              oktaData.inactiveTab.renderArgsBackup = arguments;
+              oktaData.inactiveTab.signInInstance = this;
+              try {
+                return new Promise(function (resolve, reject) {
+                  oktaData.inactiveTab.renderResolve = resolve;
+                  oktaData.inactiveTab.renderReject = reject;
+                });
+              } catch (err) {
+                // return nothing if promise is not supported, since promise chaining won't work anyway
+              }
+            }
+          }
+
+          // event handler to resume render sign-in widget
+          document.addEventListener('visibilitychange', function checkVisibilityAndCallSuccess() {
+            if (document.visibilityState === 'visible') {
+              try {
+                document.removeEventListener('visibilitychange', checkVisibilityAndCallSuccess);
+                const inactiveTabDiv = document.getElementById(oktaData.inactiveTab.elementId);
+                inactiveTabDiv.classList.add('hidden');
+
+                // resume render sign-in widget
+                if (oktaData.inactiveTab.renderFnBackup && oktaData.inactiveTab.renderArgsBackup) {
+                  OktaSignIn.prototype.renderEl = oktaData.inactiveTab.renderFnBackup;
+                  var result = oktaData.inactiveTab.signInInstance.renderEl.apply(oktaData.inactiveTab.signInInstance, oktaData.inactiveTab.renderArgsBackup);
+                  if (result && result.then) {
+             

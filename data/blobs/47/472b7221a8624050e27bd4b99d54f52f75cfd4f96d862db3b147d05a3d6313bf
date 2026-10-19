@@ -1,0 +1,30 @@
+User-agent: *
+Disallow: /signup
+Disallow: /signin
+Disallow: /request-password-reset
+Disallow: /resend-verification-email
+Disallow: /profile/
+Disallow: /liked
+Disallow: /history
+Disallow: /favorites
+Disallow: /watch-later
+Disallow: /*sidebar-tag-search-input*
+Disallow: /*?su=*
+Disallow: /*?se=*
+Disallow: /*?sd=*
+Disallow: /terms
+Disallow: /privacy
+Disallow: /dmca
+Disallow: /contact
+Disallow: /*/get-full-video
+# Broken twin of the line above, emitted by the createUrl fallback before 93148c429:
+# /video/gfv{id} (no slash before the segment, so /*/get-full-video misses it). Always
+# a 404; Google still requests ~2000 distinct ones a day on sexu. See the sexu prod
+# override for the full story.
+Disallow: /video/gfv
+Disallow: /video/*/suggest
+Disallow: /embed/
+Disallow: /accessblocked
+Disallow: /aggregate
+Disallow: /api
+Disallow: /*?page=

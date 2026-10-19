@@ -1,0 +1,81 @@
+# BigDataCloud
+
+> Precise IP geolocation and reverse geocoding APIs powered by patented technology. Verified daily against real GPS ground-truth data. Free to start.
+
+BigDataCloud provides location intelligence APIs for developers and businesses. Core products include IP Geolocation (with confidence areas, hazard detection, and ASN intelligence), Reverse Geocoding (GPS coordinates to locality/city/region), Phone & Email Verification, and Network Engineering APIs (ASN, BGP, Tor exit nodes).
+
+## Products
+
+- [IP Geolocation API](https://www.bigdatacloud.com/ip-geolocation): City-level IP geolocation with patented confidence area polygons, VPN/proxy/Tor detection, ASN intelligence, and risk scoring. IPv4 and IPv6. Over 100 languages. Sub-millisecond server processing.
+- [Reverse Geocoding API](https://www.bigdatacloud.com/reverse-geocoding): Convert GPS coordinates to city, locality, postcode and administrative region. Locality-level only — no street addresses by design. Over 100 languages.
+- [Phone & Email Verification API](https://www.bigdatacloud.com/phone-email-verification): Validate phone numbers (E.164 format, line type detection) and email addresses (syntax, MX, disposable detection).
+- [Network Engineering APIs](https://www.bigdatacloud.com/network-engineering): ASN details, BGP prefix data, network lookups, Tor exit nodes, IPv4/IPv6 address space monitoring.
+- [Free Client-Side APIs](https://www.bigdatacloud.com/free-api): No API key required. Reverse geocoding, public IP detection, client info, and roaming detection — for direct browser/mobile use only. Subject to fair use policy.
+
+## Pricing
+
+- [Pricing](https://www.bigdatacloud.com/pricing): All packages include a free tier. Paid plans from $9.95/month. Pay-as-you-go overage option available account-wide.
+
+## Documentation
+
+- [Developer Hub](https://www.bigdatacloud.com/docs): Getting started, authentication, API domains, GraphQL interface, SDKs.
+- [IP Geolocation API Reference](https://www.bigdatacloud.com/docs/ip-geolocation)
+- [Reverse Geocoding API Reference](https://www.bigdatacloud.com/docs/reverse-geocoding)
+- [SDKs & Client Libraries](https://www.bigdatacloud.com/docs/sdks)
+- [Knowledge Base](https://www.bigdatacloud.com/docs/article/getting-started)
+
+## Official SDKs — Server-side (API key required)
+
+All server-side SDKs cover all four API packages: IP Geolocation, Reverse Geocoding, Phone & Email Verification, and Network Engineering. All include typed response models, GraphQL support (where applicable), and a `fromEnvironment()` factory reading `BIGDATACLOUD_API_KEY`.
+
+- [Node.js / TypeScript](https://www.npmjs.com/package/bigdatacloud): `npm install bigdatacloud` — TypeScript-first, dual ESM/CJS, native fetch, zero runtime dependencies.
+- [Python](https://pypi.org/project/bigdatacloud/): `pip install bigdatacloud` — dataclass models, httpx, GraphQL client with fluent query builders.
+- [PHP](https://packagist.org/packages/bigdatacloudapi/bigdatacloud): `composer require bigdatacloudapi/bigdatacloud` — PHP 8.1+, readonly properties, Laravel/Symfony compatible.
+- [.NET / C#](https://www.nuget.org/packages/BigDataCloud): `dotnet add package BigDataCloud` — async/await, GraphQL builders, targets netstandard2.0.
+- [Java](https://github.com/bigdatacloudapi/bigdatacloud-java): Maven/Gradle — Java 11+ HttpClient, Kotlin compatible, thread-safe.
+- [Go](https://pkg.go.dev/github.com/bigdatacloudapi/bigdatacloud-go): `go get github.com/bigdatacloudapi/bigdatacloud-go` — stdlib net/http only, zero external dependencies.
+- [Ruby](https://rubygems.org/gems/bigdatacloud): `gem install bigdatacloud` — idiomatic Ruby 3+, stdlib net/http only.
+- [Rust](https://crates.io/crates/bigdatacloud): `cargo add bigdatacloud` — serde, reqwest, MSRV 1.70.
+
+## Official Client Libraries — Client-side (no API key required)
+
+Client-side libraries use the free `api.bigdatacloud.net` endpoint. They resolve the current device's real-time GPS location only. Pre-stored or externally-sourced coordinates are not permitted per the [fair use policy](https://www.bigdatacloud.com/docs/article/fair-use-policy-for-free-client-side-reverse-geocoding-api). Violations result in a 402 error and IP ban.
+
+- [JavaScript (vanilla)](https://www.npmjs.com/package/bigdatacloud-reverse-geocode-client): Browser-based reverse geocoding. GPS-first with automatic IP fallback.
+- [React](https://www.npmjs.com/package/@bigdatacloudapi/react-reverse-geocode-client): React hook — `useGeoLocation()`. GPS-first with IP fallback.
+- [React Native](https://www.npmjs.com/package/@bigdatacloudapi/react-native-client): Expo and bare React Native. `useReverseGeocode()` and `useAmIRoaming()` hooks.
+- [Vue / Nuxt](https://www.npmjs.com/package/@bigdatacloudapi/vue-reverse-geocode-client): Vue 3 composable. GPS-first with IP fallback.
+- [Flutter / Dart](https://pub.dev/packages/bigdatacloud_reverse_geocode_client): GPS-first with IP fallback. iOS, Android, Web.
+- [Swift](https://github.com/bigdatacloudapi/bigdatacloud-swift-client): Swift Package. iOS 15+, macOS 12+, tvOS 15+, watchOS 8+. `async/await`.
+- [Kotlin / Android](https://github.com/bigdatacloudapi/bigdatacloud-kotlin-client): FusedLocationProviderClient, coroutines. Android API 21+.
+
+## AI & MCP Integration
+
+- [MCP Server](https://www.npmjs.com/package/@bigdatacloudapi/mcp-server): `npx -y @bigdatacloudapi/mcp-server` — 26 tools covering all BigDataCloud APIs. Compatible with Claude, Cursor, VS Code Copilot, and any MCP-compatible AI assistant.
+
+## Key facts
+
+- Patented technology: US Patent 11,792,110 (Geolocation System and Method). Also granted in China (CN 112119614 B9).
+- Accuracy: Daily public benchmark comparing against MaxMind, IP2Location, DB-IP and others using real GPS ground-truth data.
+- Infrastructure: Edge-deployed flat-file architecture. Sub-millisecond response for IP geolocation and reverse geocoding.
+- Privacy: No personal data stored. GDPR compliant. Client-side APIs process coordinates without storing them.
+- SLA: 99.999% uptime.
+- Coverage: Global IPv4 and IPv6. Full coverage including seas, oceans, and uninhabited areas.
+- Languages: Over 100 world languages for locality names.
+- GraphQL: All four API packages support GraphQL in addition to REST. Unique in the geolocation industry.
+- Company: BigDataCloud Pty Ltd (ACN 627 240 162), subsidiary of HowTech Pty Ltd (ABN 83143189119). Founded in Australia.
+
+## Accuracy & Coverage
+
+- [Daily IP Geolocation Accuracy Report](https://www.bigdatacloud.com/insights/ip-geolocation-accuracy-report): Public daily benchmark updated every 24 hours. The only provider that publishes daily accuracy benchmarks.
+- [IP Geolocation Coverage by Country](https://www.bigdatacloud.com/insights/ip-geolocation-coverage): Per-country breakdown of high, moderate, and low confidence IP address coverage across 246 countries.
+
+## Competitive comparisons
+
+- [BigDataCloud vs IPinfo](https://www.bigdatacloud.com/bigdatacloud-vs-ipinfo-ip-geolocation): Technical comparison of methodologies — active network probing (IPinfo) vs. router service area mapping and GPS field evidence (BigDataCloud). Covers response rate limitations of probe-based approaches, confidence areas, VPN detection, pricing, and ease of implementation.
+- [Google Maps Reverse Geocoding Alternative](https://www.bigdatacloud.com/google-maps-reverse-geocoding-alternative): How BigDataCloud's locality-level reverse geocoding compares to Google Maps on pricing (up to 200× cheaper at volume), speed, storage restrictions, and language support.
+
+## Contact
+
+- [Contact](https://www.bigdatacloud.com/contact): support@bigdatacloud.com
+- [Blog](https://www.bigdatacloud.com/blog)

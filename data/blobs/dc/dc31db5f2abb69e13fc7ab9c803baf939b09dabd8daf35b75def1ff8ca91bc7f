@@ -1,0 +1,123 @@
+# =============================================================
+# Updated: April 21, 2026
+# =============================================================
+
+# ----- Fully blocked crawlers (known bad actors / unwanted) -----
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: GrapeshotCrawler
+Disallow: /
+
+User-agent: carbon-umbrella-bot
+Disallow: /
+
+User-agent: CriteoBot
+Disallow: /
+
+User-agent: Verity
+Disallow: /
+
+User-agent: weborama-fetcher
+Disallow: /
+
+# ----- Ad-tech / verification crawlers -----
+# These were ignoring previous rules or using variant tokens.
+# Block all known variants.
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: AmazonAdBot
+Disallow: /
+
+User-agent: peer39_crawler
+Disallow: /
+
+User-agent: peer39_crawler/1.0
+Disallow: /
+
+User-agent: ias-ie
+Disallow: /
+
+User-agent: ias-va
+Disallow: /
+
+User-agent: ias_crawler
+Disallow: /
+
+# ----- AI crawlers -----
+# Block AI training crawlers (already handled at WAF level,
+# but belt-and-suspenders)
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# ----- Googlebot -----
+# NOTE: Googlebot ignores Crawl-Delay. Use Google Search Console
+# to reduce crawl rate. These Disallow rules prevent indexing of
+# non-content paths that are generating heavy load.
+
+User-agent: Googlebot
+Disallow: /api/
+Disallow: /css/
+Disallow: /js/
+Disallow: /assets/
+Disallow: /*directory
+Disallow: /*expire
+Disallow: /*cache
+Disallow: /profile/*
+Disallow: */athletes/*
+Disallow: /*/leaderlist*
+Disallow: /*/allleaderlist*
+Disallow: /*/leaders*
+Disallow: /*/calendar*
+
+# ----- All other crawlers -----
+
+User-agent: *
+Crawl-Delay: 10
+
+Disallow: /api/
+Disallow: /css/
+Disallow: /js/
+Disallow: /assets/
+
+Disallow: /*directory
+Disallow: /*expire
+Disallow: /*cache
+Disallow: /profile/*
+Disallow: */athletes/*
+Disallow: /*/leaderlist*
+Disallow: /*/allleaderlist*
+Disallow: /*/leaders*
+Disallow: /*/calendar*
+

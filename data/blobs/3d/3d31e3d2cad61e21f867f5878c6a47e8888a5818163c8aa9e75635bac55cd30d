@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — Page Not Found</title>
+<script>
+    // Theme priority: wi_style cookie -> OS preference.
+    (function () {
+        var m = document.cookie.match(/(?:^|;\s*)wi_style=([^;]+)/);
+        var theme = m ? decodeURIComponent(m[1]) : '';
+        if (theme !== 'dark' && theme !== 'default') {
+            theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'default';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+</script>
+<style>
+    :root {
+        --bg: #ffffff;
+        --fg: #24292f;
+        --accent: #0969da;
+    }
+    /* Fallback when JS can't run: follow the OS setting. */
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme]) {
+            --bg: #0d1117;
+            --fg: #c9d1d9;
+            --accent: #58a6ff;
+        }
+    }
+    /* Explicit choice from cookie / override / OS, set by the script above. */
+    [data-theme="dark"] {
+        --bg: #0d1117;
+        --fg: #c9d1d9;
+        --accent: #58a6ff;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        text-align: center;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 60px 20px 20px;
+    }
+    h1 {
+        font-size: 4rem;
+        margin: 0 0 10px;
+        color: var(--accent);
+    }
+    p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+    a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>404</h1>
+    <p>
+        Sorry, the page you're looking for doesn't exist.<br>
+        <a href="/">Return to the homepage</a>
+    </p>
+</div>
+</body>
+</html>

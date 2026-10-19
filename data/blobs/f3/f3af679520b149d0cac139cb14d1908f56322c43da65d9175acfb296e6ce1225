@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GBitt.info — The Open BitTorrent Tracker</title>
+  <meta name="description" content="An open, unmoderated BitTorrent tracker. No bounds. Powered by Torrust-Actix.">
+  <meta name="author" content="Power2All">
+  <meta name="keywords" content="bittorrent, tracker, open tracker, torrent, udp tracker, gbitt, torrust">
+  <meta name="theme-color" content="#21d4fd">
+
+  <!-- Open Graph (Discord, Facebook, LinkedIn, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GBitt.info">
+  <meta property="og:title" content="GBitt.info — The Open BitTorrent Tracker">
+  <meta property="og:description" content="An open, unmoderated BitTorrent tracker. No bounds. Powered by Torrust-Actix.">
+  <meta property="og:url" content="https://www.gbitt.info/">
+  <meta property="og:image" content="https://www.gbitt.info/static/logo.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="GBitt.info logo">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GBitt.info — The Open BitTorrent Tracker">
+  <meta name="twitter:description" content="An open, unmoderated BitTorrent tracker. No bounds. Powered by Torrust-Actix.">
+  <meta name="twitter:image" content="https://www.gbitt.info/static/logo.png">
+
+  <link rel="icon" type="image/png" href="/static/logo.png">
+  <link rel="apple-touch-icon" href="/static/logo.png">
+  <link rel="canonical" href="https://www.gbitt.info/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="bg-stars"></div>
+<div class="bg-gradient"></div>
+
+<!-- Top navigation -->
+<div class="ui inverted attached menu top-nav">
+  <div class="ui container">
+    <a class="header item brand" href="#top">
+      <img src="/static/logo.png" alt="logo" class="brand-logo">
+      <span id="brand-title">GBitt.info</span>
+    </a>
+    <div class="nav-links">
+      <a class="item" href="#about"><i class="info circle icon"></i> About</a>
+      <a class="item" href="#tracker"><i class="broadcast tower icon"></i> Tracker</a>
+      <a class="item" href="#status"><i class="heartbeat icon"></i> Status</a>
+      <a class="item" href="#statistics"><i class="chart bar icon"></i> Statistics</a>
+      <a class="item" href="#contact"><i class="envelope outline icon"></i> Contact</a>
+    </div>
+    <div class="right menu">
+      <div class="item theme-toggle-item">
+        <div class="theme-switch" role="group" aria-label="Theme">
+          <button type="button" data-theme-mode="light" title="Light theme">
+            <i class="sun icon"></i>
+          </button>
+          <button type="button" data-theme-mode="auto" title="Match OS theme">
+            <i class="adjust icon"></i>
+          </button>
+          <button type="button" data-theme-mode="dark" title="Dark theme">
+            <i class="moon icon"></i>
+          </button>
+        </div>
+      </div>
+      <div class="item status-item">
+        <span id="status-indicator" class="ui empty circular label grey" title="Tracker status"></span>
+        <span id="status-text" class="status-text">connecting…</span>
+      </div>
+      <button class="hamburger" id="hamburger" type="button"
+              aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav">
+        <i class="bars icon"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile navigation drawer (slides in from the right when open) -->
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <a href="#about"><i class="info circle icon"></i> About</a>
+  <a href="#tracker"><i class="broadcast tower icon"></i> Tracker</a>
+  <a href="#status"><i class="heartbeat icon"></i> Status</a>
+  <a href="#statistics"><i class="chart bar icon"></i> Statistics</a>
+  <a href="#contact"><i class="envelope outline icon"></i> Contact</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="ui container hero-inner">
+    <h1 class="hero-title">
+      <span class="glow">G</span>Bitt<span class="glow">.</span>info
+    </h1>
+    <p class="hero-tagline" id="hero-tagline">THE OPEN BITTORRENT TRACKER • NO BOUNDS</p>
+    <div class="hero-actions">
+      <a class="ui huge inverted primary button" href="#tracker">
+        <i class="copy outline icon"></i> Use Tracker
+      </a>
+      <a class="ui huge inverted button" href="#statistics">
+        <i class="chart bar icon"></i> Live Stats
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint"><i class="angle double down icon"></i></div>
+</section>
+
+<!-- About -->
+<section id="about" class="section alt">
+  <div class="ui container">
+    <h2 class="section-heading"><i class="info circle icon"></i> About GBitt.info</h2>
+    <div class="ui inverted segment about-segment">
+      <p>This is an Open BitTorrent Tracker, which allows anybody to link a bittorrent file with. We do not moderate this tracker, and will run completely stand-alone.</p>
+      <p>This tracker has been started at: <strong id="started-date">19 December 2018</strong>.<br>
+         Tracking has been reset at <strong id="reset-date">05 October 2023</strong> because of heavy changes to the system.</p>
+      <p>The tracker has been started with the purpose to offer an alternative open bittorrent tracker, to support the bittorrent environment. Use of this open tracker is <strong><u>at your own risk</u></strong>, we will <u>not</u> provide any other support than running the software to use this tracker. We will <u>not</u> be held liable for what happens on this tracker, <strong>neither do we host any files on this tracker</strong>, and we do <u>not</u> monitor/moderate this system. Any complaints or questions can be sent to our email contact, but we will <strong><u>not</u></strong> — and will <strong><u>not</u></strong> be able to — remove a torrent from our listing.</p>
+      <p>This software is running on <strong><a href="https://github.com/Power2All/torrust-actix" target="_blank" rel="noopener">Torrust-Actix</a></strong>, an open-source application developed by <a href="https://www.power2all.com" target="_blank" rel="noopener">Power2All</a> and multiple other people. It runs on any Linux, MacOS and Windows environment using <a href="https://www.rust-lang.org/" target="_blank" rel="noopener">Rust</a> with the <a href="https://github.com/actix/actix-web" target="_blank" rel="noopener">Actix Framework</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Tracker URL -->
+<section id="tracker" class="section">
+  <div class="ui container">
+    <h2 class="section-heading"><i class="link icon"></i> Tracker URL</h2>
+    <p class="muted">Paste the URL below into your bittorrent file's announce list:</p>
+    <div class="tracker-url-wrap">
+      <code id="tracker-url" class="tracker-url">udp://tracker-udp.gbitt.info:80/announce</code>
+      <button class="ui primary inverted icon button" id="copy-btn" title="Copy">
+        <i class="copy icon"></i>
+      </button>
+    </div>
+    <p class="muted small">There is no HTTP or HTTPS tracking — UDP is the only supported protocol to keep bandwidth and overhead low.</p>
+  </div>
+</section>
+
+<!-- Status -->
+<section id="status" class="section">
+  <div class="ui container">
+    <h2 class="section-heading">
+      <i class="heartbeat icon"></i> Tracker Status
+      <div class="sub header" id="status-subheader">checking…</div>
+    </h2>
+
+    <div class="status-toolbar">
+      <div class="status-range" role="group" aria-label="Status range">
+        <button type="button" data-status-range="day">24 Hours</button>
+        <button type="button" data-status-range="week">1 Week</button>
+        <button type="button" data-status-range="month">1 Month</button>
+        <button type="button" data-status-range="90d" class="active">90 Days</button>
+      </div>
+      <div class="status-current">
+        <span id="status-current-state" class="status-pill status-pill-unknown">Unknown</span>
+        <span id="status-uptime" class="status-uptime">— uptime</span>
+      </div>
+    </div>
+
+    <div class="status-card">
+      <div class="status-bars" id="status-bars" aria-label="Daily uptime history"></div>
+      <div class="status-axis">
+        <span id="status-axis-start">—</span>
+        <span class="status-axis-mid" id="status-axis-mid">— uptime</span>
+        <span id="status-axis-end">Today</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Statistics -->
+<section id="statistics" class="section alt">
+  <div class="ui container">
+    <h2 class="section-heading">
+      <i class="chart line icon"></i> Live Statistics
+      <div class="sub header" id="last-updated">awaiting data…</div>
+    </h2>
+
+    <div class="ui four stackable cards stat-cards">
+      <div class="ui card stat-card torrents">
+        <div class="content">
+          <div class="header"><i class="hdd icon"></i> Torrents</div>
+          <div class="stat-value" data-stat="torrents">—</div>
+        </div>
+      </div>
+      <div class="ui card stat-card completed">
+        <div class="content">
+          <div class="header"><i class="check circle icon"></i> Completed</div>
+          <div class="stat-value" data-stat="completed">—</div>
+        </div>
+      </div>
+      <div class="ui card stat-card seeders">
+        <div class="content">
+          <div class="header"><i class="upload icon"></i> Seeders</div>
+          <div class="stat-value" data-stat="seeds">—</div>
+        </div>
+      </div>
+      <div class="ui card stat-card leechers">
+        <div class="content">
+          <div class="header"><i class="download icon"></i> Leechers</div>
+          <div class="stat-value" data-stat="peers">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-toolbar">
+      <div class="range-switch" role="group" aria-label="Chart range">
+        <button type="button" data-range="day">1 Day</button>
+        <button type="button" data-range="week">1 Week</button>
+        <button type="button" data-range="month" class="active">1 Month</button>
+      </div>
+      <div class="chart-zoom-controls">
+        <span class="chart-zoom-hint">scroll to zoom · drag to pan</span>
+        <button type="button" id="chart-reset-zoom" class="chart-zoom-reset" title="Reset zoom">
+          <i class="undo icon"></i> Reset zoom
+        </button>
+      </div>
+    </div>
+
+    <div class="chart-stack">
+      <div class="ui inverted segment chart-segment">
+        <h3 class="chart-title"><i class="users icon"></i> Peers vs Seeders <small id="range-label-peers">(last 24 hours)</small></h3>
+        <div class="chart-wrap"><canvas id="chart-peers"></canvas></div>
+      </div>
+      <div class="ui inverted segment chart-segment">
+        <h3 class="chart-title"><i class="exchange icon"></i> UDP Traffic <small id="range-label-udp">(IPv4 + IPv6, last 24 hours)</small></h3>
+        <div class="chart-wrap"><canvas id="chart-udp"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+  <div class="ui container">
+    <h2 class="section-heading"><i class="mail icon"></i> Contact</h2>
+    <p>Questions or complaints? Drop a line:</p>
+    <a class="ui huge inverted primary button" id="contact-link" href="/cdn-cgi/l/email-protection#e28b8c848da285808b9696cc8b8c848d">
+      <i class="envelope outline icon"></i> <span id="contact-email"><span class="__cf_email__" data-cfemail="d5bcbbb3ba95b2b7bca1a1fbbcbbb3ba">[email&#160;protected]</span></span>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="ui container">
+    <p>Powered by <a href="https://github.com/Power2All/torrust-actix" target="_blank" rel="noopener">Torrust-Actix</a> · built with Rust + Actix · Fomantic UI</p>
+    <p class="copyright">Copyright &copy; Gbitt.info &amp; Power2All</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <title>1GO.PLUS - India's #1 Casino &amp; Sports Betting | Instant Withdrawal</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="1GO.plus" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="theme-color" content="#24262b" />
+    <meta name="bc-language-options" content="en-US,hi-IN,bn-IN,mr-IN,te-IN,ta-IN,gu-IN,kn-IN,ml-IN" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/1go-180.png" />
+    <!-- SEO tags will be injected from public/seo.yaml by vite-plugin-seo -->
+    
+    <style>body{background-color:#f4f4f4}.start-up{background-image:url(/assets/init/init_w.png);background-size:contain;height:11rem;left:50%;margin:-5.5rem 0 0 -5.5rem;position:fixed;top:50%;width:11rem}.dark .start-up{background-image:url(/assets/init/init.png)}.dark body{background-color:#232626}.start-up.festival{background-image:url(/assets/init/init_w_festival.png)}.dark .start-up.festival{background-image:url(/assets/init/init_festival.png)}</style>
+    <script type="text/javascript">
+      (function () {
+        const FBC_NAME = '_fbc';
+        const FBP_NAME = '_fbp';
+        const REF_STORAGE_KEY = '___ref';
+        const H5_ATTRIBUTION_BRIDGE_STORAGE_KEY = '___h5AttributionBridge';
+        const META_COOKIE_MAX_AGE = 90 * 24 * 60 * 60 * 1000;
+        const META_SOURCES = ['meta', 'facebook', 'fb', 'metaads'];
+        const IPA_PACKAGE_NAME = 'com.nbpxclzt.qyhvdk';
+        const params = new URLSearchParams(window.location.search);
+
+        function encodeReferrer(referrer) {
+          return encodeURIComponent(referrer)
+            .split('')
+            .map((char) => char.charCodeAt(0).toString(16).padStart(2, '0'))
+            .join('');
+        }
+
+        function decodeReferrer(referrer) {
+          try {
+            return decodeURIComponent(
+              referrer
+                .split(/(\w\w)/g)
+                .filter((part) => !!part)
+                .map((part) => String.fromCharCode(parseInt(part, 16)))
+                .join('')
+            );
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function getCookie(name) {
+          const matched = document.cookie.match(new RegExp('(?:^|;)\\s*' + name + '=([^;]*)'));
+          return matched ? decodeURIComponent(matched[1]) : '';
+        }
+
+        function getCookieDomain() {
+          const host = window.location.hostname;
+          if (!host || host === 'localhost' || /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host)) {
+            return '';
+          }
+          const parts = host.split('.');
+          return parts.length >= 2 ? '.' + parts.slice(-2).join('.') : '';
+        }
+
+        function setCookie(name, value, maxAgeMs) {
+          const segments = [
+            name + '=' + encodeURIComponent(value),
+            'expires=' + new Date(Date.now() + maxAgeMs).toUTCString(),
+            'path=/',
+            'SameSite=Lax',
+          ];
+          const domain = getCookieDomain();
+          if (domain) {
+            segments.push('domain=' + domain);
+          }
+          document.cookie = segments.join('; ');
+        }
+
+        function buildFbp() {
+          return 'fb.1.' + Date.now() + '.' + Math.floor(Math.random() * 1e17);
+        }
+
+        function buildFbc(fbclid) {
+          return 'fb.1.' + Date.now() + '.' + fbclid;
+        }
+
+        function appendRefPart(parts, key, value) {
+          const normalized = `${value ?? ''}`.trim();
+          if (normalized) {
+            parts.push(key + '=' + normalized);
+          }
+        }
+
+        function getLastParamValue(name) {
+          const values = params.getAll(name);
+          return values.length ? values[values.length - 1] : '';
+        }
+
+        function getParamValue(name) {
+          return `${getLastParamValue(name) || ''}`.trim();
+        }
+
+        function isTrueQueryFlag(value) {
+          const normalized = `${value || ''}`.trim().toLowerCase();
+          return normalized === '1' || normalized === 'true';
+        }
+
+        function resolveIsIPA() {
+          if (isTrueQueryFlag(getParamValue('isipa'))) {
+            return true;
+          }
+
+          const packageName = getParamValue('packagename');
+          return packageName.toLowerCase() === IPA_PACKAGE_NAME;
+        }
+
+        window.isIPA = resolveIsIPA();
+
+        function getBridgeCallback(callbackName) {
+          if (!callbackName) {
+            return null;
+          }
+          const parts = `${callbackName}`.split('.').filter(Boolean);
+          let target = window;
+          if (parts[0] === 'window') {
+            parts.shift();
+          }
+          for (const part of parts) {
+            target = target && target[part];
+          }
+          return typeof target === 'function' ? target : null;
+        }
+
+        function normalizeH5AttributionBridgeData(data) {
+          if (!data || typeof data !== 'object') {
+            return null;
+          }
+          const packageName = `${data.packageName || ''}`.trim();
+          const gaid = `${data.gaid || ''}`.trim();
+          const afid = `${data.afid || ''}`.trim();
+          const adid = `${data.adid || ''}`.trim();
+          const hasAppsFlyerData = packageName && gaid && afid;
+          const hasAdjustData = packageName && gaid && adid;
+          return hasAppsFlyerData || hasAdjustData ? { packageName, gaid, afid, adid } : null;
+        }
+
+        function getQueryH5AttributionBridgeData() {
+          const packageName = getParamValue('packagename');
+          const gaid = getParamValue('gaid');
+          const afid = getParamValue('afid');
+          const adid = getParamValue('adid');
+          return normalizeH5AttributionBridgeData({ packageName, gaid, afid, adid });
+        }
+
+        function getStoredH5AttributionBridgeData() {
+          try {
+            const stored = JSON.parse(localStorage.getItem(H5_ATTRIBUTION_BRIDGE_STORAGE_KEY) || 'null');
+            const storedData = normalizeH5AttributionBridgeData(stored);
+            if (!storedData) {
+              localStorage.removeItem(H5_ATTRIBUTION_BRIDGE_STORAGE_KEY);
+            }
+            return storedData;
+          } catch (error) {
+            localStorage.removeItem(H5_ATTRIBUTION_BRIDGE_STORAGE_KEY);
+            return null;
+          }
+        }
+
+        function getH5AttributionBridgeData() {
+          const queryData = getQueryH5AttributionBridgeData();
+          if (queryData) {
+            try {
+              localStorage.setItem(H5_ATTRIBUTION_BRIDGE_STORAGE_KEY, JSON.stringify(queryData));
+            } catch (error) {}
+            return queryData;
+          }
+          return getStoredH5AttributionBridgeData();
+        }
+
+        function setOptionalStorageValue(key, value) {
+          const normalized = `${value || ''}`.trim();
+          if (normalized) {
+            localStorage.setItem(key, normalized);
+          } else {
+            localStorage.removeItem(key);
+          }
+        }
+
+        function syncH5AttributionBridgeStorage(bridgeData, conversionData, attribution) {
+          try {
+            setOptionalStorageValue('apkPackageName', bridgeData.packageName);
+            setOptionalStorageValue('apkGAID', bridgeData.gaid);
+            setOptionalStorageValue('apkAFID', bridgeData.afid);
+            setOptionalStorageValue('apkAdjustAdid', bridgeData.adid);
+            if (bridgeData.afid) {
+              localStorage.setItem('apkAFCD', JSON.stringify(conversionData));
+            } else {
+              localStorage.removeItem('apkAFCD');
+            }
+            if (bridgeData.adid) {
+              localStorage.setItem('apkAdjustAttribution', JSON.stringify(attribution));
+            } else {
+              localStorage.removeItem('apkAdjustAttribution');
+              localStorage.removeItem('apkAdjustSdkVersion');
+              localStorage.removeItem('apkAdjustEnabled');
+            }
+          } catch (error) {}
+        }
+
+        function installH5AttributionBridge() {
+          const useUrlAttribution = getParamValue('packagename').toLowerCase() === 'com.vdgxzrha.bnjqdw';
+          if (!useUrlAttribution && (window.isIPA || window.c5cp || window.a6f7 || window.a7d9)) {
+            return;
+          }
+
+          const bridgeData = getH5AttributionBridgeData();
+          if (!bridgeData) {
+            return;
+          }
+          const packageName = bridgeData.packageName;
+          const gaid = bridgeData.gaid;
+          const afid = bridgeData.afid;
+          const adid = bridgeData.adid;
+          const conversionData = {
+            source: 'h5',
+            packageName: packageName || undefined,
+            gaid: gaid || undefined,
+            afid: afid || undefined,
+          };
+          const attribution = {
+            source: 'h5',
+            packageName: packageName || undefined,
+            gaid: gaid || undefined,
+            adjustAdid: adid || undefined,
+          };
+          Object.keys(conversionData).forEach((key) => {
+            if (conversionData[key] === undefined) {
+              delete conversionData[key];
+            }
+          });
+          Object.keys(attribution).forEach((key) => {
+            if (attribution[key] === undefined) {
+              delete attribution[key];
+            }
+          });
+
+          syncH5AttributionBridgeStorage(bridgeData, conversionData, attribution);
+
+          if (window.isIPA || window.c5cp || window.a6f7 || window.a7d9) {
+            return;
+          }
+
+          window.isH5AttributionBridge = true;
+          if (!window.c5cp) {
+            window.c5cp = {
+              isApk: function () {
+                return false;
+              },
+              getPackageName: function () {
+                return packageName;
+              },
+              getGAID1: function (callbackName) {
+                const callback = getBridgeCallback(callbackName);
+                if (callback && gaid) {
+                  callback(gaid);
+                }
+              },
+            };
+          }
+          if (afid && !window.a6f7) {
+            window.a6f7 = {
+              getAppsFlyerUID: function () {
+                return afid;
+              },
+              getConversionData: function () {
+                return JSON.stringify(conversionData);
+              },
+            };
+          }
+          if (adid && !window.a7d9) {
+            window.a7d9 = {
+              getAttributionData: function () {
+                return JSON.stringify(attribution);
+              },
+              getAdid: function (callbackName) {
+                const callback = getBridgeCallback(callbackName);
+                if (callback) {
+                  callback(null, adid);
+                }
+              },
+              getAdidWithTimeout: function (timeoutMillis, callbackName) {
+                this.getAdid(callbackName);
+              },
+              getAttribution: function (callbackName) {
+                const callback = getBridgeCallback(callbackName);
+                if (callback) {
+                  callback(null, attribution);
+                }
+              },
+              getAttributionWithTimeout: function (timeoutMillis, callbackName) {
+                this.getAttribution(callbackName);
+              },
+              getSdkVersion: function (callbackName) {
+                const callback = getBridgeCallback(callbackName);
+                if (callback) {
+                  callback(null, 'h5-attribution-bridge');
+                }
+              },
+              isEnabled: function (callbackName) {
+                const callback = getBridgeCallback(callbackName);
+                if (callback) {
+                  callback(null, true);
+                }
+              },
+              logEvent: function () {},
+            };
+          }
+        }
+
+        function ensureMetaCookies() {
+          const fbclid = `${params.get('fbclid') || ''}`.trim();
+          let fbp = getCookie(FBP_NAME);
+          if (!fbp) {
+            fbp = buildFbp();
+            setCookie(FBP_NAME, fbp, META_COOKIE_MAX_AGE);
+          }
+
+          let fbc = getCookie(FBC_NAME);
+          if (fbclid && (!fbc || !fbc.endsWith('.' + fbclid))) {
+            fbc = buildFbc(fbclid);
+            setCookie(FBC_NAME, fbc, META_COOKIE_MAX_AGE);
+          }
+
+          return { fbc, fbp };
+        }
+
+        function buildMetaReferrer() {
+          const channel = `${params.get('channel') || ''}`.trim();
+          if (!channel) {
+            return '';
+          }
+
+          const { fbc, fbp } = ensureMetaCookies();
+          const referrerParts = ['channel=' + channel];
+          appendRefPart(referrerParts, 'fbc', fbc);
+          appendRefPart(referrerParts, 'fbp', fbp);
+          appendRefPart(referrerParts, 'campaign', params.get('p1'));
+          appendRefPart(referrerParts, 'campaignId', params.get('p2') || params.get('utm_campaign') || params.get('utm_id'));
+          appendRefPart(referrerParts, 'adset', params.get('p3'));
+          appendRefPart(referrerParts, 'adsetId', params.get('p4') || params.get('utm_term'));
+          appendRefPart(referrerParts, 'ad', params.get('p5'));
+          appendRefPart(referrerParts, 'adId', params.get('p6') || params.get('utm_content'));
+          appendRefPart(referrerParts, 'gtmId', params.get('gtm_id'));
+          appendRefPart(referrerParts, 'pixel_click_id', params.get('pixel_click_id'));
+
+          return encodeReferrer(referrerParts.join('&'));
+        }
+
+        function randomChannelNonce() {
+          const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+          let nonce = '';
+          if (window.crypto && window.crypto.getRandomValues) {
+            const bytes = new Uint8Array(9);
+            window.crypto.getRandomValues(bytes);
+            for (let i = 0; i < bytes.length; i++) {
+              nonce += alphabet[bytes[i] % alphabet.length];
+            }
+            return nonce;
+          }
+          for (let i = 0; i < 9; i++) {
+            nonce += alphabet[Math.floor(Math.random() * alphabet.length)];
+          }
+          return nonce;
+        }
+
+        function buildDirectQueryReferrer() {
+          const referrerParts = [];
+          appendRefPart(referrerParts, 'channel', params.get('channel'));
+          appendRefPart(referrerParts, 'bbg', params.get('bbg'));
+          appendRefPart(referrerParts, 'click_id', params.get('click_id'));
+          appendRefPart(referrerParts, 'pixel_click_id', params.get('pixel_click_id'));
+          appendRefPart(referrerParts, 'startapp', params.get('startapp'));
+          appendRefPart(referrerParts, 'link_id', params.get('link_id'));
+          // 没有 URL referrer 时才会进这里。只有 channel、没有其他 click 字段时，编码前补 9 位 nonce。
+          if (referrerParts.length === 1 && referrerParts[0].indexOf('channel=') === 0) {
+            referrerParts.push('nonce=' + randomChannelNonce());
+          }
+          return referrerParts.length ? encodeReferrer(referrerParts.join('&')) : '';
+        }
+
+        function persistReferrer(referrer) {
+          if (localStorage.getItem('_ref') === null) {
+            localStorage.setItem('_ref', referrer);
+          }
+          localStorage.setItem(REF_STORAGE_KEY, JSON.stringify({ result: referrer }));
+
+          const decoded = decodeReferrer(referrer);
+          const decodedParams = decoded ? new URLSearchParams(decoded) : null;
+          const gtmId = decodedParams ? `${decodedParams.get('gtmId') || ''}`.trim() : '';
+          if (gtmId) {
+            localStorage.setItem('gtmId', gtmId);
+          } else {
+            localStorage.removeItem('gtmId');
+          }
+        }
+
+        function resolveReferrer() {
+          const source = `${params.get('source') || ''}`.trim().toLowerCase();
+          if (META_SOURCES.includes(source)) {
+            const metaReferrer = buildMetaReferrer();
+            if (metaReferrer) {
+              return metaReferrer;
+            }
+          }
+          const referrer = getLastParamValue('referrer');
+          if (referrer) {
+            return referrer;
+          }
+          const directQueryReferrer = buildDirectQueryReferrer();
+          if (directQueryReferrer) {
+            return directQueryReferrer;
+          }
+          if (window.location.hostname === 'in3300.online' && localStorage.getItem('_ref') === null) {
+            return encodeReferrer('channel=a3300');
+          }
+          return '';
+        }
+
+        const referrer = resolveReferrer();
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = 'manifest.webmanifest' + (referrer ? '?referrer=' + referrer : '');
+        document.head.appendChild(manifestLink);
+
+        installH5AttributionBridge();
+        if (referrer) persistReferrer(referrer);
+        if (localStorage.getItem('___ref') !== null) {
+            let o = null;
+            try {
+                o = JSON.parse(localStorage.getItem('___ref'));
+            } catch (e) {}
+            if (o && (o.result === 'null' || !o.result)) localStorage.removeItem('___ref');
+        }
+      })();
+    </script>
+    <script type="text/javascript">(function(){window.nanoid=(t=32)=>{let e="",r=crypto.getRandomValues(new Uint8Array(t));for(;t--;)e+="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"[r[t]&63];return e};if(localStorage.getItem("_udid")===null)localStorage.setItem("_udid",nanoid())})()</script>
+    <script type="text/javascript">
+      if (!localStorage.getItem("_12.1.0")) {
+        localStorage.setItem("_12.1.0", "a");
+        localStorage.removeItem("_homeGameDataMd5");
+        localStorage.removeItem("_homeGameData");
+      }
+    </script>
+    <script type="text/javascript">!function(){var t=localStorage.getItem("gtmId")||"GTM-PPNFJRC5";t?function(t,e,a,n,o){t[n]=t[n]||[],t[n].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var r=e.getElementsByTagName(a)[0],g=e.createElement(a);g.async=!0,g.src="https://www.googletagmanager.com/gtm.js?id="+o,r.parentNode.insertBefore(g,r)}(window,document,"script","dataLayer",t):(window.dataLayer=window.dataLayer||[],window.dataLayer.push=function(){})}();</script>
+    <script type="text/javascript">
+      if (window.location.hostname === 'in3300.online') {
+        var _mtj = _mtj || [];
+        (function () {
+          var mtj = document.createElement("script");
+          mtj.src = "https://node92.aizhantj.com:21233/tjjs/?k=dd3xnxmw9bk";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(mtj, s);
+        })();
+      }
+    </script>
+  
+    <!-- SEO Meta Tags (auto-generated from brands/1go/seo.yaml) -->
+    <meta name="description" content="Play 5000+ casino games at India's most trusted casino. Instant INR withdrawals, 24/7 support, exclusive bonuses. Join 100,000+ daily players!">
+    <meta name="keywords" content="1GO, 1GO.PLUS, casino India, online casino, sports betting, instant withdrawal, INR casino, live casino, slots, cricket betting, teen patti, rummy, INR gambling">
+    <meta name="author" content="1GO.PLUS">
+    <meta name="application-name" content="1GO.PLUS">
+    <meta name="theme-color" content="#1a1b23">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="canonical" href="https://1go.plus/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="1GO.PLUS">
+    <meta property="og:title" content="1GO.PLUS - India's #1 Casino &amp; Sports Betting | Instant Withdrawal">
+    <meta property="og:description" content="Play 5000+ casino games at India's most trusted casino. Instant INR withdrawals, 24/7 support, exclusive bonuses. Join 100,000+ daily players!">
+    <meta property="og:url" content="https://1goplus.com">
+    <meta property="og:image" content="https://1goplus.com/og-1go.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="1GO.PLUS - India's #1 Casino &amp; Sports Betting | Instant Withdrawal">
+    <meta name="twitter:description" content="Play 5000+ casino games at India's most trusted casino. Instant INR withdrawals, 24/7 support, exclusive bonuses. Join 100,000+ daily players!">
+    <meta name="twitter:image" content="https://1goplus.com/og-1go.jpg">
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Casino",
+  "name": "1GO.PLUS",
+  "url": "https://1goplus.com",
+  "logo": "https://1goplus.com/icons/1go-512.png",
+  "description": "India's most trusted online casino and sports betting platform with instant withdrawals.",
+  "foundingDate": "2024",
+  "currenciesAccepted": "INR",
+  "paymentAccepted": [
+    "UPI",
+    "Bank Transfer"
+  ],
+  "priceRange": "$$"
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "1GO.PLUS",
+  "url": "https://1goplus.com",
+  "legalName": "1GO.PLUS",
+  "alternateName": [
+    "1GO",
+    "1GO PLUS",
+    "1GO Game",
+    "1GO Casino"
+  ],
+  "logo": "https://1goplus.com/icons/1go-512.png",
+  "description": "India's most trusted online casino and sports betting platform with instant withdrawals.",
+  "foundingDate": "2024",
+  "sameAs": [
+    "https://1go.plus",
+    "https://1go.bar",
+    "https://1go.me",
+    "https://1go.vip",
+    "https://1go.rs",
+    "https://1goplus.com"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "availableLanguage": [
+      "English",
+      "Hindi"
+    ]
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "1GO.PLUS",
+  "url": "https://1goplus.com"
+}
+    </script>
+    <link rel="icon" type="image/png" href="data:image/png;base64,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">
+<script type="text/javascript">
+    (function () {
+      var config = {"defaultLocale":"en-US","storageKey":"bc-locale","availableLocales":["en-US","hi-IN","bn-IN","mr-IN","te-IN","ta-IN","gu-IN","kn-IN"],"entries":{"en-US":{"js":"/js/index-BenUs_Cr.js","css":["/css/index-8Ct2-KxV.css"],"modulepreload":["/js/vendor-CaL_hrsg.js"]},"hi-IN":{"js":"/js/index-C1QL64ri.js","css":["/css/index-jHhV5v_y.css"],"modulepreload":["/js/vendor-BHpR_31Y.js"]},"bn-IN":{"js":"/js/index-C4W-wB30.js","css":["/css/index-dVhzvcG1.css"],"modulepreload":["/js/vendor-OScnHxWp.js"]},"mr-IN":{"js":"/js/index-DtBL5-9V.js","css":["/css/index-CXVLLgtZ.css"],"modulepreload":["/js/vendor-Cg4ccLv4.js"]},"te-IN":{"js":"/js/index-DrCOSD05.js","css":["/css/index-o64a8i1d.css"],"modulepreload":["/js/vendor-ClUT7k9C.js"]},"ta-IN":{"js":"/js/index-Dwf-VmY_.js","css":["/css/index-Dbjdmgg6.css"],"modulepreload":["/js/vendor-ig7ybxRl.js"]},"gu-IN":{"js":"/js/index-Ci-fxKHO.js","css":["/css/index-CdN4pHHt.css"],"modulepreload":["/js/vendor-D7YKRiUi.js"]},"kn-IN":{"js":"/js/index-C9KGkpRq.js","css":["/css/index-RvZiZBhQ.css"],"modulepreload":["/js/vendor-DAOBJHtg.js"]}}};
+      var locale = config.defaultLocale;
+      var stored = '';
+      try {
+        stored = window.localStorage.getItem(config.storageKey) || '';
+      } catch (error) {
+        stored = '';
+      }
+
+      function normalizeLocale(value) {
+        return String(value || '').trim().replace(/_/g, '-').toLowerCase();
+      }
+
+      function resolveAvailableLocale(value) {
+        var normalized = normalizeLocale(value);
+        if (!normalized) return '';
+
+        for (var exactIndex = 0; exactIndex < config.availableLocales.length; exactIndex += 1) {
+          var exactLocale = config.availableLocales[exactIndex];
+          if (normalizeLocale(exactLocale) === normalized && config.entries[exactLocale]) return exactLocale;
+        }
+
+        var language = normalized.split('-')[0];
+        if (!language) return '';
+        for (var languageIndex = 0; languageIndex < config.availableLocales.length; languageIndex += 1) {
+          var availableLocale = config.availableLocales[languageIndex];
+          if (normalizeLocale(availableLocale).split('-')[0] === language && config.entries[availableLocale]) return availableLocale;
+        }
+        return '';
+      }
+
+      var storedLocale = resolveAvailableLocale(stored);
+      if (storedLocale) {
+        locale = storedLocale;
+      } else if (window.navigator) {
+        var preferredBrowserLocale = '';
+        if (window.navigator.languages && typeof window.navigator.languages.length === 'number' && window.navigator.languages.length > 0) {
+          preferredBrowserLocale = window.navigator.languages[0] || '';
+        } else {
+          preferredBrowserLocale = window.navigator.language || '';
+        }
+        var browserLocale = resolveAvailableLocale(preferredBrowserLocale);
+        if (browserLocale) locale = browserLocale;
+      }
+
+      var entry = config.entries[locale] || config.entries[config.defaultLocale];
+      window.__BC_LOCALE__ = locale;
+      window.__BC_I18N_ENTRIES__ = config.entries;
+      document.documentElement.lang = locale;
+
+      entry.css.forEach(function (href) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
+      });
+
+      entry.modulepreload.forEach(function (href) {
+        var link = document.createElement('link');
+        link.rel = 'modulepreload';
+        link.href = href;
+        link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
+      });
+
+      var script = document.createElement('script');
+      script.type = 'module';
+      script.src = entry.js;
+      script.crossOrigin = 'anonymous';
+      document.head.appendChild(script);
+
+      window.__BC_SET_LOCALE__ = function (nextLocale) {
+        var resolvedLocale = resolveAvailableLocale(nextLocale);
+        if (!resolvedLocale) return false;
+        try {
+          window.localStorage.setItem(config.storageKey, resolvedLocale);
+        } catch (error) {
+          return false;
+        }
+        window.location.reload();
+        return true;
+      };
+    })();
+  </script>
+</head>
+  <body class="darken dark">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPNFJRC5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div id="root"><div class="start-up festival"></div></div>
+  </body>
+</html>

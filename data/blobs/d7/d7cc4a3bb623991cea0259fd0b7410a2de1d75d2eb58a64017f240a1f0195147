@@ -1,0 +1,773 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P952HDH13X"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-P952HDH13X');
+</script>
+    <meta charset="utf-8" />
+    <title>Zbiornik</title>
+    <meta name="description" content="Powerful site for adults. Livecams, videos, photos, verified profiles. Swingers.">
+    <link rel="stylesheet" href="/css/zbiornik-welcome-common.css?57" />
+    <link rel="stylesheet" media="only screen and (max-device-width: 800px)" href="/css/zbiornik-welcome-small.css?57" />
+    <link rel="stylesheet" media="only screen and (min-device-width: 801px)" href="/css/zbiornik-welcome.css?57" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/jquery.browser.min.js"></script>
+    <script src="/legacy-api.js?57"></script>
+    <script src="/swingers.js?57"></script>
+    <script src="/i18n.php"></script>
+    <script src="/js/balancer.js"></script>
+    <script>
+        window.apiURL = null;
+        var repass = {};
+        var repassError = false;
+    </script>
+</head>
+<body>
+<div id="zbiornik">
+    <div id="zbiornik-background-sack"><img id="zbiornik-background-img" src="/imgs/0160d9c44a354d20e81f0e6df5fe832e.jpg" alt="zbiornik-background"></div>
+    <h1 id="zbiornik-com">ZBIORNIK.com</h1>
+    <h2 id="what-da-hell-zbiornik-is">PROFESSIONAL PORTAL<br>FOR ADULTS</h2>
+</div>
+<div id="zbiornik-info">
+    ZBIORNIK IS ALREADY 24 YEARS OLD, 2 MONTHS AND 19 DAYS
+</div>
+<div id="zbiornik-come-to-daddy">
+    <div id="zbiornik-the-code" class="zbiornik-code-step" style="display: none;">
+        <div class="zbiornik-code-hint">Enter the 6-digit code from your authenticator app.</div>
+        <div><input type="text" id="zbiornik-auth-code" required inputmode="numeric" autocomplete="one-time-code" placeholder="Code" maxlength="7" oninput="codeOnchange(this.value)"/></div>
+        <div><button type="button" class="blue zbiornik-code-submit" onclick="codeSubmit('2fa')">Login</button></div>
+        <div class="zbiornik-code-links">
+            <a href="#" onclick="codeStepBack();return!1;">Back</a>
+            <a href="#" id="reset-2fa" onclick="g2fareset();return!1;">HELP</a>
+        </div>
+    </div>
+    <div id="zbiornik-the-email-code" class="zbiornik-code-step" style="display: none;">
+        <div id="zbiornik-email-code-hint" class="zbiornik-code-hint">We sent a code to your email address. Enter the 6 digits.</div>
+        <div><input type="text" id="zbiornik-email-code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="Code from the email" oninput="emailCodeOnchange(this)"/></div>
+        <div><button type="button" class="blue zbiornik-code-submit" onclick="codeSubmit('email')">Login</button></div>
+        <div class="zbiornik-code-links">
+            <a href="#" onclick="codeStepBack();return!1;">Back</a>
+            <a href="#" onclick="emailCodeResend();return!1;">Send the code again</a>
+        </div>
+    </div>
+    <form id="zbiornik-the-log-form" action="" method="post" onsubmit="login(); return false;">
+        <div>
+            <input type="email" id="zbiornik-email" required placeholder="E-mail" />
+        </div>
+        <div>
+            <input type="password" id="zbiornik-password" required placeholder="Password" />
+            <input type="hidden" id="zbiornik-ltoken" value="ZldDN3BKMzJHenRlc0ZYczA2Q2xJUVJPaE5CSXQxZTgyTTQ1SGRUa09qR21mMDFPWFYyWHgyNmtjVFdobnA3TURORksvRUxvSE5Tb0Vkem9LaUZPRU02L005bzl4T3M4dit0MXV0L1BGNzY1S21qZjJiSE9aRFcvTFZmdnF5NTl5RkpoK0t3Q1lHZ1dQSXF6QXNRaXVCQjNJenpUOFlqVm5MdEVVUkJpL0poM25ZbVNrMHpmMms0dkRsZmgzNkE5VXV1K25qcEE3cE14cE5YdlpUMHdDeXpOdlVKbFdTVWpXeXJNY2JheENIQT0="  autocomplete="off"/>
+        </div>
+        <label for="zbiornik-keep-me-logged">
+            <input type="checkbox" id="zbiornik-keep-me-logged"/>
+            <span id="zbiornik-label-text">Keep me logged in</span>
+        </label>
+        <button class="blue" id="zbiornik-log-me-in">Login</button>
+    </form>
+    <script>window.zbGoogleLoginAvailable = true; window.zbGoogleRegistrationAvailable = true;</script>
+</div>
+
+<div id="zbiornik-the-buttons">
+    <button id="zbiornik-create-account" class="blue" onclick="createAccount()">Create account</button>
+    <button id="help-me-bardzo" onclick="helpMeBardzo()">Help</button>
+    <div id="zbiornik-google-login"></div>
+        </div>
+
+<!--
+    Formularz rejestracji steruje zależnymi polami kraju, regionu i miasta oraz
+    wysyła komplet danych do API. Odczyty geograficzne są asynchroniczne, więc
+    wynik może zmieniać UI tylko wtedy, gdy nadal dotyczy aktualnego wyboru;
+    kraje i regiony bez słowników miast korzystają z pola tekstowego.
+-->
+<script>
+    var checkNickTo;
+    function sorter(a,b) {
+        return (a.name.localeCompare(b.name));
+    }
+    function yobChange(sb){
+        $(sb).removeClass('ok');
+        if(sb.value)
+            $(sb).addClass('ok');
+        czekoll();
+    }
+    function accChange(sb){
+        var v = parseInt(sb.value);
+        var couple = (v == 3 || v == 4 || v == 5);
+        if(couple)
+            couple = [
+                (v == 4) ? 2 : 1,
+                (v == 5) ? 1 : 2
+            ];
+
+        if(v)
+        {
+            $(sb).addClass('ok');
+            $('#age1').show();
+            if(couple)
+                $('#age2').show();
+            else
+                $('#age2').hide();
+
+            $('#yob1, #yob2').empty();
+            $('#yob1, #yob2').removeClass('ok');
+            var a = [l('reglog/yob'), l('reglog/yob1'), l('reglog/yob2')];
+            $('#yob1').append('<option value="">'+(couple ? a[couple[0]] : a[0])+'</option>');
+            if(couple)
+                $('#yob2').append('<option value="">'+a[couple[1]]+'</option>');
+            var y = new Date().getFullYear()-18;
+            for(var i=y; i>(y-80); i--){
+                $('#yob1').append('<option value="'+i+'">'+i+'</option>');
+                $('#yob2').append('<option value="'+i+'">'+i+'</option>');
+            }
+        }
+        else{
+            $(sb).removeClass('ok');
+            $('#age1, #age2').hide();
+        }
+        czekoll();
+    }
+    function nickChange(inp){
+        var v = inp.value;
+        $(inp).removeClass('ok');
+        $(inp).removeClass('err');
+        $('#nick-zabrali').hide();
+        if(v.length > 2){
+            if(!/[^a-zA-Z0-9_]/.test( v )) {
+                clearTimeout( checkNickTo );
+                $('#regmejl').show();
+                checkNickTo = setTimeout( function() {
+                    legacyApi.read({ command: 'checkNick', nick: v })
+                        .done(function( resp ) {
+                            if( resp && resp.ok ) {
+                                $(inp).addClass('ok');
+                            } else {
+                                $(inp).removeClass('ok');
+                                $('#nick-zabrali').show();
+                                $(inp).addClass('err');
+                            }
+                            czekoll();
+                        })
+                        .fail(function() {
+                            $(inp).removeClass('ok');
+                            $(inp).addClass('err');
+                            alert('Connection error. Check your internet connection and try again.');
+                            czekoll();
+                        });
+                }, 500 );
+            }
+            else
+                $(inp).addClass('err');
+        }
+        czekoll();
+    }
+    function emailChange(inp){
+        var v = inp.value;
+        $(inp).removeClass('ok');
+        if(v.indexOf('@') > 0){
+            $(inp).addClass('ok');
+//            $('.regpass').show();
+            if(!$('#kauntry').is(':visible'))
+                setCountries();
+            $('#regcoun').show();
+        }
+        czekoll();
+    }
+    /*
+    function passChange(){
+        $('#tajne1, #tajne2').removeClass('ok');
+        var h1 = $('#tajne1').val();
+        var h2 = $('#tajne2').val();
+
+        if(isPassOK(h1)){
+            if(h1.length >= 6 && lol.indexOf(h1) == -1 && h1 != $('#nik').val()){
+                $('#tajne1').addClass('ok');
+                if(h1 == h2){
+                    $('#tajne2').addClass('ok');
+                    setCountries();
+                    $('#regcoun').show();
+                }
+            }
+        }
+        czekoll();
+    }
+    */
+    var regions = {};
+    var cities = {};
+    var pendingLocationRequests = 0;
+
+    function hasLocationCache(cache, id){
+        return Object.prototype.hasOwnProperty.call(cache, id);
+    }
+    function locationRequestStart(){
+        pendingLocationRequests++;
+        $('.loc').prop('disabled', true);
+    }
+    function locationRequestEnd(){
+        pendingLocationRequests = Math.max(0, pendingLocationRequests - 1);
+        if(!pendingLocationRequests)
+            $('.loc').prop('disabled', false);
+    }
+    function resetCity(){
+        $('#regcit').hide();
+        $('#siti').empty().hide().removeClass('ok');
+        $('#sitinejm').hide().removeClass('ok').val('');
+    }
+    function showCityName(){
+        $('#siti').empty().hide().removeClass('ok');
+        $('#sitinejm').show();
+        $('#regcit').show();
+    }
+    function countryChange(sb){
+        var v = sb.value;
+        var inp = $('#kauntry');
+        inp.removeClass('ok');
+        $('#ridzyn').empty().removeClass('ok');
+        $('#regreg').hide();
+        resetCity();
+        if(v)
+        {
+            inp.addClass('ok');
+            if(!hasLocationCache(regions, v)) {
+                locationRequestStart();
+                legacyApi.read({ command: 'getRegions', country: v })
+                    .done(function (resp) {
+                        if (resp && resp.ok)
+                        {
+                            regions[v] = Array.isArray(resp.regions) ? resp.regions : [];
+                            regions[v].sort(sorter);
+                            if($('#kauntry').val() === v)
+                                setRegions(v);
+                        }
+                    })
+                    .fail(function () {
+                        alert('Connection error. Check your internet connection and try again.');
+                    })
+                    .always(function () {
+                        locationRequestEnd();
+                    });
+            }
+            else
+                setRegions(v);
+        }
+        else{
+            $('#regreg, #regcit').hide();
+        }
+        czekoll();
+    }
+    function regionChange(sb){
+        var v = sb.value;
+        var inp = $('#ridzyn');
+        inp.removeClass('ok');
+        resetCity();
+        if(v)
+        {
+            inp.addClass('ok');
+            if(!hasLocationCache(cities, v)) {
+                locationRequestStart();
+                legacyApi.read({ command: 'getCities', region: v })
+                    .done(function (resp) {
+                        if (resp && resp.ok)
+                        {
+                            cities[v] = Array.isArray(resp.cities) ? resp.cities : [];
+                            cities[v].sort(sorter);
+                            if($('#ridzyn').val() === v)
+                                setCities(v);
+                        }
+                    })
+                    .fail(function () {
+                        alert('Connection error. Check your internet connection and try again.');
+                    })
+                    .always(function () {
+                        locationRequestEnd();
+                    });
+            }
+            else
+                setCities(v);
+        }
+        else
+            $('#regcit').hide();
+        czekoll();
+    }
+    function cityChange(sb){
+        var v = sb.value;
+        $('#siti').removeClass('ok');
+        if(v){
+            $('#siti').addClass('ok');
+            $('#regtermz').show();
+            $('#rodotermz').show();
+            $('#rododesc').show();
+        }
+        czekoll();
+    }
+    function cityNameChange(sb){
+        var v = sb.value;
+        $('#sitinejm').removeClass('ok');
+        if(v.length>1){
+            $('#sitinejm').addClass('ok');
+            $('#regtermz').show();
+            $('#rodotermz').show();
+            $('#rododesc').show();
+        }
+        czekoll();
+    }
+    function setCountries(){
+        var sb = $('#kauntry');
+        var countries = getCountries();
+        sb.empty();
+        sb.append('<option value="" style="color:#ccc;">'+l('reglog/country')+'</option>');
+        var lng = navigator.language.substring(0,2).toUpperCase();
+        countries.forEach(function(a){
+            sb.append('<option value="'+a[0]+'"'+(a[2] == lng?' selected':'')+'>'+(a[1]?a[1]:'--')+'</option>');
+        });
+        sb.trigger('change');
+    }
+    function setRegions(id){
+        var sb = $('#ridzyn');
+        sb.empty();
+        if(!regions[id].length){
+            $('#regreg').hide();
+            showCityName();
+            czekoll();
+            return;
+        }
+        sb.append('<option value="" style="color:#ccc;">'+l('reglog/region')+'</option>');
+        regions[id].forEach(function(o){
+            sb.append('<option value="'+o.id+'">'+o.name+'</option>');
+        });
+        $('#regreg').show();
+        $('#regcit').hide();
+        czekoll();
+    }
+    function setCities(id){
+        var sb = $('#siti');
+        sb.empty();
+        if(!cities[id].length){
+            showCityName();
+            czekoll();
+            return;
+        }
+        sb.append('<option value="" style="color:#ccc;">'+l('reglog/city')+'</option>');
+        cities[id].forEach(function(o){
+            sb.append('<option value="'+o.id+'">'+o.name+'</option>');
+        });
+        sb.show();
+        $('#sitinejm').hide();
+        $('#regcit').show();
+        czekoll();
+    }
+    function termzChange(sb){
+        czekoll();
+    }
+    function rodoChange(sb){
+        czekoll();
+    }
+    /* E-mail Google jest już uzupełniony, więc nie przechodzi przez emailChange.
+       Kraj, a za nim region, miasto i zgody, odsłaniają się gdy profil jest gotowy. */
+    function googleProfileReady(){
+        if(!window.googleRegisterAttempt) return false;
+        if(!$('#imejl').hasClass('ok')) return false;
+        if(!$('#akounttajp').hasClass('ok')) return false;
+        if(!$('#yob1').hasClass('ok')) return false;
+        var accountType = parseInt($('#akounttajp').val(), 10);
+        if((accountType === 3 || accountType === 4 || accountType === 5) && !$('#yob2').hasClass('ok'))
+            return false;
+        return $('#nik').hasClass('ok');
+    }
+    var googleLocationShown = false;
+    function revealGoogleLocation(){
+        if(googleLocationShown || !googleProfileReady()) return;
+        googleLocationShown = true;
+        $('#regcoun').show();
+        setCountries();
+    }
+    function czekoll(){
+        revealGoogleLocation();
+        var test = function(){
+            if(!$('#akounttajp').hasClass('ok')) return false;
+            if(!$('#yob1').hasClass('ok')) return false;
+            var v = parseInt($('#akounttajp').val());
+            if( v == 3 || v == 4 || v == 5 )
+                if(!$('#yob2').hasClass('ok')) return false;
+            if(!$('#nik').hasClass('ok')) return false;
+            if(!$('#imejl').hasClass('ok')) return false;
+            //if(!$('#tajne1').hasClass('ok')) return false;
+            //if(!$('#tajne2').hasClass('ok')) return false;
+            if(!$('#kauntry').hasClass('ok')) return false;
+            var countryId = $('#kauntry').val();
+            if(!hasLocationCache(regions, countryId)) return false;
+            if(regions[countryId].length && !$('#ridzyn').hasClass('ok')) return false;
+            if(!$('#siti').hasClass('ok') && !$('#sitinejm').hasClass('ok')) return false;
+            if(!$('#taktak').is(':checked')) return false;
+            if(!$('#rodotaktak').is(':checked')) return false;
+            return true;
+        };
+        $('#zbiornik-register').prop('disabled', !test());
+    }
+    function jupijupi(){
+        var data = {};
+        data.httpref = '';
+        data.accType = $('#akounttajp').val();
+        data.age1 = $('#yob1').val();
+        data.age2 = $('#yob2').val();
+        data.nick = $('#nik').val();
+        data.countryId = $('#kauntry').val();
+        data.regionId = $('#ridzyn').val();
+        data.cityId = $('#siti').val();
+        data.cityName = $('#sitinejm').val();
+        data.lang = getLang();
+        if (window.googleRegisterAttempt) {
+            data.command = 'googleRegisterForm';
+            data.attemptId = window.googleRegisterAttempt;
+            data.terms = $('#taktak').is(':checked') ? 1 : 0;
+            data.rodo = $('#rodotaktak').is(':checked') ? 1 : 0;
+        } else {
+            data.token = 'ZldDN3BKMzJHenRlc0ZYczA2Q2xJUVJPaE5CSXQxZTgyTTQ1SGRUa09qR21mMDFPWFYyWHgyNmtjVFdobnA3TURORksvRUxvSE5Tb0Vkem9LaUZPRU02L005bzl4T3M4dit0MXV0L1BGNzY1S21qZjJiSE9aRFcvTFZmdnF5NTl5RkpoK0t3Q1lHZ1dQSXF6QXNRaXVCQjNJenpUOFlqVm5MdEVVUkJpL0poM25ZbVNrMHpmMms0dkRsZmgzNkE5VXV1K25qcEE3cE14cE5YdlpUMHdDeXpOdlVKbFdTVWpXeXJNY2JheENIQT0=';
+            data.email = $('#imejl').val();
+            data.command = 'createAccount';
+        }
+
+        var btn = $('#zbiornik-register');
+
+        if(btn.prop('disabled')) return false;
+
+        btn.text('Pending');
+        btn.prop('disabled', true);
+
+        legacyApi.post(data)
+            .done(function(resp){
+                if (data.command === 'googleRegisterForm') {
+                    if (resp && resp.ok && resp.regToken) {
+                        location.href = '/?YesItsReallyMe=' + resp.regToken;
+                        return;
+                    }
+                    if (resp && resp.retryGoogle) {
+                        btn.text('Register');
+                        czekoll();
+                        return;
+                    }
+                    if (resp && resp.errors && resp.errors.email) {
+                        if (resp.errors.email == 'invalid')
+                            alert('Email invail');
+                        if (resp.errors.email === true)
+                            alert('Your e-mail is already registred');
+                        $('#imejl').removeClass('ok');
+                    } else if (resp && resp.ok && resp.next === 'login') {
+                        $('#zbiornik-registration-form').hide();
+                        alert('This account already exists. Sign in with Google.');
+                    } else {
+                        alert('Error');
+                    }
+                    btn.text('Register');
+                    czekoll();
+                    return;
+                }
+                if( resp && resp.ok ) {
+                    $('#zbiornik-account-created').show();
+                    $('#zbiornik-new-account').hide();
+                } else {
+                    if (resp && resp.errors) {
+                        if(resp.errors.email){
+                            if(resp.errors.email == 'invalid')
+                                alert('Email invail');
+                            if(resp.errors.email === true)
+                                alert('Your e-mail is already registred');
+                            $('#imejl').removeClass('ok');
+                        }
+                    } else {
+                        alert('Error');
+                    }
+                    btn.text('Register');
+                    czekoll();
+                }
+            })
+            .fail(function() {
+                alert('Connection error. Check your internet connection and try again.');
+                btn.text('Register');
+                czekoll();
+            });
+        return false;
+    }
+</script>
+<section id="zbiornik-registration-form" class="pd8" style="display:none;">
+    <p id="zbiornik-google-retention-form" hidden>An unpaid account is deleted after 30 days. The email address stays reserved.</p>
+    <div id="zbiornik-account-created" class="pd8 tac pre" hidden>Success! Check your inbox to confirm registration.</div>
+    <form action="" onsubmit="jupijupi(); return false;">
+        <div id="zbiornik-new-account">
+            <div class="regfield">
+                <div class="inp">
+                    <select id="akounttajp" onchange="accChange(this)">
+                        <option value="0">Account type</option>
+                        <option value="1">Man</option>
+                        <option value="2">Woman</option>
+                        <option value="3">Couple</option>
+                        <option value="4">CoupleWW</option>
+                        <option value="5">CoupleMM</option>
+                        <option value="6">TS/TV/TG</option>
+                    </select>
+                </div>
+                <div class="desc pre">You won't be able to change it.</div>
+            </div>
+
+            <div id="age1" class="regfield" style="display:none;">
+                <div class="inp">
+                    <select id="yob1" onchange="yobChange(this)"></select>
+                </div>
+                <div class="desc pre">You won't be able to change it.</div>
+            </div>
+            <div id="age2" class="regfield" style="display:none;">
+                <div class="inp">
+                    <select id="yob2" onchange="yobChange(this)"></select>
+                </div>
+                <div class="desc">
+                </div>
+            </div>
+
+            <div class="regfield">
+                <div class="inp">
+                    <input id="nik" type="text" maxlength="32" placeholder="Nick" onkeyup="nickChange(this)" onchange="nickChange(this)">
+                </div>
+                <div class="desc pre">Only letters and numbers<br><span id="nick-zabrali" hidden>This nick is occupied</span></div>
+            </div>
+            <div id="regmejl" class="regfield" style="display:none;">
+                <div class="inp">
+                    <input id="imejl" type="email" maxlength="40" placeholder="E-mail" onkeyup="emailChange(this)" onchange="emailChange(this)">
+                </div>
+                <div class="desc pre">Keep calm.
+We don't spam.</div>
+            </div>
+            <!--
+            <div class="regfield regpass" style="display:none;">
+                <div class="inp">
+                    <input id="tajne1" type="password" maxlength="32" placeholder="Password" onkeyup="passChange()" onchange="passChange()">
+                </div>
+                <div class="desc">
+                    Wprowadź mocne hasło.<br>
+                    Minimum 6 znaków.
+                </div>
+            </div>
+            <div class="regfield regpass" style="display:none;">
+                <div class="inp">
+                    <input id="tajne2" type="password" maxlength="32" placeholder="Password again" onkeyup="passChange()" onchange="passChange()">
+                </div>
+                <div class="desc">
+                    Wielkość liter ma znaczenie.<br>
+                </div>
+            </div>
+            -->
+            <div id="regcoun" class="regfield" style="display:none;">
+                <div class="inp">
+                    <select id="kauntry" class="loc" onchange="countryChange(this)">
+                        <option value="">Country</option>
+                    </select>
+                </div>
+                <div class="desc">
+                </div>
+            </div>
+            <div id="regreg" class="regfield" style="display:none;">
+                <div class="inp">
+                    <select id="ridzyn" class="loc" onchange="regionChange(this)"></select>
+                </div>
+                <div class="desc">
+                </div>
+            </div>
+            <div id="regcit" class="regfield" style="display:none;">
+                <div class="inp">
+                    <select id="siti" class="loc" onchange="cityChange(this)"></select>
+                    <input id="sitinejm" type="text" maxlength="32" placeholder="City" class="loc" onchange="cityNameChange(this)" onkeyup="cityNameChange(this)">
+                </div>
+                <div class="desc">
+                </div>
+            </div>
+            <div id="regtermz" class="regfield" style="display:none;">
+                <div class="inp">
+                    <div class="inline" style="margin-right:8px;"><input id="taktak" type="checkbox" onclick="termzChange(this);"/></div>
+                    <!-- @todo: wiadomo -->
+                    <div class="inline">I have read and accept<br><a href="https://zbiornik.com/regulaminEN.pdf" target="_blank">Terms</a></div>
+                </div>
+                <div class="desc pre"></div>
+            </div>
+            <div id="rodotermz" class="regfield" style="display:none;">
+                <div>
+                    <div class="inline" style="margin-right:8px;"><input id="rodotaktak" type="checkbox" onclick="rodoChange(this);"/></div>
+                    <!-- @todo: wiadomo -->
+                    <div class="inline">I agree to the processing of personal data, in accordance with the Personal Data Protection Act.</div>
+                </div>
+
+            </div>
+            <div style="padding-top:8px;">
+                <button id="zbiornik-register" class="blue" disabled>Register</button>
+                <button type="button" class="hideOnDesktop" onclick="createAccount();">Cancel</button>
+            </div>
+            <div class="rodo" style="display:none;" id="rododesc">The administrator of personal data is the company TUDEMUN Sp. z o.o. established in Dąbrowa Górnicza, ul. Żeglarska 8.<br />
+
+Personal data will be processed in order to perform the contract concluded with you, to be able to provide services electronically, to use the service zbiornik.com, as well as to ensure safety during use. We guarantee the right to revoke your consent at any time. Lack of consent will prevent registration on the website, and thus the conclusion of a contract, the provision of services and the use of the website.<br />
+
+For more information on how we process your data, please read our <a href="https://zbiornik.com/polityka_prywatnosciEN.pdf" target="_blank">Privacy Policy</a>.
+            </div>
+
+        </div>
+    </form>
+</section>
+
+
+<script>
+    function resEmailChange(inp){
+        var v = inp.value;
+        $(inp).removeClass('ok');
+        $('#zbiornik-reset-button').prop('disabled', true);
+        if(v.indexOf('@') > 0){
+            $(inp).addClass('ok');
+            $('#zbiornik-reset-button').prop('disabled', false);
+        }
+    }
+    function resetPass_submit() {
+        $('#zbiornik-reset-button').prop('disabled', true);
+        var v = $('#resemail').val();
+        if( v.indexOf('@') > 0  ) {
+            var err = function(){
+                $('#zbiornik-reset-button').prop('disabled', false);
+            };
+            legacyApi.post({
+                command: 'passReset',
+                email: v,
+                lang: getLang()
+            }).done(function( resp ) {
+                    if (resp && resp.ok) {
+                        alert(l('reglog/link_sent'));
+                        $('#resemail').val('');
+                    }
+                    else {
+                        alert(l('reglog/err_email_404'));
+                        err();
+                    }
+                }).fail(function(){
+                alert(l('global/err_connection'));
+                err();
+            });
+        }
+        return false;
+    }
+</script>
+<section id="zbiornik-reset-password-form" class="pd8" style="display:none;">
+    <form action="" onsubmit="return resetPass_submit();">
+        <div id="zbiornik-reset-password">
+            <div class="regfield">
+                <div class="inp">
+                    <input id="resemail" type="email" maxlength="40" placeholder="E-mail" onkeyup="resEmailChange(this)" onchange="resEmailChange(this);"/>
+                </div>
+                <div class="desc pre">Enter your e-mail.You will receive special link to change your password.</div>
+            </div>
+            <div style="padding-top:8px;">
+                <button class="blue" id="zbiornik-reset-button" disabled>Reset password</button>
+                <button type="button" class="hideOnDesktop" onclick="helpMeBardzo();">Cancel</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+
+
+<script>
+    function createCookie(name, value, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        } else {
+            expires = "";
+        }
+        document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = encodeURIComponent(name) + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+        }
+        return null;
+    }
+    var thmin = false;
+    function more(section)
+    {
+        if(!(readCookie('adultConfirm')))
+        {
+            zbiornikConfirmAjakze(
+                String('The content you are about to view is intended for adults only.\n\nAre you over 18 years old?').split('\\n').join('\n'),
+                'Yes',
+                'No',
+                function () {moreOK(section);},
+                function () {}
+            );
+        }
+        else
+            moreOK(section);
+    }
+    function moreOK(section)
+    {
+        createCookie('adultConfirm', 1, 30);
+
+        var size = 120;
+        if(!thmin){
+            if(window.innerWidth < 1024)
+            {
+                var r = .6;
+                $('.grid > .item > img').each(function(i, el){
+                    $(el).css('width', $(el).width()*r);
+                    $(el).css('height', $(el).height()*r);
+                });
+                size *= r;
+            }
+            $('#verified_grid').height( (size+2) * 3);
+            $('#photos_grid').height( (size+2) * 3);
+            thmin = true;
+        }
+
+        $('#'+section+'_more').removeClass('hidden_elem');
+        $('#btn_'+section+'_more').hide();
+    }
+</script>
+<div id="promo" style="padding-top:16px;">
+    <section id="shitty" class="info" style="display: none;">
+        <div style="background:#f44336;color:white;text-align:center;font-weight:500;font-size:1.5rem;margin-bottom:16px;padding: 8px;border-radius: 4px;">Your browser is NOT COMPATIBLE ;(</div>
+        <div style="margin-bottom:16px;">To use all service features, please use a modern browser:</div>
+        <div style="margin-bottom:16px;">
+            <a href="https://www.google.com/chrome/" target="_blank" style="font-size: 48px;color:#03a9f4;">
+                <img src="/imgs/Chrome.png" width="48" height="48" alt="Chrome" style="margin-bottom:-8px;">
+                Google Chrome (recommended)
+            </a>
+        </div>
+        Or use the minimalist version <a href="https://mini.zbiornik.com/">mini.zbiornik.com</a>
+    </section>
+    <section class="info">
+        <h2>
+            <svg viewBox="0 0 24 24" class="ikon" style="fill:#4caf50;">
+                <g><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></g>
+            </svg>
+            Verified users
+        </h2>
+        <p>
+            The largest community in Poland, where users confirm their authenticity by publishing photos and videos.<br/>
+            <div id="verified_more" class="hidden_elem" style="margin:8px 0;">
+                <p>
+                    Users confirm their authenticity by publishing material with a verification note.<br/>
+                    This makes meeting new people much more enjoyable.<br/>
+                    Below are some example verification photos.<br/>
+                </p>
+                <div id="verified_grid" class="grid">
+                                            <div class="item"><img src="https://p.zbiornik.com/s/60ovarltz/1/270912c60829ffea089f58084620498f.jpg?e=1792448451&amp;h=5A3XERDoAzWLzL_s11fKMQ" style="width:90px;height:120px;"/></div>
+                                            <div class="item"><img src="https://p.zbiorni

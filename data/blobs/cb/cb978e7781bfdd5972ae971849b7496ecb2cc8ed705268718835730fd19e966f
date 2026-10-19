@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecionamento</title>
+</head>
+<body>
+  <script>
+    var host = window.location.hostname;
+    var redirects = {
+      'www.correiobraziliense.com.br': 'https://www.correiobraziliense.com.br',
+      'correiobraziliense.com.br': 'https://www.correiobraziliense.com.br',
+      'www.em.com.br': 'https://www.em.com.br',
+      'em.com.br': 'https://www.em.com.br',
+      'www.vrum.com.br': 'https://www.vrum.com.br',
+      'vrum.com.br': 'https://www.vrum.com.br'
+    };
+
+    if (host in redirects) {
+      var redirectUrl = redirects[host];
+      window.location.href = redirectUrl;
+    }
+  </script>
+</body>
+</html>

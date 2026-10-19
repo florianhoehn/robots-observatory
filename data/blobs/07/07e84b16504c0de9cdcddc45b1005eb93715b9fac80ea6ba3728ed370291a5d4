@@ -1,0 +1,30 @@
+# Ankr
+
+> Ankr runs blockchain infrastructure: JSON-RPC and WebSocket endpoints across many networks, indexed multichain data through the Advanced API, and Model Context Protocol servers that give AI agents read access to chain data with a management plane alongside them.
+
+Endpoints take the shape `https://rpc.ankr.com/<chain>` for public access and `https://rpc.ankr.com/<chain>/<API_KEY>` for a project key. The canonical documentation is at https://www.ankr.com/docs/, and the pages below are the authoritative source for anything on this site. Where a marketing page and a docs page disagree, the docs page is correct.
+
+## RPC and node access
+
+- [RPC Service docs](https://www.ankr.com/docs/): endpoints, authentication, limits and errors.
+- [Create a project and get a key](https://www.ankr.com/rpc/): the Web3 API platform, where keys and plans live.
+- [Premium basics](https://www.ankr.com/docs/rpc-service/getting-started/basics-premium/): how a project key works.
+- [Chains list](https://www.ankr.com/docs/rpc-service/chains/chains-list/): every network served, with its `<chain>` slug.
+- [Service plans](https://www.ankr.com/docs/rpc-service/service-plans/) and [charging policy](https://www.ankr.com/docs/rpc-service/charging-policy/): rate limits and what calls cost.
+- [Error reference](https://www.ankr.com/docs/rpc-service/errors/overview/): what a given error code from an endpoint means.
+
+## For AI agents
+
+- [Agent RPC MCP](https://www.ankr.com/docs/agentic-rpc/agent-rpc-mcp/): a hosted MCP server at `https://mcp.ankr.com/rpc` with seventeen read-only tools. Chain reads come back ABI-decoded and token-compressed. It authenticates with an Ankr API key in the `x-ankr-api-key` header, it cannot sign or broadcast anything, and it is also on npm as `@w3tech.io/agent-rpc-mcp` for running locally over stdio.
+- [Management MCP](https://www.ankr.com/docs/rpc-service/getting-started/management-mcp/): a separate MCP server at `https://mcp.ankr.com/mcp` for keys, usage, balance and notifications. It signs in with OAuth in a browser; an RPC API key is not management authority there.
+- [TORPC](https://www.ankr.com/docs/agentic-rpc/torpc/): the response-compression layer those tools rely on, requested with the `Accept-Token-Tier` header on ordinary JSON-RPC. The tier is negotiated per call and is not guaranteed, and every response reports the tier actually applied, though on a batch the reported tier is the lowest applied to any element, so a client reads each element from its own shape. The specification is at https://github.com/w3tech/torpc under CC0-1.0, with a reference implementation at https://github.com/w3tech/torpc-js under Apache-2.0.
+
+## Data
+
+- [Advanced API](https://www.ankr.com/docs/advanced-api/overview/): indexed multichain queries for balances, token holders, NFTs, logs and transfers, rather than per-chain RPC calls.
+
+## Elsewhere on this site
+
+- [Staking](https://www.ankr.com/staking/): liquid staking products.
+- [Ankr Forge](https://www.ankr.com/docs/ankr-forge/overview/): the $ANKR rewards programs.
+- [Changelog](https://www.ankr.com/docs/changelog/): what shipped, newest first.

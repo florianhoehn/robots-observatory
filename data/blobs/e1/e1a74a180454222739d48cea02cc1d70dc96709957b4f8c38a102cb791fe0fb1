@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+	<meta name="csrf-token" content="3cO7w22y9bvVkSGhoH2nmMTMwAt1bIt1WtYXQ3ra">
+  
+  <meta name="eba-cms" content="1">
+  <script>
+  (function() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get('token');
+      if (!token) return;
+
+      var map = {
+        token: 'eba-sso-token',
+        refreshToken: 'eba-sso-refreshToken',
+        roleUuid: 'roleUuid',
+        role: 'role',
+        theme: 'theme',
+        platformName: 'platformName'
+      };
+      Object.keys(map).forEach(function(key) {
+        var value = params.get(key);
+        if (value) localStorage.setItem(map[key], value);
+      });
+      if (params.get('platformName')) sessionStorage.setItem('platformName', params.get('platformName'));
+
+      // Önceki kullanıcıdan kalmasın; yalnızca geçerli JSON ise yazılır.
+      localStorage.removeItem('roleBasedData');
+      try {
+        var roleBasedData = params.get('roleBasedData');
+        if (roleBasedData && JSON.parse(roleBasedData)) localStorage.setItem('roleBasedData', roleBasedData);
+      } catch (e) {}
+
+      ['token', 'refreshToken', 'roleBasedData'].forEach(function(key) { params.delete(key); });
+      var query = params.toString();
+      history.replaceState(history.state, '', window.location.pathname + (query ? '?' + query : '') + window.location.hash);
+    } catch (e) {
+      console.error('mobile session init', e);
+    }
+  })();
+
+  // Mobil uygulama (android/ios) webview'ı URL'de platformName gönderir. Uygulama
+  // bir sayfayı doğrudan (parametresiz) açabildiği için değer kalıcı olarak
+  // localStorage'da da tutulur; 'platform' anahtarını React tarafı yazıyor.
+  window.getMobilePlatform = function() {
+    var platform = null;
+    try {
+      platform = new URLSearchParams(window.location.search).get('platformName');
+      if (platform) {
+        sessionStorage.setItem('platformName', platform);
+        localStorage.setItem('platformName', platform);
+      } else {
+        platform = sessionStorage.getItem('platformName')
+          || localStorage.getItem('platformName')
+          || localStorage.getItem('platform');
+      }
+    } catch (e) {}
+    platform = (platform || '').toLowerCase();
+    return (platform === 'android' || platform === 'ios') ? platform : null;
+  };
+
+  // Misafir kullanıcıda native'e iletilen tek aksiyonlar; diğer her şey webview
+  // içinde web davranışıyla devam eder.
+  var GUEST_ACTIONS = ['loginClicked', 'externalLinkClicked'];
+
+  // Native köprü: window.invoke[action](...args). Mobil değilse, köprü yoksa ya da
+  // misafir kullanıcıda izin verilmeyen bir aksiyonsa false döner; çağıran taraf
+  // normal web davranışına devam eder.
+  // Örnek: callNative('profileClicked'), callNative('contentClicked', uuid)
+  window.callNative = function(action) {
+    var bridge = window.invoke;
+    if (!window.getMobilePlatform() || !bridge || typeof bridge[action] !== 'function') return false;
+    if (GUEST_ACTIONS.indexOf(action) === -1 && !window.ebaIsLoggedIn()) return false;
+    try {
+      bridge[action].apply(bridge, Array.prototype.slice.call(arguments, 1));
+      return true;
+    } catch (e) {
+      console.error('native bridge error', action, e);
+      return false;
+    }
+  };
+
+  // Oturum açık mı? (JWT exp kontrolü) Misafir kullanıcıda bazı tıklamalar
+  // native'e iletilmeyip web'de devam ediyor.
+  window.ebaIsLoggedIn = function() {
+    try {
+      var tok = localStorage.getItem('eba-sso-token');
+      if (!tok) return false;
+      var s = tok.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      while (s.length % 4) s += '=';
+      var payload = JSON.parse(atob(s));
+      return !!(payload && payload.exp && payload.exp > Date.now() / 1000);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  // Mobil webview: giriş akışını uygulama yönettiği için "Giriş Yap" / "EBA'ya Git"
+  // butonu gizlenir. Buton JS ile metin/adres değiştirdiğinden CSS yerine burada.
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!window.getMobilePlatform()) return;
+    document.querySelectorAll('[data-hide-in-webview]').forEach(function(el) {
+      el.style.display = 'none';
+    });
+  });
+
+  // Mobil webview: "Giriş Yap" (/login) tıklamaları native tarafa iletilir,
+  // giriş ekranını uygulama açar. Köprü yoksa link normal çalışır.
+  document.addEventListener('click', function(e) {
+    var link = e.target && e.target.closest && e.target.closest('a[href]');
+    if (!link) return;
+    var path = link.getAttribute('href') || '';
+    if (path !== '/login' && path !== 'https://eba.gov.tr/login') return;
+    if (window.callNative('loginClicked')) e.preventDefault();
+  });
+
+  // Mobil webview: site dışına (başka alan adına) giden linkler native tarafa iletilir.
+  // Site içi linkler etkilenmez; köprü yoksa link normal çalışır.
+  document.addEventListener('click', function(e) {
+    var link = e.target && e.target.closest && e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (!/^https?:\/\//i.test(href)) return;
+    try {
+      if (new URL(href, window.location.href).host === window.location.host) return;
+    } catch (err) {
+      return;
+    }
+    if (window.callNative('externalLinkClicked', link.href)) e.preventDefault();
+  });
+</script>
+  <script>
+    // Tüm fetch isteklerine Accept-Language: tr eklensin (çağıran kod başka bir değer set etmediyse).
+    (function() {
+      var nativeFetch = window.fetch;
+      window.fetch = function(input, init) {
+        if (input instanceof Request && !init) {
+          var reqClone = input.clone();
+          if (!reqClone.headers.has('Accept-Language')) reqClone.headers.set('Accept-Language', 'tr');
+          return nativeFetch.call(this, reqClone);
+        }
+        init = init || {};
+        var headers = (input instanceof Request) ? new Headers(input.headers) : new Headers();
+        if (init.headers) {
+          new Headers(init.headers).forEach(function(value, key) { headers.set(key, value); });
+        }
+        if (!headers.has('Accept-Language')) headers.set('Accept-Language', 'tr');
+        init.headers = headers;
+        return nativeFetch.call(this, input, init);
+      };
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Meta Tags -->
+      <title>Sayfaya Ulaşılamıyor - EBA</title>
+    <meta name="keywords" content="Eba TR"/>
+    <meta name="description" content="Türkiye&#039;nin en büyük dijital eğitim platformu"/>
+    <link rel="canonical" href="https://eba.gov.tr"/>
+	<meta name="distribution" content="global" />
+  <meta name="classification" content="">
+  <meta name="copyright" content="2025 EBA tüm hakları saklıdır">
+  <meta name="content-language" content="tr">
+  <link rel="shortcut icon" href="https://eba-public-small.eba.gov.tr/media/landing/fc654a54-9174-4f8f-81a4-20147068721a.svg" type="image/x-icon" />
+  <meta name="robots" content="index,follow" />
+  <meta content="all" name="audience" />
+  <meta name="publisher" content="Eba CMS" />
+  <meta name="Author" content="EBA">
+  <link rel="shortcut icon" href="https://eba-public-small.eba.gov.tr/media/landing/fc654a54-9174-4f8f-81a4-20147068721a.svg" type="image/x-icon" />
+  
+  
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://eba.gov.tr/front/assets/vendor/figtree/webfonts/_Xms-HUzqDCFdgfMm4S9DaRvzig.woff2?v=1791900402">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="https://eba.gov.tr/front/assets/vendor/figtree/webfonts/_Xms-HUzqDCFdgfMm4q9DaRvziissg.woff2?v=1791900402">
+  <link rel="stylesheet" href="https://eba.gov.tr/front/assets/vendor/figtree/figtree.css?v=1791900402">
+  <link rel="stylesheet" href="https://eba.gov.tr/front/assets/vendor/fontawesome/css/all.min.css?v=1791900402" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://eba.gov.tr/front/assets/vendor/fontawesome/css/all.min.css?v=1791900402">
+  </noscript>
+  <link rel="stylesheet" href="https://eba.gov.tr/front/assets/css/style.css?v=1791900402">
+  <link rel="stylesheet" href="https://eba-public-small.eba.gov.tr/prod/landing-assets/front/assets/css/colors/grape.css?v=1791900402">
+  
+  <link rel="stylesheet" href="https://eba-public-small.eba.gov.tr/prod/landing-assets/front/assets/css/plugins.css?v=1791900402" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://eba-public-small.eba.gov.tr/prod/landing-assets/front/assets/css/plugins.css?v=1791900402"></noscript>
+    <style>
+    .error-404-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        background-color: #FFFFFF;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .error-404-content {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+        width: 100%;
+    }
+    
+    .error-404-number {
+        font-size: 180px;
+        font-weight: 700;
+        color: #C41819;
+        line-height: 1;
+        margin-bottom: 20px;
+        font-family: 'Figtree';
+        animation: bounce 2s ease-in-out infinite;
+        letter-spacing: -10px;
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    .error-404-title {
+        font-size: 42px;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 20px;
+        font-family: 'Figtree';
+    }
+    
+    .error-404-message {
+        font-size: 18px;
+        color: #181D27;
+        margin-bottom: 40px;
+        line-height: 1.6;
+        font-family: 'Figtree';
+    }
+    
+    .error-404-actions {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .error-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        background: #C41819;
+        color: #FFFFFF;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 400;
+        font-size: 24px;
+        font-family: 'Figtree';
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        min-width: 200px;
+    }
+    
+    .error-btn:hover {
+        transform: translateY(-3px);
+        background: #A01415;
+        color: #FFFFFF;
+    }
+    
+    .error-btn-secondary {
+        background: transparent;
+        color: #C41819;
+        border: 2px solid #C41819;
+    }
+    
+    .error-btn-secondary:hover {
+        background: #C41819;
+        color: #FFFFFF;
+    }
+    
+    @media (max-width: 768px) {
+        .error-404-number {
+            font-size: 120px;
+            letter-spacing: -5px;
+        }
+        
+        .error-404-title {
+            font-size: 28px;
+        }
+        
+        .error-404-message {
+            font-size: 16px;
+        }
+        
+        .error-404-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .error-btn {
+            width: 100%;
+            max-width: 300px;
+            font-size: 20px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .error-404-number {
+            font-size: 80px;
+        }
+        
+        .error-404-title {
+            font-size: 24px;
+        }
+        
+        .error-btn {
+            font-size: 18px;
+        }
+    }
+</style>
+  <style>
+    /* Unicons Font Face */
+    @font-face {
+      font-family: 'Unicons';
+      src: url('https://eba.gov.tr/front/assets/fonts/unicons/Unicons.woff2?v=1791900402') format('woff2'),
+           url('https://eba.gov.tr/front/assets/fonts/unicons/Unicons.woff?v=1791900402') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    .breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 0;
+      margin-bottom: 1rem;
+      list-style: none;
+      background-color: none;
+      border-radius: 0;
+      justify-content: center;
+    }
+    @media (min-width: 1200px) {
+      .display-1 {
+          font-size: 2rem;
+      }
+    }
+    ol.breadcrumb {
+      margin-bottom: 0;
+    }
+    h2.post-title {
+      min-height: 90px;
+      width: 100%;
+      display: table;
+    }
+    h2.post-title a {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    /* GLOBAL FIGTREE FONT OVERRIDE - TÜM FONT TANIMLARINI ZORLA */
+    html,
+    body:not(.has-special-page),
+    body:not(.has-special-page) *:not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad):not([class*="fa-"]):not(.uil):not([class*="uil-"]),
+    body:not(.has-special-page) *:not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad):not([class*="fa-"]):not(.uil):not([class*="uil-"])::after,
+    body.has-special-page header.wrapper,
+    body.has-special-page header.wrapper *:not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad):not([class*="fa-"]):not(.uil):not([class*="uil-"]) {
+      font-family: 'Figtree' !important;
+    }
+
+    /* FontAwesome ikonları - ::before dahil */
+    .fa, .fas, .far, .fal, .fab, .fad,
+    [class*="fa-"],
+    .fa::before, .fas::before, .far::before, .fal::before, .fab::before, .fad::before,
+    [class*="fa-"]::before {
+      font-family: 'Font Awesome 6 Brands', 'Font Awesome 6 Free', 'FontAwesome' !important;
+    }
+
+    /* Unicons ikonları */
+    .uil, [class*="uil-"],
+    .uil::before, [class*="uil-"]::before {
+      font-family: 'Unicons' !important;
+    }
+
+    /* DM Serif Display, DM Sans, Space Grotesk, THICCCBOI, Urbanist override */
+    .counter-wrapper .counter,
+    .display-1,
+    .display-2,
+    .display-3,
+    .display-4,
+    .display-5,
+    .display-6,
+    .ff-serif,
+    .post-title,
+    em,
+    body,
+    .container,
+    .wrapper,
+    section,
+    div,
+    span,
+    p,
+    h1, h2, h3, h4, h5, h6,
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    label,
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .accordion-wrapper .card-header button,
+    .collapse-link,
+    .badge,
+    .meta,
+    .more,
+    .post-category,
+    blockquote,
+    .lead {
+      font-family: 'Figtree' !important;
+    }
+
+    /* Özel font sınıflarını override et */
+    [class*="DM"],
+    [class*="Space"],
+    [class*="THICCCBOI"],
+    [class*="Urbanist"],
+    [class*="Manrope"],
+    [class*="D-DIN"],
+    [class*="DIN"],
+    [class*="D-DINExp"] {
+      font-family: 'Figtree' !important;
+    }
+
+    /* Tüm elementler için global Figtree override */
+    body:not(.has-special-page) *:not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad):not([class*="fa-"]):not(.uil):not([class*="uil-"]),
+    body.has-special-page header.wrapper *:not(.fa):not(.fas):not(.far):not(.fal):not(.fab):not(.fad):not([class*="fa-"]):not(.uil):not([class*="uil-"]) {
+      font-family: 'Figtree' !important;
+    }
+
+    /* Content List Hover Efekti - Tüm Ekranlar */
+    a.text-decoration-none .content-list-card,
+    a[href] .content-list-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    }
+    a.text-decoration-none:hover .content-list-card,
+    a[href]:hover .content-list-card {
+      transform: translateY(-8px) !important;
+      box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15) !important;
+    }
+    a.text-decoration-none:hover,
+    a[href]:hover {
+      text-decoration: none !important;
+    }
+    .special-embed {
+      width: 100%;
+      min-height: 60vh;
+      position: relative;
+      isolation: isolate;
+    }
+    body.has-special-page .special-embed,
+    body.has-special-page .special-embed * {
+      font-family: revert !important;
+    }
+    .slider-image-container {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+    }
+    .wrapper section p.fs-4 {
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .wrapper section .card {
+        height: auto !important;
+        min-height: 200px;
+        margin-bottom: 20px;
+      }
+      .wrapper section .card h5 {
+        font-size: 24px !important;
+      }
+      .wrapper section .card p {
+        font-size: 14px !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+      .wrapper section .card img {
+        width: 100% !important;
+        max-width: 200px !important;
+        height: auto !important;
+        position: relative !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: 20px auto !important;
+      }
+    }
+    @media (min-width: 992px) {
+      .slider-image-container {
+        min-height: 600px;
+      }
+      .display-lg-1 {
+        font-size: 96px;
+      }
+      .fs-lg-2 {
+        font-size: 48px;
+        width: 613px;
+      }
+    }
+
+    /* Footer Full Width */
+    footer {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    footer .container.footer-container {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .footer-copyright {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Footer Description Text */
+    .footer-description-text {
+      color: #5A5A5A !important;
+      font-family: 'Figtree' !important;
+      font-size: 16px !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      line-height: 25px !important;
+      width: 200px !important;
+    }
+
+    /* Footer Widget Title */
+    footer .widget-title {
+      align-self: stretch !important;
+      color: #3F3F3F !important;
+      font-family: 'Figtree' !important;
+      font-size: 16px !important;
+      font-style: normal !important;
+      font-weight: 700 !important;
+      line-height: normal !important;
+    }
+
+    /* Footer Menu Links */
+    footer .footer-menu-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 4px !important;
+    }
+    footer .footer-menu-link {
+      color: #3F3F3F !important;
+      font-family: 'Figtree' !important;
+      font-size: 18px !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      line-height: normal !important;
+      text-decoration: none !important;
+    }
+    footer .footer-menu-item {
+      padding: 2px 0 !important;
+    }
+
+    /* Footer Responsive */
+    @media (max-width: 768px) {
+      .footer-container {
+        padding: 30px 20px !important;
+      }
+      .footer-copyright {
+        padding: 20px !important;
+      }
+      .footer-copyright-content {
+        flex-direction: column !important;
+        gap: 16px !important;
+        text-align: center !important;
+      }
+      .footer-description-text {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
+    /* Header Responsive */
+    @media (max-width: 768px) {
+      .navbar-brand {
+        padding: 10px 0;
+      }
+      .navbar-brand img {
+        max-width: 150px;
+        height: auto;
+      }
+      .navbar-other img {
+        height: 30px !important;
+      }
+    }
+
+    /* Header Logo Konumlandırma - Desktop ve Tablet (Mobil Hariç) */
+    @media (min-width: 769px) {
+      header.wrapper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      header .navbar {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .navbar-clone {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        background-color: #FFF !important;
+      }
+      header .navbar .container,
+      .navbar-clone .container {
+        max-width: 100% !important;
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+      }
+      header .navbar-brand.w-100,
+      .navbar-clone .navbar-brand.w-100 {
+        width: auto !important;
+        flex: 0 0 auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+      }
+      header .navbar-brand a,
+      .navbar-clone .navbar-brand a {
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+      }
+      header .navbar-other.w-100,
+      .navbar-clone .navbar-other.w-100 {
+        width: auto !important;
+        flex: 0 0 auto !important;
+        margin-left: auto !important;
+        padding-right: 0 !important;
+        margin-right: 0 !important;
+      }
+      header .navbar .navbar-collapse,
+      .navbar-clone .navbar-collapse {
+        flex: 1 1 auto !important;
+        margin: 0 auto !important;
+      }
+      header .navbar.center-nav .navbar-collapse,
+      .navbar-clone.center-nav .navbar-collapse {
+        justify-content: center !important;
+      }
+    }
+
+    /*HOMEPAGE MOBİL RESPONSİVE STİLLERİ*/
+    @media (max-width: 768px) {
+      /* Hero Slider Section */
+      .hero-slider-section {
+        padding: 40px 0 !important;
+      }
+      .hero-slider-section h1 {
+        font-size: 32px !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+      }
+      .hero-slider-section p {
+        font-size: 18px !important;
+        line-height: 1.4 !important;
+        width: 100% !important;
+      }
+      .hero-slider-section .hero-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 16px !important;
+      }
+      .hero-slider-section .hero-image-wrapper {
+        min-height: 300px !important;
+        padding-left: 0 !important;
+        margin-top: 20px;
+      }
+      .hero-slider-section .col-lg-6 {
+        text-align: center;
+      }
+      .hero-slider-section .col-lg-6:first-child {
+        order: 2;
+      }
+      .hero-slider-section .col-lg-6:last-child {
+        order: 1;
+      }
+      .hero-content-wrapper {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        text-align: center;
+      }
+
+      /* Gridlist Section */
+      .responsive-grid-container {
+        grid-template-columns: 1fr !important;
+      }
+      .responsive-grid-container a {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        min-height: 200px !important;
+        padding: 20px !important;
+      }
+      .responsive-grid-container h3 {
+        font-size: 24px !important;
+        width: 100% !important;
+      }
+
+      /* Description Section */
+      .description-title {
+        font-size: 32px !important;
+        margin-bottom: 16px !important;
+      }
+      .description-text {
+        font-size: 16px !important;
+        margin-bottom: 24px !important;
+      }
+
+      /* Catalog Section */
+      .catalog-title {
+        font-size: 22px !important;
+        margin-bottom: 24px !important;
+      }
+
+      /* Carousel Section */
+      .carousel-hero-swiper .col-lg-7 > div {
+        min-height: 250px !important;
+      }
+      .carousel-title {
+        font-size: 20px !important;
+      }
+      .carousel-description {
+        font-size: 14px !important;
+      }
+      .carousel-hero-pagination {
+        margin-top: 24px !important;
+      }
+
+      /* Description Two Section */
+      .description-two-icon {
+        width: 100px !important;
+        height: auto !important;
+      }
+      .description-two-title {
+        font-size: 32px !important;
+        margin-left: 0 !important;
+        margin-bottom: 16px !important;
+        width: 100% !important;
+      }
+      .description-two-text {
+        font-size: 16px !important;
+      }
+      .description-two-images {
+        min-height: 300px !important;
+        margin-top: 30px !important;
+      }
+      .desc-img-three {
+        width: 60px !important;
+        height: 60px !important;
+        margin-top: 0 !important;
+      }
+      .desc-img-two {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .desc-img-breadcrumb {
+        width: 80% !important;
+        right: 10% !important;
+      }
+
+      /* Gridlist Two Section */
+      .gridlist-two-section {
+        overflow-x: hidden !important;
+      }
+      .gridlist-two-item {
+        margin-bottom: 20px;
+      }
+      .gridlist-two-item h3,
+      .gridlist-two-item h3[style*="width: 302px"],
+      .gridlist-two-item h3[style*="width: 288px"],
+      .gridlist-two-item h3[style*="width: 322px"],
+      .gridlist-two-item h3[style*="width:"] {
+        font-size: 18px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .gridlist-two-item p,
+      .gridlist-two-item p[style*="width: 322px"],
+      .gridlist-two-item p[style*="width:"] {
+        font-size: 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .gridlist-two-item > div,
+      .gridlist-two-item > div[style*="min-height: 405px"] {
+        min-height: auto !important;
+        padding: 20px !important;
+        overflow: hidden !important;
+      }
+      /* Gridlist two bölümündeki tüm kartlar için genel düzenlemeler */
+      .gridlist-two-section h3[style*="width: 302px"],
+      .gridlist-two-section h3[style*="width: 288px"],
+      .gridlist-two-section h3[style*="width: 322px"],
+      .gridlist-two-section h3[style*="width: 1156B7"],
+      .gridlist-two-section h3[style*="width:"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+        font-size: 18px !important;
+      }
+      .gridlist-two-section p[style*="width: 322px"],
+      .gridlist-two-section p[style*="width: 302px"],
+      .gridlist-two-section p[style*="width: 288px"],
+      .gridlist-two-section p[style*="width:"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+        font-size: 14px !important;
+      }
+      .gridlist-two-section [style*="width: 302px"],
+      .gridlist-two-section [style*="width: 288px"],
+      .gridlist-two-section [style*="width: 322px"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+      }
+      /* Gridlist two kartlarının içindeki tüm div'ler */
+      .gridlist-two-section [style*="min-height: 405px"] {
+        padding: 20px !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+      }
+      .gridlist-two-section [style*="min-height: 405px"] h3,
+      .gridlist-two-section [style*="min-height: 405px"] p {
+        width: 100% !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+      }
+
+      /* FAQ Section */
+      .faq-item {
+        flex-direction: column !important;
+        padding: 20px 0 !important;
+      }
+      .faq-icon {
+        width: 40px !important;
+        height: 40px !important;
+      }
+      .faq-title {
+        font-size: 48px !important;
+        min-width: auto !important;
+      }
+      .faq-description {
+        font-size: 20px !important;
+        margin-bottom: 16px !important;
+      }
+      .faq-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 16px !important;
+      }
+
+      /* Content List Section */
+      .content-list-card {
+        min-height: 250px !important;
+        height: auto !important;
+        padding: 20px !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+      }
+      .content-list-title {
+        font-size: 32px !important;
+        margin-bottom: 12px !important;
+      }
+      .content-list-desc {
+        font-size: 20px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin-bottom: 16px !important;
+      }
+      .content-list-img {
+        position: relative !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 200px !important;
+        height: auto !important;
+        margin: 20px auto 0 !important;
+        z-index: 1 !important;
+      }
+      .content-list-img img {
+        width: 100% !important;
+        max-width: 200px !important;
+        height: auto !important;
+        aspect-ratio: 1/1 !important;
+        object-fit: cover !important;
+      }
+      .content-list-card .w-100.h-100 {
+        width: 100% !important;
+        z-index: 2 !important;
+      }
+      .content-list-card .position-relative {
+        order: 1 !important;
+      }
+      .content-list-card .content-list-img {
+        order: 2 !important;
+      }
+
+      /* Parallax Section */
+      .parallax-section {
+        padding: 30px 0 !important;
+      }
+      .parallax-section > div {
+        height: 300px !important;
+      }
+      .parallax-section button {
+        width: 40px !important;
+        height: 40px !important;
+        left: 10px !important;
+        right: 10px !important;
+      }
+
+      /* Photo Gallery Section */
+      .photo-gallery-title {
+        font-size: 24px !important;
+      }
+      .photo-gallery-desc {
+        font-size: 16px !important;
+      }
+      .photo-gallery-item img {
+        height: 50px !important;
+      }
+
+      /* Video Gallery Section */
+      .video-gallery-section {
+        padding: 40px 0 !important;
+      }
+      .video-gallery-section h3 {
+        font-size: 24px !important;
+      }
+      .video-gallery-section p {
+        font-size: 16px !important;
+      }
+    }
+
+    /* Tablet için ek düzenlemeler */
+    @media (min-width: 769px) and (max-width: 991px) {
+      .hero-slider-section h1 {
+        font-size: 48px !important;
+      }
+      .hero-slider-section p {
+        font-size: 28px !important;
+        width: 100% !important;
+      }
+      .responsive-grid-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    /* 771px - 1439px arası Content List responsive düzenlemeleri */
+    @media (min-width: 771px) and (max-width: 1439px) {
+      .hero-slider-section h1[style*="font-size: 96px"] {
+        font-size: clamp(42px, 5vw, 60px) !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+        margin-bottom: 16px !important;
+      }
+
+      .hero-slider-section p[style*="font-size: 48px"] {
+        font-size: clamp(20px, 2.5vw, 32px) !important;
+        width: auto !important;
+        max-width: 90% !important;
+        line-height: 1.4 !important;
+        margin-bottom: 24px !important;
+      }
+
+      .hero-slider-section .hero-button {
+        font-size: clamp(16px, 1.5vw, 20px) !important;
+        width: auto !important;
+        max-width: 280px !important;
+        padding: 8px 16px !important;
+      }
+
+      .hero-image-wrapper {
+        padding-left: 40px !important;
+        min-height: 450px !important;
+      }
+
+      .hero-slider-section .col-lg-6 > div[style*="padding-right: 40px"] {
+        padding-right: 20px !important;
+        padding-left: 20px !important;
+      }
+      /* Content List Card Genel Ayarlar */
+      .content-list-card[style*="align-items: center"] {
+        overflow: hidden !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+      }
+
+      .content-list-card {
+        overflow: hidden !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+      }
+
+      /* Text container'ı sol tarafa sabitle ve genişliği sınırla - Orta ekranlar için */
+      .content-list-card .w-100.h-100.position-relative[style*="align-items: center"] {
+        max-width: 50% !important;
+        width: 50% !important;
+        flex: 0 0 50% !important;
+        padding-right: 15px !important;
+        padding-left: 0 !important;
+        padding-top: 0 !important;
+        z-index: 2 !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+      }
+
+      .co

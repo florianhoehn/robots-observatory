@@ -1,0 +1,53 @@
+# Robots.txt for Malaysia Kini
+# Allows search engine crawlers to efficiently index content
+
+# Teads Ads.txt crawler
+User-agent: AdsTxtCrawler
+Allow: /ads.txt
+
+User-agent: adstxt
+Allow: /ads.txt
+
+# Default rules for all user-agents
+User-agent: *
+Allow: /
+
+# Block crawlers from API endpoints (internal only)
+Disallow: /api/
+
+# Block auth-related pages
+Disallow: /auth/
+Disallow: /logout
+Disallow: /email-link/
+
+# Block promo and other non-indexable paths
+Disallow: /promo/
+
+# Block localized search pages
+Disallow: /en/search
+Disallow: /my/search
+Disallow: /zh/search
+Disallow: /en/search?*
+Disallow: /my/search?*
+Disallow: /zh/search?*
+
+# Allow search engines to crawl important static resources
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /ads.txt
+
+# Set crawl delay for efficient crawling (optional, in seconds)
+Crawl-delay: 1
+
+# Sitemaps for all supported languages
+Sitemap: https://www.malaysiakini.com/en/sitemap_index.xml
+Sitemap: https://www.malaysiakini.com/my/sitemap_index.xml
+Sitemap: https://www.malaysiakini.com/zh/sitemap_index.xml
+
+# Specific rules for known aggressive crawlers (optional)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10

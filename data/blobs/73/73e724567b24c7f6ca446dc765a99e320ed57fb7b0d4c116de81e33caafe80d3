@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>404</title>
+  <script>
+    // 根据浏览器语言切换中/英文文案
+    (function () {
+      var dict = {
+        zh: {
+          title: '404 — 页面不存在',
+          heading: '页面不存在',
+          desc: '你访问的地址可能已失效，或从未存在过。',
+          home: '返回首页',
+          back: '返回上一页'
+        },
+        en: {
+          title: '404 — Page Not Found',
+          heading: 'Page Not Found',
+          desc: 'The page you requested may have been moved or never existed.',
+          home: 'Back to Home',
+          back: 'Go Back'
+        }
+      };
+
+      var langs = navigator.languages || [navigator.language || navigator.userLanguage || 'en'];
+      var isZh = false;
+      for (var i = 0; i < langs.length; i++) {
+        if (String(langs[i]).toLowerCase().indexOf('zh') === 0) {
+          isZh = true;
+          break;
+        }
+      }
+
+      var locale = isZh ? 'zh' : 'en';
+      var t = dict[locale];
+      window.__i18n = { locale: locale, t: t };
+
+      document.documentElement.lang = isZh ? 'zh-CN' : 'en';
+      document.title = t.title;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var map = {
+          heading: t.heading,
+          desc: t.desc,
+          home: t.home,
+          back: t.back
+        };
+        Object.keys(map).forEach(function (key) {
+          var el = document.querySelector('[data-i18n="' + key + '"]');
+          if (el) el.textContent = map[key];
+        });
+      });
+    })();
+  </script>
+  <style>
+    :root {
+      --bg-1: #f4f6f8;
+      --bg-2: #e8eef5;
+      --ink: #1a2332;
+      --muted: #6b7a8d;
+      --accent: #2f6fed;
+      --accent-hover: #1f56c9;
+      --line: rgba(26, 35, 50, 0.08);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+        "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 15% 20%, rgba(47, 111, 237, 0.08), transparent 60%),
+        radial-gradient(900px 500px at 85% 75%, rgba(26, 35, 50, 0.06), transparent 55%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-2));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: min(420px, 100%);
+      text-align: center;
+      animation: rise 0.55s ease-out both;
+    }
+
+    .code {
+      font-family: "Avenir Next", "Segoe UI", "PingFang SC", sans-serif;
+      font-size: clamp(72px, 18vw, 104px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, #1a2332 0%, #3d5a80 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fade-in 0.7s ease-out 0.05s both;
+    }
+
+    h1 {
+      margin-top: 12px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      animation: fade-in 0.7s ease-out 0.12s both;
+    }
+
+    p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      animation: fade-in 0.7s ease-out 0.2s both;
+    }
+
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      animation: fade-in 0.7s ease-out 0.28s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+    }
+
+    .btn-ghost:hover {
+      background: #fff;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .page, .code, h1, p, .actions {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="code" aria-hidden="true">404</div>
+    <h1 data-i18n="heading">页面不存在</h1>
+    <p data-i18n="desc">你访问的地址可能已失效，或从未存在过。</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/" data-i18n="home">返回首页</a>
+      <a class="btn btn-ghost" href="javascript:history.back()" data-i18n="back">返回上一页</a>
+    </div>
+  </main>
+</body>
+</html>

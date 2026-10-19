@@ -1,0 +1,244 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en-us"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><meta name="description" content="Wiz is the unified cloud security platform with prevention and response capabilities, enabling security and development teams to build faster and more securely." data-next-head=""/><meta name="twitter:card" content="summary_large_image" data-next-head=""/><meta name="twitter:site" content="@wiz_io" data-next-head=""/><meta property="og:description" content="Wiz is the unified cloud security platform with prevention and response capabilities, enabling security and development teams to build faster and more securely." data-next-head=""/><meta property="og:image" content="https://www.wiz.io/_next/static/immutable/media/social_share_image.0laakpxcv7kyu.jpg" data-next-head=""/><meta property="og:locale" content="en-us" data-next-head=""/><meta property="og:site_name" content="wiz.io" data-next-head=""/><title data-next-head="">Page not found | Wiz</title><meta name="robots" content="noindex,nofollow" data-next-head=""/><meta property="og:title" content="Page not found | Wiz" data-next-head=""/><meta property="og:url" content="https://www.wiz.io/404" data-next-head=""/><meta property="og:type" content="website" data-next-head=""/><link rel="canonical" href="https://www.wiz.io/404" data-next-head=""/><link rel="shortcut icon" href="/favicon.png"/><meta name="twitter:widgets:csp" content="on"/><meta name="google-site-verification" content="zSanwcyYxMtAILuAY6eFdLNwmVQVVT9wbetOL7oFfN8"/><link rel="preload" href="/_next/static/immutable/media/41e5ecddd0e3bcb9.p.10ltn1joeyde3.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font=""/><link rel="preload" href="/_next/static/immutable/media/115e7a2565b70400-s.p.2e5o54q9_b0yk.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/immutable/media/dm_sans_v11_latin_regular-s.p.3vtlfyzc2mhc-.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/immutable/media/dm_sans_v11_latin_500-s.p.2ajm9e7_ishxs.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/immutable/media/dm_sans_v11_latin_700-s.p.1ivhmrnae2vch.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/immutable/media/poppins_latin_400-s.p.02pgwtu2kliti.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/immutable/media/poppins_latin_600-s.p.2jsr8pt-l398u.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/immutable/chunks/1-wn763vqr667.css" as="style"/><link rel="preload" href="/_next/static/immutable/chunks/1aoj6aacw5p11.css" as="style"/><script id="optimizely-gdpr-loader" data-nscript="beforeInteractive">
+(function() {
+  'use strict';
+  
+  // =========================================================================
+  // Configuration (injected at build time)
+  // =========================================================================
+  var REGION_COOKIE_NAME = 'wiz_region';
+  var CONSENT_COOKIE_NAME = 'OptanonConsent';
+  var REQUIRED_CONSENT_CATEGORY = 'C0002';
+  var OPTIMIZELY_SCRIPT_URL = 'https://cdn.optimizely.com/js/26988130118.js';
+  var EU_REGION = 'EU';
+  var CONSENT_ORIGIN_PATH_KEY = 'wiz_consent_origin_path';
+  
+  
+  // =========================================================================
+  // Cookie Parsing Utilities
+  // =========================================================================
+  
+  /**
+   * Get a cookie value by name
+   */
+  function getCookie(name) {
+    var cookies = document.cookie.split('; ');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      if (cookie.indexOf(name + '=') === 0) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Check if OneTrust consent is granted for a specific category
+   * 
+   * OneTrust stores consent in format:
+   * OptanonConsent=groups=C0001%3A1%2CC0002%3A1
+   * Decoded: groups=C0001:1,C0002:1
+   * 
+   * Where C0001:1 = consented, C0001:0 = not consented
+   */
+  function hasOneTrustConsent(category) {
+    var consentValue = getCookie(CONSENT_COOKIE_NAME);
+    
+    if (!consentValue) return false;
+    
+    try {
+      var decoded = decodeURIComponent(consentValue);
+      var groupsMatch = decoded.match(/groups=([^&]*)/);
+      
+      if (!groupsMatch || !groupsMatch[1]) {
+        return false;
+      }
+      
+      // Check for category:1 (consented)
+      var hasConsent = groupsMatch[1].indexOf(category + ':1') !== -1;
+      
+      return hasConsent;
+    } catch (e) {
+      return false;
+    }
+  }
+  
+  // =========================================================================
+  // Consent-origin Path Tracking
+  //
+  // sessionStorage can throw (Safari private mode, storage disabled), so every
+  // access is guarded. Failing open here just restores the previous behaviour.
+  // =========================================================================
+
+  /**
+   * Remember the page the visitor was on when consent was still missing.
+   */
+  function rememberConsentOriginPath() {
+    try {
+      sessionStorage.setItem(CONSENT_ORIGIN_PATH_KEY, window.location.pathname);
+    } catch (e) {}
+  }
+
+  /**
+   * Whether we're still on the page where consent was requested.
+   * Compares pathname only, so query strings (?wiz_test_cookie=true) and a
+   * form-submit reload of the same URL still count as the same page.
+   */
+  function isOnConsentOriginPath() {
+    try {
+      var originPath = sessionStorage.getItem(CONSENT_ORIGIN_PATH_KEY);
+      return !!originPath && originPath === window.location.pathname;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function clearConsentOriginPath() {
+    try {
+      sessionStorage.removeItem(CONSENT_ORIGIN_PATH_KEY);
+    } catch (e) {}
+  }
+
+  // =========================================================================
+  // Main Logic
+  // =========================================================================
+
+  /**
+   * Load the Optimizely script dynamically
+   */
+  function loadOptimizely() {
+    var script = document.createElement('script');
+    script.src = OPTIMIZELY_SCRIPT_URL;
+    // async=false only preserves execution order relative to other
+    // dynamically-inserted scripts; a script added via createElement never
+    // blocks HTML parsing, so experiments apply after first paint (possible
+    // flicker). A fully flicker-free load would need a synchronous
+    // <script src> in <head>, which isn't possible here because loading is
+    // gated on a runtime GDPR/consent decision.
+    script.async = false;
+    document.head.appendChild(script);
+    
+    // Mark that Optimizely was loaded
+    window.__optimizelyLoadedByGDPR = true;
+  }
+  
+  // =========================================================================
+  // Start GDPR Decision Flow (always enforced)
+  // =========================================================================
+
+  // Get user's region from cookie (set by middleware)
+  var regionCookie = getCookie(REGION_COOKIE_NAME);
+  
+  // Determine if user is in EU
+  // If no cookie exists (edge case), default to EU for safety
+  var isEU = !regionCookie || regionCookie === EU_REGION;
+  
+  // Decision logic
+  var shouldLoadOptimizely = false;
+  var blockReason = null;
+
+  if (!isEU) {
+    // Non-EU users: Always load Optimizely
+    shouldLoadOptimizely = true;
+  } else if (!hasOneTrustConsent(REQUIRED_CONSENT_CATEGORY)) {
+    // EU, no consent yet. Remember this page so that when consent arrives we
+    // don't activate experiments on it — a reload of this same URL (e.g. a form
+    // submit rendering a Thank You state) must not trigger a redirect variant.
+    rememberConsentOriginPath();
+    blockReason = 'no_consent';
+  } else if (isOnConsentOriginPath()) {
+    // Consent granted, but still on the page where it was requested.
+    blockReason = 'same_url_consent_suppress';
+  } else {
+    // Consent granted and the visitor has moved on — resume normal behaviour.
+    clearConsentOriginPath();
+    shouldLoadOptimizely = true;
+  }
+  
+  // Execute decision
+  if (shouldLoadOptimizely) {
+    loadOptimizely();
+  } else {
+    // Mark that Optimizely was intentionally blocked
+    // This flag is used by client-side code to know the current state
+    window.__optimizelyBlockedForGDPR = true;
+    window.__optimizelyBlockReason = blockReason;
+  }
+})();
+</script><script id="theme-color-mode" data-nscript="beforeInteractive">
+(function() {
+  function getInitialColorMode() {
+    const pathname = window.location.pathname;
+
+    const isDarkModePage = null;
+
+    const isResearchPage = ["/research", "/cloud-threat-landscape", "/ai-security-resource-center", "/ctf", "/bug-bounty-masterclass"].includes(pathname);
+
+    const isResearchPath = ["/bug-bounty-masterclass"].some(path => pathname.startsWith(path));
+    
+    if (isResearchPage || isResearchPath) {
+      return 'dark-research';
+    }
+    if (isDarkModePage) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  const colorMode = getInitialColorMode();
+  const root = document.documentElement;
+  root.classList.add(colorMode);
+})()
+</script><script id="content-personalization-gate" data-nscript="beforeInteractive">
+(function () {
+  try {
+    var search = window.location.search;
+    if (!search) return;
+
+    var term = new URLSearchParams(search).get('utm_term');
+    if (!term) return;
+
+    var haystack = ' ' + term.toLowerCase().replace(/\s+/g, ' ').trim() + ' ';
+    var path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+
+    var ENTRIES = [{"attr":"lp-form-hero-section-title","rank":1,"exact":null,"regex":"^lp\\/nb-ciem-.*$","triggers":[" software "," vendor "," solution "," platform "]},{"attr":"lp-form-hero-section-title","rank":1,"exact":null,"regex":"^lp\\/nb-cspm-.*$","triggers":[" software "," vendor "," solution "," platform "]},{"attr":"lp-form-hero-section-title","rank":1,"exact":null,"regex":"^lp\\/nb-cnapp-.*$","triggers":[" software "," vendor "," solution "," platform "]}];
+
+    var matched = [];
+    var seen = {};
+    for (var i = 0; i < ENTRIES.length; i++) {
+      var e = ENTRIES[i];
+      // Exact => en-US only (unprefixed); wildcard uses its precompiled pattern.
+      var ok = e.rank === 0
+        ? true
+        : (e.rank === 2 ? path === e.exact : new RegExp(e.regex).test(path));
+      if (!ok) continue;
+
+      var triggers = e.triggers;
+      for (var j = 0; j < triggers.length; j++) {
+        if (haystack.indexOf(triggers[j]) !== -1) {
+          var mark = 'k:' + e.attr;
+          if (!seen[mark]) { seen[mark] = 1; matched.push(e.attr); }
+          break;
+        }
+      }
+    }
+    if (matched.length === 0) return;
+
+    var selector = matched
+      .map(function (attr) { return '[data-ccp=' + CSS.escape(String(attr)) + ']'; })
+      .join(',');
+
+    var style = document.createElement('style');
+    style.setAttribute('data-ccp-gate', '');
+    style.textContent = selector + '{visibility:hidden!important}';
+    (document.head || document.documentElement).appendChild(style);
+
+    // Safety net: never leave content hidden if hydration/JS fails.
+    setTimeout(function () {
+      if (style && style.parentNode) style.parentNode.removeChild(style);
+    }, 4000);
+  } catch (e) {
+    var gate = document.querySelector('style[data-ccp-gate]');
+    if (gate && gate.parentNode) gate.parentNode.removeChild(gate);
+  }
+})();
+</script><link rel="stylesheet" href="/_next/static/immutable/chunks/1-wn763vqr667.css" data-n-g=""/><link rel="stylesheet" href="/_next/static/immutable/chunks/1aoj6aacw5p11.css" data-n-g=""/><noscript data-n-css=""></noscript><script>(globalThis["TURBOPACK"] || (globalThis["TURBOPACK"] = [])).push({"otherChunks":["static/immutable/chunks/0shzs62zyyghg.js","static/immutable/chunks/1xe6i5p1kgml8.js","static/immutable/chunks/2abclz8_apygh.js","static/immutable/chunks/01q6hrtcjlm_e.js","static/immutable/chunks/2a9h7m0n-k1ve.js","static/immutable/chunks/3ya4i8_owm9y2.js","static/immutable/chunks/0k7djqfedvu04.js","static/immutable/chunks/14t1r0_i4hl9q.js","static/immutable/chunks/25shzen60z3qc.js","static/immutable/chunks/3qb15v2coy_q2.js","static/immutable/chunks/0rh5c1tzd0ayh.js","static/immutable/chunks/2wlules7n3bet.js","static/immutable/chunks/24qz94ihp09zn.js","static/immutable/chunks/342buzgwtrb3l.js","static/immutable/chunks/0p2ijmseofo3u.js","static/immutable/chunks/2tr2r91m3t0_s.js","static/immutable/chunks/3-iq71fz7ythd.js","static/immutable/chunks/19fuz0-db9q96.js","static/immutable/chunks/1gzxdxy9d-_et.js","static/immutable/chunks/1tq_nvy4xwlmu.js","static/immutable/chunks/19rnn5j4t94gf.js","static/immutable/chunks/19i1ecpe47lp1.js","static/immutable/chunks/285us6siutuu9.js","static/immutable/chunks/1-wn763vqr667.css","static/immutable/chunks/1aoj6aacw5p11.css"],"runtimeModuleIds":[910783,294757]});
+(globalThis["TURBOPACK"] || (globalThis["TURBOPACK"] = [])).push({"otherChunks":["static/immutable/chunks/24j_onnd3vi9h.js"],"runtimeModuleIds":[910783,560299]});</script><script src="/_next/static/immutable/chunks/0shzs62zyyghg.js" defer=""></script><script src="/_next/static/immutable/chunks/1xe6i5p1kgml8.js" defer=""></script><script src="/_next/static/immutable/chunks/2abclz8_apygh.js" defer=""></script><script src="/_next/static/immutable/chunks/01q6hrtcjlm_e.js" defer=""></script><script src="/_next/static/immutable/chunks/2a9h7m0n-k1ve.js" defer=""></script><script src="/_next/static/immutable/chunks/3ya4i8_owm9y2.js" defer=""></script><script src="/_next/static/immutable/chunks/0k7djqfedvu04.js" defer=""></script><script src="/_next/static/immutable/chunks/14t1r0_i4hl9q.js" defer=""></script><script src="/_next/static/immutable/chunks/25shzen60z3qc.js" defer=""></script><script src="/_next/static/immutable/chunks/3qb15v2coy_q2.js" defer=""></script><script src="/_next/static/immutable/chunks/0rh5c1tzd0ayh.js" defer=""></script><script src="/_next/static/immutable/chunks/2wlules7n3bet.js" defer=""></script><script src="/_next/static/immutable/chunks/24qz94ihp09zn.js" defer=""></script><script src="/_next/static/immutable/chunks/342buzgwtrb3l.js" defer=""></script><script src="/_next/static/immutable/chunks/0p2ijmseofo3u.js" defer=""></script><script src="/_next/static/immutable/chunks/2tr2r91m3t0_s.js" defer=""></script><script src="/_next/static/immutable/chunks/3-iq71fz7ythd.js" defer=""></script><script src="/_next/static/immutable/chunks/19fuz0-db9q96.js" defer=""></script><script src="/_next/static/immutable/chunks/1gzxdxy9d-_et.js" defer=""></script><script src="/_next/static/immutable/chunks/1tq_nvy4xwlmu.js" defer=""></script><script src="/_next/static/immutable/chunks/19rnn5j4t94gf.js" defer=""></script><script src="/_next/static/immutable/chunks/19i1ecpe47lp1.js" defer=""></script><script src="/_next/static/immutable/chunks/285us6siutuu9.js" defer=""></script><script src="/_next/static/immutable/chunks/turbopack-2_04ewhudzrza.js" defer=""></script><script src="/_next/static/immutable/chunks/24j_onnd3vi9h.js" defer=""></script><script src="/_next/static/-JhK7RIxfy0fAxV8HRHuk/_buildManifest.js" defer=""></script><script src="/_next/static/-JhK7RIxfy0fAxV8HRHuk/_ssgManifest.js" defer=""></script><script src="/_next/static/-JhK7RIxfy0fAxV8HRHuk/_clientMiddlewareManifest.js" defer=""></script></head><body class="font-body text-gray-dark selection:bg-primary-blue dark:bg-gray-black dark:text-gray-light dark-research:bg-gray-black dark-research:text-gray-light bg-white antialiased selection:text-white YyzdBW_variable sC0XiW_variable QHXhtG_variable"><div id="__next"><main><div><div data-site-navbar="true" class="sticky inset-x-0 -top-px z-50 transition-transform duration-300 ease-in-out"><div class="dark:bg-gray-black dark-research:bg-gray-black relative border-b border-b-transparent bg-white transition-all duration-300"><div class="flex h-16 items-center justify-between px-8 xl:gap-4"><div class="mr-4 flex justify-start xl:mr-0"><a class="inline-block self-start" href="/"><span class="sr-only">Wiz</span><svg class="text-primary-blue dark-research:text-white h-9 max-w-[51px] translate-y-[-2.5px] transition-all active:opacity-50 lg:hover:opacity-70 dark:text-white" aria-label="Wiz Logo"><use href="/images/logo_sprite.svg#wiz-logo"></use></svg></a></div><div class="ml-auto flex items-center gap-4 xl:hidden"><button type="button" aria-label="Open search" class="text-gray-dark dark:text-gray-light/70 dark-research:text-gray-light/70 flex items-center transition-opacity hover:opacity-70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search size-5" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><button type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed" aria-label="Open navigation menu" class="text-gray-black focus:ring-primary-blue dark:text-gray-light dark-research:text-gray-light flex items-center focus:ring-2 focus:outline-hidden focus:ring-inset xl:hidden"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button></div><div class="hidden xl:flex xl:flex-1"><nav aria-label="Main" data-orientation="horizontal" dir="ltr" class="w-full flex-1 items-center hidden justify-start xl:flex"><div style="position:relative"><ul data-orientation="horizontal" class="group flex flex-1 list-none items-center justify-center space-x-1" dir="ltr"><li><button id="radix-_R_kmcm_-trigger-radix-_R_bkmcm_" data-state="closed" aria-expanded="false" class="group inline-flex w-max items-center justify-center rounded-md hover:text-primary-blue dark:hover:text-pink-research dark-research:hover:text-pink-research bg-transparent px-4 text-sm font-medium transition-colors focus:text-primary-blue focus:bg-transparent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent dark:bg-gray-black dark:focus:bg-gray-black dark:data-[state=open]:bg-gray-black dark-research:bg-gray-black dark-research:focus:bg-gray-black dark-research:data-[state=open]:bg-gray-black dark:focus:text-pink-research dark:data-[state=open]:text-pink-research dark-research:focus:text-pink-research dark-research:data-active:bg-transparent dark-research:data-[state=open]:text-pink-research dark:data-active:bg-transparent group" data-radix-collection-item="">Platform<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></li><li><button id="radix-_R_kmcm_-trigger-radix-_R_jkmcm_" data-state="closed" aria-expanded="false" class="group inline-flex w-max items-center justify-center rounded-md hover:text-primary-blue dark:hover:text-pink-research dark-research:hover:text-pink-research bg-transparent px-4 text-sm font-medium transition-colors focus:text-primary-blue focus:bg-transparent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent dark:bg-gray-black dark:focus:bg-gray-black dark:data-[state=open]:bg-gray-black dark-research:bg-gray-black dark-research:focus:bg-gray-black dark-research:data-[state=open]:bg-gray-black dark:focus:text-pink-research dark:data-[state=open]:text-pink-research dark-research:focus:text-pink-research dark-research:data-active:bg-transparent dark-research:data-[state=open]:text-pink-research dark:data-active:bg-transparent group" data-radix-collection-item="">Solutions<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></li><li><a class="group inline-flex w-max items-center justify-center rounded-md hover:text-primary-blue dark:hover:text-pink-research dark-research:hover:text-pink-research bg-transparent px-4 text-sm font-medium transition-colors focus:text-primary-blue focus:bg-transparent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent dark:bg-gray-black dark:focus:bg-gray-black dark:data-[state=open]:bg-gray-black dark-research:bg-gray-black dark-research:focus:bg-gray-black dark-research:data-[state=open]:bg-gray-black dark:focus:text-pink-research dark:data-[state=open]:text-pink-research dark-research:focus:text-pink-research dark-research:data-active:bg-transparent dark-research:data-[state=open]:text-pink-research dark:data-active:bg-transparent" data-radix-collection-item="" href="/pricing">Pricing</a></li><li><button id="radix-_R_kmcm_-trigger-radix-_R_13kmcm_" data-state="closed" aria-expanded="false" class="group inline-flex w-max items-center justify-center rounded-md hover:text-primary-blue dark:hover:text-pink-research dark-research:hover:text-pink-research bg-transparent px-4 text-sm font-medium transition-colors focus:text-primary-blue focus:bg-transparent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent dark:bg-gray-black dark:focus:bg-gray-black dark:data-[state=open]:bg-gray-black dark-research:bg-gray-black dark-research:focus:bg-gray-black dark-research:data-[state=open]:bg-gray-black dark:focus:text-pink-research dark:data-[state=open]:text-pink-research dark-research:focus:text-pink-research dark-research:data-active:bg-transparent dark-research:data-[state=open]:text-pink-research dark:data-active:bg-transparent group" data-radix-collection-item="">Resources<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></li><li><button id="radix-_R_kmcm_-trigger-radix-_R_1bkmcm_" data-state="closed" aria-expanded="false" class="group inline-flex w-max items-center justify-center rounded-md hover:text-primary-blue dark:hover:text-pink-research dark-research:hover:text-pink-research bg-transparent px-4 text-sm font-medium transition-colors focus:text-primary-blue focus:bg-transparent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent dark:bg-gray-black dark:focus:bg-gray-black dark:data-[state=open]:bg-gray-black dark-research:bg-gray-black dark-research:focus:bg-gray-black dark-research:data-[state=open]:bg-gray-black dark:focus:text-pink-research dark:data-[state=open]:text-pink-research dark-research:focus:text-pink-research dark-research:data-active:bg-transparent dark-research:data-[state=open]:text-pink-research dark:data-active:bg-transparent group" data-radix-collection-item="">Customers<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></li><li><button id="radix-_R_kmcm_-trigger-radix-_R_1jkmcm_" data-state="closed" aria-expanded="false" class="group inline-flex w-max items-center justify-center rounded-md hover:text-primary-blue dark:hover:text-pink-research dark-research:hover:text-pink-research bg-transparent px-4 text-sm font-medium transition-colors focus:text-primary-blue focus:bg-transparent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-transparent data-[state=open]:bg-transparent dark:bg-gray-black dark:focus:bg-gray-black dark:data-[state=open]:bg-gray-black dark-research:bg-gray-black dark-research:focus:bg-gray-black dark-research:data-[state=open]:bg-gray-black dark:focus:text-pink-research dark:data-[state=open]:text-pink-research dark-research:focus:text-pink-research dark-research:data-active:bg-transparent dark-research:data-[state=open]:text-pink-research dark:data-active:bg-transparent group" data-radix-collection-item="">Company<!-- --> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button></li></ul></div><div class="absolute inset-x-0 top-full flex justify-center"></div></nav></div><div class="hidden items-center justify-end xl:flex xl:gap-5"><ul class="flex items-center gap-2.5"><li><a class="group/button ease-spring-button relative inline-flex items-center justify-start rounded-full border border-transparent whitespace-nowrap transition-[transform,translate,color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] before:absolute before:left-0 before:-z-50 before:size-full before:bg-transparent before:content-[&quot;&quot;] hover:before:scale-y-140 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 group-hover/button:text-gray-black hover:text-gray-black dark:group-hover/button:text-primary-blue dark:hover:text-primary-blue dark-research:group-hover/button:text-white dark-research:hover:text-white px-0 text-gray-dark dark:text-gray-light/70 dark-research:text-gray-light/70 h-auto py-0 text-sm font-normal underline" href="https://app.wiz.io/login">Sign in</a></li><li class="border-gray-dark h-[10px] border-l"></li><li><a class="group/button ease-spring-button relative inline-flex items-center justify-start rounded-full border border-transparent whitespace-nowrap transition-[transform,translate,color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] before:absolute before:left-0 before:-z-50 before:size-full before:bg-transparent before:content-[&quot;&quot;] hover:before:scale-y-140 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 group-hover/button:text-gray-black hover:text-gray-black dark:group-hover/button:text-primary-blue dark:hover:text-primary-blue dark-research:group-hover/button:text-white dark-research:hover:text-white px-0 text-gray-dark dark:text-gray-light/70 dark-research:text-gray-light/70 h-auto py-0 text-sm font-normal underline" href="/experiencing-an-incident">Under attack?</a></li></ul><div class="flex items-center gap-4"><button type="button" aria-label="Open search" class="text-gray-dark dark:text-gray-light/70 dark-research:text-gray-light/70 flex items-center transition-opacity hover:opacity-70"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search size-5" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><!--$?--><template id="B:0"></template><!--/$--></div><a class="group/button ease-spring-button relative inline-flex items-center justify-start rounded-full border border-transparent font-medium whitespace-nowrap transition-[transform,translate,color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] before:absolute before:left-0 before:-z-50 before:size-full before:bg-transparent before:content-[&quot;&quot;] hover:before:scale-y-140 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 bg-primary-blue group-hover/button:bg-secondary-blue-dark dark-research:bg-pink-research dark-research:text-gray-black dark-research:hover:shadow-[0px_5px_0px_0px_var(--color-primary-blue)] dark-research:active:shadow-[0px_3px_0px_0px_var(--color-primary-blue)] text-white shadow-[0px_0px_0px_0px_var(--color-primary-pink)] hover:translate-y-[-5px] hover:shadow-[0px_5px_0px_0px_var(--color-primary-pink)] active:translate-y-[-3px] active:shadow-[0px_3px_0px_0px_var(--color-primary-pink)] h-8 px-5 py-1 text-sm group/button ease-spring-button relative inline-flex items-center justify-start rounded-full border border-transparent font-medium whitespace-nowrap transition-[transform,translate,color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] before:absolute before:left-0 before:-z-50 before:size-full before:bg-transparent before:content-[&quot;&quot;] hover:before:scale-y-140 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 bg-primary-blue group-hover/button:bg-secondary-blue-dark dark-research:bg-pink-research dark-research:text-gray-black dark-research:hover:shadow-[0px_5px_0px_0px_var(--color-primary-blue)] dark-research:active:shadow-[0px_3px_0px_0px_var(--color-primary-blue)] text-white shadow-[0px_0px_0px_0px_var(--color-primary-pink)] hover:translate-y-[-5px] hover:shadow-[0px_5px_0px_0px_var(--color-primary-pink)] active:translate-y-[-3px] active:shadow-[0px_3px_0px_0px_var(--color-primary-pink)] h-8 px-5 py-1 text-sm" href="/demo?cta_source=404&amp;cta_page=/404&amp;cta_placement=nav">Get a demo<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right transition-transform size-3 ml-1" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></a></div></div></div></div><section><div aria-hidden="true" class="home-fluid:h-[clamp(3.5rem,min(43.83px+3.8vw,10svh),6rem)] h-14 md:h-16 lg:h-24"></div><div class="grid grid-cols-[1fr_min(1310px,calc(100%-4rem))_1fr] gap-x-8 [&amp;&gt;*:not([data-layout=&quot;full-bleed&quot;])]:col-start-2 home-fluid:grid-cols-[1fr_min(1310px,calc(100%-4rem),max(635px+31.73vw,75.81vw))_1fr] space-y-8 text-center md:space-y-10"><img alt="404 - Page not found" loading="lazy" width="300" height="300" decoding="async" data-nimg="1" class="mx-auto block" style="color:transparent" srcSet="/_next/image?url=%2Fimages%2F404.svg&amp;w=384&amp;q=75 1x, /_next/image?url=%2Fimages%2F404.svg&amp;w=640&amp;q=75 2x" src="/_next/image?url=%2Fimages%2F404.svg&amp;w=640&amp;q=75"/><div class="space-y-2 text-center"><h1 data-size="xl" class="font-headings text-gray-black-soft dark-research:text-white font-semibold dark:text-white home-fluid:text-[clamp(1.725rem,min(23.83px+1.18vw,4.17svh),2.5rem)] home-fluid:leading-[1.3] text-[1.725rem]/8.5 md:text-[2.5rem]/13">This page does not exist</h1><p class="text-gray-dark dark:text-gray-light dark-research:text-gray-light font-sans font-normal tracking-normal home-fluid:text-[clamp(1rem,min(15.39px+0.19vw,1.88svh),1.125rem)] home-fluid:leading-[1.56] text-base/6.5 md:text-lg/7">The page you are looking for could not be found</p></div><a class="group/button ease-spring-button relative inline-flex items-center justify-start rounded-full border border-transparent text-base whitespace-nowrap transition-[transform,translate,color,background-color,border-color,text-decoration-color,fill,stroke,box-shadow] before:absolute before:left-0 before:-z-50 before:size-full before:bg-transparent before:content-[&quot;&quot;] hover:before:scale-y-140 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 text

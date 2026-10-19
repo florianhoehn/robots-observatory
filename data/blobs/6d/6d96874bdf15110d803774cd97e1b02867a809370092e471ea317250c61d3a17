@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verification</title>
+  <script type="module" src="/aegis_altcha_object/altcha.min.js?rule_uuid=474aa36c-0382-4f14-8302-22e413d30c4a"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .desc {
+      margin-bottom: 16px;
+      color: #444;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p class="desc" id="desc"></p>
+    <altcha-widget
+      id="altcha"
+      challenge='{"signature":"ba884f147188bb4df77515cbcc4140e850bf3649f1cf0081191289c73af1eaf2","parameters":{"data":{"ja4":"t13d1711ht_ab0a1bf427ad_3142aac3dc2f","ip":"82.39.15.43","rule_uuid":"474aa36c-0382-4f14-8302-22e413d30c4a"},"cost":1000,"salt":"58b9eb1b4fc0ddfbdbbb4600e4fbf558","expiresAt":1792440273,"keyPrefix":"f9217870509dac873d54ff3efbef8a3c","keySignature":"15ab7f076c74d351b090227554b516c9f9771c76672296890c8ee488682b6325","algorithm":"PBKDF2/SHA-256","nonce":"66e4625412fcd758240f066080f4c2be","keyLength":32}}'
+      auto="onload"
+      display="standard"
+      type="checkbox"
+      configuration='{"hideFooter":true,"hideLogo":true}'></altcha-widget>
+  </div>
+  <script>
+    const locale = navigator.language.toLowerCase().startsWith('zh') ? 'zh-CN' : 'en'
+    document.getElementById('desc').textContent =
+      locale === 'zh-CN' ? '请稍候，正在验证…' : 'Please wait a moment, verification is in progress'
+
+    const ZH = {
+      label: '我不是机器人',
+      verify: '验证',
+      verifying: '正在验证…',
+      verified: '已验证',
+      error: '验证失败，请重试',
+      expired: '验证已过期，请刷新页面',
+      waitAlert: '正在验证… 请稍候。',
+      loading: '加载中…',
+      reload: '重新加载',
+      verificationRequired: '需要验证！',
+      cancel: '取消',
+      enterCode: '输入代码',
+      enterCodeAria: '输入您听到的代码。按空格键播放音频。',
+      enterCodeFromImage: '请输入下图中的验证码。',
+      getAudioChallenge: '获取音频挑战',
+      footer: '',
+      ariaLinkLabel: '',
+    }
+
+    const widget = document.getElementById('altcha')
+
+    customElements.whenDefined('altcha-widget').then(() => {
+      if (locale === 'zh-CN' && window.$altcha?.i18n) {
+        window.$altcha.i18n.set('zh-CN', ZH)
+        widget.setAttribute('language', 'zh-CN')
+      }
+    })
+
+    function isSameOriginRedirect(target) {
+      try {
+        return new URL(target, window.location.origin).origin === window.location.origin
+      } catch {
+        return false
+      }
+    }
+
+    widget.addEventListener('verified', async ({ detail }) => {
+      await fetch('/aegis_altcha_verify?rule_uuid=474aa36c-0382-4f14-8302-22e413d30c4a', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ altcha: detail.payload }),
+      })
+
+      const target = new URLSearchParams(window.location.search).get('uri-redirect')
+
+      if (target && isSameOriginRedirect(target)) {
+        window.location.replace(target)
+      } else {
+        location.reload()
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+# Stop anything going into these locations
+User-agent: *
+Disallow: /login/
+Disallow: */diff/
+Disallow: */source/
+Disallow: */source
+Disallow: */raw/
+Disallow: /account/
+Disallow: /search
+
+# Do not allow changing the default per page as is not useful
+Disallow: /*?*size=*
+
+Sitemap: https://metacpan.org/sitemap-authors.xml.gz
+Sitemap: https://metacpan.org/sitemap-releases.xml.gz
+
+# Stop the bots - using signalsciences to block

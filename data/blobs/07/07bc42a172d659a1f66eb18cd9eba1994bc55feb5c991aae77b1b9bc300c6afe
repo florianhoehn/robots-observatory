@@ -1,0 +1,72 @@
+# robots.txt for http://www.psychologicalscience.org/
+
+User-agent: *
+Disallow: /forms/
+Disallow: /spr/
+Disallow: /members-only/
+Disallow: /test/
+Disallow: /upload/
+# PDFs are crawlable (the blanket Disallow: /*.pdf$ was removed 2026-08-26) so
+# the Observer back-issue run (88 files, incl. 1990), convention programs (49),
+# and policy/advocacy documents (114) can be found and cited.
+#
+# The 172 journal-editor candidate packets that previously made a blanket block
+# look necessary were MOVED OUT of the web root on 2026-08-26 and purged from
+# Cloudflare -- they are gone, not merely hidden. Note that a Disallow here
+# could never have protected them: uploads are reachable by direct URL, and
+# disallowing a file also stops crawlers from seeing an X-Robots-Tag: noindex
+# header on it. Removal was the only real fix.
+Disallow: /*.doc$
+Disallow: /*.docx$
+Disallow: /members/nominationuploads/
+Disallow: /members/PDF/
+Disallow: /members/rsuploads/
+Disallow: /members/tfgrants/
+Disallow: /members/directory/
+Disallow: /staff-feedback-form
+# Deep archive pagination has no SEO value and was a crawler-flood vector
+# (bots walking /page/N/ into the thousands pegged the origin 2026-06-29).
+# Pages already carry noindex,follow via the seo-baseline mu-plugin.
+Disallow: /*/page/
+Disallow: /page/
+Disallow: /*?m=matomeview
+
+User-agent: AhrefsBot
+Disallow: /
+
+Sitemap: https://www.psychologicalscience.org/wp-sitemap.xml
+
+# Curated site index for AI agents (llms.txt convention). Not a substitute
+# for the sitemap; it maps the journal article archive and convention
+# archive URL patterns so an agent can navigate without crawling.
+# https://www.psychologicalscience.org/llms.txt
+
+# AI training crawlers — ALLOWED as of 2026-08-26 (previously all nine below
+# were Disallow: /). Removed deliberately, on mission grounds: the Observer,
+# PSPI and the APS newsroom exist to put real scientific information in front
+# of the public, and a rule that keeps them out of the systems through which
+# the public now asks questions works against the reason APS publishes them.
+#
+# Journal pages are included. What this site holds is titles, authors,
+# abstracts and DOIs, sourced from the public Crossref API — already public and
+# already syndicated. Article FULL TEXT is not here; it remains at SAGE, and
+# nothing in this file affects that.
+#
+# Previously blocked, now permitted by the User-agent: * rules above:
+#   GPTBot, anthropic-ai, CCBot, Google-Extended, Applebot-Extended,
+#   Bytespider, FacebookBot, Meta-ExternalAgent, Omgilibot
+#
+# STILL ENFORCED ABOVE, and unrelated to AI policy — do not remove these
+# when revisiting the decision:
+#   * member and staff paths (/members-only/, /members/directory/, /forms/,
+#     the /members/*uploads/ trees, /staff-feedback-form) — privacy, not SEO
+#   * /page/ and /*/page/ — deep pagination is a load vector, not content;
+#     a crawler walking it took this origin to load 240 on 2026-06-29
+#   * AhrefsBot — a commercial SEO scraper with no mission argument and a
+#     real load cost
+#
+# Load posture is now the binding constraint rather than robots.txt: ~63,600
+# sitemap URLs, of which the journal/Observer/PSPI/news HTML is served
+# cf-cache-status: DYNAMIC (origin PHP + MySQL on every hit) behind
+# pm.max_children = 18. Edge-cache anonymous HTML before assuming this file
+# is the thing protecting the server.

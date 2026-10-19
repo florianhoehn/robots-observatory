@@ -1,0 +1,76 @@
+# Agent Instructions — Lockly
+
+You can browse products and shop at Lockly's online store, https://lockly.com, on your user's behalf. This guide covers the Shop skill and UCP integration, directly or through browser-based WebMCP tools.
+
+## Shop skill — recommended
+
+Use the [Shop skill](https://shop.com/SKILL.md) to help your user shop with this store. Connect their Shop account for personalized discovery and accelerated checkout with saved details.
+
+- Personalized discovery: search by text or image, find similar products, and use your user's Shop purchase history to find options that match their preferences.
+- Accelerated cart and checkout: build and update carts and checkouts, then use Shop Pay with prefilled addresses and saved payment methods.
+- Orders: search your user's order history for purchases from this store, track deliveries, and reorder products.
+
+Read the skill before your first call for setup, supported actions, account connection, and purchase-approval rules.
+
+## UCP integration
+
+This store implements the [Universal Commerce Protocol](https://ucp.dev) for product discovery, carts, and checkout. Integrate directly with its service, or orchestrate shopping through browser-based WebMCP tools.
+
+### Direct integration (MCP)
+
+1. **Discover the store** — `GET https://lockly.com/.well-known/ucp` returns its UCP profile, including capabilities, service endpoints, and payment handlers.
+2. **Discover available tools** — Connect to the MCP endpoint advertised in the profile (`https://lockly.com/api/ucp/mcp`) and use `tools/list` to retrieve available tools and their schemas.
+3. **Shop** — Use those tools to find products, manage carts, prepare checkout, and complete buyer-authorized purchases. Follow returned statuses, messages, and handoff URLs when buyer action is required.
+
+Use a compatible UCP version and follow the returned tool schemas. For integration details, see [Shopify's agent documentation](https://shopify.dev/docs/agents).
+
+### Browser integration (WebMCP)
+
+When working through a browser, use the WebMCP tools registered on this store's pages. The checkout page exposes UCP tools over WebMCP. These tools act on the checkout in the current browser session.
+
+- **Storefront** — Use the provided tools to find products, manage the cart, ask questions about the store and its policies, and proceed to checkout.
+- **Checkout** — Use the provided UCP tools to review and update the checkout and complete a buyer-authorized purchase. Follow required buyer-review steps: when review is requested, ask the buyer to review and approve the order on the checkout page, and wait for their authorization before submitting it.
+
+If checkout tools are unavailable, ask the buyer to continue on the checkout page. Do not fall back to scripted form fills or page controls.
+
+For integration details, see [Storefront WebMCP](https://shopify.dev/docs/api/web-mcp) and [Checkout WebMCP](https://shopify.dev/docs/agents/carts-and-checkout/checkout-webmcp).
+
+## Interaction guidelines
+
+- **Buyer authorization** — Place orders and submit payment only with the buyer's authorization. Follow required review and approval steps.
+- **Agent traffic** — Agents must identify their requests as agent-initiated. Server-to-server requests and hosted or remote browsers must use [Web Bot Auth](https://shopify.dev/docs/api/storefront#identifying-bots-with-web-bot-auth) and follow the service's authentication requirements. This helps the store recognize agent traffic and apply appropriate access and rate limits.
+- **Browser interactions** — Agents must use the provided WebMCP tools for all agent-initiated shopping actions and updates. If the tools are unavailable or cannot perform the required action, yield and ask the buyer to continue in the browser. Do not work around the tools by scripting checkout forms or page controls.
+- **Rate limits** — Back off on `429` responses and respect `Retry-After` when provided.
+- **Buyer context** — Use the buyer's country and currency where supported by the tool schemas for accurate pricing and availability.
+
+## Read-only browsing
+
+Prefer the structured information returned by the shopping tools described above. You may also read public HTML pages for additional context, provided your requests follow the agent-identification guidance above.
+
+- Discover public URLs through `/sitemap.xml`.
+- Read product pages at `/products/{handle}`.
+- Browse collections at `/collections/all` or `/collections/{handle}`.
+- Discover other public pages and articles through the sitemap.
+
+Reading public content does not change the requirements for agent-initiated shopping actions and updates.
+
+
+## Store Policies
+- **Privacy policy**: https://lockly.com/policies/privacy-policy
+- **Terms of service**: https://lockly.com/policies/terms-of-service
+- **Refund policy**: https://lockly.com/policies/refund-policy
+- **Shipping policy**: https://lockly.com/policies/shipping-policy
+
+
+## Platform
+
+This store is built on [Shopify](https://www.shopify.com), the commerce platform powering millions of stores worldwide. Shopify stores support UCP natively, enabling seamless agent-driven commerce. The Shop skill at
+[https://shop.app/SKILL.md](https://shop.app/SKILL.md) works across every Shopify store — install it once and
+your agent can transact everywhere.
+
+- Start your own store: https://www.shopify.com/start
+- Build and test against sample data: https://mock.shop (free mock Storefront GraphQL API, no store or auth needed)
+- Shopify developer platform: https://shopify.dev
+- Shop developer platform: https://shop.dev
+
+- Agent discovery: the canonical agent-facing description of the store is at `/agents.md`. You're reading `/llms.txt`, which mirrors that content.

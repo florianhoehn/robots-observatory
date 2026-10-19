@@ -1,0 +1,270 @@
+<!doctype html>
+            <html lang="pt" data-reactroot=""><head><script id="didomi" type="text/javascript">window.gdprAppliesGlobally=true;(function() {
+  function a(e) {
+    if(!window.frames[e]) {
+      if(document.body&&document.body.firstChild) {
+        var t=document.body;var n=document.createElement("iframe");
+        n.style.display="none";
+        n.name=e;
+        n.title=e;
+        t.insertBefore(n,t.firstChild)
+      }
+      else {
+        setTimeout(function() {
+          a(e)
+        },5)
+      }
+    }
+  }
+  function e(n,r,o,c,s) {
+    function e(e,t,n,a) {
+      if(typeof n!=="function") {
+        return
+      }
+      if(!window[r]) {
+        window[r]=[]
+      }
+      var i=false;if(s) {
+        i=s(e,t,n)
+      }
+      if(!i) {
+        window[r].push({
+          command:e,parameter:t,callback:n,version:a}
+          )
+      }
+    }
+    e.stub=true;
+    function t(a) {
+      if(!window[n]||window[n].stub!==true){
+        return
+      }
+      if(!a.data){
+        return
+      }
+      var i=typeof a.data==="string";
+      var e;try{
+        e=i?JSON.parse(a.data):a.data
+      }
+      catch(t){
+        return
+      }
+      if(e[o]){
+        var r=e[o];window[n](r.command,r.parameter,function(e,t){
+          var n={};n[c]={
+            returnValue:e,success:t,callId:r.callId
+          };
+          a.source.postMessage(i?JSON.stringify(n):n,"*")
+        },r.version)
+      }
+    }
+    if(typeof window[n]!=="function"){
+      window[n]=e;
+      if(window.addEventListener){
+        window.addEventListener("message",t,false)
+      }
+      else{
+        window.attachEvent("onmessage",t)
+      }
+    }
+  }
+  e("__tcfapi","__tcfapiBuffer","__tcfapiCall","__tcfapiReturn");
+    a("__tcfapiLocator");
+    (function(e){
+      var t=document.createElement("script");
+      t.id="spcloader";
+      t.type="text/javascript";
+      t.async=true;
+      t.src="https://sdk.privacy-center.org/"+e+"/loader.js?target="+document.location.hostname;
+      t.charset="utf-8";
+      var n=document.getElementsByTagName("script")[0];
+      n.parentNode.insertBefore(t,n)
+    })
+    ("69f6f376-a0e5-4426-a60f-e66e903394da")
+  })();</script><script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script><script src="https://cdn.id5-sync.com/api/1.0/id5-api.js"></script><script>
+      window.ID5EspConfig = {partnerId: 1827};
+      ID5.init({partnerId: 1827});
+  </script><script data-testid="google-ad-manager-script">  
+    window.googletag = window.googletag || { cmd: [] };
+    
+    function initGoogleAdManagerGlobalVariables() {
+      window.gsVariablesAdsGoogle = window.gsVariablesAdsGoogle || {};
+      window.gsVariablesAdsGoogle.variables = window.gsVariablesAdsGoogle.variables || {};
+
+      const makeReactive = (initialValue) => {
+        let value = initialValue;
+        return {
+          get: () => value,
+          set: (v) => {
+            value = v;
+            return value;
+          }
+        };
+      };
+
+      window.gsVariablesAdsGoogle.variables.networkCode = makeReactive('');
+      window.gsVariablesAdsGoogle.variables.refreshTimer = makeReactive(null);
+      window.gsVariablesAdsGoogle.variables.lazyLoadConfig = makeReactive(undefined);
+      window.gsVariablesAdsGoogle.variables.isLazyLoadEnabled = makeReactive(false);
+      window.gsVariablesAdsGoogle.variables.adNameCount = new Map();
+      window.gsVariablesAdsGoogle.variables.isUserActive = makeReactive(true);
+    };
+     
+    function setConfig(googletag, config) {
+        if (config.networkCode) window.gsVariablesAdsGoogle?.variables?.networkCode?.set(config?.networkCode)
+        if (config.collapseEmptyDivs) googletag.pubads().collapseEmptyDivs();
+        if (config.enableSingleRequest) googletag.pubads().enableSingleRequest();
+        if (config.disableInitialLoad) googletag.pubads().disableInitialLoad();
+        
+        window.gsVariablesAdsGoogle.variables.lazyLoadConfig.set(config.lazyLoadConfig)
+        if (config.lazyLoadConfig && !config.disableInitialLoad) {
+          googletag.pubads().enableLazyLoad(config.lazyLoadConfig);
+          window.gsVariablesAdsGoogle?.variables?.isLazyLoadEnabled?.set(true)
+        }
+    }
+
+    function setTargeting(googletag, target = []) {
+      target.forEach(([key, value]) => {
+        googletag.pubads().setTargeting(key, value);
+      });
+    }
+
+    function setEvents(googletag, config = {}) {
+       if (config.eventSlotOnload) {
+        googletag.pubads().addEventListener('slotOnload', (event) => {
+          config.eventSlotOnload(event)
+        })
+      }
+
+      if (config.eventSlotVisibilityChanged) {
+        googletag.pubads().addEventListener('slotVisibilityChanged', (event) => {
+          config.eventSlotVisibilityChanged(event)
+        })
+      }
+
+      if (config.eventImpressionViewable) {
+        googletag.pubads().addEventListener('impressionViewable', (event) => {
+          config.eventImpressionViewable(event)
+        })
+      }
+
+      if (config.eventSlotRenderEnded) {
+        googletag.pubads().addEventListener('slotRenderEnded', (event) => {
+          config.eventSlotRenderEnded(event)
+        })
+      }
+
+      if (config.eventSlotRequested) {
+        googletag.pubads().addEventListener('slotRequested', (event) => {
+          config.eventSlotRequested(event)
+        })
+      }
+
+      if (config.eventSlotResponseReceived) {
+        googletag.pubads().addEventListener('slotResponseReceived', (event) => {
+          config.eventSlotResponseReceived(event)
+        })
+      }
+    }
+    
+    function setupUserActivityListener() {
+      let inactivityTimer;
+      
+      document.addEventListener('mousemove', resetInactivity)
+      document.addEventListener('keypress', resetInactivity)
+      document.addEventListener('mousedown', resetInactivity)
+      document.addEventListener('touchstart', resetInactivity)
+      document.addEventListener('scroll', resetInactivity)
+    
+      function resetInactivity () {
+        clearTimeout(inactivityTimer)
+        window.gsVariablesAdsGoogle.variables.isUserActive.set(true)
+    
+        inactivityTimer = setTimeout(() => {
+          window.gsVariablesAdsGoogle.variables.isUserActive.set(false)
+        }, 90000)
+      }
+    }
+    
+    function configureAds(config) {
+      initGoogleAdManagerGlobalVariables();
+      setupUserActivityListener();
+      googletag.cmd.push(() => {
+        setTargeting(googletag, config.target);
+        setEvents(googletag, config);
+        setConfig(googletag, config);
+        googletag.enableServices();
+      });
+    }
+
+
+    function buildTargeting() {
+      const userLocalStorage = JSON.parse(localStorage.getItem('gs-usr'))
+
+      function getUserStatus() {
+        let userStatus = 'anonymous'
+        if (userLocalStorage?.isLogged) {
+            userStatus = 'loggedin'
+        }
+        return userStatus
+      }
+
+      function isSubscriberForBrand (brand) {
+        const subscriptions = userLocalStorage?.user?.subscriptions
+
+        if (!subscriptions || subscriptions.length === 0) {
+          return 'false'
+        }
+
+        if (subscriptions.includes(brand)) {
+          return 'true'
+        }
+
+        return 'false'
+      }
+
+      return [
+        ['url', 'undefined'],
+        ['cat', '/humans.txt'],
+        ['categoria', ''],
+        ['userStatus', getUserStatus()],
+        ['subscriber_expresso', isSubscriberForBrand('expresso')],
+        ['subscriber_sicnot', isSubscriberForBrand('sicnot')],
+        ['subscriber_opto', isSubscriberForBrand('opto')],
+        ['semanario', 'false'],
+        ['nytcontent', 'false']
+      ]
+    }
+
+    configureAds({
+      target: buildTargeting(),
+      collapseEmptyDivs: true,
+      networkCode: "23102241760",
+      disableInitialLoad: true,
+      enableSingleRequest: true,
+      lazyLoadConfig: {
+        fetchMarginPercent: 50,
+        renderMarginPercent: 25,
+        mobileScaling: 1.5
+      }
+    });
+  </script><script>
+          window.ddjskey = '700FC9E253B8BCFDC7596F167F2032';
+          window.ddoptions = {};
+        </script><script src="https://statics.impresa.pt/datadome/tags.js" async=""></script><meta name="apple-mobile-web-app-title" content="SIC Notícias | tv • web • app"/><title>SIC Notícias - SIC Notícias | tv • web • app</title><meta name="description" content="Em direto, em áudio ou em vídeo, as notícias do País e do Mundo, a análise e o comentário."/><meta property="article:content_tier" content="free"/><meta property="impresa:country_code" content="GB"/><meta name="amp-consent-blocking" content="amp-ad"/><meta name="twitter:title" content="SIC Notícias"/><meta name="twitter:url" content="https://sicnoticias.pt/humans.txt"/><meta name="twitter:description" content="Em direto, em áudio ou em vídeo, as notícias do País e do Mundo, a análise e o comentário."/><meta name="twitter:image" content="https://images.impresa.pt/sicnot/2021-09-03-sicnot.png-67c7aced-1/1.91x1?wm=true&amp;outputFormat=jpeg"/><meta name="twitter:card" content="summary_large_image"/><meta property="og:title" content="SIC Notícias"/><meta property="og:url" content="https://sicnoticias.pt/humans.txt"/><meta property="og:description" content="Em direto, em áudio ou em vídeo, as notícias do País e do Mundo, a análise e o comentário."/><meta property="og:image" content="https://images.impresa.pt/sicnot/2021-09-03-sicnot.png-67c7aced-1/1.91x1?wm=true&amp;outputFormat=jpeg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:type" content="website"/><meta property="fb:app_id" content="100159910122450"/><meta property="fb:pages" content="150808986387"/><meta name="robots" content="unavailable_after: 2021-01-01"/><meta name="robots" content="all, max-image-preview:large"/><link rel="alternate" type="application/rss+xml" href="https://rss.impresa.pt/feed/latest/sicnot.rss?type=ARTICLE,VIDEO,GALLERY,STREAM,PLAYLIST,EVENT,NEWSLETTER&amp;limit=20&amp;pubsubhub=true"/><script data-schema="Organization" type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"SIC Notícias","url":"https://sicnoticias.pt","logo":"https://images.impresa.pt/sicnot/2021-09-03-sicnot.png-67c7aced-1","sameAs":[]}</script><script data-schema="WebPage" type="application/ld+json">{"@context":"http://schema.org","@type":"WebSite","name":"SIC Notícias","url":"https://sicnoticias.pt","potentialAction":{"@type":"SearchAction","target":"https://sicnoticias.pt/pesquisa/?q={search_term}","query-input":"required name=search_term"}}</script><link rel="preconnect" href="https://statics.impresa.pt/"/><link rel="preconnect" href="https://images.impresa.pt/"/><link rel="preconnect" href="https://sdistribution.impresa.pt"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta charSet="utf-8"/><link rel="icon" href="/assets/favicon.ico"/><link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16"/><link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32"/><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/><link rel="manifest" href="/assets/site.webmanifest"/><link rel="mask-icon" href="/assets/safari-pinned-tab.svg" color="#000000"/><meta name="msapplication-config" content="/assets/browserconfig.xml"/><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="/assets/mstile-150x150.png"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/SourceSansPro-900i.woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/icons-sicnot..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/Graphik-MediumItalic-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/Graphik-Medium-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/Graphik-Regular-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/Graphik-Semibold-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/GraphikCompact-Medium-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/GraphikCompact-Bold-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/Graphik-Bold-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/GraphikCompact-Regular-Web..woff2" as="font"/><link rel="preload" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/fonts/Graphik-Black-Web..woff2" as="font"/><link rel="stylesheet" href="https://statics.impresa.pt/generic-site-assets/sicnot/active/styles/styles-sicnot.css"/><link rel="stylesheet" href="https://statics.impresa.pt/generic-site-assets/logos/active/styles/styles.css"/><script id="impresa-sso" src="https://api.impresa.pt/sso/js/impresa-sso.min.js" defer=""></script><script src="/api/gs/js/client.cd2102a1.js" defer=""></script><link rel="stylesheet" href="/api/gs/css/client.d5b11e13.css"/><script>
+            window.__STATICS_HOST__ = "https://statics.impresa.pt/";
+            window.__FAPI_EXTERNAL_HOST__ = "https://api.impresa.pt/";
+            window.__PAYWALL_HOST__ = "https://pagamento.impresa.pt/";
+            window.__ANALYTICS__ = "true";
+            window.__ADS__ = "true";
+            window.__GS_ADS_REFRESH__ = "true";
+            window.__PREVIEW__ = "true";
+            window.__GOOGLE_SHOWCASE_ENABLED__ = "true";
+            window.__GS_ENVIRONMENT__ = "production";
+            window.__GS_LIVESTREAM_HYPERLINK_PAIRS__ = {"https://popup.live.impresa.pt/out/v1/3cc2998191024d369a901e9b4f56621b/sicnot_vertical.m3u8": "faa4badc-e197-48ee-9943-3fd8b98134a9", "https://sicnot.live.impresa.pt/sicnot540p.m3u8": "f63ec4f6-43cb-45c8-9e8d-8f07fc6f076b"};
+            window.__GS_VERIFF_CLIENT_KEY__ = "7acb3bc1-661f-442b-9fad-33d7c7222fd0";
+            window.__GS_SWG__ = "true";
+            window.__GS_SWG_SUBSCRIPTION_LINKING__ = "true";
+            window.__GS_DARK_MODE__ = "brand";
+            window.__GS_AI_SUMMARY__ = "false";
+            window.__GS_RANKING_ESCOLAS_BASE_URL__ = "https://sicnoticias.pt/ranking-das-escolas-iframe";
+          </script><script id="gs-init-info">window.__INITIAL_DATA__ = {"componentId":"251580ec-24a4-4417-96fe-8da54fdc3be5","type":"Layout","nodes":[{"componentId":"a89a214d-2f56-4fde-b9db-8cee48710ec1","type":"NodesWrapper","nodes":[{"componentId":"ac3fee37-ee0c-4f1d-a2a8-88cdc033cd72","type":"Group","properties":{"lazyLoad":true,"classNames":"impresaBar-wrapper"},"nodes":[{"componentId":"39060522-3649-4a18-b43b-3d91ae5ee7d0","type":"BrandsBar","properties":{"classNames":"brands"},"data":{"contents":[{"componentId":"60918073-2748-41cb-b046-d9710df3b565","type":"LINK","title":"Sic","link":"https:\u002F\u002Fwww.sic.pt\u002F"},{"componentId":"83f9a65a-494c-4073-bb86-bd974521a96b","type":"LINK","title":"Opto Sic","link":"https:\u002F\u002Fopto.sic.pt\u002F"},{"componentId":"b4e74664-990c-4706-a6fb-3a7d1df52b4c","type":"LINK","title":"Sic Notícias","link":"https:\u002F\u002Fsicnoticias.pt\u002F"},{"componentId":"ec385016-4850-448a-8019-fe8a0e920919","type":"LINK","title":"Contas Poupança","link":"https:\u002F\u002Fcontaspoupanca.pt\u002F"},{"componentId":"c988245e-1ff2-4b1c-aaf4-e5c1e22270d3","type":"LINK","title":"Tenho Cancro. E depois?","link":"https:\u002F\u002Fsicnoticias.pt\u002Ftenho-cancro-e-depois"},{"componentId":"4fc0dc69-83c4-4780-bdc2-9476ef1ed4df","type":"LINK","title":"Sic Radical","link":"https:\u002F\u002Fsicradical.pt\u002F"},{"componentId":"f092865f-345d-4f60-bad9-494e351170d6","type":"LINK","title":"Sic Mulher","link":"https:\u002F\u002Fsicmulher.pt\u002F"},{"componentId":"c264dfa3-6a60-4589-84c1-3c4c16dc7d57","type":"LINK","title":"Sic K","link":"https:\u002F\u002Fsickapa.pt\u002F"},{"componentId":"7d923a94-19bb-489d-9f56-8691e9aef544","type":"LINK","title":"Sic Caras","link":"https:\u002F\u002Fsiccaras.pt\u002F"},{"componentId":"929ae1bd-642c-4333-a74b-4f947bb48ec0","type":"LINK","title":"Sic Explica-me","link":"https:\u002F\u002Fsicexplicame.pt\u002F"},{"componentId":"0803a7f6-2bff-40c6-9040-c58552c45a24","type":"LINK","title":"Sic Internacional","link":"https:\u002F\u002Fwww.sic.pt\u002Finternacional"},{"componentId":"a88f54c8-0b41-4de2-bf18-dded6c3321a3","type":"LINK","title":"Volante Sic","link":"https:\u002F\u002Fvolantesic.pt\u002F"},{"componentId":"f6b6f0c4-b2cd-4f03-ba39-b39c882cf72f","type":"LINK","title":"Sic Esperança","link":"https:\u002F\u002Fsicesperanca.pt\u002F"},{"componentId":"b36a68e4-fce7-4569-b590-c52cbabf8b18","type":"LINK","title":"Fama Show","link":"https:\u002F\u002Ffamashow.pt\u002F"}]}}]},{"componentId":"e85261db-49b8-493e-8462-c10eb6c641d2","type":"Group","properties":{"lazyLoad":true,"classNames":"pushdown-wrapper"},"nodes":[{"componentId":"93faadf5-0485-4a94-8674-809a733acbbd","type":"BsuRoot"},{"componentId":"340094ab-8418-4f8c-908f-79e08517adfd","type":"GoogleAdManagerBatch","properties":{"ads":[{"adUnit":"pushdown","name":"pushdown-container"},{"adUnit":"pushdown","name":"floorad-container","size":"floorad"},{"adUnit":"interstitial","name":"intra-container","useCustomOutOfPageFormat":true}]}},{"componentId":"0a8c7938-af90-447b-ba1a-7bad754da4f2","type":"AdContainer","properties":{"classNames":"sas-pushdown","adType":"adserver","adUnit":"pushdown","name":"pushdown-container","loadedInBatch":true,"refreshEnabled":false}},{"componentId":"1878c991-477e-40d8-a46d-9a98aa2d2d4f","type":"AdContainer","properties":{"adType":"adserver","classNames":"gam-floorad","adUnit":"pushdown","name":"floorad-container","size":"floorad","loadHidden":true,"loadedInBatch":true,"refreshEnabled":false}},{"componentId":"1c158d70-460e-436a-851a-bdfa5149758d","type":"AdContainer","properties":{"adType":"adserver","classNames":"gam-interstitial","adUnit":"interstitial","name":"intra-container","useCustomOutOfPageFormat":true,"loadHidden":true,"loadedInBatch":true,"refreshEnabled":false}}]},{"componentId":"4f208d05-69f0-448d-82f3-8c8ce38aa742","type":"NodesWrapper","nodes":[{"componentId":"ac34eda4-707a-4461-88fa-e33c2183de2b","type":"Header","properties":{"lazyLoad":true},"nodes":[{"componentId":"5d0a6abd-0aca-4f6e-a276-1683f32dfec2","type":"Group","properties":{"lazyLoad":true,"classNames":"header-wrapper"},"nodes":[{"componentId":"eb58e34e-71fb-44bc-9eba-56b3ad02581e","type":"Group","properties":{"classNames":"header-top-wrapper"},"nodes":[{"componentId":"ee5925c6-71a2-41a6-9087-c9d7793dc5ea","type":"Container","name":"row","properties":{"lazyLoad":true,"classNames":"main-header-elements"},"nodes":[{"componentId":"3e98d096-3a45-4642-82f9-865f8c44488e","type":"Hamburguer","nodes":[{"componentId":"fa3de479-6ee7-4dfe-9060-0598f0029721","type":"Group","properties":{"classNames":"header-sideNav-wrapper"},"nodes":[{"componentId":"f8ef5bfb-d74a-49e2-9005-4eb0f657b944","type":"Logo","properties":{"lazyLoad":true,"title":"SIC Notícias","link":"\u002F","crop":"original","mw":210,"classNames":"logo-header-sidNav"},"data":[{"children":[],"code":"sicnot\u002Fgestao-do-site\u002Flogo-principal","contents":[{"authors":[],"binary":"https:\u002F\u002Fsdistribution.impresa.pt\u002Fdata\u002Fcontent\u002Fbinaries\u002Fb58\u002F207\u002F7422461b-ba2f-49d1-a5bf-dcddad117f38\u002Fsicnot.svg","code":"22675182","contents":[],"domain":{"code":"sicnot","hostname":"sicnoticias.pt","id":"2060197e-f8ae-4dba-b6ef-b53f881b1092","name":"SIC Notícias"},"domainCode":"sicnot","friendlyURI":"2023-10-08-sicnot.svg-af045eeb","lastModifiedDate":"2023-10-31T17:13:31.905Z","link":"\u002Fgestao-do-site\u002F2023-10-08-sicnot.svg-af045eeb","mainCategory":{"code":"gestao-do-site","link":"\u002Fgestao-do-site","name":"Gestão do Site","path":"\u002Fgestao-do-site","subCategories":[]},"mimetype":"image\u002Fsvg+xml","publishedDate":"2023-10-08T22:53:15.507Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"size":2060,"type":"MEDIA","url":"https:\u002F\u002Fsdistribution.impresa.pt\u002Fdata\u002Fcontent\u002Fbinaries\u002Fb58\u002F207\u002F7422461b-ba2f-49d1-a5bf-dcddad117f38\u002Fsicnot.svg","uuid":"7422461b-ba2f-49d1-a5bf-dcddad117f38","positionInList":1},{"authors":[],"binary":"https:\u002F\u002Fsdistribution.impresa.pt\u002Fdata\u002Fcontent\u002Fbinaries\u002F2ec\u002F97b\u002Fe6cbdcae-d05d-4206-94ca-e828b5d40503\u002Fsicnot-25anos.svg","code":"27900400","contents":[],"domain":{"code":"sicnot","hostname":"sicnoticias.pt","id":"2060197e-f8ae-4dba-b6ef-b53f881b1092","name":"SIC Notícias"},"domainCode":"sicnot","friendlyURI":"2026-01-08-sicnot-25anos.svg-7ed53443","lastModifiedDate":"2026-04-17T16:33:03.838Z","link":"\u002Fgestao-do-site\u002F2026-01-08-sicnot-25anos.svg-7ed53443","mainCategory":{"code":"gestao-do-site","link":"\u002Fgestao-do-site","name":"Gestão do Site","path":"\u002Fgestao-do-site","subCategories":[]},"mimetype":"image\u002Fsvg+xml","publishedDate":"2026-01-08T06:00:00.000Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"size":3950,"type":"MEDIA","url":"https:\u002F\u002Fsdistribution.impresa.pt\u002Fdata\u002Fcontent\u002Fbinaries\u002F2ec\u002F97b\u002Fe6cbdcae-d05d-4206-94ca-e828b5d40503\u002Fsicnot-25anos.svg","uuid":"e6cbdcae-d05d-4206-94ca-e828b5d40503","positionInList":2},{"authors":[],"code":"27341814","contents":[],"domain":{"code":"sicnot","hostname":"sicnoticias.pt","id":"2060197e-f8ae-4dba-b6ef-b53f881b1092","name":"SIC Notícias"},"domainCode":"sicnot","friendlyURI":"2025-10-22-sn_pb.svg-54a35ac0","lastModifiedDate":"2025-10-22T12:00:58.474Z","link":"https:\u002F\u002Fimages.impresa.pt\u002Fsicnot\u002F2025-10-22-sn_pb.svg-54a35ac0","mainCategory":{"code":"gestao-do-site","link":"\u002Fgestao-do-site","name":"Gestão do Site","path":"\u002Fgestao-do-site","subCategories":[]},"mimetype":"image\u002Fsvg+xml","publishedDate":"2025-10-22T12:00:58.438Z","related":[],"showLead":false,"showPicture":true,"showRelated":false,"showRelatedPicture":false,"title":"SN_PB.svg","type":"PICTURE","url":"https:\u002F\u002Fimages.impresa.pt\u002Fsicnot\u002F2025-10-22-sn_pb.svg-54a35ac0","uuid":"df2694cb-50ef-4aed-9850-f52ec3a59bef","positionInList":3}],"creationDate":"2023-10-27T20:30:47.402Z","lastModifiedDate":"2026-09-30T23:30:16.488Z","name":"Logo Principal","style":""}],"dataSource":{"componentId":"c7c24a10-a85d-49c3-a468-a978a15dbf58","type":"featured","lists":["sicnot\u002Fgestao-do-site\u002Flogo-principal"],"contentTypes":["MEDIA","PICTURE"]}},{"componentId":"2ffcf4d6-22bb-493b-8722-1960df506fc7","type":"Container","properties":{"classNames":"user-alert-wrapper"},"nodes":[{"componentId":"eac3dcca-81c6-4807-88b5-d84e4fc01519","type":"UserIconButton","properties":{"classNames":{"button":"user-toggleButton"},"label":"User"},"nodes":[{"componentId":"5f2fb817-646a-4c69-9731-dcc1989cd041","type":"Sidebar","properties":{"lazyLoad":true,"topGutter":false,"classNames":"sidebar-splitter","position":"right"},"nodes":[{"componentId":"2de3b7cb-67b5-49af-a9da-4b05cd7e64ec","type":"Container","properties":{"classNames":"perfil-wrapper","title":"Perfil"},"nodes":[{"componentId":"78d07349-eb49-4592-8ed7-aa20d7e7b5ac","type":"UserState","properties":{"classNames":"user-dropdown"},"anonymous":{"nodes":[]},"loggedIn":{"nodes":[{"componentId":"155253c4-9ecf-4d22-b81a-099f404073ba","type":"Group","properties":{"classNames":"user-dropdown-inner"},"nodes":[{"componentId":"21c09557-6589-4696-9569-bafc2c3808f6","type":"Group","properties":{"classNames":"user-dropdown-welcome"},"nodes":[{"componentId":"a3a1c450-5c68-4be9-b058-4c2b75eb52ae","type":"UserName"},{"componentId":"eb451119-f057-469b-9a3d-70fd42fb6e23","type":"UserEmail"}]}]}]},"paid":{"nodes":[{"componentId":"fa440ef0-7a71-4575-a1fc-980b1427583d","type":"Group","properties":{"classNames":"user-dropdown-inner"},"nodes":[{"componentId":"afc0836f-af5f-43f7-94e9-ba9b379072db","type":"Group","properties":{"classNames":"user-dropdown-welcome"},"nodes":[{"componentId":"664781f0-ad80-4a44-9de5-8c642347e75f","type":"UserName"},{"componentId":"d3b5dc2b-1479-42ec-80d3-4f0b503e21cf","type":"UserEmail"}]}]}]}},{"componentId":"44aba95f-cb69-40eb-b090-2964e6c22a7f","type":"Container","properties":{"classNames":"sessao-subscrever-wrapper"},"nodes":[{"componentId":"b498cce9-06ee-4d6e-92f2-0cf083964c73","type":"Container","properties":{"classNames":"sessao-perfil-wrapper"},"nodes":[{"componentId":"f4d302da-3642-4b25-9562-1b2d919e1656","type":"Button","properties":{"target":"_blank","classNames":{"container":"perfil-button"},"label":"Editar Perfil","link":"https:\u002F\u002Fperfil.impresa.pt"}},{"componentId":"e7738129-a6e5-45cf-827c-45c7b23fbca0","type":"Container","properties":{"classNames":"user-login-wrapper"},"nodes":[{"componentId":"cdc17424-bc1f-4431-8175-7dd250640a5c","type":"LoginButton","properties":{"classNames":{"container":"bt-login"},"label":"Iniciar Sessão"}},{"componentId":"242e8be9-1c0f-4584-a6d7-a914eb4f84e1","type":"LogoutButton"}]}]}]},{"componentId":"a90870f1-201f-467f-b671-507598272f3d","type":"Container","properties":{"classNames":"links-perfil-wrapper"},"nodes":[{"componentId":"07f8a9ce-5fb1-4584-befa-ed00b006e208","type":"Button","properties":{"target":"_self","classNames":{"container":"alertas"},"label":"Alertas","link":"\u002Fperfil\u002Falertas"}},{"componentId":"eedd1c0c-8ed4-4cb3-8fd5-62bf38dbd0be","type":"Button","properties":{"target":"_self","classNames":{"container":"continuar-ver"},"label":"Continuar a ver","link":"\u002Fperfil\u002Fcontinuar-a-ver"}},{"componentId":"83d5e076-eb6e-4fa3-a82f-b9e0d6d10bb7","type":"Button","properties":{"target":"_self","classNames":{"container":"continuar-ouvir"},"label":"Continuar a ouvir","link":"\u002Fperfil\u002Fcontinuar-a-ouvir"}},{"componentId":"203c969d-aeff-4d1f-82f6-ddbcacf91aae","type":"PerfilMenu","properties":{"target":"_self","classNames":{"container":"a-seguir"},"label":"A Seguir","link":"\u002Fperfil\u002Fa-seguir"}},{"componentId":"acb760a2-e7a7-4f92-a2f8-3dc8e161e384","type":"Button","properties":{"target":"_self","classNames":{"container":"guardados"},"label":"Guardados","link":"\u002Fperfil\u002Fguardados"}},{"componentId":"771185d5-617f-495a-9c62-3be4de51bc7b","type":"Button","properties":{"target":"_self","classNames":{"container":"historico"},"label":"Histórico","link":"\u002Fperfil\u002Fhistorico"}}]}]}]}]}]}]},{"componentId":"597a111b-6544-482d-82de-331e3d24b727","type":"Section","properties":{"lazyLoad":true,"classNames":"sideNav-wrapper has-sidebar force--has-sidebar sidebar-splitter no-gutter"},"nodes":[{"componentId":"7d59336f-ff53-4816-b686-6aa34aa3d3ff","type":"Section","properties":{"lazyLoad":true,"boxed":false,"classNames":"left-sideNav-wrapper"},"nodes":[{"componentId":"842a1563-31b1-47a3-8ca2-ca50f36d3d64","type":"Search","properties":{"placeholder":"Pesquisar na SIC Noticias"}},{"componentId":"b84c8944-13dd-4bb4-8876-1bef7161be6a","type":"NavBar","properties":{"classNames":"links-diretos-wrapper"},"mw":1,"crop":"1x1","data":[{"children":[],"code":"sicnot\u002Fdiretos\u002Fdiretos-em-destaque---header","contents":[{"authors":[],"code":"22736619","contentDomain":"sicnot","contents":[],"domain":{"code":"sicnot","hostname":"sicnoticias.pt","id":"2060197e-f8ae-4dba-b6ef-b53f881b1092","name":"SIC Notícias"},"domainCode":"sicnot","friendlyURI":"2023-10-20-sic-noticias-em-direto-9536c495","hyperlinkType":"category","lastModifiedDate":"2026-05-25T20:45:55.556Z","lead":"\u003Cp\u003E\u003Cspan\u003E\u002Fagora\u003C\u002Fspan\u003E\u003C\u002Fp\u003E","link":"\u002Fagora","mainCategory":{"code":"agora","description":"Notícias de última hora: reações, análise e opinião. SIC Notícias em Direto e diretos alternativos. Live blog com acompanhamento ao minuto e jogos de futebol ao minuto.","link":"\u002Fagora","name":"Agora","path":"\u002Fagora","subCategories":[]},"picture":{"alternates":"{\"1x1\":{\"output\":{\"height\":100,\"width\":100},\"crop\":{\"x\":113,\"y\":0,\"width\":290,\"height\":290}},\"5x4\":{\"output\":{\"height\":400,\"width\":500},\"crop\":{\"x\":74,\"y\":0,\"width\":362,\"height\":290}},\"16x9\":{\"output\":{\"height\":360,\"width\":640},\"crop\":{\"x\":0,\"y\":0,\"width\":513,\"height\":287}},\"3x2\":{\"output\":{\"height\":400,\"width\":600},\"crop\":{\"x\":38,\"y\":0,\"width\":433,\"height\":290}},\"3x1\":{\"output\":{\"height\":640,\"width\":1920},\"crop\":{\"x\":0,\"y\":54,\"width\":513,\"height\":172}},\"2x3\":{\"output\":{\"height\":600,\"width\":400},\"crop\":{\"x\":159,\"y\":0,\"width\":192,\"height\":290}},\"4x5\":{\"output\":{\"height\":500,\"width\":400},\"crop\":{\"x\":141,\"y\":0,\"width\":231,\"height\":290}},\"12x1\":{\"output\":{\"height\":160,\"width\":1920},\"crop\":{\"x\":0,\"y\":0,\"width\":513,\"height\":41}},\"6x1\":{\"output\":{\"height\":150,\"width\":900},\"crop\":{\"x\":0,\"y\":0,\"width\":513,\"height\":85}},\"4x3\":{\"output\":{\"height\":480,\"width\":640},\"crop\":{\"x\":64,\"y\":0,\"width\":385,\"height\":290}},\"fb\":{\"output\":{\"height\":630,\"width\":1200},\"crop\":{\"x\":0,\"y\":10,\"width\":513,\"height\":269}},\"4x1\":{\"output\":{\"height\":320,\"width\":1280},\"crop\":{\"x\":0,\"y\":80,\"width\":513,\"height\":128}},\"1.91x1\":{\"output\":{\"height\":672,\"width\":1280},\"crop\":{\"x\":0,\"y\":13,\"width\":513,\"height\":269}}}","binary":"s3:\u002F\u002Feu-west-1\u002Fcdn.sites.impresa.pt\u002Fdata\u002Fcontent\u002Fbinaries\u002Ffd0\u002F5f5\u002F022572b4-3555-434f-8a41-08c282f20f9d\u002FSubscricoes_SN--9-.png","code":"27033981","domainCode":"sicnot","height":"289","landscape":true,"lastModifiedDate":"2025-09-12T13:53:23.031Z","mimetype":"image\u002Fpng","publishedDate":"2025-09-12T13:49:31.064Z","state":"published","title":"SIC-Noticias-Direto.png","type":"PICTURE","urlLandscape":"https:\u002F\u002Fimages.impresa.pt\u002Fsicnot\u002F2025-09-12-sic-noticias-direto.png-cc296604?v=w620h395","urlOriginal":"https:\u002F\u002Fimages.impresa.pt\u002Fsicnot\u002F2025-09-12-sic-noticias-direto.png-cc296604","urlPortrait":"https:\u002F\u002Fimages.impresa.pt\u002Fsicnot\u002F2025-09-12-sic-noticias-direto.png-cc296604?v=w260h395","urlThumbnail":"https:\u002F\u002Fimages.impresa.pt\u002Fsicnot\u002F2025-09-12-sic-noticias-direto.png-cc296604?v=w220h138","uselosslesscomp":"true","uuid":"022572b4-3555-434f-8a41-08c282f20f9d","width":"513"},"publishedDate":"2023-10-20T15:34:54.667Z","related":[],"showLead":false,"showPicture":false,"showRelated":false,"showRelatedPicture":false,"status":"","target":"","title":"SIC Notícias em direto","type":"LINK","uuid":"03ea8aef-93dc-422a-a36e-189d31183ad0","positionInList":1},{"authors":[],"code":"22736618","contents":[],"domain":{"code":"sicnot","hostname":"sicnoticias.pt","id":"2060197e-f8ae-4dba-b6ef-b53f881b1092","name":"SIC Notícias"},"domainCode":"sicnot","friendlyURI":"2023-10-20-direto-c92d7f69","hyperlinkType":"externalUrl","lastModifiedDate":"2025-09-09T13:23:08.854Z","lead":"[popup]","link":"javascript:window.open('\u002Fdireto\u002Fouvir', 'audioBroadcast', 'width=420,height=500,top=50,left=50, resizable=no')","mainCategory":{"code":"direto.ouvir","link":"\u002Fdireto\u002Fouvir","name":"Ouvir","path":"\u002Fdireto\u002Fouvir","subCategories":[]},"picture":{"alternates":"{\"1x1\":{\"output\":{\"height\":100,\"width\":100},\"crop\":{\"x\":394,\"y\":0,\"width\":1085,\"height\":1085}},\"5x4\":{\"output\":{\"height\":400,\"width\":500},\"crop\":{\"x\":288,\"y\":0,\"width\":1354,\"height\":1085}},\"16x9\":{\"output\":{\"height\":360,\"width\":640},\"crop\":{\"x\":0,\"y\":0,\"width\":1920,\"height\":1085}},\"3x2\":{\"output\":{\"height\":400,\"width\":600},\"crop\":{\"x\":154,\"y\":0,\"width\":1622,\"height\":1085}},\"3x1\":{\"output\":{\"height\":640,\"width\":1920},\"crop\":{\"x\":0,\"y\":240,\"width\":1920,\"height\":643}},\"2x3\":{\"output\":{\"height\":600,\"width\":400},\"crop\":{\"x\":605,\"y\":0,\"width\":720,\"height\":1085}},\"4x5\":{\"output\":{\"height\":500,\"width\":400},\"crop\":{\"x\":528,\"y\":0,\"width\":864,\"height\":1085}},\"12x1\":{\"output\":{\"height\":160,\"width\":1920},\"crop\":{\"x\":0,\"y\":0,\"width\":1920,\"height\":163}},\"6x1\":{\"output\":{\"height\":150,\"width\":900},\"crop\":{\"x\":0,\"y\":451,\"width\":1920,\"height\":317}},\"4x3\":{\"output\":{\"height\":480,\"width\":640},\"crop\":{\"x\":240,\"y\":0,\"width\":1440,\"height\":1085}},\"fb\":{\"output\":{\"height\":630,\"width\":1200},\"cro

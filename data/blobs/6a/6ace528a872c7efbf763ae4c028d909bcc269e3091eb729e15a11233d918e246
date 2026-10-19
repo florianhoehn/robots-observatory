@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Page Not Found | HeavyFetish</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="The link you followed may be broken or the page may have been removed. Return to our homepage or explore other sections of HeavyFetish and discover new videos." />
+	<meta name="keywords" content="HeavyFetish" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="clckd" content="20446ae85db1fa5cf8b854181ec3b9a2" />
+	<meta name="6f9340821158cc01fbfca289864bdfa0ffb5ac9e" content="6f9340821158cc01fbfca289864bdfa0ffb5ac9e" />
+
+	<link rel="manifest" href="https://heavyfetish.com/static/manifest.json" />
+
+	<link rel="icon" href="https://heavyfetish.com/static/images/favicon/favicon-16x16.png" type="image/x-icon" sizes="16x16">
+	<link rel="icon" href="https://heavyfetish.com/static/images/favicon/favicon-32x32.png" type="image/x-icon" sizes="32x32">
+	<link rel="icon" href="https://heavyfetish.com/static/images/favicon/favicon-64x64.png" type="image/x-icon" sizes="64x64">
+	<link rel="icon" href="https://heavyfetish.com/static/images/favicon/favicon-128x128.png" type="image/x-icon" sizes="128x128">
+	<link rel="icon" href="https://heavyfetish.com/static/images/favicon/favicon-192x192.png" type="image/x-icon" sizes="192x192">
+
+	<link rel="icon" href="https://heavyfetish.com/static/images/favicon/favicon.svg" type="image/svg+xml">
+
+	<link rel="shortcut icon" href="https://heavyfetish.com/static/images/favicon/favicon-64x64.png" type="image/x-icon" sizes="64x64">
+
+	<link href="https://fonts.googleapis.com/css2?family=Eczar&family=Vina+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+			<link rel="preconnect" href="https://www.ageverif.com">
+
+<style>
+	.hf-age-verification-wrapper { display: none; inset: 0; }
+	html[data-age-gate] { overflow: hidden !important; }
+	html[data-age-gate] body { overflow: hidden !important; }
+	html[data-age-gate="loading"] [data-age-screen="default"],
+	html[data-age-gate="default"] [data-age-screen="default"],
+	html[data-age-gate="check"] [data-age-screen="check"] { display: block; }
+	html[data-age-gate="loading"] [data-age-screen="default"] .hf-age-verification-body { visibility: hidden; }
+	.hf-age-verification-error { display: none; }
+	html[data-age-failed] .hf-age-verification-error { display: block; }
+</style>
+
+<script>
+	(function () {
+		const CHECKER_TIMEOUT = 5000;
+		const AGE_OK_DAYS = 30;
+		const GEO_DAYS = 1;
+
+		const root = document.documentElement;
+		let checkerAnswered = false;
+		let checkerSettled = false;
+		let adsReleased = false;
+
+		function getCookie(name) {
+			const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+
+			return match ? match[1] : null;
+		}
+
+		function setCookie(name, value, days) {
+			document.cookie = name + '=' + value + '; max-age=' + days * 86400 + '; path=/; secure; samesite=lax';
+		}
+
+		function setGate(state) {
+			if (state) {
+				root.setAttribute('data-age-gate', state);
+			} else {
+				root.removeAttribute('data-age-gate');
+			}
+		}
+
+		function isAgeOk() {
+			return getCookie('hf_age_ok') === '1';
+		}
+
+		// Re-creates the scripts of a <template data-age-deferred> one by one, so an
+		// inline script that depends on an external one runs after it is loaded.
+		function runDeferred(template) {
+			const fragment = template.content.cloneNode(true);
+			const scripts = Array.prototype.slice.call(fragment.querySelectorAll('script'));
+			const markers = scripts.map(function (script) {
+				const marker = document.createComment('');
+
+				script.parentNode.replaceChild(marker, script);
+
+				return marker;
+			});
+
+			template.parentNode.replaceChild(fragment, template);
+
+			(function next(index) {
+				if (index >= scripts.length) {
+					return;
+				}
+
+				const original = scripts[index];
+				const script = document.createElement('script');
+
+				Array.prototype.forEach.call(original.attributes, function (attribute) {
+					script.setAttribute(attribute.name, attribute.value);
+				});
+
+				script.text = original.text;
+
+				if (original.src) {
+					script.onload = script.onerror = function () {
+						next(index + 1);
+					};
+				}
+
+				markers[index].parentNode.replaceChild(script, markers[index]);
+
+				if (!original.src) {
+					next(index + 1);
+				}
+			})(0);
+		}
+
+		// Ads run only when the gate is passed and the region is known not to need
+		// AgeVerif (or the checker can't tell - same fail-open rule as the gate).
+		function releaseAds() {
+			if (adsReleased || root.hasAttribute('data-age-gate')) {
+				return;
+			}
+
+			if (getCookie('hf_av_geo') !== '0' && !checkerSettled) {
+				return;
+			}
+
+			adsReleased = true;
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', function () {
+					document.querySelectorAll('template[data-age-deferred]').forEach(runDeferred);
+				});
+			} else {
+				document.querySelectorAll('template[data-age-deferred]').forEach(runDeferred);
+			}
+		}
+
+		const geo = getCookie('hf_av_geo');
+
+		if (geo === '1') {
+			setGate('check');
+		} else if (!isAgeOk()) {
+			setGate(geo === '0' ? 'default' : 'loading');
+		}
+
+		if (/[?&]age_verify=failed(&|$)/.test(location.search)) {
+			root.setAttribute('data-age-failed', '');
+			setGate('check');
+
+			if (window.history.replaceState) {
+				const search = location.search.replace(/([?&])age_verify=failed(&|$)/, '$1').replace(/[?&]$/, '');
+
+				history.replaceState(null, document.title, location.pathname + search + location.hash);
+			}
+		}
+
+		releaseAds();
+
+		window.addEventListener('ageverif:load', function () {
+			const requiresVerification = !!(window.ageverif && window.ageverif.requiresVerification);
+
+			checkerAnswered = true;
+			checkerSettled = true;
+			setCookie('hf_av_geo', requiresVerification ? '1' : '0', GEO_DAYS);
+
+			if (requiresVerification) {
+				setGate('check');
+			} else {
+				setGate(isAgeOk() ? '' : 'default');
+			}
+
+			releaseAds();
+		});
+
+		function onCheckerUnavailable() {
+			if (checkerAnswered) {
+				return;
+			}
+
+			checkerSettled = true;
+
+			if (root.getAttribute('data-age-gate') === 'loading') {
+				setGate('default');
+			}
+
+			releaseAds();
+		}
+
+		window.hfAgeCheckerUnavailable = onCheckerUnavailable;
+		window.addEventListener('ageverif:error', onCheckerUnavailable);
+		setTimeout(onCheckerUnavailable, CHECKER_TIMEOUT);
+
+		document.addEventListener('click', function (event) {
+			const button = event.target.closest && event.target.closest('[data-age-action]');
+
+			if (!button) {
+				return;
+			}
+
+			event.preventDefault();
+
+			switch (button.getAttribute('data-age-action')) {
+				case 'confirm':
+					setCookie('hf_age_ok', '1', AGE_OK_DAYS);
+					setGate('');
+					releaseAds();
+					break;
+				case 'verify':
+					location.href = '/services/actions.php?action=age_verify_start&return_to=' + encodeURIComponent(location.pathname + location.search);
+					break;
+				case 'close':
+					location.href = 'https://www.google.com/';
+					break;
+			}
+		});
+	})();
+</script>
+
+<script src="https://www.ageverif.com/checker.js?key=KoKye4OdSJMy74SbKDKW49yn66EwlENNEiuM2azi&nostart" onerror="window.hfAgeCheckerUnavailable && window.hfAgeCheckerUnavailable()" async></script>	
+			<link href="https://heavyfetish.com/static/styles/all-responsive-metal.css?v=13.996" rel="stylesheet" type="text/css" />
+		<link href="https://heavyfetish.com/static/styles/jquery.fancybox-metal.css?v=8.72" rel="stylesheet" type="text/css" />
+	
+	<link href="https://heavyfetish.com/static/styles/owl.carousel.min.css" rel="stylesheet" type="text/css"/>
+	<link href="https://unpkg.com/microtip/microtip.css" rel="stylesheet" type="text/css"/>
+
+	<script>
+		var pageContext = {
+															loginUrl: 'https://heavyfetish.com/login-required/',
+			animation: '200'
+		};
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-86294138-17"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-86294138-17');
+	</script>
+
+	
+	
+			<meta property="og:title" content="HeavyFetish" />
+	
+			<meta property="og:image" content="https://heavyfetish.com/static/images/logo.png" />
+	
+			<meta property="og:description" content="The link you followed may be broken or the page may have been removed. Return to our homepage or explore other sections of HeavyFetish and discover new videos." />
+	
+			<meta property="og:type" content="website" />
+	
+	
+					
+				<script src="https://cdn-fc.com/creatives/bar/bar.min.js?v=1739976586"></script>
+	
+	<meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com; Sec-CH-UA-Mobile https://s.magsrv.com; Sec-CH-UA-Arch https://s.magsrv.com; Sec-CH-UA-Model https://s.magsrv.com; Sec-CH-UA-Platform https://s.magsrv.com; Sec-CH-UA-Platform-Version https://s.magsrv.com; Sec-CH-UA-Bitness https://s.magsrv.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com; Sec-CH-UA-Full-Version https://s.magsrv.com;">
+	<meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com; Sec-CH-UA-Mobile https://s.magsrv.com; Sec-CH-UA-Arch https://s.magsrv.com; Sec-CH-UA-Model https://s.magsrv.com; Sec-CH-UA-Platform https://s.magsrv.com; Sec-CH-UA-Platform-Version https://s.magsrv.com; Sec-CH-UA-Bitness https://s.magsrv.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com; Sec-CH-UA-Full-Version https://s.magsrv.com;">
+	<meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.pemsrv.com; Sec-CH-UA-Mobile https://s.pemsrv.com; Sec-CH-UA-Arch https://s.pemsrv.com; Sec-CH-UA-Model https://s.pemsrv.com; Sec-CH-UA-Platform https://s.pemsrv.com; Sec-CH-UA-Platform-Version https://s.pemsrv.com; Sec-CH-UA-Bitness https://s.pemsrv.com; Sec-CH-UA-Full-Version-List https://s.pemsrv.com; Sec-CH-UA-Full-Version https://s.pemsrv.com;">
+	<meta http-equiv="Delegate-CH" content="Sec-CH-UA https://s.magsrv.com; Sec-CH-UA-Mobile https://s.magsrv.com; Sec-CH-UA-Arch https://s.magsrv.com; Sec-CH-UA-Model https://s.magsrv.com; Sec-CH-UA-Platform https://s.magsrv.com; Sec-CH-UA-Platform-Version https://s.magsrv.com; Sec-CH-UA-Bitness https://s.magsrv.com; Sec-CH-UA-Full-Version-List https://s.magsrv.com; Sec-CH-UA-Full-Version https://s.magsrv.com;">
+</head>
+
+<body>
+			<div class="hf-age-verification-wrapper" data-age-screen="default">
+    <div class="hf-age-verification" data-age-verification="default">
+        <div class="hf-age-verification-header">
+            <img class="hf-age-verification-logo" src="/static/images/age-verify/logo.png" alt="Logo"/>
+
+            <ul class="hf-age-verification-lang">
+                                    <li class="language-switch">
+                        <a href="https://heavyfetish.com/es/">
+                            <img src="/static/images/age-verify/es.png" alt="Español"/>
+                        </a>
+                    </li>
+                            </ul>
+        </div>
+
+        <div class="hf-age-verification-body">
+            <img class="hf-age-verification-image" src="/static/images/age-verify/ava.png" alt="HeavyFetish"/>
+
+            <div class="hf-age-verification-content">
+                <h2 class="hf-age-verification-title">This site is for adults only!</h2>
+
+                <div class="hf-age-verification-subtitle">This site has explicit content for adults 18+. If underage, please EXIT now! By entering, you confirm you are 18 or older.</div>
+
+                <div class="hf-age-verification-actions">
+                    <a href="#" class="hf-age-verification-actions-confirm" type="button" data-age-action="confirm">I'm 18 or Older</a>
+
+                    <a href="#" class="hf-age-verification-actions-cancel" type="button" data-age-action="close">Leave</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>		<div class="hf-age-verification-wrapper" data-age-screen="check">
+    <div class="hf-age-verification">
+        <div class="hf-age-verification-header">
+            <img class="hf-age-verification-logo" src="/static/images/age-verify/logo.png" alt="Logo"/>
+
+            <ul class="hf-age-verification-lang">
+                                    <li class="language-switch">
+                        <a href="https://heavyfetish.com/es/">
+                            <img src="/static/images/age-verify/es.png" alt="Español"/>
+                        </a>
+                    </li>
+                            </ul>
+        </div>
+
+        <div class="hf-age-verification-body">
+            <img class="hf-age-verification-image" src="/static/images/age-verify/ava.png" alt="HeavyFetish"/>
+
+            <div class="hf-age-verification-content">
+                <h2 class="hf-age-verification-title">Age verification is required <span>in your region</span></h2>
+
+                <div class="hf-age-verification-subtitle">Age verification is required in your region to comply with local regulations. This website contains age-restricted materials, including nudity and explicit depictions of sexual activity.</div>
+
+                <div class="hf-age-verification-subtitle hf-age-verification-error">Verification was not completed. Please try again.</div>
+
+                <div class="hf-age-verification-actions">
+                    <a href="#" class="hf-age-verification-actions-confirm" data-age-action="verify">Start age verification</a>
+
+                    <div href="#" class="hf-age-verification-label">
+                        <span class="hf-age-verification-label-text">Povered by</span>
+                        <img class="hf-age-verification-label-logo" src="/static/images/age-verify/label.png" alt="AgeVerify"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>	
+			<div class="hf-popup-custom-overlay"></div>
+<div class="hf-upgrade-popup hf-upgrade-custom-popup">
+    <div class="hf-upgrade-popup-block">
+        <div class="popup-title hf-upgrade-popup-title">Get <span>Heavyfetish premium</span> for 4k, ad-free fetish content</div>
+        <div class="popup-title hf-upgrade-popup-title hf-upgrade-popup-mobile-title">Get <span>HF. premium</span> and enjoy 4k COMPLETELY AD-FREE</div>
+        <div class="popup-holder hf-upgrade-popup-holder">
+            <form action="https://heavyfetish.com/upgrade/" data-form="ajax" method="post">
+                <div class="generic-error hidden"></div>
+                <div class="button-group hf-upgrade-button-group">
+                    <div class="row">
+                        <div class="hf-upgrade-button hf-upgrade-custom-button hf-upgrade-active" data-action="choose">
+                            <input type="radio" class="radio" name="card_package_id" value="" />
+                            <span class="hf-radio-before">
+                                <div class="hf-upgrade-button-price">$3.99</div>
+                                <div class="hf-upgrade-button-period">
+                                    <div><span>1 Month</span></div>
+                                    <div>$3.99 per month</div>
+                                </div>
+                                <div class="hf-upgrade-button-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="hf-upgrade-button hf-upgrade-custom-button" data-action="choose">
+                            <input type="radio" class="radio" name="card_package_id" value="" />
+                            <span class="hf-radio-before">
+                                <div class="hf-upgrade-button-price">$9.99</div>
+                                <div class="hf-upgrade-button-period">
+                                    <div><span>3 months</span></div>
+                                    <div>Save 16% for $3.33 per month</div>
+                                </div>
+                                <div class="hf-upgrade-button-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="hf-upgrade-button hf-upgrade-custom-button" data-action="choose">
+                            <input type="radio" class="radio" name="card_package_id" value="" />
+                            <span class="hf-radio-before">
+                                <div class="hf-upgrade-button-price">$17.99</div>
+                                <div class="hf-upgrade-button-period">
+                                    <div><span>6 months</span></div>
+                                    <div>Save 25% for $2.99 per month</div>
+                                </div>
+                                <div class="hf-upgrade-button-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="hf-upgrade-button hf-upgrade-custom-button" data-action="choose">
+                            <input type="radio" class="radio" name="card_package_id" value="" />
+                            <span class="hf-radio-before">
+                                <div class="hf-upgrade-button-price">$29.99</div>
+                                <div class="hf-upgrade-button-period">
+                                    <div><span>12 months</span></div>
+                                    <div>Save 37% for $2.49 per month</div>
+                                </div>
+                                <div class="hf-upgrade-button-arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 21 24" fill="none">
+                                        <path d="M7.2612 22.6068L17.3857 12.0002L7.2612 1.39364" stroke="#F5F5F4" stroke-opacity="0.5" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hf-upgrade-bottom">
+                    <a href="https://heavyfetish.com/login/" data-fancybox="ajax" class="hf-upgrade-submit hf-upgrade-custom-submit">Continue</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="hf-upgrade-info">
+        <div class="hf-upgrade-custom-popup-close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M21.5629 6.30457C22.1487 5.71879 23.0985 5.71879 23.6842 6.30457C24.27 6.89036 24.27 7.84011 23.6842 8.42589L17.1137 14.9964L23.686 21.5688C24.2718 22.1546 24.2718 23.1043 23.686 23.6901C23.1002 24.2759 22.1505 24.2759 21.5647 23.6901L14.9924 17.1178L8.42004 23.6901C7.83425 24.2759 6.8845 24.2759 6.29871 23.6901C5.71293 23.1043 5.71293 22.1546 6.29872 21.5688L12.871 14.9964L6.3005 8.42589C5.71471 7.84011 5.71471 6.89036 6.3005 6.30457C6.88628 5.71879 7.83603 5.71879 8.42182 6.30457L14.9924 12.8751L21.5629 6.30457Z" fill="#FFFEFA" fill-opacity="0.7"/>
+            </svg>
+        </div>
+        <div class="hf-upgrade-info-logo">
+            <img src="/static/images/upgrade-popup-logo.svg" alt="HeavyFetish premium logo">
+        </div>
+        <div class="hf-upgrade-info-title">HeavyFetish Premium Lets you:</div>
+        <div class="hf-upgrade-info-title hf-upgrade-info-mobile-title">What does a Premium MemberSHIP give you?</div>
+        <div class="hf-upgrade-info-possibilities">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="9" fill="#F5F5F4"/>
+                <path d="M4.19922 8.76908L7.55922 11.9998L13.7992 5.99985" stroke="#EF7D2A" stroke-width="2.20909"/>
+            </svg>
+            <div>Watch 4K videos</div>
+        </div>
+        <div class="hf-upgrade-info-possibilities">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="9" fill="#F5F5F4"/>
+                <path d="M4.19922 8.76908L7.55922 11.9998L13.7992 5.99985" stroke="#EF7D2A" stroke-width="2.20909"/>
+            </svg>
+            <div>Download content</div>
+        </div>
+        <div class="hf-upgrade-info-possibilities">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="9" fill="#F5F5F4"/>
+                <path d="M4.19922 8.76908L7.55922 11.9998L13.7992 5.99985" stroke="#EF7D2A" stroke-width="2.20909"/>
+            </svg>
+            <div>Enjoy 100% ad-free videos</div>
+        </div>
+        <div class="hf-upgrade-info-text">Treat yourself to the best possible version of HeavyFetish — without any restrictions, limits, or safe words.</div>
+        <div class="hf-upgrade-info-crypto"><strong>Payment options:</strong> Bitcoin, Litecoin, Dash, Zcash, Dogecoin, Bitcoin Cash, Monero,
+            Ethereum, Tether ERC-20, TrueUSD ERC-20, USD Coin ERC-20, Shiba Inu ERC-20, Tron, Tether TRC-20, BNB Chain,
+            Tether BEP-20, Binance USD BEP-20, BitTorrent-Chain TRC-20, Ethereum Classic</div>
+    </div>
+</div>	
+	
+	<div><!-- Faphouse -->
+<script>
+var text = {
+    'en': '<i class="fh-i fh-i-love"></i> 1 000 000+ premium videos in one subscription <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">GET ACCESS</span>',
+    'nl': '<i class="fh-i fh-i-love"></i> 1 000 000+ premium video\'s in één abonnement <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">TOEGANG KRIJGEN</span>',
+    'es': '<i class="fh-i fh-i-love"></i> 1 000 000+ vídeos premium en una suscripción <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">TENER ACCESO</span>',
+    'it': '<i class="fh-i fh-i-love"></i> 1 000 000+ video premium in un unico abbonamento <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">AVERE ACCESSO</span>',
+    'de': '<i class="fh-i fh-i-love"></i> 1 000 000+ Premium-Videos in einem Abonnement <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">ZUGANG ERHALTEN</span>',
+    'no': '<i class="fh-i fh-i-love"></i> 1 000 000+ premiumvideoer i ett abonnement <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">FÅ TILGANG</span>',
+    'pl': '<i class="fh-i fh-i-love"></i> 1 000 000+ filmów premium w jednej subskrypcji <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">UZYSKAĆ DOSTĘP</span>',
+    'pt': '<i class="fh-i fh-i-love"></i> 1 000 000+ vídeos premium em uma única assinatura <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">CONSEGUIR ACESSO</span>',
+    'ro': '<i class="fh-i fh-i-love"></i> 1 000 000+ videoclipuri premium într-un singur abonament <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">OBȚINE ACCES</span>',
+    'fr': '<i class="fh-i fh-i-love"></i> 1 000 000+ vidéos premium dans un seul abonnement <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">AVOIR ACCÈS</span>',
+    'sv': '<i class="fh-i fh-i-love"></i> 1 000 000+ premiumvideor i ett abonnemang <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">FÅ TILLGÅNG TILL</span>',
+    'ja': '<i class="fh-i fh-i-love"></i> 1 000 000本以上のプレミアム動画が1つのサブスクリプションで <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">アクセスを取得</span>',
+    'ru': '<i class="fh-i fh-i-love"></i> 1 000 000+ премиум-видео в одной подписке <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">ПОЛУЧИТЬ ДОСТУП</span>',
+    'hi': '<i class="fh-i fh-i-love"></i> 1 000 000+ प्रीमियम वीडियो एक ही सब्सक्रिप्शन में <i class="fh-i fh-i-fire"></i> <span class="fh-button fh-button3">एक्सेस प्राप्त करें</span>'
+};
+  
+var options = {
+    url: 'https://fhgte.com/tour?utm_campaign=ai.BmY&utm_content=preheader_HF',
+    defaultLang: 'en',
+    target: '',
+    rel: '',
+    marginClass: 'fh-margin',
+    designClass: 'fh-line1'
+};
+  
+banner.init(text, options);
+</script></div>
+
+	
+	
+	<div class="top-links">
+		<div class="center-hold">
+			
+			<div class="member-links">
+				<ul>
+					<li><a href="https://www.sexvr.com" target="_blank" rel="noopener">VR Porn</a></li>
+					<li><a href="https://allescorts.com/united-kingdom" target="_blank" rel="noopener">Escorts UK</a></li>
+					<li><a href="https://s.gentlefieldpattern.com/v1/d.php?z=3688" target="_blank" rel="nofollow noopener">AI JERK OFF 🫦</a></li>
+					<li><a href="https://femdoms.com/" rel="noopener">Femdom</a></li>
+					<li><a href="https://bongacams.com" target="_blank" rel="noopener">Live Porn</a></li>
+					<li><a href="https://www.yourlesbians.com" target="_blank" rel="noopener">Lesbian Porn</a></li>
+					<li><a href="https://www.escortsaffair.com" target="_blank" rel="noopener">Escorts</a></li>
+					<li class="hf-mobile-show"><a href="https://trustkiwi.com/zn/1f128796-e12e-691a-93dd-79ab2649a5d6" target="_blank">18 & Abused</a></li>
+					<li class="hf-mobile-show"><a href="https://go.greentrafsa.com/smartpop/fdf78b9528308253f44b8b2d4a033d157ca76483bd86c513d868f10b9d253daa?userId=a5e08cb8852d135e68bf7c3d75f16937cbbc276fbaf5712e870fa6a9b2993aea" target="_blank">Live Sex</a></li>
+					<li><a href="https://ikisoda.com" target="_blank">JAV Porn</a></li>
+					<li><a href="https://theporndude.com" target="_blank" rel="nofollow noopener">The Porn Dude</a></li>
+					<li><a href="https://naughty.club" target="_blank">Porn Directory</a></li>
+					<li><a href="https://xoxporn.com/" target="_blank">Amateur Porn</a></li>
+					<li><a href="https://onlyrule34.com/" target="_blank">Rule 34</a></li>
+																<li class="language-switch"><a href="https://heavyfetish.com/es/">🇪🇸 &nbsp;ES</a></li>
+														</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="header">
+			<div class="header-inner">
+				<div class="logo">
+					<a href="https://heavyfetish.com/"><img src="https://heavyfetish.com/static/images/logo.png" alt="HeavyFetish" /></a>
+				</div>
+
+				<div class="search">
+					<form id="search_form" action="https://heavyfetish.com/search/" method="get" data-url="https://heavyfetish.com/search/%QUERY%/">
+						<span class="search-button">Search</span>
+						<div class="search-text"><input type="text" name="q" placeholder="Search" value="" /></div>
+					</form>
+				</div>
+
+				<div class="header-inner-upload header-inner-upload-desktop">
+					<a class="header-inner-upload-button" href="https://heavyfetish.com/login/" data-fancybox="ajax">
+						<img src="/static/images/upload.svg" alt="Upload icon">
+						<div>Upload video</div>
+					</a>
+
+					<div class="header-inner-upload-description"><span>$0.25</span> per 1k unique views</div>
+				</div>
+
+				
+				<div class="hf-user-account">
+											<a id="login" data-href="https://heavyfetish.com/login/" data-fancybox="ajax" class="hf-user-account-icon desktop"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"> <circle cx="18" cy="13" r="5" stroke="#F5F5F4" stroke-width="2"/> <circle cx="18" cy="18" r="17" stroke="#F5F5F4" stroke-width="2"/> <path d="M29 31C28.7067 26.3736 27.0753 23 18 23C8.9247 23 7.29327 26.3736 7 31" stroke="#F5F5F4" stroke-width="2" stroke-linecap="round"/> </svg></a>
+						<div class="hf-user-account-icon mobile"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none"> <circle cx="18" cy="13" r="5" stroke="#F5F5F4" stroke-width="2"/> <circle cx="18" cy="18" r="17" stroke="#F5F5F4" stroke-width="2"/> <path d="M29 31C28.7067 26.3736 27.0753 23 18 23C8.9247 23 7.29327 26.3736 7 31" stroke="#F5F5F4" stroke-width="2" stroke-linecap="round"/> </svg></div>
+										<div class="hf-account-menu">
+													<a class="hf-account-menu-item" data-href="https://heavyfetish.com/login/" data-fancybox="ajax">Log in</a>
+							<a class="hf-account-menu-item" data-href="https://heavyfetish.com/signup/" data-fancybox="ajax">Sign up</a>
+											</div>
+				</div>
+
+															<div class="hf-header-banner">
+<div></div>
+</div>
+												</div>
+
+					</div>
+
+		<nav>
+			<div class="navigation">
+				<button class="button">
+					<span class="icon">
+						<span class="ico-bar"></span>
+						<span class="ico-bar"></span>
+						<span class="ico-bar"></span>
+					</span>
+				</button>
+								<ul class="primary">
+					<li >
+						<a href="https://heavyfetish.com/fetish-videos/"
+							id="item4">Fetish Videos</a>
+					</li>
+
+											<li >
+							<a href="https://heavyfetish.com/categories/"
+								id="item5">Categories</a>
+						</li>
+					
+					<li >
+						<a href="https://heavyfetish.com/tags/" id="item6">Tags</a>
+					</li>
+
+											<li >
+							<a href="https://heavyfetish.com/fetish-models/" id="item7">Models</a>
+						</li>
+					
+											<li >
+							<a href="https://heavyfetish.com/members/" id="item8">Community</a>
+						</li>
+					
+																
+					<li>
+						<a href=

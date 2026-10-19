@@ -1,0 +1,31 @@
+# Specific rule for Googlebot
+User-agent: Googlebot
+
+    # Disallow French pages
+    Disallow: /fr/chercher/
+
+# Rules for all the search engines
+User-agent: *
+
+    #full paths
+    Disallow: /admin/
+    Disallow: /login/
+    Disallow: /api/admin/
+
+    # Disallow mygeotab static routes
+    Disallow: /mygeotab/ 
+
+    #individual gallery items
+    Disallow: /CMS-GeneralFiles-production/NA/ebooks/Geotab_StateofCommercialTransportation_2023*
+
+    # Disallow URLs with UTM parameters
+    Disallow: /*?*utm_campaign
+    Disallow: /*?*utm_source
+    Disallow: /*?*utm_medium
+    Disallow: /*?*utm_term
+    Disallow: /*?*utm_content
+
+    # Disallow other query parameters
+    Disallow: /*?*sortBy
+
+    Sitemap: https://www.geotab.com/sitemap.xml

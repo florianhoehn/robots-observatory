@@ -1,0 +1,17 @@
+User-agent: *
+
+# We are in the process of sunsetting this endpoint
+# but it's not gone yet
+Disallow: /vip*
+# Don't spider all tag and sort filter combinations
+# but do spider all tag filter combinations
+# for presets until we change these to use url slugs
+# (ex: /sounds/presets/:preset/:main-tag)
+Disallow: /sounds/*?*tags=
+Allow: /sounds/presets/*?*tags=
+
+# Allows /plugins/search, but disallows versions of the page with search results
+Disallow: /plugins/search?*q=
+Disallow: /sounds/search*?*filepath=
+
+Sitemap: https://splice.com/splice-sitemap.xml

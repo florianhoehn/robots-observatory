@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en" class="no-js ">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    var hidecookiecontrol = false;
+  </script>
+
+<script>
+    // Include the following lines to define the gtag() function
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    // Call the default command before Tag Manager runs
+    gtag('consent', 'default', {
+        'analytics_storage': 'denied'
+    });
+</script>
+
+<!-- Form tracking function -->
+<script>console.log("Tracking allowed");</script>
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-54HRKX');
+    </script>
+    <!-- End Google Tag Manager -->
+    
+    <script src="https://cc.cdn.civiccomputing.com/9/cookieControl-9.x.min.js"></script>
+    <script>
+        var config = {
+            apiKey: "6083b9c08a2f568ceccbbe0ad3fca860c19f0e60",
+            product: "PRO",
+            necessaryCookies: ["gold", "PHPSESSID", "info.gold.ac.uk", "appView", "resolution", "AWSALB", "UB_UUID", "redux:authState", "__cfduid", "pusherTransportTLS", "Firebase Device ID"],
+            initialState: "notify",
+            notifyDismissButton: !1,
+            acceptBehaviour: "recommended",
+            rejectButton: !1,
+            closeStyle: "button",
+            settingsStyle: "button",
+            layout: "slideout",
+            notifyOnce: !1,
+            position: "left",
+            theme: "dark",
+            text: {
+                notifyTitle: "Your choice regarding cookies on this site",
+                notifyDescription: "Cookies and similar technologies are used to provide functionality, understand how people use our website, and personalise content on and off gold.ac.uk. This includes matching visitors with their details held by other platforms.",
+                accept: "Accept and continue",
+                settings: "Review cookie settings",
+                acceptRecommended: "Accept all cookies",
+                closeLabel: "Close panel",
+                title: "This website uses cookies",
+                intro: "Cookies and similar technologies are used to provide functionality, understand how people use our website, and personalise content on and off gold.ac.uk. This includes matching visitors with their details held by other platforms. ",
+                necessaryTitle: "Necessary Cookies",
+                necessaryDescription: "These are technically essential to the provision of the gold.ac.uk website. For example, to enable secure sign-in to restricted areas."
+            },
+            statement: {
+                description: "We use cookies as the collective term for these technologies. For more detailed information on what we use, please see our",
+                name: "cookies page",
+                url: "https://www.gold.ac.uk/cookies-statement/",
+                updated: "01/12/2020"
+            },
+            optionalCookies: [{
+                name: "analytics",
+                label: "Analytics",
+                description: "These help us understand how people use our website and make improvements to what we do.",
+                cookies: ["_ga", "_gid", "_gat", "__utma", "__utmb", "__utmc", "__utmt", "__utmz"],
+                recommendedState: "on",
+                onAccept: function() {
+                    dataLayer.push({
+                        civic_cookies_analytics: "consent_given",
+                        event: "analytics_consent_given"
+                    });
+                    gtag("consent", "update", {
+                        analytics_storage: "granted"
+                    })
+                },
+                onRevoke: function() {
+                    dataLayer.push({
+                        event: "analytics_revoked"
+                    }), gtag("consent", "update", {
+                        analytics_storage: "denied"
+                    })
+                }
+            }, {
+                name: "embedded",
+                label: "Embedded content",
+                description: "Our videos, maps and some other content is embedded from other websites (eg Vimeo and Google Maps) that will use their own cookies.",
+                thirdPartyCookies: [{
+                    name: "Airtable",
+                    optOutLink: "https://airtable.com/privacy"
+                }, {
+                    name: "Google/YouTube",
+                    optOutLink: "https://policies.google.com/technologies/types?hl=en"
+                }, {
+                    name: "Issuu",
+                    optOutLink: "https://issuu.com/legal/cookies"
+                }, {
+                    name: "Soundcloud",
+                    optOutLink: "https://soundcloud.com/pages/cookies"
+                }, {
+                    name: "Vimeo",
+                    optOutLink: "https://vimeo.com/cookie_policy"
+                }],
+                recommendedState: "on",
+                onAccept: function() {
+                    dataLayer.push({
+                        civic_cookies_embedded: "consent_given",
+                        event: "embedded_consent_given"
+                    });
+                    var e = new Event("embeddedConsentGiven");
+                    document.dispatchEvent(e)
+                },
+                onRevoke: function() {
+                    dataLayer.push({
+                        civic_cookies_embedded: "consent_revoked"
+                    })
+                }
+            }, {
+                name: "advertising",
+                label: "Advertising/targeting cookies",
+                description: "These are used by companies we use to help us monitor the effectiveness of our advertising. \n\n Sometimes we use remarketing advertising services, which use cookies to show adverts from Goldsmiths on other websites that you visit. \n\n We have advanced matching enabled on forms used by visitors who are enquiring about coming to study at Goldsmiths (for example open day registration). This securely checks to see if the information provided matches users of other services.",
+                cookies: ["ad-id", "ad-privacy", "fr", "_fbp", "IDE", "DSID", "bscookie", "_uetvid", "_uetsid"],
+                recommendedState: "on",
+                onAccept: function() {
+                    dataLayer.push({
+                        civic_cookies_marketing: "consent_given",
+                        event: "marketing_consent_given"
+                    });
+                    gtag('consent', 'update', {
+                        'ad_storage': 'granted',
+                        'ad_user_data': 'granted',
+                        'ad_personalization': 'granted'
+                    });
+                },
+                onRevoke: function() {
+                    dataLayer.push({
+                        civic_cookies_marketing: "consent_revoked"
+                    });
+                    gtag('consent', 'update', {
+                        'ad_storage': 'denied',
+                        'ad_user_data': 'denied',
+                        'ad_personalization': 'denied'
+                    });
+                    CookieControl.delete("ad-id"), CookieControl.delete("ad-privacy"), CookieControl.delete("fr"), CookieControl.delete("_fbp"), CookieControl.delete("IDE"), CookieControl.delete("DSID"), CookieControl.delete("bscookie"), CookieControl.delete("_uetvid"), CookieControl.delete("_uetsid")
+                }
+            }],
+            branding: {
+                acceptBackground: "#ffcd6e",
+                acceptText: "#333",
+                fontColor: "#FFF",
+                fontSizeTitle: "1.2em",
+                fontSizeIntro: "1em",
+                fontSizeHeaders: "1.2em",
+                fontSize: "1em",
+                backgroundColor: "#37424a",
+                toggleText: "#fff",
+                toggleColor: "#f6f7f7",
+                toggleBackground: "#111125",
+                closeBackground: "#333",
+                closeText: "#FFF",
+                buttonIcon: null,
+                buttonIconWidth: "32px",
+                buttonIconHeight: "32px",
+                removeIcon: !1,
+                removeAbout: !1
+            },
+            accessibility: {
+                outline: !0
+            }
+        };
+        CookieControl.load(config);
+    </script>
+    <meta property="fb:pages" content="196821702848">
+<!-- Metadata -->
+ 
+<meta name="robots" content="noindex">
+
+<link rel="canonical" href="https://www.gold.ac.uk/404/">
+<title>Oh dear :( | Goldsmiths, University of London</title>
+<meta name="description"          content="The page you requested has not been found. (Error 404)">
+<meta name="name"                 content="Oh dear :(">
+<meta name="summary"              content="The page you requested has not been found. (Error 404)">
+<meta name="image"                content="">
+<meta property="og:url"           content="https://www.gold.ac.uk/404/">
+<meta property="og:type"          content="article">
+<meta property="og:title"         content="Oh dear :(">
+<meta property="og:description"   content="The page you requested has not been found. (Error 404)">
+<meta property="og:site_name"     content="Goldsmiths, University of London">
+<meta name="twitter:card"         content="summary">
+<meta name="twitter:site"         content="@goldsmithsuol">
+<meta name="twitter:title"        content="Oh dear :(">
+<meta name="twitter:description"  content="The page you requested has not been found. (Error 404)">
+<meta property="og:image"         content="https://www.gold.ac.uk/static/images/generic-social-media-card.jpg">
+<meta name="twitter:image"        content="https://www.gold.ac.uk/static/images/generic-social-media-card.jpg">
+<meta name="theme-color" content="#37424A">
+<meta name='breadcrumb' content="&lt;a href=&quot;/404/&quot;&gt;Page not found&lt;/a&gt;">
+<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+("devicePixelRatio" in window ? ","+devicePixelRatio : ",1")+'; path=/';</script>
+<!-- Set the head no-js/js class before the browsers had chance to render anything. -->
+<script>
+  (function(H) {
+    H.className = H.className.replace(/\bno-js\b/, 'js')
+  })(document.documentElement);
+</script>
+
+<link href="/assets/css/styles.9ffa5b86a2e668a0b335908fc0b523a6.css" rel="stylesheet">
+<!-- New padding css during test/dev -->
+<link href="/assets/css/new-padding.4d42bb4a2cec71cfdf70c66fe638d9a4.css" rel="stylesheet">
+
+<!-- navigation object:  Favicons -->
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="mask-icon" href="/safari-pinned-tab1.svg" color="#37424A">
+
+  <noscript><style>.noscripthide {display:none;}</style></noscript>
+</head>
+
+<body class="menu-closed staff-students-closed search-closed">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54HRKX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="site-wrapper">
+
+  <header id="top" class="header new-navigation">
+    <div id="skiptocontent"><a href="#maincontent">skip to main content</a></div>
+    <div class="header-container">
+      <a href="/"><span class="site-logo header__logo">Goldsmiths - University of London</span></a>
+      <div class="top-nav-right">
+        <ul class="top-upper-nav desktop">
+          <li>
+            <a class="header__charm header__charm--text" href="#" aria-label="Toggles staff and students menu">Students, Staff and Alumni</a>
+          </li>
+        </ul>
+        <ul class="top-upper-nav mobile">
+          <li>
+            <a class="header__charm charm-search" href="/search-results/" aria-label="Toggles search">Search</a>
+            <a class="header__charm header__charm--text" href="#" aria-label="Toggles staff and students menu">Students, Staff and Alumni</a>
+          </li>
+        </ul>
+        <ul class="header__charms desktop-header-menu">
+          <li><a class="" href="/study">Study</a></li>
+          <li><a class="" href="/course-finder">Course finder</a></li>
+          <li><a class="" href="/international">International</a></li>
+          <li class="more-menu"><a class="text-menu more" href="#" aria-label="Toggles staff and students menu">More</a></li>
+          <li class="search-parent"><a class="header__charm charm-search" href="/search-results/" aria-label="Toggles search">Search</a></li>
+        </ul>
+    </div>
+    </div>
+      <div class="mobile-top-nav">
+        <ul class="header__charms mobile-header-menu">
+          <li><a class="" href="/study">Study</a></li>
+          <li><a class="" href="/course-finder">Courses</a></li>
+          <li><a class="" href="/international">International</a></li>
+          <li class="more-menu"><a class="text-menu more" href="#" aria-label="Toggles staff and students menu">More</a></li>
+        </ul>
+      </div>
+  </header>
+
+  <!-- Drop down search  -->
+  <nav class="section section--site-search" tabindex="-1" aria-hidden="true">
+    <div class="wrapper clearfix">
+      <div class="full-width fluid-search">
+        <form role="search" id="main-search" action="/search-results" method="GET">
+        <div class="search-wrapper">
+          <div class="search-icon">&nbsp;</div>
+          <div class="search-form-wrapper">
+            <div class="search-form">
+              <div class="search-form-input">
+                <label for="search-site" id="searchTitle">Search Goldsmiths</label>
+                <input type="hidden" name="collection" value="goldsmiths~sp-meta">
+                <input type="text" name="query" class="meta-query" id="search-site" aria-describedby="searchTitle">
+              </div>
+              <div class="search-cta-button">
+                <input type="submit" class="button search-submit-button" value="Search">
+                <!-- GO button only on mobile -->
+                <input type="submit" class="button go-submit-button" value="Go">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </nav>
+
+  <main aria-label="Main page content">
+    <div class="pusher-wrapper">
+      <div class="charm-menu--no-js"><a class="header__charm charm-menu" href="#">Main menu</a></div>
+      <nav id="primary-nav" class="primary-nav pusher" aria-hidden="true">
+        <h2 id="primaryNavigationTitle" class="visuallyhidden">Primary</h2>
+        <ul role="menu" aria-describedby="primaryNavigationTitle">
+                    <li role="menuitem"><a href="/about/">About Goldsmiths</a></li>
+          <li role="menuitem"><a href="/study/">Study with us</a></li>
+          <li role="menuitem"><a href="/research/">Research</a></li>
+          <li role="menuitem"><a href="/business/">Business and partnerships</a></li>
+          <li role="menuitem"><a href="/community/">For the local community</a></li>
+          <li role="menuitem"><a href="/schools/">Faculties and Schools</a></li>
+          <li role="menuitem"><a href="/news/">News and features</a></li>
+          <li role="menuitem"><a href="/events/">Events</a></li>
+
+<a class="button donateBtn" href="/giving-to-goldsmiths/">Give to Goldsmiths</a>
+        </ul>
+      </nav>
+
+      <div class="charm-students--no-js"><a class="header__charm header__charm--text" href="#">Staff & students</a></div>
+      <nav id="student-nav" class="staff-students-nav pusher" aria-hidden="true">
+        <h2 id="studentNavigationTitle" class="visuallyhidden">Staff + students</h2>
+        <ul role="menu" aria-describedby="studentNavigationTitle">
+                    <li role="menuitem"><a href="/new-students/">New students</a></li>
+          <li role="menuitem"><a href="/students/">Current students</a></li>
+          <li role="menuitem"><a href="/alumni/">Alumni</a></li>
+          <li role="menuitem"><a href="/library/">Library</a></li>
+          <li role="menuitem"><a href="/students/timetable/">Timetable</a></li>
+          <li role="menuitem"><a href="https://learn.gold.ac.uk/">Learn.gold - VLE</a></li>
+          <li role="menuitem"><a href="https://outlook.com/gold.ac.uk">Email - Outlook</a></li>
+          <li role="menuitem"><a href="/it/">IT support</a></li>
+          <li role="menuitem"><a href="/staff-directory/">Staff directory</a></li>
+          <li role="menuitem"><a href="https://goldsmithscollege.sharepoint.com/sites/goldmine">Staff intranet - Goldmine</a></li>
+          <li role="menuitem"><a href="/graduate-school/">Graduate School - PGR students</a></li>
+          <li role="menuitem"><a href="/talic/">Teaching and Learning Innovation Centre</a></li>
+          <li role="menuitem"><a href="/calendar/?action=admin">Events admin</a></li>
+        </ul>
+      </nav>
+
+      <div class="main-container push-this">
+
+
+        <article id="maincontent" class="standard">
+                    <header class="section hero  hero">
+            <div class="hero__content">
+              <h1>Oh dear :(</h1>
+            </div>
+            <div class="hero__image" style="background-image:url('/static/images/generic-standard-hero.jpg');"></div>
+          </header>
+
+
+
+          <div class="section section--no-padding">
+            <div class="content-wrapper">
+              <div class="primary-content intro">
+                <div class="content">
+                  <p class="emphasis">The page you requested has not been found. (Error 404)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="section">
+            <h2 class="visuallyhidden">Primary page content</h2>
+            <div class="content-wrapper">
+              <div class="primary-content">
+                <div class="content">
+                <p>This may be because the page has been removed or the link that sent you here was incorrect.</p>
+
+                <a id="d.en.1837418"></a>
+<div class="page-search-container search-slice">
+          <div class="cta-icon cta-icon--search"></div>
+          <div class="page-search-components">
+            <h2>Search Goldsmiths</h2>
+            <form id="in-page-main-search" action="/search-results" method="GET" role="search">
+              <input type="hidden" name="collection" value="goldsmiths~sp-meta">
+
+              <div class="page-search-box-cta">
+                <div class="page-search-box">
+                  <input type="text" name="query" autocomplete="off" aria-label="Search the entire website">
+                </div>
+                <input type="submit" class="button" value="Search">
+                <input type="submit" class="button button-mobile" value="Go">
+
+              </div>
+            </form>
+          </div>
+        </div>
+                </div>
+              </div>
+
+              <aside class="secondary-content">
+                <div class="box">
+  <h2 class="box-heading">You may want to try</h2>
+  <ul>
+<li><a href="/course-finder/">Course finder</a></li>
+<li><a href="/study/">Study with us</a></li>
+<li><a href="/research/">Research</a></li>
+<li><a href="/about/">About us</a></li>
+</ul>
+  
+      
+  
+  
+</div>
+
+              </aside>
+
+            </div>
+          </section>
+
+
+
+        </article>
+
+
+<!--<a id="d.en.1837419"></a>--><!--<a id="d.en.1837418"></a>--><!-- navigation object : Pull Twitter feed into footer -->
+
+</div>
+</div>
+</main>
+<!-- navigation object : Pull promotion to above footer -->
+
+
+<footer class="section" aria-label="Footer links and social sharing options">
+<div class="footer">
+<ul class="site-map">
+  <li><a href="/about/">About us</a></li>
+  <li><a href="/contact/">Contact us</a></li>
+  <li><a href="/find-us/">Find us</a></li>
+  <li><a href="/working/">Jobs</a></li>
+  <li><a href="/accessibility/">Accessibility statement</a></li>
+  <li><a href="/cookies-statement/">Cookie use</a></li>
+	<li><a href="/disclaimer/">Copyright and disclaimer</a></li>
+  <li><a href="/governance/public-information/statements-reports/slavery-and-human-trafficking/">Slavery and human trafficking statement</a></li>
+</ul>
+<ul class="cms-login">
+<li>
+<a class="admin-login" href="https://cms.gold.ac.uk/terminalfour/page/section#edit/30196/contents">Admin login</a></li>
+</ul>
+<ul class="social-hubs social-hubs--footer">
+  <li><a href="https://twitter.com/goldsmithsuol">Twitter</a> </li>
+  <li><a href="https://www.linkedin.com/edu/school?id=12593">LinkedIn</a> </li>
+	<li><a href="https://www.tiktok.com/@goldsmithsuol/">TikTok</a> </li>
+  <li><a href="https://instagram.com/goldsmithsuol/">Instagram</a> </li>
+  <li><a href="https://www.youtube.com/user/GoldsmithsLondon">YouTube</a></li>
+</ul>
+</div>
+<div class="footer__meta">
+<small class="footer__copyright">© <script>document.write(new Date().getFullYear())</script> Goldsmiths, University of London</small>
+<small><a class="footer__back-top" href="#top">Back to top</a></small>
+</div>
+</footer>
+
+</div>
+
+<script src="/assets/js/common.db4883317972066f90bf76e18054abcd.js"></script>
+<script src="/assets/js/main.f9743a01c858cd21f4460b022e084bdc.js"></script>
+<script src="/assets/js/search.ef961bf8b6235c7f903e4bace268c28c.js"></script>
+<script src="/assets/js/helpful.37c29487f605a04e5c3324db64f4a0ea.js"></script>
+<!-- text/code content -->
+
+
+<script>
+if ((document.querySelector('.vimeoVideo')) || (document.querySelector('.vimeoPlaylist')) || (document.querySelector('.youtubeVideo')) || (document.querySelector('.bilibiliVideo')) || (document.querySelector('.youtube-stream'))) {
+    dataLayer.push({
+        'event': 'video_found'
+    });
+}
+if (document.querySelector('.soundcloud')) {
+    dataLayer.push({
+        'event': 'soundcloud_found'
+    });
+}
+  if (document.querySelector('.issuu')) {
+    dataLayer.push({
+        'event': 'issuu_found'
+    });
+}
+if (document.querySelector('.airtable')) {
+    dataLayer.push({
+        'event': 'airtable_found'
+    });
+}
+  if (document.querySelector('.unibuddy')) {
+    dataLayer.push({
+        'event': 'unibuddy_found'
+    });
+}
+</script>
+</body>
+
+</html>

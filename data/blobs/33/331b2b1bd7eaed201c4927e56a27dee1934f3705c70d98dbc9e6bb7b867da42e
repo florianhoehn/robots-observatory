@@ -1,0 +1,453 @@
+<!DOCTYPE HTML>
+
+<html lang="en-us">
+    <head>
+
+
+<script>
+    function extractHostnameFromOktaIssuer() {
+        var hostname = window.location.hostname;
+        var parts = hostname.split(".");
+
+        if (["www", "new", "book"].includes(parts[0])) {
+            parts[0] = "loyaltysso";
+            return parts.join(".");
+        }
+
+        if (hostname.includes(".com")) {
+            var lastPartIndex = parts.length - 2;
+            var defaultDomain = `loyaltysso.qa..com`;
+            return defaultDomain;
+        } else {
+            hostname = hostname || "bestwestern";
+            return "loyaltysso.qa." + hostname + ".com";
+        }
+    }
+
+    window.ddjskey = "98F265B4C60E01E1D49C55E665ED62";
+
+    window.ddoptions = {
+        ajaxListenerPath: [
+            window.location.hostname,
+            extractHostnameFromOktaIssuer()
+        ],
+        ajaxListenerPathExclusion: ["c.go-mpulse.net"],
+        withCredentials: true,
+        replayAfterChallenge: true
+    };
+
+    // Select DataDome tag domain based on brand
+    var hostname = window.location.hostname;
+    var ddTagDomain;
+
+    if (hostname.includes("worldhotels")) {
+        ddTagDomain = "dd.worldhotels.com";
+    } else if (hostname.includes("bwhhotelgroup")) {
+        // IBE
+        ddTagDomain = "dd.bwhhotelgroup.com";
+    } else {
+        // Best Western (default)
+        ddTagDomain = "dd.bestwestern.com";
+    }
+
+    var ddScript = document.createElement("script");
+    ddScript.src = "https://" + ddTagDomain + "/tags.js";
+    ddScript.async = true;
+    document.head.appendChild(ddScript);
+</script>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<meta name="keywords"/>
+<meta name="description" content="Find Best Western hotels in over 100 countries world wide.   Get the lowest rate when you book online. "/>
+<meta name="referrer" content="same-origin"/>
+
+
+
+
+
+
+
+    
+
+
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/bestwestern/clientlibs/clientlib-aemdependencies.min.805091f7b013e902175b0237ec3fd8dc.css" type="text/css">
+<script src="/etc.clientlibs/clientlibs/granite/jquery.min.1fc733054ddb2e2fcd4a0f763671047b.js"></script>
+<script src="/etc.clientlibs/bestwestern/clientlibs/clientlib-aemdependencies.min.202f2fe60bdf6aa24de0c59f4a0891c5.js"></script>
+
+
+
+    
+    
+<script type="text/javascript" src="/etc.clientlibs/component-marketplace/clientlibs/clientlib-bootstrap.min.633fa9eb8ad4d0de732939cc46b1fee8.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes"/>
+
+
+
+
+
+
+
+
+<link rel="preload" href="/etc.clientlibs/component-marketplace/clientlibs/clientlib-external-commons/resources/luxHotels/Roboto-Regular.woff2" as="font" crossorigin="anonymous"/>
+<link rel="preload" href="/etc.clientlibs/component-marketplace/clientlibs/clientlib-external-commons/resources/NotoSans-Bold.woff" as="font" crossorigin="anonymous"/>
+<link rel="preload" href="/etc.clientlibs/component-marketplace/clientlibs/clientlib-external-commons/resources/NotoSans-BoldItalic.woff" as="font" crossorigin="anonymous"/>
+<link rel="preload" href="/etc.clientlibs/component-marketplace/clientlibs/clientlib-external-commons/resources/NotoSans-BoldItalic.ttf" as="font" crossorigin="anonymous"/>
+<link rel="preload" href="/etc.clientlibs/component-marketplace/clientlibs/clientlib-external-commons/resources/NotoSans-Italic.woff" as="font" crossorigin="anonymous"/>
+<link rel="preload" href="/etc.clientlibs/component-marketplace/clientlibs/clientlib-external-commons/resources/NotoSans-Regular.woff" as="font" crossorigin="anonymous"/>
+
+
+
+
+    
+<link rel="stylesheet" href="/etc.clientlibs/bestwestern/clientlibs/clientlib-all.min.531dc5bb369aed64893bd5dcfff6d1b6.css" type="text/css">
+
+
+
+
+
+<script type="text/javascript" src="//tags.tiqcdn.com/utag/bwi/grs/prod/utag.sync.js"></script>
+
+<script>
+    var BestWestern = {};
+    BestWestern.hotelsChainCode = "BW,UR,PB,XW,WW";
+    BestWestern.isWHPage = ("true" == "");
+    BestWestern.isIBEPage = ("true" == "");
+    BestWestern.isHotelDevelopmentSite = ("true" == "");
+    BestWestern.isIE = /*@cc_on!@*/false || !!document.documentMode;
+    BestWestern.pageName = "errors";
+    BestWestern.pagePath = "\/content\/best\u002Dwestern\/en_US\/errors";
+    BestWestern.language = "en";
+    BestWestern.region = "us";
+    BestWestern.regionFromPagePath = "us";
+    BestWestern.templateName = "fullwidthcontent";
+    if (!BestWestern.region) {
+        BestWestern.region = BestWestern.regionFromPagePath;
+    }
+    BestWestern.localeFromPath = "en_US";
+    BestWestern.languageCountryFromPath = BestWestern.localeFromPath.replace('_', '-');
+    BestWestern.isLoginRequired = "";
+    BestWestern.isEditMode = false;
+    BestWestern.isPreviewMode = false;
+    BestWestern.specialUrlCharactersPattern =  new RegExp("[\\s|\\[|\\]|\\{|\\}|%|#|;|@|:|\\^|\\~|\x22|,|\\.|\x27|\x26|_|\/|\u002D]+".replace('\\\\s', '\\s'), 'g');
+    BestWestern.specialUrlCharactersPatternWH =  new RegExp("[\\s|\\[|\\]|\\{|\\}|%|#|;|@|:|\\^|\\~|\x22|,|\\.|\x27|\x26|_|\/|\u002D|\\(|\\)]+".replace('\\\\s', '\\s'), 'g');
+    BestWestern.stripePublishableKey = "pk_live_51JdLT1B6TiqTQFhLbA3yv5IkOgU6xF2k0avjvjSrgZ0W00zGqyY9GZpv7hM7dSDopmPt6Be4XA8t7lvZYCjAmcOi004H4evlNh";
+    BestWestern.enableOneTrustRecordCreationFlag = "true";
+    BestWestern.DefaultConfigs = {};
+    BestWestern.DefaultConfigs.daysToAddToCheckin = 0;
+    BestWestern.DefaultConfigs.daysToAddToCheckout = 1;
+    BestWestern.DefaultConfigs.displayDateFormat = "dd\u002DM\u002Dyy";
+    BestWestern.DefaultConfigs.cancelDisplayDateFormat = "DD MM dd, yy";
+    BestWestern.DefaultConfigs.pointsPlusCashMinPoints = "5000";
+    BestWestern.DefaultConfigs.pointsPlusCashConversionRate = "0.005";
+    BestWestern.DefaultConfigs.enablePointsPlusCash = ("true" === "true");
+    BestWestern.DefaultConfigs.enableFavorites = ("true" === "true");
+    BestWestern.DefaultConfigs.pointsPlusCashSliderStepValue = "1000";
+    BestWestern.DefaultConfigs.enableUserLocaleTimeFormat = ("true" === "false");
+    BestWestern.DefaultConfigs.enableNewDateFormat = ("true" === "true");
+    BestWestern.DefaultConfigs.enableFNVoucher = ("true" === "true");
+    BestWestern.DefaultConfigs.showCurrencyDropdown = ("true" === "true");
+    BestWestern.DefaultConfigs.enablePrearrivalTextCheckbox = ("true" === "true");
+    BestWestern.DefaultConfigs.showCVVField = ("true" === "true");
+    BestWestern.DefaultConfigs.enableRedeemTravelcard = ("true" === "true");
+    BestWestern.DefaultConfigs.enableMedalliaSiteLevel = ("true" === "true");
+    BestWestern.DefaultConfigs.minMedalliaReviewsCount = "10";
+    BestWestern.DefaultConfigs.enableSpecialRatesHotelRooms = ("true" === "true");
+    BestWestern.DefaultConfigs.displayLimitedAvailabilityMessage = ("true" === "true");
+    BestWestern.DefaultConfigs.displayLimitedAvailabilityMessageSelectHotel = ("true" === "true");
+    BestWestern.DefaultConfigs.urgencyMessageTextLine1 = "HURRY!  SELLING FAST";
+    BestWestern.DefaultConfigs.urgencyMessageTextLine2 = "FEW ROOMS REMAIN";
+    BestWestern.DefaultConfigs.occupancyThreshold = "80";
+    BestWestern.DefaultConfigs.showEnhanceYourStay = ("true" === "");
+    BestWestern.DefaultConfigs.awardProgressContentFragment = "\/content\/dam\/api\/award\u002Dprogress\/noram\u002Dprogress\u002Dfall";
+    BestWestern.DefaultConfigs.israelVATMessageContentFragment = "\/content\/dam\/api\/israel\u002Dvat\u002Dmessage\/israel\u002Dvat\u002Dmessage";
+    BestWestern.DefaultConfigs.modifyReservationForPMXHotels = ("true" === "");
+    BestWestern.DefaultConfigs.enableDigitalWallet = ("true" === "true");
+    BestWestern.DefaultConfigs.enableLastViewedExperience = ("true" === "true");
+    BestWestern.DefaultConfigs.modifyReservationButtonVal = ("true" === "true");
+    BestWestern.DefaultConfigs.oktaIssuer = "https:\/\/loyaltysso.bestwestern.com\/oauth2\/ausbh4l8x0n2n5vCR4x7";
+    BestWestern.DefaultConfigs.oktaRedirectUri = "https:\/\/www.bestwestern.com\/bin\/login\/callback";
+    BestWestern.DefaultConfigs.oktaClientId = "0oaq30lh13CL8hG3i4x7";
+
+    BestWestern.ssob = "";
+    BestWestern.iata = "";
+    BestWestern.runmode = "production";
+    BestWestern.Services = {};
+    BestWestern.Services.isProxyEnabled = true;
+    BestWestern.Services.isTealiumAnalyticsEnabled = true;
+    BestWestern.Services.sendBWHeaders = false;
+    BestWestern.Services.enableStripeForAllResorts = true;
+    BestWestern.Services.disableSaveCard = false;
+
+    // AEM template paths
+    BestWestern.Services.searchPageTemplatePath = "hotelsearchresults";
+    BestWestern.Services.upsellContentFragmentPath = "/content/dam/api/upsell-products";
+
+    // AEM Servlets
+    BestWestern.Services.proxyURL = '/bin/bestwestern/proxy';
+    BestWestern.Services.bwrMemeberProxyUrl = '/bin/bestwestern/bwrmemberidproxy';
+    BestWestern.Services.deleteProxyUrl = '/bin/bestwestern/deleteproxy';
+    BestWestern.Services.bwrRegisterServletPath = "/bin/bestwestern/rest/profile/create?sp=1";
+    BestWestern.Services.reservationInfoUrl = "/bin/bestwestern/check-reservation";
+    BestWestern.Services.countryMapperUrl = "/bin/bestwestern/country/mapper";
+    BestWestern.Services.bwrRegisterPromoSetServletPath = "/bin/bestwestern/rest/profile/register-promo-set";
+    BestWestern.Services.bwrRegisterFeaturePromoSetServletPath = "/bin/bestwestern/rest/profile/register-feature-promo-set";
+    BestWestern.Services.bwrProfilePwdGetServletPath  = "/bin/bestwestern/rest/password-help";
+    BestWestern.Services.bwrProfileAddressListGetServletPath  = "/bin/bestwestern/rest/addressListGet";
+    BestWestern.Services.bwrMemberProfileValidator  = "/bin/bestwestern/rest/memberprofilevalidator";
+    BestWestern.Services.bwrMemberValidator  = "/bin/bestwestern/rest/membervalidator";
+    BestWestern.Services.bwrAwardsCategoryListGetServletPath = "/bin/bestwestern/rest/awards/category/list";
+    BestWestern.Services.bwrAwardsTitleListGetServletPath = "/bin/bestwestern/rest/awards/title/list";
+    BestWestern.Services.bwrAwardInfoGetServletPath = "/bin/bestwestern/rest/award/get";
+    BestWestern.Services.bwrProductTilesGetServletPath = "/bin/bestwestern/rest/awards/producttiles/list";
+	BestWestern.Services.bwrRegionOfferListGet = "/bin/bestwestern/rest/regionOfferListGet";
+    BestWestern.Services.bwrProfileAwardsPointsRedeemSetServletPath = "/bin/bestwestern/rest/awards/pointsRedeemSet";
+    BestWestern.Services.bwrAccountStatementGetServletPath = "/bin/bestwestern/rest/account/statement";
+    BestWestern.Services.bwrProfileSpecialOfferListGetServletPath = "/bin/bestwestern/rest/specialOffersListGet";
+    BestWestern.Services.bwrProfileSpecialOfferRegistrationSetServletPath = "/bin/bestwestern/rest/specialOffersListSet";
+    BestWestern.Services.bwrMemberId = "/bin/bestwestern/rest/bwrmemberid";
+    BestWestern.Services.countryListURL = "/etc/acs-commons/lists/countries/jcr:content/list.infinity.json";
+    BestWestern.Services.stateListURL = '/etc/acs-commons/lists/states/{COUNTRY_CODE}/jcr:content/list.infinity.json';
+    BestWestern.Services.amenitiesListURL = '/etc/acs-commons/lists/amenities/jcr:content/list.infinity.json';
+    BestWestern.Services.standardAmenitiesACSListPath = '/etc/acs-commons/lists/standard-amenities/jcr:content/list.infinity.json';
+    BestWestern.Services.cookiesCategoryURL = '/etc/acs-commons/lists/cookieCategories/jcr:content/list.infinity.json';
+    BestWestern.Services.earnBonusRegionListGet = '/etc/acs-commons/lists/earn-bonus-regions/jcr:content/list.infinity.json';
+    BestWestern.Services.bwrLogoutServletPath = "/bin/bestwestern/rest/logout";
+    BestWestern.Services.commentsServletPath = "/bin/bestwestern/reservation/comments";
+    BestWestern.Services.savedCardInfoServletPath = "/bin/bestwestern/saved/cards";
+    BestWestern.Services.hotelSummaryServletPath = "/bin/bestwestern/hotelSummary";
+    BestWestern.Services.hotelImageCatalogListServletPath = "/bin/bestwestern/imgCatalog";
+    BestWestern.Services.LocationPickerServlet = "/bin/bestwestern/location/picker";
+    BestWestern.Services.GoogleMapPickerServlet = "/bin/bestwestern/googlemap/picker";
+    BestWestern.Services.resortIdServlet = "/bin/bestwestern/rest/resortid";
+    BestWestern.Services.folioReservationPdfServlet = "/bin/bestwestern/folio";
+    BestWestern.Services.folioDetailsServlet = "/bin/bestwestern/folio-details";
+    BestWestern.Services.removeUuidServlet = "/bin/bestwestern/rest/removeuuid";
+    BestWestern.Services.rewardsClubsInfoServlet = "/bin/bestwestern/rest/rewardsClubInfo";
+    BestWestern.Services.packagesAvailabilityUrl = "/bin/bestwestern/rest/packagesAvailability";
+    BestWestern.Services.gatedRatesFromServlet = "/bin/bestwestern/rest/gatedRatesFromListGet";
+    BestWestern.Services.resortOccupancyServlet = "/bin/bestwestern/resortOccupancy";
+    BestWestern.Services.modifyReservationServlet = "/bin/bestwestern/modifyRoom";
+    BestWestern.Services.resModifyServlet = "/bin/bestwestern/resModify";
+    BestWestern.Services.paymentInfoMappingServlet = "/bin/bestwestern/paymentInfoMapping";
+    BestWestern.Services.getResortAvailableIncludedExcludedProductList = "/bin/bestwestern/resortAvailableIncludedExcludedProductList";
+    BestWestern.Services.profileActionIQFavoritesUrl = "/bin/bestwestern/favoriteHotels";
+    BestWestern.Services.contentFragmentPublicUrl = "/bin/public/content";
+    BestWestern.Services.validateReservationUrl = "/bin/bestwestern/validateReservation";
+
+    // AEM internal URLs
+    BestWestern.Services.homePageUrl = "\/en_US.html";
+    BestWestern.Services.joinBwrUrl = "\/en_US\/rewards\/join.html";
+    BestWestern.Services.isBookingPath = "false";
+    BestWestern.thankYouPageUrl = "\/en_US\/reservations\/reservation\u002Ddetails.thankyou.html";
+    BestWestern.cancelReservationPageUrl = "\/en_US\/reservations\/reservation\u002Ddetails.cancel.html";
+    BestWestern.hotelSearchPageUrl = "\/en_US\/book\/hotel\u002Dsearch.html";
+    BestWestern.hotelDetailsPageUrl = "\/en_US\/book\/hotel\u002Ddetails.html";
+    BestWestern.selectRoomPageUrl = "\/en_US\/book\/hotel\u002Drooms.html";
+    BestWestern.hotelDetailsEndUserPageUrl = "\/en_US\/book\/hotels\u002Din\u002D{HOTEL_CITY}\/{HOTEL_NAME}\/propertyCode.{HOTEL_ID}.html";
+    BestWestern.destinationPageUrl = "\/en_US\/book\/destinations\/{DESTINATION_COUNTRY}\/hotels\u002Din\u002D{CITY}.html";
+    BestWestern.selectRoomEndUserPageUrl = "\/en_US\/book\/{HOTEL_CITY}\/hotel\u002Drooms\/{HOTEL_NAME}\/propertyCode.{HOTEL_ID}.html";
+    BestWestern.rewardsReservationPageUrl = "\/en_US\/reservations\/reservation\u002Ddetails.rewards.html";
+    BestWestern.reservationIndexPageUrl = "\/en_US\/reservations\/reservation\u002Dindex.html";
+    BestWestern.bookingSummaryPageUrl = "\/en_US\/book\/booking\u002Dsummary.html";
+    BestWestern.sliderSummaryPageUrl = "\/en_US\/book\/options.html";
+    BestWestern.reviewReservePageUrl = "\/en_US\/book\/booking\u002Dsummary\u002Db.html";
+    BestWestern.groupsPageUrl = "\/en_US\/reservations\/groups.html";
+    BestWestern.addEditAddressPageUrl = "\/en_US\/rewards\/profile\u002Dand\u002Dpreferences\/add\u002Daddress.html";
+    BestWestern.amenitiesDamPath = "\/content\/dam\/best\u002Dwestern\/amenities\/";
+    BestWestern.redeemRewardPageUrl = "\/en_US\/rewards\/redeem\u002Dawards.html";
+    BestWestern.myAccountsPageUrl = "\/en_US\/rewards\/member\u002Ddashboard.html";
+    BestWestern.cartProductCatalogPageUrl = "\/en_US\/rewards\/redemption\u002Dmall.html";
+    BestWestern.cartCheckoutPageUrl = "\/en_US\/rewards\/check\u002Dout.html";
+    BestWestern.sessionExpiredModalUrl = "\/en_US\/popup\/session\u002Dexpired\u002Dstart\u002Dagain";
+    BestWestern.bookingCompletedWarningUrl = "\/en_US\/popup\/booking\u002Dcompleted\u002Dwarning";
+    BestWestern.noRoomsAvailableWarningUrl = "\/en_US\/popup\/no\u002Drooms\u002Davailable\u002Dwarning";
+    BestWestern.fxOccupancyNoticeUrlWarningUrl = "\/en_US\/popup\/fx\u002Doccupancy\u002Dnotice\u002Dwarning";
+    BestWestern.fnvNonDomesticRegionWarningUrl = "\/en_US\/popup\/fnv\u002Dnon\u002Ddomestic\u002Dregion\u002Dwarning";
+    BestWestern.fnvMultipleNightsWarningUrl = "\/en_US\/popup\/fnv\u002Dmultiple\u002Dnights\u002Dwarning";
+    BestWestern.fnvMultipleRoomsWarningUrl = "\/en_US\/popup\/fnv\u002Dmultiple\u002Drooms\u002Dwarning";
+    BestWestern.defaultCCTypes = JSON.parse("[{\x22code\x22:\x22MC\x22,\x22description\x22:\x22MASTER CARD\x22},{\x22code\x22:\x22VA\x22,\x22description\x22:\x22VISA\x22}]");
+
+    // External URLs
+    BestWestern.Services.dictionaryGwsErrorEndKey = "\u002Dservice\u002Derror";
+    BestWestern.Services.gwsInternalErrorStartKey = "ERR.";
+    BestWestern.Services.tealiumURL = "\/\/tags.tiqcdn.com\/utag\/bwi\/grs\/prod\/utag.js";
+    BestWestern.Services.stripeJsURL = "https:\/\/js.stripe.com\/v3\/";
+    BestWestern.Services.mlJsURL = "https:\/\/cnp.merchantlink.com\/form\/version\/47\/merchant\/MLBWESTERN\/session.js";
+    BestWestern.Services.hotelTollFreeNumber = "800\/780\u002D7234";
+    BestWestern.Services.emailSignUpActionUrl = "https:\/\/www.bwicomms.com\/signup?email=";
+    BestWestern.Services.gdsCarrierCode = "38";
+    BestWestern.Services.iceBaseUrl = "https:\/\/images.bestwestern.com";
+    BestWestern.Services.googleMapApiKey = "AIzaSyA93VHZdvwMOfhB0KIVNsO5f7bRaEu8bao";
+    BestWestern.Services.googlePlacesApiUrl = "https:\/\/places.googleapis.com\/v1\/places:autocomplete";
+    BestWestern.Services.googleSearchMinLength = "2";
+    BestWestern.Services.externalHotelsUrl = "https:\/\/be.synxis.com\/";
+    BestWestern.Services.magicLinkURL = "https:\/\/privacyportal.onetrust.com\/ui\/#\/preferences\/multipage\/token\/2f7d7888\u002D7820\u002D4362\u002D84ca\u002Dea834a9d4876\/<tokenid>";
+
+    // GWS Services URLs
+    BestWestern.Services.authenticationNameValue = "GRS";
+    BestWestern.Services.baseServiceURL = "";
+    BestWestern.Services.hotelSearchServiceURL = "\/bin\/bestwestern\/proxy?gwServiceURL=HOTEL_SEARCH";
+    BestWestern.Services.exchangeRateServiceURL = "https:\/\/public\u002Dservices.bestwestern.com\/search\/currency\/exchangerate";
+    BestWestern.Services.currencyServicePublicUrl = "https:\/\/public\u002Dservices.bestwestern.com\/search\/currency";
+    BestWestern.Services.resortAdultChildCalculatorUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/adultchildcalculator;adults={ADULTS};children={CHILDREN}";
+    BestWestern.Services.roomTaxesURL = "\/bin\/bestwestern\/proxy?gwServiceURL=ROOM_TAXES\x26hotelid={HOTEL_ID}\x26ratecode={RATE_CODE}\x26roomtype={ROOM_TYPE}";
+    BestWestern.Services.rateDescriptionURL = "";
+    BestWestern.Services.ratePlanDescriptionURL = "https:\/\/public\u002Dservices.bestwestern.com\/rateplan\/{RATE_CODE}\/description;resort={HOTEL_ID};channel={CHANNEL}";
+    BestWestern.Services.guaranteeResortRatePlanURL = "\/bin\/bestwestern\/proxy?gwServiceURL=GUARANTEE_RESORT_RATE_PLAN\x26hotelid={HOTEL_ID}\x26ratecode={RATE_CODE}";
+    BestWestern.Services.guaranteeListResortRatePlanURL = "\/bin\/bestwestern\/proxy?gwServiceURL=GUARANTEE_LIST_RESORT_RATE_PLAN\x26hotelid={HOTEL_ID}\x26ratecode={RATE_CODE}";
+    BestWestern.Services.hotelCreditCardsUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/creditcards";
+    BestWestern.Services.emailReservationConformationUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=EMAIL_RESERVATION_CONFIRMATION";
+    BestWestern.Services.messageReservationConformationUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=MESSAGE_RESERVATION_CONFIRMATION";
+    BestWestern.Services.rimSellOrderServiceUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RIM_SELL_ORDER\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.roomRatePlanServiceUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=ROOM_RATE_PLAN\x26hotelid={HOTEL_ID}\x26rateplan={RATE_PLAN}";
+    BestWestern.Services.roomRatePlanTypeServiceUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=ROOM_RATE_PLAN_TYPE\x26hotelid={HOTEL_ID}\x26rateplan={RATE_PLAN}\x26roomtype={ROOM_TYPE}";
+    BestWestern.Services.searchResortRatesUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=SEARCH_RESORT_RATES\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.searchResortPointsUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=SEARCH_RESORT_POINTS\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.bookingLegInformationUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=BOOKING_LEG_INFORMATION\x26confirmationnumber={CONFIRMATION_NUMBER}";
+    BestWestern.Services.reservationInfoRetrievalUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESERVATION_INFO\x26confirmationnumber={CONFIRMATION_NUMBER}";
+	BestWestern.Services.bookingProfileInformationUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=BOOKING_PROFILE_INFORMATION\x26confirmationnumber={CONFIRMATION_NUMBER}\x26leg={LEG}";
+    BestWestern.Services.cancelReservationUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=CANCEL_RESERVATION\x26confirmationnumber={CONFIRMATION_NUMBER}";
+    BestWestern.Services.cancelReservationReduceRoomUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=CANCEL_RESERVATION_REDUCE_ROOM\x26confirmationnumber={CONFIRMATION_NUMBER}\x26leg={LEG}";
+    BestWestern.Services.hotelMessagesUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/alert";
+    BestWestern.Services.resortAvailabilityUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_AVAILABILITY\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.ratePlanForPromoUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RATE_PLAN_FOR_PROMO\x26promoid={PROMO_ID}";
+    BestWestern.Services.corporateIdRatePlanUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=CORPORATE_ID_RATE_PLAN\x26hotelid={HOTEL_ID}\x26corporateid={CORPORATE_ID}";
+    BestWestern.Services.rewardsProfileUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=REWARDS_PROFILE\x26confirmationnumber={CONFIRMATION_NUMBER}\x26leg={LEG}";
+    BestWestern.Services.addRewardsProfileUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=ADD_REWARDS_PROFILE\x26confirmationnumber={CONFIRMATION_NUMBER}";
+    BestWestern.Services.resortSummaryUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/summary";
+    BestWestern.Services.hotelAttributesURL = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/attributes";
+    BestWestern.Services.reservationBookingUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESERVATION_BOOKING\x26confirmationnumber={CONFIRMATION_NUMBER}";
+    BestWestern.Services.resortRoomCategoryDetailsUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_ROOM_CATEGORY_DETAILS\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.reservationsLookupUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=RESERVATIONS_LOOKUP";
+    BestWestern.Services.groupInfoUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=GROUP_INFO\x26groupid={GROUP_ID}";
+    BestWestern.Services.groupIdStatusUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=GROUP_ID_STATUS\x26groupid={GROUP_ID}";
+    BestWestern.Services.productsModificationsUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=PRODUCTS_MODIFICATIONS\x26confirmationnumber={CONFIRMATION_NUMBER}\x26leg={LEG}";
+    BestWestern.Services.productsDeleteUrl = "\/bin\/bestwestern\/deleteproxy?gwServiceURL=PRODUCTS_DELETION";
+    BestWestern.Services.resortExcludedProductListUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_EXCLUDED_PRODUCT_LIST\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.resortAvailableIncludedExcludedProductListUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_AVAILABLE_INCLUDED_EXCLUDED_PRODUCT_LIST\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.resortIncludedProductListUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_INCLUDED_PRODUCT_LIST\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.resortProductAvailabilityUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_PRODUCT_AVAILABILITY\x26hotelid={HOTEL_ID}\x26product={PRODUCT}";
+    BestWestern.Services.hotelFeeInfoUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/fee\/{FEE_CODE}";
+    BestWestern.Services.roomTaxesPostReservationUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=ROOM_TAXES_POST_RES\x26confirmationnumber={CONFIRMATION_NUMBER}\x26leg={LEG}";
+    BestWestern.Services.bookingReservationTokenization = "\/bin\/bestwestern\/proxy?gwServiceURL=BOOKING_RESERVATION_TOKENIZATION";
+    BestWestern.Services.resortPackagesListUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=RESORT_PACKAGES_LIST\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.packagesInfoUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/package\/{PACKAGE_CODE}";
+    BestWestern.Services.memberProfileUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_PROFILE";
+    BestWestern.Services.memberClubUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_CLUB_INFO";
+    BestWestern.Services.redeemPointsBalanceUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=REDEEM_POINTS_BALANCE";
+    BestWestern.Services.memberCartUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_CART";
+    BestWestern.Services.communicationPrefsUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=COMMUNICATION_PREFS";
+    BestWestern.Services.travelPrefsUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=TRAVEL_PREFS";
+    BestWestern.Services.memberCartDeleteUrl = "\/bin\/bestwestern\/deleteproxy?gwServiceURL=MEMBER_CART";
+    BestWestern.Services.memberCartSummaryUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_CART_SUMMARY";
+    BestWestern.Services.specialRequestCommentsUrl = "";
+    BestWestern.Services.memberPasswordUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_PASSWORD";
+    BestWestern.Services.memberEmailUpdateUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_EMAIL_UPDATE";
+    BestWestern.Services.memberAddressUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_ADDRESS";
+    BestWestern.Services.memberAddressDeleteUrl = "\/bin\/bestwestern\/deleteproxy?gwServiceURL=MEMBER_ADDRESS_DELETE";
+    BestWestern.Services.memberAddressIdUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_ADDRESS_ID_URL";
+    BestWestern.Services.earningPrefsUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=EARNING_PREFS";
+    BestWestern.Services.earningPrefsTypeUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=EARNING_PREFS_TYPE";
+    BestWestern.Services.airlinePartnerBaseUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=AIRLINE_PARTNER_BASE";
+    BestWestern.Services.airlinePartnerValidateUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=AIRLINE_PARTNER_VALIDATE";
+    BestWestern.Services.airlinePartnerDeleteUrl = "\/bin\/bestwestern\/deleteproxy?gwServiceURL=AIRLINE_PARTNER_DELETE";
+    BestWestern.Services.pointPartnerUpdateUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=POINT_PARTNER_UPDATE";
+    BestWestern.Services.airlinePartnerModifyUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=AIRLINE_PARTNER_MODIFY";
+    BestWestern.Services.memberPhoneListGetSetUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_PHONE_GET_SET";
+    BestWestern.Services.memberPhoneListUpdateUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_PHONE_UPDATE";
+    BestWestern.Services.memberPhoneListDeleteUrl = "\/bin\/bestwestern\/deleteproxy?gwServiceURL=MEMBER_PHONE_DELETE";
+    BestWestern.Services.activeResortsUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/active";
+    BestWestern.Services.resortAmenity = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/search\/amenity";
+    BestWestern.Services.resortDestinations = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/destinations";
+    BestWestern.Services.regionalOffersUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=REGION_OFFERS\x26region={REGION}";
+    BestWestern.Services.rewardsClubsUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=REWARDS_CLUBS";
+    BestWestern.Services.resortRoomDescPerChannelUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/room\u002Ddescriptions;channel={CHANNEL}";
+    BestWestern.Services.clubInfoUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_CLUB_INFO";
+    BestWestern.Services.corporateProfileUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=CORPORATE_PROFILE_INFO\x26corporateid={CORPORATE_ID}";
+    BestWestern.Services.loyaltyInfoUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_LOYALTY_INFO";
+    BestWestern.Services.stripeSetupIntentUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=STRIPE_SETUP_INTENT\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.stripePaymentIntentUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=STRIPE_PAYMENT_INTENT\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.stripePaymentIntentStandardAccountUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=STRIPE_PAYMENT_INTENT_STANDARD_ACCOUNT\x26paymentintentid={PAYMENT_INTENT_ID}";
+    BestWestern.Services.stripeCardBrandsUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=STRIPE_CARD_BRANDS\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.stripePropertyAccountUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=STRIPE_PROPERTY_ACCOUNT\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.stripeCustomerIdUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=STRIPE_CUSTOMER_ID\x26hotelid={HOTEL_ID}";
+    BestWestern.Services.travelCardBalanceUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=TRAVEL_CARD_BALANCE";
+    BestWestern.Services.travelCardPreAuthUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=TRAVEL_CARD_PREAUTH";
+    BestWestern.Services.tripAdvisorDetailUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/tripadvisor\/detail";
+    BestWestern.Services.resortMedalliaUrl = "https:\/\/public\u002Dservices.bestwestern.com\/resort\/{HOTEL_ID}\/medallia";
+    BestWestern.Services.entityDetailUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=ENTITY_DETAIL\x26entityname={ENTITY_NAME}";
+    BestWestern.Services.rewardsRatePlansUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=REWARDS_RATE_PLANS\x26ratecode={RATE_CODE}";
+    BestWestern.Services.emailRewardsMissingPointsUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=EMAIL_REWARDS_MISSING_POINTS";
+    BestWestern.Services.favoritesUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_FAVORITES";
+    BestWestern.Services.fnvVoucherUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=FNVVOUCHER";
+    BestWestern.Services.auditServiceUrl = "\/bin\/bestwestern\/proxy?gwServiceURL=AUDIT_VOUCHER\x26confirmationnumber={CONFIRMATION_NUMBER}";
+    BestWestern.Services.promotionProgressUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=PROMOTION_PROGRESS";
+    BestWestern.Services.memberDigitalWalletUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=MEMBER_DIGITAL_WALLET";
+    BestWestern.Services.memberLinkTokenUrl = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=ONE_TRUST_LINK_TOKEN";
+    BestWestern.Services.oneTrustConsentReceipts = "\/bin\/bestwestern\/bwrmemberidproxy?gwServiceURL=ONE_TRUST_CONSENT_RECEIPTS";
+
+    // Datadog Sample Rate
+    BestWestern.dataDogSampleRate = 0;
+
+    if (typeof Granite !== "undefined") {
+        Granite.I18n.setLocale(BestWestern.language.toLowerCase() + "_" + BestWestern.regionFromPagePath.toUpperCase());
+    }
+
+    // BWGRS-326: This function is used to validate credit card number
+    function validateNumber(evt) {
+        var e = evt || window.event;
+        var key = e.keyCode || e.which;
+
+        if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+            // numbers
+            key >= 48 && key <= 57 ||
+            // Numeric keypad
+            key >= 96 && key <= 105 ||
+            // Backspace and Tab and Enter
+            key == 8 || key == 9 || key == 13 ||
+            // Home and End
+            key == 35 || key == 36 ||
+            // left and right arrows
+            key == 37 || key == 39 ||
+            // Andriod keys
+            key == 229 ||
+            // Del and Ins
+            key == 46 || key == 45) {
+            // input is VALID
+        }
+        else {
+            // input is INVALID
+            e.returnValue = false;
+            if (e.preventDefault) e.preventDefault();
+        }
+    }
+
+    var Marketplace = {};
+    Marketplace.Services = {};
+
+    Marketplace.localeFromPath = "en_US";
+    Marketplace.specialUrlCharactersPattern =  new RegExp("[\\s|\\[|\\]|\\{|\\}|%|#|;|@|:|\\^|\\~|\x22|,|\\.|\x27|\x26|_|\/|\u002D]+".replace('\\\\s', '\\s'), 'g');
+    Marketplace.Services.dictionaryGwsErrorEndKey = "\u002Dservice\u002Derror";
+    Marketplace.Services.gwsInternalErrorStartKey = "ERR.";
+    Marketplace.Services.bwrRegisterPromoSetServletPath = "/bin/component-marketplace/rest/profile/register-promo-set";
+
+</script>
+
+<link rel="icon" type="image/vnd.microsoft.icon" href="/content/dam/best-weste

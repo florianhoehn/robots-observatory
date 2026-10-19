@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>The page you were looking for doesn't exist (404)</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        color: #f16434;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .error-num {
+        font-size: 8em;
+      }
+      .eye {
+        background: #f16434;
+        border-radius: 50%;
+        display: inline-block;
+        height: 100px;
+        position: relative;
+        width: 100px;
+      }
+      .eye::after {
+        background: #fff;
+        border-radius: 50%;
+        bottom: 56.1px;
+        content: '';
+        height: 33px;
+        position: absolute;
+        right: 33px;
+        width: 33px;
+      }
+      p {
+        margin-bottom: 4em;
+      }
+      a {
+        color: #f16434;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      a:hover {
+        color: #f16434;
+      }
+    </style>
+
+  </head>
+
+  <body class="rails-default-error-page">
+    <div>
+      <span class='error-num'>4</span>
+      <div class='eye'></div>
+      <span class='error-num'>4</span>
+      <h1>The page you were looking for doesn't exist.</h1>
+      <p class='sub-text'>You may have mistyped the address or the page may have moved.</p>
+      <a href='/'>Go To Home</a>
+    </div>
+    <script>
+      document.body.addEventListener('mousemove', function(event) {
+        var eyes = document.querySelectorAll('.eye');
+        eyes.forEach(function(e) {
+          var x = (e.offsetLeft) + (e.offsetWidth / 2);
+          var y = (e.offsetTop) + (e.offsetHeight / 2);
+          var rad = Math.atan2(event.pageX - x, event.pageY - y);
+          var rot = (rad * (180 / Math.PI) * -1) + 180;
+          e.style.webkitTransform = 'rotate(' + rot + 'deg)';
+          e.style.transform = 'rotate(' + rot + 'deg)';
+        });
+      });
+    </script>
+  </body>
+</html>

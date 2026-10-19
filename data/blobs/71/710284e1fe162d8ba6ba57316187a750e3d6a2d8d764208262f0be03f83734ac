@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="apple-itunes-app" content="app-id=348364305, app-argument=myUrl">
+    <style>
+        body {
+            background-color: #f3f3f3;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .error-wrapper {
+            display: flex;
+            width: 740px;
+            flex-wrap: nowrap;
+            flex-direction: row;
+        }
+
+        .error-logotype {
+            background-color: #fff;
+            padding: 2rem;
+            margin: 0 4px 0 0;
+            align-self: stretch;
+            flex-shrink: 1;
+        }
+
+        .error-description {
+            flex-grow: 1;
+            background-color: #fff;
+            padding: 2rem;
+            align-self: stretch;
+        }
+
+        .error-muted {
+            font-size: 0.75rem;
+        }
+
+        h1 {
+            font-family: azo-sans-web, sans-serif;
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        p {
+            font-family: azo-sans-web, sans-serif;
+            margin-bottom: 2.5rem;
+        }
+
+        .link-btn {
+            background-color: #30a74b;
+            font-weight: 400;
+            letter-spacing: 1px;
+            padding: 0.75rem 1.1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        hr {
+            border-top: 1px solid #f3f3f3;
+            margin-bottom: 2rem;
+        }
+
+        @@media only screen and (max-width: 767px) {
+            .error-wrapper {
+                width: 100%;
+                margin: 3rem;
+                flex-wrap: wrap;
+                flex-direction: column;
+            }
+
+            .error-logotype {
+                margin: 0 0 4px 0;
+            }
+
+            .link-btn {
+                display: block;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        @@media only screen and (max-width: 399px) {
+            .error-wrapper {
+                width: 100%;
+                margin: 1rem;
+                align-self: start;
+            }
+        }
+    </style>
+
+    <script type="text/javascript">function RelayErrorToMobileApp() {
+            if (window.AnalyticsWebInterface) {
+                // Call Android interface
+                window.AnalyticsWebInterface.updateLoginStatus("PasswordIncorrect");
+            } else if (window.webkit
+                && window.webkit.messageHandlers
+                && window.webkit.messageHandlers.firebase) {
+                var message = {
+                    LoginStatus: "PasswordIncorrect"
+                };
+                window.webkit.messageHandlers.firebase.postMessage(JSON.stringify(message));
+            }
+        }</script>
+</head>
+<body onload="RelayErrorToMobileApp()">
+    <div class="error-wrapper">
+        <div class="error-logotype">
+            <svg width="100" height="24" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1070_155534)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0L16.7597 15.4457V0.676146H20.3707V24L3.61129 8.36204V23.2856H0V0ZM57.086 0.674973L63.7132 8.91418L70.3401 0.674973L75.0087 0.675852L66.0259 11.7085L75.0087 23.2862H70.3401L63.7129 14.6921L57.086 23.285H52.4174L61.4001 11.7073L52.4174 0.674973H57.086ZM46.3298 0.676731V4.17853H32.794V10.1872H45.0967V13.657H32.794V19.7844H46.3295V23.2856H29.183V0.676731H46.3298ZM99.488 0.673507V4.17472H91.206V23.2818H87.595V4.17472H79.3132V0.673507H99.488Z" fill="black" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_1070_155534">
+                        <rect width="100" height="24" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="error-description">
+
+            <h1>Oops, something went wrong.</h1>
+
+            <p>It appears that you have encountered a technical problem while browsing Next.co.uk. You can attempt to resolve this issue by revisiting the website...</p>
+
+            <p><a class="link-btn" href="https://www.nextdirect.com/CountrySelect?AEC=0.ec35068.1792443180.7be7c4fa">Continue Shopping</a></p>
+
+            <hr>
+
+            <p class="error-muted">If you continue to see this error message, then please try again later.</p>
+
+            <p class="error-muted">Reference ID: 0.ec35068.1792443180.7be7c4fa</p>
+        </div>
+    </div>
+</body>
+</html>
+
+

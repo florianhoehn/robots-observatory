@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Thể thao 247"/>
+        <meta name="abstract" content="Trang tin thể thao bóng đá số hàng đầu Việt Nam"/>
+        <meta name="copyright" content="Copyright © 2026 by thethao247.vn"/>
+        <meta name="robots" content="noindex,nofollow,noarchive"/>
+        <meta name="Googlebot" content="noindex,nofollow"/>
+        <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="content-language" content="vi"/>
+        <meta property="og:locale" content="vi_VN"/>
+        <meta property="og:site_name" content="Thể thao 247"/>
+        <meta property="og:type" content="article"/>
+        <meta name="apple-itunes-app" content="app-id=1485962204"/>
+		<link rel="canonical" href="https://thethao247.vn/404.html">
+		<link rel="alternate" media="handheld" href="https://m.thethao247.vn/404.html"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="theme-color" content="#254892"/>
+		<link rel="shortcut icon" href="https://cdn-img.thethao247.vn/frontend/images/favicon.ico?v=v1" type="image/x-icon"/>
+		        <script>
+            // Chạy fn khi cái nào đến trước: tương tác đầu tiên | requestIdleCallback(timeout) | setTimeout fallback.
+            window.whenIdleOrInteract=window.whenIdleOrInteract||function(fn,timeout){var done=false,evs=['pointerdown','keydown','scroll','touchstart'];function run(){if(done)return;done=true;evs.forEach(function(e){removeEventListener(e,run,true)});fn()}evs.forEach(function(e){addEventListener(e,run,{capture:true,passive:true})});timeout=timeout||3000;if('requestIdleCallback' in window)requestIdleCallback(run,{timeout:timeout});else setTimeout(run,timeout)};
+        </script>
+		
+<script>
+	function insertHTMLtoELEMENT(html, dest, append=false){
+	    if(!append) dest.innerHTML = '';
+	    let container = document.createElement('div');
+	    container.innerHTML = html;
+	    let scripts = container.querySelectorAll('script');
+	    let nodes = container.childNodes;
+	    for( let i=0; i< nodes.length; i++) dest.appendChild( nodes[i].cloneNode(true) );
+	    for( let i=0; i< scripts.length; i++){
+	        let script = document.createElement('script');
+	        script.type = scripts[i].type || 'text/javascript';
+	        if( scripts[i].hasAttribute('src') ) script.src = scripts[i].src;
+	        script.innerHTML = scripts[i].innerHTML;
+	        document.head.appendChild(script);
+	        document.head.removeChild(script);
+	    }
+	    return true;
+	}
+    document.addEventListener("DOMContentLoaded", function(){
+        var is_mobile=0;
+        if(/Android|webOS|iPhone|iPod|BlackBerry|BB10|IEMobile|Opera Mini/i.test(navigator.userAgent)){is_mobile=1;}
+        if(/iPad|Tablet/i.test(navigator.userAgent)){is_mobile=1;}
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", '/api/getAds?is_mobile='+is_mobile+'&field=is_home&news_id=0&category_id=0&cmod=donotcache', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if(response){
+                    Object.keys(response).forEach(function(k) {
+                        var strSplit = k.split('|');
+                        var ads_slug = strSplit[0];
+                        var ads_device = strSplit[1];
+                        var ads_position = document.querySelector('[id="'+ads_slug+'"][data-device="'+ads_device+'"]');
+                        var value = response[k];
+                        if (value && ads_position) {
+                            insertHTMLtoELEMENT(value, ads_position);
+                            // ads_position.classList.add('ad-label');
+                        }
+                        else if(ads_position) ads_position.remove();
+                    });
+                }
+            }
+        };
+        xhr.send();
+        var all_position;
+        if(is_mobile === 1) all_position = document.querySelectorAll('[data-device="desktop"]');
+        else all_position = document.querySelectorAll('[data-device="mobile"]');
+        Array.prototype.forEach.call(all_position, function(el, i){
+            el.remove();
+        });
+    });
+</script>
+<script>
+(function(){
+    // [FB-WEBVIEW] Ẩn/hiện zone-ads rỗng. Trước đây gán window.onscroll chạy MỖI
+    // sự kiện scroll + querySelectorAll toàn DOM -> O(DOM) mỗi frame, càng append
+    // bài (infinite scroll) càng nặng -> giật + đốt CPU/RAM trên WebView Facebook.
+    // Bọc requestAnimationFrame: tối đa 1 lần/frame khi đang cuộn, và addEventListener
+    // (passive) để không đè handler scroll khác trên trang.
+    var ticking = false;
+    function updateAdZones() {
+        ticking = false;
+        var zoneAdsElements = document.querySelectorAll('div[id^="zone-ads-"]');
+        for (var i = 0; i < zoneAdsElements.length; i++) {
+            var adZoneElement = zoneAdsElements[i].querySelector('div[id^="ad-zone-"]');
+            if (adZoneElement && adZoneElement.childElementCount === 0) {
+                zoneAdsElements[i].style.display = 'none';
+            } else {
+                zoneAdsElements[i].style.display = '';
+            }
+        }
+    }
+    function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateAdZones);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+		
+		<meta name="distribution" content="Global" />
+<meta name="RATING" content="GENERAL" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="language" content="vietnamese" />
+<meta content="news" itemprop="genre" name="medium"/>
+<meta content="vi-VN" itemprop="inLanguage"/>
+<meta name="geo.placename" content="Ha Noi, Viet Nam"/>
+<meta name="geo.region" content="VN-HN"/>
+<meta http-equiv="X-UA-Compatible" content="IE=100"/>
+<meta property="fb:pages" content="423818771019594,869607989723141,283273801772589"/>
+<meta property="fb:app_id" content="370320593357857"/>
+<meta name='dmca-site-verification' content='S2dwNnVFNXJ4Ukp3QWhXT3J2UEM3Zz090' />
+<meta name="zalo-platform-site-verification" content="M-QPBj78CnWDmkObsV1j7X3q_mByX2XVCJ0" />
+<meta name="revisit-after" content="1 days"/>
+<meta name="geo.placename" content="Ha Noi, Viet Nam" />
+<meta name="geo.region" content="VN-HN" />
+<meta name="google" content="notranslate"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Thethao247.vn"/>
+<link rel="preconnect" href="https://www.googletagmanager.com"/>
+<link rel="preconnect" href="https://www.google-analytics.com"/>
+<link rel="preconnect" href="https://securepubads.g.doubleclick.net"/>
+<link rel="preconnect" href="https://tpc.googlesyndication.com"/>
+<link rel="preconnect" href="https://imgthumb-cdn.thethao247.vn"/>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-60x60.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://cdn-img.thethao247.vn/neo/logo/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="https://cdn-img.thethao247.vn/neo/logo/favicon-196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="https://cdn-img.thethao247.vn/neo/logo/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="https://cdn-img.thethao247.vn/neo/logo/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="https://cdn-img.thethao247.vn/neo/logo/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="https://cdn-img.thethao247.vn/neo/logo/favicon-128.png" sizes="128x128" />
+<meta name="application-name" content="THỂ THAO 247 - Đọc báo bóng đá, tin thể thao 24h" />
+<meta name="msapplication-TileColor" content="#fcfaf6" />
+<meta name="msapplication-TileImage" content="https://cdn-img.thethao247.vn/neo/logo/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="https://cdn-img.thethao247.vn/neo/logo/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="https://cdn-img.thethao247.vn/neo/logo/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="https://cdn-img.thethao247.vn/neo/logo/mstile-310x150.png" />
+<meta name="msapplication-square310x310logo" content="https://cdn-img.thethao247.vn/neo/logo/mstile-310x310.png" />
+
+<!-- GOOGLE SEARCH META GOOGLE SEARCH STRUCTURED DATA FOR ARTICLE & GOOGLE BREADCRUMB STRUCTURED DATA-->
+<!-- END GOOGLE SEARCH META GOOGLE SEARCH STRUCTURED DATA FOR ARTICLE && GOOGLE BREADCRUMB STRUCTURED DATA-->
+
+<script>
+    window.teads_analytics = window.teads_analytics || {};
+    window.teads_analytics.analytics_tag_id = "PUB_12630";
+    window.teads_analytics.share = window.teads_analytics.share || function() {
+        ;(window.teads_analytics.shared_data = window.teads_analytics.shared_data || []).push(arguments)
+    };
+</script>
+<script async src="https://a.teads.tv/analytics/tag.js"></script><script src="https://jsc.mgid.com/site/1092037.js" async></script>
+                <!-- ADS ASYNC -->
+    <!-- Code Cắm header -->
+    <script async src="https://static.amcdn.vn/tka/cdn.js" type="text/javascript"></script>
+    <script>
+        var arfAsync = arfAsync || [];
+    </script>
+    <script id="arf-core-js" onerror="window.arferrorload=true;" src="//media1.admicro.vn/cms/Arf.min.js" async></script>
+                
+            <!-- Geniee Wrapper Head Tag -->
+            <script>
+                window.gnshbrequest = window.gnshbrequest || {cmd:[]};
+                window.gnshbrequest.cmd.push(function(){
+                    window.gnshbrequest.forceInternalRequest();
+                });
+            </script>
+            <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+            <script async src="https://cpt.geniee.jp/hb/v1/222652/2809/wrapper.min.js"></script>
+            <!-- /Geniee Wrapper Head Tag -->
+                    <style>body{background: #fcfaf6}.as{width: 100%}</style>
+		<link rel="preconnect" href="https://fonts.gstatic.com"/>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap&subset=vietnamese" rel="stylesheet"/>
+		<link rel="preload" href="https://cdn-img.thethao247.vn/frontend/fonts/fonts-awesome/style.css?v=v1" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+		<noscript><link rel="stylesheet" href="https://cdn-img.thethao247.vn/frontend/fonts/fonts-awesome/style.css?v=v1"/></noscript>
+		<link rel="preload" href="https://cdn-img.thethao247.vn/frontend/fonts/thethao247/style.css?v=v1" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+		<noscript><link rel="stylesheet" href="https://cdn-img.thethao247.vn/frontend/fonts/thethao247/style.css?v=v1"/></noscript>
+		<link href="https://cdn-img.thethao247.vn/base/base.dev.css?v=v1" rel="stylesheet"/>
+		<link href="https://cdn-img.thethao247.vn/frontend/css/style.css?v=v1" rel="stylesheet"/>
+		<link href="https://cdn-img.thethao247.vn/frontend/css/custom.css?v=v1" rel="stylesheet"/>
+		<style>
+			@media screen and (max-width: 580px) {
+				.detail_article .breadcrumb_bottom{display: flex;align-items: center;line-height: 1.3;}
+				.box_latest .content li .title_cat, .box_latest_more li .title_cat, .box-pick .top-pick .cover .content .title_cat {
+					background: #4371d2;
+				}
+				.box_latest .content li .title_cat::after, .box_latest_more li .title_cat::after, .box-pick .top-pick .cover .content .title_cat::after {
+					border-top: 8px solid #4371d2;
+				}
+			}
+
+			/* Fix Width */
+			.container {
+				width: 1120px;
+				margin: 0 auto;
+			}
+			.box-pick .top-pick .cover .thumb img {
+				width: 100%
+			}
+			.box-pick .flex-1 {
+				max-width: inherit !important
+			}
+			.flex-1 {
+				max-width: 790px !important;
+			}
+			.data .flex-1 {
+				max-width: 650px !important;
+				flex-grow: 1 !important
+			}
+
+			.box_video .content .right-style li .title{
+			    width: 45%;
+		        line-height: 1.4;
+    			font-weight: normal;
+			    background: linear-gradient(to right, #00133c 15%, rgba(9, 9, 121, 0) 100%, rgba(0, 19, 60, 0) 100%);
+			}
+			.box_video .content .right-style li i{
+				z-index: 9;
+			}
+			@media screen and (max-width: 991px) {
+				.container {
+					width: 100%;
+					max-width: 100%;
+				}
+			}
+		</style>
+		    <style>
+        .time_news_24h{font-size: 12px;color: #999;margin-bottom: 10px}
+        .box_more_news_24h{position: relative;padding-left: 30px;}
+        .box_more_news_24h:before{position: absolute;top: 0;bottom: 0;width: 1px;background: #ddd;content: '';display: inline-block;left: 0}
+        .box_more_news_24h li .thumb{margin-left: 15px;margin-right: 0}
+        .time_news_24h{position: relative}
+        .time_news_24h:before{width: 9px;height: 9px;background: #c12c2e;display: inline-block;content: '';border-radius: 10px;position: absolute;left: -34px;}
+        .box_latest_more li .text .date { float: left; }
+        form.gsc-search-box {
+            max-width: 100% !important;
+        }
+    </style>
+				
+			</head>
+	<body class="bg_euro2020">
+		<style>
+#gtx-trans{
+display:none!important;
+}
+.container.bg-white.p-15 .d-flex > .google-auto-placed:first-child, 
+.main-content > main > .google-auto-placed:first-child, .container.text-center.mt20 .google-auto-placed:first-child, .main_content .block_white .google-auto-placed:first-child {
+    display: none;
+}
+#grey{
+-webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+z-index: 99999;
+}
+</style>		<style>
+    .logo-event {
+        padding-left: 20px;
+        padding-top: 0;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+    .notification {
+        background: #c62127;
+        color: #fff;
+    }
+    .notification .notification-box {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 8px 0;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 30px;
+    }
+    .notification.mobile .notification-icon {
+        display: inline-block;
+    }
+
+    .notification.mobile .notification-box {
+        display: block;
+        font-size: 13px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .notification-icon {
+        width: 30px;
+    }
+
+    .notification-btn {
+        color: #c62127;
+        padding: 0 10px;
+        border-radius: 5px;
+        background: #fff;
+    }
+
+    .notification.mobile {
+        display: none;
+    }
+
+    @media screen and (max-width: 900px) {
+        .logo-event {
+            display: none;
+        }
+
+        .notification {
+            display: none;
+        }
+
+        .notification.mobile {
+            display: block;
+        }
+    }
+</style>
+
+<script>
+// Hàm cho onclick ở header: để inline (main.js nạp defer, user có thể bấm trước DOMContentLoaded)
+function searchClick(e) {
+    // #box_search có thể bị ẩn từ CMS (ui_visible) trong khi nút tìm kiếm vẫn hiện
+    var box = document.getElementById('box_search');
+    if (!box) return;
+    box.classList.toggle('show');
+    e.firstElementChild.classList.toggle('icon-search');
+}
+function barClick() {
+    // .mobile_nav_content có thể bị ẩn từ CMS (ui_visible) trong khi icon 3 gạch vẫn hiện
+    var nav = document.querySelector('.mobile_nav_content');
+    if (!nav) return;
+    nav.classList.toggle('open');
+}
+</script>
+<header>
+            <div class="container">
+            <div class="top-header relative p-10-0">
+                <div class="d-flex">
+                    <div class="logo relative">
+                        <a href="/" title="Thể thao 247">
+                            <img src="https://cdn-img.thethao247.vn/storage/system/logo_1767019237.png" alt="Thể thao 247" width="282" height="73" style="width: 282px; height: 73px;">
+                        </a>
+                    </div>
+                    <div class="logo-event">
+                                            </div>
+                </div>
+                <style>
+                    header .top-header .submenu_social .submenu li a img{
+                        height: 17px;
+                        display: inline-block;
+                        margin-right: 3px;
+                        vertical-align: middle;
+                    }
+                    header .top-header .submenu_social .submenu li a{
+                        line-height: 20px;
+                        vertical-align: middle;
+                    }
+                </style>
+                <div class="submenu_social relative" style="flex-direction: row; align-items: center; justify-content: center; gap: 7px">
+                    <ul class="submenu" style="border-right: 0">
+                        <li>
+                            <a rel="nofollow" href="/bao-gia.html" title="Quảng cáo">
+                                <i class="icon-ads"></i>
+                                Quảng cáo
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="login-box"></div>
+                </div>
+            </div>
+        </div>
+            <nav class="navigation">
+                    <div class="main_nav is_desktop">
+                <div class="container">
+                    <ul class="nav_content">
+                        <li>
+                            <a href="/" title="Trang chủ Thể Thao 247" class="home-icon">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </a>
+                        </li>
+
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/lich-thi-dau-bong-da/" title="Lịch thi đấu">
+                                Lịch thi đấu                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/bong-da-viet-nam-c1/" title="Bóng đá Việt Nam">
+                                Bóng đá Việt Nam                                                            </a>
+                                                        <div class="cate-child bg-2">
+                                <div class="container">
+                                    <nav>
+                                                                                <a href="https://thethao247.vn/v-league-c15/"
+                                            title="V-League">
+                                            V-League                                        </a>
+                                                                                <a href="https://thethao247.vn/aff-cup"
+                                            title="AFF CUP">
+                                            AFF CUP                                        </a>
+                                                                                <a href="https://thethao247.vn/asian-cup"
+                                            title="Asian Cup 2027">
+                                            Asian Cup 2027                                        </a>
+                                                                                <a href="https://thethao247.vn/u23-asian-cup"
+                                            title="U23 Châu Á">
+                                            U23 Châu Á                                        </a>
+                                                                                <a href="https://thethao247.vn/tuyen-quoc-gia-vn-c19/"
+                                            title="Đội tuyển Quốc gia">
+                                            Đội tuyển Quốc gia                                        </a>
+                                                                                <a href="https://thethao247.vn/sea-games"
+                                            title="SEA Games 33">
+                                            SEA Games 33                                        </a>
+                                                                                <a href="https://thethao247.vn/bong-da-tre-c329/"
+                                            title="Bóng đá trẻ">
+                                            Bóng đá trẻ                                        </a>
+                                                                                                                        <ul class="more_sub_cate">
+                                            <li>
+                                                <a href="#">Xem thêm <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                                <ul class="list_more_sub_cate">
+                                                                                                        <li>
+                                                        <a href="/aff-u16"
+                                                            title="AFF U16">
+                                                            AFF U16                                                        </a>
+                                                    </li>
+                                                                                                    </ul>
+                                            </li>
+                                        </ul>
+                                                                            </nav>
+                                </div>
+                            </div>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/cup-c1-c13/" title="Cúp C1">
+                                Cúp C1                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/ngoai-hang-anh-c8/" title="Ngoại hạng Anh">
+                                Ngoại hạng Anh                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/bong-da-quoc-te-c2/" title="Bóng đá quốc tế">
+                                Bóng đá quốc tế                                                            </a>
+                                                        <div class="cate-child bg-5">
+                                <div class="container">
+                                    <nav>
+                                                                                <a href="https://thethao247.vn/cup-c2-europa-league-c75/"
+                                            title="Cúp C2 Europa League">
+                                            Cúp C2 Europa League                                        </a>
+                                                                                <a href="https://thethao247.vn/bong-da-tay-ban-nha-la-liga-c9/"
+                                            title="Bóng đá Tây Ban Nha - La Liga">
+                                            Bóng đá Tây Ban Nha - La Liga                                        </a>
+                                                                                <a href="https://thethao247.vn/bong-da-duc-c11/"
+                                            title="Bóng đá Đức">
+                                            Bóng đá Đức                                        </a>
+                                                                                <a href="https://thethao247.vn/world-cup/video"
+                                            title="Video">
+                                            Video                                        </a>
+                                                                                <a href="https://thethao247.vn/world-cup"
+                                            title="World Cup">
+                                            World Cup                                        </a>
+                                                                                <a href="https://thethao247.vn/copa-america"
+                                            title="Copa America 2028">
+                                            Copa America 2028                                        </a>
+                                                                                                                    </nav>
+                                </div>
+                            </div>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/nhan-dinh-bong-da-c288/" title="Nhận định">
+                                Nhận định                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/chuyen-nhuong-c14/" title="Chuyển nhượng">
+                                Chuyển nhượng                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/the-thao-c5/" title="Thể Thao">
+                                Thể Thao                                                            </a>
+                                                        <div class="cate-child bg-0">
+                                <div class="container">
+                                    <nav>
+                                                                                <a href="https://thethao247.vn/quan-vot-tennis-c4/"
+                                            title="Tennis - Quần vợt">
+                                            Tennis - Quần vợt                                        </a>
+                                                                                <a href="https://thethao247.vn/golf-c42/"
+                                            title="Golf">
+                                            Golf                                        </a>
+                                                                                <a href="https://thethao247.vn/bong-ro-c43/"
+                                            title="Bóng rổ">
+                                            Bóng rổ                                        </a>
+                                                                                <a href="https://thethao247.vn/cau-long-c44/"
+                                            title="Cầu lông">
+                                            Cầu lông                                        </a>
+                                                                                <a href="https://thethao247.vn/bong-chuyen-c45/"
+                                            title="Bóng chuyền">
+                                            Bóng chuyền                                        </a>
+                                                                                <a href="https://thethao247.vn/co-vua-c115/"
+                                            title="Cờ">
+                                            Cờ                                        </a>
+                                                                                <a href="https://thethao247.vn/pickleball-c342/"
+                                            title="Pickleball">
+                                            Pickleball                                        </a>
+                                                                                                                        <ul class="more_sub_cate">
+                                            <li>
+                                                <a href="#">Xem thêm <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                                <ul class="list_more_sub_cate">
+                                                                                                        <li>
+                                                        <a href="https://thethao247.vn/vo-thuat-c228/"
+                                                            title="Võ thuật">
+                                                            Võ thuật                                                        </a>
+                                                    </li>
+                                                                                                    </ul>
+                                            </li>
+                                        </ul>
+                                                                            </nav>
+                                </div>
+                            </div>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/esports-c180/" title="Esports">
+                                Esports                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/xe-c191/" title="Xe">
+                                Xe                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/cong-nghe-c344/" title="Công nghệ">
+                                Công nghệ                                                            </a>
+                                                    </li>
+                                                <li>
+                            <a class="relative" href="https://thethao247.vn/can-biet-c123/" title="Xu hướng">
+                                Xu hướng                                                            </a>
+                                                    </li>
+                                            </ul>
+                    <div class="topsearch">
+                        <a href="#" class="btn_search" onclick="searchClick(this);">
+                            <i class="icon-search far fa-times"></i>
+                        </a>
+                    </div>
+                    <input type="checkbox" id="menu">
+                    <label for="menu" class="icon_menu menu_full">
+                        <div class="menu"></div>
+                    </label>
+                    <div class="show_menu_full clwhite">
+                        <div class="container">
+                            <div class="d-flex">
+                                <div class="col83per">
+                                    <div class="d-flex">
+                                                                                <div class="col20per mb-25">
+                                            <div class="title_menu_full">Bóng đá Việt Nam</div>
+                                                                                        <u

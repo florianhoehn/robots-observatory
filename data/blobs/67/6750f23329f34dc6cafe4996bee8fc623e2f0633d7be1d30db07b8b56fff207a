@@ -1,0 +1,43 @@
+User-agent: Yandex
+Allow: /rss/yandex/index.xml
+Disallow: /search/
+Disallow: /system/
+Disallow: /upload/adv/
+Disallow: /*?action=
+Disallow: /*.swf
+Disallow: /*.txt?
+Disallow: /*=twitter
+Disallow: /*facebook.com
+Disallow: /*SECTION_URL=
+Disallow: /admin/
+Disallow: /advert/preview/
+Disallow: /editions/daily/$
+Disallow: /amp/
+Disallow: /finance/redirect/
+# Disallow: /promokodi/couponRedirect*
+Disallow: *couponRedirect
+Disallow: /print/
+Host: https://www.mk.ru
+Sitemap: https://www.mk.ru/sitemap/index.xml
+Clean-param: google_editors_picks&_utl_t&utm_source&utm_medium&utm_campaign&from&_openstat&url&page&print&search&fb_xd_fragment&AR&ucid&phrase_id
+Clean-param: set_region&noredirect&PageSpeed&_t&NSNDX&cfb3d160&ce11bae0&utm_referrer&responsive&refresh&fae81b68&usqp&app&origin&travel_data&__twitter_impression&web_view&preload
+Clean-param: brands&category&tracking_url&cm_id&clid&utm_follow&fromtg&price&age_&sort&msclkid&spush&author&paged&exist
+
+User-agent: *
+Disallow: /search/
+Disallow: /system/
+Disallow: /upload/adv/
+Disallow: /*?action=
+Disallow: /*.swf
+Disallow: /*.txt?
+Disallow: /*=twitter
+Disallow: /*facebook.com
+Disallow: /*SECTION_URL=
+Disallow: /admin/
+Disallow: /advert/preview/
+Disallow: /editions/daily/$
+Disallow: /finance/redirect/
+# Disallow: /promokodi/couponRedirect*
+Disallow: *couponRedirect
+Disallow: /print/
+Sitemap: https://www.mk.ru/sitemap/index.xml

@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://t24.com.tr/assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="https://t24.com.tr/assets/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://t24.com.tr/assets/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://t24.com.tr/assets/img/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://t24.com.tr/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://t24.com.tr/assets/img/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://t24.com.tr/assets/img/android-chrome-512x512.png">
+    <meta name="language" content="Turkish"/>
+
+    
+    <script>
+      (function () {
+        var accessGranted = false;
+        var loginUrl = "https:\/\/t24.com.tr\/giris-yap?return=https%3A%2F%2Ft24.com.tr%2F404";
+
+        class CustomOfferwallChoice {
+          async initialize(params) {
+            var Enum = (window.googlefc
+              && window.googlefc.offerwall
+              && window.googlefc.offerwall.customchoice
+              && window.googlefc.offerwall.customchoice.InitializeResponseEnum) || {};
+
+            if (accessGranted) {
+              return Enum.ACCESS_GRANTED;
+            }
+
+            return Enum.ACCESS_NOT_GRANTED;
+          }
+
+          async show() {
+            window.location.href = loginUrl;
+            return false;
+          }
+        }
+
+        window.googlefc = window.googlefc || {};
+        window.googlefc.offerwall = window.googlefc.offerwall || {};
+        window.googlefc.offerwall.customchoice = window.googlefc.offerwall.customchoice || {};
+        window.googlefc.offerwall.customchoice.registry = new CustomOfferwallChoice();
+
+        // "Zaten abone misiniz?" linkinin adresi Funding Choices panelinde sabit; ziyaretçinin domainindeki girişe çevrilir.
+        function fixSubscriptionLinks(root) {
+          var links = (root || document).querySelectorAll('a.fc-subscription-link');
+          for (var i = 0; i < links.length; i++) {
+            if (links[i].href !== loginUrl) {
+              links[i].href = loginUrl;
+            }
+          }
+        }
+
+        if (window.MutationObserver) {
+          new MutationObserver(function (mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+              if (mutations[i].addedNodes.length) {
+                fixSubscriptionLinks();
+                return;
+              }
+            }
+          }).observe(document.documentElement, { childList: true, subtree: true });
+        }
+      })();
+    </script>
+    
+    <!-- CDN Preconnect - Render blocking'i azaltmak için erken bağlantı -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+    
+<script>
+  (function () {
+    var shouldGuardStorage = false;
+    if (!shouldGuardStorage || typeof window === 'undefined' || !window.localStorage) {
+      return;
+    }
+
+    var storageProto = Object.getPrototypeOf(window.localStorage);
+    if (!storageProto || typeof storageProto.setItem !== 'function' || storageProto.__t24SafeSetItemPatched) {
+      return;
+    }
+
+    var originalSetItem = storageProto.setItem;
+    storageProto.setItem = function (key, value) {
+      try {
+        return originalSetItem.call(this, key, value);
+      } catch (error) {
+        var isQuotaError = error && (
+          error.name === 'QuotaExceededError'
+          || error.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+          || error.code === 22
+          || error.code === 1014
+        );
+
+        if (isQuotaError) {
+          try {
+            console.warn('[t24] localStorage quota reached; continuing payment flow.', key);
+          } catch (noop) {
+            // Intentionally ignore logging errors.
+          }
+          return;
+        }
+
+        throw error;
+      }
+    };
+
+    storageProto.__t24SafeSetItemPatched = true;
+  })();
+</script>
+
+    <!-- Google tag (gtag.js) - Çerez kabul edildiğinde yüklenecek -->
+<script>
+
+  window.dataLayer = window.dataLayer || [];
+
+</script>
+<script>var script = document.createElement("script");script.src="//cdn-v2.p.analitik.bik.gov.tr/t-"+(typeof self !== "undefined" && self.crypto && typeof self.crypto.randomUUID === "function" ? "1-" : typeof Promise !== "undefined" ? "2-" : "3-")+"t24-com-tr-"+"0"+".js";document.head.appendChild(script);</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V2E36KRB71"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V2E36KRB71');
+</script>   
+
+<!-- bildirt uygulama id bildirtsdk.js için -->
+<script>
+   var uygulamaid="6008-4074-7093-5528-7505-6";
+   </script>
+<script async src="https://cdn2.bildirt.com/BildirtSDKfiles.js"></script>
+<!-- bildirt son -->
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(99297402, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/99297402" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+    
+ 
+        <title>404 - Sayfa Bulunamadı | T24</title>
+    <meta name="description" content="Aradığınız sayfa bulunamadı. T24 ana sayfasına dönebilir veya popüler sayfalarımızı ziyaret edebilirsiniz."/>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://t24.com.tr/404" />
+    <meta property="og:title" content="404 - Sayfa Bulunamadı | T24" />
+    <meta property="og:description" content="Aradığınız sayfa bulunamadı. T24 ana sayfasına dönebilir veya popüler sayfalarımızı ziyaret edebilirsiniz." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="T24" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta name="twitter:card" content="summary" />
+    
+
+    
+    
+
+    <!-- Critical CSS: Bootstrap (grid system için gerekli) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Font Preload - Render blocking'i azaltmak için -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"></noscript>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet"></noscript>
+    
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet"></noscript>
+    
+    <link rel="preload" href="https://fonts.cdnfonts.com/css/midland-luxury" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.cdnfonts.com/css/midland-luxury" rel="stylesheet"></noscript>
+    
+    <!-- Critical CSS: Normal yükleme (header için gerekli) -->
+    <link rel="stylesheet" href="https://t24.com.tr/assets/css/style.css?v=12">
+    <link rel="stylesheet" href="https://t24.com.tr/assets/css/responsive.css?v=9">
+    
+    <!-- AOS CSS - Defer -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+    
+    <!-- Flatpickr CSS - Defer -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"></noscript>
+    
+    <!-- LoadCSS Polyfill - Eski tarayıcılar için -->
+    <script>
+        !function(e){"use strict";var t=function(t,n,o){var i,r=e.document,a=r.createElement("link");if(n)i=n;else{var l=(r.body||r.getElementsByTagName("head")[0]).childNodes;i=l[l.length-1]}var d=r.styleSheets;a.rel="stylesheet",a.href=t,a.media="only x",function e(t){if(r.body)return t();setTimeout(function(){e(t)})}(function(){i.parentNode.insertBefore(a,n?i:i.nextSibling)});var f=function(e){for(var t=a.href,n=d.length;n--;)if(d[n].href===t)return e();setTimeout(function(){f(e)})};return a.addEventListener&&a.addEventListener("load",function(){this.media=o||"all"}),a.onloadcssdefined=f,f(function(){a.media!==o&&(a.media=o||"all")}),a};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+    </script>
+
+
+
+
+
+    <!-- JavaScript - jQuery'yi sayfanın sonuna taşıdık (footer'da yüklenecek) -->
+    <!-- Flatpickr JS - Defer (jQuery'den sonra yüklenecek) -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+    <script defer>
+        // DOMContentLoaded'da çalışacak şekilde
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof flatpickr !== 'undefined') {
+                flatpickr("input[type='datetime-local']", {
+                    dateFormat: "d.m.Y",
+                });
+            }
+        });
+    </script>
+<script>
+  window.__T24_HIDE_ADS__ = false;
+  if (window.__T24_HIDE_ADS__) {
+    // Reklam JS çağrıları hata vermesin diye stub.
+    window.googletag = window.googletag || { cmd: [] };
+    window.googletag.cmd = window.googletag.cmd || [];
+    window._taboola = window._taboola || [];
+    window.adsbygoogle = window.adsbygoogle || [];
+  }
+</script>
+<!-- Google Ads (gpt.js) - Çerez kabul edildiğinde yüklenecek -->
+<!-- Yükleme işlemi _cookie-policy-popup.blade.php içindeki script tarafından yapılacak -->
+<script>
+  // Google Ads googletag objesi çerez kabul edildiğinde yüklenecek
+  window.googletag = window.googletag || {cmd: []};
+  window.googletag.cmd = window.googletag.cmd || [];
+  
+  // googletag için global alias (güvenlik için)
+  var googletag = window.googletag;
+  
+  // Google Ad Manager script'ini direkt yükle (çerez politikasından bağımsız)
+  // Script yüklendikten sonra cmd queue'daki tüm komutlar otomatik çalışacak
+  (function() {
+    // Script'in zaten yüklenip yüklenmediğini kontrol et
+    var gptScriptExists = document.querySelector('script[src*="securepubads.g.doubleclick.net/tag/js/gpt.js"]');
+    
+    if (!gptScriptExists) {
+      // Script'i yükle
+      var gptScript = document.createElement('script');
+      gptScript.async = true;
+      gptScript.src = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js';
+      gptScript.crossOrigin = 'anonymous';
+      gptScript.onload = function() {
+        // Script yüklendikten sonra cmd queue'daki tüm komutları çalıştır
+        // googletag.cmd.push ile eklenen tüm fonksiyonlar otomatik çalışacak
+        console.log('Google Ad Manager script loaded successfully');
+      };
+      gptScript.onerror = function() {
+        console.error('Failed to load Google Ad Manager script');
+      };
+      document.head.appendChild(gptScript);
+    } else {
+      // Script zaten yüklenmiş, cmd queue'daki komutları çalıştır
+      if (window.googletag && window.googletag.cmd && Array.isArray(window.googletag.cmd)) {
+        var cmdQueue = window.googletag.cmd.slice(0);
+        cmdQueue.forEach(function(cmd) {
+          if (typeof cmd === 'function') {
+            try {
+              cmd();
+            } catch(e) {
+              console.error('Google Ads cmd error:', e);
+            }
+          }
+        });
+      }
+    }
+  })();
+</script>
+
+
+
+
+
+
+
+<script>
+  window.googletag = window.googletag || {cmd: []};
+  window.googletag.cmd = window.googletag.cmd || [];
+  (window.googletag.cmd || []).push(function() {
+    if (window.__t24OutOfPageSlotDefined) {
+      return;
+    }
+    try {
+      var outOfPageSlot = googletag.defineOutOfPageSlot('/42427672/Diger/Diger_1x1', 'div-gpt-ad-1731670750525-0');
+      if (outOfPageSlot) {
+        outOfPageSlot.addService(googletag.pubads());
+        window.__t24OutOfPageSlotDefined = true;
+      }
+    } catch(e) {
+      console.error('Error defining out-of-page slot:', e);
+    }
+  });
+</script>
+
+
+
+<script>
+    window.googletag = window.googletag || {cmd: []};
+  window.googletag.cmd = window.googletag.cmd || [];
+  (window.googletag.cmd || []).push(function() {
+    if (window.__t24GptServicesEnabled) {
+      return;
+    }
+    function t24DisplayDiger1x1() {
+      if (!window.__t24OutOfPageSlotDefined) return;
+      try { googletag.display('div-gpt-ad-1731670750525-0'); } catch (e) { console.error('Diger_1x1 display:', e); }
+    }
+    // Script yüklendikten sonra bu fonksiyon çalışacak
+    if (window.googletag && window.googletag.pubads && typeof window.googletag.pubads === 'function') {
+      try {
+      googletag.pubads().collapseEmptyDivs();
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+    window.__t24GptServicesEnabled = true;
+    t24DisplayDiger1x1();
+      } catch(e) {
+        console.error('Error enabling Google Ads services:', e);
+        // Script henüz yüklenmemişse, biraz bekleyip tekrar dene
+        setTimeout(function() {
+          if (window.__t24GptServicesEnabled) {
+            return;
+          }
+          if (window.googletag && window.googletag.pubads && typeof window.googletag.pubads === 'function') {
+            try {
+    googletag.pubads().collapseEmptyDivs();
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+    window.__t24GptServicesEnabled = true;
+    t24DisplayDiger1x1();
+            } catch(e2) {
+              console.error('Error enabling Google Ads services (retry):', e2);
+            }
+          }
+        }, 500);
+      }
+    }
+  });
+</script>
+
+
+<style>
+/* Boş video placeholder div'lerini gizle */
+.story-content div[style*="padding-bottom:56.25%"]:empty,
+.story-content div[style*="padding-bottom: 56.25%"]:empty,
+.mobil-haber-detay-card-content-text div[style*="padding-bottom:56.25%"]:empty,
+.mobil-haber-detay-card-content-text div[style*="padding-bottom: 56.25%"]:empty {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Google Ads - Reklam alanları için min-height (layout shift önleme) */
+[id*="div-gpt-ad"] {
+    min-height: 50px;
+    display: block;
+}
+/* Diger_1x1 out-of-page: 1x1 + yayın kodu; min-height 50px reklamı bozar */
+.t24-diger-1x1-oop {
+    min-height: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    max-height: 1px !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    clip: rect(0, 0, 0, 0) !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+/* Tüm reklamlar için sabit height (reklam dolmasa bile boş kalmaması için) */
+[id*="div-gpt-ad"] {
+    box-sizing: border-box;
+}
+
+/* Farklı reklam boyutları için sabit height - Öncelik sırası: Büyükten küçüğe */
+/* 600px reklamlar */
+[id*="div-gpt-ad"][style*="600px"]:not([style*="1600px"]):not([style*="2600px"]) {
+    height: 600px !important;
+    min-height: 600px !important;
+}
+
+/* 325px reklamlar */
+[id*="div-gpt-ad"][style*="325px"]:not([style*="600px"]):not([style*="250px"]):not([style*="200px"]):not([style*="100px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 325px !important;
+    min-height: 325px !important;
+}
+
+/* 250px reklamlar */
+[id*="div-gpt-ad"][style*="250px"]:not([style*="600px"]):not([style*="325px"]):not([style*="200px"]):not([style*="100px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 250px !important;
+    min-height: 250px !important;
+}
+
+/* 200px reklamlar */
+[id*="div-gpt-ad"][style*="200px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="100px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 200px !important;
+    min-height: 200px !important;
+}
+
+/* 100px reklamlar */
+[id*="div-gpt-ad"][style*="100px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="200px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 100px !important;
+    min-height: 100px !important;
+}
+
+/* 90px reklamlar */
+[id*="div-gpt-ad"][style*="90px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="200px"]):not([style*="100px"]):not([style*="50px"]) {
+    height: 90px !important;
+    min-height: 90px !important;
+}
+
+/* 50px reklamlar - En son kontrol edilmeli */
+[id*="div-gpt-ad"][style*="50px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="200px"]):not([style*="100px"]):not([style*="90px"]) {
+    height: 50px !important;
+    min-height: 50px !important;
+}
+
+/* Reklam wrapper'ları için sabit height (display: none olsa bile height korunsun) */
+.ad-wrapper-fixed {
+    width: 300px !important;
+    height: 250px !important;
+    min-width: 300px !important;
+    min-height: 250px !important;
+    position: relative !important;
+    display: inline-block !important;
+}
+
+/* Reklam wrapper'ları için margin ayarları */
+.ad-wrapper-fixed {
+    margin: 0 auto 20px auto !important;
+}
+
+/* Sonradan yüklenen reklamlar için col-12 margin-top: 0 */
+.col-12[id*="div-gpt-ad"] {
+    margin-top: 0 !important;
+}
+
+/* Story inline ad wrapper */
+.story-inline-ad-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Article inline ad wrapper */
+.article-inline-ad-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Gallery inline ad wrapper */
+.gallery-inline-ad-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Sticky sidebar ad */
+#div-gpt-ad-story-sidebar-sticky,
+#div-gpt-ad-article-sidebar-sticky,
+#div-gpt-ad-video-sidebar-sticky {
+    position: sticky;
+    top: 80px;
+    z-index: 10;
+}
+</style>
+
+ 
+ 
+ 	
+
+
+
+
+
+<script>
+  window.googletag = window.googletag || {cmd: []};
+  window.googletag.cmd = window.googletag.cmd || [];
+  (window.googletag.cmd || []).push(function() {
+    if (window.__t24GptServicesEnabled) {
+      return;
+    }
+    // Script yüklendikten sonra bu fonksiyon çalışacak
+    if (window.googletag && window.googletag.pubads && typeof window.googletag.pubads === 'function') {
+      try {
+    googletag.pubads().collapseEmptyDivs();
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+    window.__t24GptServicesEnabled = true;
+      } catch(e) {
+        console.error('Error enabling Google Ads services:', e);
+        // Script henüz yüklenmemişse, biraz bekleyip tekrar dene
+        setTimeout(function() {
+          if (window.__t24GptServicesEnabled) {
+            return;
+          }
+          if (window.googletag && window.googletag.pubads && typeof window.googletag.pubads === 'function') {
+            try {
+    googletag.pubads().collapseEmptyDivs();
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+    window.__t24GptServicesEnabled = true;
+            } catch(e2) {
+              console.error('Error enabling Google Ads services (retry):', e2);
+            }
+          }
+        }, 500);
+      }
+    }
+  });
+</script>
+
+
+<style>
+/* Boş video placeholder div'lerini gizle */
+.story-content div[style*="padding-bottom:56.25%"]:empty,
+.story-content div[style*="padding-bottom: 56.25%"]:empty,
+.mobil-haber-detay-card-content-text div[style*="padding-bottom:56.25%"]:empty,
+.mobil-haber-detay-card-content-text div[style*="padding-bottom: 56.25%"]:empty {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Google Ads - Reklam alanları için min-height (layout shift önleme) */
+[id*="div-gpt-ad"] {
+    min-height: 50px;
+    display: block;
+}
+/* Diger_1x1 out-of-page: 1x1 + yayın kodu; min-height 50px reklamı bozar */
+.t24-diger-1x1-oop {
+    min-height: 0 !important;
+    width: 1px !important;
+    height: 1px !important;
+    max-height: 1px !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    clip: rect(0, 0, 0, 0) !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+/* Tüm reklamlar için sabit height (reklam dolmasa bile boş kalmaması için) */
+[id*="div-gpt-ad"] {
+    box-sizing: border-box;
+}
+
+/* Farklı reklam boyutları için sabit height - Öncelik sırası: Büyükten küçüğe */
+/* 600px reklamlar */
+[id*="div-gpt-ad"][style*="600px"]:not([style*="1600px"]):not([style*="2600px"]) {
+    height: 600px !important;
+    min-height: 600px !important;
+}
+
+/* 325px reklamlar */
+[id*="div-gpt-ad"][style*="325px"]:not([style*="600px"]):not([style*="250px"]):not([style*="200px"]):not([style*="100px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 325px !important;
+    min-height: 325px !important;
+}
+
+/* 250px reklamlar */
+[id*="div-gpt-ad"][style*="250px"]:not([style*="600px"]):not([style*="325px"]):not([style*="200px"]):not([style*="100px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 250px !important;
+    min-height: 250px !important;
+}
+
+/* 200px reklamlar */
+[id*="div-gpt-ad"][style*="200px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="100px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 200px !important;
+    min-height: 200px !important;
+}
+
+/* 100px reklamlar */
+[id*="div-gpt-ad"][style*="100px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="200px"]):not([style*="90px"]):not([style*="50px"]) {
+    height: 100px !important;
+    min-height: 100px !important;
+}
+
+/* 90px reklamlar */
+[id*="div-gpt-ad"][style*="90px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="200px"]):not([style*="100px"]):not([style*="50px"]) {
+    height: 90px !important;
+    min-height: 90px !important;
+}
+
+/* 50px reklamlar - En son kontrol edilmeli */
+[id*="div-gpt-ad"][style*="50px"]:not([style*="600px"]):not([style*="325px"]):not([style*="250px"]):not([style*="200px"]):not([style*="100px"]):not([style*="90px"]) {
+    height: 50px !important;
+    min-height: 50px !important;
+}
+
+/* Reklam wrapper'ları için sabit height (display: none olsa bile height korunsun) */
+.ad-wrapper-fixed {
+    width: 300px !important;
+    height: 250px !important;
+    min-width: 300px !important;
+    min-height: 250px !important;
+    position: relative !important;
+    display: inline-block !important;
+}
+
+/* Google AdsbyGoogle elementi için */
+ins.adsbygoogle {
+    min-height: 50px;
+    display: block;
+}
+
+/* Ad blocker ile gizlenen reklamlar için placeholder yüksekliği */
+[id*="div-gpt-ad"]:empty,
+ins.adsbygoogle:empty {
+    min-height: 50px;
+}
+</style>
+<script type="text/javascript">
+                    window._taboola = window._taboola || [];
+                    _taboola.push({article:'auto'});
+                    !function (e, f, u, i) {
+                      if (!document.getElementById(i)){
+                        e.async = 1;
+                        e.src = u;
+                        e.id = i;
+                        f.parentNode.insertBefore(e, f);
+                      }
+                    }(document.createElement('script'),
+                    document.getElementsByTagName('script')[0],
+                    '//cdn.taboola.com/libtrc/t24turkey/loader.js',
+                    'tb_loader_script');
+                    if(window.performance && typeof window.performance.mark == 'function')
+                      {window.performance.mark('tbl_ic');}
+                  </script>
+
+<script>
+    (function () {
+        try {
+            var d = document;
+            var h = d.head || d.getElementsByTagName('head')[0];
+            if (!h) return;
+
+            var s = d.createElement('script');
+            s.async = true;
+            s.src = 'https://cdn.insurads.com/bootstrap/BDW4JDL4.js';
+            s.onerror = function () {};
+            h.appendChild(s);
+        } catch (e) {
+            // Fail-safe: never break page execution for third-party ad bootstrap.
+        }
+    })();
+</script>
+
+<!-- FI TAG - START t24.com.tr -->
+<script data-cfasync='false' type='text/javascript'>
+    ;(function(o) {
+        try {
+            var w;
+            try {
+                void window.top.location.href;
+                w = window.top;
+            } catch (e) {
+                w = window;
+            }
+
+            var d = w.document;
+            var ft = d.head || d.getElementsByTagName('head')[0];
+            if (!d || !ft) return;
+
+            var a = 'apdAdmin';
+            var l = String(w.location && w.location.href ? w.location.href : '');
+            w.apd_options = o;
+
+            if (l.indexOf('disable_fi') !== -1) {
+                return;
+            }
+
+            var fiab = d.createElement('script');
+            fiab.type = 'text/javascript';
+            fiab.async = true;
+            fiab.src = o.scheme + 'ecdn.analysis.fi/static/js/fab.js';
+            fiab.id = 'fi-' + o.websiteId;
+            fiab.onerror = function () {};
+            ft.appendChild(fiab);
+
+            if (l.indexOf(a) !== -1 && w.localStorage) {
+                w.localStorage[a] = 1;
+            }
+
+            var aM = !!(w.localStorage && w.localStorage[a] == 1);
+            var fi = d.createElement('script');
+            fi.type = 'text/javascript';
+            fi.async = true;
+            if (aM) fi.setAttribute('data-cfasync', 'false');
+            fi.src = o.scheme + (aM ? 'cdn' : 'ecdn') + '.firstimpression.io/' + (aM ? 'fi.js?id=' + o.websiteId : 'fi_client.js');
+            fi.onerror = function () {};
+            ft.appendChild(fi);
+        } catch (e) {
+            // Fail-safe: never block other scripts if FI tag fails.
+        }
+    })({
+        'websiteId': 7374,
+        'scheme': '//'
+    });
+</script>
+<!-- FI TAG - END -->
+</head>
+<div id="div-gpt-ad-1731670750525-0" class="t24-diger-1x1-oop" aria-hidden="true"></div>
+
+
+
+
+    <section class="navigation" style="background: #fff;"> 
+
+    <div class="container">
+        <div class="navtop">
+            <div class="navigationlinks">
+                <ul>
+                    <li>
+                                                    <a href="https://t24.com.tr"><img class="logo-image" src="https://t24.com.tr/assets/img/logo.svg" alt="T24 Logo"></a>
+                                            </li>
+            
+                </ul>
+            </div>
+
+            <div class="navbuttons ">
+  
+            <ul style="">
+                    <li>
+                        <span class="btnabone" style="margin-right:8px;" data-webuser-nav="user"  hidden >Merhaba<span data-webuser-first-name></span></span>
+                        <a class="btnabone" href="https://t24.com.tr/abonelik/profil" data-webuser-nav="user"  hidden >PROFİLİM</a>
+                        <a class="btnabone" href="https://t24.com.tr/abonelik" data-webuser-nav="user" data-webuser-subscribe  hidden >ABONELİK</a>
+                        <a class="btnabone" href="https://t24.com.tr/cikis" data-webuser-nav="user"  hidden  onclick="event.preventDefault(); document.getElementById('webuser-logout-form').submit();">ÇIKIŞ</a>
+                        <form id="webuser-logout-form" action="https://t24.com.tr/webuser-logout" method="POST" style="display:none;">
+                            <input type="hidden" name="_token" value="lsCFTG6QG6mCpd9TEmPfKYxHw7XqtEc4EgmMOtRN">                        </form>
+                        <a class="btnabone" href="https://t24.com.tr/giris-yap?return=https%3A%2F%2Ft24.com.tr%2F404" data-webuser-nav="guest" >GİRİŞ YAP</a>
+                        <a class="btnabone" href="https://t24.com.tr/abonelik" data-webuser-nav="guest" >ABONE OL</a>
+                    </li>
+                </ul>
+ 
+
+
+            
+            <ul style="">
+                <li data-webuser-nav="user"  hidden >
+                    <a class="btnsearch" href="https://t24.com.tr/arama">
+                        <img src="https://t24.com.tr/assets/img/search.svg" alt="Ara">
+                    </a>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="mobil-navbar" style="background: #fff;">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="mobil-navbar-logo">
+                                    <a href="https://t24.com.tr"> <img src="https://t24.com.tr/assets/img/logo.svg" alt="logo"></a>
+                            </div>
+            
+            <div class="mobil-navbar-menu">
+                  <div class="mobilenavtopbuttons">
+                    <ul style="">
+                            <li class="mobile-user-name" data-webuser-nav="user"  hidden >
+                                <a href="https://t24.com.tr/abonelik/profil" class="user-name-badge" title="Profilim">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <span class="user-name-text" data-webuser-first-name-text></span>
+                                </a>
+                            </li>
+                            <li data-webuser-nav="user"  hidden >
+                                <a class="mobile-user-btn" href="https://t24.com.tr/abonelik/profil" title="Profilim" style

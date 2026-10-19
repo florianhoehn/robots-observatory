@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<!-- First they ignore you, then they laugh at you, then they fight you, then you win. - Mohandas Karamchand Gandhi -->
+<html lang="en">
+  <head>
+
+  <script type="text/javascript">
+  window.PRODUCT_NAMESPACE = 'hackerrank'
+  window.APP_METRIC_TRACKING_ENABLED = false
+  window.PERF_METRICS = {
+    tracked_initial_view_load_tti: {},
+    tracked_view_load_tti: {}
+  }
+    if ((window.PRODUCT_NAMESPACE == 'hackerrank' || window.PRODUCT_NAMESPACE == 'hackerrankx') && (Math.floor(Math.random() * 2) + 1) == 1) {
+      window.APP_METRIC_TRACKING_ENABLED = true
+    }
+</script>
+
+<script type="text/javascript">
+  window.HR = window.HR || {}
+  HR.development = false
+  HR.production = true
+  HR.DESIGN_SUBDOMAIN_PREFIX = 'design'
+  HR.DESIGN_DOMAIN = 'hrcdn.net'
+  HR.USE_CURRENT_HOST_AS_DESIGN_DOMAIN = ''
+  HR.RECAPTCHA_V3_KEY = '6LfTjdkUAAAAAOhQL2_kkpxaLt2mwILWGO9V1_vm'
+  HR.RECAPTCHA_V2_KEY = '6LeaGAcTAAAAAHUJqnwrXceN4kmVMKHhm-DG-Rxw'
+</script>
+
+<!-- reCAPTCHA: loaded with v3 site key; v2 widgets are rendered explicitly via grecaptcha.render() -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LfTjdkUAAAAAOhQL2_kkpxaLt2mwILWGO9V1_vm"></script>
+
+<!-- jsCookies -->
+  <script type="text/javascript">
+    /*!
+ * JavaScript Cookie v2.1.2
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+if(function(factory){if("function"==typeof define&&define.amd)define(factory);else if("object"==typeof exports)module.exports=factory();else{var OldCookies=window.Cookies,api=window.Cookies=factory();api.noConflict=function(){return window.Cookies=OldCookies,api}}}(function(){function extend(){for(var i=0,result={};i<arguments.length;i++){var attributes=arguments[i];for(var key in attributes)result[key]=attributes[key]}return result}function init(converter){function api(key,value,attributes){var result;if("undefined"!=typeof document){if(arguments.length>1){if("number"==typeof(attributes=extend({path:"/"},api.defaults,attributes)).expires){var expires=new Date;expires.setMilliseconds(expires.getMilliseconds()+864e5*attributes.expires),attributes.expires=expires}try{result=JSON.stringify(value),/^[\{\[]/.test(result)&&(value=result)}catch(e){}return value=converter.write?converter.write(value,key):encodeURIComponent(String(value)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),key=(key=(key=encodeURIComponent(String(key))).replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent)).replace(/[\(\)]/g,escape),document.cookie=[key,"=",value,attributes.expires&&"; expires="+attributes.expires.toUTCString(),attributes.path&&"; path="+attributes.path,attributes.domain&&"; domain="+attributes.domain,attributes.secure?"; secure":""].join("")}key||(result={});for(var cookies=document.cookie?document.cookie.split("; "):[],rdecode=/(%[0-9A-Z]{2})+/g,i=0;i<cookies.length;i++){var parts=cookies[i].split("="),cookie=parts.slice(1).join("=");'"'===cookie.charAt(0)&&(cookie=cookie.slice(1,-1));try{var name=parts[0].replace(rdecode,decodeURIComponent);if(cookie=converter.read?converter.read(cookie,name):converter(cookie,name)||cookie.replace(rdecode,decodeURIComponent),this.json)try{cookie=JSON.parse(cookie)}catch(e){}if(key===name){result=cookie;break}key||(result[name]=cookie)}catch(e){}}return result}}return api.set=api,api.get=function(key){return api(key)},api.getJSON=function(){return api.apply({json:!0},[].slice.call(arguments))},api.defaults={},api.remove=function(key,attributes){api(key,"",extend(attributes,{expires:-1}))},api.withConverter=init,api}return init(function(){})}),void 0===jsCookies&&"undefined"!=typeof Cookies)var jsCookies={get:function(c_name){return Cookies.get(c_name)},set:function(c_name,value,expiredays,expirehours,expiremins,expiresecs,options){var exdate=new Date;exdate.setDate(exdate.getDate()+(expiredays||0)),exdate.setHours(exdate.getHours()+(expirehours||0)),exdate.setMinutes(exdate.getMinutes()+(expiremins||0)),exdate.setSeconds(exdate.getSeconds()+(expiresecs||0));var config=options||{};!(null==expiredays&&null==expiresecs&&null==expiremins&&null==expirehours)&&(config.expires=exdate),Cookies.set(c_name,value,config)},check:function(c_name){return!!Cookies.get(c_name)},destroy:function(c_name){Cookies.remove(c_name)}};
+  </script>
+
+<script type="text/javascript">
+  !function(){function getRandRange(min,max){return parseInt(Math.random()*(max-min))+min}function getRandChar(){var offset=getRandRange(0,35);return offset>25?(offset-26).toString():String.fromCharCode(97+offset)}function makeId(length){for(var text="",i=0;i<length;i++)text+=getRandChar();return text}function setSessionId(){key="session_id";var session_key=jsCookies.get(key);session_key?jsCookies.set(key,session_key,null,2,null,null,{secure:!0}):(epoch=(new Date).getTime(),rand_id=makeId(8),jsCookies.set(key,rand_id+"-"+epoch.toString(),null,2,null,null,{secure:!0})),setTimeout(setSessionId,6e4)}setSessionId()}();
+</script>
+
+<!-- DNS Prefetch -->
+<link rel="dns-prefetch" href="//hrcdn.net">
+<link rel="dns-prefetch" href="//d1ka33fs6lvw5x.cloudfront.net">
+<link rel="dns-prefetch" href="//notifications.hackerrank.com">
+<link rel="dns-prefetch" href="//metrics.hackerrank.com">
+
+<!-- use the latest IE browser -->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+<!-- App Icon for iOS Devices -->
+<link rel="apple-touch-icon-precomposed" href="https://hrcdn.net/hackerrank/assets/apple-touch-icon-precomposed-c99b684c98b4befc43c47592bc900ebd95a0b1e9b9e5103b252c8b320432646d.png" />
+
+<!-- favicon -->
+<link rel="shortcut icon" type="image/png" href="https://hrcdn.net/hackerrank/assets/favicon-69d2a5f80ad413089c703bf9947bfa75582c3f13fdb0a1db26fe5b59d8bfd4ce.png" />
+
+<!-- generating meta tags -->
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<meta charset='utf-8' />
+<meta name='description' content='Join over 30 million developers in solving code challenges on HackerRank, one of the best ways to prepare for programming interviews.' />
+<meta property='og:title' content='Join Random  on HackerRank' />
+<meta property='og:image' content='https://hrcdn.net/og/default.jpg' />
+<meta property='og:description' content='' />
+<meta property='og:url' content='https://www.hackerrank.com/ai' />
+<meta property='og:site_name' content='HackerRank' />
+<meta property='og:type' content='hackerrank:contest' />
+<meta name='twitter:card' content='summary' />
+<meta name='twitter:site' content='@hackerrank' />
+<meta name='twitter:url' content='https://www.hackerrank.com' />
+<meta name='twitter:title' content='HackerRank' />
+<meta property='fb:app_id' content='347499128655783' />
+<meta property='description' content='' />
+<meta name='robots' content='noindex, nofollow' />
+
+<link href="https://www.hackerrank.com/ai.txt/" rel="canonical" /><!-- ends meta tags generation -->
+
+<!-- CSRF Token -->
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="c7kdb0+7Q74gTn9tHxbyC8a5P9bielp+StdEbpLtJ0acqDMX7IMn7N0fOumBKd5lyT4kh2CFEEXk4y4pNWLwJw==" />
+
+  <link rel="stylesheet" media="all" href="https://hrcdn.net/hackerrank/assets/external_libraries-a76c3ccf0a9f085b68808226272db071436bce6e4159089c37e1d97f05ab3c56.css" />
+  <link rel="stylesheet" media="all" href="https://hrcdn.net/hackerrank/assets/external-core-e989abc16cb1627a765d3e22df3ce96d0af66d388db5d547dcfe0af9c62d953d.css" />
+  <link rel="stylesheet" media="all" href="https://hrcdn.net/hackerrank/assets/hackerrank-65a3f25cc3b9631b912d656bb4e54bb7435e829741c632e804fe2ddf5d345fa1.css" />
+
+
+<!-- Google Analyitics Init -->
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', "UA-45092266-1"]);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_gat._anonymizeIp']);
+    _gaq.push(['_setCampSourceKey', 'utm_source']);
+    _gaq.push(['_setCampMediumKey', 'utm_medium']);
+    _gaq.push(['_setCampContentKey', 'utm_keyword']);
+    _gaq.push(['_setCampTermKey', 'utm_keyword']);
+    _gaq.push(['_setCampNameKey', 'utm_campaign']);
+</script>
+
+<!-- Mixpanel Stub -->
+<script type="text/javascript">
+  window.mixpanel = window.mixpanel || [];
+  var attrs = "disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+  for (var attribute in attrs) {
+    mixpanel[attrs[attribute]] = function () {};
+  }
+</script>
+
+<!-- Heap Analytics Init -->
+<script type="text/javascript">
+    var heap = heap || [];
+</script>
+
+<script type="text/javascript">
+  (function(h) {
+    window.hr_metrics = h;
+    if (!h.loaded) {
+      var a = ['track', 'batch_track', 'app_track', 'externalService', 'init', 'batch_track_record', 'track_dwell_time', 'set_navigation_data'];
+      for (var i = 0; i < a.length; i++) {
+        if (!h[a[i]]) {h[a[i]] = function() {};}
+      }
+    }
+  })(window.hr_metrics || {});
+</script>
+
+<script type="text/javascript">
+    /**
+     * Protect window.console method calls, e.g. console is not defined on IE
+     * unless dev tools are open, and IE doesn't define console.debug
+     */
+(function() {
+    if (!window.console) {
+      window.console = {};
+    }
+    var m = ["log", "info", "warn", "error", "debug", "trace", "dir", "group", "groupCollapsed", "groupEnd", "time", "timeEnd", "profile", "profileEnd", "dirxml", "assert", "count", "markTimeline", "timeStamp", "clear"];
+    // define undefined methods as noops to prevent errors
+    for (var i = 0; i < m.length; i++) {
+        if (!window.console[m[i]]) {
+            window.console[m[i]] = function() {};
+        }
+    }
+})();
+</script>
+
+
+  <script type="text/javascript">
+    var pusher_app_key = 'a280047e3b323ccb1b65';
+  </script>
+
+<!-- Linkedin Insights -->
+
+
+<script>
+  dataLayer = [];
+</script>
+
+<!-- Google Tag Manager #1 -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer', 'GTM-5FXW96J');</script>
+<!-- End Google Tag Manager #1 -->
+
+
+
+  <title>Programming problems and Competitions :: HackerRank</title>
+  <meta name="viewport" content="width=device-width">
+  <base href="/">
+</head>
+
+<script src="https://hrcdn.net/hackerrank/assets/base-153aa897c88730d6cee3642e04e184fceac798cf87b7ab79552102930ff30e59.js"></script>
+<!-- failsafe -->
+<script>
+ if (typeof(jQuery) != "function" && !jsCookies.get("jQueryError") && (window.location.href.split("jQueryError=1").length == 1)) {
+   // set 10 mins cookie
+   var current_cdn = jsCookies.get("cdn_url");
+   jsCookies.set("jQueryError", 1, 0, 0, 10);
+   jsCookies.set("cdn_url", 1, 0, -1);
+
+   // reload the page
+   separator = (window.location.href.split("?").length > 1) ? "&" : "?";
+   if (navigator.appName == "Microsoft Internet Explorer") {
+     window.document.execCommand('Stop');
+   } else {
+     window.stop();
+   }
+   window.location.href = window.location.href + separator + "jQueryError=1&current_cdn=" + encodeURIComponent(current_cdn);
+
+   //stop JavaScript execution
+   throw new Error("StopExec");
+ } else {
+   // if it worked, remove jQueryError
+   if (jsCookies.get("jQueryError")) {
+     jsCookies.set("jQueryError", 1, 0, -1);
+   }
+ }
+</script>
+
+    <style type="text/css">
+    .container{
+        width: 100%;
+        padding: 0px 20px;
+    }
+    .navigation{
+        height: 72px;
+    }
+    .contests_landing{
+        background: url(/lib/contests/generic/contest_bg.jpg) no-repeat;
+        background-size: cover;
+    }
+    .contests_landing svg{
+        margin-top: 65px;
+    }
+    .presents{
+        margin-top: -15px;
+        display: block;
+        color: #fff;
+    }
+    .navigation{
+        text-align: center;
+        position: relative;
+    }
+    .navigation ul li{
+        list-style-type: none;
+        display: inline-block;
+    }
+    .navigation ul li a{
+        display: inline-block;
+        padding: 25px 16px;
+        font-size: 16px;
+        color: #333;
+    }
+    .right-side{
+        margin-left: 0px;
+    }
+    .right-side ul li{
+        list-style-type: none;
+        margin-bottom: 5px;
+    }
+    .sections{
+        padding: 60px 0px;
+    }
+    .ticks{
+        width: 30px;
+        margin-right: 20px;
+    }
+    .rules ul li, .scoring ul li{
+        list-style-type: none;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+    .contest_header h1{
+        font-size: 36px;
+    }
+    .x-footer-number a{
+        color: #4691f6 !important;
+    }
+    .inner-block{
+        text-align: center;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+    .tpoint{
+        width: 80%;
+    }
+
+    nav{
+        box-shadow: 0px 6px 5px -3px #ddd;
+    }
+
+    /* This is for fixed header. */
+    .fixed{
+        position: fixed;
+        top: 0;
+        background: #ffffff;
+        left: 0;
+        right: 0;
+        margin: auto;
+        z-index: 999;
+    }
+
+    /* This is v4 timer i think. will move to seperate view*/
+    .timer{
+      width: 65px;
+      display: inline-block;
+      background: #fff;
+      color: #333;
+      border-radius: 5px;
+      height: 52px;
+      padding: 6px 0px 1px 0px;
+    }
+    .timer span{
+      display: inline-block;
+      font-size: 14px;
+      line-height: normal;
+    }
+    .timer .num{
+      display: block;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+    .timer_box{
+      width: 300px;
+      margin: auto;
+      padding: 20px 0px;
+    }
+    /* time css ends*/
+
+    @media screen and (min-width:960px){
+        .container{
+            width: 960px;
+            padding: 0px;
+        }
+
+        .inner-block{
+            text-align: left;
+        }
+
+        .tpoint{
+            width: 910px;
+        }
+        .right-side{
+            margin-left: 20px;
+        }
+    }
+    .contest-time{
+        width: 285px;
+        height: 35px;
+    }
+    ul {
+        list-style-position: inside;
+    }
+
+    .inner-text-container {
+        margin-left: 30px;
+    }
+
+</style>
+<body id="contest_page">
+    <div class="contests_landing">
+        <div class="container--flex">
+            <div class="text-center">
+                <svg class="block-center" width="202" height="55">
+                    <image xlink:href="https://hrcdn.net/hackerrank/assets/brand/typemark--inverse60x200-2ef3c6a2a0961a942c68330cfcfb1e400e21563c62ea9121d7c5c721b1710aac.svg" src="https://hrcdn.net/hackerrank/assets/brand/typemark--inverse60x200-868af3dfef9f490c69d524ec69ccdb24486e7e00192f4ef5dd391229c46b526d.png" width="202" height="55"></image>
+                </svg>
+                <span class="presents">presents</span>
+            </div>
+            <div class="contest_header mjT text-center txt-white">
+                <h1 class="mlB">Random </h1>
+
+                <div id="body-buttons">
+                    <style>
+    .facebook-button {
+        background: none repeat scroll 0% 0% #3B5998 !important;
+        padding: 10px 15px;
+    }
+
+    .contest-signup-stub {
+        width: 500px;
+        margin: auto;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .contest-signup-stub img.loader {
+        vertical-align: middle;
+        margin-left: 2px;
+    }
+
+    .social-wrap {
+        margin: 15px 0px;
+    }
+    .social-wrap .button {
+        padding: 7px;
+        border-radius: 3px;
+        color: #fbfbfb;
+        font-weight: bold;
+        position: relative;
+    }
+    .social-wrap .twitter {
+        padding-left: 34px;
+        background: #4099ff;
+        margin-right: 10px;
+    }
+    .social-wrap .facebook {
+        padding-left: 26px;
+        background: #3b5998;
+        margin-left: 10px;
+    }
+    .social-wrap .twitter img {
+        position: absolute;
+        top: 6px;
+        left: 5px;
+    }
+    .social-wrap .facebook img {
+        position: absolute;
+        top: 6px;
+        left: 8px;
+    }
+    .share-text {
+        margin: 15px 0;
+    }
+    textarea {
+        width: 100%;
+        resize: none;
+        height: 88px;
+    }
+    .fade {
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+    }
+
+
+    /* Version specific css */
+        .contest-signup-stub {
+            color: white;
+            width: auto;
+        }
+        .txt-black {
+            color: black;
+        }
+       .message{
+            padding: 10px !important;
+            margin-top: 10px;
+        }
+
+</style>
+<div class="contest-signup-stub">
+    <span class="contest-messages">
+        <p class="message"></p>
+        <br>
+        <p class="error hide"></p>
+    </span>
+    <button class="btn btn-primary btn-large action-button btn-flat"></button>
+    <img class="loader hide" src="https://hrcdn.net/hackerrank/assets/ajax-view-loader-24636582f7e45440ba4c888f52a40bc112a260e01691dfddee48f281c901f744.gif">
+        <p class="pariticipating hide banner txt-black msT">You are registered for the contest.</p>
+    <div class="success-message hide">
+        <h3 class="text-center heading psT">Sweet, we've sent you an email confirming your registration!</h3>
+        <h5 class="text-center share-text">You can tell your friends about Random </h5>
+        <textarea class="span11 block-center" >I just registered for Random  ( https://www.hackerrank.com/ai ). Join me @hackerrank</textarea>
+        <div class="social-wrap clearfix psT">
+            <a href="" class="twitter button" onClick="_gaq.push(['_trackEvent', 'HackerGamesPage', 'Click', 'Tweet it']);" data-analytics="Tweet"><img alt="" src="https://hrcdn.net/hackerrank/assets/twitter-bird-d5cf2555cd8bc7d6fbdc8132a42310f32f1e4a2fe90112bfbc03e972e3db32d9.png" /><span> Tweet it</span></a>
+            <a href="" class="facebook button" onClick="_gaq.push(['_trackEvent', 'HackerGamesPage', 'Click', 'Share it']);" data-analytics="Facebook Share"><img alt="" src="https://hrcdn.net/hackerrank/assets/facebook-f-b1d1eb8b1ff58764e23cb48b465f3428fb4fb6ef1b96cfc33856e7661d1b2b20.png" /><span> Share it</span></a>
+        </div>
+        <a href="/domains?h_l=contest_landing_page&h_v=control" class="text-center btn btn-green msA mjT" data-analytics="LandingPagePracticeButton" data-attr1="ai">Practice</a>
+        <h3>
+            You might like to solve practice problems on HackerRank.
+        </h3>
+    </div>
+    <a class="show_login_dialog hide"></a>
+    <a class="show_signup_dialog hide"></a>
+</div>
+<script>
+    
+HR = {};
+HR.CONTEST_SLUG = 'ai';
+$(document).ready(function () {
+
+    var version = '4';
+    function Hacker() {
+        var hacker = null;
+        var hacker_participating = false;
+
+        return {
+            signed_in: function () {
+                if (hacker === null) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
+            username: function () {
+                if (hacker === null) {
+                    return null;
+                } else {
+                    return hacker.username;
+                }
+            },
+
+            id: function () {
+                if (hacker === null) {
+                    return null;
+                } else {
+                    return hacker.id;
+                }
+            },
+
+            participating: function (bool) {
+                if (typeof(bool) === "boolean") {
+                    hacker_participating = bool;
+                } else {
+                    return hacker_participating;
+                }
+            },
+
+            hacker: function(_hacker) {
+                if (typeof(_hacker) === "undefined" || _hacker === null) {
+                    return hacker;
+                } else {
+                    hacker = _hacker;
+                }
+            }
+        };
+    }
+
+    function Contest() {
+        // start time
+        var start_time = 1473489000;
+
+        // end time
+        var end_time = null;
+
+        return {
+            current_time: function () {
+                // current time
+                return Math.floor((new Date()).getTime() / 1000);
+            },
+
+            started: function () {
+                if (start_time === null) return true;
+
+                var current_time = this.current_time();
+                if (start_time > current_time) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
+            ended: function () {
+                if (end_time === null) return false;
+
+                var current_time = this.current_time();
+                if (end_time > current_time) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
+            no_endtime: function () {
+                return (end_time === null) ? true : false;
+            },
+
+            start_time: start_time,
+            end_time: end_time,
+            name: 'Random ',
+            slug: 'ai',
+            disable_signup: ''
+        };
+    }
+
+    function Display(contest, hacker) {
+        return {
+            get_time_string: function (diff) {
+                // don't you fuckin mess with the order
+                var days = Math.floor(diff / (24*60*60));
+                var _seconds = diff % (24*60*60);
+                var hours = Math.floor(_seconds / (60*60));
+                _seconds = _seconds % (60*60);
+                var minutes = Math.floor(_seconds / 60);
+                var seconds = _seconds % 60;
+
+                var time_string = "";
+                var show_the_rest = false;
+                if (days > 0 || show_the_rest) {
+                    show_the_rest = true;
+                    time_string += days + " Day" + (days != 1 ? "s" : "") + " ";
+                }
+
+                if (hours > 0 || show_the_rest) {
+                    show_the_rest = true;
+                    time_string += hours + " Hour" + (hours != 1 ? "s" : "") + " ";
+                }
+
+                if (minutes > 0 || show_the_rest) {
+                    show_the_rest = true;
+                    time_string += minutes + " Minute" + (minutes != 1 ? "s" : "") + " ";
+                }
+
+                time_string += seconds + " Second" + (seconds != 1 ? "s" : "") +" ";
+
+                return time_string;
+            },
+
+            get_time_obj: function (diff) {
+                // don't you fuckin mess with the order
+                var days = Math.floor(diff / (24*60*60));
+                var _seconds = diff % (24*60*60);
+                var hours = Math.floor(_seconds / (60*60));
+                _seconds = _seconds % (60*60);
+                var minutes = Math.floor(_seconds / 60);
+                var seconds = _seconds % 60;
+
+                return {
+                    days: days,
+                    hrs: hours,
+                    mins: minutes,
+                    secs: seconds
+                };
+            },
+
+            countdown_timer_v4: function (final_time) {
+                var current_time = Math.floor((new Date()).getTime() / 1000);
+                var diff = final_time - current_time;
+
+                var time_obj = this.get_time_obj(diff);
+
+                $('#count-secs-pf').html(time_obj.secs !=1 ? 'secs':'sec');
+                $('#count-mins-pf').html(time_obj.mins !=1 ? 'mins':'min');
+                $('#count-hrs-pf').html(time_obj.hrs !=1 ? 'hrs':'hour');
+                $('#count-days-pf').html(time_obj.days !=1 ? 'days':'day');
+                $('#count-days').html(time_obj.days);
+                $('#count-hrs').html(time_obj.hrs);
+                $('#count-mins').html(time_obj.mins);
+                $('#count-secs').html(time_obj.secs);
+
+                that = this;
+                if (diff > 1) {
+                    setTimeout(function(){
+                        that.countdown_timer_v4(final_time);
+                    }, 1000)
+                } else {
+                    setTimeout(function(){
+                        that.render();
+                    }, 1000)
+                }
+            },
+
+
+
+            countdown_timer: function (final_time, $el) {
+                var current_time = Math.floor((new Date()).getTime() / 1000);
+                var diff = final_time - current_time;
+
+                var time_string = this.get_time_string(diff);
+
+                $el.find('.countdown').html(time_string);
+
+                that = this;
+                if (diff > 1) {
+                    setTimeout(function(){
+                        that.countdown_timer(final_time, $el);
+                    }, 1000)
+                } else {
+                    setTimeout(function(){
+                        that.render();
+                    }, 1000)
+                }
+            },
+
+            facebook_mode: function () {
+                function getUrlVars() {
+                    var vars = {};
+                    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+                        vars[key] = value;
+                    });
+                    return vars;
+                }
+                return (getUrlVars()["utm_source"] == "fb");
+            },
+
+            facebook_text: function () {
+                return '<i class="icon-facebook"></i> Register with Facebook';
+            },
+
+            render: function () {
+                var $el = $(".contest-signup-stub");
+                var $message = $el.find(".message");
+                var $action_button = $el.find(".action-button");
+                var $br = $el.find("br");
+                var $participating = $el.find(".pariticipating");
+                var $loggedin_message = $el.find(".loggedin-message");
+                window.facebook_mode = this.facebook_mode;
+
+                if (hacker.signed_in()) {
+                    $loggedin_message.html("You are logged in as <b>" + hacker.username() + "</b>.").show();
+                }
+
+                if (!contest.started()) {
+                    // Contest Not Started
+                    // show countdown timer
+                    if (version == 4)
+                    {
+                        $(".contest-messages").hide();
+                        $('#block-timer-head').html('Starts in');
+                        this.countdown_timer_v4(contest.start_time);
+                    }
+                    else
+                    {
+                        $message.html("The contest starts in <span class='countdown'></span>");
+                        this.countdown_timer(contest.start_time, $message);
+                    }
+                    if (hacker.participating()) {
+                        $action_button.hide();
+                        $br.hide();
+                        $participating.show().html("Hey <b>" + hacker.username() + "</b>! You have been signed up for the contest!");
+                        $loggedin_message.hide();
+                    } else {
+                        $br.show();
+                        $action_button.show();
+                        $participating.hide();
+                        if (hacker.signed_in()) {
+                            $action_button.html("Sign Up");
+                        } else {
+                            if (this.facebook_mode()) {
+                                $action_button.html(this.facebook_text()).addClass("facebook-button");
+                            } else {
+                                $action_button.html("Sign Up");
+                            }
+                        }
+                        $action_button.unbind("click").bind("click", this.actionButtonClick);
+                    }
+
+                } else if (contest.started() && !contest.ended()) {
+                    // During The Contest
+                    // show countdown timer
+                    if (version == 4)
+                    {
+                        $message.hide();
+                    }
+                    if (!contest.no_endtime()) {
+                        if (version == 4) {
+                            this.countdown_timer_v4(contest.end_time);
+                            $('#block-timer-head').html('Ends in');
+                        }
+                        else {
+                            $message.html("The contest ends in <span class='countdown'></span>.");
+                            this.countdown_timer(contest.end_time, $message);
+                        }
+                    } else {
+                        $message.hide();
+                        if (version == 4) {
+                            $('#block-timer').hide();
+                        }
+                    }
+                    $br.show();
+                    $participating.hide();
+                    $action_button.show();
+                    if (hacker.signed_in()) {
+                        $action_button.html("Enter");
+                    } else {
+                        if (this.facebook_mode()) {
+                            $action_button.html(this.facebook_text()).addClass("facebook-button");
+                        } else {
+                            $action_button.html("Sign Up");
+                        }
+                    }
+                    $action_button.unbind("click").bind("click", this.actionButtonClick);
+
+                } else if (contest.ended()) {
+                    if (version == 4) {
+                        $('#block-timer').hide();
+                        this.countdown_timer_v4(3,0);
+                        $message.hide();
+                    }
+                    // After The Contest
+                    $message.html("The contest has ended. " + (hacker.signed_in() ? "Enter " : "Signup ") + " to solve archived challenges.");
+                    $br.show();
+                    $participating.hide();
+                    $action_button.show();
+                    if (hacker.signed_in()) {
+                        $action_button.html("Enter");
+                    } else {
+                        if (this.facebook_mode()) {
+                            $action_button.html(this.facebook_text()).addClass("facebook-button");
+                        } else {
+                            $action_button.html("Sign Up");
+                        }
+                    }
+                    $action_button.unbind("click").bind("click", this.actionButtonClick);
+
+                }
+
+                if(contest.disable_signup == 'true' && !hacker.participating()){
+                    $message.hide();
+                    $participating.show().html("This is a private contest.");
+                    $action_button.hide()
+                }
+
+                return this;
+            },
+
+            actionButtonClick: function (e) {
+                e.preventDefault();
+                var $el = $(".contest-signup-stub");
+                var $message = $el.find(".message");
+                var $action_button = $(e.currentTarget);
+                var $loader = $el.find("img.loader");
+                var $error = $el.find(".error");
+                var $success_message = $el.find(".success-message");
+                var $loggedin_message = $el.find(".loggedin-message");
+                $error.hide();
+                if (hacker.signed_in()) {
+                    if (!contest.started()) {
+                        $action_button.attr('disabled', 'disabled')
+                            .html("Signing you up...");
+                        $loader.show();
+                    } else if (contest.started() && !contest.ended()) {
+                        $action_button.attr('disabled', 'disabled')
+                            .html("Logging you in...");
+                        $loader.show();
+                    } else if (contest.ended()) {
+                        $action_button.attr('disabled', 'disabled')
+                            .html("Logging you in...");
+                        $loader.show();
+                    }
+                } else if (window.facebook_mode()) {
+                } else {
+                    $action_button.attr('disabled', 'disabled')
+                      .html("Redirecting...");
+                    $loader.show();
+                }
+
+                if (hacker.signed_in()) {
+                    // signup
+                    $.ajax({
+                        type: "POST",
+                        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                        url: '/auth/login/' + contest.slug,
+                        success: function(data) {
+                            $loader.hide();
+                            if (data.status) {
+        

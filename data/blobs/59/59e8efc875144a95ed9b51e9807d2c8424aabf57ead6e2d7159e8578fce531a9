@@ -1,0 +1,66 @@
+User-agent: *
+# Markdown-for-Agents (.md article/opinion endpoints) and /llms.txt are
+# intentionally crawlable — do not disallow them.
+# Legacy WordPress paths
+Disallow: /wp-content/plugins/
+Disallow: /wp-includes/
+# Admin, internal tools, and app surfaces (see documentation/ROBOTS_TXT.md)
+Disallow: /dm-admin/
+Disallow: /style-guide/
+Disallow: /test-comments/
+Disallow: /api/
+Disallow: /account/
+Disallow: /s/
+Disallow: /oauth/
+Disallow: /healthz
+Disallow: /email-link/
+
+# ---------------------------------------------------------------------------
+# AI crawlers — explicit User-agent groups (robots groups do NOT inherit from *).
+# Same path Disallow list as *; Allow: / keeps editorial content available for
+# answer-engine citation / retrieval. See documentation/ROBOTS_TXT.md.
+# ---------------------------------------------------------------------------
+
+# AI search / answer-engine indexing and user-triggered fetches
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+Allow: /
+Disallow: /wp-content/plugins/
+Disallow: /wp-includes/
+Disallow: /dm-admin/
+Disallow: /style-guide/
+Disallow: /test-comments/
+Disallow: /api/
+Disallow: /account/
+Disallow: /s/
+Disallow: /oauth/
+Disallow: /healthz
+Disallow: /email-link/
+
+# AI training crawlers and control tokens
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: meta-externalagent
+Allow: /
+Disallow: /wp-content/plugins/
+Disallow: /wp-includes/
+Disallow: /dm-admin/
+Disallow: /style-guide/
+Disallow: /test-comments/
+Disallow: /api/
+Disallow: /account/
+Disallow: /s/
+Disallow: /oauth/
+Disallow: /healthz
+Disallow: /email-link/
+
+Sitemap: https://www.dailymaverick.co.za/sitemap_index.xml

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This page no longer exists</title>
+    <link rel="preconnect" href="https://www.netcetera.com" crossorigin />
+    <link rel="preload" href="https://www.netcetera.com/_assets/c2a094a0c500e6bb6cc7b47b09b6554c/Assets/fonts/noto-sans-v42-latin-regular.a368ce60.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://www.netcetera.com/_assets/c2a094a0c500e6bb6cc7b47b09b6554c/Assets/fonts/noto-sans-v42-latin-700.0ff35ccf.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+        /* ── Typography (Hosted on netcetera.com CDN) ── */
+        @font-face {
+            font-display: swap;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://www.netcetera.com/_assets/c2a094a0c500e6bb6cc7b47b09b6554c/Assets/fonts/noto-sans-v42-latin-regular.a368ce60.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-display: swap;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 600;
+            src: url('https://www.netcetera.com/_assets/c2a094a0c500e6bb6cc7b47b09b6554c/Assets/fonts/noto-sans-v42-latin-600.47c2075e.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-display: swap;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 700;
+            src: url('https://www.netcetera.com/_assets/c2a094a0c500e6bb6cc7b47b09b6554c/Assets/fonts/noto-sans-v42-latin-700.0ff35ccf.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-display: swap;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 900;
+            src: url('https://www.netcetera.com/_assets/c2a094a0c500e6bb6cc7b47b09b6554c/Assets/fonts/noto-sans-v42-latin-700.0ff35ccf.woff2') format('woff2');
+        }
+
+        /* ── Reset & Base ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --color-primary:      #040066;
+            --color-secondary:    #00D4FF;
+            --color-dark:         #1B1D1F;
+            --color-body:         #1B1D1F;
+            --color-muted:        #5A626A;
+            --color-light-grey:   #F7F8F9;
+            --color-light-blue:   #F2F9FF;
+            --color-border:       #E2E8F0;
+            --color-white:        #FFFFFF;
+            --font-sans: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        *::selection {
+            background: var(--color-secondary);
+            color: var(--color-primary);
+        }
+
+        html, body {
+            height: 100%;
+            font-family: var(--font-sans);
+            background-color: var(--color-white);
+            color: var(--color-body)
+        }
+
+        /* ── Header / Nav ── */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 72px;
+            background-color: var(--color-white);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--color-primary);
+        }
+
+        .logo svg {
+            height: 32px;
+            width: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ── Header Actions ── */
+        .header-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-btn {
+            font-size: 1rem;
+            padding: 8px 22px;
+        }
+
+        /* ── TYPO3 Language Switch ── */
+        .language-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: none;
+            color: var(--color-primary);
+            cursor: pointer;
+            padding: 0;
+            text-decoration: none;
+            border-radius: 50%;
+            transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        .language-switch:hover,
+        .language-switch:focus {
+            color: var(--color-primary);
+            background-color: var(--color-light-grey);
+        }
+
+        .language-switch:focus-visible {
+            outline: 2px solid var(--color-secondary);
+            outline-offset: 2px;
+        }
+
+        .language-switch--globe,
+        .language-switch--code {
+            transition: opacity 0.35s ease;
+        }
+
+        .language-switch--globe {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .language-switch--globe svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+
+        .language-switch--code {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            font-family: var(--font-sans);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1;
+            color: var(--color-primary);
+            opacity: 0;
+        }
+
+        .language-switch:hover .language-switch--globe,
+        .language-switch:focus .language-switch--globe {
+            opacity: 0;
+        }
+
+        .language-switch:hover .language-switch--code,
+        .language-switch:focus .language-switch--code {
+            opacity: 1;
+        }
+
+        /* ── Main ── */
+        main {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 72px - 72px);
+            padding: 4.5rem 1.5rem;
+            text-align: center;
+            overflow: hidden;
+            background-color: var(--color-white);
+        }
+
+        .badge, .error-code, h1, .description, .actions, .divider {
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+            font-size: 0.8125rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.4rem 1.25rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-code {
+            font-size: clamp(6.5rem, 18vw, 11rem);
+            font-weight: 900;
+            line-height: 1;
+            color: var(--color-primary);
+            letter-spacing: -0.04em;
+            margin-bottom: 1.25rem;
+        }
+
+        h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--color-dark);
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .description {
+            max-width: 580px;
+            font-size: 1.125rem;
+            line-height: 1.65;
+            color: var(--color-muted);
+            margin-bottom: 2.75rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+            padding: 10px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out, gap 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--color-secondary);
+            color: var(--color-primary);
+            border-color: var(--color-secondary);
+            gap: 16px;
+        }
+        .btn-arrow {
+            width: 10px;
+            height: 14px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn-primary:hover .btn-arrow,
+        .btn-primary:focus .btn-arrow,
+        .btn-secondary:hover .btn-arrow,
+        .btn-secondary:focus .btn-arrow {
+            transform: translateX(2px);
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: var(--color-secondary);
+            border-radius: 2px;
+            margin: 3rem auto 0;
+        }
+
+        /* ── Footer ── */
+        footer {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-primary);
+            font-size: 0.875rem;
+            color: var(--color-white);
+            gap: 2rem;
+            padding: 1.25rem 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 10;
+        }
+
+        footer a {
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out;
+        }
+
+        footer a:hover,
+        footer a:focus {
+            color: var(--color-white);
+            text-decoration: underline;
+            text-decoration-color: var(--color-secondary);
+            text-underline-offset: 4px;
+        }
+
+        /* ── Fade transition ── */
+        [data-lang] {
+            transition: opacity 0.2s ease;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            header {
+                padding: 0 1.25rem;
+                height: 64px;
+            }
+            .logo svg {
+                height: 26px;
+                max-width: 140px;
+            }
+            .header-actions {
+                gap: 0.75rem;
+            }
+            .header-btn {
+                font-size: 0.875rem;
+                padding: 6px 14px;
+            }
+            main {
+                min-height: calc(100vh - 64px - 110px);
+                padding: 3rem 1.25rem;
+            }
+            .error-code {
+                margin-bottom: 0.75rem;
+            }
+            .description {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                max-width: 320px;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+            footer {
+                padding: 1.5rem 1.25rem;
+                gap: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══ Header ══ -->
+<header>
+    <a class="logo" href="https://www.netcetera.com/" data-link="home" aria-label="Netcetera Homepage">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 263 40" fill="#000" height="32" aria-hidden="true">
+            <path d="M59.208 32.908H42.993v-9.362H59.23v-7.093H42.992V7.092h16.216c7.042 0 12.757 5.782 12.757 12.908S66.25 32.908 59.208 32.908M59.21 0H35.983v16.453H19.75v7.093h16.233v9.362H19.766C12.724 32.908 7.01 27.125 7.01 20c0-7.126 5.714-12.908 12.756-12.908h8.11V0h-8.11C8.854 0 0 8.959 0 20c0 10.907 8.897 20 19.766 20H59.21c10.87 0 19.766-9.027 19.766-20 0-11.042-8.854-20-19.766-20m45.24 32.182h4.81V13.199h.071l9.585 18.983h6.14V6.797h-4.811v18.983h-.071l-9.55-18.983h-6.174zm29.16-11.201c.215-2.51 1.579-4.4 4.272-4.4 2.692 0 3.769 2.036 3.913 4.4zm11.416 6.182c-1.795 1.018-3.806 1.89-6.139 1.89-2.98 0-5.062-1.708-5.277-4.726h12.78c0-6.547-1.939-11.31-8.795-11.31-5.744 0-8.58 4.473-8.58 9.891 0 6.146 3.554 9.71 9.657 9.71 2.584 0 4.594-.51 6.354-1.491zm6.569-.618c0 3.71 2.083 6.073 5.852 6.073 1.436 0 2.549-.145 3.554-.437l-.143-3.854c-.503.327-1.329.51-2.19.51-1.831 0-2.262-1.492-2.262-3.092v-8.728h4.272v-3.564h-4.272V8.144l-4.811 1.563v3.746h-3.554v3.564h3.555v9.528zm25.284-12.91c-1.328-.4-2.728-.618-4.666-.618-5.78 0-8.939 4.291-8.939 9.71 0 5.709 3.051 9.891 9.118 9.891 1.975 0 3.411-.182 4.811-.619l-.216-4.036c-.826.364-2.333.873-3.698.873-3.374 0-4.99-2.655-4.99-6.11 0-3.527 1.903-5.927 4.883-5.927 1.472 0 2.405.291 3.267.691zm7.072 7.346c.215-2.51 1.579-4.4 4.272-4.4s3.769 2.036 3.913 4.4zm11.416 6.182c-1.795 1.018-3.805 1.89-6.139 1.89-2.979 0-5.062-1.708-5.277-4.726h12.78c0-6.547-1.938-11.31-8.795-11.31-5.744 0-8.58 4.473-8.58 9.891 0 6.146 3.554 9.71 9.657 9.71 2.585 0 4.595-.51 6.354-1.491zm6.57-.618c0 3.71 2.082 6.073 5.851 6.073 1.436 0 2.549-.145 3.554-.437l-.143-3.854c-.503.327-1.329.51-2.19.51-1.831 0-2.262-1.492-2.262-3.092v-8.728h4.272v-3.564h-4.272V8.144l-4.81 1.563v3.746h-3.555v3.564h3.555zm15.931-5.564c.216-2.51 1.58-4.4 4.273-4.4s3.769 2.036 3.913 4.4zm11.417 6.182c-1.795 1.018-3.805 1.89-6.139 1.89-2.98 0-5.062-1.708-5.278-4.726h12.781c0-6.547-1.939-11.31-8.796-11.31-5.743 0-8.58 4.473-8.58 9.891 0 6.146 3.554 9.71 9.658 9.71 2.584 0 4.595-.51 6.354-1.491zm5.047 5.018h4.81v-6.873c0-2.69 0-7.636 3.913-7.636.862 0 1.724.145 2.155.4v-4.91c-.503-.145-1.005-.145-1.472-.145-2.872 0-4.847 2.945-5.062 4.691h-.072v-4.254h-4.272zm14.13-13.564c1.616-1.237 3.662-2.036 5.707-2.036 2.837 0 4.165 1.018 4.165 4.036h-2.656c-2.011 0-4.38.182-6.211 1.092-1.83.908-3.159 2.545-3.159 5.345 0 3.564 3.195 5.564 6.462 5.564 2.19 0 4.595-1.164 5.708-3.236h.071c.037.581.037 1.818.216 2.8H263a85 85 0 0 1-.215-4.183c-.036-1.381-.072-2.8-.072-4.69v-2.4c0-5.528-2.334-7.892-7.97-7.892-2.046 0-4.559.546-6.426 1.418zm2.441 8.146c0-2.873 3.195-3.236 5.349-3.236h2.082c0 1.454-.215 2.8-1.005 3.854-.754 1.018-1.902 1.673-3.375 1.673-1.723 0-3.051-.69-3.051-2.29"/>
+        </svg>
+    </a>
+
+    <div class="header-actions">
+        <a class="btn-primary header-btn" href="https://www.netcetera.com/contact-us" data-link="contact">
+            <span data-lang="en">Contact us</span>
+            <span data-lang="de" hidden>Kontakt aufnehmen</span>
+        </a>
+        <!-- TYPO3 Language switcher -->
+        <button class="language-switch" id="lang-switch" onclick="toggleLang()" aria-label="Switch to German" title="Switch to German">
+            <span class="language-switch--globe">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+            </span>
+            <span class="language-switch--code" id="lang-code">de</span>
+        </button>
+    </div>
+</header>
+
+<!-- ══ Main Content ══ -->
+<main>
+    <span class="badge">HTTP 410 – Gone</span>
+    <div class="error-code" aria-hidden="true">410</div>
+
+    <h1>
+        <span data-lang="en">This page no longer exists</span>
+        <span data-lang="de" hidden>Diese Seite existiert nicht mehr</span>
+    </h1>
+
+    <p class="description">
+      <span data-lang="en">
+        The page you requested has been permanently removed and is no longer
+        available. Please update your bookmarks or return to the homepage.
+      </span>
+        <span data-lang="de" hidden>
+        Die angeforderte Seite wurde dauerhaft entfernt und steht nicht mehr
+        zur Verfügung. Bitte aktualisieren Sie Ihre Lesezeichen oder kehren
+        Sie zur Startseite zurück.
+      </span>
+    </p>
+
+    <div class="actions">
+        <a class="btn-primary" href="https://www.netcetera.com/" data-link="home">
+            <span data-lang="en">Back to Homepage</span>
+            <span data-lang="de" hidden>Zur Startseite</span>
+            <svg class="btn-arrow" viewBox="0 0 10 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 2l6 6-6 6"/>
+            </svg>
+        </a>
+
+    </div>
+</main>
+
+<!-- ══ Footer ══ -->
+<footer>
+    <span>© <span id="year"></span> Netcetera AG</span>
+    <a href="https://www.netcetera.com/legal-information" data-link="legal">
+        <span data-lang="en">Legal</span>
+        <span data-lang="de" hidden>Rechtliches</span>
+    </a>
+    <a href="https://www.netcetera.com/privacy-policies" data-link="privacy">
+        <span data-lang="en">Privacy Policy</span>
+        <span data-lang="de" hidden>Datenschutz</span>
+    </a>
+    <a href="https://www.netcetera.com/contact-us" data-link="contact">
+        <span data-lang="en">Contact</span>
+        <span data-lang="de" hidden>Kontakt</span>
+    </a>
+</footer>
+
+<script>
+    // ── Auto-set copyright year ──
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const titles = {
+        en: 'This page no longer exists',
+        de: 'Diese Seite existiert nicht mehr'
+    };
+
+    const links = {
+        en: {
+            home: 'https://www.netcetera.com/',
+            contact: 'https://www.netcetera.com/contact-us',
+            legal: 'https://www.netcetera.com/legal-information',
+            privacy: 'https://www.netcetera.com/privacy-policies'
+        },
+        de: {
+            home: 'https://www.netcetera.com/de/',
+            contact: 'https://www.netcetera.com/de/contact-us',
+            legal: 'https://www.netcetera.com/de/legal-information',
+            privacy: 'https://www.netcetera.com/de/privacy-policies'
+        }
+    };
+
+    // ── Language switcher ──
+    function setLang(lang) {
+        const nextLang = lang === 'en' ? 'de' : 'en';
+
+        // Show/hide all translated nodes
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            if (el.dataset.lang === lang) {
+                el.hidden = false;
+            } else {
+                el.hidden = true;
+            }
+        });
+
+        // Update links for the current language
+        document.querySelectorAll('[data-link]').forEach(el => {
+            const key = el.dataset.link;
+            if (links[lang] && links[lang][key]) {
+                el.href = links[lang][key];
+            }
+        });
+
+        // Update <html lang="…"> and document title
+        document.documentElement.lang = lang;
+        if (titles[lang]) {
+            document.title = titles[lang];
+        }
+
+        // Update TYPO3-style language switch target
+        const langCodeEl = document.getElementById('lang-code');
+        const langSwitchBtn = document.getElementById('lang-switch');
+        if (langCodeEl) {
+            langCodeEl.textContent = nextLang;
+        }
+        if (langSwitchBtn) {
+            const label = lang === 'en' ? 'Switch to German' : 'Zu Englisch wechseln';
+            langSwitchBtn.setAttribute('aria-label', label);
+            langSwitchBtn.setAttribute('title', label);
+        }
+
+        // Persist preference
+        try { localStorage.setItem('nc_lang', lang); } catch(e) {}
+    }
+
+    function toggleLang() {
+        const currentLang = document.documentElement.lang || 'en';
+        const nextLang = currentLang === 'en' ? 'de' : 'en';
+        setLang(nextLang);
+    }
+
+    // ── Restore saved preference or fall back to browser language ──
+    (function () {
+        let saved;
+        try { saved = localStorage.getItem('nc_lang'); } catch(e) {}
+        const browserLang = (navigator.language || 'en').toLowerCase().startsWith('de') ? 'de' : 'en';
+        setLang(saved || browserLang);
+    })();
+</script>
+
+</body>
+</html>
+

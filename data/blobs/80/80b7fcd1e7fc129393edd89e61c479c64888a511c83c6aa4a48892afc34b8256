@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-bm-mode="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>পেজ পাওয়া যায়নি &middot; BizMation</title>
+    
+    <link rel="shortcut icon" href="https://bizmation.io/uploads/info/favicon.png?c=5">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap">
+    <style>
+    /* ===================================================================
+       V2 tokens, hand-inlined. new-ui.css never loads on an error page.
+       =================================================================== */
+    :root{
+      --bm-teal-900:#064E48; --bm-teal-800:#0A6B62; --bm-teal-700:#0C9488;
+      --bm-teal-600:#0FA89A; --bm-teal-500:#14B8A6; --bm-teal-300:#5EEAD4;
+      --bm-teal-50:#F0FDFA;
+      --bm-coral-500:#FF6A1F; --bm-coral-100:#FFE3D3;
+
+      --bm-bg-app:#F4F2F8; --bm-surface:#FFFFFF; --bm-surface-sunken:#F0EDF4;
+      --bm-border-subtle:#E8E4ED; --bm-border-default:#DCD6E3;
+
+      --bm-text-primary:#1A1233; --bm-text-secondary:#4B4163;
+      /* Lifted from the #7C7388 token: micro-labels at 10px/600 need
+         headroom. #6B6279 = 5.76:1 on surface, 6.6:1 on sunken. */
+      --bm-text-tertiary:#6B6279;
+
+      --bm-danger:#E5474D;  --bm-danger-bg:#FCE6E7;
+      --bm-warning:#F5A623; --bm-warning-bg:#FEF3DD;
+
+      --bm-shadow-xs:0 1px 2px rgba(12,30,28,.04);
+      --bm-shadow-md:0 4px 12px rgba(12,30,28,.08),0 2px 4px rgba(12,30,28,.04);
+      --bm-shadow-teal:0 6px 18px rgba(6,78,72,.28);
+
+      /* Inter Tight first (Latin + the tabular numerals), Hind Siliguri
+         second to catch the Bengali codepoints Inter Tight has no glyphs
+         for. Ordering is the whole mechanism — do not reorder. */
+      --bm-font:"Inter Tight","Hind Siliguri","Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+      /* Non-token additions, each measured — see the verification notes. */
+      --bm-ghost-border:#8E839F;   /* 3.56:1 on surface — WCAG 1.4.11 */
+      --bm-focus:#0C9488;          /* 3.75:1 on surface */
+      --bm-focus-halo:rgba(20,184,166,.20);
+
+      /* Per-page accent, rebound by the .ac-* classes below. */
+      --bm-accent:var(--bm-teal-600);
+      --bm-accent-tint:var(--bm-teal-50);
+      --bm-accent-ink:var(--bm-teal-800);
+      color-scheme:light;
+    }
+
+    /* Accent map. Teal owns the navigation/session pages (the ones users
+       actually hit); coral is the app's own live attention colour
+       (sidebar active bar, notification count) and owns 403; amber and red
+       are reserved for the genuinely semantic cases.
+       Purple is deliberately unused: the --bm-purple-* tokens have ZERO
+       component consumers in new-ui.css — purple is substrate in V2
+       (bg-app, the text ramp), never an accent. */
+    .ac-teal   {--bm-accent:var(--bm-teal-600); --bm-accent-tint:var(--bm-teal-50);   --bm-accent-ink:var(--bm-teal-800)}
+    .ac-deep   {--bm-accent:var(--bm-teal-800); --bm-accent-tint:var(--bm-teal-50);   --bm-accent-ink:var(--bm-teal-800)}
+    .ac-coral  {--bm-accent:var(--bm-coral-500);--bm-accent-tint:var(--bm-coral-100); --bm-accent-ink:#A33A0B} /* 5.42:1 */
+    .ac-warning{--bm-accent:var(--bm-warning);  --bm-accent-tint:var(--bm-warning-bg);--bm-accent-ink:#8A5A05} /* 5.38:1 */
+    .ac-danger {--bm-accent:var(--bm-danger);   --bm-accent-tint:var(--bm-danger-bg); --bm-accent-ink:#C42B31} /* 4.71:1 */
+
+    /* ===================================================================
+       Dark. Three signals, correct precedence.
+       Theme is DB-only (saveUiPreference() writes users.others and
+       session()->forget()s the key — no cookie is ever set), so on
+       401/402/403/419/429/503 the user's real theme is UNKNOWABLE and we
+       emit data-bm-mode="auto" and defer to the OS. data-bm-mode="light"
+       matches nothing here, so an authenticated V2-Light user on a dark OS
+       is correctly NOT force-flipped — the bug every
+       prefers-color-scheme-only page ships.
+       =================================================================== */
+    html[data-bm-mode="dark"], body.new_ui_dark{
+      --bm-bg-app:#061715; --bm-surface:#0E2421; --bm-surface-sunken:#081A18;
+      --bm-border-subtle:#1A3D38; --bm-border-default:#245049;
+      --bm-text-primary:#F0FDFA; --bm-text-secondary:#B7CDC9; --bm-text-tertiary:#7E9692;
+      --bm-danger-bg:rgba(229,71,77,.15); --bm-warning-bg:rgba(245,166,35,.15);
+      --bm-teal-50:rgba(20,184,166,.12); --bm-coral-100:rgba(255,106,31,.20);
+      --bm-shadow-xs:0 1px 2px rgba(0,0,0,.3);
+      --bm-shadow-md:0 4px 12px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.3);
+      --bm-shadow-teal:0 6px 18px rgba(0,0,0,.45);
+      --bm-ghost-border:#4E8C82;  /* 4.17:1 on dark surface */
+      --bm-focus:#5EEAD4;         /* 10.98:1 on dark surface */
+      color-scheme:dark;
+    }
+    /* The documented tint + dark-ink trap (new-ui.css:1716-1726): a soft
+       tint becomes a low-alpha overlay on dark, so the dark ink that was
+       correct on light goes invisible. Every accent ink lifts with it. */
+    html[data-bm-mode="dark"] .ac-teal,   body.new_ui_dark .ac-teal,
+    html[data-bm-mode="dark"] .ac-deep,   body.new_ui_dark .ac-deep   {--bm-accent-ink:var(--bm-teal-300)}
+    html[data-bm-mode="dark"] .ac-coral,  body.new_ui_dark .ac-coral  {--bm-accent-ink:#FF9E66}
+    html[data-bm-mode="dark"] .ac-warning,body.new_ui_dark .ac-warning{--bm-accent-ink:#F7BC5A}
+    html[data-bm-mode="dark"] .ac-danger, body.new_ui_dark .ac-danger {--bm-accent-ink:#F27D81}
+
+    @media (prefers-color-scheme:dark){
+      html[data-bm-mode="auto"]{
+        --bm-bg-app:#061715; --bm-surface:#0E2421; --bm-surface-sunken:#081A18;
+        --bm-border-subtle:#1A3D38; --bm-border-default:#245049;
+        --bm-text-primary:#F0FDFA; --bm-text-secondary:#B7CDC9; --bm-text-tertiary:#7E9692;
+        --bm-danger-bg:rgba(229,71,77,.15); --bm-warning-bg:rgba(245,166,35,.15);
+        --bm-teal-50:rgba(20,184,166,.12); --bm-coral-100:rgba(255,106,31,.20);
+        --bm-shadow-xs:0 1px 2px rgba(0,0,0,.3);
+        --bm-shadow-md:0 4px 12px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.3);
+        --bm-shadow-teal:0 6px 18px rgba(0,0,0,.45);
+        --bm-ghost-border:#4E8C82;
+        --bm-focus:#5EEAD4;
+        color-scheme:dark;
+      }
+      html[data-bm-mode="auto"] .ac-teal,
+      html[data-bm-mode="auto"] .ac-deep   {--bm-accent-ink:var(--bm-teal-300)}
+      html[data-bm-mode="auto"] .ac-coral  {--bm-accent-ink:#FF9E66}
+      html[data-bm-mode="auto"] .ac-warning{--bm-accent-ink:#F7BC5A}
+      html[data-bm-mode="auto"] .ac-danger {--bm-accent-ink:#F27D81}
+    }
+
+    /* ===================================================================
+       Shell
+       =================================================================== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh; min-height:100dvh;
+      display:flex; align-items:center; justify-content:center;
+      padding:32px 24px;
+      background:var(--bm-bg-app);
+      font-family:var(--bm-font); font-size:14px;
+      color:var(--bm-text-primary);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    .bm-card{
+      width:100%; max-width:760px;
+      background:var(--bm-surface);
+      border:1px solid var(--bm-border-subtle);
+      border-radius:14px;                 /* the top-level shell radius */
+      box-shadow:var(--bm-shadow-md);     /* the only precedented step up
+                                             from xs for a lone panel;
+                                             -lg is reserved for overlays */
+    }
+
+    /* --- header rail: 13px top corners inside the 14px shell --- */
+    .bm-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px 20px;
+      border-bottom:1px solid var(--bm-border-subtle);
+      border-radius:13px 13px 0 0;
+    }
+    /* The mark is INLINED as a data URI, not linked with asset().
+       Why: /public/uploads is gitignored (.gitignore:29), so anything under
+       uploads/info/ is deploy-time cargo, not source. logo-pdf.png returns
+       404 on bizmation.io for exactly that reason — verified with curl —
+       and logo.png only happens to be there because someone uploaded it.
+       An error page is the last surface that should depend on a file the
+       repo does not own: it must render on a hard-down 500, in maintenance
+       mode, and in a fresh environment with an empty uploads dir.
+       Inlined, it costs one 9.4KB payload, zero network requests, and
+       cannot 404. 252x88 source = 2x the 126x44 box, so it stays crisp on
+       retina; background-size:contain holds the 2.87 ratio at every size. */
+    .bm-logo{
+      width:126px; height:44px; display:block; flex:none;
+      background:url("data:image/png;base64,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") no-repeat left center;
+      background-size:contain;
+    }
+    .bm-tag{
+      font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+      padding:3px 9px; border-radius:999px;
+      background:var(--bm-surface-sunken); color:var(--bm-text-secondary);
+      white-space:nowrap;
+    }
+
+    /* --- body: the editorial split --- */
+    .bm-body{
+      display:grid;
+      grid-template-columns:minmax(0,196px) 1fr;
+      gap:28px;
+      padding:28px 24px;
+    }
+    .bm-plate{
+      position:relative;
+      padding-left:18px;
+      border-right:1px solid var(--bm-border-subtle);
+      min-width:0;
+    }
+    /* The app's native decor move: .custom_dashboard_card::before, verbatim
+       (4px wide, inset 12px top/bottom, cap radius 0 4px 4px 0). */
+    .bm-plate::before{
+      content:''; position:absolute; left:0; top:12px; bottom:12px;
+      width:4px; background:var(--bm-accent); border-radius:0 4px 4px 0;
+    }
+    /* The cdc_icon recipe (new-ui.css:1372-1383) in its soft-tint variant
+       (L1370-1371), which auto-flips to the alpha overlay on dark. */
+    .bm-chip{
+      width:36px; height:36px; border-radius:10px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background:var(--bm-accent-tint); color:var(--bm-accent-ink);
+      margin-bottom:14px;
+    }
+    .bm-chip svg{
+      width:18px; height:18px; display:block;
+      stroke:currentColor; stroke-width:1.75; fill:none;
+      stroke-linecap:round; stroke-linejoin:round;
+    }
+    /* The KPI-number recipe (700 / -0.02em / tnum) scaled to hero and
+       pushed to 800 (Inter Tight loads 800).
+       MEASURED: the plate track is 196px minus 18px padding = 178px of
+       content. "404" at 92px in Inter Tight 800 with tabular figures is
+       ~166px wide. It fits with margin at every desktop width — the
+       numeral never crosses the border-right hairline. */
+    .bm-code{
+      display:block; white-space:nowrap;
+      font-size:clamp(64px,8vw,92px); font-weight:800;
+      line-height:.9; letter-spacing:-.02em;
+      font-feature-settings:"tnum";
+      color:var(--bm-text-primary);
+    }
+    /* Legacy/compat: errors::minimal can pass a non-numeric code (the old
+       503 sent 'Maintenance Mode'). Never let a word blow out the slot. */
+    .bm-code.is-word{
+      font-size:clamp(18px,2.2vw,22px); line-height:1.2;
+      white-space:normal; overflow-wrap:anywhere;
+    }
+    .bm-eyebrow{
+      display:block; margin-top:12px;
+      font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--bm-text-tertiary);
+    }
+
+    /* --- content --- */
+    .bm-content{min-width:0}
+    /* The copy is Bangla (Hind Siliguri). Bengali needs materially more
+       leading than Latin — matras sit above the headline and the
+       descenders of ্র/ু/ৃ hang below — so line-height is 1.35/1.75
+       rather than the 1.2/1.6 a Latin-only page would use.
+       letter-spacing stays NEGATIVE only on the title, where it applies to
+       the Latin "BizMation" and the numerals; Bengali conjuncts are not
+       tracked apart (see .bm-note b). */
+    .bm-title{
+      font-size:clamp(22px,2.6vw,28px); font-weight:700; letter-spacing:-.01em;
+      line-height:1.35; color:var(--bm-text-primary); margin-bottom:10px;
+    }
+    .bm-lede{
+      font-size:14.5px; line-height:1.75; color:var(--bm-text-secondary);
+      max-width:52ch; overflow-wrap:anywhere;
+    }
+    /* errors::minimal forwards only a one-line `message`, so it supplies no
+       lede. An empty <p> would still take its margin box. */
+    .bm-lede:empty{display:none}
+    /* The borderless 10px soft-tint alert (new-ui.css:1257-1262). */
+    .bm-note{
+      margin-top:16px; padding:11px 14px;
+      border:none; border-radius:10px; font-weight:500;
+      font-size:13.5px; line-height:1.7; overflow-wrap:anywhere;
+      background:var(--bm-accent-tint); color:var(--bm-accent-ink);
+    }
+    /* This label is Bangla, so it drops the uppercase + .12em tracking the
+       Latin micro-labels use. text-transform:uppercase is a no-op on
+       Bengali (the script is unicameral), but letter-spacing is actively
+       destructive: it forces gaps between the parts of a conjunct and
+       detaches matras from their base glyph. Weight and colour carry the
+       hierarchy instead. */
+    .bm-note b{
+      display:block; margin-bottom:1px;
+      font-size:11.5px; font-weight:700; opacity:.85;
+    }
+
+    /* --- CTAs: the .btn recipe --- */
+    .bm-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
+    .bm-btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:7px;
+      min-height:40px; padding:8px 15px;
+      border:1px solid transparent; border-radius:9px;   /* the control radius */
+      /* 1.6 leading, not the 1.2 a Latin label needs: Bangla button text
+         has ascending matras and descenders that 1.2 clips. */
+      font:600 13.5px/1.6 var(--bm-font);
+      text-decoration:none; cursor:pointer;
+      transition:background .15s, border-color .15s, box-shadow .15s, transform .1s;
+    }
+    .bm-btn:active{transform:translateY(.5px)}
+    .bm-btn:focus-visible{
+      outline:2px solid var(--bm-focus); outline-offset:2px;
+      box-shadow:0 0 0 3px var(--bm-focus-halo);
+    }
+    /* DELIBERATE DEVIATION, documented: new-ui.css's .btn-primary is
+       linear-gradient(135deg, teal-500, teal-700). White on teal-500 is
+       2.49:1 and on teal-700 is 3.75:1 — both fail WCAG AA at 13px/600.
+       An error page is the one screen where the exit must be legible, so
+       the ramp shifts to teal-800 -> teal-900 (6.38:1 at its lightest
+       point). The 135deg axis, the teal identity, the glow and the
+       darken-on-hover rule are all preserved. */
+    .bm-btn--primary{
+      background:linear-gradient(135deg,var(--bm-teal-800),var(--bm-teal-900));
+      color:#fff; box-shadow:var(--bm-shadow-teal);
+    }
+    .bm-btn--primary:hover{
+      background:linear-gradient(135deg,var(--bm-teal-900),#043B36);
+      color:#fff;   /* re-pinned: dark mode's link colour bleeds into
+                       anchor-styled buttons (new-ui.css:1872-1876) */
+    }
+    .bm-btn--ghost{
+      background:var(--bm-surface);
+      border-color:var(--bm-ghost-border);
+      color:var(--bm-text-secondary);
+    }
+    .bm-btn--ghost:hover{
+      background:var(--bm-surface-sunken);
+      color:var(--bm-text-primary);
+    }
+
+    /* --- the manifest strip --- */
+    .bm-manifest{
+      display:flex; flex-wrap:wrap; align-items:flex-end; gap:10px 26px;
+      padding:12px 20px;
+      background:var(--bm-surface-sunken);
+      border-top:1px solid var(--bm-border-subtle);
+      border-radius:0 0 13px 13px;
+    }
+    .bm-manifest dt{
+      font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--bm-text-tertiary); margin-bottom:2px;
+    }
+    .bm-manifest dd{
+      font-size:12.5px; font-weight:600; font-feature-settings:"tnum";
+      color:var(--bm-text-secondary); overflow-wrap:anywhere;
+    }
+    .bm-manifest .bm-path{
+      max-width:34ch; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      /* NB: direction:rtl is deliberately NOT used to truncate from the
+         left — bidi rule UAX#9 N2 relocates the leading "/" to the visual
+         right and misprints the path as "admin/orders/1841/". Plain
+         right-side ellipsis is honest. */
+    }
+    .bm-copy{
+      margin-left:auto; align-self:center;
+      background:none; border:1px solid var(--bm-ghost-border); border-radius:8px;
+      padding:5px 11px; cursor:pointer;
+      font:600 11.5px/1.6 var(--bm-font); color:var(--bm-text-secondary);
+      transition:background .15s, color .15s, box-shadow .15s;
+    }
+    .bm-copy:hover{background:var(--bm-surface); color:var(--bm-text-primary)}
+    .bm-copy:focus-visible{
+      outline:2px solid var(--bm-focus); outline-offset:2px;
+      box-shadow:0 0 0 3px var(--bm-focus-halo);
+    }
+
+    /* ===================================================================
+       Responsive
+       =================================================================== */
+    @media (max-width:720px){
+      .bm-body{grid-template-columns:1fr; gap:22px; padding:24px 20px}
+      .bm-plate{
+        border-right:none;
+        border-bottom:1px solid var(--bm-border-subtle);
+        padding-bottom:22px;
+        display:flex; align-items:center; gap:14px;
+      }
+      .bm-chip{margin-bottom:0; flex:none}
+      .bm-eyebrow{margin-top:0}
+      .bm-code.is-word{flex:1 1 auto}
+    }
+    /* The header is a flex row: logo + the "SYSTEM RESPONSE" tag. At 44px
+       the logo is 126px wide, which together with the tag would overrun a
+       320px viewport — so it steps down before that can happen. */
+    @media (max-width:480px){
+      .bm-logo{width:98px; height:34px}
+      .bm-head{padding:12px 16px}
+    }
+    @media (max-width:420px){
+      body{padding:16px 12px}
+      .bm-body{padding:20px 16px}
+      .bm-actions{flex-direction:column; align-items:stretch}
+      .bm-btn{min-height:44px}   /* touch target */
+      .bm-manifest{gap:10px 18px}
+      .bm-copy{margin-left:0}
+    }
+    @media (max-height:520px){
+      body{align-items:flex-start; padding-top:20px; padding-bottom:20px}
+    }
+
+    /* ===================================================================
+       Motion. new-ui.css contains ZERO @keyframes, zero `animation` and
+       zero `backdrop-filter` across all 1,931 lines. This page adds none
+       of the three — an animated error page would be the single most
+       foreign thing in the product. The whole budget is the system's own
+       .15s colour / .1s transform transitions on interactive elements.
+       Because there is no keyframe, the reduced-motion block is trivially
+       complete and nothing is lost: no content, meaning or wayfinding is
+       carried by motion.
+       =================================================================== */
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{transition-duration:.01ms !important}
+      .bm-btn:active{transform:none}
+    }
+
+    /* Windows High Contrast: keep the accent rail and controls perceivable. */
+    @media (forced-colors:active){
+      .bm-card{border:1px solid CanvasText}
+      .bm-plate::before{background:Highlight; forced-color-adjust:none}
+      .bm-btn{border:1px solid ButtonText}
+    }
+
+    @media print{
+      .bm-actions, .bm-copy{display:none}
+      body{padding:0; background:#fff}
+      .bm-card{box-shadow:none; border-color:#999; max-width:none}
+    }
+    </style>
+</head>
+<body class="">
+
+<main class="bm-card ac-teal">
+
+    <header class="bm-head">
+        
+        <span class="bm-logo" role="img" aria-label="BizMation"></span>
+        <span class="bm-tag">System response</span>
+    </header>
+
+    <div class="bm-body">
+
+        <div class="bm-plate">
+            <span class="bm-chip" aria-hidden="true"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+    <circle cx="10" cy="10" r="7.75"/>
+    <path d="M13 7 8.75 8.75 7 13l4.25-1.75z"/>
+</svg>
+</span>
+            <span class="bm-code ">404</span>
+            <span class="bm-eyebrow">Not Found</span>
+        </div>
+
+        <div class="bm-content">
+            <h1 class="bm-title">এই ঠিকানায় কোনো পেজ নেই।</h1>
+            <p class="bm-lede">লিংকটি পুরোনো হয়ে যেতে পারে, অথবা রেকর্ডটি মুছে ফেলা হয়েছে। আমরা যে ঠিকানায় গিয়েছিলাম তা নিচে দেওয়া আছে — মিলিয়ে দেখুন, অথবা ড্যাশবোর্ডে ফিরে যান।</p>
+
+            
+            
+            
+            
+            
+            <div class="bm-actions">
+                                                                                                    <a class="bm-btn bm-btn--primary" href="https://bizmation.io/admin/dashboard"
+                           >ড্যাশবোর্ডে ফিরে যান</a>
+                                                                                                                        
+                        <button type="button" class="bm-btn bm-btn--ghost" onclick="if(history.length&gt;1){history.back()}else{location.href=&quot;https:\/\/bizmation.io&quot;}">পিছনে ফিরে যান</button>
+                                                </div>
+        </div>
+
+    </div>
+
+    
+        <dl class="bm-manifest">
+        <div><dt>Status</dt><dd>404</dd></div>
+        <div><dt>Method</dt><dd>GET</dd></div>        <div><dt>Page</dt><dd class="bm-path" title="/.well-known/gpc.json">/.well-known/gpc.json</dd></div>        <div><dt>Time</dt><dd>20 Oct 2026, 02:28</dd></div>        
+        <button type="button" class="bm-copy"
+                data-details="404 — GET /.well-known/gpc.json — 20 Oct 2026, 02:28"
+                onclick="var b=this,d=b.getAttribute('data-details');if(navigator.clipboard&amp;&amp;navigator.clipboard.writeText){navigator.clipboard.writeText(d).then(function(){b.textContent='কপি হয়েছে';},function(){b.textContent='Ctrl+C চাপুন';});}else{b.textContent=d;}">বিস্তারিত কপি করুন</button>
+    </dl>
+    
+</main>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Cloudflare Status
+
+> Real-time status, incidents, and scheduled maintenance for Cloudflare services.
+
+Use this index to find Markdown status pages and structured API resources.
+
+## Status pages
+
+- [Status page index](/index.md): Markdown
+  routes for the overview, services, locations, history, incidents, and
+  notifications.
+- [Public sitemap](/sitemap.xml): Public status
+  page URLs.
+
+## Automated access
+
+- [Status API skill](/.well-known/agent-skills/status-api/SKILL.md):
+  Agent workflow for querying current status and incidents.
+- [OpenAPI description](/openapi/v2.yaml):
+  Complete public v2 API specification.
+
+Use the Status API for automated access; do not scrape the HTML status pages.
+Automated HTML requests may be rate limited or blocked. Send an identifiable
+`User-Agent` with a contact URL or email, for example
+`ExampleMonitor/1.0 (+https://example.com/contact)`. Requests
+without a `User-Agent` are subject to more aggressive rate limiting.
+Agentic clients may request the Markdown representation with
+`Accept: text/markdown`.

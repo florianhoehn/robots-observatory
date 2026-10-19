@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt" xml:lang="pt" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YK1RSLZKFX"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YK1RSLZKFX');
+    </script>    <meta charset="UTF-8">
+    <title>The Hentai - O melhor em Hentai</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+
+    <meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
+    <meta name="rating" content="adult"/>
+
+    <link rel="stylesheet" type="text/css" href="/thehentai/style.css?ver=102"/>
+    <link rel="stylesheet" href="/thehentai/icons.css?ver=12"/>
+    <script src="/thehentai/jquery-3.7.1.min.js"></script>
+        
+    <meta name="description"  content=""/>
+    <meta name="keywords"  content=""/>
+    
+    
+    <link rel="canonical" href=""/>
+        
+
+    <!-- OG -->
+    <link rel="image_src" href=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:description" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="pt_br"/>
+    <meta property="og:site_name" content="The Hentai"/>
+    <meta property="og:title" content="The Hentai - O melhor em Hentai"/>
+    <meta property="og:url" content=""/>
+    <!-- /OG -->
+
+    <!-- /ICONS -->
+    <link rel="icon" sizes="32x32" href="/uploads/img/icon-th-32x32.png"/>
+    <link rel="icon" sizes="150x150" href="/uploads/img/icon-th-150x150.png"/>
+    <link rel="icon" sizes="300x300" href="/uploads/img/icon-th-300x300.png"/>
+    <link rel="icon" sizes="500x500" href="/uploads/img/icon-th-500x500.png"/>
+    <link rel="apple-touch-icon" href="/uploads/img/icon-th-300x300.png"/>
+
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+
+        
+</head>
+<body>
+    
+    <style>
+.age_overlay{position:fixed;top:0;left:0;z-index:999998;display:none;width:100%;height:100vh;height:100lvh;align-items:center;justify-content:center;padding:25px;overscroll-behavior:none;touch-action:none}
+.age_overlay.active{display:flex}
+.age_overlay:before{content:"";position:fixed;inset:-100px 0;background:rgba(0,0,0,.74);-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);pointer-events:none}
+.age_overlay strong{ color: white; }
+.age_overlay a{color:#f2e1bd;font-weight:700}
+
+.age_box{box-sizing:border-box;background:#111214;color:#f2e1bd;border:1px solid #303139;font:15px Arial,sans-serif}
+.age_box{position:relative;width:100%;max-width:510px;padding:46px 24px 26px;border-radius:20px;box-shadow:0 18px 65px rgba(0,0,0,.65);text-align:center}
+.age_lang{position:absolute;top:15px;left:16px}
+.age_lang_select{height:30px;padding:0 10px;border:1px solid #3b3d45;border-radius:8px;background:#1b1c20;color:#cfcfd4;font:700 12px Arial,sans-serif;cursor:pointer}
+.age_logo{display:block;width:100px;height:100px;margin:0 auto 18px;object-fit:contain;filter:grayscale(1)}
+.age_buttons{display:grid;gap:14px}
+.age_btn{width:100%;min-height:40px;border:1px solid #f2e1bd;border-radius:15px;font:700 16px Arial,sans-serif;cursor:pointer}
+.age_btn_exit{background:transparent;color:#f2e1bd}
+.age_btn_enter{background:#f2e1bd;color:#111214}
+.age_btn:hover,.age_lang_select:hover{filter:brightness(.94)}
+html.age_lock,body.age_lock{overflow:hidden;overscroll-behavior:none}
+@media(max-width:1450px){
+    .age_overlay{align-items:flex-start;padding:42px 16px 16px}
+    .age_box{padding:46px 20px 24px;border-radius:18px}}
+</style>
+
+<div id="age_overlay" class="age_overlay">
+    <div class="age_box">
+
+        <div class="age_lang">
+            <select id="age_lang_select" class="age_lang_select" aria-label="Language Select">
+                <option value="en">🇺🇸 English</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+        </div>
+
+        <img class="age_logo" src="/uploads/img/icon-th-150x150.png" width="100" height="100" alt="The Hentai">
+
+        <h2 id="age_title"></h2>
+
+        <p id="age_text_1"></p>
+        <p id="age_text_2"></p>
+        <p id="age_parental"></p>
+
+        <div class="age_buttons">
+            <button id="age_exit" class="age_btn age_btn_exit"></button>
+            <button id="age_enter" class="age_btn age_btn_enter"></button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+(function(){
+
+let site_lang="pt";
+const cookie_prefix="th";
+const cookie_domain="thehentai.net";
+const age_cookie=`${cookie_prefix}_age_verified`;
+
+const lang_pack={
+pt:{
+age_title:"Este é um site adulto!",
+age_text_1:`Este site contém conteúdo sexualmente explícito. Ao prosseguir, você confirma que tem <strong>18 anos ou mais</strong>, ou a idade legal exigida em sua região, e que visualizar este conteúdo é permitido onde você está localizado.`,
+age_text_2:`Ao clicar em <strong>Entrar — Eu concordo</strong>, você confirma que aceita acessar este conteúdo. Se você não concorda, clique em sair.`,
+age_parental:`Esta <a href="https://www.internetmatters.org/parental-controls/" target="_blank" rel="noopener noreferrer">página de controle parental</a> explica como bloquear facilmente o acesso a este site.`,
+age_exit:"Sair",
+age_enter:"Entrar — Eu concordo"
+},
+en:{
+age_title:"This is an adult website!",
+age_text_1:`This website contains sexually explicit material. By continuing, you confirm that you are <strong>18 years or older</strong>, or the age of majority in your jurisdiction, and that viewing this content is lawful where you are located.`,
+age_text_2:`By clicking <strong>Enter — I Agree</strong>, you confirm that you agree to access this content. If you do not agree, click Exit.`,
+age_parental:`This <a href="https://www.internetmatters.org/parental-controls/" target="_blank" rel="noopener noreferrer">Parental Controls Page</a> explains how you can easily block access to this site.`,
+age_exit:"Exit",
+age_enter:"Enter — I Agree"
+}
+};
+
+const ids=["age_title","age_text_1","age_text_2","age_parental","age_exit","age_enter","age_lang_select","age_overlay"];
+const el=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+const html_fields=["age_text_1","age_text_2","age_parental"];
+const text_fields=["age_title","age_exit","age_enter"];
+
+function get_cookie(name){
+    return document.cookie.split("; ").find(row=>row.startsWith(name+"="))?.split("=")[1];
+}
+
+function set_cookie(name,max_age){
+    const domain=location.hostname===cookie_domain||location.hostname.endsWith(`.${cookie_domain}`)
+        ?`; Domain=${cookie_domain}`
+        :"";
+    document.cookie=`${name}=1; Max-Age=${max_age}; Path=/; SameSite=Lax${domain}${location.protocol==="https:"?"; Secure":""}`;
+}
+
+function get_lang(){
+    const lang=(site_lang||document.documentElement.lang||navigator.language||"en").toLowerCase();
+    const base=lang.split("-")[0];
+    return lang_pack[lang]?lang:lang_pack[base]?base:"en";
+}
+
+function set_lang(lang){
+    lang=lang_pack[lang]?lang:"en";
+    const t=lang_pack[lang];
+    site_lang=lang;
+
+    html_fields.forEach(id=>el[id].innerHTML=t[id]);
+    text_fields.forEach(id=>el[id].textContent=t[id]);
+    el.age_lang_select.value=lang;
+}
+
+set_lang(get_lang());
+
+el.age_lang_select.addEventListener("change",event=>set_lang(event.target.value));
+
+if(get_cookie(age_cookie)!=="1"){
+    document.documentElement.classList.add("age_lock");
+    document.body.classList.add("age_lock");
+    el.age_overlay.classList.add("active");
+}
+
+el.age_enter.addEventListener("click",()=>{
+    set_cookie(age_cookie,2592000);
+    el.age_overlay.classList.remove("active");
+    document.documentElement.classList.remove("age_lock");
+    document.body.classList.remove("age_lock");
+    window.dispatchEvent(new Event("age_verified"));
+});
+
+el.age_exit.addEventListener("click",()=>location.href="https://www.youtube.com/watch?v=4VEMLNg3ICo");
+
+})();
+</script>
+<style>
+.cookie_box{box-sizing:border-box;position:fixed;left:20px;bottom:20px;z-index:999999;display:none;width:calc(100% - 40px);max-width:300px;padding:20px 18px;border:1px solid #303139;border-radius:10px;background:#111214;color:#f2e1bd;box-shadow:0 12px 38px rgba(0,0,0,.6);font:15px Arial,sans-serif;text-align:center}
+.cookie_box.active{display:block}
+.cookie_button{min-height:38px;padding:0 24px;border:0;border-radius:15px;background:#f2e1bd;color:#111214;font:700 15px Arial,sans-serif;cursor:pointer}
+.cookie_button:hover{filter:brightness(.94)}
+@media(max-width:1450px){
+    .cookie_box{left:12px;bottom:12px;width:calc(100% - 24px)}
+    .cookie_button{width:100%}}
+</style>
+
+<div id="cookie_box" class="cookie_box">
+    <h3 id="cookie_title"></h3>
+    <p id="cookie_text"></p>
+    <button id="cookie_button" class="cookie_button"></button>
+</div>
+
+<script>
+(function(){
+
+let site_lang="pt";
+const cookie_prefix="th";
+const cookie_domain="thehentai.net";
+const notice_cookie=`${cookie_prefix}_cookie_notice_ok`;
+
+const lang_pack={
+pt:{
+cookie_title:"Valorizamos sua privacidade",
+cookie_text:"Usamos cookies e tecnologias semelhantes para melhorar sua experiência, lembrar preferências e analisar o uso da plataforma.",
+cookie_button:"Prosseguir"
+},
+en:{
+cookie_title:"We value your privacy",
+cookie_text:"We use cookies and similar technologies to improve your experience, remember preferences, and analyze platform usage.",
+cookie_button:"Continue"
+}
+};
+
+const ids=["cookie_title","cookie_text","cookie_button","cookie_box"];
+const el=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+
+function get_cookie(name){
+    return document.cookie.split("; ").find(row=>row.startsWith(name+"="))?.split("=")[1];
+}
+
+function set_cookie(name,max_age){
+    const domain=location.hostname===cookie_domain||location.hostname.endsWith(`.${cookie_domain}`)
+        ?`; Domain=${cookie_domain}`
+        :"";
+    document.cookie=`${name}=1; Max-Age=${max_age}; Path=/; SameSite=Lax${domain}${location.protocol==="https:"?"; Secure":""}`;
+}
+
+function get_lang(){
+    const lang=(site_lang||document.documentElement.lang||navigator.language||"en").toLowerCase();
+    const base=lang.split("-")[0];
+    return lang_pack[lang]?lang:lang_pack[base]?base:"en";
+}
+
+function set_lang(lang){
+    const t=lang_pack[lang_pack[lang]?lang:"en"];
+    el.cookie_title.textContent=t.cookie_title;
+    el.cookie_text.textContent=t.cookie_text;
+    el.cookie_button.textContent=t.cookie_button;
+}
+
+set_lang(get_lang());
+
+if(get_cookie(notice_cookie)!=="1")el.cookie_box.classList.add("active");
+
+el.cookie_button.addEventListener("click",()=>{
+    set_cookie(notice_cookie,31536000);
+    el.cookie_box.classList.remove("active");
+});
+
+})();
+</script>
+
+    <header class="">
+
+        <div class="logo"><a href="/" title="The Hentai">   <picture> <source type="image/webp" srcset="/uploads/mascot/mascot-th-big.jpg.webp">
+                                <img class="cfg_Logo" src="/uploads/mascot/mascot-th-big.jpg" alt="The Hentai Logo" width="479" height="153"> </picture></a></div>
+
+        <div class="box_top_right">
+            <div class="select_countries">
+                                                <a href="https://en.thehentai.net" lang="en" hreflang="en" title="Porn Comics in English"><img src="/uploads/img/US.png" class="flag_en" alt="Porn Comics in English"></a>
+                <a href="https://thehentai.net" lang="pt" hreflang="pt" title="Hentai em Português"><img src="/uploads/img/PT.png" class="flag_pt" alt="Hentai em Português"></a>
+                            </div>
+            <div class="top_search">
+                <div class="search_box">
+                    <form name="myForm" action="/" method="get" role="search" onsubmit="return validateForm()">                        
+                        <input type="search" name="s" id="s" class="search" placeholder="Buscar..." value="" onkeyup="valueUTM()">
+                        <input type="hidden" name="utm_source" value="TheHentaiSearch">
+                        <input type="hidden" name="utm_medium" id="utm_medium" value="">
+                        <input type="submit" id="search-button" class="search-button" aria-label="s" value="">
+                    </form>
+                </div>
+                <script>
+                    //Normalization of quotes in the search
+                    document.getElementById("s").addEventListener("input", 	function () {
+                    this.value = this.value.replace(/’/g, "'").replace(/“|”/g, '"'); });
+
+                    function validateForm() {
+                    var x = document.forms["myForm"]["s"].value;
+                    if (x == "" || x == null) {
+                        document.getElementById("search-button").placeholder = "Type name here..";
+                        document.getElementById("s").focus();
+                        return false;
+                    }
+                    }
+
+                    function valueUTM(){
+                        // passing the value of "s" to "utm_medium"
+                        document.getElementById('utm_medium').value = document.getElementById('s').value;
+                    }
+                </script>
+            </div>
+
+        </div>
+
+    </header>
+
+    <nav>
+
+        <hr class="menu_row">
+
+                <div class="tags_top">
+                        <a class="first_icon" href="https://pt.jerkmate.com" target="_blank" rel="noopener" title="Sex Cams">
+                <img src="/uploads/img/jerkmate-icon-20px.png" class="icon_jerkmate" alt="Jerkmate"  width="30" height="20"> Jerkmate
+            </a>
+            
+            <a href="https://pt.bongacams.com" target="_blank" rel="noopener" title="BongaCams">
+                <img src="/uploads/img/bongacams-32x24.png" class="icon_bongacams" width="27" height="20" alt="BongaCams"> BongaCams
+            </a>
+            
+            <a href="https://a.candyai.love/cb6237bf-87bb-4f12-84c1-22016a8485a2?creative=1_home_anime&spot=menu_link&adg=0" target="_blank" rel="noopener" title="AI Sex Chat">
+                <img src="/uploads/img/candyai-23x20.png" class="icon_candyai" width="20" height="20" alt="AI Sex Chat"> AI Sex Chat
+            </a>
+            
+            <a href="https://www.cmonbae.com/?union_id=MTE1" target="_blank" rel="noopener" title="Undress AI">
+                <img src="https://thehentai.net/uploads/img/2025/11/undress-ai-20x20-hentai-pt-br-48.jpg" width="20" height="20" class="tablink_20_20" alt="Undress AI"> Undress AI
+            </a>
+            
+            <a href="https://go.mavrtracktor.com/easy?campaignId=d2670f48fd8f3992839d95a844a56254704c6b61a0a9d6c74a77f1b1cc3b550d&userId=200362f3aa93b0a0113f5879830b7c65b10d5e09ff934d6c23379e2562b53cda" target="_blank" rel="nofollow noreferrer noopener" title="StripChat">
+                <img src="/uploads/ads/stripchat-24x24.png" width="20" height="20" class="tablink_20_20" alt="StripChat"> StripChat
+            </a>        </div>
+        
+        <hr class="menu_row">
+                <div id="bar_tags">
+            <a href="/"  title="Página Inicial" class="bar-black"><i class="ico-home" style="font-size: 13px; vertical-align:text-top"></i> Início</a>
+                        <a href="/category/hentai/" title="Hentai">Hentai</a>
+            <a href="/category/comics-hq/"  title="HQ Hentai">HQ</a>
+            <a href="/category/exclusivo/"  title="Traduções Exclusivas">Exclusivo</a>
+            <a href="/category/imagens/"  title="Imagens">Imagens</a>
+            <a href="/tag/femboy/"  title="Femboy">Femboy</a>
+            <a href="/category/3d/"  title="Pornô 3D">Pornô 3D</a>
+            <a href="/tags/"  title="Todas as tags"><i class="ico-tags2" style="font-size: 13px; vertical-align:text-top"></i> Tags</a>        </div>
+        
+    </nav>
+
+        <section class="box_404">
+            <h1>404!</h1>
+            <p>Algo saiu errado.</p>
+
+            <button type="button" id="btn_search_404">Fazer uma pesquisa</button>
+            <a href="/">Ir para o início</a>
+        </section>
+
+        <style>
+        .box_404{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#EBD8B8;padding:30px 15px;box-sizing:border-box}
+        .box_404 h1{font-size:90px;line-height:1;margin:0 0 10px;font-weight:800}
+        .box_404 p{font-size:22px;margin:0 0 25px}
+        .box_404 button,.box_404 a{width:220px;margin:6px 0;padding:12px 18px;border:1px solid ;border-radius:8px;background:transparent;color:#EBD8B8;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;box-sizing:border-box}
+        .box_404 button:hover,.box_404 a:hover{background:#EBD8B8;color:#1F2023}
+        .search_box_404_active{margin-top:12px;animation:show_search_404 1s ease forwards}
+        @keyframes show_search_404{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        @media(max-width:500px){.box_404 h1{font-size:70px}.box_404 p{font-size:19px}.box_404 button,.box_404 a{width:100%;max-width:240px}}
+        </style>
+
+        <script>
+        document.getElementById('btn_search_404').onclick=function(){
+            var btn_404=document.getElementById('btn_search_404');
+            var search_box=document.querySelector('.search_box');
+            var search_input=document.getElementById('s');
+
+            if(search_box && btn_404){
+                search_box.classList.remove('search_box_404_active');
+                btn_404.insertAdjacentElement('afterend',search_box);
+                setTimeout(function(){ search_box.classList.add('search_box_404_active'); },10);
+                if(search_input){ search_input.focus(); }
+            }
+        }
+        </script>
+
+        
+
+
+
+
+
+
+
+    <div class="msg_amarela" style="max-width:900px; margin:auto; margin-top:20px;">
+    <a href="https://discord.gg/7F4bbEx73U" target="_blank" title="The Hentai Server" style="display:block;">
+        <img class="gif_discord" src="/uploads/img/discord.gif" loading="lazy" alt="Discord TH"> Entre em nosso Discord e não perca os lançamentos do site. Clique Aqui
+    </a>
+</div>
+<div class="box_partnerships">
+    
+
+<a title="Fotos Porno" href="https://www.pornocarioca.com/fotos" target="_blank" rel="noopener">
+<picture class="lozad" style=" min-height: 1rem">
+    <source type="image/webp" srcset="/uploads/img/2024/10/carioca-120x60-hentai-pt-br-30.jpg.webp">
+    <img src="/uploads/img/2024/10/carioca-120x60-hentai-pt-br-30.jpg" loading="lazy" alt="Fotos Porno"  width="120" height="60">
+</picture></a>
+
+
+
+<a target="_blank" href="https://pt.jerkmate.com/" rel="noopener"  title="Sex Cams">
+<picture class="lozad" style=" min-height: 1rem">
+    <source type="image/webp" srcset="/uploads/img/jarkmate-120x60.jpg.webp">
+    <img src="/uploads/img/jarkmate-120x60.jpg" loading="lazy" alt="Sex Cams"  width="120" height="60">
+</picture></a>  
+    
+<a target="_blank" href="https://theporndude.com/pt/" rel="nofollow noopener">
+<picture class="lozad" style=" min-height: 1rem">
+    <source type="image/webp" srcset="/uploads/img/2026/02/tpd-120x60-porn-comics-english-09.jpg.webp">
+    <img src="/uploads/img/2026/02/tpd-120x60-porn-comics-english-09.jpg" loading="lazy" alt="The Porn Dude"  width="120" height="60">
+</picture></a>
+
+
+<a href="https://www.hqdesexo.com/" title="Hq de Sexo" target="_blank" rel="nofollow noopener">
+<picture class="lozad" style=" min-height: 1rem">
+    <source type="image/webp" srcset="/uploads/img/2024/03/hqdesexo-120x60-hentai-pt-br-27.jpg.webp">
+    <img src="/uploads/img/2024/03/hqdesexo-120x60-hentai-pt-br-27.jpg" loading="lazy" alt="Hq de Sexo"  width="120" height="60">
+</picture></a>
+    
+    <div id="friend_links">
+        <a href="https://porcore.com/show/hentai" title="Hentai Videos" rel="noopener" target="_blank">Hentai Videos</a>
+<a href="https://gamcore.com/hentai_games" title="Hanime Games" rel="noopener" target="_blank">Hanime Games</a>
+<a href="https://xvideo.vlog.br/" title="Xvideo" rel="noopener" target="_blank">Xvideo</a>
+<a href="https://zhentube.com/" title="Free Hentai" rel="noopener" target="_blank">Free Hentai</a>
+
+
+<a href="https://nhentaibr.com/" title="nhentai" rel="noopener" target="_blank">nhentai</a> 
+<a href="https://hqhentai.online/" title="Hentai Hq" rel="noopener" target="_blank">Hentai HQ</a> 
+<a href="https://xtubehentai.com/" title="Animes Hentai" rel="noopener" target="_blank">Animes Hentai</a>
+<a href="https://mundohentaioficial.com/" title="Mundo Hentai" rel="noopener" target="_blank">Mundo Hentai</a>
+    </div>
+</div> <!-- End box_partnerships -->
+
+<hr class="menu_row">
+
+<footer>
+        
+    <p>
+        <a href="/" title="Hentai">The Hentai</a> é um site totalmente gratuito de Quadrinhos Eróticos em português que tem uma política de qualidade 
+            bem rigorosa, estamos trabalhando para ser o melhor site de <a href="/category/comics-hq/" title="Hentai HQ">Hentai HQ</a>.
+    </p>
+
+    <p>Aqui você encontra Quadrinhos Pornô, <a href="/category/hentai" title="Hentai">Hentai Online</a>, <a href="/tag/anal" title="Hentai de Anal">Anal</a>, <a href="/tag/incesto" title="Hentai de Incesto">Incesto</a>, <a href="/tag/milf" title="Hentai Milf">Milf</a>,  
+    <a href="/tag/interracial" title="Hentai Interracial">Quadrinhos Interracial</a>, <a href="/category/3d" title="Hentai 3D">Hentai 3D</a> e tudo para seu melhor entretenimento!</p>
+    
+    E lembre-se sempre desse nome!
+    <br><a href="/" title="The Hentai">TheHentai.net</a> – O melhor em Hentai
+
+    <p>©The Hentai 2020-2026 - Free Online Comics, hentai e quadrinhos eróticos</p>
+    
+    <p>Todos os personagens mostrados aqui são maiores de 18 anos!</p>
+
+    
+    <div class="footer_navigation" style="margin-top:30px; margin-bottom:100px;">
+                <a href="/">Página Inicial</a>
+        <a href="/contact">Contate-nos</a>
+        <a href="/our-friends">Nossos Amigos</a>
+        <a href="/18-usc-2257">18 USC 2257</a>
+        <a href="/dmca">DMCA</a>
+
+
+
+        <ul style="list-style: none; margin-top:40px;">        
+            <li style="display: inline; margin:0 10px;">
+                <a href='https://ipv6-test.com/validate.php?url=https://en.thehentai.net' rel="nofollow noopener" target="_blank"  style="text-decoration: none;">
+                    <picture class="lozad" style=" min-height: 1rem">
+                        <source type="image/webp" srcset="/uploads/img/button-ipv6-80x15.png.webp">
+                        <img src="/uploads/img/button-ipv6-80x15.png" alt="ipv6 ready">
+                    </picture>
+                </a>
+            </li>
+            
+            <li style="display: inline; margin:0 10px;">
+                <a href="https://stats.uptimerobot.com/wv2MpSvxOx/792988936" target="_blank" rel="noopener nofollow" title="Server Status" style="text-decoration: none;">
+                    <div class="statusInfo"></div> Status
+                </a>
+            </li>
+        </ul>    </div>
+</footer>
+
+<script>
+const univresalP = function() {
+    const puURLstrpcht = 'https://go.mayzaent.com/smartpop/895e33a7a01b8760f97a812fa57228ad3f2b53bd752e7ba0ebdf8d3314a10ccc?userId=e5c0079e98d9f24f36ad955c354f221203b358886b44ab6eb4248f6fc6ac9cd3';
+    const interval = 3600;
+    const maxPopunders = 3; // maximum number of times to show the popunder within the interval
+    const delayBetweenPopunders = 20; // delay between popunders in seconds
+    const targetSelectors = ['#bar_tags', '.logo', '.summary', '.tags', '.post_imgs', '.gridPosts', '.pagination', '.title_post_pagination', '.reading_navigation_top', '.reading_navigation_bottom', '.gallery_pagination'];
+
+    // Initialize the timestamps and counter if they don't exist
+    if (typeof localStorage.puTSstrpcht === 'undefined') {
+    localStorage.puTSstrpcht = Math.round(+new Date() / 1000);
+    }
+    if (typeof localStorage.puCountstrpcht === 'undefined') {
+    localStorage.puCountstrpcht = 0;
+    }
+    if (typeof localStorage.lastPopunderTS === 'undefined') {
+    localStorage.lastPopunderTS = 0;
+    }
+
+    const checkInterval = function() {
+    const currentTS = Math.round(+new Date() / 1000);
+    if (parseInt(localStorage.puTSstrpcht) <= currentTS - interval) {
+        localStorage.puCountstrpcht = 0;
+        localStorage.puTSstrpcht = currentTS;
+    }
+    };
+
+    const handlePopunder = function(e, linkUrl) {
+    const currentTS = Math.round(+new Date() / 1000);
+
+    if (parseInt(localStorage.puCountstrpcht) >= maxPopunders) {
+        checkInterval();
+    }
+
+    if (parseInt(localStorage.puCountstrpcht) < maxPopunders && currentTS - parseInt(localStorage.lastPopunderTS) >= delayBetweenPopunders) {
+        e.preventDefault();
+        window.open(linkUrl);
+        window.location.href = puURLstrpcht;
+        localStorage.puTSstrpcht = currentTS;
+        localStorage.lastPopunderTS = currentTS;
+        localStorage.puCountstrpcht = parseInt(localStorage.puCountstrpcht) + 1;
+    }
+    };
+
+    document.addEventListener('click', function(e) {
+    if (e.target.closest('iframe')) {
+        return; // Ignore clicks inside iframes
+    }
+
+    const link = e.target.closest('a');
+    if (link && link.href && targetSelectors.some(selector => link.closest(selector))) {
+        handlePopunder(e, link.href);
+    }
+    });
+
+    const focusListener = function() {
+    window.addEventListener('blur', function onBlur() {
+        if (document.activeElement.tagName === 'IFRAME') {
+        handlePopunder({ preventDefault: () => {} }, window.location.href);
+        }
+        window.removeEventListener('blur', onBlur);
+        setTimeout(() => {
+        window.addEventListener('blur', onBlur);
+        }, 100);
+    });
+    };
+
+    focusListener();
+};
+
+window.onload = univresalP;
+</script><div id="balaoAdDireito">
+    
+    <div id="iframe_slider"></div>
+    <script>
+        const userLangSlider = 'gb';
+        const containerSlider = document.getElementById('iframe_slider');
+        
+        if (userLangSlider === 'br') {
+          containerSlider.innerHTML = `<iframe id='add21fef' name='add21fef' src='https://webstats1.com/www/delivery/afr.php?zoneid=315' frameborder='0' scrolling='no' width='300' height='250' allow='autoplay'></iframe>`;
+        } else {
+          containerSlider.innerHTML = `<iframe data-aa='2392484' src='//ad.a-ads.com/2392484?size=300x250' style='width:300px; height:250px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe>`;
+        }
+    </script>
+    
+    
+    <span id="fecharAdDireito" onclick="fecharBalaoDireito()">X</span>
+</div>
+<script>
+  function fecharBalaoDireito() {
+      var el = document.getElementById( 'balaoAdDireito' );
+      el.parentNode.removeChild( el );
+      if ( getCookie5("adsth_d") < 1 ) {  setCookie5("adsth_d", getCookie5("adsth_d") + 1, 1); }
+  }
+</script>
+<style>
+  #balaoAdDireito {
+      z-index: 9998; position: fixed; bottom: 10px; right: 3px; background-color: #fff; color: black;
+      padding: 5px; border-radius: 5px 5px 5px 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      animation: moveUpDownDireito 8s infinite, startSliderDireito 1s 1; /* Ajusta a duração e o intervalo */
+  }
+  @keyframes startSliderDireito {  0% {right:-330px;} 100% {right:3px;}  }
+  @keyframes moveUpDownDireito { 90% { bottom: 10px; } 93% { bottom: 30px; } 94% { bottom: 20px; } 95% { bottom: 30px; } 100% { bottom: 10px; } }
+  #fecharAdDireito {
+      opacity : 0.6; padding:2px 5px; position: absolute; top: -22px; right: 145px; background-color: black;
+      color: white; border-radius: 10px; border: 3px solid; cursor: pointer;
+  }
+</style>
+<script>
+function setCookie5(n,v,m){document.cookie=`${n}=${v};expires=${new Date(Date.now()+m*60000).toUTCString()};path=/`;}
+function getCookie5(n){return document.cookie.split('; ').find(c=>c.startsWith(n+'='))?.split('=')[1]||null;}
+if ( getCookie5("adsth_d") >= 1 ) {  fecharBalaoDireito(); } 
+</script>
+<!-- ### LOZAD ### -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fadePictures = document.querySelectorAll('picture[data-fade]');
+        fadePictures.forEach(picture => {
+        const img = picture.querySelector('img');
+        if (!img) return;
+        picture.classList.add('fade-picture', 'loading');
+        img.classList.add('fade');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (img.complete) activateFade(img, picture);
+                else img.addEventListener('load', () => activateFade(img, picture), { once: true });
+                observer.unobserve(img);
+            } });
+        }, { threshold: 0.1 });
+        observer.observe(img);
+        });
+        function activateFade(img, picture) {
+        img.classList.add('animate');
+        picture.classList.remove('loading');
+        }
+    });
+</script>
+
+
+</body>
+</html>

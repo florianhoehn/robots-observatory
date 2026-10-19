@@ -1,0 +1,27 @@
+User-agent: *
+Disallow: /admin
+Disallow: /cart
+Disallow: /user
+Disallow: /home
+Disallow: /404
+Disallow: /login
+Disallow: /register
+Disallow: /cc
+Disallow: /change-email
+Disallow: /change-slug
+Disallow: /books/promote
+Disallow: /books/make
+Disallow: /books/edit
+Disallow: /books/access-closed
+Disallow: /comment
+Disallow: /like-toggle
+Disallow: /auth
+Disallow: /users
+Disallow: /not-found
+Disallow: /not-auth
+Disallow: /access-denied
+Disallow: /black-list
+Disallow: /search
+Disallow: *?
+
+Sitemap: https://litgorod.ru/sitemap.xml
