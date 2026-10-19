@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RobotsObservatory — what this bot is</title>
-<meta name="description" content="RobotsObservatory reads robots.txt and three well-known policy files, five requests per host per run. How to stop it, and what it stores.">
+<meta name="description" content="RobotsObservatory reads robots.txt and seven well-known policy files, nine requests per host per run. How to stop it, and what it stores.">
 <style>
   :root {
     --bg: #edf0f0; --surface: #fafbfb; --ink: #141d1c; --ink-2: #4e5c5a;
@@ -92,19 +92,26 @@ approve.</p>
 </div>
 
 <h2>What it requested</h2>
-<p>Per host, per run, exactly five requests:</p>
+<p>Per host, per run, exactly nine requests. The last four are not about AI
+&mdash; they are controls, so the AI-specific numbers can be read against
+something:</p>
 <table>
   <thead><tr><th>Path</th><th>Count</th><th>Why</th></tr></thead>
   <tbody>
     <tr><td><code>/robots.txt</code></td><td class="n">2</td><td>once per requester identity, to see whether declared policy varies by who asks</td></tr>
-    <tr><td><code>/llms.txt</code></td><td class="n">1</td><td>machine-readable usage terms</td></tr>
+    <tr><td><code>/llms.txt</code></td><td class="n">1</td><td>a guide written for AI readers</td></tr>
     <tr><td><code>/ai.txt</code></td><td class="n">1</td><td>training opt-out convention</td></tr>
     <tr><td><code>/.well-known/tdmrep.json</code></td><td class="n">1</td><td>TDM Reservation Protocol</td></tr>
+    <tr><td><code>/.well-known/security.txt</code></td><td class="n">1</td><td>RFC 9116 security contact &mdash; a control, not an AI signal</td></tr>
+    <tr><td><code>/ads.txt</code></td><td class="n">1</td><td>IAB authorised sellers &mdash; a benchmark for machine-readable adoption</td></tr>
+    <tr><td><code>/.well-known/gpc.json</code></td><td class="n">1</td><td>Global Privacy Control</td></tr>
+    <tr><td><code>/humans.txt</code></td><td class="n">1</td><td>the human counterpart to robots.txt &mdash; a control</td></tr>
   </tbody>
 </table>
-<p><strong>Five requests per host, per run.</strong> Spread over about nine
-seconds, with 1.5 seconds between requests to any one host, six hosts in flight
-at a time. That is less traffic than one person loading one page. A host whose
+<p><strong>Nine requests per host, per run.</strong> Spread over about thirteen
+seconds, with 1.5 seconds between requests to any one host, ten hosts in flight at a
+time — a figure that governs how many different sites are read in parallel,
+never how fast any one of them is asked. That is less traffic than one person loading one page. A host whose
 probe fails is retried once after a pause, so a transient timeout is not
 recorded as a policy fact.</p>
 
@@ -151,7 +158,7 @@ on anecdote, because there is no public baseline for what sites actually declare
 This builds one, in the open, under
 <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
 <p>The collector is two readable Python files. The claim that it only ever
-requests the four paths above is checkable from the source, not just asserted —
+requests the paths above is checkable from the source, not just asserted —
 <a href="https://github.com/florianhoehn/robots-observatory/blob/main/observatory.py">read
 it</a>.</p>
 

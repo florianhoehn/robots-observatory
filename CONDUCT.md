@@ -2,23 +2,36 @@
 
 ## What this project requests
 
-Per host, per weekly run, exactly five requests:
+Per host, per run, exactly nine requests:
 
 | Path | Count | Why |
 |---|---|---|
 | `/robots.txt` | 2 | once per requester identity, to see whether declared policy varies by who asks |
-| `/llms.txt` | 1 | machine-readable usage terms |
+| `/llms.txt` | 1 | a guide written for AI readers |
 | `/ai.txt` | 1 | training opt-out convention |
 | `/.well-known/tdmrep.json` | 1 | TDM Reservation Protocol |
+| `/.well-known/security.txt` | 1 | RFC 9116 security contact — a control, not an AI signal |
+| `/ads.txt` | 1 | IAB authorised sellers — a benchmark for machine-readable adoption |
+| `/.well-known/gpc.json` | 1 | Global Privacy Control — a machine-readable rights signal |
+| `/humans.txt` | 1 | the human counterpart to robots.txt — a control |
 
-**Five requests per host, per run.** Spread over about nine seconds, six hosts
+The last four are not about AI. They are there so the AI-specific numbers can
+be read against something: a site with no `llms.txt` **and** no `security.txt`,
+`ads.txt` or `humans.txt` has not declined to document itself for machines, it
+has simply never done that for anyone.
+
+**Nine requests per host, per run.** Spread over about nine seconds, six hosts
 at a time, with 1.5 seconds between requests to any one host. That is less
 traffic than a single human visitor loading a single page.
+
+Ten hosts are in flight at once. That figure governs how many *different* sites
+are being read in parallel, never how fast any one of them is asked — the 1.5
+second per-host gap is the guarantee, and it does not change with it.
 
 Two panels, deliberately different in kind:
 
 - **panel-01** — 463 hand-screened websites from the Tranco top 1000, probed
-  weekly. 260 requests per host per year.
+  weekly. 468 requests per host per year.
 - **panel-02** — 16,314 hosts from the Tranco top 20,000, unscreened, probed
   occasionally rather than on a schedule. Breadth, not a time series.
 

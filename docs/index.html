@@ -220,8 +220,8 @@
     <h1>The web isn't charging AI agents. It's <span class="q">writing them documentation</span>.</h1>
     <p class="stand">We read the policy files that 463 of the world's most-visited
     websites publish for machines &mdash; <code>robots.txt</code>,
-    <code>llms.txt</code>, <code>ai.txt</code>, TDM reservations &mdash; and
-    counted what they say. Not what they enforce. What they declare.</p>
+    <code>llms.txt</code>, <code>ai.txt</code>, TDM reservations and more &mdash;
+    and counted what they say. Not what they enforce. What they declare.</p>
 
     <p id="err" hidden>Could not load the figures.
     <a href="https://github.com/florianhoehn/robots-observatory/tree/main/data">The
@@ -367,7 +367,7 @@
       as one</a>.</p>
       <p><strong>No page was ever fetched</strong> &mdash; only files the web publishes
       for machines to read, so no request was one a site asked crawlers not to make.
-      Five requests per site, 1.5 seconds apart. That claim is checkable from two
+      Nine requests per site, 1.5 seconds apart. Four of the nine are controls — security.txt, ads.txt, gpc.json, humans.txt — so the AI-specific numbers can be read against a site's general habit of publishing machine-readable files at all. That claim is checkable from two
       readable source files rather than merely asserted.</p>
       <p><strong>No model sits in the measurement path.</strong> Fetch, parse and count
       are deterministic, because the output of this project is the difference between
@@ -443,7 +443,11 @@ var STATE_MEANING = {
 var WK = {
   llms_txt: ["llms.txt", "a guide written for AI readers"],
   ai_txt: ["ai.txt", "a training opt-out"],
-  tdmrep: ["tdmrep.json", "an EU text-and-data-mining reservation"]
+  tdmrep: ["tdmrep.json", "an EU text-and-data-mining reservation"],
+  security_txt: ["security.txt", "a security contact \u2014 a control, not an AI signal"],
+  ads_txt: ["ads.txt", "authorised ad sellers \u2014 the adoption benchmark"],
+  gpc: ["gpc.json", "a Global Privacy Control signal"],
+  humans_txt: ["humans.txt", "the human counterpart to robots.txt \u2014 a control"]
 };
 
 function el(t, c, txt) {

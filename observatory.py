@@ -56,7 +56,7 @@ PANEL_ID = "panel-01"
 
 # --- conduct limits. Changing any of these changes the ethical argument in
 # --- CONDUCT.md, so they live here in one place and are recorded per run.
-CONCURRENT_HOSTS = 6
+CONCURRENT_HOSTS = 10
 ERROR_BUDGET = 0.05
 HOST_GAP_S = 1.5
 MAX_REDIRECTS = 5
@@ -105,6 +105,27 @@ WELLKNOWN = {
     "llms_txt": "/llms.txt",
     "ai_txt": "/ai.txt",
     "tdmrep": "/.well-known/tdmrep.json",
+    # RFC 9116. Not an AI signal -- a control. It says whether an organisation
+    # publishes machine-readable metadata at all, which is the baseline the
+    # AI-specific files should be read against: a site with no security.txt
+    # and no llms.txt has not declined to document itself for machines, it has
+    # simply never done that for anyone.
+    "security_txt": "/.well-known/security.txt",
+    # Benchmark, not an AI signal. ads.txt is a machine-readable policy file
+    # with real money behind it that went from nothing to mass adoption in
+    # about two years. It gives llms.txt's number a scale to be read against:
+    # 20% of what, compared to what?
+    "ads_txt": "/ads.txt",
+    # Global Privacy Control. A machine-readable rights signal that is legally
+    # operative in several US states -- the closest existing thing to the
+    # "declare your terms to automated readers" idea, arrived at from privacy
+    # rather than from AI.
+    "gpc": "/.well-known/gpc.json",
+    # The human counterpart to robots.txt. Pure control: does this site publish
+    # voluntary metadata files at all? A site with neither humans.txt nor
+    # llms.txt has not declined to document itself for machines; it has never
+    # documented itself for anyone.
+    "humans_txt": "/humans.txt",
 }
 
 # Stored response headers. An allowlist, so we never accidentally archive
@@ -977,6 +998,8 @@ def cmd_derive(args) -> None:
             k: share(lambda r, k=k:
                      r.get("wellknown", {}).get(k, {}).get("file_state") == "present")
             for k in WELLKNOWN
+            # only report a path this run actually requested
+            if any(k in r.get("wellknown", {}) for r in recs)
         },
         "rsl_license_refs": share(lambda r: bool(pol(r, "rsl_license_refs"))),
         # The headline comparison, defined narrowly on purpose: both

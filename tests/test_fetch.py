@@ -189,8 +189,8 @@ t0 = time.monotonic()
 rec = obs.probe_host(row, ["GPTBot", "CCBot"], "test", "test", write_text=False)
 elapsed = time.monotonic() - t0
 
-check("five requests per host", len(hits), 5)
-check("per-host gap honoured (>= 4 x 1.5s)", elapsed >= 4 * obs.HOST_GAP_S, True)
+check("nine requests per host", len(hits), 9)
+check("per-host gap honoured (>= 8 x 1.5s)", elapsed >= 8 * obs.HOST_GAP_S, True)
 gaps = [round(hits[i + 1][0] - hits[i][0], 2) for i in range(len(hits) - 1)]
 check("every inter-request gap >= 1.5s", all(g >= obs.HOST_GAP_S - 0.05 for g in gaps), True)
 print(f"      gaps: {gaps}")
@@ -209,6 +209,7 @@ check("would_disallow_us false under the wildcard group",
 check("llms.txt found", rec["wellknown"]["llms_txt"]["status"], 200)
 check("ai.txt absent", rec["wellknown"]["ai_txt"]["status"], 404)
 check("tdmrep absent", rec["wellknown"]["tdmrep"]["status"], 404)
+check("security.txt probed too", rec["wellknown"]["security_txt"]["status"], 404)
 check("sector carried through", rec["sector"], "reference")
 check("parser_version stamped", rec["parser_version"], obs.robots_parse.PARSER_VERSION)
 check("no errors", rec["errors"], [])
@@ -261,7 +262,7 @@ with lock:
 rec3 = obs.probe_host(
     {"host": base, "rank_at_freeze": "1", "sector": "other", "adult": "false"},
     [], "test", "test", write_text=False)
-check("permissive host still gets all five requests", len(hits), 5)
+check("permissive host still gets all nine requests", len(hits), 9)
 check("permissive host not flagged", rec3["opted_out_via_robots"], False)
 
 # --- conduct: concurrency ceiling -----------------------------------------
@@ -269,7 +270,7 @@ with lock:
     hits.clear()
     globals()["max_inflight"] = 0
 rows = [{"host": base, "rank_at_freeze": str(i), "sector": "other", "adult": "false"}
-        for i in range(12)]
+        for i in range(obs.CONCURRENT_HOSTS * 2)]
 from concurrent.futures import ThreadPoolExecutor  # noqa: E402
 
 with ThreadPoolExecutor(obs.CONCURRENT_HOSTS) as pool:
