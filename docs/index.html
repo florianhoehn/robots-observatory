@@ -4,500 +4,637 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Robots Observatory</title>
-<meta name="description" content="How the top 1000 websites declare their policy toward AI agents. One in five publishes an llms.txt; 0.6% signal a price. Open dataset, CC0.">
+<meta name="description" content="We read the policy files 463 of the world's most-visited websites publish for machines. One in five writes documentation for AI readers. Almost none asks for money.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
+  /* A deliberately single-theme design: a measurement report, in white. */
   :root {
-    --bg: #edf0f0; --surface: #fafbfb; --surface-2: #f2f5f4;
-    --ink: #141d1c; --ink-2: #4e5c5a; --ink-3: #7b8886;
-    --line: #cbd4d3; --line-2: #dfe5e4;
-    --accent: #0e5f63; --accent-soft: #0e5f6322;
-    --signal: #9c5508;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    --sans: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e1413; --surface: #161e1d; --surface-2: #1c2625;
-      --ink: #e2eae8; --ink-2: #9fafad; --ink-3: #74827f;
-      --line: #2c3836; --line-2: #232e2d;
-      --accent: #58b6ba; --accent-soft: #58b6ba26;
-      --signal: #dd9340;
-    }
+    --paper: #ffffff;
+    --wash: #f6f8f8;
+    --ink: #10211f;
+    --muted: #5b6b69;
+    --faint: #8a9a98;
+    --rule: #e6ebea;
+    --rule-2: #f0f4f3;
+
+    /* Ordinal ramp, validated against #ffffff: monotone lightness,
+       adjacent dL >= 0.06, light end 2.23:1, hue spread 2deg. */
+    --s1: #063b3f;
+    --s2: #0a5f64;
+    --s3: #3c9095;
+    --s4: #79b8bd;
+    --accent: #0a5f64;
+    --track: #e8f0f0;
+
+    --sans: Archivo, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.62 Georgia, "Times New Roman", serif;
-    -webkit-text-size-adjust: 100%;
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6;
+    font-weight: 400; -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 52rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  .wrap { max-width: 60rem; margin: 0 auto; padding-inline: 1.5rem; }
+  .narrow { max-width: 40rem; }
 
-  .eyebrow {
-    font-family: var(--mono); font-size: .7rem; letter-spacing: .13em;
-    text-transform: uppercase; color: var(--accent); margin: 0 0 .9rem;
+  /* ---------- masthead strip ---------- */
+  .top {
+    display: flex; gap: 1rem; align-items: baseline; flex-wrap: wrap;
+    padding-block: 1.4rem; border-bottom: 1px solid var(--rule);
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--faint);
   }
+  .top .name { color: var(--accent); font-weight: 500; }
+  .top .sp { margin-left: auto; }
+
+  /* ---------- the 30 seconds ---------- */
+  .lead { padding-block: 2.4rem 2.2rem; }
   h1 {
-    font-family: var(--sans); font-size: clamp(1.9rem, 6vw, 2.7rem);
-    line-height: 1.08; letter-spacing: -.025em; margin: 0 0 .7rem;
+    font-size: clamp(2rem, 4.9vw, 3.15rem); line-height: 1.05;
+    letter-spacing: -.033em; font-weight: 600; margin: 0 0 1.2rem;
+    max-width: 22ch; text-wrap: balance;
   }
-  .lede { font-size: 1.15rem; color: var(--ink-2); margin: 0 0 1.5rem; max-width: 40rem; }
-  h2 {
-    font-family: var(--sans); font-size: .78rem; letter-spacing: .12em;
-    text-transform: uppercase; color: var(--ink-3); font-weight: 600;
-    margin: 3rem 0 .4rem; padding-bottom: .4rem; border-bottom: 1px solid var(--line);
-  }
-  h3 { font-family: var(--sans); font-size: 1.15rem; margin: 1.6rem 0 .4rem; letter-spacing: -.012em; }
-  p { margin: 0 0 .9rem; max-width: 40rem; }
-  .note { font-size: .95rem; color: var(--ink-2); }
-  a { color: var(--accent); }
-  code {
-    font-family: var(--mono); font-size: .85em; background: var(--surface);
-    border: 1px solid var(--line-2); border-radius: 3px; padding: .08em .33em;
+  h1 .q { color: var(--accent); }
+  .stand {
+    font-size: clamp(1rem, 2vw, 1.14rem); line-height: 1.55;
+    color: var(--muted); margin: 0; max-width: 46ch; font-weight: 400;
   }
 
-  /* The headline is a single figure, so it is a hero number, not a chart. */
-  .hero {
-    margin: 1.5rem 0 0; padding: 1.6rem 1.5rem; background: var(--surface);
-    border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 5px;
-  }
+  .headline { margin-top: 2.1rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  @media (min-width: 52rem) { .headline { grid-template-columns: 17rem minmax(0, 1fr); gap: 3rem; align-items: start; } }
+
+  /* Exactly one hero figure, in the body sans, proportional figures. */
   .hero-n {
-    font-family: var(--sans); font-size: clamp(3rem, 12vw, 5rem); line-height: .95;
-    letter-spacing: -.035em; color: var(--accent); font-weight: 600;
-    font-variant-numeric: tabular-nums;
+    font-size: clamp(3.6rem, 10vw, 5.4rem); line-height: .88; font-weight: 600;
+    letter-spacing: -.045em; color: var(--accent); white-space: nowrap;
   }
-  .hero-l { font-family: var(--sans); font-size: 1.05rem; color: var(--ink); margin-top: .5rem; }
-  .hero-s { font-size: .95rem; color: var(--ink-2); margin-top: .35rem; max-width: 34rem; }
+  .hero-c { font-size: 1rem; color: var(--ink); margin-top: .65rem; max-width: 24ch; line-height: 1.45; }
+  .hero-c b { font-weight: 600; }
 
-  .stats {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 1px;
-    background: var(--line-2); border: 1px solid var(--line); border-radius: 5px;
-    overflow: hidden; margin: 1.1rem 0 0;
-  }
-  .stat { background: var(--surface); padding: .85rem .9rem 1rem; }
-  .stat-n {
-    font-family: var(--sans); font-size: 1.65rem; font-weight: 600; letter-spacing: -.02em;
-    font-variant-numeric: tabular-nums;
-  }
-  .stat-k {
-    font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink-3); margin-bottom: .2rem;
-  }
-  .stat-s { font-size: .85rem; color: var(--ink-2); margin-top: .15rem; }
+  /* two bars, one measure, same scale: the ratio is the point */
+  .vs-row { display: grid; gap: .1rem; }
+  .vs-lab { font-size: .95rem; color: var(--ink); margin-bottom: .3rem; }
+  .vs-lab .pc { font-family: var(--mono); font-weight: 500; color: var(--accent); }
+  .vs-track { background: var(--track); height: 22px; border-radius: 2px; }
+  .vs-fill { background: var(--accent); height: 100%; border-radius: 0 4px 4px 0; min-width: 3px; }
+  .vs-note { font-size: .92rem; color: var(--muted); margin-top: 1rem; max-width: 40ch; }
+  .vs-gap { height: 1.4rem; }
 
-  /* Ranked bars: one series, length carries magnitude, every row keeps its
-     number, so identity is never colour alone and the table IS the data view. */
-  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
-  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-  th {
-    font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink-3); text-align: left; padding: .6rem .8rem; font-weight: 600;
-    border-bottom: 1px solid var(--line); white-space: nowrap;
+  /* ---------- sections ---------- */
+  .divide { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+  section { padding-block: 3.4rem; border-bottom: 1px solid var(--rule); }
+  .kicker {
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 .7rem;
   }
-  td { padding: .38rem .8rem; border-top: 1px solid var(--line-2); vertical-align: middle; }
-  tbody tr:first-child td { border-top: none; }
-  td.name { font-family: var(--mono); font-size: .82rem; white-space: nowrap; }
-  td.num {
-    font-family: var(--mono); font-size: .82rem; text-align: right;
-    font-variant-numeric: tabular-nums; color: var(--ink-2); white-space: nowrap;
+  h2 {
+    font-size: clamp(1.5rem, 3.4vw, 2.05rem); line-height: 1.14; font-weight: 600;
+    letter-spacing: -.024em; margin: 0 0 .8rem; max-width: 24ch; text-wrap: balance;
   }
-  td.why { font-size: .88rem; color: var(--ink-2); }
-  td.bar { width: 42%; min-width: 7rem; padding-right: 1rem; }
-  .track { background: var(--accent-soft); border-radius: 2px; height: 14px; }
-  .fill {
-    background: var(--accent); height: 100%;
-    border-radius: 0 4px 4px 0;   /* rounded data-end, anchored to the baseline */
-    min-width: 2px;
+  .intro { font-size: 1.05rem; color: var(--muted); margin: 0 0 2rem; max-width: 46ch; }
+  p { margin: 0 0 1rem; }
+  .prose { max-width: 40rem; color: var(--muted); }
+  .prose strong, .prose b { color: var(--ink); font-weight: 600; }
+  code {
+    font-family: var(--mono); font-size: .86em; background: var(--wash);
+    border-radius: 3px; padding: .1em .36em; color: var(--ink);
   }
-  caption {
-    caption-side: bottom; text-align: left; padding: .6rem .8rem .7rem;
-    font-size: .85rem; color: var(--ink-3); border-top: 1px solid var(--line-2);
-    max-width: 44rem;
+  a { color: var(--accent); text-underline-offset: 2px; }
+
+  /* ---------- part-to-whole: one bar, all 463 sites ---------- */
+  .part { display: flex; width: 100%; height: 56px; gap: 2px; margin-bottom: 1.1rem; }
+  .part-seg { border-radius: 2px; position: relative; min-width: 3px;
+              display: flex; align-items: center; justify-content: center; }
+  .part-seg span {
+    font-family: var(--mono); font-size: .82rem; font-weight: 500;
+    padding-inline: .5rem; white-space: nowrap;
+  }
+  .legend { display: grid; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+  .legend li { display: grid; grid-template-columns: 11px auto 1fr auto; gap: .65rem;
+               align-items: baseline; font-size: .97rem; }
+  .legend .sw { width: 11px; height: 11px; border-radius: 2px; transform: translateY(1px); }
+  .legend .pc { font-family: var(--mono); font-size: .88rem; color: var(--ink); font-weight: 500; }
+  .legend .n { font-family: var(--mono); font-size: .82rem; color: var(--faint);
+               font-variant-numeric: tabular-nums; text-align: right; }
+  .legend .lb { color: var(--muted); }
+
+  /* ---------- ranked bars ---------- */
+  .rank { display: grid; gap: 2px; }
+  .rank-row { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 2.6rem;
+              gap: .7rem; align-items: center; }
+  .rank-name { font-family: var(--mono); font-size: .8rem; color: var(--ink);
+               overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rank-track { background: var(--track); height: 18px; border-radius: 2px; }
+  .rank-fill { background: var(--accent); height: 100%; border-radius: 0 4px 4px 0; min-width: 3px; }
+  .rank-val { font-family: var(--mono); font-size: .8rem; color: var(--muted);
+              font-variant-numeric: tabular-nums; text-align: right; }
+  .band {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--faint);
+    padding: .9rem 0 .45rem; display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr); gap: .7rem;
+  }
+  .band span:last-child { border-top: 1px solid var(--rule-2); padding-top: .45rem; }
+  figcaption { font-size: .95rem; color: var(--muted); margin-top: 1.2rem; max-width: 42rem; }
+  figure { margin: 0; }
+
+  /* ---------- small multiples ---------- */
+  .sm { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1.6rem 1.8rem; }
+  .sm-t { font-size: .97rem; font-weight: 500; margin-bottom: .1rem; }
+  .sm-n { font-family: var(--mono); font-size: 1.5rem; color: var(--accent); font-weight: 500; }
+  .sm-s { font-size: .85rem; color: var(--faint); margin-bottom: .45rem; }
+  .sm-track { background: var(--track); height: 7px; border-radius: 2px; }
+  .sm-fill { background: var(--accent); height: 100%; border-radius: 0 3px 3px 0; min-width: 2px; }
+
+  /* ---------- correction callout ---------- */
+  .fix { background: var(--wash); border-radius: 6px; padding: 1.5rem 1.6rem; margin-top: 1.6rem; }
+  .fix h3 { font-size: 1.08rem; font-weight: 600; margin: 0 0 .6rem; letter-spacing: -.012em; }
+  .fix p { color: var(--muted); margin-bottom: .7rem; }
+  .fix p:last-child { margin-bottom: 0; }
+  .fix strong { color: var(--ink); }
+
+  /* ---------- limits ---------- */
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem 2.5rem; }
+  .two h3 { font-size: 1rem; font-weight: 600; margin: 0 0 .3rem; }
+  .two ul { list-style: none; padding: 0; margin: 0; }
+  .two li { padding: .55rem 0; border-top: 1px solid var(--rule-2); font-size: .97rem; color: var(--muted); }
+  .two li b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- tables ---------- */
+  details { border-top: 1px solid var(--rule); }
+  summary { cursor: pointer; padding: 1.1rem 0; font-size: 1rem; font-weight: 500; }
+  summary::marker { color: var(--faint); }
+  .tbl { overflow-x: auto; padding-bottom: 1.2rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th { text-align: left; font-family: var(--mono); font-size: .66rem; letter-spacing: .1em;
+       text-transform: uppercase; color: var(--faint); font-weight: 500;
+       padding: .5rem .7rem; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  td { padding: .4rem .7rem; border-top: 1px solid var(--rule-2); }
+  td.m { font-family: var(--mono); font-size: .82rem; }
+  td.n { font-family: var(--mono); font-size: .82rem; text-align: right;
+         font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+
+  /* ---------- data ---------- */
+  .files { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .5rem; }
+  .files a { display: block; padding: .8rem .9rem; border: 1px solid var(--rule);
+             border-radius: 5px; text-decoration: none; }
+  .files a:hover { border-color: var(--accent); background: var(--wash); }
+  .files .f { font-family: var(--mono); font-size: .82rem; color: var(--accent); display: block; }
+  .files .d { font-size: .85rem; color: var(--muted); display: block; margin-top: .1rem; }
+
+  /* Narrow screens: the fixed label column eats the bar, so shrink it and
+     let the long crawler names wrap out of the way. */
+  @media (max-width: 34rem) {
+    .rank-row { grid-template-columns: 7.2rem minmax(0, 1fr) 2.3rem; gap: .5rem; }
+    .rank-name { font-size: .72rem; }
+    .part { height: 44px; }
+    .legend li { grid-template-columns: 11px auto 1fr; }
+    .legend .n { display: none; }
+    .top .sp { margin-left: 0; }
+    .files { grid-template-columns: minmax(0, 1fr); }
   }
 
-  .callout {
-    background: var(--surface); border: 1px solid var(--line);
-    border-left: 3px solid var(--signal); border-radius: 4px;
-    padding: 1rem 1.1rem; margin: 1.2rem 0;
-  }
-  .callout h3 { margin-top: 0; }
-  .callout p:last-child { margin-bottom: 0; }
-
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0 2rem; }
-  .cols ul { list-style: none; padding: 0; margin: 0; }
-  .cols li { padding: .5rem 0; border-top: 1px solid var(--line-2); font-size: .95rem; color: var(--ink-2); }
-  .cols li b { color: var(--ink); font-weight: 600; }
-  .cols h3 { display: flex; gap: .5rem; align-items: baseline; }
-  .mk { font-family: var(--mono); }
-  .yes .mk { color: var(--accent); }
-  .no .mk { color: var(--signal); }
-
-  .dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .6rem; margin: 1rem 0; }
-  .dl a {
-    display: block; background: var(--surface); border: 1px solid var(--line);
-    border-radius: 4px; padding: .7rem .85rem; text-decoration: none;
-  }
-  .dl a:hover { border-color: var(--accent); }
-  .dl .f { font-family: var(--mono); font-size: .84rem; color: var(--accent); display: block; }
-  .dl .d { font-size: .85rem; color: var(--ink-2); margin-top: .12rem; display: block; }
-
-  .pending { color: var(--ink-3); font-style: italic; }
-  footer {
-    margin-top: 3.5rem; padding-top: 1.1rem; border-top: 1px solid var(--line);
-    font-size: .9rem; color: var(--ink-3);
-  }
-  #err { color: var(--signal); }
-  @media (prefers-reduced-motion: no-preference) { .fill { transition: width .4s ease; } }
+  footer { padding-block: 2.2rem 4rem; font-size: .9rem; color: var(--faint); }
+  footer a { color: var(--muted); }
+  #err { color: #9c3b1f; }
+  .pending { color: var(--faint); }
 </style>
 </head>
 <body>
-<main>
 
-<p class="eyebrow">Run <span id="runid">&hellip;</span> &middot; <span id="panelsize">&hellip;</span> hosts &middot; residential UK vantage</p>
-<h1>Robots Observatory</h1>
-<p class="lede">How the most-visited websites <em>declare</em> their policy toward AI
-agents &mdash; read from the files they publish for machines, not inferred from
-behaviour.</p>
-
-<p id="err" hidden>Could not load <code>data/findings.json</code>. The raw data is still
-<a href="https://github.com/florianhoehn/robots-observatory/tree/main/data">in the repository</a>.</p>
-
-<div class="hero">
-  <div class="hero-n" id="hero-n">&hellip;</div>
-  <div class="hero-l">of the panel publishes an <code>llms.txt</code></div>
-  <div class="hero-s" id="hero-s"></div>
-</div>
-
-<div class="stats" id="stats"></div>
-
-<h2>What this says</h2>
-
-<p>Everyone is arguing about whether AI agents should pay for access to the web.
-Almost nobody is asking for money: <strong id="t-rsl">&hellip;</strong> of these
-sites carry any licensing or pay-per-crawl signal at all.</p>
-
-<p>But a fifth of them have written a document <em>for</em> the agents. So far the
-web's answer to automated readers is not a toll booth &mdash; it is
-documentation.</p>
-
-<p class="note">That is one snapshot from one vantage, and the panel is more than
-half commerce. The <a href="#limits">limits</a> matter as much as the numbers.</p>
-
-<h2>Which crawlers get blocked</h2>
-<p>Each row is a user-agent token named in at least 40 of the panel's
-<code>robots.txt</code> files, ranked by how often naming it means blocking it at
-the site root.</p>
-
-<div class="tbl-wrap">
-  <table id="tokens">
-    <thead><tr><th>Token</th><th>Blocked where named</th><th>Rate</th><th>Blocked / named</th></tr></thead>
-    <tbody></tbody>
-    <caption>Publishers distinguish bulk collection from fetch-on-behalf-of-a-user:
-    the scraping and training crawlers sit at the top, search and user-initiated
-    agents at the bottom.</caption>
-  </table>
-</div>
-
-<h2>By sector</h2>
-<p>Six hand-assigned labels, applied once when the panel was frozen.</p>
-
-<div class="tbl-wrap">
-  <table id="sectors">
-    <thead><tr><th>Sector</th><th>Publishes llms.txt</th><th>Rate</th><th>Names an AI agent</th><th>Hosts</th></tr></thead>
-    <tbody></tbody>
-    <caption>News sites name AI crawlers far more often than they document
-    themselves for them. Developer-facing sites do the opposite.</caption>
-  </table>
-</div>
-
-<h2>Machine-readable terms</h2>
-<div class="tbl-wrap">
-  <table id="wellknown">
-    <thead><tr><th>File</th><th>Adoption</th><th>Rate</th><th>Hosts</th></tr></thead>
-    <tbody></tbody>
-    <caption>Counted as present only when the response actually was the requested
-    file &mdash; not a homepage, a consent wall, or a CAPTCHA served with a 200.</caption>
-  </table>
-</div>
-
-<h2>Does policy change depending on who asks?</h2>
-<p>Each host's <code>robots.txt</code> was fetched twice: once as a declared bot,
-once as a browser. Three different questions hide inside "the files differ", and
-only the narrowest is a finding about policy.</p>
-
-<div class="tbl-wrap">
-  <table id="variance">
-    <thead><tr><th>Measure</th><th></th><th>Rate</th><th>Hosts</th></tr></thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<div class="callout">
-  <h3>Why the raw number is published but not reported</h3>
-  <p>A straight hash comparison says the files differ on
-  <strong id="v-raw">&hellip;</strong> of the panel. That number is almost entirely
-  artefact: two error pages, or two cookie-consent pages, whose bytes differ only
-  because of an embedded nonce. It is kept here so the gap between it and the real
-  figure stays visible.</p>
-  <p>Genuine identity-dependent policy reproduces on two hosts.
-  <code>rakuten.co.jp</code> serves a declared bot 490 bytes of rules and a browser
-  a 51-byte stub; <code>telegraph.co.uk</code> serves 3,228 bytes against 914.</p>
-</div>
-
-<h2>How each host answered</h2>
-<p>A <code>200</code> is not evidence of a policy file. These states are counted
-apart because averaging them produces a confident wrong number.</p>
-
-<div class="tbl-wrap">
-  <table id="states">
-    <thead><tr><th>State</th><th>Share of panel</th><th>Rate</th><th>Hosts</th><th>Meaning</th></tr></thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<h2>Over time</h2>
-<p class="pending">One run so far, so there is nothing to compare yet. The panel is
-frozen as a fixed cohort precisely so that future runs measure policy change rather
-than sample change.</p>
-
-<h2 id="limits">What this cannot say</h2>
-<div class="cols">
-  <div class="yes">
-    <h3><span class="mk">&#10003;</span> Can say</h3>
-    <ul>
-      <li>What share of this panel <b>names an AI crawler</b>, and which tokens</li>
-      <li>What share publishes <b>llms.txt, ai.txt or a TDM reservation</b></li>
-      <li>What share carries a <b>licensing or pay-per-crawl signal</b></li>
-      <li>Whether declared policy <b>differs by requester identity</b></li>
-      <li>How much of a top-1000 list <b>is not a website</b></li>
-    </ul>
-  </div>
-  <div class="no">
-    <h3><span class="mk">&times;</span> Cannot say</h3>
-    <ul>
-      <li>Whether any of it is <b>enforced</b>. Declared and enforced are different
-          datasets, and this is the first one</li>
-      <li>Whether <b>cryptographic agent identity</b> changes anything &mdash; nothing
-          was fetched that could be refused</li>
-      <li>Anything about <b>change over time</b> yet</li>
-      <li>Anything <b>geographic</b>: one vantage, one country</li>
-      <li>Anything about the <b>long tail</b> outside a popularity list</li>
-      <li>Anything about <b>advertising technology</b>, 14 of which this vantage
-          cannot resolve</li>
-    </ul>
+<div class="wrap">
+  <div class="top">
+    <span class="name">Robots Observatory</span>
+    <span>Run <span id="runid">&hellip;</span></span>
+    <span><span id="panelsize">&hellip;</span> websites</span>
+    <span class="sp">Open dataset &middot; CC0</span>
   </div>
 </div>
 
-<h2>Method</h2>
+<div class="wrap">
+  <div class="lead">
+    <h1>The web isn't charging AI agents. It's <span class="q">writing them documentation</span>.</h1>
+    <p class="stand">We read the policy files that 463 of the world's most-visited
+    websites publish for machines &mdash; <code>robots.txt</code>,
+    <code>llms.txt</code>, <code>ai.txt</code>, TDM reservations &mdash; and
+    counted what they say. Not what they enforce. What they declare.</p>
 
-<h3>The panel</h3>
-<p>Tranco list <a href="https://tranco-list.eu/list/467YX">467YX</a>, 18 October
-2026, top 1000 &mdash; screened by hand to 463 content websites. 537 were excluded,
-mostly because they are not websites: CDN and asset hosts, cloud and API endpoints,
-ad and analytics serving domains, DNS and certificate infrastructure. <strong>31 of
-the top 50 are not websites anyone reads.</strong> Tranco ranks domains by machine
-lookups, and one human page load triggers a dozen of those.</p>
-<p>Every decision is published per host, so you can disagree with any single row
-rather than audit a rule. 17 hosts are excluded because this vantage cannot resolve
-them &mdash; a property of the measuring machine, not of those hosts, and
-<a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/VANTAGE-EXCLUSIONS.md">documented
-as such</a>.</p>
+    <p id="err" hidden>Could not load the figures.
+    <a href="https://github.com/florianhoehn/robots-observatory/tree/main/data">The
+    raw data is in the repository.</a></p>
 
-<h3>What was requested</h3>
-<p>Five requests per host: <code>/robots.txt</code> twice, once per identity, then
-<code>/llms.txt</code>, <code>/ai.txt</code> and
-<code>/.well-known/tdmrep.json</code> once each. A host whose probe fails is retried
-once after a pause, so a transient timeout is not recorded as a policy fact.</p>
-<p><strong>No page was ever fetched.</strong> Only files the web publishes for
-machines to read, so no request was one a host asked bots not to make. That claim is
-checkable from two readable source files rather than merely asserted.</p>
-
-<h3>No model in the measurement path</h3>
-<p>Fetch, parse and count are deterministic. The output of this project is the
-difference between runs, so non-determinism in parsing would surface as policy
-change and be indistinguishable from the real thing.</p>
-
-<h2>Data</h2>
-<div class="dl">
-  <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/runs/2026-10-19/records.jsonl">
-    <span class="f">records.jsonl</span><span class="d">one row per host, everything recorded</span></a>
-  <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/hosts.csv">
-    <span class="f">hosts.csv</span><span class="d">flat, one row per host</span></a>
-  <a href="data/findings.json">
-    <span class="f">findings.json</span><span class="d">every figure on this page</span></a>
-  <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-01.csv">
-    <span class="f">panel-01.csv</span><span class="d">the frozen cohort</span></a>
-  <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/excluded.csv">
-    <span class="f">excluded.csv</span><span class="d">the 537, with reasons</span></a>
-  <a href="https://github.com/florianhoehn/robots-observatory/blob/main/data/runs/2026-10-19/run-meta.json">
-    <span class="f">run-meta.json</span><span class="d">provenance for this run</span></a>
+    <div class="headline">
+      <div>
+        <div class="hero-n" id="hero-n">&hellip;</div>
+        <div class="hero-c" id="hero-c"></div>
+      </div>
+      <div>
+        <div class="vs-row">
+          <div class="vs-lab">Write a guide for AI readers
+            <span class="pc" id="vs-a">&hellip;</span></div>
+          <div class="vs-track"><div class="vs-fill" id="vs-bar-a" style="width:0"></div></div>
+        </div>
+        <div class="vs-gap"></div>
+        <div class="vs-row">
+          <div class="vs-lab">Ask for payment or a licence
+            <span class="pc" id="vs-b">&hellip;</span></div>
+          <div class="vs-track"><div class="vs-fill" id="vs-bar-b" style="width:0"></div></div>
+        </div>
+        <p class="vs-note" id="vs-note"></p>
+      </div>
+    </div>
+  </div>
 </div>
-<p class="note">Data under <code>data/</code> and <code>panel/</code> is
-<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>; code is MIT.
-To have a host removed from the dataset,
-<a href="https://github.com/florianhoehn/robots-observatory/issues/new">open an
-issue</a>.</p>
 
-<footer>
-<a href="https://github.com/florianhoehn/robots-observatory">Source</a> &middot;
-<a href="bot/">What the crawler is, and how to stop it</a> &middot;
-<a href="https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md">Conduct charter</a> &middot;
-generated <span id="gen">&hellip;</span>
-</footer>
+<div class="wrap">
 
-</main>
+  <section>
+    <p class="kicker">What came back</p>
+    <h2>Half the web has a rulebook that never mentions AI</h2>
+    <p class="intro">Every one of the <span id="p-total">463</span> sites, sorted by
+    how directly its <code>robots.txt</code> addresses automated readers.</p>
+    <figure>
+      <div class="part" id="part"></div>
+      <ul class="legend" id="part-legend"></ul>
+      <figcaption>A third have gone through their rules and named specific AI
+      crawlers. Half publish a <code>robots.txt</code> that predates the question
+      entirely &mdash; not a refusal, just silence.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="kicker">Who gets turned away</p>
+    <h2>It depends entirely on what the crawler is for</h2>
+    <p class="intro">Of the sites that name a given crawler, the share that block it
+    from the whole site. Crawlers named by fewer than 40 sites are left out.</p>
+    <figure>
+      <div id="tokens"></div>
+      <figcaption>The pattern runs from top to bottom: crawlers that collect in bulk
+      for training are blocked two to three times as often as crawlers that fetch one
+      page because a person asked for it. Publishers are not refusing AI. They are
+      refusing <em>bulk collection</em>.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="kicker">By sector</p>
+    <h2>Developers document. News publishers police.</h2>
+    <p class="intro">Six labels, assigned by hand once when the panel was frozen.
+    Share of each sector publishing an <code>llms.txt</code>.</p>
+    <div class="sm" id="sectors"></div>
+  </section>
+
+  <section>
+    <p class="kicker">Does the answer change by who asks</p>
+    <h2>Almost never &mdash; and the number that says otherwise is wrong</h2>
+    <div class="prose">
+      <p>Each site's <code>robots.txt</code> was fetched twice: once by a crawler
+      that says what it is, once by something shaped like a browser.</p>
+    </div>
+    <div class="fix">
+      <h3>Why we publish a number we don't report</h3>
+      <p>A straight byte comparison says the two copies differ on
+      <strong id="v-raw">&hellip;</strong> of sites. That number is almost entirely
+      artefact: two error pages, or two cookie-consent pages, whose bytes differ only
+      because each carries a one-off token.</p>
+      <p>Genuine identity-dependent policy holds up on <strong id="v-real">&hellip;</strong>
+      sites. <code>rakuten.co.jp</code> gives a declared crawler 490 bytes of rules and
+      a browser a 51-byte stub; <code>telegraph.co.uk</code> gives 3,228 bytes against
+      914. A further <strong id="v-acc">&hellip;</strong> let one through and refused
+      the other &mdash; different access, not different policy.</p>
+      <p>The large number stays on the page so the gap between it and the real one is
+      visible rather than quietly dropped.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">Over time</p>
+    <h2>One run so far</h2>
+    <p class="intro pending">Nothing to compare yet. The panel is frozen as a fixed
+    group of sites precisely so that the next run measures a change in policy rather
+    than a change in sample.</p>
+  </section>
+
+  <section>
+    <p class="kicker">Honesty</p>
+    <h2>What this cannot tell you</h2>
+    <div class="two">
+      <div>
+        <h3>It can</h3>
+        <ul>
+          <li>Say what share <b>names AI crawlers</b>, and which ones</li>
+          <li>Say what share publishes <b>a guide, an opt-out or a reservation</b></li>
+          <li>Say what share <b>asks for money</b></li>
+          <li>Say whether the answer <b>changes by who asks</b></li>
+          <li>Show how much of a top-1000 list <b>is not a website</b></li>
+        </ul>
+      </div>
+      <div>
+        <h3>It cannot</h3>
+        <ul>
+          <li>Say whether any of it is <b>enforced</b>. Declared and enforced are
+              different datasets; this is the first</li>
+          <li>Say whether <b>signing your requests</b> helps &mdash; nothing was
+              fetched that could be refused</li>
+          <li>Say anything about <b>change over time</b>, yet</li>
+          <li>Speak for <b>other countries</b>: one vantage, one connection</li>
+          <li>Speak for <b>the long tail</b> outside a popularity list</li>
+          <li>Speak for <b>ad technology</b>, 14 of which this connection cannot
+              resolve</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">Method</p>
+    <h2>How the panel was built</h2>
+    <div class="prose">
+      <p>Tranco list <a href="https://tranco-list.eu/list/467YX">467YX</a>, 18 October
+      2026, top 1000 &mdash; screened by hand down to 463 websites. The other 537 were
+      dropped mostly because <strong>they are not websites</strong>: CDN and asset
+      hosts, cloud endpoints, ad servers, DNS infrastructure. <strong>31 of the top 50
+      are not pages anyone reads.</strong> Tranco ranks domains by how often machines
+      look them up, and one human page view triggers a dozen machine lookups.</p>
+      <p>Every decision is published per host, so you can disagree with a single row
+      instead of auditing a rule. A further 17 were dropped because this connection
+      cannot resolve them, which is a fact about the measuring machine and
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/VANTAGE-EXCLUSIONS.md">recorded
+      as one</a>.</p>
+      <p><strong>No page was ever fetched</strong> &mdash; only files the web publishes
+      for machines to read, so no request was one a site asked crawlers not to make.
+      Five requests per site, 1.5 seconds apart. That claim is checkable from two
+      readable source files rather than merely asserted.</p>
+      <p><strong>No model sits in the measurement path.</strong> Fetch, parse and count
+      are deterministic, because the output of this project is the difference between
+      runs &mdash; and a model that answered slightly differently each week would look
+      exactly like the web changing its mind.</p>
+    </div>
+  </section>
+
+  <details>
+    <summary>All the numbers</summary>
+    <div class="tbl">
+      <table id="t-tokens">
+        <thead><tr><th>Crawler</th><th class="n">Named by</th><th class="n">Blocked by</th><th class="n">Rate</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="tbl">
+      <table id="t-states">
+        <thead><tr><th>How the site answered</th><th class="n">Sites</th><th class="n">Share</th><th>Meaning</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="tbl">
+      <table id="t-wk">
+        <thead><tr><th>File</th><th class="n">Sites</th><th class="n">Share</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </details>
+
+  <section>
+    <p class="kicker">Data</p>
+    <h2>Everything is downloadable</h2>
+    <div class="files">
+      <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/runs/panel-01/2026-10-19/records.jsonl">
+        <span class="f">records.jsonl</span><span class="d">every response, in full</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/hosts.csv">
+        <span class="f">hosts.csv</span><span class="d">one flat row per site</span></a>
+      <a href="data/findings.json">
+        <span class="f">findings.json</span><span class="d">every figure on this page</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-01.csv">
+        <span class="f">panel-01.csv</span><span class="d">the 463</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/excluded.csv">
+        <span class="f">excluded.csv</span><span class="d">the 537, with reasons</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/data/runs/panel-01/2026-10-19/run-meta.json">
+        <span class="f">run-meta.json</span><span class="d">provenance for this run</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <a href="https://github.com/florianhoehn/robots-observatory">Source</a> &middot;
+    <a href="bot/">What the crawler is, and how to stop it</a> &middot;
+    <a href="https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md">Conduct charter</a>
+    &middot; data CC0, code MIT &middot; generated <span id="gen">&hellip;</span>
+  </footer>
+
+</div>
 
 <script>
+var RAMP = ["#063b3f", "#0a5f64", "#3c9095", "#79b8bd"];
 var STATE_MEANING = {
-  present: "a real policy file",
-  absent_404: "no such file",
-  blocked_403: "refused outright",
-  redirected_away: "200, but at a different path — usually a consent wall",
-  challenged: "200 carrying a CAPTCHA or bot check",
-  soft_404: "200 carrying a web page instead of the file",
-  undefined_5xx: "server error: undefined, not permitted",
+  present: "a policy file we could read",
+  absent_404: "no robots.txt at all",
+  blocked_403: "refused to serve it",
+  redirected_away: "sent us somewhere else, usually a consent wall",
+  challenged: "served a CAPTCHA instead",
+  soft_404: "served a web page instead of the file",
+  undefined_5xx: "server error — undefined, not permission",
   unexpected_status: "some other status",
-  dns_failure: "the resolver would not look the host up",
-  error: "transport failure, after a retry"
+  dns_failure: "this connection would not look the site up",
+  error: "no response, after a retry"
+};
+var WK = {
+  llms_txt: ["llms.txt", "a guide written for AI readers"],
+  ai_txt: ["ai.txt", "a training opt-out"],
+  tdmrep: ["tdmrep.json", "an EU text-and-data-mining reservation"]
 };
 
-var WK_NAMES = { llms_txt: "/llms.txt", ai_txt: "/ai.txt",
-                 tdmrep: "/.well-known/tdmrep.json" };
-
-function pct(v) { return v.toFixed(1) + "%"; }
-
-function el(tag, cls, txt) {
-  var n = document.createElement(tag);
-  if (cls) n.className = cls;
-  if (txt !== undefined && txt !== null) n.textContent = txt;
+function el(t, c, txt) {
+  var n = document.createElement(t);
+  if (c) { n.className = c; }
+  if (txt !== undefined && txt !== null) { n.textContent = txt; }
   return n;
 }
+function pct(v, d) { return v.toFixed(d === undefined ? 1 : d) + "%"; }
 
-// One series; magnitude is length. `max` is the scale's upper bound, so every
-// bar on a table is placed against the same scale.
-function barCell(value, max, title) {
-  var td = el("td", "bar");
-  var track = el("div", "track");
-  var fill = el("div", "fill");
-  fill.style.width = Math.max(0, Math.min(100, (value / max) * 100)) + "%";
-  track.appendChild(fill);
-  if (title) { td.title = title; track.setAttribute("aria-label", title); }
-  td.appendChild(track);
-  return td;
-}
-
-function row(tbody, cells) {
-  var tr = el("tr");
-  cells.forEach(function (c) { tr.appendChild(c); });
-  tbody.appendChild(tr);
-  return tr;
+// A label sitting inside a coloured fill takes white or ink by the fill's
+// luminance, so it clears contrast either way.
+function inkOn(hex) {
+  var r = parseInt(hex.slice(1, 3), 16) / 255,
+      g = parseInt(hex.slice(3, 5), 16) / 255,
+      b = parseInt(hex.slice(5, 7), 16) / 255;
+  function f(c) { return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  var L = 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  return L > 0.42 ? "#10211f" : "#ffffff";
 }
 
 function render(f) {
   var H = f.hosts;
   document.getElementById("runid").textContent = f.run_id;
   document.getElementById("panelsize").textContent = H;
+  document.getElementById("p-total").textContent = H;
   document.getElementById("gen").textContent = (f.generated || "").replace("T", " ");
 
-  var llms = f.wellknown.llms_txt;
+  var llms = f.wellknown.llms_txt, pay = f.rsl_license_refs;
+
+  // one hero figure, body sans, proportional figures
   document.getElementById("hero-n").textContent = pct(llms.pct);
-  document.getElementById("hero-s").textContent =
-    llms.n + " of " + H + " hosts. A convention barely a year old, already on "
-    + "a fifth of the most-visited websites.";
+  document.getElementById("hero-c").innerHTML =
+    "<b>" + llms.n + " of " + H + " sites</b> publish an <code>llms.txt</code> — "
+    + "a plain-language guide to themselves, written for machines to read.";
 
-  var stats = [
-    ["Names an AI crawler", pct(f.names_any_ai_agent.pct),
-     f.names_any_ai_agent.n + " hosts name at least one"],
-    ["Silent on AI", pct(f.has_robots_but_silent_on_ai.pct),
-     "has robots.txt, never mentions it"],
-    ["Blocks all crawlers", pct(f.wildcard_root_disallowed.pct),
-     "blanket disallow at the root"],
-    ["Signals a price", pct(f.rsl_license_refs.pct),
-     f.rsl_license_refs.n + " hosts, any licensing directive"]
-  ];
-  var sw = document.getElementById("stats");
-  stats.forEach(function (s) {
-    var d = el("div", "stat");
-    d.appendChild(el("div", "stat-k", s[0]));
-    d.appendChild(el("div", "stat-n", s[1]));
-    d.appendChild(el("div", "stat-s", s[2]));
-    sw.appendChild(d);
+  document.getElementById("vs-a").textContent = pct(llms.pct);
+  document.getElementById("vs-b").textContent = pct(pay.pct);
+  document.getElementById("vs-bar-a").style.width = llms.pct + "%";
+  document.getElementById("vs-bar-b").style.width = pay.pct + "%";
+  var ratio = pay.pct > 0 ? Math.round(llms.pct / pay.pct) : null;
+  document.getElementById("vs-note").textContent =
+    "Both bars are drawn to the same scale. "
+    + (ratio ? "Documentation is " + ratio + " times more common than any ask for money — "
+             : "")
+    + "just " + pay.n + " sites in the panel carry a licensing or pay-per-crawl signal.";
+
+  // ---- part-to-whole: every site, by how directly it addresses AI ----
+  var st = f.robots_file_state || {};
+  var unread = 0;
+  Object.keys(st).forEach(function (k) {
+    if (k !== "present" && k !== "absent_404") { unread += st[k]; }
   });
-  document.getElementById("t-rsl").textContent =
-    pct(f.rsl_license_refs.pct) + " (" + f.rsl_license_refs.n + " hosts)";
+  var parts = [
+    { n: f.names_any_ai_agent.n, lb: "Name specific AI crawlers in their rules",
+      sub: "they have thought about this" },
+    { n: f.has_robots_but_silent_on_ai.n, lb: "Have rules that never mention AI",
+      sub: "written before the question existed" },
+    { n: st.absent_404 || 0, lb: "Publish no rules at all", sub: "no robots.txt" },
+    { n: unread, lb: "Would not let us read them",
+      sub: "refused, challenged, or sent us to a consent wall" }
+  ];
+  var bar = document.getElementById("part"), leg = document.getElementById("part-legend");
+  parts.forEach(function (p, i) {
+    var share = (100 * p.n) / H;
+    var seg = el("div", "part-seg");
+    seg.style.background = RAMP[i];
+    seg.style.flex = p.n + " 0 0";
+    seg.title = p.lb + " — " + p.n + " sites (" + pct(share) + ")";
+    // only label a segment wide enough to hold the text
+    if (share > 11) {
+      var s = el("span", null, pct(share, 0));
+      s.style.color = inkOn(RAMP[i]);
+      seg.appendChild(s);
+    }
+    bar.appendChild(seg);
 
-  // Tokens, ranked by block rate. Only tokens with enough mentions to have a
-  // meaningful rate at all.
+    var li = el("li");
+    var sw = el("span", "sw"); sw.style.background = RAMP[i];
+    li.appendChild(sw);
+    li.appendChild(el("span", "pc", pct(share)));
+    var lb = el("span", "lb");
+    lb.appendChild(document.createTextNode(p.lb + " "));
+    var sub = el("span"); sub.style.color = "#8a9a98";
+    sub.textContent = "— " + p.sub;
+    lb.appendChild(sub);
+    li.appendChild(lb);
+    li.appendChild(el("span", "n", p.n));
+    leg.appendChild(li);
+  });
+
+  // ---- ranked: crawlers by block rate ----
   var toks = Object.keys(f.agent_tokens).map(function (t) {
     var d = f.agent_tokens[t];
     return { t: t, named: d.named, blocked: d.disallowed,
              rate: (100 * d.disallowed) / d.named };
   }).filter(function (r) { return r.named >= 40; })
     .sort(function (a, b) { return b.rate - a.rate; });
-  var tb = document.querySelector("#tokens tbody");
-  toks.forEach(function (r) {
-    row(tb, [el("td", "name", r.t),
-             barCell(r.rate, 100, r.t + ": blocked at the root by " + r.blocked
-                     + " of the " + r.named + " hosts that name it"),
-             el("td", "num", r.rate.toFixed(0) + "%"),
-             el("td", "num", r.blocked + " / " + r.named)]);
-  });
 
+  var host = document.getElementById("tokens");
+  var grid = el("div", "rank");
+  toks.forEach(function (r, i) {
+    if (i === 0) {
+      var b1 = el("div", "band");
+      b1.appendChild(el("span"));
+      b1.appendChild(el("span", null, "Collects in bulk — blocked most"));
+      host.appendChild(b1);
+    }
+    if (i === toks.length - 5) {
+      host.appendChild(grid);
+      grid = el("div", "rank");
+      var b2 = el("div", "band");
+      b2.appendChild(el("span"));
+      b2.appendChild(el("span", null, "Fetches for one person — blocked least"));
+      host.appendChild(b2);
+    }
+    var row = el("div", "rank-row");
+    row.appendChild(el("div", "rank-name", r.t));
+    var tr = el("div", "rank-track"), fl = el("div", "rank-fill");
+    fl.style.width = r.rate + "%";
+    tr.appendChild(fl);
+    tr.title = r.blocked + " of the " + r.named + " sites that name " + r.t + " block it";
+    row.appendChild(tr);
+    row.appendChild(el("div", "rank-val", r.rate.toFixed(0) + "%"));
+    grid.appendChild(row);
+  });
+  host.appendChild(grid);
+
+  // ---- sectors: small multiples ----
   var secs = Object.keys(f.by_sector).map(function (s) {
     var d = f.by_sector[s];
     return { s: s, hosts: d.hosts, llms: d.llms_txt || 0, ai: d.names_ai,
              rate: (100 * (d.llms_txt || 0)) / d.hosts,
              airate: (100 * d.names_ai) / d.hosts };
   }).sort(function (a, b) { return b.rate - a.rate; });
-  var sb = document.querySelector("#sectors tbody");
+  var sm = document.getElementById("sectors");
   secs.forEach(function (r) {
-    row(sb, [el("td", "name", r.s),
-             barCell(r.rate, 100, r.s + ": " + r.llms + " of " + r.hosts
-                     + " publish llms.txt"),
-             el("td", "num", r.rate.toFixed(0) + "%"),
-             el("td", "num", r.ai + " (" + r.airate.toFixed(0) + "%)"),
-             el("td", "num", r.hosts)]);
+    var d = el("div");
+    d.appendChild(el("div", "sm-t", r.s));
+    d.appendChild(el("div", "sm-n", pct(r.rate, 0)));
+    d.appendChild(el("div", "sm-s", r.llms + " of " + r.hosts + " sites"));
+    var tr = el("div", "sm-track"), fl = el("div", "sm-fill");
+    fl.style.width = r.rate + "%"; tr.appendChild(fl);
+    d.appendChild(tr);
+    var note = el("div", "sm-s");
+    note.style.marginTop = ".45rem";
+    note.textContent = pct(r.airate, 0) + " name an AI crawler";
+    d.appendChild(note);
+    sm.appendChild(d);
   });
 
-  var wb = document.querySelector("#wellknown tbody");
-  Object.keys(f.wellknown).map(function (k) {
-    return { k: k, d: f.wellknown[k] };
-  }).sort(function (a, b) { return b.d.pct - a.d.pct; }).forEach(function (r) {
-    row(wb, [el("td", "name", WK_NAMES[r.k] || r.k),
-             barCell(r.d.pct, 100, r.d.n + " of " + H + " hosts"),
-             el("td", "num", pct(r.d.pct)),
-             el("td", "num", r.d.n)]);
-  });
-
-  // Narrowest measure first. The scale tops out at 12% so the three are
-  // comparable to each other rather than squashed against a 100% axis.
-  var vb = document.querySelector("#variance tbody");
-  [["Policy differs", f.policy_varies_by_identity,
-    "both identities got a real file, and the files differ"],
-   ["Access differs", f.access_varies_by_identity,
-    "one identity got the file, the other was refused"],
-   ["Bytes differ (raw)", f.hash_differs_by_identity,
-    "diagnostic only — mostly nonces in error and consent pages"]
-  ].forEach(function (v) {
-    var tr = row(vb, [el("td", "name", v[0]),
-                      barCell(v[1].pct, 12, v[2]),
-                      el("td", "num", pct(v[1].pct)),
-                      el("td", "num", v[1].n)]);
-    tr.title = v[2];
-  });
+  // ---- identity variance ----
   document.getElementById("v-raw").textContent =
-    pct(f.hash_differs_by_identity.pct) + " (" + f.hash_differs_by_identity.n + " hosts)";
+    pct(f.hash_differs_by_identity.pct) + " (" + f.hash_differs_by_identity.n + ")";
+  document.getElementById("v-real").textContent = f.policy_varies_by_identity.n;
+  document.getElementById("v-acc").textContent = f.access_varies_by_identity.n;
 
-  var states = Object.keys(f.robots_file_state).map(function (k) {
-    return { k: k, n: f.robots_file_state[k], p: (100 * f.robots_file_state[k]) / H };
-  }).sort(function (a, b) { return b.n - a.n; });
-  var stb = document.querySelector("#states tbody");
-  states.forEach(function (r) {
-    row(stb, [el("td", "name", r.k),
-              barCell(r.p, 100, r.n + " of " + H + " hosts"),
-              el("td", "num", pct(r.p)),
-              el("td", "num", r.n),
-              el("td", "why", STATE_MEANING[r.k] || "")]);
+  // ---- tables ----
+  var tb = document.querySelector("#t-tokens tbody");
+  toks.forEach(function (r) {
+    var tr = el("tr");
+    tr.appendChild(el("td", "m", r.t));
+    tr.appendChild(el("td", "n", r.named));
+    tr.appendChild(el("td", "n", r.blocked));
+    tr.appendChild(el("td", "n", r.rate.toFixed(0) + "%"));
+    tb.appendChild(tr);
   });
+  var sb = document.querySelector("#t-states tbody");
+  Object.keys(st).map(function (k) { return { k: k, n: st[k] }; })
+    .sort(function (a, b) { return b.n - a.n; })
+    .forEach(function (r) {
+      var tr = el("tr");
+      tr.appendChild(el("td", "m", r.k));
+      tr.appendChild(el("td", "n", r.n));
+      tr.appendChild(el("td", "n", pct((100 * r.n) / H)));
+      tr.appendChild(el("td", null, STATE_MEANING[r.k] || ""));
+      sb.appendChild(tr);
+    });
+  var wb = document.querySelector("#t-wk tbody");
+  Object.keys(f.wellknown).map(function (k) { return { k: k, d: f.wellknown[k] }; })
+    .sort(function (a, b) { return b.d.pct - a.d.pct; })
+    .forEach(function (r) {
+      var tr = el("tr");
+      var td = el("td");
+      td.appendChild(el("code", null, (WK[r.k] || [r.k])[0]));
+      td.appendChild(document.createTextNode(" " + ((WK[r.k] || ["", ""])[1])));
+      tr.appendChild(td);
+      tr.appendChild(el("td", "n", r.d.n));
+      tr.appendChild(el("td", "n", pct(r.d.pct)));
+      wb.appendChild(tr);
+    });
 }
 
 fetch("data/findings.json", { cache: "no-cache" })
