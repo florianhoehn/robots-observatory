@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # One full collection: probe, retry the failures, derive.
 #
-# Used by hand and, later, by the scheduled workflow -- the same chain either
-# way, so a scheduled run cannot drift from a manual one.
+# Used by hand and by the scheduled timer -- the same chain either way, so a
+# scheduled run cannot drift from a manual one.
 #
 # Deliberately not `set -e`. A run exits non-zero when it is degraded, and the
 # retry pass is precisely the remedy for that, so bailing on the first non-zero
 # exit would skip the step most likely to fix it.
 #
-# Never pipe the run through `tail` or `head`: the pipeline's exit status is
-# the last command's, which silently turns a degraded run into a success. That
+# Never pipe the run through `tail` or `head`: a pipeline's exit status is the
+# last command's, which silently turns a degraded run into a success. That
 # mistake hid a degraded run once already.
 set -uo pipefail
 
@@ -21,23 +21,57 @@ cd "$(dirname "$(readlink -f "$0")")" || exit 1
 export OBSERVATORY_CONTACT="${OBSERVATORY_CONTACT:-https://florianhoehn.github.io/robots-observatory/bot/}"
 export OBSERVATORY_VANTAGE="${OBSERVATORY_VANTAGE:-residential-gb-ni}"
 
-echo "=== $(date -Is)  panel=$PANEL  vantage=$OBSERVATORY_VANTAGE"
+# An eight-hour unattended pass will meet a dropped connection or a suspended
+# laptop sooner or later. Resume is idempotent -- it skips hosts already in the
+# records file -- so retrying is strictly better than losing the night.
+MAX_ATTEMPTS="${OBSERVATORY_MAX_ATTEMPTS:-6}"
+BACKOFF=60
 
-uv run observatory.py run --panel "$PANEL" "$@"
-run_rc=$?
-echo "=== $(date -Is)  run exited $run_rc"
+log() { echo "=== $(date -Is)  $*"; }
 
-if [ "$run_rc" -ne 0 ] && [ ! -s "$(ls -d data/runs/"$PANEL"/*/records.jsonl 2>/dev/null | tail -1)" ]; then
-  echo "=== run produced no records; stopping before retry"
-  exit "$run_rc"
+log "panel=$PANEL vantage=$OBSERVATORY_VANTAGE attempts<=$MAX_ATTEMPTS"
+
+attempt=1
+run_rc=1
+while [ "$attempt" -le "$MAX_ATTEMPTS" ]; do
+  if [ "$attempt" -eq 1 ]; then
+    uv run observatory.py run --panel "$PANEL" "$@"
+  else
+    log "attempt $attempt: resuming"
+    uv run observatory.py run --panel "$PANEL" --resume "$@"
+  fi
+  run_rc=$?
+  log "attempt $attempt exited $run_rc"
+
+  # 0 = complete. A degraded run also stops here: its remedy is the retry
+  # pass below, not another full sweep.
+  if [ "$run_rc" -eq 0 ]; then break; fi
+  if grep -q "degraded" <<<"$(uv run observatory.py resolve --panel "$PANEL" 2>&1)"; then :; fi
+
+  # If every host is already recorded there is nothing left to resume.
+  if uv run observatory.py run --panel "$PANEL" --resume "$@" 2>&1 | grep -q "nothing left to do"; then
+    log "all hosts recorded"
+    run_rc=0
+    break
+  fi
+
+  attempt=$((attempt + 1))
+  [ "$attempt" -le "$MAX_ATTEMPTS" ] && { log "backing off ${BACKOFF}s"; sleep "$BACKOFF"; BACKOFF=$((BACKOFF * 2)); }
+done
+
+latest=$(ls -dt data/runs/"$PANEL"/*/ 2>/dev/null | head -1)
+if [ -z "$latest" ] || [ ! -s "${latest}records.jsonl" ]; then
+  log "no records produced; stopping before retry"
+  exit 1
 fi
 
 # A transient timeout recorded as a policy fact is a wrong answer, so every
 # failed host gets one more attempt before its failure is treated as data.
 uv run observatory.py retry --panel "$PANEL"
-echo "=== $(date -Is)  retry exited $?"
+log "retry exited $?"
 
 uv run observatory.py derive --panel "$PANEL"
 derive_rc=$?
-echo "=== $(date -Is)  derive exited $derive_rc"
+log "derive exited $derive_rc"
+log "done"
 exit "$derive_rc"
