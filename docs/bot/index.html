@@ -6,9 +6,23 @@
 <title>RobotsObservatory: what this bot is</title>
 <meta name="description" content="RobotsObservatory reads robots.txt and ten well-known policy files, twelve requests per host per run. How to stop it, and what it stores.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129302;</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Self-hosted so no visitor's IP reaches a third party just to read a page.
+     Both families are SIL OFL; only the hosting changed, not the design.
+     Latin subset, variable where available: 64 KB for the three files. */
+  @font-face {
+    font-family: 'Archivo'; font-style: normal; font-weight: 300 700;
+    font-display: swap; src: url('../fonts/archivo-300_700.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 400;
+    font-display: swap; src: url('../fonts/ibm-plex-mono-400.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 500;
+    font-display: swap; src: url('../fonts/ibm-plex-mono-500.woff2') format('woff2');
+  }
+</style>
 <style>
   /* Shares the design of the findings and lenses pages: one white theme,
      Archivo for text, IBM Plex Mono for anything a machine wrote. */
@@ -75,6 +89,22 @@
              font-size: .82rem; line-height: 1.5; }
   .ai-note strong { font-weight: 600; color: var(--ink); }
 </style>
+<!-- Visitor counting. GoatCounter: no cookies, no personal data, nothing
+     shared with a third party beyond the counter itself. Inert until a site
+     code is filled in below, so this file is safe to deploy either way.
+     Sign up at https://www.goatcounter.com/ and put the code here. -->
+<script>
+  (function () {
+    var CODE = "";              // <- e.g. "robots-observatory"
+    if (!CODE) { return; }      // nothing is loaded, and nothing is counted
+    window.goatcounter = { path: location.pathname + location.search };
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "//gc.zgo.at/count.js";
+    s.setAttribute("data-goatcounter", "https://" + CODE + ".goatcounter.com/count");
+    document.head.appendChild(s);
+  }());
+</script>
 </head>
 <body>
 <div class="top">
