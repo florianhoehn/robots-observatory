@@ -690,6 +690,9 @@ var LENSES = [
   title:"Nothing with a committee behind it got adopted.",
   blurb:"<p>One square per site, grouped by the convention it adopted, and labelled "
     + "with who is actually behind it.</p>"
+    + "<p>The smallest block is the one this project set out to find: the "
+    + "sites that state a price or a licence an agent could read. There are "
+    + "fourteen. Click it for all of them.</p>"
     + "<p>The two that worked both skipped the standards process entirely: a "
     + "community convention that started as a blog post, and a line one CDN began "
     + "writing into its customers' files. Everything with a formal process behind it "
@@ -718,7 +721,12 @@ var LENSES = [
       { lb:"ai.txt", who:"a startup", c:C.mixed,
         set:f.filter(function (s) { return s.wkHas("ai_txt"); }) },
       { lb:"A2A agent card", who:"an industry consortium", c:"#6b7f7e",
-        set:f.filter(function (s) { return s.wkHas("agent_card") || s.wkHas("agent_card_legacy"); }) }
+        set:f.filter(function (s) { return s.wkHas("agent_card") || s.wkHas("agent_card_legacy"); }) },
+      // The one convention that answers "what would it cost", and the reason
+      // this project exists. It belongs in the adoption comparison, and its
+      // fourteen adopters have to be reachable from somewhere.
+      { lb:"A price or a licence", who:"RSL, and one pay-per-use provider", c:C.mixed,
+        set:f.filter(function (s) { return s.has("asks_for_money"); }) }
     ].sort(function (a,b) { return b.set.length - a.set.length; });
     var g = freshSvg(474);
     var cell = 4, gap = 1, colW = VW/3 - 16, perRow = Math.floor(colW/(cell+gap));
