@@ -135,13 +135,13 @@
          padding-top: .8rem; border-top: 1px solid var(--line); }
 
   /* ---------- lens index ---------- */
-  .lensgrid { display: grid; gap: 4px;
-              grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); }
-  .lenscard { display: flex; gap: .8rem; align-items: flex-start; padding: .8rem .85rem;
+  .lensgrid { display: grid; gap: 6px;
+              grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); }
+  .lenscard { display: block; padding: .85rem .9rem 1rem;
               border: 1px solid var(--line); border-radius: 9px; text-decoration: none;
               color: inherit; background: #fff; transition: border-color .15s, background .15s; }
   .lenscard:hover { border-color: var(--accent); background: #fafcfc; }
-  .lenscard .g { flex: 0 0 auto; width: 40px; height: 27px; color: var(--accent); }
+  .lenscard .g { display: block; width: 100%; height: auto; margin-bottom: .65rem; }
   .lenscard .lt { font-size: .88rem; font-weight: 600; line-height: 1.25;
                   letter-spacing: -.01em; }
   .lenscard .lf { font-family: var(--mono); font-size: .78rem; color: var(--accent);
@@ -188,9 +188,13 @@
      Four measures over an ordered scale. Four lines sharing one chart would
      need a categorical palette and a legend; facetting keeps each panel to a
      single hue, where length and slope carry everything. */
-  .facets { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1.8rem 2rem; }
-  .facet-t { font-size: .97rem; font-weight: 600; margin-bottom: .15rem; }
-  .facet-s { font-size: .85rem; color: var(--faint); margin-bottom: .6rem; min-height: 2.4em; }
+  .facets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1.4rem 1.6rem; }
+  @media (max-width: 60rem) { .facets { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 30rem) { .facets { grid-template-columns: minmax(0,1fr); } }
+  .facet-t { font-size: .92rem; font-weight: 600; margin-bottom: .15rem; }
+  .facet-s { font-size: .8rem; color: var(--faint); margin-bottom: .6rem;
+             min-height: 4.2em; line-height: 1.35; }
   .facet svg { display: block; width: 100%; height: 76px; overflow: visible; }
   .facet .ep { font-family: var(--mono); font-size: .72rem; fill: var(--muted); }
   .facet .ax { font-family: var(--mono); font-size: .62rem; fill: var(--faint);
@@ -347,9 +351,10 @@
     document, all the way down.</p>
 
     <p class="kicker" style="margin-top:3rem">Against popularity</p>
-    <h2>Publishing machine-readable files is mostly a big-site habit</h2>
+    <h2>Two of these are a big-site habit. Two are not.</h2>
     <p class="intro">Each panel is the same measure across five bands of Tranco
-    rank, from the most-visited sites on the left to rank 20,000 on the right.</p>
+    rank, most-visited on the left, rank 20,000 on the right. If adoption were
+    simply a function of size, all four lines would fall together.</p>
     <figure>
       <div class="facets" id="facets"></div>
       <figcaption><code>security.txt</code> more than halves as you descend, and
@@ -649,77 +654,114 @@ function renderFacets(f) {
 
 // Ten miniatures of the lens charts, so the index shows what it links to.
 var LENS_TITLES = {
-  purpose:   "Blocked for training, allowed for answering",
-  operators: "The crawler that explains itself gets let in",
+  purpose:   "Training is the line, not AI itself",
+  operators: "Sites tell OpenAI's bots apart",
   sector:    "Newsrooms withhold. Developer sites publish.",
   fork:      "Guides and walls are built by different sites",
   signal:    "Nothing with a committee behind it got adopted",
-  tdm:       "Europe's AI opt-out is mostly French",
+  tdm:       "Europe's AI opt-out has 46 users",
   ghosts:    "Rules that can never fire",
   legal:     "robots.txt is growing a contract",
   strain:    "A 1994 file carrying the AI debate",
   silence:   "Most of the web has not joined the argument"
 };
 var NSVG = "http://www.w3.org/2000/svg";
-function lensGlyph(id) {
+
+// A true miniature of each lens's chart, drawn from the same numbers the lens
+// itself uses. These were abstract glyphs first; a preview that is not the
+// data is just decoration pointing at data.
+function lensPreview(pv) {
+  var W = 150, H = 62;
   var g = document.createElementNS(NSVG, "svg");
-  g.setAttribute("viewBox", "0 0 44 30");
+  g.setAttribute("viewBox", "0 0 " + W + " " + H);
   g.setAttribute("class", "g");
   g.setAttribute("aria-hidden", "true");
-  var S2 = function (t, a) {
+  var E = function (t, a) {
     var n = document.createElementNS(NSVG, t);
-    for (var k in a) { n.setAttribute(k, a[k]); }
+    for (var k in a) { if (a[k] !== null) { n.setAttribute(k, a[k]); } }
     g.appendChild(n); return n;
   };
-  var dot = function (x, y, r, o) {
-    S2("circle", { cx:x, cy:y, r:r, fill:"currentColor", "fill-opacity":o || 1 }); };
-  var bar = function (x, y, w, h, o) {
-    S2("rect", { x:x, y:y, width:w, height:h, rx:1, fill:"currentColor",
-                 "fill-opacity":o || 1 }); };
-  if (id === "purpose") {
-    [7,15,23].forEach(function (y, i) {
-      S2("line", { x1:4, x2:40, y1:y, y2:y, stroke:"currentColor",
-                   "stroke-opacity":.25, "stroke-width":1 });
-      dot([32,22,18][i], y, 3, .9); dot([26,17,13][i], y, 2.2, .5);
+  if (!pv || !pv.v || !pv.v.length) { return g; }
+  var v = pv.v, w = pv.w || [], max = Math.max.apply(null, v.concat(w, [1]));
+  var A = "#0a5f64", R = "#a8453a", M = "#b4802c", S = "#c6d0ce";
+
+  if (pv.kind === "ladder") {               // three rungs, dot by block rate
+    v.forEach(function (x, i) {
+      var y = 12 + i * 19;
+      E("line", { x1:4, x2:W-4, y1:y, y2:y, stroke:S, "stroke-width":1 });
+      E("circle", { cx: 4 + (x / 100) * (W - 8), cy:y, r:5,
+                    fill: i === 0 ? R : i === 1 ? M : A, "fill-opacity":.9 });
     });
-  } else if (id === "operators") {
-    [8,16,24].forEach(function (y, i) {
-      var x1 = [10,14,20][i], x2 = [36,30,26][i];
-      S2("line", { x1:x1, x2:x2, y1:y, y2:y, stroke:"currentColor",
-                   "stroke-opacity":.3, "stroke-width":3, "stroke-linecap":"round" });
-      dot(x1, y, 2.6, 1); dot(x2, y, 2.6, .55);
+  } else if (pv.kind === "dumbbell") {      // one bar per operator
+    v.forEach(function (x, i) {
+      var y = 8 + i * 11, len = Math.max(6, (x / max) * (W - 20));
+      E("line", { x1:6, x2:6+len, y1:y, y2:y, stroke:A, "stroke-width":3,
+                  "stroke-opacity":.3, "stroke-linecap":"round" });
+      E("circle", { cx:6, cy:y, r:2.6, fill:A });
+      E("circle", { cx:6+len, cy:y, r:2.6, fill: i === 0 ? R : A, "fill-opacity":.8 });
     });
-  } else if (id === "sector") {
-    [6,13,20,26].forEach(function (y, i) {
-      var w = [14,8,5,3][i];
-      bar(22 - w, y - 2, w, 4, .85); bar(22, y - 2, [3,6,11,4][i], 4, .4);
+  } else if (pv.kind === "diverge") {       // bars out from a centre line
+    var mid = W / 2;
+    v.forEach(function (x, i) {
+      var y = 6 + i * 11, lw = (x / max) * (mid - 6), rw = ((w[i] || 0) / max) * (mid - 6);
+      E("rect", { x: mid - lw, y:y, width: Math.max(1, lw), height:7, rx:1, fill:R, "fill-opacity":.85 });
+      E("rect", { x: mid, y:y, width: Math.max(1, rw), height:7, rx:1, fill:A, "fill-opacity":.85 });
     });
-    S2("line", { x1:22, x2:22, y1:2, y2:28, stroke:"currentColor", "stroke-opacity":.4 });
-  } else if (id === "fork") {
-    dot(17, 15, 11, .5); dot(28, 15, 9, .35);
-  } else if (id === "signal") {
-    for (var r = 0; r < 5; r++) { for (var c = 0; c < 7; c++) { bar(4+c*3, 4+r*3, 2, 2, .85); } }
-    for (var r2 = 0; r2 < 2; r2++) { for (var c2 = 0; c2 < 5; c2++) { bar(28+c2*3, 4+r2*3, 2, 2, .4); } }
-    bar(28, 16, 2, 2, .3);
-  } else if (id === "tdm") {
-    [[9,10],[15,10],[9,16],[15,16],[12,22]].forEach(function (q) { dot(q[0], q[1], 2.6, .9); });
-    [[28,11],[34,11],[28,17]].forEach(function (q) { dot(q[0], q[1], 2.6, .45); });
-  } else if (id === "ghosts") {
-    [6,13,20,27].forEach(function (y, i) {
-      S2("rect", { x:5, y:y-2.5, width:[32,18,12,8][i], height:5, rx:1, fill:"none",
-                   stroke:"currentColor", "stroke-width":1, "stroke-dasharray":"2.5 2" });
+    E("line", { x1:mid, x2:mid, y1:3, y2:H-4, stroke:"#9fb0ae", "stroke-width":1 });
+  } else if (pv.kind === "venn") {          // two circles, overlap to scale
+    var rA = Math.sqrt(v[0]) * 4.6, rB = Math.sqrt(v[2]) * 4.6;
+    var d = rA + rB - Math.sqrt(v[1]) * 7.4;
+    E("circle", { cx: W/2 - d/2, cy: H/2, r: rA, fill:A, "fill-opacity":.55 });
+    E("circle", { cx: W/2 + d/2, cy: H/2, r: rB, fill:R, "fill-opacity":.55 });
+  } else if (pv.kind === "blocks") {        // unit squares, one per convention
+    var x0 = 4;
+    v.forEach(function (n, i) {
+      var cols = Math.max(1, Math.round(Math.sqrt(n / 14)));
+      var sq = n > 500 ? 2.2 : 3.4, rows = Math.max(1, Math.min(14, Math.ceil(n / cols / 6)));
+      for (var r2 = 0; r2 < rows; r2++) {
+        for (var c = 0; c < cols; c++) {
+          E("rect", { x: x0 + c * (sq + .8), y: H - 6 - (r2 + 1) * (sq + .8),
+                      width:sq, height:sq, fill: i === 0 ? A : i === 1 ? "#79b8bd" : R,
+                      "fill-opacity": .9 });
+        }
+      }
+      x0 += cols * (sq + .8) + 7;
     });
-  } else if (id === "legal") {
-    [0,1,2,3,4].forEach(function (i) {
-      var x = 5 + i*8, hT = [4,6,8,11,13][i], hO = [10,8,6,4,3][i];
-      bar(x, 26-hT, 6, hT, .3); bar(x, 26-hT-hO, 6, hO, .9);
+  } else if (pv.kind === "dots") {          // one dot per adopter, grouped
+    var x = 6, cols2 = [R, A, M, "#79b8bd"];
+    v.forEach(function (n, i) {
+      for (var j = 0; j < n; j++) {
+        E("circle", { cx: x + (j % 4) * 8, cy: 12 + Math.floor(j / 4) * 9,
+                      r:3.1, fill: cols2[i], "fill-opacity":.85 });
+      }
+      x += 36;
     });
-  } else if (id === "strain") {
-    [[8,24],[13,21],[17,18],[21,16],[25,13],[29,11],[33,8],[12,24],[20,20],[28,15]]
-      .forEach(function (q, i) { dot(q[0], q[1], 2.4, i % 3 ? .4 : .85); });
-  } else if (id === "silence") {
-    for (var r3 = 0; r3 < 5; r3++) { for (var c3 = 0; c3 < 8; c3++) {
-      bar(5+c3*4.4, 4+r3*4.4, 3.2, 3.2, r3 < 3 ? .22 : .85); } }
+  } else if (pv.kind === "hollow") {        // dashed outlines: rules that miss
+    v.forEach(function (n, i) {
+      E("rect", { x:5, y: 6 + i * 11, width: Math.max(4, (n / max) * (W - 14)),
+                  height:7, rx:1, fill:"none", stroke:M, "stroke-width":1,
+                  "stroke-dasharray":"3 2" });
+    });
+  } else if (pv.kind === "stack") {         // hand-written on top of template
+    v.forEach(function (own, i) {
+      var x2 = 8 + i * 28, hT = ((w[i] || 0) / max) * 44, hO = (own / max) * 44;
+      E("rect", { x:x2, y: H - 6 - hT, width:18, height: Math.max(1, hT), fill:R, "fill-opacity":.3 });
+      E("rect", { x:x2, y: H - 6 - hT - hO, width:18, height: Math.max(1, hO), rx:1, fill:R });
+    });
+  } else if (pv.kind === "pair") {          // two medians, side by side
+    v.forEach(function (n, i) {
+      var h = (n / max) * 46;
+      E("rect", { x: 34 + i * 48, y: H - 6 - h, width:30, height: Math.max(2, h),
+                  rx:2, fill: i === 0 ? R : S });
+    });
+  } else if (pv.kind === "grid") {          // a waffle per rank band
+    v.forEach(function (pct2, i) {
+      var filled = Math.round(pct2 / 10);
+      for (var k2 = 0; k2 < 10; k2++) {
+        E("rect", { x: 7 + i * 28, y: H - 8 - (k2 + 1) * 5.4, width:18, height:4.2,
+                    rx:1, fill: k2 < filled ? S : A, "fill-opacity": k2 < filled ? 1 : .75 });
+      }
+    });
   }
   return g;
 }
@@ -732,10 +774,14 @@ function renderLensIndex(big, small) {
   (small && small.lenses ? small.lenses : []).forEach(function (l) { fallback[l.id] = l; });
   big.lenses.forEach(function (l) {
     // the sector lens is the hand-screened panel, so its figure comes from there
-    var fig = l.figure || (fallback[l.id] || {}).figure;
+    // the sector lens is the hand-screened panel, so both its figure and its
+    // preview series come from there
+    var alt = fallback[l.id] || {};
+    var fig = l.figure || alt.figure;
+    var pv = (l.preview && l.preview.v && l.preview.v.length) ? l.preview : alt.preview;
     var a = el("a", "lenscard");
     a.href = "lenses/#lens-" + l.id;
-    a.appendChild(lensGlyph(l.id));
+    a.appendChild(lensPreview(pv));
     var box = el("div");
     box.appendChild(el("div", "lt", LENS_TITLES[l.id] || l.id));
     if (fig) { box.appendChild(el("div", "lf", fig)); }

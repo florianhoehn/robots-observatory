@@ -1494,7 +1494,81 @@ def _lens_figures(recs: list[dict], sectors: dict) -> list[dict]:
     def pc(v):
         return f"{v:.0f}%"
 
-    return [
+    # A small real series per lens, so the findings page can draw a true
+    # miniature of each chart instead of a decorative glyph. Kept to a handful
+    # of numbers: the point is the shape, not the detail.
+    bands = _rank_bands(recs)
+    ghost_counts: dict[str, int] = {}
+    for r in present:
+        for g in _ghosts(r, {w.lower() for w in load_watchlist()}):
+            k = g.lower()
+            ghost_counts[k] = ghost_counts.get(k, 0) + 1
+    top_ghosts = sorted(ghost_counts.values(), reverse=True)[:5]
+
+    ops = []
+    for op in ("OpenAI", "Anthropic", "Meta", "Perplexity", "Webz.io"):
+        a = b = 0
+        for r in present:
+            named = [t for t in (_pol(r, "ai_tokens_named") or [])
+                     if AI_OPERATOR.get(t) == op]
+            if len(named) < 2:
+                continue
+            blocked = set(_pol(r, "ai_tokens_root_disallowed") or [])
+            hit = sum(1 for t in named if t in blocked)
+            a += 1
+            if 0 < hit < len(named):
+                b += 1
+        ops.append(round(100 * b / a, 1) if a else 0.0)
+
+    legal_own, legal_tpl = [], []
+    for i, _ in enumerate(RANK_BANDS):
+        grp = [r for r in rd if (lambda k: k is not None and
+               RANK_BANDS[i][0] <= k <= RANK_BANDS[i][1])(r.get("rank_at_freeze"))]
+        n2 = len(grp) or 1
+        legal_own.append(round(100 * sum(
+            1 for r in grp if _pol(r, "has_legal_text")
+            and not _pol(r, "legal_boilerplate")) / n2, 2))
+        legal_tpl.append(round(100 * sum(
+            1 for r in grp if _pol(r, "legal_boilerplate")) / n2, 2))
+
+    silent_by_band = []
+    for lo, hi in RANK_BANDS:
+        grp = [r for r in rd if (r.get("rank_at_freeze") or 0) and
+               lo <= r["rank_at_freeze"] <= hi]
+        n2 = len(grp) or 1
+        silent_by_band.append(round(100 * sum(
+            1 for r in grp
+            if not any(f(r) for f in SUPPORT_SIGNALS.values())
+            and not any(f(r) for f in HINDER_SIGNALS.values())) / n2, 1))
+
+    sec_rows = [(k, v) for k, v in sorted(
+        sectors.items(), key=lambda kv: -(kv[1]["withholds"] / max(kv[1]["hosts"], 1)))
+        if k != "unlabelled"][:5]
+    content_signal = sum(1 for r in present if _pol(r, "content_signal"))
+
+    prev = {
+        "purpose":   {"kind": "ladder",   "v": [rate("train"), rate("search"), rate("user")]},
+        "operators": {"kind": "dumbbell", "v": ops},
+        "sector":    {"kind": "diverge",
+                      "v": [round(100 * v["withholds"] / v["hosts"], 1) for _, v in sec_rows],
+                      "w": [round(100 * v["publishes"] / v["hosts"], 1) for _, v in sec_rows]},
+        "fork":      {"kind": "venn",
+                      "v": [round(100 * sum(1 for r in rd if any(f(r) for f in SUPPORT_SIGNALS.values())) / n, 1),
+                            round(100 * both / n, 1),
+                            round(100 * sum(1 for r in rd if any(f(r) for f in HINDER_SIGNALS.values())) / n, 1)]},
+        "signal":    {"kind": "blocks",
+                      "v": [llms, content_signal,
+                            sum(1 for r in recs if wk_present(r, "tdmrep")),
+                            sum(1 for r in recs if wk_present(r, "ai_catalog")),
+                            sum(1 for r in recs if wk_present(r, "ai_txt"))]},
+        "tdm":       {"kind": "dots",     "v": [17, 11, 7, 11]},
+        "ghosts":    {"kind": "hollow",   "v": top_ghosts},
+        "legal":     {"kind": "stack",    "v": legal_own, "w": legal_tpl},
+        "strain":    {"kind": "pair",     "v": [mid(lines_ai), mid(lines_no)]},
+        "silence":   {"kind": "grid",     "v": silent_by_band},
+    }
+
+    rows = [
         {"id": "purpose", "figure": pc(rate("train")),
          "label": "of training crawlers are blocked where they are named"},
         {"id": "operators",
@@ -1520,6 +1594,9 @@ def _lens_figures(recs: list[dict], sectors: dict) -> list[dict]:
         {"id": "silence", "figure": pc(100 * silent / n),
          "label": "of readable rulebooks never mention AI either way"},
     ]
+    for row in rows:
+        row["preview"] = prev.get(row["id"])
+    return rows
 
 
 def _rank_bands(recs: list[dict]) -> list[dict]:
