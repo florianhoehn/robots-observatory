@@ -33,8 +33,9 @@ second per-host gap is the guarantee, and it does not change with it.
 
 Two panels, deliberately different in kind:
 
-- **panel-01**: 463 hand-screened websites from the Tranco top 1000, probed
-  weekly. 624 requests per host per year.
+- **panel-01**: 463 hand-screened websites from the Tranco top 1000. Intended
+  for a weekly series; one run so far. At weekly cadence that is 624 requests
+  per host per year, and this document is the budget it has to stay inside.
 - **panel-02**: 16,314 hosts from the Tranco top 20,000, unscreened, probed
   occasionally rather than on a schedule. Breadth, not a time series.
 

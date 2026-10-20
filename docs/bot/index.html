@@ -5,64 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RobotsObservatory: what this bot is</title>
 <meta name="description" content="RobotsObservatory reads robots.txt and ten well-known policy files, twelve requests per host per run. How to stop it, and what it stores.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#129302;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
+  /* Shares the design of the findings and lenses pages: one white theme,
+     Archivo for text, IBM Plex Mono for anything a machine wrote. */
   :root {
-    --bg: #edf0f0; --surface: #fafbfb; --ink: #141d1c; --ink-2: #4e5c5a;
-    --ink-3: #7b8886; --line: #cbd4d3; --accent: #0e5f63;
+    --bg: #fff; --ink: #11201f; --muted: #5d6f6d; --faint: #8a9a98;
+    --line: #e2e8e7; --wash: #f4f7f6; --accent: #0a5f64;
     --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0e1413; --surface: #161e1d; --ink: #e2eae8; --ink-2: #9fafad;
-      --ink-3: #74827f; --line: #2c3836; --accent: #58b6ba;
-    }
+    --sans: Archivo, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.6 Georgia, "Times New Roman", serif;
-    -webkit-text-size-adjust: 100%;
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  main { max-width: 44rem; margin: 0 auto; padding: 0 16px 4rem; }
+  .top {
+    display: flex; gap: 1.4rem; align-items: baseline; flex-wrap: wrap;
+    max-width: 44rem; margin: 0 auto; padding: 1.1rem 16px .9rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .top a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .top .sp { margin-left: auto; }
   h1 {
-    font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-    font-size: clamp(1.6rem, 5vw, 2.1rem); line-height: 1.15; margin: 0 0 .5rem;
-    letter-spacing: -.02em;
+    font-size: clamp(1.9rem, 5vw, 2.6rem); line-height: 1.04; margin: 2.2rem 0 .6rem;
+    letter-spacing: -.032em; font-weight: 700;
   }
   h2 {
-    font-family: system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.05rem; margin: 2.25rem 0 .5rem; letter-spacing: -.01em;
+    font-size: 1.12rem; margin: 2.4rem 0 .6rem; letter-spacing: -.015em;
+    font-weight: 600;
   }
-  .lede { font-size: 1.1rem; color: var(--ink-2); margin: 0 0 1.5rem; }
-  p { margin: 0 0 .9rem; }
+  .lede { font-size: 1.1rem; color: var(--muted); margin: 0 0 1.5rem; }
+  p { margin: 0 0 .9rem; color: var(--muted); }
+  p strong, li strong { color: var(--ink); font-weight: 600; }
   code, pre { font-family: var(--mono); font-size: .85em; }
-  code { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; padding: .1em .35em; }
+  code { background: var(--wash); border: 1px solid var(--line); border-radius: 3px;
+         padding: .1em .35em; color: var(--ink); }
   pre {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 5px;
+    background: var(--wash); border: 1px solid var(--line); border-radius: 6px;
     padding: .9rem 1rem; overflow-x: auto; margin: 0 0 1rem; line-height: 1.5;
+    color: var(--ink);
   }
   pre code { background: none; border: 0; padding: 0; font-size: 1em; }
   .stop { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.25rem 0; }
-  table { width: 100%; border-collapse: collapse; font-size: .95rem; margin: 0 0 1rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 0 0 1rem; }
   th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--line); }
+  td { color: var(--muted); }
   th {
-    font-family: var(--mono); font-size: .68rem; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--ink-3); font-weight: 600;
+    font-family: var(--mono); font-size: .66rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--faint); font-weight: 500;
   }
-  td.n { font-family: var(--mono); text-align: right; width: 4rem; }
+  td.n { font-family: var(--mono); text-align: right; width: 4rem; color: var(--ink); }
   td code { font-size: .8rem; }
   a { color: var(--accent); }
   ul { padding-left: 1.2rem; margin: 0 0 .9rem; }
-  li { margin-bottom: .35rem; }
-    .ai-note { margin: 1rem 0 0; padding-top: .9rem;
-    border-top: 1px solid var(--line); font-size: .85rem; line-height: 1.5; }
-footer {
-    margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
-    font-size: .9rem; color: var(--ink-3);
+  li { margin-bottom: .35rem; color: var(--muted); }
+  footer {
+    margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+    font-size: .88rem; color: var(--faint);
   }
+  .ai-note { margin: 1rem 0 0; padding-top: .9rem; border-top: 1px solid var(--line);
+             font-size: .82rem; line-height: 1.5; }
+  .ai-note strong { font-weight: 600; color: var(--ink); }
 </style>
 </head>
 <body>
+<div class="top">
+  <span><a href="../">Robots Observatory</a></span>
+  <span>Run 2026-10-19</span>
+  <span>16,314 websites</span>
+  <span class="sp"><a href="../lenses/">Ten lenses</a></span>
+</div>
 <main>
 
 <h1>RobotsObservatory</h1>
@@ -72,8 +92,10 @@ this bot did, and how to stop it.</p>
 <p>RobotsObservatory is a research crawler that measures how the web
 <em>declares</em> its policy toward AI agents. It reads <code>robots.txt</code>
 and ten well-known policy files from fixed lists of sites and publishes the
-aggregate result as an open dataset: 463 sites weekly, and occasionally a wider
-survey of about 16,000.</p>
+aggregate result as an open dataset. Two fixed panels: 463 hand-screened sites,
+and a wider one of 16,314. One run of each so far, on 19 October 2026. If it
+becomes a weekly series, this page will say so before the second run, not
+after.</p>
 
 <p><strong>It does not read your pages.</strong> It requests only files that
 exist to be read by machines. It never touches anything behind a login, never
@@ -176,7 +198,8 @@ it</a>.</p>
 <footer>
 <a href="https://github.com/florianhoehn/robots-observatory">Source and data</a> ·
 <a href="https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md">Conduct charter</a> ·
-<a href="../">Findings</a>
+<a href="../">Findings</a> &middot;
+<a href="../lenses/">Ten lenses</a>
 <p class="ai-note"><strong>Researched, built and written with the help of AI.</strong> No model sits in the measurement path: fetching, parsing and counting are deterministic, and every figure here is computed from the published data. The judgement calls, and the mistakes, are documented in the <a href="https://github.com/florianhoehn/robots-observatory/commits/main">commit history</a>.</p>
 </footer>
 
