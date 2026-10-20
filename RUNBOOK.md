@@ -116,3 +116,42 @@ records compared as a sorted set must be identical before and after:
 Equal hashes mean any derivation is unchanged. If `derive` then reports
 different findings, the cause is a change in the derivation code, not the
 split -- which is how the panel-01 catch-all discount surfaced.
+
+## Presence is not stance, and a 200 is not a file
+
+Three ways a well-known path was counted as published when it was not:
+
+**A JSON path carrying something else.** hyundai.com and six lazada domains
+answered five agent-discovery paths each with a WAF block page: 200, no
+`<html>` tag anywhere in it, and a detection timestamp inside, so every copy
+hashed differently and `catch_all_shas` could not see it either. `classify`
+now takes `expect_json` and rejects a body that will not parse. It cut
+`agent_card` by a third and `agent_card_legacy` by nearly half.
+
+Do **not** widen this into "starts with a bracket". Real `llms.txt` and
+`ads.txt` files open with an HTML comment, and dropping them would trade a
+small over-count for a larger under-count.
+
+**A zero-length body.** 36 hosts served an empty `ads.txt`, 16 an empty
+`humans.txt`. A well-known convention needs content to mean anything, so
+`empty_is_absent` classifies these as `empty`. robots.txt is the exception and
+passes `False`: an empty robots.txt is a valid file meaning "no rules". 104
+hosts in panel-02 serve exactly that.
+
+**Presence read as stance.** `tdmrep.json` expresses reservation *or* explicit
+permission (`tdm-reservation: 0`); tiket.com grants. `ai.txt` is used both as a
+Spawning-style opt-out and as a guide pointing AI systems at what they may use
+(manuals.plus, vidiq.com, att.com). Counting either by presence files
+permissions under refusals. `reparse` reads the body and stamps `restricts` on
+the record, so `derive` stays a pure function of the records.
+
+### The detector must not depend on its own output
+
+`catch_all_shas` counted hashes only across paths still marked `present`.
+Demoting cloudflare.net's five non-JSON agent files dropped it below the
+repeat threshold, which un-discounted the sixth copy of the same "Invalid key"
+body — and `security.txt` went *up* by 14 on a change that should only ever
+remove. It now counts every response that returned a body. The reported
+statistic is separate: `catch_all_responses` counts hosts where a repeat
+actually suppressed something, because most hosts serve one 404 page for every
+missing path and that is ordinary, not pathological.

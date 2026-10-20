@@ -124,6 +124,11 @@ IDENTITIES = {
 }
 US_TOKEN = "RobotsObservatory"
 
+# Paths the convention defines as JSON. A 200 at one of these carrying
+# anything else is not that file -- see robots_parse.looks_like_json.
+JSON_WELLKNOWN = frozenset({"tdmrep", "gpc", "agent_card", "ai_catalog",
+                            "agent_card_legacy"})
+
 WELLKNOWN = {
     "llms_txt": "/llms.txt",
     "ai_txt": "/ai.txt",
@@ -596,7 +601,12 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
     # crawler that says what it is.
     honest = next(e for e in rec["robots"] if e["identity"] == "honest_bot")
     rec["policy"] = {"file_state": honest["file_state"]}
-    if honest["file_state"] == "present" and bodies["honest_bot"]:
+    # `is not None`, not truthiness: 104 hosts in panel-02 serve a zero-byte
+    # robots.txt, which is a valid file meaning "no rules". Skipping the parse
+    # left their policy as a bare file_state with every field missing rather
+    # than explicitly empty -- same answer to every question asked so far, but
+    # only by accident of absent and [] both being falsy.
+    if honest["file_state"] == "present" and bodies["honest_bot"] is not None:
         rec["policy"].update(
             robots_parse.summarise(bodies["honest_bot"], watchlist, US_TOKEN)
         )
@@ -635,7 +645,9 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         body = got.pop("_body")
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
-                                      got["path_mismatch"], got["dns_error"])
+                                      got["path_mismatch"], got["dns_error"],
+                                      expect_json=key in JSON_WELLKNOWN,
+                                      empty_is_absent=True)
         store_blob(got["sha256"], body, present=(state == "present"))
         rec["wellknown"][key] = {
             "status": got["status"], "file_state": state,
@@ -1061,11 +1073,63 @@ def catch_all_shas(rec: dict) -> set:
     already gathered and can be revised without re-crawling. Distinct real
     policy files never share a body.
     """
+    # Counted over every path that returned a body, not only those still
+    # classified present. Tying it to 'present' made the detector depend on
+    # its own downstream result: demoting cloudflare.net's five non-JSON
+    # agent files dropped it below the threshold and un-discounted the sixth
+    # copy of the same "Invalid key" body, which then counted as a real
+    # security.txt.
     seen: dict[str, int] = {}
     for v in (rec.get("wellknown") or {}).values():
-        if v.get("file_state") == "present" and v.get("sha256"):
+        if v.get("sha256"):
             seen[v["sha256"]] = seen.get(v["sha256"], 0) + 1
     return {sha for sha, n in seen.items() if n > 1}
+
+
+def tdm_reserves(body: str | None) -> bool | None:
+    """Does this tdmrep.json actually reserve rights?
+
+    Presence is not stance. TDMRep expresses either a reservation
+    (`tdm-reservation: 1`) or an explicit grant (`0`); tiket.com publishes a
+    grant. Counting every tdmrep.json as an opt-out would file a permission
+    under refusals.
+    """
+    if body is None:
+        return None
+    try:
+        d = json.loads(body)
+    except ValueError:
+        return None
+    items = d if isinstance(d, list) else [d]
+    return any(isinstance(i, dict) and i.get("tdm-reservation", 0) not in (0, None)
+               for i in items)
+
+
+def ai_txt_restricts(body: str | None) -> bool | None:
+    """Does this ai.txt withhold anything, or is it a guide?
+
+    ai.txt is used both ways. Most are Spawning-style opt-outs listing
+    `Disallow:` rules; a handful (manuals.plus, vidiq.com, att.com) are
+    documents pointing AI systems at what they may use, which is the opposite
+    stance in the same file.
+    """
+    if body is None:
+        return None
+    for line in body.splitlines():
+        line = line.strip()
+        if line.lower().startswith("disallow:") and line.split(":", 1)[1].strip():
+            return True
+    return False
+
+
+def _catch_all_suppressed(rec: dict) -> bool:
+    """True if a repeated body cost this host at least one apparent file."""
+    shas = catch_all_shas(rec)
+    if not shas:
+        return False
+    return any((v or {}).get("file_state") == "present"
+               and (v or {}).get("sha256") in shas
+               for v in (rec.get("wellknown") or {}).values())
 
 
 def wk_present(rec: dict, key: str) -> bool:
@@ -1169,10 +1233,48 @@ def cmd_reparse(args) -> None:
     watchlist = load_watchlist()
     for run_dir in runs:
         recs = load_records(run_dir)
-        changed = missing = 0
+        changed = missing = demoted = 0
         for r in recs:
+            # A JSON convention whose archived body is not JSON was never that
+            # file. Only ever demotes a 'present', so a reclassification can
+            # lower a published share and never inflate one.
+            for key in (r.get("wellknown") or {}):
+                if key not in JSON_WELLKNOWN:
+                    continue
+                wk = r["wellknown"][key] or {}
+                if wk.get("file_state") != "present" or not wk.get("sha256"):
+                    continue
+                body = read_blob(wk["sha256"])
+                if body is None or robots_parse.looks_like_json(body):
+                    continue
+                wk["file_state"] = "soft_404"
+                wk["reclassified"] = "body is not JSON"
+                demoted += 1
+
+            # And a zero-length body at any well-known path.
+            for key in (r.get("wellknown") or {}):
+                wk = r["wellknown"][key] or {}
+                if wk.get("file_state") != "present":
+                    continue
+                if wk.get("bytes") == 0 or (
+                        wk.get("sha256") and (read_blob(wk["sha256"]) or "").strip() == ""):
+                    wk["file_state"] = "empty"
+                    wk["reclassified"] = "zero-length body"
+                    demoted += 1
+
+            # Stance that can only be read from the body, stamped onto the
+            # record so derive stays a pure function of the records and works
+            # without the blob store.
+            for key, fn in (("tdmrep", tdm_reserves), ("ai_txt", ai_txt_restricts)):
+                wk = (r.get("wellknown") or {}).get(key) or {}
+                if wk.get("file_state") == "present" and wk.get("sha256"):
+                    verdict = fn(read_blob(wk["sha256"]))
+                    if verdict is not None:
+                        wk["restricts"] = verdict
+
             sha = _file_sha(r, "robots")
             if not sha:
+                r["parser_version"] = robots_parse.PARSER_VERSION
                 continue
             body = read_blob(sha)
             if body is None:
@@ -1186,12 +1288,95 @@ def cmd_reparse(args) -> None:
             r["parser_version"] = robots_parse.PARSER_VERSION
         if not args.dry_run:
             write_records(run_dir, recs)
-        print(f"  {run_dir.name}: {changed} record(s) changed"
+        print(f"  {run_dir.name}: {changed} policy record(s) changed, "
+              f"{demoted} non-JSON well-known file(s) demoted"
               + (f", {missing} body missing" if missing else "")
               + (" (dry run)" if args.dry_run else ""), file=sys.stderr)
     print(f"reparsed at parser_version={robots_parse.PARSER_VERSION}", file=sys.stderr)
 
 
+
+
+def _wk_restricts(rec: dict, key: str) -> bool:
+    """A convention counted as restrictive only where its body says so."""
+    if not wk_present(rec, key):
+        return False
+    return bool(((rec.get("wellknown") or {}).get(key) or {}).get("restricts"))
+
+
+def _wk_permits(rec: dict, key: str) -> bool:
+    """Published, and its body does not withhold anything."""
+    if not wk_present(rec, key):
+        return False
+    wk = (rec.get("wellknown") or {}).get(key) or {}
+    return "restricts" in wk and not wk["restricts"]
+
+
+# What a host declares toward automated readers, as separate measures rather
+# than one axis. A site can document itself and block a crawler in the same
+# breath, and collapsing that into a single "friendliness" score would hide
+# the most interesting group on the web.
+SUPPORT_SIGNALS = {
+    "llms_txt": lambda r: wk_present(r, "llms_txt"),
+    "agent_discovery": lambda r: any(wk_present(r, k) for k in
+                                     ("agent_card", "agent_card_legacy", "ai_catalog")),
+    "ai_txt_as_guide": lambda r: _wk_permits(r, "ai_txt"),
+    "names_ai_blocks_none": lambda r: bool(_pol(r, "ai_tokens_named"))
+                                      and not _pol(r, "ai_tokens_root_disallowed")
+                                      and not _pol(r, "wildcard_root_disallowed"),
+}
+HINDER_SIGNALS = {
+    "blocks_named_ai": lambda r: bool(_pol(r, "ai_tokens_root_disallowed")),
+    "blocks_all_crawlers": lambda r: bool(_pol(r, "wildcard_root_disallowed")),
+    "reserves_tdm": lambda r: _wk_restricts(r, "tdmrep"),
+    "ai_txt_optout": lambda r: _wk_restricts(r, "ai_txt"),
+    "asks_for_money": lambda r: bool(_pol(r, "rsl_license_refs")),
+}
+FRICTION_SIGNALS = {
+    "crawl_delay": lambda r: _pol(r, "crawl_delay") not in (None, "", "0"),
+    "policy_by_identity": lambda r: bool(r.get("policy_varies_by_identity")),
+    "access_by_identity": lambda r: bool(r.get("access_varies_by_identity")),
+}
+
+
+def _pol(r: dict, key: str, default=None):
+    return (r.get("policy") or {}).get(key, default)
+
+
+def _stance(recs: list[dict]) -> dict:
+    """Support / silence / hindrance, over hosts that gave a definitive answer.
+
+    The denominator is deliberately not every host probed. A host that refused
+    us, timed out or sent us to a consent wall has no measurable stance, and
+    counting it as "silent" would read as indifference where the truth is that
+    we could not tell.
+    """
+    answered = [r for r in recs
+                if _pol(r, "file_state") in ("present", "absent_404")]
+    n = len(answered)
+    if not n:
+        return {}
+
+    def tally(group):
+        return {k: {"n": c, "pct": round(100 * c / n, 2)}
+                for k, f in group.items()
+                for c in [sum(1 for r in answered if f(r))]}
+
+    sup = [any(f(r) for f in SUPPORT_SIGNALS.values()) for r in answered]
+    hin = [any(f(r) for f in HINDER_SIGNALS.values()) for r in answered]
+    cells = {"supports_only": 0, "both": 0, "restricts_only": 0, "silent": 0}
+    for s_, h_ in zip(sup, hin):
+        cells["both" if s_ and h_ else
+              "supports_only" if s_ else
+              "restricts_only" if h_ else "silent"] += 1
+    return {
+        "answered": n,
+        "unreadable": len(recs) - n,
+        "stance": {k: {"n": v, "pct": round(100 * v / n, 2)} for k, v in cells.items()},
+        "support": tally(SUPPORT_SIGNALS),
+        "hindrance": tally(HINDER_SIGNALS),
+        "friction": tally(FRICTION_SIGNALS),
+    }
 
 
 def _rank_bands(recs: list[dict]) -> list[dict]:
@@ -1331,9 +1516,18 @@ def cmd_derive(args) -> None:
         # Hosts too slow to finish their probe inside the budget. Their
         # remaining paths are unmeasured, not absent.
         "budget_exceeded": share(lambda r: bool(r.get("budget_exceeded"))),
-        # Hosts answering every unknown well-known path with one body. Counted
-        # so the correction is visible rather than silently applied.
-        "catch_all_responses": share(lambda r: bool(catch_all_shas(r))),
+        # Hosts where a repeated body actually suppressed a file that would
+        # otherwise have counted. Not simply "some hash repeats": most hosts
+        # serve one 404 page for every missing path, which is ordinary and
+        # suppresses nothing. The detector considers every response (so it
+        # cannot be weakened by its own demotions); this counts the hosts it
+        # changed the answer for.
+        "catch_all_responses": share(_catch_all_suppressed),
+        # Hosts where at least one of the twelve requests failed at the
+        # transport layer. Published so the page can state its own error rate
+        # rather than carry a figure typed in by hand.
+        "transport_errors": share(lambda r: bool(r.get("errors"))),
+        "declared_stance": _stance(recs),
         "opted_out_via_robots": share(
             lambda r: bool(r.get("opted_out_via_robots"))
         ),

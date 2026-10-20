@@ -15,9 +15,10 @@ instead of silently breaking comparability with week 1.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 
-PARSER_VERSION = 3
+PARSER_VERSION = 4
 
 # Directives we treat as standard group members (RFC 9309 plus crawl-delay).
 _GROUP_STANDARD = {"allow", "disallow", "crawl-delay"}
@@ -127,8 +128,26 @@ def is_dns_error(err: str | None) -> bool:
     return any(m in low for m in DNS_ERROR_MARKERS)
 
 
+def looks_like_json(body: str) -> bool:
+    """True if the body actually parses as JSON.
+
+    For a path defined to carry JSON this is the only reliable presence test.
+    A WAF block page served with 200 at /.well-known/tdmrep.json passes every
+    heuristic worth having, and when it embeds a detection timestamp every
+    response hashes differently, so catch-all detection does not see it
+    either. hyundai.com and six lazada domains were each counted as publishing
+    five agent-discovery files on exactly that basis.
+    """
+    try:
+        json.loads(body)
+    except (ValueError, TypeError):
+        return False
+    return True
+
+
 def classify(status: int | None, body: str | None, transport_error: bool,
-             path_mismatch: bool = False, dns_error: bool = False) -> str:
+             path_mismatch: bool = False, dns_error: bool = False,
+             expect_json: bool = False, empty_is_absent: bool = False) -> str:
     """Bucket the response.
 
     These states are genuinely different claims and averaging them produces a
@@ -149,6 +168,8 @@ def classify(status: int | None, body: str | None, transport_error: bool,
       dns_failure     the resolver would not look the host up -- says
                       nothing about the host, and on a filtering resolver
                       silently deletes a whole category from the dataset
+      empty           200 with a zero-length body, at a path where that
+                      cannot be a file (well-known conventions, not robots)
       error           any other transport failure
     """
     if dns_error:
@@ -170,6 +191,19 @@ def classify(status: int | None, body: str | None, transport_error: bool,
             return "redirected_away"
         if looks_like_html(body):
             return "soft_404"
+        # A *.json path whose body is not JSON is not that file, whatever else
+        # it may be. Applied only where the convention defines JSON: llms.txt
+        # and ads.txt legitimately open with an HTML comment and must not be
+        # discarded for it.
+        if expect_json and not looks_like_json(body):
+            return "soft_404"
+        # 200 with nothing in it. A well-known convention needs content to
+        # mean anything, so an empty one is not a published file -- 36 hosts
+        # had a zero-byte ads.txt counted as adoption. robots.txt is the
+        # exception and passes empty_is_absent=False: an empty robots.txt is
+        # a valid file whose meaning is "no rules".
+        if empty_is_absent and not body.strip():
+            return "empty"
         return "present"
     return "unexpected_status"
 

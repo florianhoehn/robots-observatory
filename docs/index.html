@@ -132,6 +132,12 @@
   .rank-fill { background: var(--accent); height: 100%; border-radius: 0 4px 4px 0; min-width: 3px; }
   .rank-val { font-family: var(--mono); font-size: .8rem; color: var(--muted);
               font-variant-numeric: tabular-nums; text-align: right; }
+  /* Sentence-length labels and two-decimal values need more room than the
+     crawler-token rows above, where a label is one word. */
+  .rank.wide { gap: 3px; margin: 1rem 0 .4rem; }
+  .rank.wide .rank-row { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr) 3.6rem; }
+  .rank-lab { font-size: .92rem; color: var(--ink); line-height: 1.3; }
+  h3.sub { font-size: 1rem; margin: 2.2rem 0 .2rem; letter-spacing: -.01em; }
   .band {
     font-family: var(--mono); font-size: .68rem; letter-spacing: .1em;
     text-transform: uppercase; color: var(--faint);
@@ -230,7 +236,8 @@
 
 <div class="wrap">
   <div class="lead">
-    <h1>The web isn't charging AI agents. It's <span class="q">writing them documentation</span>.</h1>
+    <h1>Almost nobody charges AI agents. They <span class="q">write a guide</span> or
+    <span class="q">shut the door</span>.</h1>
     <p class="stand">We read the policy files that <strong>16,314</strong> of the
     world's most-visited websites publish for machines &mdash;
     <code>robots.txt</code>, <code>llms.txt</code>, <code>ai.txt</code>, TDM
@@ -247,17 +254,8 @@
         <div class="hero-c" id="hero-c"></div>
       </div>
       <div>
-        <div class="vs-row">
-          <div class="vs-lab">Write a guide for AI readers
-            <span class="pc" id="vs-a">&hellip;</span></div>
-          <div class="vs-track"><div class="vs-fill" id="vs-bar-a" style="width:0"></div></div>
-        </div>
-        <div class="vs-gap"></div>
-        <div class="vs-row">
-          <div class="vs-lab">Ask for payment or a licence
-            <span class="pc" id="vs-b">&hellip;</span></div>
-          <div class="vs-track"><div class="vs-fill" id="vs-bar-b" style="width:0"></div></div>
-        </div>
+        <div class="part" id="stance"></div>
+        <ul class="legend" id="stance-legend"></ul>
         <p class="vs-note" id="vs-note"></p>
       </div>
     </div>
@@ -279,6 +277,27 @@
       Half publish a <code>robots.txt</code> that predates the question
       entirely &mdash; not a refusal, just silence.</figcaption>
     </figure>
+  </section>
+
+  <section>
+    <p class="kicker">What refusal looks like</p>
+    <h2>Five ways to say no. Money is the rarest.</h2>
+    <p class="intro">Every mechanism a site can use to withhold itself from an AI
+    reader, as a share of the <span id="st-answered">&hellip;</span> sites whose
+    rules we could read. A site can use more than one.</p>
+    <div class="rank wide" id="hinder"></div>
+    <figcaption id="hinder-note"></figcaption>
+
+    <h3 class="sub">And four ways to say yes</h3>
+    <div class="rank wide" id="supportr"></div>
+    <figcaption id="support-note"></figcaption>
+
+    <h3 class="sub">Neither yes nor no</h3>
+    <div class="rank wide" id="friction"></div>
+    <figcaption>A crawl-delay slows a reader without refusing it. Serving one
+    answer to a declared crawler and another to a browser is rarer than it is
+    assumed to be &mdash; and when it happens it is usually differential
+    <em>access</em>, not differential policy.</figcaption>
   </section>
 
   <section>
@@ -309,7 +328,8 @@
     </div>
     <p class="prose" style="margin-top:1.4rem">Everything shrank except the thing
     that matters. <strong>Documentation still outnumbers any ask for money by
-    131&nbsp;to&nbsp;1</strong> &mdash; wider than the 31:1 we measured on the
+    <span id="ratio-big">&hellip;</span>&nbsp;to&nbsp;1</strong> &mdash; wider
+    than the <span id="ratio-small">&hellip;</span>:1 we measured on the
     smaller panel, because the sites that charge are rarer than the sites that
     document, all the way down.</p>
 
@@ -424,13 +444,24 @@
       per host</a> instead of quietly absorbed. Every exclusion is one row you can
       disagree with.</p>
       <p><strong>This run is marked degraded, and the figures are reported anyway.</strong>
-      13.6% of hosts returned at least one transport error &mdash; mostly TLS failures
-      and connect timeouts, which is what the long tail of a popularity list actually
-      looks like from one home connection. A further 797 hosts (4.9%) hit the two-minute
-      per-host budget, so their later paths are unmeasured rather than absent, and 78
-      hosts answer every unknown path with one stock body and are discounted rather than
-      counted as publishers. Each of those is a reason a share here reads low, never
-      high.</p>
+      <span id="q-err">&hellip;</span> of hosts returned at least one transport error
+      &mdash; mostly TLS failures and connect timeouts, which is what the long tail of a
+      popularity list actually looks like from one home connection. A further
+      <span id="q-budget">&hellip;</span> hit the two-minute per-host budget, so their
+      later paths are unmeasured rather than absent, and
+      <span id="q-catchall">&hellip;</span> answer several paths with one stock body and
+      are discounted rather than counted as publishers. Each of those is a reason a
+      share here reads low, never high.</p>
+      <p><strong>Presence is not stance, and a 200 is not a file.</strong> A path
+      defined to carry JSON is only counted when its body parses as JSON: seven hosts
+      answered five agent-discovery paths each with a firewall block page carrying a
+      detection timestamp, which defeats both an HTML check and the duplicate-body
+      check, because every copy hashed differently. A zero-length body is not counted
+      either &mdash; 36 sites served an empty <code>ads.txt</code>. And a
+      <code>tdmrep.json</code> is read before it is filed as a refusal, because the
+      format expresses permission as readily as reservation. Applying all three cut
+      the agent-card count by a third and the legacy path by nearly half.</p>
+
       <p><strong>No page was ever fetched</strong> &mdash; only files the web publishes
       for machines to read, so no request was one a site asked crawlers not to make.
       Twelve requests per site, 1.5 seconds apart. Four of the twelve are controls — security.txt, ads.txt, gpc.json, humans.txt — so the AI-specific numbers can be read against a site's general habit of publishing machine-readable files at all. That claim is checkable from two
@@ -598,6 +629,14 @@ function renderFacets(f) {
 function renderPanelCompare(small, big) {
   var tb = document.querySelector("#t-panels tbody");
   if (!tb || !small) { return; }
+  // From counts on both sides. findings.json rounds pct to one decimal, so
+  // dividing percentages at these denominators reads 113 where the ratio is
+  // 131; and a ratio typed into the prose goes stale on the next derive.
+  var r = function (f) {
+    return Math.round(f.wellknown.llms_txt.n / Math.max(f.rsl_license_refs.n, 1));
+  };
+  document.getElementById("ratio-big").textContent = num(r(big));
+  document.getElementById("ratio-small").textContent = num(r(small));
   [["Publishes llms.txt", small.wellknown.llms_txt.pct, big.wellknown.llms_txt.pct, "the headline, nearly halved"],
    ["Names an AI crawler", small.names_any_ai_agent.pct, big.names_any_ai_agent.pct, "awareness is concentrated at the top"],
    ["Signals a price or licence", small.rsl_license_refs.pct, big.rsl_license_refs.pct, "already almost nothing, now vanishing"],
@@ -629,18 +668,66 @@ function render(f) {
     "<b>" + num(llms.n) + " of " + num(H) + " sites</b> publish an <code>llms.txt</code> — "
     + "a plain-language guide to themselves, written for machines to read.";
 
-  document.getElementById("vs-a").textContent = pct(llms.pct);
-  document.getElementById("vs-b").textContent = pct(pay.pct);
-  document.getElementById("vs-bar-a").style.width = llms.pct + "%";
-  document.getElementById("vs-bar-b").style.width = pay.pct + "%";
-  // From counts, never from the percentages: findings.json rounds pct to one
-  // decimal, so 11.3/0.1 reads 113 where the true ratio is 1837/14 = 131.
-  var ratio = pay.n > 0 ? Math.round(llms.n / pay.n) : null;
-  document.getElementById("vs-note").textContent =
-    "Both bars are drawn to the same scale. "
-    + (ratio ? "Documentation is " + ratio + " times more common than any ask for money — "
-             : "")
-    + "just " + num(pay.n) + " sites in the panel carry a licensing or pay-per-crawl signal.";
+  // ---- stance: support / both / restrict / silent ----
+  // Four exclusive cells over the hosts that gave a definitive answer. A site
+  // can document itself and block a crawler at once, so "both" is its own
+  // cell rather than being forced onto a single friendly-to-hostile axis.
+  var ds = f.declared_stance;
+  if (ds && ds.stance) {
+    var cells = [
+      { k: "supports_only",  lb: "Document themselves for AI",
+        sub: "a guide, an agent card, or naming crawlers and blocking none" },
+      { k: "both",           lb: "Both at once",
+        sub: "document themselves and restrict a crawler" },
+      { k: "restricts_only", lb: "Restrict, document nothing",
+        sub: "blocking, a reservation, or an ask for money" },
+      { k: "silent",         lb: "Say nothing either way",
+        sub: "rules that predate the question, or no rules at all" }
+    ];
+    var strip = document.getElementById("stance"), leg = document.getElementById("stance-legend");
+    cells.forEach(function (p, i) {
+      var d = ds.stance[p.k] || { n: 0, pct: 0 };
+      var seg = el("div", "part-seg");
+      seg.style.background = RAMP[i];
+      seg.style.flex = d.n + " 0 0";
+      seg.title = p.lb + " — " + num(d.n) + " sites (" + pct(d.pct) + ")";
+      if (d.pct > 11) {
+        var sp = el("span", null, pct(d.pct, 0));
+        sp.style.color = inkOn(RAMP[i]);
+        seg.appendChild(sp);
+      }
+      strip.appendChild(seg);
+
+      var li = el("li");
+      var sw = el("span", "sw"); sw.style.background = RAMP[i];
+      li.appendChild(sw);
+      li.appendChild(el("span", "pc", pct(d.pct)));
+      var lb = el("span", "lb");
+      lb.appendChild(document.createTextNode(p.lb + " "));
+      var sb = el("span"); sb.style.color = "#8a9a98";
+      sb.textContent = "— " + p.sub;
+      lb.appendChild(sb);
+      li.appendChild(lb);
+      li.appendChild(el("span", "n", num(d.n)));
+      leg.appendChild(li);
+    });
+    document.getElementById("vs-note").textContent =
+      "Of the " + num(ds.answered) + " sites that gave a definitive answer. "
+      + "A further " + num(ds.unreadable) + " refused us, timed out or sent us to a "
+      + "consent wall, and have no stance we can read — they are not counted as silent.";
+  }
+
+  // Quality caveats, from the findings rather than typed into the sentence.
+  var q = function (id, d, suffix) {
+    var e = document.getElementById(id);
+    if (e && d) { e.textContent = num(d.n) + " host" + (d.n === 1 ? "" : "s")
+                                  + " (" + pct(d.pct) + ")"; }
+  };
+  if (f.transport_errors) {
+    document.getElementById("q-err").textContent = pct(f.transport_errors.pct);
+  }
+  q("q-budget", f.budget_exceeded);
+  q("q-catchall", f.catch_all_responses);
 
   // ---- part-to-whole: every site, by how directly it addresses AI ----
   var st = f.robots_file_state || {};
@@ -770,6 +857,74 @@ function render(f) {
 // so deriving sectors there yields one "unlabelled" bucket holding everything.
 // This reads from panel-01 and the heading says so, rather than rendering a
 // single meaningless tile under a finding it cannot support.
+// The three families as plain ranked rows, sharing one scale within each
+// family so the bars are comparable. Not one chart with three series: the
+// families answer different questions and a reader should not be invited to
+// add them up.
+var STANCE_LABELS = {
+  blocks_named_ai: "Blocks named AI crawlers in robots.txt",
+  blocks_all_crawlers: "Blocks every crawler at the root",
+  reserves_tdm: "Reserves text-and-data-mining rights",
+  ai_txt_optout: "Publishes an ai.txt training opt-out",
+  asks_for_money: "Asks for money or a licence",
+  llms_txt: "Publishes an llms.txt guide",
+  names_ai_blocks_none: "Names AI crawlers and blocks none of them",
+  agent_discovery: "Publishes an agent card or AI catalog",
+  ai_txt_as_guide: "Uses ai.txt as a guide, not an opt-out",
+  crawl_delay: "Sets a crawl-delay",
+  access_by_identity: "Let one identity in, refused the other",
+  policy_by_identity: "Serves different policy by identity"
+};
+
+function renderRanked(hostId, group) {
+  var host = document.getElementById(hostId);
+  if (!host || !group) { return; }
+  var rows = Object.keys(group).map(function (k) {
+    return { k: k, n: group[k].n, pct: group[k].pct };
+  }).sort(function (a, b) { return b.pct - a.pct; });
+  var max = rows.length ? rows[0].pct : 1;
+  rows.forEach(function (r) {
+    var row = el("div", "rank-row");
+    row.appendChild(el("div", "rank-lab", STANCE_LABELS[r.k] || r.k));
+    var tr = el("div", "rank-track"), fl = el("div", "rank-fill");
+    fl.style.width = (100 * r.pct / max) + "%";
+    tr.appendChild(fl);
+    row.appendChild(tr);
+    row.appendChild(el("div", "rank-val", r.pct.toFixed(2) + "%"));
+    host.appendChild(row);
+  });
+}
+
+function renderStanceDetail(f) {
+  var ds = f.declared_stance;
+  if (!ds) { return; }
+  var a = document.getElementById("st-answered");
+  if (a) { a.textContent = num(ds.answered); }
+  renderRanked("hinder", ds.hindrance);
+  renderRanked("supportr", ds.support);
+  renderRanked("friction", ds.friction);
+
+  // Both captions state a ratio, so both compute it from counts. A caption
+  // with a number typed into it is a number that stops being true quietly.
+  var h = ds.hindrance, sp = ds.support;
+  var blockN = h.blocks_named_ai.n, payN = h.asks_for_money.n;
+  var others = h.blocks_all_crawlers.n + h.reserves_tdm.n + h.ai_txt_optout.n + payN;
+  document.getElementById("hinder-note").textContent =
+    "Blocking a crawler by name is "
+    + (blockN > others ? "more common than every other refusal combined, and " : "")
+    + "roughly " + num(Math.round(blockN / Math.max(payN, 1)))
+    + " times more common than asking to be paid. The debate is about licensing; "
+    + "the web is doing something simpler.";
+
+  var share = sp.names_ai_blocks_none.n / Math.max(sp.llms_txt.n, 1);
+  document.getElementById("support-note").textContent =
+    "Naming an AI crawler and declining to block it is a quieter kind of "
+    + "permission than publishing a guide, and about "
+    + Math.round(100 * share) + "% as common. Agent cards barely exist yet: "
+    + num(sp.agent_discovery.n) + " sites across three competing conventions.";
+}
+
+
 function renderSectors(f) {
   var sm = document.getElementById("sectors");
   if (!f || !f.by_sector || !sm) { return; }
@@ -810,6 +965,7 @@ Promise.all([
 ]).then(function (both) {
   render(both[0]);
   renderFacets(both[0]);
+  renderStanceDetail(both[0]);
   renderSectors(both[1]);
   renderPanelCompare(both[1], both[0]);
 }).catch(function () {

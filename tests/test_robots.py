@@ -84,6 +84,38 @@ check("a generic HTML page is not a challenge",
       rp.looks_like_challenge(html), False)
 check("generic HTML is still soft_404", rp.classify(200, html, False), "soft_404")
 
+# --- trap: a 200 at a *.json path carrying something else -------------------
+# hyundai.com and six lazada domains answered five agent-discovery paths each
+# with a WAF block page: 200, no <html> tag, and a detection timestamp inside
+# that made every response hash differently, so catch-all detection could not
+# see it either. Counted as 35 published agent files.
+waf = "<br> <br> <center> <h2> The request has been blocked. </h2> </center>"
+check("a WAF fragment with no <html> is not caught by markers",
+      rp.looks_like_html(waf), False)
+check("but a json path rejects it",
+      rp.classify(200, waf, False, expect_json=True), "soft_404")
+check("and a text path still accepts it",
+      rp.classify(200, waf, False, expect_json=False), "present")
+check("real JSON passes", rp.classify(200, '{"tdm-reservation":1}', False,
+      expect_json=True), "present")
+check("a JSON array passes too", rp.classify(200, '[{"location":"/"}]', False,
+      expect_json=True), "present")
+
+# llms.txt and ads.txt legitimately open with an HTML comment; the json rule
+# must not be widened into "starts with a bracket".
+check("an llms.txt opening with a comment is kept",
+      rp.classify(200, "<!-- version: 1.0.0 -->\n# Compass\n", False), "present")
+
+# --- trap: 200 with nothing in it ------------------------------------------
+# 36 hosts served a zero-byte ads.txt. A well-known convention needs content to
+# mean anything; robots.txt is the exception, where empty means "no rules".
+check("an empty well-known file is not a file",
+      rp.classify(200, "", False, empty_is_absent=True), "empty")
+check("whitespace counts as empty",
+      rp.classify(200, "\n  \n", False, empty_is_absent=True), "empty")
+check("an empty robots.txt is still present",
+      rp.classify(200, "", False), "present")
+
 # --- trap: redirected away is not "present" --------------------------------
 # youtube.com/llms.txt terminates at consent.youtube.com/ml with a 200. The
 # status says nothing; the path says everything. A UK or EU vantage meets these
