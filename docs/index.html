@@ -72,7 +72,7 @@
     font-size: clamp(3.6rem, 10vw, 5.4rem); line-height: .88; font-weight: 600;
     letter-spacing: -.045em; color: var(--accent); white-space: nowrap;
   }
-  .hero-c { font-size: 1rem; color: var(--ink); margin-top: .65rem; max-width: 24ch; line-height: 1.45; }
+  .hero-c { font-size: 1rem; color: var(--ink); margin-top: .65rem; max-width: 30ch; line-height: 1.45; }
   .hero-c b { font-weight: 600; }
 
   /* two bars, one measure, same scale: the ratio is the point */
@@ -264,8 +264,8 @@
 
 <div class="wrap">
   <div class="lead">
-    <h1>Almost nobody charges AI agents. They <span class="q">write a guide</span> or
-    <span class="q">shut the door</span>.</h1>
+    <h1>Almost nobody charges AI agents. Most
+    <span class="q">never mention them at all</span>.</h1>
     <p class="stand">We read the policy files that <strong>16,314</strong> of the
     world's most-visited websites publish for machines: <code>robots.txt</code>,
     <code>llms.txt</code>, <code>ai.txt</code>, TDM reservations, agent cards and
@@ -847,11 +847,14 @@ function render(f) {
 
   var llms = f.wellknown.llms_txt, pay = f.rsl_license_refs;
 
-  // one hero figure, body sans, proportional figures
-  document.getElementById("hero-n").textContent = pct(llms.pct);
+  // One hero figure, and it has to be the one the headline rests on. This
+  // was llms.txt adoption for a while, which evidenced neither half of the
+  // sentence above it.
+  document.getElementById("hero-n").textContent = num(pay.n);
   document.getElementById("hero-c").innerHTML =
-    "<b>" + num(llms.n) + " of " + num(H) + " sites</b> publish an <code>llms.txt</code>, "
-    + "a plain-language guide to themselves, written for machines to read.";
+    "<b>of " + num(H) + " sites</b> publish a price or a licence an agent could "
+    + "find. Deals between publishers and AI companies exist, but they are signed "
+    + "in private. Almost nothing is declared where a machine could read it.";
 
   // ---- stance: support / both / restrict / silent ----
   // Four exclusive cells over the hosts that gave a definitive answer. A site
