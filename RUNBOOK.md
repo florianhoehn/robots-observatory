@@ -62,3 +62,23 @@ mechanical screen that got worse when made more precise. None were caught by
 tests. All were caught by finding a number implausible and checking it.
 
 Check the surprising ones by hand before they go on a page.
+
+### Two that only appear when the panel changes
+
+**Never divide the percentages.** `findings.json` rounds `pct` to one decimal.
+The page computed the documentation-to-price ratio as `llms.pct / pay.pct`,
+which at 11.3/0.1 printed **113** where the true ratio is 1837/14 = **131**. At
+small denominators a rounded percentage carries almost no precision. Derive
+every ratio from the counts.
+
+**A hand-picked example is a measurement too, and it expires.** The page named
+`rakuten.co.jp` as its example of identity-dependent *policy*, true on panel-01.
+On panel-02 that host is access variance instead -- the exact distinction the
+section exists to draw, illustrated by a counter-example. When the panel
+changes, re-check every named host, not just the aggregates.
+
+The same applies to prose: "a third have gone through their rules" was
+panel-01's 32.8% still sitting above panel-02's 17.2%, and Method, the download
+links and the conduct pages all described the previous probe set. Numbers
+written into sentences do not get recomputed. Grep the page for digits after
+every panel change.
