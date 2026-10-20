@@ -29,6 +29,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import threading
@@ -1434,6 +1435,102 @@ def cmd_reshard(args) -> None:
               f"{len(shard_paths(run_dir))} shard(s)", file=sys.stderr)
 
 
+# AI-shaped agent tokens that match no crawler anyone operates. Blocking one
+# is a rule that can never fire: Claude-Web was retired, and a product token
+# containing a space cannot match under RFC 9309 at all.
+GHOST_RE = re.compile(
+    r"(gpt|openai|chatgpt|claude|anthropic|llm|\bai\b|perplexity|gemini|bard"
+    r"|copilot|mistral|llama)", re.I)
+
+
+def _ghosts(rec: dict, watch_lower: set[str]) -> list[str]:
+    out = []
+    for t in (rec.get("policy") or {}).get("all_agent_tokens_seen", []) or []:
+        if t == "*" or t.lower() in watch_lower:
+            continue
+        if GHOST_RE.search(t):
+            out.append(t)
+    return sorted(out)
+
+
+def write_sites(recs: list[dict], watchlist: list[str]) -> dict:
+    """One row per site, small enough to load in a browser.
+
+    The findings file carries the aggregates; this carries the population they
+    were computed from, so a reader can re-cut the data instead of taking the
+    page's word for it. Columns are indices into the vocabularies above them,
+    which keeps 16,314 rows near a megabyte rather than near ten.
+    """
+    wl = list(watchlist)
+    wl_ix = {t.lower(): i for i, t in enumerate(wl)}
+    wk_keys = list(WELLKNOWN)
+    states: list[str] = []
+    sectors: list[str] = []
+    ghost_vocab: list[str] = []
+
+    def ix(lst: list[str], v: str) -> int:
+        if v not in lst:
+            lst.append(v)
+        return lst.index(v)
+
+    rows = []
+    for r in sorted(recs, key=lambda r: r.get("rank_at_freeze") or 10 ** 9):
+        pol = r.get("policy") or {}
+        named = sorted(wl_ix[t.lower()] for t in (pol.get("ai_tokens_named") or [])
+                       if t.lower() in wl_ix)
+        blocked = sorted(wl_ix[t.lower()] for t in (pol.get("ai_tokens_root_disallowed") or [])
+                         if t.lower() in wl_ix)
+        wk = sorted(i for i, k in enumerate(wk_keys) if wk_present(r, k))
+        flags = 0
+        for bit, on in enumerate((
+            bool(pol.get("wildcard_root_disallowed")),
+            bool(pol.get("rsl_license_refs")),
+            bool(r.get("policy_varies_by_identity")),
+            bool(r.get("access_varies_by_identity")),
+            bool(pol.get("has_legal_text")),
+            bool(pol.get("content_signal")),
+            bool(pol.get("starts_with_bom")),
+            bool(r.get("budget_exceeded")),
+            bool(r.get("adult")),
+            bool(_wk_restricts(r, "tdmrep")),
+            bool(_wk_restricts(r, "ai_txt")),
+            bool(pol.get("legal_boilerplate")),
+        )):
+            if on:
+                flags |= 1 << bit
+        rows.append([
+            r["host"],
+            r.get("rank_at_freeze"),
+            ix(states, pol.get("file_state") or "unknown"),
+            ix(sectors, (r.get("sector") or "").strip().lower() or "unlabelled"),
+            named, blocked, wk, flags,
+            pol.get("crawl_delay"),
+            pol.get("sitemaps") or 0,
+            pol.get("directive_lines") or 0,
+            next((e.get("bytes") or 0 for e in (r.get("robots") or [])
+                  if e.get("identity") == "honest_bot"), 0),
+            sorted(ix(ghost_vocab, g) for g in _ghosts(r, set(wl_ix))),
+            (pol.get("content_signal") or [None])[0],
+        ])
+    return {
+        "panel_id": PANEL_ID,
+        "generated": utc_now(),
+        "note": "One row per site. Index columns point into the vocabularies "
+                "below. Companion to findings; same run, same records.",
+        "columns": ["host", "rank", "state", "sector", "named", "blocked",
+                    "wellknown", "flags", "crawl_delay", "sitemaps",
+                    "directive_lines", "bytes", "ghosts", "content_signal"],
+        "flag_bits": ["blocks_all_crawlers", "asks_for_money",
+                      "policy_varies_by_identity", "access_varies_by_identity",
+                      "has_legal_text", "has_content_signal", "starts_with_bom",
+                      "budget_exceeded", "adult", "reserves_tdm", "ai_txt_optout",
+                      "legal_boilerplate"],
+        "tokens": wl, "wellknown": wk_keys, "states": states,
+        "sectors": sectors, "ghost_tokens": ghost_vocab,
+        "sites": rows,
+    }
+
+
 def cmd_derive(args) -> None:
     base = RUNS / PANEL_ID
     runs = sorted((d for d in base.iterdir()
@@ -1542,6 +1639,11 @@ def cmd_derive(args) -> None:
     }
 
     SITE_DATA.mkdir(parents=True, exist_ok=True)
+    # The population behind every figure above, small enough to load in a
+    # browser so a reader can re-cut it instead of trusting the summary.
+    (SITE_DATA / f"sites-{PANEL_ID}.json").write_text(
+        json.dumps(write_sites(recs, load_watchlist()), separators=(",", ":")) + "\n",
+        encoding="utf-8")
     (SITE_DATA / ("findings.json" if PANEL_ID == "panel-01" else f"findings-{PANEL_ID}.json")).write_text(
         json.dumps(findings, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

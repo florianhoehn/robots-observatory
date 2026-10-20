@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ten Lenses</title>
+<meta name="description" content="The same 16,314 websites, drawn ten different ways. Each lens has its own shape; every mark is clickable down to the individual site.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128301;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#fff; --ink:#11201f; --muted:#5d6f6d; --faint:#8a9a98;
+    --line:#e2e8e7; --track:#eff4f3;
+    --support:#0a5f64; --restrict:#a8453a; --mixed:#b4802c;
+    --silent:#c6d0ce; --unread:#edf1f0; --deep:#063b3f; --pale:#79b8bd;
+    --sans:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+       font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 16px}
+
+  .mast{display:flex;gap:1.4rem;align-items:baseline;flex-wrap:wrap;
+        font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;
+        text-transform:uppercase;color:var(--faint);
+        padding:1.1rem 0 .9rem;border-bottom:1px solid var(--line)}
+  .mast a{color:var(--support);text-decoration:none;font-weight:500}
+  .mast .sp{margin-left:auto}
+
+  .lead{padding:2.4rem 0 1rem;max-width:47rem}
+  h1{font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.02;letter-spacing:-.035em;
+     font-weight:700;margin:0 0 .7rem}
+  .stand{font-size:1.1rem;color:var(--muted);margin:0}
+  .stand b{color:var(--ink);font-weight:600}
+
+  .rail{display:flex;gap:6px;overflow-x:auto;padding:.9rem 0 1rem;
+        border-bottom:1px solid var(--line)}
+  .lens-btn{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:7px;
+            padding:.45rem .75rem;cursor:pointer;font-family:var(--sans);font-size:.82rem;
+            color:var(--muted);display:flex;gap:.5rem;align-items:center;white-space:nowrap;
+            transition:border-color .15s,color .15s,background .15s}
+  .lens-btn:hover{border-color:#b9c6c4;color:var(--ink)}
+  .lens-btn[aria-pressed=true]{background:var(--support);border-color:var(--support);color:#fff}
+  .lens-btn .ix{font-family:var(--mono);font-size:.7rem;opacity:.6;
+                font-variant-numeric:tabular-nums}
+
+  .stage{display:grid;grid-template-columns:minmax(0,1fr) 19.5rem;gap:2.2rem;
+         padding:1.8rem 0 .6rem;align-items:start}
+  .viz{position:relative;min-height:320px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .vz-cap{font-size:.84rem;color:var(--faint);margin:.9rem 0 0;max-width:46rem}
+
+  .readout .kicker{font-family:var(--mono);font-size:.67rem;letter-spacing:.13em;
+                   text-transform:uppercase;color:var(--faint);margin:0 0 .5rem}
+  .readout h2{font-size:1.4rem;line-height:1.14;letter-spacing:-.02em;margin:0 0 .7rem;
+              font-weight:700}
+  .big{font-size:2.7rem;font-weight:700;letter-spacing:-.03em;color:var(--support);
+       line-height:1;margin:.1rem 0 .15rem;font-variant-numeric:tabular-nums}
+  .bigsub{font-size:.88rem;color:var(--muted);margin:0 0 1rem}
+  .readout p{font-size:.92rem;color:var(--muted);margin:0 0 .8rem}
+  .readout code{font-family:var(--mono);font-size:.85em;background:var(--track);
+                padding:.08em .3em;border-radius:3px}
+
+  .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;padding:.9rem 0;
+            border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:1rem}
+  .lbl{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+       color:var(--faint);margin-right:.1rem}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:.28rem .68rem;
+        font-size:.79rem;cursor:pointer;color:var(--muted);font-family:var(--sans)}
+  .chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+  input[type=search]{border:1px solid var(--line);border-radius:7px;padding:.36rem .6rem;
+                     font-family:var(--mono);font-size:.79rem;width:12rem;color:var(--ink)}
+  input[type=search]:focus{outline:2px solid var(--support);outline-offset:1px}
+  .count{font-family:var(--mono);font-size:.76rem;color:var(--faint);margin-left:auto;
+         font-variant-numeric:tabular-nums}
+
+  /* site drawer */
+  .drawer{padding:1.3rem 0 0}
+  .drawer h3{font-size:.95rem;margin:0 0 .2rem;font-weight:600}
+  .drawer .sub{font-size:.84rem;color:var(--faint);margin:0 0 .9rem}
+  .sitegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:4px}
+  .site{border:1px solid var(--line);border-radius:6px;padding:.45rem .6rem;cursor:pointer;
+        background:#fff;text-align:left;font-family:var(--sans);font-size:.82rem;
+        display:flex;gap:.5rem;align-items:baseline;overflow:hidden}
+  .site:hover{border-color:var(--support)}
+  .site .h{font-family:var(--mono);font-size:.78rem;overflow:hidden;text-overflow:ellipsis;
+           white-space:nowrap}
+  .site .r{margin-left:auto;color:var(--faint);font-family:var(--mono);font-size:.7rem}
+  .site .dot{width:8px;height:8px;border-radius:2px;flex:0 0 8px}
+  .more{font-size:.82rem;color:var(--faint);padding:.6rem 0 0}
+
+  .tip{position:fixed;pointer-events:none;z-index:40;background:var(--ink);color:#fff;
+       padding:.4rem .55rem;border-radius:5px;font-size:.76rem;font-family:var(--mono);
+       opacity:0;transition:opacity .1s;max-width:18rem;line-height:1.45}
+  .detail{position:fixed;right:16px;bottom:16px;width:min(24rem,calc(100vw - 32px));
+          background:#fff;border:1px solid var(--line);border-radius:10px;
+          box-shadow:0 8px 30px rgba(17,32,31,.15);padding:1rem 1.1rem;z-index:50}
+  .detail[hidden]{display:none}
+  .detail h4{margin:0 1.4rem .1rem 0;font-size:1rem;font-family:var(--mono)}
+  .detail .meta{font-size:.76rem;color:var(--faint);margin:0 0 .7rem;font-family:var(--mono)}
+  .detail dl{display:grid;grid-template-columns:6.8rem 1fr;gap:.3rem .7rem;margin:0;font-size:.82rem}
+  .detail dt{color:var(--faint);font-family:var(--mono);font-size:.7rem;text-transform:uppercase;
+             letter-spacing:.06em;padding-top:.15rem}
+  .detail dd{margin:0;overflow-wrap:anywhere}
+  .detail .close{position:absolute;top:.5rem;right:.65rem;border:0;background:none;
+                 font-size:1.25rem;cursor:pointer;color:var(--faint);line-height:1}
+  .pill{display:inline-block;font-family:var(--mono);font-size:.69rem;border:1px solid var(--line);
+        border-radius:4px;padding:.05em .35em;margin:0 .2em .25em 0}
+  .pill.no{border-color:#e4c4c0;background:#fbf2f1;color:#8e3a30}
+  .pill.yes{border-color:#bcd6d7;background:#f0f7f7;color:#09585c}
+  .pill.ghost{border-color:#e6d7b4;background:#fbf7ec;color:#7d5a14}
+
+  .quote{border-left:3px solid var(--restrict);padding:.1rem 0 .1rem .8rem;margin:.7rem 0;
+         font-size:.86rem;color:var(--muted)}
+  .quote b{color:var(--ink);font-weight:500}
+
+  footer{border-top:1px solid var(--line);margin-top:2.6rem;padding:1.2rem 0 3rem;
+         font-size:.85rem;color:var(--faint)}
+  footer a{color:var(--support)}
+
+  text{font-family:var(--sans)}
+  .ax{font-family:var(--mono);font-size:9px;fill:#8a9a98;letter-spacing:.08em;
+      text-transform:uppercase}
+  .vlab{font-size:11px;fill:#11201f}
+  .vnum{font-family:var(--mono);font-size:10px;fill:#5d6f6d;font-variant-numeric:tabular-nums}
+  .hit{cursor:pointer}
+  .hit:hover{opacity:.78}
+
+  @media(max-width:880px){
+    .stage{grid-template-columns:1fr;gap:1.3rem}
+    .detail{left:16px;right:16px;width:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <span><a href="../">Robots Observatory</a></span>
+    <span>Run 2026-10-19</span>
+    <span><span id="m-n">&hellip;</span> websites</span>
+    <span class="sp"><a href="#data">Open dataset &middot; CC0</a></span>
+  </div>
+
+  <div class="lead">
+    <h1>Ten lenses on the same web.</h1>
+    <p class="stand">One run, <b id="s-n">&hellip;</b> websites, ten different shapes.
+    Each lens draws the data the way that question wants to be drawn &mdash; and every
+    mark on every chart is live. Hover it, click it, and read the list of real sites
+    underneath.</p>
+  </div>
+
+  <div class="rail" id="rail" role="tablist" aria-label="Lenses"></div>
+
+  <div class="stage">
+    <div class="viz">
+      <svg id="viz" role="img" aria-labelledby="viztitle"><title id="viztitle"></title></svg>
+      <p class="vz-cap" id="vcap"></p>
+    </div>
+    <div class="readout">
+      <p class="kicker" id="r-kicker">&hellip;</p>
+      <h2 id="r-title">&hellip;</h2>
+      <div class="big" id="r-big">&hellip;</div>
+      <div class="bigsub" id="r-bigsub"></div>
+      <div id="r-blurb"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <span class="lbl">Rank</span>
+    <button class="chip" data-band="all" aria-pressed="true">All</button>
+    <button class="chip" data-band="0">1&ndash;1k</button>
+    <button class="chip" data-band="1">1k&ndash;2.5k</button>
+    <button class="chip" data-band="2">2.5k&ndash;5k</button>
+    <button class="chip" data-band="3">5k&ndash;10k</button>
+    <button class="chip" data-band="4">10k&ndash;20k</button>
+    <span class="lbl" style="margin-left:.7rem">Rules</span>
+    <button class="chip" data-read="all" aria-pressed="true">All</button>
+    <button class="chip" data-read="yes">Readable only</button>
+    <input type="search" id="q" placeholder="find a site&hellip;" aria-label="Find a site">
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="drawer">
+    <h3 id="d-title">The sites behind this</h3>
+    <p class="sub" id="d-sub"></p>
+    <div class="sitegrid" id="sitegrid"></div>
+    <p class="more" id="more"></p>
+  </div>
+
+  <footer id="data">
+    <p><strong>Every chart here is drawn from one file you can download.</strong>
+    <a href="../data/sites-panel-02.json">sites-panel-02.json</a> is one row per site
+    &mdash; the population the <a href="../data/findings-panel-02.json">findings</a> are
+    computed from. Raw responses are in
+    <a href="https://github.com/florianhoehn/robots-observatory/tree/main/data/runs/panel-02/2026-10-19/records">records/</a>,
+    one file per rank band.</p>
+    <p><a href="../">Findings</a> &middot;
+    <a href="../bot/">What the crawler is, and how to stop it</a> &middot;
+    <a href="https://github.com/florianhoehn/robots-observatory">Source</a> &middot;
+    data CC0, code MIT</p>
+  </footer>
+</div>
+
+<div class="tip" id="tip" role="status"></div>
+<div class="detail" id="detail" hidden>
+  <button class="close" id="dclose" aria-label="Close">&times;</button>
+  <h4 id="x-host"></h4>
+  <p class="meta" id="x-meta"></p>
+  <dl id="x-list"></dl>
+</div>
+
+<script>
+"use strict";
+var NS = "http://www.w3.org/2000/svg";
+var C = { support:"#0a5f64", restrict:"#a8453a", mixed:"#b4802c", silent:"#c6d0ce",
+          unread:"#edf1f0", deep:"#063b3f", pale:"#79b8bd", line:"#e2e8e7" };
+var num = function (v) { return Math.round(v).toLocaleString("en-GB"); };
+var pct = function (v, d) { return v.toFixed(d === undefined ? 1 : d) + "%"; };
+
+function S(tag, a, text) {
+  var n = document.createElementNS(NS, tag);
+  for (var k in a) { if (a[k] !== null && a[k] !== undefined) { n.setAttribute(k, a[k]); } }
+  if (text !== undefined) { n.textContent = text; }
+  return n;
+}
+function el(t, c, x) {
+  var n = document.createElement(t);
+  if (c) { n.className = c; }
+  if (x !== undefined) { n.textContent = x; }
+  return n;
+}
+
+/* ------------------------------------------------------------ vocabulary -- */
+var PURPOSE = {
+  "GPTBot":"train","Google-Extended":"train","CCBot":"train","Bytespider":"train",
+  "anthropic-ai":"train","ClaudeBot":"train","cohere-ai":"train","Diffbot":"train",
+  "omgili":"train","omgilibot":"train","Applebot-Extended":"train","Timpibot":"train",
+  "meta-externalagent":"train","ImagesiftBot":"train","PetalBot":"train",
+  "Amazonbot":"train","AI2Bot":"train","Webzio-Extended":"train","SemrushBot-OCOB":"train",
+  "OAI-SearchBot":"search","PerplexityBot":"search","YouBot":"search","Applebot":"search",
+  "FacebookBot":"search","Claude-SearchBot":"search","DuckAssistBot":"search",
+  "ChatGPT-User":"user","Perplexity-User":"user","Claude-User":"user",
+  "MistralAI-User":"user","meta-externalfetcher":"user"
+};
+var OPERATOR = {
+  "GPTBot":"OpenAI","OAI-SearchBot":"OpenAI","ChatGPT-User":"OpenAI",
+  "ClaudeBot":"Anthropic","anthropic-ai":"Anthropic","Claude-User":"Anthropic",
+  "Claude-SearchBot":"Anthropic","PerplexityBot":"Perplexity","Perplexity-User":"Perplexity",
+  "Applebot":"Apple","Applebot-Extended":"Apple","meta-externalagent":"Meta",
+  "FacebookBot":"Meta","meta-externalfetcher":"Meta","omgili":"Webz.io",
+  "omgilibot":"Webz.io","Webzio-Extended":"Webz.io"
+};
+var PLABEL = { train:"Trains a model", search:"Powers a search index",
+               user:"Fetches for a person" };
+var FRENCH = ["01net.com","caradisiac.com","elle.fr","france24.com","francebleu.fr",
+  "franceinfo.fr","francetvinfo.fr","gala.fr","ici.fr","larepubliquedespyrenees.fr",
+  "lefigaro.fr","leparisien.fr","rfi.fr","sudouest.fr","tf1.fr","tf1info.fr","tv5monde.com"];
+var ACADEMIC = ["biomedcentral.com","cambridge.org","cochranelibrary.com","elsevier.com",
+  "nature.com","sagepub.com","scopus.com","springer.com","springernature.com",
+  "springeropen.com","ssrn.com"];
+var USREG = ["bostonherald.com","dailynews.com","denverpost.com","mercurynews.com",
+  "ocregister.com","sandiegouniontribune.com","twincities.com"];
+var WKLABEL = { llms_txt:"llms.txt", ai_txt:"ai.txt", tdmrep:"tdmrep.json",
+  security_txt:"security.txt", ads_txt:"ads.txt", gpc:"gpc.json", humans_txt:"humans.txt",
+  agent_card:"agent-card.json", ai_catalog:"ai-catalog.json", agent_card_legacy:"agent.json" };
+
+/* ------------------------------------------------------------------ data -- */
+var DATA = { 1:null, 2:null };
+function decorate(d) {
+  var IX = {}; d.columns.forEach(function (c,i) { IX[c] = i; });
+  var fb = {}; d.flag_bits.forEach(function (b,i) { fb[b] = 1 << i; });
+  return d.sites.map(function (row) {
+    var named = row[IX.named].map(function (j) { return d.tokens[j]; });
+    var blocked = row[IX.blocked].map(function (j) { return d.tokens[j]; });
+    var bset = {}; blocked.forEach(function (t) { bset[t] = 1; });
+    var o = {
+      host: row[IX.host], rank: row[IX.rank] || 999999,
+      state: d.states[row[IX.state]], sector: d.sectors[row[IX.sector]],
+      named: named, blocked: blocked, bset: bset,
+      wk: row[IX.wellknown].map(function (j) { return d.wellknown[j]; }),
+      flags: row[IX.flags], crawlDelay: row[IX.crawl_delay],
+      sitemaps: row[IX.sitemaps], lines: row[IX.directive_lines], bytes: row[IX.bytes],
+      ghosts: row[IX.ghosts].map(function (j) { return d.ghost_tokens[j]; }),
+      signal: row[IX.content_signal]
+    };
+    o.has = function (n) { return (o.flags & fb[n]) !== 0; };
+    o.wkHas = function (k) { return o.wk.indexOf(k) >= 0; };
+    o.readable = o.state === "present" || o.state === "absent_404";
+    o.band = o.rank <= 1000 ? 0 : o.rank <= 2500 ? 1 : o.rank <= 5000 ? 2
+           : o.rank <= 10000 ? 3 : 4;
+    o.supports = o.wkHas("llms_txt") || o.wkHas("agent_card") || o.wkHas("agent_card_legacy")
+      || o.wkHas("ai_catalog") || (o.wkHas("ai_txt") && !o.has("ai_txt_optout"))
+      || (named.length > 0 && blocked.length === 0 && !o.has("blocks_all_crawlers"));
+    o.restricts = blocked.length > 0 || o.has("blocks_all_crawlers")
+      || o.has("reserves_tdm") || o.has("ai_txt_optout") || o.has("asks_for_money");
+    var hit = {};
+    blocked.forEach(function (t) { if (PURPOSE[t]) { hit[PURPOSE[t]] = 1; } });
+    o.depth = o.has("blocks_all_crawlers") || hit.user ? 3 : hit.search ? 2
+            : hit.train ? 1 : named.length ? 0 : -1;
+    return o;
+  });
+}
+function byOperator(s) {
+  var g = {};
+  s.named.forEach(function (t) {
+    var op = OPERATOR[t]; if (!op) { return; }
+    g[op] = g[op] || { named:0, blocked:0 };
+    g[op].named++; if (s.bset[t]) { g[op].blocked++; }
+  });
+  return g;
+}
+function med(a) {
+  if (!a.length) { return 0; }
+  var b = a.slice().sort(function (x,y) { return x-y; });
+  return b[b.length >> 1];
+}
+function tokStats(f) {
+  var st = {};
+  f.forEach(function (s) {
+    if (!s.readable) { return; }
+    s.named.forEach(function (t) {
+      st[t] = st[t] || { named:0, blocked:0 };
+      st[t].named++; if (s.bset[t]) { st[t].blocked++; }
+    });
+  });
+  return st;
+}
+
+/* -------------------------------------------------------------- plumbing -- */
+var svg = document.getElementById("viz");
+var tip = document.getElementById("tip");
+var VW = 760, VH = 420;          // viewBox units; the SVG scales to fit
+function freshSvg(h) {
+  VH = h || 420;
+  while (svg.firstChild) { svg.removeChild(svg.firstChild); }
+  svg.setAttribute("viewBox", "0 0 " + VW + " " + VH);
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  var t = S("title", {}, cur.title);
+  svg.appendChild(t);
+  return svg;
+}
+function hover(node, html) {
+  node.classList.add("hit");
+  node.addEventListener("mousemove", function (e) {
+    tip.innerHTML = html;
+    tip.style.left = Math.min(e.clientX + 12, window.innerWidth - 250) + "px";
+    tip.style.top = (e.clientY + 16) + "px";
+    tip.style.opacity = 1;
+  });
+  node.addEventListener("mouseleave", function () { tip.style.opacity = 0; });
+}
+function clickTo(node, label, sites) {
+  node.addEventListener("click", function () {
+    tip.style.opacity = 0;
+    showSites(label, sites);
+  });
+}
+
+/* ---------------------------------------------------------------- lenses -- */
+var LENSES = [
+
+/* 1 ----------------------------------------------- the permission ladder - */
+{
+  id:"purpose", tab:"Purpose", kicker:"Lens 1 / the gradient",
+  title:"Blocked for training. Allowed for answering.",
+  blurb:"<p>Three rungs, one per job a crawler can do. Every circle is a named "
+    + "crawler, placed by how often it is blocked where it is named, and sized by "
+    + "how many sites name it at all.</p><p>The top rung sits apart from the other "
+    + "two, and that is the clearest signal in the dataset: the objection is to "
+    + "becoming training data. Once a crawler is <em>not</em> training, sites stop "
+    + "distinguishing much between reading for search and fetching for a person.</p>",
+  cap:"Each circle is one crawler. Hover for its numbers; click to list the sites "
+    + "that block it.",
+  big:function (f) {
+    var st = tokStats(f), a = 0, b = 0;
+    for (var t in st) { if (PURPOSE[t] === "train") { a += st[t].named; b += st[t].blocked; } }
+    return [a ? pct(100*b/a, 0) : "—", "of training crawlers are blocked where named"];
+  },
+  draw:function (f) {
+    var g = freshSvg(360), st = tokStats(f);
+    var L = 150, R = VW - 30, rows = ["train","search","user"];
+    var x = function (p) { return L + (p/100) * (R-L); };
+    [0,25,50,75,100].forEach(function (v) {
+      g.appendChild(S("line",{x1:x(v),x2:x(v),y1:40,y2:318,stroke:C.line,
+        "stroke-dasharray":v?"2 4":null}));
+      g.appendChild(S("text",{x:x(v),y:332,"text-anchor":"middle","class":"ax"}, v+"%"));
+    });
+    g.appendChild(S("text",{x:(L+R)/2,y:24,"text-anchor":"middle","class":"ax"},
+      "Share of naming sites that block it"));
+    rows.forEach(function (p, i) {
+      var y = 80 + i*95;
+      var toks = Object.keys(st).filter(function (t) { return PURPOSE[t] === p; })
+        .sort(function (a,b) { return st[b].named - st[a].named; });
+      g.appendChild(S("line",{x1:L,x2:R,y1:y,y2:y,stroke:C.line,"stroke-width":1}));
+      g.appendChild(S("text",{x:L-12,y:y-4,"text-anchor":"end","class":"vlab",
+        "font-weight":600}, PLABEL[p]));
+      g.appendChild(S("text",{x:L-12,y:y+10,"text-anchor":"end","class":"vnum"},
+        toks.length + " crawlers"));
+      var tot = 0, blk = 0;
+      // jitter identical rates so overlapping circles stay countable
+      var used = {};
+      toks.forEach(function (t) {
+        var d = st[t], rate = 100*d.blocked/d.named;
+        tot += d.named; blk += d.blocked;
+        var key = Math.round(rate/2);
+        used[key] = (used[key]||0) + 1;
+        var off = ((used[key]-1) % 4) * 11 - 16;
+        var r = Math.max(3.2, Math.sqrt(d.named) * 0.46);
+        var col = p === "train" ? C.restrict : p === "search" ? C.mixed : C.support;
+        var c = S("circle",{cx:x(rate),cy:y+off,r:r,fill:col,"fill-opacity":.68,
+          stroke:col,"stroke-width":1});
+        hover(c, "<b>"+t+"</b><br>"+num(d.named)+" sites name it<br>"
+          + pct(rate,0) + " of them block it");
+        clickTo(c, t + " — sites that block it",
+          f.filter(function (s) { return s.bset[t]; }));
+        g.appendChild(c);
+      });
+      var mean = tot ? 100*blk/tot : 0;
+      g.appendChild(S("line",{x1:x(mean),x2:x(mean),y1:y-34,y2:y+34,
+        stroke:C.deep,"stroke-width":2}));
+      g.appendChild(S("text",{x:x(mean),y:y-40,"text-anchor":"middle","class":"vnum",
+        "font-weight":600,fill:C.deep}, pct(mean,0)));
+    });
+  },
+  subset:function (f) {
+    return ["Sites that block at least one training crawler",
+      f.filter(function (s) {
+        return s.blocked.some(function (t) { return PURPOSE[t] === "train"; });
+      })];
+  }
+},
+
+/* 2 --------------------------------------------------------- the dumbbell - */
+{
+  id:"operators", tab:"Operators", kicker:"Lens 2 / who gets a hearing",
+  title:"The crawler that explains itself gets let in.",
+  blurb:"<p>Each bar spans one operator's least-blocked bot to its most-blocked one. "
+    + "The figure beside it is the one that matters: how often a single site gives "
+    + "that operator's bots <em>different</em> answers.</p>"
+    + "<p>Operators who publish a plainly separated bot family — OpenAI with three, "
+    + "Anthropic with four — get a split verdict far more often than operators whose "
+    + "crawlers all look alike. Perplexity runs two and is told apart by one site in "
+    + "seventy.</p>",
+  cap:"Dots are that operator's bots, placed by block rate. The figure on the right "
+    + "is what matters: how often one site gives them different answers.",
+  big:function (f) {
+    var a=0,b=0;
+    f.forEach(function (s) {
+      var g = byOperator(s).OpenAI;
+      if (g && g.named >= 2) { a++; if (g.blocked>0 && g.blocked<g.named) { b++; } }
+    });
+    return [a ? pct(100*b/a) : "—",
+      "of sites naming two or more OpenAI bots give them different answers"];
+  },
+  draw:function (f) {
+    var st = tokStats(f);
+    var ops = {};
+    Object.keys(st).forEach(function (t) {
+      var o = OPERATOR[t]; if (!o) { return; }
+      (ops[o] = ops[o] || []).push({ t:t, rate:100*st[t].blocked/st[t].named, n:st[t].named });
+    });
+    var rows = Object.keys(ops).filter(function (o) { return ops[o].length >= 2; })
+      .map(function (o) {
+        var a = ops[o].slice().sort(function (x,y) { return x.rate - y.rate; });
+        return { op:o, bots:a, lo:a[0], hi:a[a.length-1], span:a[a.length-1].rate - a[0].rate };
+      }).map(function (r) {
+        // The headline is per-site behaviour, not the spread of aggregate rates:
+        // OpenAI and Anthropic happen to span the same range, yet individual sites
+        // split OpenAI's bots an order of magnitude more often.
+        var a = 0, b = 0;
+        f.forEach(function (s) {
+          var gg = byOperator(s)[r.op];
+          if (gg && gg.named >= 2) { a++; if (gg.blocked > 0 && gg.blocked < gg.named) { b++; } }
+        });
+        r.sites = a; r.split = a ? 100*b/a : 0; r.splitN = b;
+        return r;
+      }).sort(function (x,y) { return y.split - x.split; });
+    var g = freshSvg(70 + rows.length*52);
+    var L = 112, R = VW - 215;
+    var x = function (p) { return L + (p/100)*(R-L); };
+    [0,25,50,75,100].forEach(function (v) {
+      g.appendChild(S("line",{x1:x(v),x2:x(v),y1:34,y2:38+rows.length*52,stroke:C.line,
+        "stroke-dasharray":v?"2 4":null}));
+      g.appendChild(S("text",{x:x(v),y:26,"text-anchor":"middle","class":"ax"}, v+"%"));
+    });
+    rows.forEach(function (r, i) {
+      var y = 62 + i*52;
+      g.appendChild(S("text",{x:L-12,y:y+4,"text-anchor":"end","class":"vlab",
+        "font-weight":600}, r.op));
+      g.appendChild(S("line",{x1:x(r.lo.rate),x2:x(r.hi.rate),y1:y,y2:y,
+        stroke:C.support,"stroke-width":5,"stroke-linecap":"round","stroke-opacity":.3}));
+      r.bots.forEach(function (b) {
+        var c = S("circle",{cx:x(b.rate),cy:y,r:7,
+          fill: b === r.hi ? C.restrict : b === r.lo ? C.support : C.mixed,
+          stroke:"#fff","stroke-width":2});
+        hover(c, "<b>"+b.t+"</b><br>"+num(b.n)+" sites name it<br>"+pct(b.rate,0)+" block it");
+        clickTo(c, b.t + " — sites that block it",
+          f.filter(function (s) { return s.bset[b.t]; }));
+        g.appendChild(c);
+      });
+      var badge = S("text",{x:x(r.hi.rate)+14,y:y+1,"class":"vnum","font-weight":600,
+        fill: r.split > 5 ? C.restrict : "#5d6f6d"},
+        pct(r.split,1) + " of sites split them");
+      hover(badge, "<b>"+r.op+"</b><br>"+num(r.sites)+" sites name 2+ of its bots<br>"
+        + num(r.splitN) + " block some and allow others");
+      clickTo(badge, r.op + " — sites that split its bots",
+        f.filter(function (s) {
+          var gg = byOperator(s)[r.op];
+          return gg && gg.named >= 2 && gg.blocked > 0 && gg.blocked < gg.named;
+        }));
+      g.appendChild(badge);
+      g.appendChild(S("text",{x:x(r.hi.rate)+14,y:y+13,"class":"vnum"},
+        pct(r.span,0) + " between its least- and most-blocked bot"));
+    });
+  },
+  subset:function (f) {
+    return ["Sites that treat one operator's bots differently",
+      f.filter(function (s) {
+        var g = byOperator(s);
+        for (var k in g) { if (g[k].named>=2 && g[k].blocked>0 && g[k].blocked<g[k].named) { return true; } }
+        return false;
+      })];
+  }
+},
+
+/* 3 ----------------------------------------------------------- the tornado - */
+{
+  id:"sector", tab:"Sector", kicker:"Lens 3 / what you sell",
+  title:"The newsroom built a wall. The dev shop wrote a guide.",
+  blurb:"<p>Bars grow out from the centre in opposite directions: left is the share "
+    + "of a sector that <em>withholds</em> something from AI readers, right is the "
+    + "share that <em>publishes</em> something for them.</p><p>Sector labels were "
+    + "assigned by hand, so this lens uses the 463-site panel.</p>",
+  cap:"Click either half of a sector to list those sites.",
+  panel:1,
+  big:function (f) {
+    var n = f.filter(function (s) { return s.sector === "news"; });
+    var b = n.filter(function (s) { return s.restricts; }).length;
+    return [n.length ? pct(100*b/n.length,0) : "—", "of news sites withhold something"];
+  },
+  draw:function (f) {
+    var g = {}, order;
+    f.forEach(function (s) {
+      if (s.sector === "unlabelled" || !s.sector) { return; }
+      g[s.sector] = g[s.sector] || { n:0, r:0, d:0, rs:[], ds:[] };
+      var o = g[s.sector]; o.n++;
+      if (s.restricts) { o.r++; o.rs.push(s); }
+      if (s.supports) { o.d++; o.ds.push(s); }
+    });
+    order = Object.keys(g).sort(function (a,b) {
+      return (g[b].r/g[b].n) - (g[a].r/g[a].n);
+    });
+    var sv = freshSvg(80 + order.length*54);
+    var mid = VW/2, halfW = (VW/2) - 92;
+    var x = function (p, left) { return left ? mid - (p/100)*halfW : mid + (p/100)*halfW; };
+    sv.appendChild(S("text",{x:mid-14,y:24,"text-anchor":"end","class":"ax",
+      fill:C.restrict}, "← withholds"));
+    sv.appendChild(S("text",{x:mid+14,y:24,"class":"ax", fill:C.support}, "publishes →"));
+    sv.appendChild(S("line",{x1:mid,x2:mid,y1:32,y2:46+order.length*54,stroke:"#c9d3d1"}));
+    order.forEach(function (k, i) {
+      var y = 56 + i*54, o = g[k];
+      var pr = 100*o.r/o.n, pd = 100*o.d/o.n;
+      var br = S("rect",{x:x(pr,true),y:y,width:Math.max(1,mid-x(pr,true)),height:22,
+        fill:C.restrict,rx:3});
+      hover(br, "<b>"+k+"</b><br>"+num(o.r)+" of "+num(o.n)+" withhold something<br>"+pct(pr,0));
+      clickTo(br, k + " — sites that withhold something", o.rs);
+      sv.appendChild(br);
+      var bd = S("rect",{x:mid,y:y,width:Math.max(1,x(pd,false)-mid),height:22,
+        fill:C.support,rx:3});
+      hover(bd, "<b>"+k+"</b><br>"+num(o.d)+" of "+num(o.n)+" publish something<br>"+pct(pd,0));
+      clickTo(bd, k + " — sites that publish something for AI", o.ds);
+      sv.appendChild(bd);
+      sv.appendChild(S("text",{x:mid,y:y+37,"text-anchor":"middle","class":"vlab",
+        "font-weight":600}, k));
+      sv.appendChild(S("text",{x:x(pr,true)-8,y:y+16,"text-anchor":"end","class":"vnum"}, pct(pr,0)));
+      sv.appendChild(S("text",{x:x(pd,false)+8,y:y+16,"class":"vnum"}, pct(pd,0)));
+    });
+  },
+  subset:function (f) {
+    return ["News sites that withhold something",
+      f.filter(function (s) { return s.sector === "news" && s.restricts; })];
+  }
+},
+
+/* 4 ------------------------------------------------------------- the euler - */
+{
+  id:"fork", tab:"Two webs", kicker:"Lens 4 / the fork",
+  title:"The sites writing guides are not the sites building walls.",
+  blurb:"<p>Two circles, drawn to area. One is every site that publishes something "
+    + "for AI readers, the other every site that withholds something. The overlap is "
+    + "solved so that its area really is the count of sites doing both.</p>"
+    + "<p>If documenting and blocking were two habits of the same careful operators, "
+    + "these circles would sit on top of each other. They barely touch.</p>",
+  cap:"Click any region — including the field behind, which is everyone saying nothing.",
+  big:function (f) {
+    var rd = f.filter(function (s) { return s.readable; });
+    var w = rd.filter(function (s) { return s.wkHas("llms_txt"); });
+    var a = w.filter(function (s) { return s.blocked.length; }).length;
+    return [w.length ? pct(100*a/w.length) : "—",
+      "of sites with an llms.txt block a crawler"];
+  },
+  draw:function (f) {
+    var rd = f.filter(function (s) { return s.readable; });
+    var sup = rd.filter(function (s) { return s.supports; });
+    var res = rd.filter(function (s) { return s.restricts; });
+    var both = rd.filter(function (s) { return s.supports && s.restricts; });
+    var none = rd.filter(function (s) { return !s.supports && !s.restricts; });
+    var g = freshSvg(400);
+    // area of the frame represents every readable site
+    var FR = { x:30, y:46, w:VW-60, h:300 };
+    var per = (FR.w * FR.h) / Math.max(rd.length, 1);   // px² per site
+    var bg = S("rect",{x:FR.x,y:FR.y,width:FR.w,height:FR.h,rx:10,fill:"#f4f7f6",
+      stroke:C.line});
+    hover(bg, "<b>"+num(none.length)+"</b> sites say nothing either way<br>"
+      + pct(100*none.length/rd.length,0) + " of readable rulebooks");
+    clickTo(bg, "Sites that say nothing either way", none);
+    g.appendChild(bg);
+    var rA = Math.sqrt(sup.length*per/Math.PI), rB = Math.sqrt(res.length*per/Math.PI);
+    // solve centre distance so the lens area equals the "both" count
+    var target = both.length*per, lo = Math.abs(rA-rB), hi = rA+rB, d = hi;
+    function lens(dd) {
+      if (dd >= rA+rB) { return 0; }
+      if (dd <= Math.abs(rA-rB)) { return Math.PI*Math.min(rA,rB)*Math.min(rA,rB); }
+      var a1 = rA*rA*Math.acos((dd*dd+rA*rA-rB*rB)/(2*dd*rA));
+      var a2 = rB*rB*Math.acos((dd*dd+rB*rB-rA*rA)/(2*dd*rB));
+      var a3 = 0.5*Math.sqrt(Math.max(0,(-dd+rA+rB)*(dd+rA-rB)*(dd-rA+rB)*(dd+rA+rB)));
+      return a1+a2-a3;
+    }
+    for (var i=0;i<60;i++) { d=(lo+hi)/2; if (lens(d) > target) { lo=d; } else { hi=d; } }
+    var cy = FR.y + FR.h/2, cx = FR.x + FR.w/2;
+    var ax = cx - d/2, bx = cx + d/2;
+    var cA = S("circle",{cx:ax,cy:cy,r:rA,fill:C.support,"fill-opacity":.62});
+    hover(cA, "<b>"+num(sup.length)+"</b> publish something for AI readers");
+    clickTo(cA, "Sites that publish something for AI readers", sup);
+    var cB = S("circle",{cx:bx,cy:cy,r:rB,fill:C.restrict,"fill-opacity":.62});
+    hover(cB, "<b>"+num(res.length)+"</b> withhold something");
+    clickTo(cB, "Sites that withhold something", res);
+    g.appendChild(cA); g.appendChild(cB);
+    var cid = "lensclip";
+    var defs = S("defs",{});
+    var cp = S("clipPath",{id:cid});
+    cp.appendChild(S("circle",{cx:ax,cy:cy,r:rA}));
+    defs.appendChild(cp); g.appendChild(defs);
+    var ov = S("circle",{cx:bx,cy:cy,r:rB,fill:C.mixed,"clip-path":"url(#"+cid+")"});
+    hover(ov, "<b>"+num(both.length)+"</b> do both");
+    clickTo(ov, "Sites that document themselves AND withhold something", both);
+    g.appendChild(ov);
+    g.appendChild(S("text",{x:ax,y:cy-rA-10,"text-anchor":"middle","class":"vlab",
+      "font-weight":600,fill:C.support}, "Publishes for AI · " + num(sup.length)));
+    g.appendChild(S("text",{x:bx,y:cy+rB+20,"text-anchor":"middle","class":"vlab",
+      "font-weight":600,fill:C.restrict}, "Withholds · " + num(res.length)));
+    g.appendChild(S("text",{x:cx,y:cy+4,"text-anchor":"middle","class":"vnum",
+      "font-weight":600,fill:"#fff"}, num(both.length)));
+    g.appendChild(S("text",{x:FR.x+14,y:FR.y+24,"class":"vnum"},
+      num(none.length) + " say nothing either way"));
+    g.appendChild(S("text",{x:VW/2,y:30,"text-anchor":"middle","class":"ax"},
+      "The frame is every site whose rules we could read · areas are to scale"));
+  },
+  subset:function (f) {
+    return ["Sites that do both — document themselves and withhold something",
+      f.filter(function (s) { return s.readable && s.supports && s.restricts; })];
+  }
+},
+
+/* 5 ------------------------------------------------------------ the waffle - */
+{
+  id:"signal", tab:"Standards", kicker:"Lens 5 / where policy really comes from",
+  title:"Nothing with a committee behind it got adopted.",
+  blurb:"<p>One square per site, grouped by the convention it adopted, and labelled "
+    + "with who is actually behind it.</p>"
+    + "<p>The two that worked both skipped the standards process entirely: a "
+    + "community convention that started as a blog post, and a line one CDN began "
+    + "writing into its customers' files. Everything with a formal process behind it "
+    + "— an EU directive, a Linux Foundation draft, an industry consortium — is "
+    + "still counted in dozens.</p>",
+  cap:"Each square is one site. Hover a block for the total; click to list them.",
+  big:function (f) {
+    var a = f.filter(function (s) { return s.wkHas("llms_txt"); }).length;
+    var formal = f.filter(function (s) {
+      return s.wkHas("tdmrep") || s.wkHas("ai_catalog") || s.wkHas("agent_card")
+          || s.wkHas("agent_card_legacy");
+    }).length;
+    return [formal ? Math.round(a/formal) + "\u00d7" : "\u2014",
+      "more sites publish an llms.txt than every formally specified convention combined"];
+  },
+  draw:function (f) {
+    var fams = [
+      { lb:"llms.txt", who:"a blog post and a community", c:C.support,
+        set:f.filter(function (s) { return s.wkHas("llms_txt"); }) },
+      { lb:"content-signal", who:"one CDN's default", c:C.pale,
+        set:f.filter(function (s) { return s.has("has_content_signal"); }) },
+      { lb:"TDM reservation", who:"an EU directive", c:C.restrict,
+        set:f.filter(function (s) { return s.wkHas("tdmrep"); }) },
+      { lb:"AI catalog", who:"a Linux Foundation draft", c:C.deep,
+        set:f.filter(function (s) { return s.wkHas("ai_catalog"); }) },
+      { lb:"ai.txt", who:"a startup", c:C.mixed,
+        set:f.filter(function (s) { return s.wkHas("ai_txt"); }) },
+      { lb:"A2A agent card", who:"an industry consortium", c:"#6b7f7e",
+        set:f.filter(function (s) { return s.wkHas("agent_card") || s.wkHas("agent_card_legacy"); }) }
+    ].sort(function (a,b) { return b.set.length - a.set.length; });
+    var g = freshSvg(474);
+    var cell = 4, gap = 1, colW = VW/3 - 16, perRow = Math.floor(colW/(cell+gap));
+    fams.forEach(function (fam, i) {
+      var cx = (i%3) * (VW/3), cy = 46 + Math.floor(i/3) * 236;
+      g.appendChild(S("text",{x:cx,y:cy-20,"class":"vlab","font-weight":600}, fam.lb));
+      g.appendChild(S("text",{x:cx,y:cy-8,"class":"vnum"},
+        num(fam.set.length) + " sites \u00b7 " + fam.who));
+      var grp = S("g",{});
+      var shown = Math.min(fam.set.length, perRow*34);
+      for (var k=0;k<shown;k++) {
+        grp.appendChild(S("rect",{ x: cx + (k%perRow)*(cell+gap),
+          y: cy + Math.floor(k/perRow)*(cell+gap),
+          width:cell, height:cell, fill:fam.c, rx:.7 }));
+      }
+      if (fam.set.length > shown) {
+        // sits under the rows actually drawn, not a guessed offset, or it
+        // collides with the next row's label
+        var used = Math.ceil(shown/perRow);
+        g.appendChild(S("text",{x:cx, y:cy + used*(cell+gap) + 12,"class":"vnum"},
+          "+ " + num(fam.set.length - shown) + " more"));
+      }
+      hover(grp, "<b>"+fam.lb+"</b><br>"+num(fam.set.length)+" sites<br>"+fam.who);
+      clickTo(grp, fam.lb + " \u2014 every site that carries it", fam.set);
+      g.appendChild(grp);
+    });
+  },
+  subset:function (f) {
+    return ["Sites carrying a content-signal directive",
+      f.filter(function (s) { return s.has("has_content_signal"); })];
+  }
+},
+
+/* 6 ----------------------------------------------------------- the cluster - */
+{
+  id:"tdm", tab:"Europe", kicker:"Lens 6 / law has a geography",
+  title:"Europe's AI opt-out has 46 users. Most are French.",
+  blurb:"<p>Small enough to draw every single one. Each dot is a site publishing a "
+    + "machine-readable TDM reservation &mdash; the mechanism the EU copyright "
+    + "directive points to &mdash; clustered by who they are.</p>"
+    + "<p>Three tiny constituencies account for three quarters of global adoption.</p>",
+  cap:"Every adopter in the panel is on screen. Hover any dot for the site.",
+  big:function (f) {
+    var n = f.filter(function (s) { return s.wkHas("tdmrep"); }).length;
+    return [num(n), "sites out of " + num(f.length) + " publish a reservation"];
+  },
+  draw:function (f) {
+    var t = f.filter(function (s) { return s.wkHas("tdmrep"); });
+    var who = function (s) {
+      return FRENCH.indexOf(s.host) >= 0 ? "fr" : ACADEMIC.indexOf(s.host) >= 0 ? "ac"
+           : USREG.indexOf(s.host) >= 0 ? "us" : "other";
+    };
+    var groups = [
+      { k:"fr", lb:"French media", c:C.restrict },
+      { k:"ac", lb:"Academic publishers", c:C.support },
+      { k:"us", lb:"US regional papers, one owner", c:C.mixed },
+      { k:"other", lb:"Everyone else", c:C.pale }
+    ];
+    var g = freshSvg(360);
+    var colW = VW/4;
+    groups.forEach(function (gr, i) {
+      var set = t.filter(function (s) { return who(s) === gr.k; });
+      var cx = i*colW + colW/2;
+      g.appendChild(S("text",{x:cx,y:28,"text-anchor":"middle","class":"vlab",
+        "font-weight":600}, gr.lb));
+      g.appendChild(S("text",{x:cx,y:42,"text-anchor":"middle","class":"vnum"},
+        num(set.length) + " of " + num(t.length)));
+      // spiral-ish packed cluster, 4 per row
+      set.forEach(function (s, j) {
+        var col = j % 4, row = Math.floor(j/4);
+        var c = S("circle",{ cx: cx - 33 + col*22, cy: 78 + row*22, r:8.5,
+          fill:gr.c, "fill-opacity":.85, stroke:"#fff", "stroke-width":1.5 });
+        hover(c, "<b>"+s.host+"</b><br>rank "+num(s.rank)
+          + (s.has("reserves_tdm") ? "<br>reserves rights" : "<br>grants permission"));
+        c.addEventListener("click", function () { showDetail(s); });
+        c.classList.add("hit");
+        g.appendChild(c);
+      });
+      g.appendChild(S("rect",{x:i*colW+10,y:56,width:colW-20,
+        height:Math.max(44, 22*Math.ceil(set.length/4)+22), rx:8, fill:"none",
+        stroke:C.line}));
+    });
+    g.appendChild(S("text",{x:VW/2,y:VH-8,"text-anchor":"middle","class":"ax"},
+      "every adopter in the panel, one dot each"));
+  },
+  subset:function (f) {
+    return ["Every site publishing a TDM reservation",
+      f.filter(function (s) { return s.wkHas("tdmrep"); })];
+  }
+},
+
+/* 7 ------------------------------------------------------- the hollow bars - */
+{
+  id:"ghosts", tab:"Ghosts", kicker:"Lens 7 / rules that cannot fire",
+  title:"A thousand sites are blocking a crawler that was retired.",
+  blurb:"<p>These bars are drawn hollow because that is what they are. Every one is "
+    + "an agent token named in a real robots.txt that matches no crawler anyone "
+    + "operates &mdash; a retired bot, a product name, or a string with a space in "
+    + "it, which can never match under RFC&nbsp;9309 at all.</p>",
+  cap:"Click a bar to list the sites carrying that rule.",
+  big:function (f) {
+    var n = f.filter(function (s) { return s.ghosts.length; }).length;
+    return [num(n), "sites carry at least one rule that can never fire"];
+  },
+  draw:function (f) {
+    // Agent-token matching is case-insensitive under RFC 9309, so Claude-Web and
+    // claude-web are one rule, not two. Fold them and show the commonest casing.
+    var c = {}, label = {};
+    f.forEach(function (s) {
+      s.ghosts.forEach(function (gt) {
+        var k = gt.toLowerCase();
+        c[k] = (c[k]||0) + 1;
+        label[k] = label[k] || {};
+        label[k][gt] = (label[k][gt]||0) + 1;
+      });
+    });
+    var rows = Object.keys(c).sort(function (a,b) { return c[b]-c[a]; }).slice(0,10);
+    var disp = function (k) {
+      return Object.keys(label[k]).sort(function (a,b) { return label[k][b]-label[k][a]; })[0];
+    };
+    var g = freshSvg(60 + rows.length*34);
+    var max = rows.length ? c[rows[0]] : 1, L = 228, R = VW-60;
+    var why = function (k) {
+      return k.indexOf(" ") >= 0 ? "has a space — can never match"
+        : k === "claude-web" ? "retired by Anthropic"
+        : "a product name, not a token";
+    };
+    rows.forEach(function (k, i) {
+      var y = 36 + i*34, w = Math.max(3, (c[k]/max)*(R-L)), name = disp(k);
+      var bar = S("rect",{x:L,y:y,width:w,height:18,rx:3,fill:"none",
+        stroke:C.mixed,"stroke-width":1.6,"stroke-dasharray":"4 3"});
+      hover(bar, "<b>"+name+"</b><br>"+num(c[k])+" sites<br>"+why(k));
+      clickTo(bar, name + " — sites naming it",
+        f.filter(function (s) {
+          return s.ghosts.some(function (gt) { return gt.toLowerCase() === k; });
+        }));
+      g.appendChild(bar);
+      g.appendChild(S("text",{x:L-10,y:y+9,"text-anchor":"end","class":"vlab"}, name));
+      g.appendChild(S("text",{x:L-10,y:y+20,"text-anchor":"end","class":"vnum"}, why(k)));
+      g.appendChild(S("text",{x:L+w+8,y:y+13,"class":"vnum"}, num(c[k])));
+    });
+    g.appendChild(S("text",{x:L,y:20,"class":"ax"},
+      "named in a real robots.txt · matches nothing"));
+  },
+  subset:function (f) {
+    return ["Sites with a rule that can never fire",
+      f.filter(function (s) { return s.ghosts.length; })];
+  }
+},
+
+/* 8 ------------------------------------------------------------ the quotes - */
+{
+  id:"legal", tab:"Contracts", kicker:"Lens 8 / a file growing teeth",
+  title:"robots.txt is turning into a contract nobody signed.",
+  blurb:"<p>Rulebooks increasingly assert terms — conditions of access, "
+    + "permitted use, the threat of legal action. The file has no mechanism that "
+    + "makes any of it binding.</p>"
+    + "<p>But most of it is not sites lawyering up. The pale part of each bar is one "
+    + "template, pushed out by a single CDN, which is why the share barely moves "
+    + "across the ranks. Strip it out and the genuinely bespoke contracts — eBay's, "
+    + "the New York Times's — are a couple of hundred sites in sixteen thousand.</p>",
+  cap:"Dark is written by hand; pale is the shared template. Click either part.",
+  big:function (f) {
+    var rd = f.filter(function (s) { return s.readable; });
+    var n = rd.filter(function (s) {
+      return s.has("has_legal_text") && !s.has("legal_boilerplate"); }).length;
+    return [num(n), "sites wrote their own terms into robots.txt"];
+  },
+  draw:function (f) {
+    var bands = ["1\u20131k","1k\u20132.5k","2.5k\u20135k","5k\u201310k","10k\u201320k"];
+    var g = freshSvg(340);
+    var L = 70, B = 196, maxH = 132;
+    var vals = bands.map(function (_, i) {
+      var grp = f.filter(function (s) { return s.band === i && s.readable; });
+      var own = grp.filter(function (s) {
+        return s.has("has_legal_text") && !s.has("legal_boilerplate"); });
+      var tpl = grp.filter(function (s) { return s.has("legal_boilerplate"); });
+      return { tot:grp.length, own:own, tpl:tpl,
+               pOwn: grp.length ? 100*own.length/grp.length : 0,
+               pTpl: grp.length ? 100*tpl.length/grp.length : 0 };
+    });
+    var max = Math.max.apply(null, vals.map(function (v) { return v.pOwn+v.pTpl; }).concat([1]));
+    var bw = (VW - L - 150) / bands.length;
+    g.appendChild(S("line",{x1:L-10,x2:VW-150,y1:B,y2:B,stroke:C.line}));
+    vals.forEach(function (v, i) {
+      var x = L + i*bw, w = bw-18;
+      var hT = (v.pTpl/max)*maxH, hO = (v.pOwn/max)*maxH;
+      var rT = S("rect",{x:x,y:B-hT,width:w,height:Math.max(1,hT),fill:C.restrict,
+        "fill-opacity":.33});
+      hover(rT, "<b>"+bands[i]+"</b><br>"+num(v.tpl.length)+" carry the shared template<br>"
+        + pct(v.pTpl) + " of readable rulebooks");
+      clickTo(rT, "Rank "+bands[i]+" — the shared template", v.tpl);
+      g.appendChild(rT);
+      var rO = S("rect",{x:x,y:B-hT-hO,width:w,height:Math.max(1,hO),fill:C.restrict,rx:2});
+      hover(rO, "<b>"+bands[i]+"</b><br>"+num(v.own.length)+" wrote their own terms<br>"
+        + pct(v.pOwn) + " of readable rulebooks");
+      clickTo(rO, "Rank "+bands[i]+" — terms written by hand", v.own);
+      g.appendChild(rO);
+      g.appendChild(S("text",{x:x+w/2,y:B-hT-hO-8,"text-anchor":"middle","class":"vnum",
+        "font-weight":600}, pct(v.pOwn+v.pTpl,1)));
+      g.appendChild(S("text",{x:x+w/2,y:B+16,"text-anchor":"middle","class":"ax"}, bands[i]));
+    });
+    g.appendChild(S("text",{x:L-10,y:24,"class":"ax"}, "share asserting terms, by rank"));
+    [["written by hand", C.restrict, 1],["one shared template", C.restrict, .33]]
+      .forEach(function (k, i) {
+        var y = 44 + i*18;
+        g.appendChild(S("rect",{x:VW-140,y:y-9,width:11,height:11,rx:2,fill:k[1],
+          "fill-opacity":k[2]}));
+        g.appendChild(S("text",{x:VW-124,y:y,"class":"vnum"}, k[0]));
+      });
+    var qs = [
+      ["ebay.com","Unauthorized use of automated agents in checkout may result in legal action."],
+      ["nytimes.com","\u2026for your personal, non-commercial use subject to our Terms of Service."]
+    ];
+    qs.forEach(function (q, i) {
+      var y = 250 + i*44;
+      g.appendChild(S("rect",{x:L-10,y:y-14,width:3,height:32,fill:C.restrict}));
+      var t = S("text",{x:L+2,y:y,"class":"vlab"});
+      t.appendChild(S("tspan",{"font-family":"IBM Plex Mono, monospace","font-size":"10",
+        fill:"#8a9a98"}, q[0] + "   "));
+      t.appendChild(S("tspan",{}, q[1]));
+      g.appendChild(t);
+    });
+  },
+  subset:function (f) {
+    return ["Sites that wrote their own terms into robots.txt",
+      f.filter(function (s) {
+        return s.has("has_legal_text") && !s.has("legal_boilerplate"); })];
+  }
+},
+
+/* 9 ------------------------------------------------------------ the hexbin - */
+{
+  id:"strain", tab:"Strain", kicker:"Lens 9 / the format is buckling",
+  title:"A 1994 text file is carrying the AI copyright debate.",
+  blurb:"<p>Every readable rulebook placed by how many directives it holds against "
+    + "how many bytes it runs to. Both axes are logarithmic. Darker cells hold more "
+    + "sites.</p><p>The named outliers are not errors: figma.com really does serve a "
+    + "390&nbsp;kilobyte robots.txt. The two above it hit our 512&nbsp;KB read cap, "
+    + "so they are larger still by an unknown amount.</p>",
+  cap:"Hover a cell for its sites; click to list them.",
+  draw:function (f) {
+    var pts = f.filter(function (s) { return s.readable && s.lines > 0 && s.bytes > 0; });
+    var g = freshSvg(390);
+    var L = 56, R = VW-24, T = 30, B = 330;
+    var lx = function (v) { return Math.log10(Math.max(1,v)); };
+    var xmax = 4.1, ymax = 6.0;
+    var X = function (v) { return L + (lx(v)/xmax)*(R-L); };
+    var Y = function (v) { return B - (lx(v)/ymax)*(B-T); };
+    [0,1,2,3,4].forEach(function (p) {
+      var x = L + (p/xmax)*(R-L);
+      g.appendChild(S("line",{x1:x,x2:x,y1:T,y2:B,stroke:C.line}));
+      g.appendChild(S("text",{x:x,y:B+15,"text-anchor":"middle","class":"ax"},
+        p === 0 ? "1" : num(Math.pow(10,p))));
+    });
+    [1,2,3,4,5].forEach(function (p) {
+      var y = B - (p/ymax)*(B-T);
+      g.appendChild(S("line",{x1:L,x2:R,y1:y,y2:y,stroke:C.line}));
+      g.appendChild(S("text",{x:L-8,y:y+3,"text-anchor":"end","class":"ax"},
+        p>=3 ? Math.pow(10,p-3)+"KB" : Math.pow(10,p)+"B"));
+    });
+    g.appendChild(S("text",{x:(L+R)/2,y:B+30,"text-anchor":"middle","class":"ax"},
+      "directive lines →"));
+    g.appendChild(S("text",{x:L-8,y:T-10,"class":"ax"}, "file size ↑"));
+    // hexbin
+    var RAD = 9, dx = RAD*1.732, dy = RAD*1.5, bins = {};
+    pts.forEach(function (s) {
+      var px = X(s.lines), py = Y(s.bytes);
+      var row = Math.round(py/dy);
+      var col = Math.round((px - (row%2 ? dx/2 : 0))/dx);
+      var k = row+":"+col;
+      (bins[k] = bins[k] || { r:row, c:col, a:[] }).a.push(s);
+    });
+    var mx = 1;
+    for (var k in bins) { mx = Math.max(mx, bins[k].a.length); }
+    var hex = function (cx, cy) {
+      var p = [];
+      for (var i=0;i<6;i++) {
+        var ang = Math.PI/180*(60*i - 30);
+        p.push((cx+RAD*Math.cos(ang)).toFixed(1)+","+(cy+RAD*Math.sin(ang)).toFixed(1));
+      }
+      return p.join(" ");
+    };
+    Object.keys(bins).forEach(function (key) {
+      var b = bins[key];
+      var cx = b.c*dx + (b.r%2 ? dx/2 : 0), cy = b.r*dy;
+      if (cx < L-RAD || cx > R+RAD || cy < T-RAD || cy > B+RAD) { return; }
+      var t = Math.log(1+b.a.length)/Math.log(1+mx);
+      var poly = S("polygon",{points:hex(cx,cy),fill:C.support,
+        "fill-opacity":(0.1 + t*0.8).toFixed(2)});
+      hover(poly, "<b>"+num(b.a.length)+" sites</b><br>"
+        + b.a.slice(0,3).map(function (s) { return s.host; }).join("<br>")
+        + (b.a.length>3 ? "<br>…" : ""));
+      clickTo(poly, "Sites in this part of the distribution", b.a);
+      g.appendChild(poly);
+    });
+    // label the extremes
+    pts.slice().sort(function (a,b) { return b.bytes - a.bytes; }).slice(0,3)
+      .forEach(function (s, i) {
+        var cx = X(s.lines), cy = Y(s.bytes);
+        // the three largest sit almost on top of each other; fan the labels out
+        var ly = T + 12 + i*14, lx = R - 160;
+        g.appendChild(S("circle",{cx:cx,cy:cy,r:3.5,fill:C.restrict}));
+        g.appendChild(S("line",{x1:cx+4,y1:cy,x2:lx-5,y2:ly-3,stroke:C.restrict,
+          "stroke-width":.7,"stroke-opacity":.5}));
+        // 524288 is the read cap: those files are "at least this big", not
+        // measured, and the label should not pretend otherwise.
+        var capped = s.bytes >= 524288;
+        g.appendChild(S("text",{x:lx,y:ly,"class":"vnum",fill:C.restrict},
+          s.host + " · " + Math.round(s.bytes/1024) + " KB"
+          + (capped ? "+ (our read cap)" : "")));
+      });
+  },
+  big:function (f) {
+    var rd = f.filter(function (s) { return s.readable && s.lines; });
+    var a = med(rd.filter(function (s) { return s.named.length; }).map(function (s) { return s.lines; }));
+    var b = med(rd.filter(function (s) { return !s.named.length; }).map(function (s) { return s.lines; }));
+    return [b ? (a/b).toFixed(1)+"×" : "—", "more directives once a file mentions AI"];
+  },
+  subset:function (f) {
+    return ["The hundred largest rulebooks",
+      f.filter(function (s) { return s.readable && s.bytes; })
+        .sort(function (a,b) { return b.bytes - a.bytes; }).slice(0,100)];
+  }
+},
+
+/* 10 ---------------------------------------------------------- the waffles - */
+{
+  id:"silence", tab:"Silence", kicker:"Lens 10 / the majority",
+  title:"Two thirds of the web has not joined the argument.",
+  blurb:"<p>Five hundred squares, a hundred per rank band. Each one is one per cent "
+    + "of the readable rulebooks in that band, coloured by what they declare.</p>"
+    + "<p>Grey is silence, and it grows as you go down the ranks. It is not neglect: "
+    + "most of these sites maintain a sitemap and a working robots.txt. They have "
+    + "simply never addressed AI in it.</p>",
+  cap:"Click any band's grey block to list the silent sites in it.",
+  big:function (f) {
+    var rd = f.filter(function (s) { return s.readable; });
+    var n = rd.filter(function (s) { return !s.supports && !s.restricts; }).length;
+    return [rd.length ? pct(100*n/rd.length, 0) : "—",
+      "of readable rulebooks never mention AI either way"];
+  },
+  draw:function (f) {
+    var bands = ["1–1k","1k–2.5k","2.5k–5k","5k–10k","10k–20k"];
+    var g = freshSvg(330);
+    var cell = 13, gap = 2, gridW = 10*(cell+gap);
+    var colW = VW/5;
+    bands.forEach(function (lb, i) {
+      var grp = f.filter(function (s) { return s.band === i && s.readable; });
+      var cats = [
+        { k:"sup", c:C.support, set:grp.filter(function (s) { return s.supports && !s.restricts; }) },
+        { k:"both", c:C.mixed, set:grp.filter(function (s) { return s.supports && s.restricts; }) },
+        { k:"res", c:C.restrict, set:grp.filter(function (s) { return s.restricts && !s.supports; }) },
+        { k:"sil", c:C.silent, set:grp.filter(function (s) { return !s.supports && !s.restricts; }) }
+      ];
+      var x0 = i*colW + (colW - gridW)/2, y0 = 56;
+      var seq = [];
+      cats.forEach(function (c) {
+        var n = grp.length ? Math.round(100*c.set.length/grp.length) : 0;
+        for (var j=0;j<n;j++) { seq.push(c); }
+      });
+      while (seq.length < 100) { seq.push(cats[3]); }
+      seq = seq.slice(0,100);
+      g.appendChild(S("text",{x:i*colW+colW/2,y:30,"text-anchor":"middle","class":"vlab",
+        "font-weight":600}, lb));
+      g.appendChild(S("text",{x:i*colW+colW/2,y:44,"text-anchor":"middle","class":"vnum"},
+        num(grp.length) + " readable"));
+      var byCat = {};
+      seq.forEach(function (c, j) {
+        var col = j%10, row = 9 - Math.floor(j/10);
+        var r = S("rect",{x:x0+col*(cell+gap), y:y0+row*(cell+gap),
+          width:cell, height:cell, rx:2, fill:c.c});
+        if (!byCat[c.k]) { byCat[c.k] = c; }
+        g.appendChild(r);
+      });
+      var sil = cats[3];
+      var hitRect = S("rect",{x:x0,y:y0,width:gridW,height:10*(cell+gap),fill:"transparent"});
+      hover(hitRect, "<b>"+lb+"</b><br>"+num(sil.set.length)+" of "+num(grp.length)
+        + " say nothing<br>"+pct(grp.length?100*sil.set.length/grp.length:0,0));
+      clickTo(hitRect, "Rank " + lb + " — sites saying nothing either way", sil.set);
+      g.appendChild(hitRect);
+    });
+    var keys = [["Publishes for AI",C.support],["Both",C.mixed],
+                ["Withholds",C.restrict],["Says nothing",C.silent]];
+    keys.forEach(function (k, i) {
+      var x = 60 + i*160;
+      g.appendChild(S("rect",{x:x,y:VH-24,width:10,height:10,rx:2,fill:k[1]}));
+      g.appendChild(S("text",{x:x+16,y:VH-15,"class":"vnum"}, k[0]));
+    });
+  },
+  subset:function (f) {
+    return ["Sites that say nothing either way",
+      f.filter(function (s) { return s.readable && !s.supports && !s.restricts; })];
+  }
+}
+];
+
+/* ----------------------------------------------------------------- state -- */
+var cur = LENSES[0], band = "all", readOnly = false, query = "";
+function active() { return DATA[cur.panel === 1 ? 1 : 2] || []; }
+function filtered() {
+  var q = query.trim().toLowerCase();
+  return active().filter(function (s) {
+    if (band !== "all" && s.band !== +band) { return false; }
+    if (readOnly && !s.readable) { return false; }
+    if (q && s.host.indexOf(q) < 0) { return false; }
+    return true;
+  });
+}
+
+function showSites(label, list) {
+  document.getElementById("d-title").textContent = label;
+  document.getElementById("d-sub").textContent =
+    num(list.length) + (list.length === 1 ? " site" : " sites")
+    + (list.length > 300 ? " — showing the first 300 by rank" : "");
+  var host = document.getElementById("sitegrid");
+  host.innerHTML = "";
+  list.slice().sort(function (a,b) { return a.rank - b.rank; }).slice(0,300)
+    .forEach(function (s) {
+      var b = el("button", "site");
+      var d = el("span", "dot");
+      d.style.background = s.restricts && s.supports ? C.mixed : s.restricts ? C.restrict
+        : s.supports ? C.support : s.readable ? C.silent : C.unread;
+      b.appendChild(d);
+      b.appendChild(el("span", "h", s.host));
+      b.appendChild(el("span", "r", num(s.rank)));
+      b.addEventListener("click", function () { showDetail(s); });
+      host.appendChild(b);
+    });
+  document.getElementById("more").textContent = list.length > 300
+    ? "Narrow it with the rank filter or the search box above." : "";
+}
+
+function showDetail(s) {
+  document.getElementById("x-host").textContent = s.host;
+  document.getElementById("x-meta").textContent =
+    "rank " + num(s.rank) + "  ·  robots.txt: " + s.state
+    + (s.sector && s.sector !== "unlabelled" ? "  ·  " + s.sector : "");
+  var dl = document.getElementById("x-list");
+  dl.innerHTML = "";
+  var add = function (k, v) {
+    dl.appendChild(el("dt", null, k));
+    var dd = el("dd");
+    if (typeof v === "string") { dd.textContent = v; } else { dd.appendChild(v); }
+    dl.appendChild(dd);
+  };
+  var pills = function (list, cls) {
+    var w = el("div");
+    list.forEach(function (t) { w.appendChild(el("span", "pill " + cls, t)); });
+    return w;
+  };
+  if (s.named.length) {
+    var allowed = s.named.filter(function (t) { return !s.bset[t]; });
+    add("Blocks", s.blocked.length ? pills(s.blocked, "no") : "nothing by name");
+    if (allowed.length) { add("Allows", pills(allowed, "yes")); }
+  } else {
+    add("AI crawlers", s.readable ? "none named" : "rules not readable");
+  }
+  if (s.wk.length) { add("Publishes", pills(s.wk.map(function (k) { return WKLABEL[k]||k; }), "yes")); }
+  if (s.ghosts.length) { add("Matches nothing", pills(s.ghosts, "ghost")); }
+  if (s.signal) { add("content-signal", s.signal); }
+  if (s.crawlDelay) { add("Crawl-delay", s.crawlDelay + "s"); }
+  add("Rulebook", num(s.lines) + " directives"
+    + (s.bytes ? ", " + (s.bytes > 2048 ? Math.round(s.bytes/1024)+" KB" : s.bytes+" bytes") : "")
+    + (s.sitemaps ? ", " + num(s.sitemaps) + " sitemaps" : ""));
+  var notes = [];
+  if (s.has("blocks_all_crawlers")) { notes.push("blocks every crawler at the root"); }
+  if (s.has("asks_for_money")) { notes.push("asks for money or a licence"); }
+  if (s.has("reserves_tdm")) { notes.push("reserves TDM rights"); }
+  if (s.has("has_legal_text")) { notes.push("asserts legal terms"); }
+  if (s.has("starts_with_bom")) { notes.push("begins with a byte-order mark"); }
+  if (s.has("access_varies_by_identity")) { notes.push("answered our two identities differently"); }
+  if (s.has("budget_exceeded")) { notes.push("hit the time budget — later paths unmeasured"); }
+  if (notes.length) { add("Also", notes.join("; ")); }
+  var a = el("a", null, "open robots.txt ↗");
+  a.href = "https://" + s.host + "/robots.txt";
+  a.target = "_blank"; a.rel = "noopener noreferrer";
+  a.style.color = C.support;
+  add("Check it", a);
+  document.getElementById("detail").hidden = false;
+}
+
+function render() {
+  var f = filtered();
+  document.getElementById("count").textContent = num(f.length) + " sites in view";
+  document.getElementById("r-kicker").textContent = cur.kicker;
+  document.getElementById("r-title").textContent = cur.title;
+  document.getElementById("r-blurb").innerHTML = cur.blurb;
+  document.getElementById("vcap").textContent = cur.cap || "";
+  var b = cur.big(f);
+  document.getElementById("r-big").textContent = b[0];
+  document.getElementById("r-bigsub").textContent = b[1];
+  try { cur.draw(f); } catch (e) {
+    freshSvg(120).appendChild(S("text",{x:20,y:60,"class":"vlab"},
+      "This lens could not be drawn for the current filter."));
+  }
+  var sub = cur.subset(f);
+  showSites(sub[0], sub[1]);
+}
+
+var rail = document.getElementById("rail");
+LENSES.forEach(function (l, i) {
+  var b = el("button", "lens-btn");
+  b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+  b.appendChild(el("span", "ix", String(i+1).padStart(2,"0")));
+  b.appendChild(el("span", null, l.tab));
+  b.addEventListener("click", function () {
+    cur = l;
+    Array.prototype.forEach.call(rail.children, function (c, j) {
+      c.setAttribute("aria-pressed", j === i ? "true" : "false");
+    });
+    document.getElementById("detail").hidden = true;
+    ensure(l.panel === 1 ? 1 : 2).then(render);
+  });
+  rail.appendChild(b);
+});
+Array.prototype.forEach.call(document.querySelectorAll("[data-band]"), function (b) {
+  b.addEventListener("click", function () {
+    band = b.dataset.band;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-band]"), function (o) {
+      o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+    render();
+  });
+});
+Array.prototype.forEach.call(document.querySelectorAll("[data-read]"), function (b) {
+  b.addEventListener("click", function () {
+    readOnly = b.dataset.read === "yes";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-read]"), function (o) {
+      o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+    render();
+  });
+});
+var qt = null;
+document.getElementById("q").addEventListener("input", function (e) {
+  query = e.target.value; clearTimeout(qt); qt = setTimeout(render, 180);
+});
+document.getElementById("dclose").addEventListener("click", function () {
+  document.getElementById("detail").hidden = true;
+});
+
+function ensure(which) {
+  if (DATA[which]) { return Promise.resolve(); }
+  return fetch(which === 1 ? "../data/sites-panel-01.json" : "../data/sites-panel-02.json",
+      { cache:"no-cache" })
+    .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.json(); })
+    .then(function (j) { DATA[which] = decorate(j); });
+}
+
+ensure(2).then(function () {
+  var n = DATA[2].length;
+  document.getElementById("m-n").textContent = num(n);
+  document.getElementById("s-n").textContent = num(n);
+  render();
+}).catch(function (err) {
+  document.getElementById("r-title").textContent = "Could not load the data.";
+  document.getElementById("r-blurb").textContent =
+    "The per-site file did not load (" + err.message + ").";
+});
+</script>
+</body>
+</html>

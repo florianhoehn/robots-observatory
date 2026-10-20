@@ -16,9 +16,10 @@ instead of silently breaking comparability with week 1.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 
-PARSER_VERSION = 4
+PARSER_VERSION = 6
 
 # Directives we treat as standard group members (RFC 9309 plus crawl-delay).
 _GROUP_STANDARD = {"allow", "disallow", "crawl-delay"}
@@ -27,6 +28,15 @@ _GLOBAL_STANDARD = {"sitemap", "host"}
 # Non-standard directives worth recording wherever they appear. "license" is
 # RSL's pay-per-crawl pointer; the others are AI-preference experiments.
 _NOTABLE = {"license", "content-usage", "content-signal", "noai", "noimageai"}
+
+# robots.txt increasingly carries terms rather than directives: 4% of readable
+# files assert conditions of use, and eBay threatens legal action in a comment.
+# Matched against the whole body because it lives in comments, which the
+# directive parser discards by design.
+_BOILER = re.compile(r"as a condition of accessing", re.I)
+_LEGAL = re.compile(
+    r"(as a condition of accessing|you agree to|terms of (use|service)"
+    r"|unauthorized use|legal action|binding arbitration)", re.I)
 
 # Markers that mean a 200 response body is a web page, not a robots file. Many
 # hosts answer /robots.txt with their homepage; parsed naively that invents a
@@ -349,6 +359,18 @@ def summarise(text: str, watchlist: list[str], us: str) -> dict:
         "groups": len(r.groups),
         "directive_lines": r.directive_lines,
         "would_disallow_us": path_disallowed(r.group_for(us)),
+        # Body-derived facts, kept here rather than in a separate pass so a
+        # reparse backfills them across the whole archive for free.
+        "content_signal": sorted(
+            {v for g in r.groups for v in g.notable.get("content-signal", [])}
+            | set(r.global_notable.get("content-signal", []))
+        ),
+        "has_legal_text": bool(_LEGAL.search(text)),
+        # Most of the legal language on the web is one template, not sites
+        # lawyering up independently. Flagged separately so the two can be
+        # told apart rather than reported as one trend.
+        "legal_boilerplate": bool(_BOILER.search(text)),
+        "starts_with_bom": text.startswith("\ufeff"),
     }
 
 
