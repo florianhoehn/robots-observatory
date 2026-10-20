@@ -5,7 +5,7 @@ declaration change depending on who asks?
 
 A frozen panel of 480 real websites, drawn from the Tranco top 1000 and
 screened down to hosts that are actually websites. Every week we read each
-host's policy surface — `robots.txt` plus three well-known paths — under two
+host's policy surface — `robots.txt` plus ten well-known paths — under two
 requester identities, and publish the result.
 
 **Policy only.** This project reads the files the web publishes for machines to

@@ -150,6 +150,18 @@
   .sm-track { background: var(--track); height: 7px; border-radius: 2px; }
   .sm-fill { background: var(--accent); height: 100%; border-radius: 0 3px 3px 0; min-width: 2px; }
 
+  /* ---------- rank-band small multiples ----------
+     Four measures over an ordered scale. Four lines sharing one chart would
+     need a categorical palette and a legend; facetting keeps each panel to a
+     single hue, where length and slope carry everything. */
+  .facets { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1.8rem 2rem; }
+  .facet-t { font-size: .97rem; font-weight: 600; margin-bottom: .15rem; }
+  .facet-s { font-size: .85rem; color: var(--faint); margin-bottom: .6rem; min-height: 2.4em; }
+  .facet svg { display: block; width: 100%; height: 76px; overflow: visible; }
+  .facet .ep { font-family: var(--mono); font-size: .72rem; fill: var(--muted); }
+  .facet .ax { font-family: var(--mono); font-size: .62rem; fill: var(--faint);
+               letter-spacing: .06em; text-transform: uppercase; }
+
   /* ---------- correction callout ---------- */
   .fix { background: var(--wash); border-radius: 6px; padding: 1.5rem 1.6rem; margin-top: 1.6rem; }
   .fix h3 { font-size: 1.08rem; font-weight: 600; margin: 0 0 .6rem; letter-spacing: -.012em; }
@@ -211,6 +223,7 @@
     <span class="name">Robots Observatory</span>
     <span>Run <span id="runid">&hellip;</span></span>
     <span><span id="panelsize">&hellip;</span> websites</span>
+    <span id="panelname">panel-02</span>
     <span class="sp">Open dataset &middot; CC0</span>
   </div>
 </div>
@@ -218,10 +231,11 @@
 <div class="wrap">
   <div class="lead">
     <h1>The web isn't charging AI agents. It's <span class="q">writing them documentation</span>.</h1>
-    <p class="stand">We read the policy files that 463 of the world's most-visited
-    websites publish for machines &mdash; <code>robots.txt</code>,
-    <code>llms.txt</code>, <code>ai.txt</code>, TDM reservations and more &mdash;
-    and counted what they say. Not what they enforce. What they declare.</p>
+    <p class="stand">We read the policy files that <strong>16,314</strong> of the
+    world's most-visited websites publish for machines &mdash;
+    <code>robots.txt</code>, <code>llms.txt</code>, <code>ai.txt</code>, TDM
+    reservations, agent cards and more &mdash; and counted what they say. Not what
+    they enforce. What they declare.</p>
 
     <p id="err" hidden>Could not load the figures.
     <a href="https://github.com/florianhoehn/robots-observatory/tree/main/data">The
@@ -260,8 +274,9 @@
     <figure>
       <div class="part" id="part"></div>
       <ul class="legend" id="part-legend"></ul>
-      <figcaption>A third have gone through their rules and named specific AI
-      crawlers. Half publish a <code>robots.txt</code> that predates the question
+      <figcaption>One site in six has gone through its rules and named specific
+      AI crawlers &mdash; a quarter of those whose rulebook we could read at all.
+      Half publish a <code>robots.txt</code> that predates the question
       entirely &mdash; not a refusal, just silence.</figcaption>
     </figure>
   </section>
@@ -277,6 +292,40 @@
       for training are blocked two to three times as often as crawlers that fetch one
       page because a person asked for it. Publishers are not refusing AI. They are
       refusing <em>bulk collection</em>.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="kicker">The correction</p>
+    <h2>A rate measured on the top 1,000 is not a rate for the web</h2>
+    <p class="intro">We ran the same probe twice: once on 463 hand-screened sites
+    from the Tranco top 1,000, then on 16,314 unscreened sites from the top
+    20,000. The figures moved a long way.</p>
+    <div class="tbl">
+      <table id="t-panels">
+        <thead><tr><th></th><th class="n">463 sites</th><th class="n">16,314 sites</th><th>what it means</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="prose" style="margin-top:1.4rem">Everything shrank except the thing
+    that matters. <strong>Documentation still outnumbers any ask for money by
+    131&nbsp;to&nbsp;1</strong> &mdash; wider than the 32:1 we measured on the
+    smaller panel, because the sites that charge are rarer than the sites that
+    document, all the way down.</p>
+
+    <p class="kicker" style="margin-top:3rem">Against popularity</p>
+    <h2>Publishing machine-readable files is mostly a big-site habit</h2>
+    <p class="intro">Each panel is the same measure across five bands of Tranco
+    rank, from the most-visited sites on the left to rank 20,000 on the right.</p>
+    <figure>
+      <div class="facets" id="facets"></div>
+      <figcaption><code>security.txt</code> more than halves as you descend, and
+      naming an AI crawler falls by a third: both are habits of large, well-staffed
+      sites. <code>ads.txt</code> does not fall, because it is driven by money
+      rather than diligence. <code>llms.txt</code> behaves like
+      <code>ads.txt</code> &mdash; it dips and then flattens, rather than
+      collapsing. Whatever is driving it is not confined to the top of the
+      web.</figcaption>
     </figure>
   </section>
 
@@ -302,10 +351,12 @@
       artefact: two error pages, or two cookie-consent pages, whose bytes differ only
       because each carries a one-off token.</p>
       <p>Genuine identity-dependent policy holds up on <strong id="v-real">&hellip;</strong>
-      sites. <code>rakuten.co.jp</code> gives a declared crawler 490 bytes of rules and
-      a browser a 51-byte stub; <code>telegraph.co.uk</code> gives 3,228 bytes against
-      914. A further <strong id="v-acc">&hellip;</strong> let one through and refused
-      the other &mdash; different access, not different policy.</p>
+      sites. <code>telegraph.co.uk</code> gives a declared crawler 3,228 bytes of
+      rules and a browser 914; <code>depositphotos.com</code> gives 3,118 against
+      1,613. It runs the other way too: <code>messenger.com</code> hands the browser
+      841 bytes and the declared crawler 643. A further
+      <strong id="v-acc">&hellip;</strong> let one identity through and refused the
+      other &mdash; different access, not different policy.</p>
       <p>The large number stays on the page so the gap between it and the real one is
       visible rather than quietly dropped.</p>
     </div>
@@ -330,7 +381,7 @@
           <li>Say what share publishes <b>a guide, an opt-out or a reservation</b></li>
           <li>Say what share <b>asks for money</b></li>
           <li>Say whether the answer <b>changes by who asks</b></li>
-          <li>Show how much of a top-1000 list <b>is not a website</b></li>
+          <li>Show how much of a popularity list <b>is not a website</b></li>
         </ul>
       </div>
       <div>
@@ -343,8 +394,10 @@
           <li>Say anything about <b>change over time</b>, yet</li>
           <li>Speak for <b>other countries</b>: one vantage, one connection</li>
           <li>Speak for <b>the long tail</b> outside a popularity list</li>
-          <li>Speak for <b>ad technology</b>, 14 of which this connection cannot
-              resolve</li>
+          <li>Speak for <b>ad technology</b>, 418 domains of which this connection
+              cannot resolve</li>
+          <li>Be read as a <b>floor rather than a count</b> where a host timed out,
+              errored, or answered everything with one stock page</li>
         </ul>
       </div>
     </div>
@@ -355,16 +408,27 @@
     <h2>How the panel was built</h2>
     <div class="prose">
       <p>Tranco list <a href="https://tranco-list.eu/list/467YX">467YX</a>, 18 October
-      2026, top 1000 &mdash; screened by hand down to 463 websites. The other 537 were
-      dropped mostly because <strong>they are not websites</strong>: CDN and asset
-      hosts, cloud endpoints, ad servers, DNS infrastructure. <strong>31 of the top 50
-      are not pages anyone reads.</strong> Tranco ranks domains by how often machines
-      look them up, and one human page view triggers a dozen machine lookups.</p>
-      <p>Every decision is published per host, so you can disagree with a single row
-      instead of auditing a rule. A further 17 were dropped because this connection
-      cannot resolve them, which is a fact about the measuring machine and
-      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/VANTAGE-EXCLUSIONS.md">recorded
-      as one</a>.</p>
+      2026, top 20,000. Nothing was screened by hand: every domain that resolves to a
+      server is in, whether or not it is a website anyone reads. That is the opposite
+      of the smaller panel above, and deliberately so &mdash; hand-screening is a
+      judgement, and a judgement applied 20,000 times is a thumb on the scale.</p>
+      <p>3,686 domains were dropped before probing, each for a stated reason:
+      <strong>3,190 have no address record at all</strong> and serve nothing from any
+      vantage, 78 more fail to resolve or resolve ambiguously, and
+      <strong>418 are unreachable from this particular connection</strong>, which
+      filters ad and tracker domains at the DNS layer. That last group is a fact about
+      the measuring machine rather than the web, so it is
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/VANTAGE-EXCLUSIONS.md">published
+      per host</a> instead of quietly absorbed. Every exclusion is one row you can
+      disagree with.</p>
+      <p><strong>This run is marked degraded, and the figures are reported anyway.</strong>
+      13.6% of hosts returned at least one transport error &mdash; mostly TLS failures
+      and connect timeouts, which is what the long tail of a popularity list actually
+      looks like from one home connection. A further 797 hosts (4.9%) hit the two-minute
+      per-host budget, so their later paths are unmeasured rather than absent, and 78
+      hosts answer every unknown path with one stock body and are discounted rather than
+      counted as publishers. Each of those is a reason a share here reads low, never
+      high.</p>
       <p><strong>No page was ever fetched</strong> &mdash; only files the web publishes
       for machines to read, so no request was one a site asked crawlers not to make.
       Twelve requests per site, 1.5 seconds apart. Four of the twelve are controls — security.txt, ads.txt, gpc.json, humans.txt — so the AI-specific numbers can be read against a site's general habit of publishing machine-readable files at all. That claim is checkable from two
@@ -402,18 +466,22 @@
     <p class="kicker">Data</p>
     <h2>Everything is downloadable</h2>
     <div class="files">
-      <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/runs/panel-01/2026-10-19/records.jsonl">
-        <span class="f">records.jsonl</span><span class="d">every response, in full</span></a>
-      <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/hosts.csv">
-        <span class="f">hosts.csv</span><span class="d">one flat row per site</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/hosts-panel-02.csv">
+        <span class="f">hosts-panel-02.csv</span><span class="d">one flat row per site &mdash; start here</span></a>
+      <a href="data/findings-panel-02.json">
+        <span class="f">findings-panel-02.json</span><span class="d">every figure on this page</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/raw/main/data/runs/panel-02/2026-10-19/records.jsonl">
+        <span class="f">records.jsonl</span><span class="d">every response, in full &mdash; 80&nbsp;MB</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-02.csv">
+        <span class="f">panel-02.csv</span><span class="d">the 16,314 probed</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-02-excluded.csv">
+        <span class="f">panel-02-excluded.csv</span><span class="d">the 3,686 dropped, with reasons</span></a>
+      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/data/runs/panel-02/2026-10-19/run-meta.json">
+        <span class="f">run-meta.json</span><span class="d">provenance, including why it is degraded</span></a>
       <a href="data/findings.json">
-        <span class="f">findings.json</span><span class="d">every figure on this page</span></a>
+        <span class="f">findings.json</span><span class="d">the 463-site panel, for comparison</span></a>
       <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-01.csv">
-        <span class="f">panel-01.csv</span><span class="d">the 463</span></a>
-      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/panel/excluded.csv">
-        <span class="f">excluded.csv</span><span class="d">the 537, with reasons</span></a>
-      <a href="https://github.com/florianhoehn/robots-observatory/blob/main/data/runs/panel-01/2026-10-19/run-meta.json">
-        <span class="f">run-meta.json</span><span class="d">provenance for this run</span></a>
+        <span class="f">panel-01.csv</span><span class="d">the 463 hand-screened</span></a>
     </div>
   </section>
 
@@ -460,6 +528,7 @@ function el(t, c, txt) {
   return n;
 }
 function pct(v, d) { return v.toFixed(d === undefined ? 1 : d) + "%"; }
+function num(v) { return v.toLocaleString("en-GB"); }
 
 // A label sitting inside a coloured fill takes white or ink by the fill's
 // luminance, so it clears contrast either way.
@@ -472,11 +541,82 @@ function inkOn(hex) {
   return L > 0.42 ? "#10211f" : "#ffffff";
 }
 
+// Four measures over an ordered scale, one panel each: single hue, slope and
+// length carry it, no legend and no categorical palette needed.
+function sparkline(vals, labels) {
+  var W = 240, H = 76, PADX = 26, PADY = 12;
+  var max = Math.max.apply(null, vals) * 1.15 || 1;
+  var pts = vals.map(function (v, i) {
+    return [PADX + (i * (W - 2 * PADX)) / Math.max(vals.length - 1, 1),
+            H - PADY - (v / max) * (H - 2 * PADY)];
+  });
+  var line = pts.map(function (q, i) { return (i ? "L" : "M") + q[0].toFixed(1) + " " + q[1].toFixed(1); }).join(" ");
+  var area = line + " L" + pts[pts.length - 1][0].toFixed(1) + " " + (H - PADY)
+           + " L" + pts[0][0].toFixed(1) + " " + (H - PADY) + " Z";
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="'
+    + labels.map(function (l, i) { return l + ": " + vals[i].toFixed(1) + "%"; }).join(", ") + '">';
+  svg += '<path d="' + area + '" fill="var(--accent)" fill-opacity="0.10"/>';
+  svg += '<path d="' + line + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  pts.forEach(function (q, i) {
+    var end = i === 0 || i === pts.length - 1;
+    svg += '<circle cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="'
+         + (end ? 4 : 2.5) + '" fill="var(--accent)" stroke="var(--paper)" stroke-width="2"><title>'
+         + labels[i] + ": " + vals[i].toFixed(1) + '%</title></circle>';
+  });
+  svg += '<text class="ep" x="' + (pts[0][0] - 3).toFixed(1) + '" y="' + (pts[0][1] - 9).toFixed(1)
+       + '" text-anchor="start">' + vals[0].toFixed(0) + '%</text>';
+  var L = pts[pts.length - 1];
+  svg += '<text class="ep" x="' + (L[0] + 3).toFixed(1) + '" y="' + (L[1] - 9).toFixed(1)
+       + '" text-anchor="end">' + vals[vals.length - 1].toFixed(0) + '%</text>';
+  svg += '<text class="ax" x="' + PADX + '" y="' + (H - 1) + '" text-anchor="start">most visited</text>';
+  svg += '<text class="ax" x="' + (W - PADX) + '" y="' + (H - 1) + '" text-anchor="end">rank 20k</text>';
+  return svg + "</svg>";
+}
+
+function renderFacets(f) {
+  var bands = f.by_rank_band || [];
+  if (!bands.length) { return; }
+  var labels = bands.map(function (b) { return b.lo + "-" + b.hi; });
+  [["security.txt", "security_txt", "A security contact. Nothing to do with AI - it measures whether a site publishes machine-readable files at all."],
+   ["Names an AI crawler", "names_ai", "robots.txt mentions at least one AI crawler by name."],
+   ["llms.txt", "llms_txt", "A guide written for AI readers."],
+   ["ads.txt", "ads_txt", "Authorised ad sellers. The benchmark: driven by money, not diligence."]
+  ].forEach(function (pn) {
+    var vals = bands.map(function (b) { return b[pn[1]] || 0; });
+    var d = el("div", "facet");
+    d.appendChild(el("div", "facet-t", pn[0]));
+    d.appendChild(el("div", "facet-s", pn[2]));
+    var wrap = el("div");
+    wrap.innerHTML = sparkline(vals, labels);
+    d.appendChild(wrap);
+    document.getElementById("facets").appendChild(d);
+  });
+}
+
+function renderPanelCompare(small, big) {
+  var tb = document.querySelector("#t-panels tbody");
+  if (!tb || !small) { return; }
+  [["Publishes llms.txt", small.wellknown.llms_txt.pct, big.wellknown.llms_txt.pct, "the headline, nearly halved"],
+   ["Names an AI crawler", small.names_any_ai_agent.pct, big.names_any_ai_agent.pct, "awareness is concentrated at the top"],
+   ["Signals a price or licence", small.rsl_license_refs.pct, big.rsl_license_refs.pct, "already almost nothing, now vanishing"],
+   ["Blocks every crawler", small.wildcard_root_disallowed.pct, big.wildcard_root_disallowed.pct, "blanket refusal stays rare"]
+  ].forEach(function (r) {
+    var tr = el("tr");
+    tr.appendChild(el("td", null, r[0]));
+    tr.appendChild(el("td", "n", r[1].toFixed(1) + "%"));
+    tr.appendChild(el("td", "n", r[2].toFixed(1) + "%"));
+    tr.appendChild(el("td", "why", r[3]));
+    tb.appendChild(tr);
+  });
+}
+
 function render(f) {
   var H = f.hosts;
   document.getElementById("runid").textContent = f.run_id;
-  document.getElementById("panelsize").textContent = H;
-  document.getElementById("p-total").textContent = H;
+  document.getElementById("panelsize").textContent = H.toLocaleString();
+  document.getElementById("p-total").textContent = H.toLocaleString();
+  var pn = document.getElementById("panelname");
+  if (pn) { pn.textContent = f.panel_id; }
   document.getElementById("gen").textContent = (f.generated || "").replace("T", " ");
 
   var llms = f.wellknown.llms_txt, pay = f.rsl_license_refs;
@@ -484,19 +624,21 @@ function render(f) {
   // one hero figure, body sans, proportional figures
   document.getElementById("hero-n").textContent = pct(llms.pct);
   document.getElementById("hero-c").innerHTML =
-    "<b>" + llms.n + " of " + H + " sites</b> publish an <code>llms.txt</code> — "
+    "<b>" + num(llms.n) + " of " + num(H) + " sites</b> publish an <code>llms.txt</code> — "
     + "a plain-language guide to themselves, written for machines to read.";
 
   document.getElementById("vs-a").textContent = pct(llms.pct);
   document.getElementById("vs-b").textContent = pct(pay.pct);
   document.getElementById("vs-bar-a").style.width = llms.pct + "%";
   document.getElementById("vs-bar-b").style.width = pay.pct + "%";
-  var ratio = pay.pct > 0 ? Math.round(llms.pct / pay.pct) : null;
+  // From counts, never from the percentages: findings.json rounds pct to one
+  // decimal, so 11.3/0.1 reads 113 where the true ratio is 1837/14 = 131.
+  var ratio = pay.n > 0 ? Math.round(llms.n / pay.n) : null;
   document.getElementById("vs-note").textContent =
     "Both bars are drawn to the same scale. "
     + (ratio ? "Documentation is " + ratio + " times more common than any ask for money — "
              : "")
-    + "just " + pay.n + " sites in the panel carry a licensing or pay-per-crawl signal.";
+    + "just " + num(pay.n) + " sites in the panel carry a licensing or pay-per-crawl signal.";
 
   // ---- part-to-whole: every site, by how directly it addresses AI ----
   var st = f.robots_file_state || {};
@@ -519,7 +661,7 @@ function render(f) {
     var seg = el("div", "part-seg");
     seg.style.background = RAMP[i];
     seg.style.flex = p.n + " 0 0";
-    seg.title = p.lb + " — " + p.n + " sites (" + pct(share) + ")";
+    seg.title = p.lb + " — " + num(p.n) + " sites (" + pct(share) + ")";
     // only label a segment wide enough to hold the text
     if (share > 11) {
       var s = el("span", null, pct(share, 0));
@@ -538,7 +680,7 @@ function render(f) {
     sub.textContent = "— " + p.sub;
     lb.appendChild(sub);
     li.appendChild(lb);
-    li.appendChild(el("span", "n", p.n));
+    li.appendChild(el("span", "n", num(p.n)));
     leg.appendChild(li);
   });
 
@@ -591,7 +733,7 @@ function render(f) {
     var d = el("div");
     d.appendChild(el("div", "sm-t", r.s));
     d.appendChild(el("div", "sm-n", pct(r.rate, 0)));
-    d.appendChild(el("div", "sm-s", r.llms + " of " + r.hosts + " sites"));
+    d.appendChild(el("div", "sm-s", num(r.llms) + " of " + num(r.hosts) + " sites"));
     var tr = el("div", "sm-track"), fl = el("div", "sm-fill");
     fl.style.width = r.rate + "%"; tr.appendChild(fl);
     d.appendChild(tr);
@@ -604,9 +746,9 @@ function render(f) {
 
   // ---- identity variance ----
   document.getElementById("v-raw").textContent =
-    pct(f.hash_differs_by_identity.pct) + " (" + f.hash_differs_by_identity.n + ")";
-  document.getElementById("v-real").textContent = f.policy_varies_by_identity.n;
-  document.getElementById("v-acc").textContent = f.access_varies_by_identity.n;
+    pct(f.hash_differs_by_identity.pct) + " (" + num(f.hash_differs_by_identity.n) + ")";
+  document.getElementById("v-real").textContent = num(f.policy_varies_by_identity.n);
+  document.getElementById("v-acc").textContent = num(f.access_varies_by_identity.n);
 
   // ---- tables ----
   var tb = document.querySelector("#t-tokens tbody");
@@ -624,7 +766,7 @@ function render(f) {
     .forEach(function (r) {
       var tr = el("tr");
       tr.appendChild(el("td", "m", r.k));
-      tr.appendChild(el("td", "n", r.n));
+      tr.appendChild(el("td", "n", num(r.n)));
       tr.appendChild(el("td", "n", pct((100 * r.n) / H)));
       tr.appendChild(el("td", null, STATE_MEANING[r.k] || ""));
       sb.appendChild(tr);
@@ -638,19 +780,28 @@ function render(f) {
       td.appendChild(el("code", null, (WK[r.k] || [r.k])[0]));
       td.appendChild(document.createTextNode(" " + ((WK[r.k] || ["", ""])[1])));
       tr.appendChild(td);
-      tr.appendChild(el("td", "n", r.d.n));
+      tr.appendChild(el("td", "n", num(r.d.n)));
       tr.appendChild(el("td", "n", pct(r.d.pct)));
       wb.appendChild(tr);
     });
 }
 
-fetch("data/findings.json", { cache: "no-cache" })
-  .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.json(); })
-  .then(render)
-  .catch(function () {
-    document.getElementById("err").hidden = false;
-    document.getElementById("hero-n").textContent = "—";
-  });
+// panel-02 carries the page; panel-01 is kept for the correction table.
+Promise.all([
+  fetch("data/findings-panel-02.json", { cache: "no-cache" }).then(function (r) {
+    if (!r.ok) { throw new Error(r.status); } return r.json();
+  }),
+  fetch("data/findings.json", { cache: "no-cache" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .catch(function () { return null; })
+]).then(function (both) {
+  render(both[0]);
+  renderFacets(both[0]);
+  renderPanelCompare(both[1], both[0]);
+}).catch(function () {
+  document.getElementById("err").hidden = false;
+  document.getElementById("hero-n").textContent = "\u2014";
+});
 </script>
 </body>
 </html>

@@ -69,7 +69,7 @@ this bot did, and how to stop it.</p>
 
 <p>RobotsObservatory is a research crawler that measures how the web
 <em>declares</em> its policy toward AI agents. It reads <code>robots.txt</code>
-and three well-known policy files from fixed lists of sites and publishes the
+and ten well-known policy files from fixed lists of sites and publishes the
 aggregate result as an open dataset: 463 sites weekly, and occasionally a wider
 survey of about 16,000.</p>
 
@@ -92,9 +92,10 @@ approve.</p>
 </div>
 
 <h2>What it requested</h2>
-<p>Per host, per run, exactly twelve requests. The last four are not about AI
-&mdash; they are controls, so the AI-specific numbers can be read against
-something:</p>
+<p>Per host, per run, exactly twelve requests. Four of them &mdash;
+<code>security.txt</code>, <code>ads.txt</code>, <code>gpc.json</code> and
+<code>humans.txt</code> &mdash; are not about AI. They are controls, so the
+AI-specific numbers can be read against something:</p>
 <table>
   <thead><tr><th>Path</th><th>Count</th><th>Why</th></tr></thead>
   <tbody>
@@ -135,7 +136,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
 <ul>
   <li>Status codes, response times, content hashes, and <strong>all</strong>
       response headers.</li>
-  <li>The body of each of the four files above — including whatever is
+  <li>The body of every path listed above — including whatever is
       returned instead of one: a 404, an error page, a cookie-consent wall, a
       CAPTCHA. Those are evidence about how the web treats automated readers,
       and they are this study's subject just as much as a policy file is.</li>

@@ -18,13 +18,14 @@ Per host, per run, exactly eleven requests:
 | `/.well-known/ai-catalog.json` | 1 | AI Catalog — domain-level discovery for MCP and A2A |
 | `/.well-known/agent.json` | 1 | the pre-1.0 A2A path, so that a zero at the current path is interpretable |
 
-The last four are not about AI. They are there so the AI-specific numbers can
+Four of the twelve — `security.txt`, `ads.txt`, `gpc.json` and `humans.txt` —
+are not about AI. They are there so the AI-specific numbers can
 be read against something: a site with no `llms.txt` **and** no `security.txt`,
 `ads.txt` or `humans.txt` has not declined to document itself for machines, it
 has simply never done that for anyone.
 
-**Twelve requests per host, per run.** Spread over about nine seconds, six hosts
-at a time, with 1.5 seconds between requests to any one host. That is less
+**Twelve requests per host, per run.** Spread over about seventeen seconds,
+with 1.5 seconds between requests to any one host. That is less
 traffic than a single human visitor loading a single page.
 
 Thirty hosts are in flight at once. That figure governs how many *different* sites

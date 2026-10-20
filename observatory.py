@@ -1074,6 +1074,26 @@ def cmd_reparse(args) -> None:
     print(f"reparsed at parser_version={robots_parse.PARSER_VERSION}", file=sys.stderr)
 
 
+RANK_BANDS = ((1, 1000), (1001, 2500), (2501, 5000), (5001, 10000), (10001, 20000))
+
+
+def _rank_bands(recs: list[dict]) -> list[dict]:
+    out = []
+    for lo, hi in RANK_BANDS:
+        sub = [r for r in recs if lo <= int(r.get("rank_at_freeze") or 0) <= hi]
+        if not sub:
+            continue
+        pres = [r for r in sub if r.get("policy", {}).get("file_state") == "present"]
+        row = {"lo": lo, "hi": hi, "hosts": len(sub), "readable": len(pres)}
+        for k in WELLKNOWN:
+            row[k] = round(100 * sum(1 for r in sub if wk_present(r, k)) / len(sub), 2)
+        row["names_ai"] = round(
+            100 * sum(1 for r in pres if r["policy"].get("ai_tokens_named")) / len(pres), 2
+        ) if pres else 0.0
+        out.append(row)
+    return out
+
+
 def cmd_derive(args) -> None:
     base = RUNS / PANEL_ID
     runs = sorted((d for d in base.iterdir()
@@ -1168,6 +1188,10 @@ def cmd_derive(args) -> None:
         "challenged": share(lambda r: pol(r, "file_state") == "challenged"),
         "redirected_away": share(lambda r: pol(r, "file_state") == "redirected_away"),
         "by_sector": sectors,
+        # Adoption against popularity rank. The single most important
+        # correction this dataset makes: a rate measured on the top 1000 is
+        # not a rate for the web, and these bands show how far off it is.
+        "by_rank_band": _rank_bands(recs),
     }
 
     SITE_DATA.mkdir(parents=True, exist_ok=True)
