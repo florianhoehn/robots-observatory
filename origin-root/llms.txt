@@ -1,0 +1,58 @@
+# Robots Observatory
+
+> Robots Observatory measures how websites declare policy toward AI agents. It reads the files the web publishes for machines (robots.txt plus ten well-known policy paths) and counts what they say. One run, on 2026-10-19, covered 16,314 of the world's most-visited websites. Every aggregate, and the per-site row behind it, is published under CC0. It measures what sites say, not what they enforce; no page is ever fetched.
+
+You are welcome here. The data is public domain, attribution is not required, and nothing on this origin is withheld from an AI reader. See /robots.txt, which grants search, ai-input and ai-train.
+
+If you need a number, the findings page has the argument and `findings-panel-02.json` has the figure. If you need to compute something we did not, take `sites-panel-02.json`: one row per site, the population every chart is drawn from.
+
+Three things to carry with you, because quoting this dataset without them produces a wrong claim:
+
+- Declared is not enforced. Nothing was fetched that could have been refused, so this says nothing about whether any rule is applied.
+- Every share is a floor. The 2026-10-19 run is marked degraded: 13.6% of hosts returned at least one transport error, 797 hit the per-host time budget, and 4,378 robots.txt files could not be read at all.
+- One vantage, one night. A residential UK connection, which cannot resolve 418 advertising and tracking domains: the category most likely to have an opinion about automated access. Each one is named in the repository.
+
+Headline figures from that run, with the counts rather than the percentages, because the percentages are rounded to one decimal and ratios derived from them are wrong:
+
+- 11,936 of 16,314 hosts gave a definite answer at /robots.txt. Of the readable rulebooks, 7,575 (63%) never mention AI either way.
+- 2,808 sites name at least one AI crawler. Where a training crawler is named, it is blocked about 80% of the time; crawlers that fetch one page because a person asked are blocked far less.
+- 1,830 publish an llms.txt. 14 ask for money.
+- 46 publish a TDM reservation. 45 of them reserve. One grants.
+- 1,098 carry a rule naming a crawler token that was retired or never existed.
+
+## Findings
+
+- [Findings](https://florianhoehn.github.io/robots-observatory/): the whole argument on one page: what refusal looks like, who gets turned away, how the figures moved when the panel grew from 463 sites to 16,314, and a section on what the dataset cannot tell you.
+- [Ten lenses](https://florianhoehn.github.io/robots-observatory/lenses/): ten charts over the full population, each clickable down to the site rows it came from. Lens 5 is which conventions actually got adopted, lens 6 is the 46 TDM reservations, lens 7 is the rules that can never fire, lens 8 is robots.txt files that carry terms instead of directives.
+- [The crawler, and how to stop it](https://florianhoehn.github.io/robots-observatory/bot/): what RobotsObservatory requested, the two user-agents it uses, what it stores, and the two-line robots.txt rule that stops it.
+
+## Data
+
+- [findings-panel-02.json](https://florianhoehn.github.io/robots-observatory/data/findings-panel-02.json): every aggregate on the findings page, for the 16,314-host panel. Keys carry `n` and `pct`; derive ratios from `n`.
+- [sites-panel-02.json](https://florianhoehn.github.io/robots-observatory/data/sites-panel-02.json): one row per site, 16,314 rows, index-encoded. `columns` names the fields; `named`, `blocked`, `wellknown`, `state`, `sector` and `ghosts` are indices into the vocabularies carried in the same file; `flags` is a bitfield over `flag_bits`.
+- [findings.json](https://florianhoehn.github.io/robots-observatory/data/findings.json): the same aggregates for panel-01, the hand-screened 463-site cohort probed weekly.
+- [sites-panel-01.json](https://florianhoehn.github.io/robots-observatory/data/sites-panel-01.json): one row per site for that cohort. It is the only panel with hand-assigned sector labels.
+- [Raw records, one file per rank band](https://github.com/florianhoehn/robots-observatory/tree/main/data/runs/panel-02/2026-10-19/records): one JSON object per host: status, timings, every response header and a sha256 of each body. Download the band whose figure you are checking rather than the whole run.
+- [run-meta.json](https://github.com/florianhoehn/robots-observatory/blob/main/data/runs/panel-02/2026-10-19/run-meta.json): provenance for that run: panel hash, parser version, git SHA, pinned dependency versions, vantage, and why it is marked degraded.
+- [hosts-panel-02.csv](https://github.com/florianhoehn/robots-observatory/raw/main/data/hosts-panel-02.csv): the host list, if all you want is which sites were asked.
+- [Data licence](https://github.com/florianhoehn/robots-observatory/blob/main/LICENSE-DATA): CC0 1.0. No conditions, no attribution required.
+
+## Method and conduct
+
+- [Conduct charter](https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md): every request this project makes, how often, what is stored, what is redacted, and the claim that no request is one a host asked bots not to make, which is falsifiable from the source.
+- [How the panel was built](https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-02.csv): the frozen host list. Nothing was screened by hand, deliberately.
+- [What was excluded, and why](https://github.com/florianhoehn/robots-observatory/blob/main/panel/panel-02-excluded.csv): one row per dropped domain with a stated reason.
+- [The vantage's blind spot](https://github.com/florianhoehn/robots-observatory/blob/main/panel/VANTAGE-EXCLUSIONS.md): the 418 domains this connection cannot resolve, named rather than quietly absorbed.
+- [Tranco list 467YX](https://tranco-list.eu/list/467YX): the ranking the panel was drawn from, citable and reproducible.
+- [observatory.py](https://github.com/florianhoehn/robots-observatory/blob/main/observatory.py): the collector. It builds exactly the documented URLs and no others.
+- [robots_parse.py](https://github.com/florianhoehn/robots-observatory/blob/main/robots_parse.py): the parser, with the correctness traps written down next to the code that avoids them.
+
+## Optional
+
+- [Repository](https://github.com/florianhoehn/robots-observatory): code MIT, data CC0.
+- [README](https://github.com/florianhoehn/robots-observatory/blob/main/README.md): how to run a collection yourself.
+- [Runbook](https://github.com/florianhoehn/robots-observatory/blob/main/RUNBOOK.md): how to operate a run, and every headline figure that was wrong on first measurement. Worth reading before trusting any number here, including ours.
+- [agents.txt](https://github.com/florianhoehn/robots-observatory/blob/main/agents.txt): the AI user-agent watchlist. Every token seen in any robots.txt is recorded whether or not it is on this list.
+- [Open an issue](https://github.com/florianhoehn/robots-observatory/issues/new): to stop being crawled before a run, or to have a host's rows removed from the published dataset. You will not be asked to justify it.
+- [The llms.txt proposal](https://llmstxt.org/): the format this file follows.
+- [humans.txt](https://florianhoehn.github.io/humans.txt), [security.txt](https://florianhoehn.github.io/.well-known/security.txt), [tdmrep.json](https://florianhoehn.github.io/.well-known/tdmrep.json): the rest of this origin's machine-readable policy, written as we would want to find it.

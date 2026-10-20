@@ -10,7 +10,7 @@ How to operate a collection, and what to do when one goes wrong.
 `run.sh` retries with `--resume` up to six times with exponential backoff.
 Resume is idempotent: it reads the records already written and skips those
 hosts, so re-running after a dropped connection or a suspended laptop costs
-minutes rather than the night. It never pipes the run through `tail` — a
+minutes rather than the night. It never pipes the run through `tail`: a
 pipeline's exit status is the last command's, which turns a degraded run into
 an apparent success.
 
@@ -32,7 +32,7 @@ final line while the run is mid-write.
 
 | Symptom | What it means | Do |
 |---|---|---|
-| `degraded (error_rate_…)` | over the 5% budget | `./status.sh`, then `observatory.py retry` — transient timeouts usually clear |
+| `degraded (error_rate_…)` | over the 5% budget | `./status.sh`, then `observatory.py retry`; transient timeouts usually clear |
 | `FILTERING RESOLVER DETECTED` | the vantage has DNS ad-blocking | exclude those hosts with a published reason, or run elsewhere. Never `--allow-unresolvable` silently |
 | `N PANEL HOST(S) DO NOT RESOLVE` | panel contains hosts this vantage can't see | same |
 | `run … already exists` | a finished run of that id | `--resume` to continue it, `--run-id` to name a new one, `--force` only deliberately |
@@ -150,7 +150,7 @@ the record, so `derive` stays a pure function of the records.
 `catch_all_shas` counted hashes only across paths still marked `present`.
 Demoting cloudflare.net's five non-JSON agent files dropped it below the
 repeat threshold, which un-discounted the sixth copy of the same "Invalid key"
-body — and `security.txt` went *up* by 14 on a change that should only ever
+body, and `security.txt` went *up* by 14 on a change that should only ever
 remove. It now counts every response that returned a body. The reported
 statistic is separate: `catch_all_responses` counts hosts where a repeat
 actually suppressed something, because most hosts serve one 404 page for every

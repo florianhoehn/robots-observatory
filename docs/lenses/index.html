@@ -138,6 +138,9 @@
          font-size:.86rem;color:var(--muted)}
   .quote b{color:var(--ink);font-weight:500}
 
+  .ai-note{margin:1rem 0 0;padding-top:.9rem;border-top:1px solid var(--line);
+           font-size:.82rem;line-height:1.5;max-width:46rem}
+  .ai-note strong{font-weight:600}
   footer{border-top:1px solid var(--line);margin-top:2.6rem;padding:1.2rem 0 3rem;
          font-size:.85rem;color:var(--faint)}
   footer a{color:var(--support)}
@@ -174,8 +177,8 @@
     <h1>Nobody agrees what the web thinks about AI.<br>
     <span class="q">Here is what it put in writing.</span></h1>
     <p class="stand">Not a survey and not a sample: every site in the Tranco top
-    20,000 that resolves &mdash; <b id="s-n">&hellip;</b> of them &mdash; asked once,
-    in one night. Ten lenses on the result, each clickable down to the rulebook it
+    20,000 that resolves. <b id="s-n">&hellip;</b> of them, asked once, in one
+    night. Ten lenses on the result, each clickable down to the rulebook it
     came from.</p>
   </div>
 </div>
@@ -204,8 +207,8 @@
 
   <footer id="data">
     <p><strong>Every chart here is drawn from one file you can download.</strong>
-    <a href="../data/sites-panel-02.json">sites-panel-02.json</a> is one row per site
-    &mdash; the population the <a href="../data/findings-panel-02.json">findings</a> are
+    <a href="../data/sites-panel-02.json">sites-panel-02.json</a> is one row per site,
+    the population the <a href="../data/findings-panel-02.json">findings</a> are
     computed from. Raw responses are in
     <a href="https://github.com/florianhoehn/robots-observatory/tree/main/data/runs/panel-02/2026-10-19/records">records/</a>,
     one file per rank band.</p>
@@ -213,6 +216,7 @@
     <a href="../bot/">What the crawler is, and how to stop it</a> &middot;
     <a href="https://github.com/florianhoehn/robots-observatory">Source</a> &middot;
     data CC0, code MIT</p>
+    <p class="ai-note"><strong>Researched, built and written with the help of AI.</strong> No model sits in the measurement path: fetching, parsing and counting are deterministic, and every figure here is computed from the published data. The judgement calls, and the mistakes, are documented in the <a href="https://github.com/florianhoehn/robots-observatory/commits/main">commit history</a>.</p>
   </footer>
 </div>
 
@@ -392,7 +396,7 @@ var LENSES = [
   big:function (f) {
     var st = tokStats(f), a = 0, b = 0;
     for (var t in st) { if (PURPOSE[t] === "train") { a += st[t].named; b += st[t].blocked; } }
-    return [a ? pct(100*b/a, 0) : "—", "of training crawlers are blocked where named"];
+    return [a ? pct(100*b/a, 0) : "n/a", "of training crawlers are blocked where named"];
   },
   draw:function (f) {
     var g = freshSvg(360), st = tokStats(f);
@@ -429,7 +433,7 @@ var LENSES = [
           stroke:col,"stroke-width":1});
         hover(c, "<b>"+t+"</b><br>"+num(d.named)+" sites name it<br>"
           + pct(rate,0) + " of them block it");
-        clickTo(c, t + " — sites that block it",
+        clickTo(c, t + " · sites that block it",
           f.filter(function (s) { return s.bset[t]; }));
         g.appendChild(c);
       });
@@ -455,8 +459,8 @@ var LENSES = [
   blurb:"<p>Each bar spans one operator's least-blocked bot to its most-blocked one. "
     + "The figure beside it is the one that matters: how often a single site gives "
     + "that operator's bots <em>different</em> answers.</p>"
-    + "<p>Operators who publish a plainly separated bot family — OpenAI with three, "
-    + "Anthropic with four — get a split verdict far more often than operators whose "
+    + "<p>Operators who publish a plainly separated bot family (OpenAI with three, "
+    + "Anthropic with four) get a split verdict far more often than operators whose "
     + "crawlers all look alike. Perplexity runs two and is told apart by one site in "
     + "seventy.</p>",
   cap:"Dots are that operator's bots, placed by block rate. The figure on the right "
@@ -467,7 +471,7 @@ var LENSES = [
       var g = byOperator(s).OpenAI;
       if (g && g.named >= 2) { a++; if (g.blocked>0 && g.blocked<g.named) { b++; } }
     });
-    return [a ? pct(100*b/a) : "—",
+    return [a ? pct(100*b/a) : "n/a",
       "of sites naming two or more OpenAI bots give them different answers"];
   },
   draw:function (f) {
@@ -512,7 +516,7 @@ var LENSES = [
           fill: b === r.hi ? C.restrict : b === r.lo ? C.support : C.mixed,
           stroke:"#fff","stroke-width":2});
         hover(c, "<b>"+b.t+"</b><br>"+num(b.n)+" sites name it<br>"+pct(b.rate,0)+" block it");
-        clickTo(c, b.t + " — sites that block it",
+        clickTo(c, b.t + " · sites that block it",
           f.filter(function (s) { return s.bset[b.t]; }));
         g.appendChild(c);
       });
@@ -521,7 +525,7 @@ var LENSES = [
         pct(r.split,1) + " of sites split them");
       hover(badge, "<b>"+r.op+"</b><br>"+num(r.sites)+" sites name 2+ of its bots<br>"
         + num(r.splitN) + " block some and allow others");
-      clickTo(badge, r.op + " — sites that split its bots",
+      clickTo(badge, r.op + " · sites that split its bots",
         f.filter(function (s) {
           var gg = byOperator(s)[r.op];
           return gg && gg.named >= 2 && gg.blocked > 0 && gg.blocked < gg.named;
@@ -554,7 +558,7 @@ var LENSES = [
   big:function (f) {
     var n = f.filter(function (s) { return s.sector === "news"; });
     var b = n.filter(function (s) { return s.restricts; }).length;
-    return [n.length ? pct(100*b/n.length,0) : "—", "of news sites withhold something"];
+    return [n.length ? pct(100*b/n.length,0) : "n/a", "of news sites withhold something"];
   },
   draw:function (f) {
     var g = {}, order;
@@ -581,12 +585,12 @@ var LENSES = [
       var br = S("rect",{x:x(pr,true),y:y,width:Math.max(1,mid-x(pr,true)),height:22,
         fill:C.restrict,rx:3});
       hover(br, "<b>"+k+"</b><br>"+num(o.r)+" of "+num(o.n)+" withhold something<br>"+pct(pr,0));
-      clickTo(br, k + " — sites that withhold something", o.rs);
+      clickTo(br, k + " · sites that withhold something", o.rs);
       sv.appendChild(br);
       var bd = S("rect",{x:mid,y:y,width:Math.max(1,x(pd,false)-mid),height:22,
         fill:C.support,rx:3});
       hover(bd, "<b>"+k+"</b><br>"+num(o.d)+" of "+num(o.n)+" publish something<br>"+pct(pd,0));
-      clickTo(bd, k + " — sites that publish something for AI", o.ds);
+      clickTo(bd, k + " · sites that publish something for AI", o.ds);
       sv.appendChild(bd);
       sv.appendChild(S("text",{x:mid,y:y+37,"text-anchor":"middle","class":"vlab",
         "font-weight":600}, k));
@@ -609,12 +613,12 @@ var LENSES = [
     + "solved so that its area really is the count of sites doing both.</p>"
     + "<p>If documenting and blocking were two habits of the same careful operators, "
     + "these circles would sit on top of each other. They barely touch.</p>",
-  cap:"Click any region — including the field behind, which is everyone saying nothing.",
+  cap:"Click any region, including the field behind, which is everyone saying nothing.",
   big:function (f) {
     var rd = f.filter(function (s) { return s.readable; });
     var w = rd.filter(function (s) { return s.wkHas("llms_txt"); });
     var a = w.filter(function (s) { return s.blocked.length; }).length;
-    return [w.length ? pct(100*a/w.length) : "—",
+    return [w.length ? pct(100*a/w.length) : "n/a",
       "of sites with an llms.txt block a crawler"];
   },
   draw:function (f) {
@@ -675,7 +679,7 @@ var LENSES = [
       "The frame is every site whose rules we could read · areas are to scale"));
   },
   subset:function (f) {
-    return ["Sites that do both — document themselves and withhold something",
+    return ["Sites that do both: document themselves and withhold something",
       f.filter(function (s) { return s.readable && s.supports && s.restricts; })];
   }
 },
@@ -689,7 +693,7 @@ var LENSES = [
     + "<p>The two that worked both skipped the standards process entirely: a "
     + "community convention that started as a blog post, and a line one CDN began "
     + "writing into its customers' files. Everything with a formal process behind it "
-    + "— an EU directive, a Linux Foundation draft, an industry consortium — is "
+    + "(an EU directive, a Linux Foundation draft, an industry consortium) is "
     + "still counted in dozens.</p>",
   cap:"Each square is one site. Hover a block for the total; click to list them.",
   big:function (f) {
@@ -698,7 +702,7 @@ var LENSES = [
       return s.wkHas("tdmrep") || s.wkHas("ai_catalog") || s.wkHas("agent_card")
           || s.wkHas("agent_card_legacy");
     }).length;
-    return [formal ? Math.round(a/formal) + "\u00d7" : "\u2014",
+    return [formal ? Math.round(a/formal) + "\u00d7" : "n/a",
       "more sites publish an llms.txt than every formally specified convention combined"];
   },
   draw:function (f) {
@@ -738,7 +742,7 @@ var LENSES = [
           "+ " + num(fam.set.length - shown) + " more"));
       }
       hover(grp, "<b>"+fam.lb+"</b><br>"+num(fam.set.length)+" sites<br>"+fam.who);
-      clickTo(grp, fam.lb + " \u2014 every site that carries it", fam.set);
+      clickTo(grp, fam.lb + " \u00b7 every site that carries it", fam.set);
       g.appendChild(grp);
     });
   },
@@ -753,8 +757,8 @@ var LENSES = [
   id:"tdm", tab:"Europe", kicker:"Lens 6 / law has a geography",
   title:"Europe's AI opt-out has 46 users. Most are French.",
   blurb:"<p>Small enough to draw every single one. Each dot is a site publishing a "
-    + "machine-readable TDM reservation &mdash; the mechanism the EU copyright "
-    + "directive points to &mdash; clustered by who they are.</p>"
+    + "machine-readable TDM reservation, the mechanism the EU copyright "
+    + "directive points to, clustered by who they are.</p>"
     + "<p>Three tiny constituencies account for three quarters of global adoption.</p>",
   cap:"Every adopter in the panel is on screen. Hover any dot for the site.",
   big:function (f) {
@@ -812,7 +816,7 @@ var LENSES = [
   title:"A thousand sites are blocking a crawler that was retired.",
   blurb:"<p>These bars are drawn hollow because that is what they are. Every one is "
     + "an agent token named in a real robots.txt that matches no crawler anyone "
-    + "operates &mdash; a retired bot, a product name, or a string with a space in "
+    + "operates: a retired bot, a product name, or a string with a space in "
     + "it, which can never match under RFC&nbsp;9309 at all.</p>",
   cap:"Click a bar to list the sites carrying that rule.",
   big:function (f) {
@@ -838,7 +842,7 @@ var LENSES = [
     var g = freshSvg(60 + rows.length*34);
     var max = rows.length ? c[rows[0]] : 1, L = 228, R = VW-60;
     var why = function (k) {
-      return k.indexOf(" ") >= 0 ? "has a space — can never match"
+      return k.indexOf(" ") >= 0 ? "has a space, so can never match"
         : k === "claude-web" ? "retired by Anthropic"
         : "a product name, not a token";
     };
@@ -847,7 +851,7 @@ var LENSES = [
       var bar = S("rect",{x:L,y:y,width:w,height:18,rx:3,fill:"none",
         stroke:C.mixed,"stroke-width":1.6,"stroke-dasharray":"4 3"});
       hover(bar, "<b>"+name+"</b><br>"+num(c[k])+" sites<br>"+why(k));
-      clickTo(bar, name + " — sites naming it",
+      clickTo(bar, name + " · sites naming it",
         f.filter(function (s) {
           return s.ghosts.some(function (gt) { return gt.toLowerCase() === k; });
         }));
@@ -869,13 +873,13 @@ var LENSES = [
 {
   id:"legal", tab:"Contracts", kicker:"Lens 8 / a file growing teeth",
   title:"robots.txt is turning into a contract nobody signed.",
-  blurb:"<p>Rulebooks increasingly assert terms — conditions of access, "
+  blurb:"<p>Rulebooks increasingly assert terms: conditions of access, "
     + "permitted use, the threat of legal action. The file has no mechanism that "
     + "makes any of it binding.</p>"
     + "<p>But most of it is not sites lawyering up. The pale part of each bar is one "
     + "template, pushed out by a single CDN, which is why the share barely moves "
-    + "across the ranks. Strip it out and the genuinely bespoke contracts — eBay's, "
-    + "the New York Times's — are a couple of hundred sites in sixteen thousand.</p>",
+    + "across the ranks. Strip it out and the genuinely bespoke contracts, eBay's and "
+    + "the New York Times's, are a couple of hundred sites in sixteen thousand.</p>",
   cap:"Dark is written by hand; pale is the shared template. Click either part.",
   big:function (f) {
     var rd = f.filter(function (s) { return s.readable; });
@@ -906,12 +910,12 @@ var LENSES = [
         "fill-opacity":.33});
       hover(rT, "<b>"+bands[i]+"</b><br>"+num(v.tpl.length)+" carry the shared template<br>"
         + pct(v.pTpl) + " of readable rulebooks");
-      clickTo(rT, "Rank "+bands[i]+" — the shared template", v.tpl);
+      clickTo(rT, "Rank "+bands[i]+" · the shared template", v.tpl);
       g.appendChild(rT);
       var rO = S("rect",{x:x,y:B-hT-hO,width:w,height:Math.max(1,hO),fill:C.restrict,rx:2});
       hover(rO, "<b>"+bands[i]+"</b><br>"+num(v.own.length)+" wrote their own terms<br>"
         + pct(v.pOwn) + " of readable rulebooks");
-      clickTo(rO, "Rank "+bands[i]+" — terms written by hand", v.own);
+      clickTo(rO, "Rank "+bands[i]+" · terms written by hand", v.own);
       g.appendChild(rO);
       g.appendChild(S("text",{x:x+w/2,y:B-hT-hO-8,"text-anchor":"middle","class":"vnum",
         "font-weight":600}, pct(v.pOwn+v.pTpl,1)));
@@ -1032,7 +1036,7 @@ var LENSES = [
     var rd = f.filter(function (s) { return s.readable && s.lines; });
     var a = med(rd.filter(function (s) { return s.named.length; }).map(function (s) { return s.lines; }));
     var b = med(rd.filter(function (s) { return !s.named.length; }).map(function (s) { return s.lines; }));
-    return [b ? (a/b).toFixed(1)+"×" : "—", "more directives once a file mentions AI"];
+    return [b ? (a/b).toFixed(1)+"×" : "n/a", "more directives once a file mentions AI"];
   },
   subset:function (f) {
     return ["The hundred largest rulebooks",
@@ -1054,7 +1058,7 @@ var LENSES = [
   big:function (f) {
     var rd = f.filter(function (s) { return s.readable; });
     var n = rd.filter(function (s) { return !s.supports && !s.restricts; }).length;
-    return [rd.length ? pct(100*n/rd.length, 0) : "—",
+    return [rd.length ? pct(100*n/rd.length, 0) : "n/a",
       "of readable rulebooks never mention AI either way"];
   },
   draw:function (f) {
@@ -1094,7 +1098,7 @@ var LENSES = [
       var hitRect = S("rect",{x:x0,y:y0,width:gridW,height:10*(cell+gap),fill:"transparent"});
       hover(hitRect, "<b>"+lb+"</b><br>"+num(sil.set.length)+" of "+num(grp.length)
         + " say nothing<br>"+pct(grp.length?100*sil.set.length/grp.length:0,0));
-      clickTo(hitRect, "Rank " + lb + " — sites saying nothing either way", sil.set);
+      clickTo(hitRect, "Rank " + lb + " · sites saying nothing either way", sil.set);
       g.appendChild(hitRect);
     });
     var keys = [["Publishes for AI",C.support],["Both",C.mixed],
@@ -1298,7 +1302,7 @@ function showDetail(s) {
                                           : "wrote its own terms"); }
   if (s.has("starts_with_bom")) { notes.push("begins with a byte-order mark"); }
   if (s.has("access_varies_by_identity")) { notes.push("answered our two identities differently"); }
-  if (s.has("budget_exceeded")) { notes.push("hit the time budget \u2014 later paths unmeasured"); }
+  if (s.has("budget_exceeded")) { notes.push("hit the time budget, later paths unmeasured"); }
   if (notes.length) { add("Also", notes.join("; ")); }
   var a = el("a", null, "open robots.txt \u2197");
   a.href = "https://" + s.host + "/robots.txt";

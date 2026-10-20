@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RobotsObservatory — what this bot is</title>
+<title>RobotsObservatory: what this bot is</title>
 <meta name="description" content="RobotsObservatory reads robots.txt and ten well-known policy files, twelve requests per host per run. How to stop it, and what it stores.">
 <style>
   :root {
@@ -54,7 +54,9 @@
   a { color: var(--accent); }
   ul { padding-left: 1.2rem; margin: 0 0 .9rem; }
   li { margin-bottom: .35rem; }
-  footer {
+    .ai-note { margin: 1rem 0 0; padding-top: .9rem;
+    border-top: 1px solid var(--line); font-size: .85rem; line-height: 1.5; }
+footer {
     margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
     font-size: .9rem; color: var(--ink-3);
   }
@@ -82,19 +84,19 @@ submits a form, never solves a CAPTCHA, and never works around a paywall.</p>
 <p>Put this in your <code>robots.txt</code>:</p>
 <pre><code>User-agent: RobotsObservatory
 Disallow: /</code></pre>
-<p>We read <code>robots.txt</code> once — that file is exempt from
+<p>We read <code>robots.txt</code> once, because that file is exempt from
 <code>robots.txt</code> rules under
 <a href="https://www.rfc-editor.org/rfc/rfc9309.html">RFC&nbsp;9309</a>, which is
-the only way any crawler can learn it has been told to stop — and then request
+the only way any crawler can learn it has been told to stop, and then request
 nothing else from your host, this run or any future one.</p>
 <p>No custom directive to learn, nothing to email, and nothing for us to
 approve.</p>
 </div>
 
 <h2>What it requested</h2>
-<p>Per host, per run, exactly twelve requests. Four of them &mdash;
-<code>security.txt</code>, <code>ads.txt</code>, <code>gpc.json</code> and
-<code>humans.txt</code> &mdash; are not about AI. They are controls, so the
+<p>Per host, per run, exactly twelve requests. Four of them
+(<code>security.txt</code>, <code>ads.txt</code>, <code>gpc.json</code> and
+<code>humans.txt</code>) are not about AI. They are controls, so the
 AI-specific numbers can be read against something:</p>
 <table>
   <thead><tr><th>Path</th><th>Count</th><th>Why</th></tr></thead>
@@ -103,25 +105,25 @@ AI-specific numbers can be read against something:</p>
     <tr><td><code>/llms.txt</code></td><td class="n">1</td><td>a guide written for AI readers</td></tr>
     <tr><td><code>/ai.txt</code></td><td class="n">1</td><td>training opt-out convention</td></tr>
     <tr><td><code>/.well-known/tdmrep.json</code></td><td class="n">1</td><td>TDM Reservation Protocol</td></tr>
-    <tr><td><code>/.well-known/security.txt</code></td><td class="n">1</td><td>RFC 9116 security contact &mdash; a control, not an AI signal</td></tr>
-    <tr><td><code>/ads.txt</code></td><td class="n">1</td><td>IAB authorised sellers &mdash; a benchmark for machine-readable adoption</td></tr>
+    <tr><td><code>/.well-known/security.txt</code></td><td class="n">1</td><td>RFC 9116 security contact. A control, not an AI signal</td></tr>
+    <tr><td><code>/ads.txt</code></td><td class="n">1</td><td>IAB authorised sellers. A benchmark for machine-readable adoption</td></tr>
     <tr><td><code>/.well-known/gpc.json</code></td><td class="n">1</td><td>Global Privacy Control</td></tr>
-    <tr><td><code>/humans.txt</code></td><td class="n">1</td><td>the human counterpart to robots.txt &mdash; a control</td></tr>
-    <tr><td><code>/.well-known/agent-card.json</code></td><td class="n">1</td><td>A2A Agent Card &mdash; a site describing itself to agents</td></tr>
-    <tr><td><code>/.well-known/ai-catalog.json</code></td><td class="n">1</td><td>AI Catalog &mdash; domain-level discovery for MCP and A2A</td></tr>
+    <tr><td><code>/humans.txt</code></td><td class="n">1</td><td>the human counterpart to robots.txt. A control</td></tr>
+    <tr><td><code>/.well-known/agent-card.json</code></td><td class="n">1</td><td>A2A Agent Card. A site describing itself to agents</td></tr>
+    <tr><td><code>/.well-known/ai-catalog.json</code></td><td class="n">1</td><td>AI Catalog. Domain-level discovery for MCP and A2A</td></tr>
     <tr><td><code>/.well-known/agent.json</code></td><td class="n">1</td><td>the pre-1.0 A2A path, so a zero at the current one is interpretable</td></tr>
   </tbody>
 </table>
 <p><strong>Twelve requests per host, per run.</strong> Spread over about seventeen
 seconds, with 1.5 seconds between requests to any one host, thirty hosts in flight at a
-time — a figure that governs how many different sites are read in parallel,
+time, a figure that governs how many different sites are read in parallel,
 never how fast any one of them is asked. That is less traffic than one person loading one page. A host whose
 probe fails is retried once after a pause, so a transient timeout is not
 recorded as a policy fact.</p>
 
 <h2>The two user-agents</h2>
 <p>One declares itself. The other is a browser-shaped control, used to detect
-sites that serve different policy to bots than to browsers — it still carries
+sites that serve different policy to bots than to browsers. It still carries
 full contact details, so <strong>no request this project makes is
 anonymous</strong>:</p>
 <pre><code>RobotsObservatory/1.0 (+https://florianhoehn.github.io/robots-observatory/bot/)
@@ -136,7 +138,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
 <ul>
   <li>Status codes, response times, content hashes, and <strong>all</strong>
       response headers.</li>
-  <li>The body of every path listed above — including whatever is
+  <li>The body of every path listed above, including whatever is
       returned instead of one: a 404, an error page, a cookie-consent wall, a
       CAPTCHA. Those are evidence about how the web treats automated readers,
       and they are this study's subject just as much as a policy file is.</li>
@@ -146,7 +148,7 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
       requested.</li>
 </ul>
 <p><strong>Stored and published are not the same thing.</strong> The public
-dataset is the per-response record &mdash; status, timings, every header, and a
+dataset is the per-response record: status, timings, every header, and a
 hash of the body. The bodies themselves are currently kept locally and are not
 published, because at roughly a gigabyte per wide run they are more than the
 repository should carry. That is less exposure for your site, not more.</p>
@@ -156,8 +158,8 @@ mean coming back.</p>
 
 <h2>Removal from the published dataset</h2>
 <p>Blocking us in <code>robots.txt</code> stops the crawling. If you also want a
-host's rows removed from the <em>published dataset</em> — which names
-thousands of sites and will stay online indefinitely —
+host's rows removed from the <em>published dataset</em>, which names
+thousands of sites and will stay online indefinitely,
 <a href="https://github.com/florianhoehn/robots-observatory/issues/new">open an
 issue</a> and it will be removed. You will not be asked to justify it.</p>
 
@@ -167,7 +169,7 @@ on anecdote, because there is no public baseline for what sites actually declare
 This builds one, in the open, under
 <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
 <p>The collector is two readable Python files. The claim that it only ever
-requests the paths above is checkable from the source, not just asserted —
+requests the paths above is checkable from the source, not just asserted.
 <a href="https://github.com/florianhoehn/robots-observatory/blob/main/observatory.py">read
 it</a>.</p>
 
@@ -175,6 +177,7 @@ it</a>.</p>
 <a href="https://github.com/florianhoehn/robots-observatory">Source and data</a> ·
 <a href="https://github.com/florianhoehn/robots-observatory/blob/main/CONDUCT.md">Conduct charter</a> ·
 <a href="../">Findings</a>
+<p class="ai-note"><strong>Researched, built and written with the help of AI.</strong> No model sits in the measurement path: fetching, parsing and counting are deterministic, and every figure here is computed from the published data. The judgement calls, and the mistakes, are documented in the <a href="https://github.com/florianhoehn/robots-observatory/commits/main">commit history</a>.</p>
 </footer>
 
 </main>

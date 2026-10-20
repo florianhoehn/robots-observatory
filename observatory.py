@@ -125,6 +125,34 @@ IDENTITIES = {
 }
 US_TOKEN = "RobotsObservatory"
 
+# What each crawler is for, and who runs it, as its operator documents it.
+# A judgement, so it is published rather than buried: a reader who disagrees
+# with a classification can see it and re-cut the data.
+AI_PURPOSE = {
+    "GPTBot": "train", "Google-Extended": "train", "CCBot": "train",
+    "Bytespider": "train", "anthropic-ai": "train", "ClaudeBot": "train",
+    "cohere-ai": "train", "Diffbot": "train", "omgili": "train",
+    "omgilibot": "train", "Applebot-Extended": "train", "Timpibot": "train",
+    "meta-externalagent": "train", "ImagesiftBot": "train", "PetalBot": "train",
+    "Amazonbot": "train", "AI2Bot": "train", "Webzio-Extended": "train",
+    "SemrushBot-OCOB": "train",
+    "OAI-SearchBot": "search", "PerplexityBot": "search", "YouBot": "search",
+    "Applebot": "search", "FacebookBot": "search", "Claude-SearchBot": "search",
+    "DuckAssistBot": "search",
+    "ChatGPT-User": "user", "Perplexity-User": "user", "Claude-User": "user",
+    "MistralAI-User": "user", "meta-externalfetcher": "user",
+}
+AI_OPERATOR = {
+    "GPTBot": "OpenAI", "OAI-SearchBot": "OpenAI", "ChatGPT-User": "OpenAI",
+    "ClaudeBot": "Anthropic", "anthropic-ai": "Anthropic",
+    "Claude-User": "Anthropic", "Claude-SearchBot": "Anthropic",
+    "PerplexityBot": "Perplexity", "Perplexity-User": "Perplexity",
+    "Applebot": "Apple", "Applebot-Extended": "Apple",
+    "meta-externalagent": "Meta", "FacebookBot": "Meta",
+    "meta-externalfetcher": "Meta",
+    "omgili": "Webz.io", "omgilibot": "Webz.io", "Webzio-Extended": "Webz.io",
+}
+
 # Paths the convention defines as JSON. A 200 at one of these carrying
 # anything else is not that file -- see robots_parse.looks_like_json.
 JSON_WELLKNOWN = frozenset({"tdmrep", "gpc", "agent_card", "ai_catalog",
@@ -1380,6 +1408,94 @@ def _stance(recs: list[dict]) -> dict:
     }
 
 
+def _lens_figures(recs: list[dict], sectors: dict) -> list[dict]:
+    """The one number each lens leads with.
+
+    These are ordinary statistics, not page furniture: they live here so the
+    findings page can preview the lenses without loading the per-site file,
+    and so there is one place they are computed rather than two.
+    """
+    rd = [r for r in recs if _pol(r, "file_state") in ("present", "absent_404")]
+    n = len(rd) or 1
+    present = [r for r in rd if _pol(r, "file_state") == "present"]
+
+    def rate(purpose):
+        a = b = 0
+        for r in present:
+            named = set(_pol(r, "ai_tokens_named") or [])
+            blocked = set(_pol(r, "ai_tokens_root_disallowed") or [])
+            for t in named:
+                if AI_PURPOSE.get(t) == purpose:
+                    a += 1
+                    if t in blocked:
+                        b += 1
+        return round(100 * b / a, 1) if a else 0.0
+
+    split_a = split_b = 0
+    for r in present:
+        named = [t for t in (_pol(r, "ai_tokens_named") or [])
+                 if AI_OPERATOR.get(t) == "OpenAI"]
+        if len(named) < 2:
+            continue
+        blocked = set(_pol(r, "ai_tokens_root_disallowed") or [])
+        hit = sum(1 for t in named if t in blocked)
+        split_a += 1
+        if 0 < hit < len(named):
+            split_b += 1
+
+    ghosts = sum(1 for r in present if _ghosts(r, {w.lower() for w in load_watchlist()}))
+    own = sum(1 for r in present if _pol(r, "has_legal_text")
+              and not _pol(r, "legal_boilerplate"))
+    lines_ai = sorted(_pol(r, "directive_lines") or 0 for r in present
+                      if _pol(r, "ai_tokens_named"))
+    lines_no = sorted(_pol(r, "directive_lines") or 0 for r in present
+                      if not _pol(r, "ai_tokens_named"))
+    mid = lambda a: a[len(a) // 2] if a else 0
+    # Counted over every host, as the top-level `wellknown` block is: a site
+    # can publish llms.txt while refusing us its robots.txt, and filtering to
+    # readable rulebooks would undercount adoption.
+    formal = sum(1 for r in recs if any(wk_present(r, k) for k in
+                 ("tdmrep", "ai_catalog", "agent_card", "agent_card_legacy")))
+    llms = sum(1 for r in recs if wk_present(r, "llms_txt"))
+    tdm = sum(1 for r in recs if wk_present(r, "tdmrep"))
+    both = sum(1 for r in rd
+               if any(f(r) for f in SUPPORT_SIGNALS.values())
+               and any(f(r) for f in HINDER_SIGNALS.values()))
+    silent = sum(1 for r in rd
+                 if not any(f(r) for f in SUPPORT_SIGNALS.values())
+                 and not any(f(r) for f in HINDER_SIGNALS.values()))
+
+    def pc(v):
+        return f"{v:.0f}%"
+
+    return [
+        {"id": "purpose", "figure": pc(rate("train")),
+         "label": "of training crawlers are blocked where they are named"},
+        {"id": "operators",
+         "figure": f"{100 * split_b / split_a:.1f}%" if split_a else "\u2014",
+         "label": "of sites split OpenAI's bots, allowing some and blocking others"},
+        {"id": "sector",
+         "figure": (f"{100 * sectors['news']['withholds'] / sectors['news']['hosts']:.0f}%"
+                    if sectors.get("news", {}).get("hosts") else None),
+         "label": "of newsrooms withhold something; developer sites mostly publish"},
+        {"id": "fork", "figure": f"{both:,}",
+         "label": "sites both document themselves and withhold something"},
+        {"id": "signal", "figure": f"{round(llms / formal) if formal else 0}\u00d7",
+         "label": "more llms.txt than every formally specified convention combined"},
+        {"id": "tdm", "figure": f"{tdm:,}",
+         "label": "sites publish a machine-readable TDM reservation"},
+        {"id": "ghosts", "figure": f"{ghosts:,}",
+         "label": "sites carry a rule that can never fire"},
+        {"id": "legal", "figure": f"{own:,}",
+         "label": "sites wrote their own terms into robots.txt"},
+        {"id": "strain",
+         "figure": (f"{mid(lines_ai) / mid(lines_no):.1f}\u00d7" if mid(lines_no) else "\u2014"),
+         "label": "more directives once a rulebook mentions AI"},
+        {"id": "silence", "figure": pc(100 * silent / n),
+         "label": "of readable rulebooks never mention AI either way"},
+    ]
+
+
 def _rank_bands(recs: list[dict]) -> list[dict]:
     # Only paths this run actually requested, matching the top-level wellknown
     # summary. A run predating a path would otherwise report it at 0.0%, which
@@ -1564,9 +1680,13 @@ def cmd_derive(args) -> None:
     sectors: dict[str, dict] = {}
     for r in recs:
         s = r.get("sector") or "unlabelled"
-        e = sectors.setdefault(s, {"hosts": 0, "names_ai": 0,
-                                   "wildcard_block": 0, "llms_txt": 0})
+        e = sectors.setdefault(s, {"hosts": 0, "names_ai": 0, "wildcard_block": 0,
+                                   "llms_txt": 0, "withholds": 0, "publishes": 0})
         e["hosts"] += 1
+        if any(f(r) for f in HINDER_SIGNALS.values()):
+            e["withholds"] += 1
+        if any(f(r) for f in SUPPORT_SIGNALS.values()):
+            e["publishes"] += 1
         if pol(r, "ai_tokens_named"):
             e["names_ai"] += 1
         if pol(r, "wildcard_root_disallowed"):
@@ -1636,6 +1756,7 @@ def cmd_derive(args) -> None:
         # correction this dataset makes: a rate measured on the top 1000 is
         # not a rate for the web, and these bands show how far off it is.
         "by_rank_band": _rank_bands(recs),
+        "lenses": _lens_figures(recs, sectors),
     }
 
     SITE_DATA.mkdir(parents=True, exist_ok=True)

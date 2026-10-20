@@ -1,0 +1,53 @@
+# robots.txt for florianhoehn.github.io
+#
+# Everything on this origin is open to everyone, including AI agents. There
+# is no reader here we would rather not have, and no use we withhold.
+#
+# What lives here: Robots Observatory, a project that measures how websites
+# declare policy toward AI agents. It reads robots.txt and ten well-known
+# policy paths, counts what they say, and publishes the result as open data.
+# It seemed wrong to measure whether the web documents itself for machines
+# and publish nothing machine-readable of our own.
+#
+#   Findings      https://florianhoehn.github.io/robots-observatory/
+#   Ten lenses    https://florianhoehn.github.io/robots-observatory/lenses/
+#   Guide for agents, with the data files
+#                 https://florianhoehn.github.io/llms.txt
+#   The crawler, and how to stop it
+#                 https://florianhoehn.github.io/robots-observatory/bot/
+#
+# The dataset is CC0 and the collector is MIT. Both are stated where they can
+# mean something: in the repository, next to the files they cover. This file
+# carries no conditions, because a robots.txt has no mechanism to impose one
+# and 430 sites in our panel write as though it does.
+
+User-agent: *
+Content-signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+# The empty Disallow is the 1994 spelling of the same permission, kept for
+# parsers written before Allow existed.
+Disallow:
+
+# Notes on what is deliberately absent
+# ------------------------------------
+#
+# Content-signal grants all three uses: search (building an index), ai-input
+# (feeding a model at answer time) and ai-train (training or fine-tuning).
+# 400 sites in the panel carry this directive, 288 of them set ai-train=no,
+# and this origin is in the smaller group on purpose. The policy preamble
+# that usually ships with the directive is not reproduced here: it is
+# contract language, 262 sites carry one identical copy of it, and none of it
+# binds anyone.
+#
+# No Sitemap line. This origin publishes no sitemap, and a Sitemap pointing
+# at a file that does not exist is a kind of sloppiness we document in other
+# people's files.
+#
+# No crawler is named anywhere above. A named token grants nothing the
+# wildcard group has not already granted, and it is a rule with an expiry
+# date: 1,098 sites in the panel carry a rule naming a product token that was
+# retired or never existed, and a token containing a space can never match
+# under RFC 9309. That is lens 7 of ten:
+#   https://florianhoehn.github.io/robots-observatory/lenses/
+#
+# No crawl-delay. We count that as friction, so we do not ask for it.
