@@ -333,7 +333,9 @@
     <p class="kicker">By sector</p>
     <h2>Developers document. News publishers police.</h2>
     <p class="intro">Six labels, assigned by hand once when the panel was frozen.
-    Share of each sector publishing an <code>llms.txt</code>.</p>
+    Share of each sector publishing an <code>llms.txt</code>. <strong>This one
+    chart is the 463-site panel</strong>, not the 16,314 &mdash; sector labels
+    are hand-assigned, and the wider panel is deliberately unscreened.</p>
     <div class="sm" id="sectors"></div>
   </section>
 
@@ -721,29 +723,6 @@ function render(f) {
   });
   host.appendChild(grid);
 
-  // ---- sectors: small multiples ----
-  var secs = Object.keys(f.by_sector).map(function (s) {
-    var d = f.by_sector[s];
-    return { s: s, hosts: d.hosts, llms: d.llms_txt || 0, ai: d.names_ai,
-             rate: (100 * (d.llms_txt || 0)) / d.hosts,
-             airate: (100 * d.names_ai) / d.hosts };
-  }).sort(function (a, b) { return b.rate - a.rate; });
-  var sm = document.getElementById("sectors");
-  secs.forEach(function (r) {
-    var d = el("div");
-    d.appendChild(el("div", "sm-t", r.s));
-    d.appendChild(el("div", "sm-n", pct(r.rate, 0)));
-    d.appendChild(el("div", "sm-s", num(r.llms) + " of " + num(r.hosts) + " sites"));
-    var tr = el("div", "sm-track"), fl = el("div", "sm-fill");
-    fl.style.width = r.rate + "%"; tr.appendChild(fl);
-    d.appendChild(tr);
-    var note = el("div", "sm-s");
-    note.style.marginTop = ".45rem";
-    note.textContent = pct(r.airate, 0) + " name an AI crawler";
-    d.appendChild(note);
-    sm.appendChild(d);
-  });
-
   // ---- identity variance ----
   document.getElementById("v-raw").textContent =
     pct(f.hash_differs_by_identity.pct) + " (" + num(f.hash_differs_by_identity.n) + ")";
@@ -786,6 +765,40 @@ function render(f) {
     });
 }
 
+
+// Sector labels exist only on the hand-screened panel; panel-02 is unscreened,
+// so deriving sectors there yields one "unlabelled" bucket holding everything.
+// This reads from panel-01 and the heading says so, rather than rendering a
+// single meaningless tile under a finding it cannot support.
+function renderSectors(f) {
+  var sm = document.getElementById("sectors");
+  if (!f || !f.by_sector || !sm) { return; }
+  var secs = Object.keys(f.by_sector).filter(function (s) {
+    return s !== "unlabelled";
+  }).map(function (s) {
+    var d = f.by_sector[s];
+    return { s: s, hosts: d.hosts, llms: d.llms_txt || 0, ai: d.names_ai,
+             rate: (100 * (d.llms_txt || 0)) / d.hosts,
+             airate: (100 * d.names_ai) / d.hosts };
+  }).sort(function (a, b) { return b.rate - a.rate; });
+  if (!secs.length) { sm.closest("section").hidden = true; return; }
+  secs.forEach(function (r) {
+    var d = el("div");
+    d.appendChild(el("div", "sm-t", r.s));
+    d.appendChild(el("div", "sm-n", pct(r.rate, 0)));
+    d.appendChild(el("div", "sm-s", num(r.llms) + " of " + num(r.hosts) + " sites"));
+    var tr = el("div", "sm-track"), fl = el("div", "sm-fill");
+    fl.style.width = r.rate + "%"; tr.appendChild(fl);
+    d.appendChild(tr);
+    var note = el("div", "sm-s");
+    note.style.marginTop = ".45rem";
+    note.textContent = pct(r.airate, 0) + " name an AI crawler";
+    d.appendChild(note);
+    sm.appendChild(d);
+  });
+
+}
+
 // panel-02 carries the page; panel-01 is kept for the correction table.
 Promise.all([
   fetch("data/findings-panel-02.json", { cache: "no-cache" }).then(function (r) {
@@ -797,6 +810,7 @@ Promise.all([
 ]).then(function (both) {
   render(both[0]);
   renderFacets(both[0]);
+  renderSectors(both[1]);
   renderPanelCompare(both[1], both[0]);
 }).catch(function () {
   document.getElementById("err").hidden = false;
