@@ -91,14 +91,16 @@
   .count{font-family:var(--mono);font-size:.76rem;color:var(--faint);margin-left:auto;
          font-variant-numeric:tabular-nums}
 
-  /* per-lens site list */
-  .peek{margin:1.6rem 0 0;border-top:1px dashed var(--line);padding-top:.7rem}
-  .peek summary{cursor:pointer;font-size:.86rem;color:var(--support);font-weight:500;
-                list-style:none;padding:.15rem 0}
-  .peek summary::-webkit-details-marker{display:none}
-  .peek summary::before{content:"\25B8  ";color:var(--faint)}
-  .peek[open] summary::before{content:"\25BE  "}
-  .peek .sub{font-size:.8rem;color:var(--faint);margin:.35rem 0 .7rem}
+  /* per-lens site list, shown only after a mark is clicked */
+  .peek{margin:1.5rem 0 0;border:1px solid var(--line);border-radius:9px;
+        padding:.8rem .9rem .9rem;background:#fbfcfc}
+  .peek[hidden]{display:none}
+  .peek-head{display:flex;align-items:baseline;gap:.6rem;margin:0 0 .6rem}
+  .peek-t{font-size:.86rem;font-weight:600;color:var(--ink)}
+  .peek-x{margin-left:auto;border:0;background:none;font-size:1.15rem;line-height:1;
+          cursor:pointer;color:var(--faint);padding:0 .1rem}
+  .peek-x:hover{color:var(--ink)}
+  .peek .sub{font-size:.78rem;color:var(--faint);margin:.6rem 0 0}
   .sitegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:4px}
   .site{border:1px solid var(--line);border-radius:6px;padding:.45rem .6rem;cursor:pointer;
         background:#fff;text-align:left;font-family:var(--sans);font-size:.82rem;
@@ -366,7 +368,7 @@ function clickTo(node, label, sites) {
   var list = targetList;   // captured at draw time, not click time
   node.addEventListener("click", function () {
     tip.style.opacity = 0;
-    showSites(list, label, sites, true);
+    showSites(list, label, sites);
   });
 }
 
@@ -1204,17 +1206,22 @@ function buildSections() {
         '<div class="readout"><div class="big"></div><div class="bigsub"></div>' +
         '<div class="blurb"></div></div>' +
       '</div>' +
-      '<details class="peek"><summary></summary>' +
-        '<p class="sub"></p><div class="sitegrid"></div><p class="more"></p>' +
-      '</details>';
+      '<div class="peek" hidden>' +
+        '<div class="peek-head"><span class="peek-t"></span>' +
+        '<button class="peek-x" aria-label="Close this list">&times;</button></div>' +
+        '<div class="sitegrid"></div><p class="sub"></p>' +
+      '</div>';
     host.appendChild(sec);
     l._el = {
       sec: sec, svg: sec.querySelector("svg"), cap: sec.querySelector(".vz-cap"),
       big: sec.querySelector(".big"), bigsub: sec.querySelector(".bigsub"),
-      blurb: sec.querySelector(".blurb"), det: sec.querySelector("details"),
-      sum: sec.querySelector("summary"), sub: sec.querySelector(".sub"),
-      grid: sec.querySelector(".sitegrid"), more: sec.querySelector(".more")
+      blurb: sec.querySelector(".blurb"), peek: sec.querySelector(".peek"),
+      ttl: sec.querySelector(".peek-t"), sub: sec.querySelector(".sub"),
+      grid: sec.querySelector(".sitegrid")
     };
+    sec.querySelector(".peek-x").addEventListener("click", function () {
+      l._el.peek.hidden = true;
+    });
 
     var a = el("a", "jump-btn");
     a.href = "#lens-" + l.id;
@@ -1227,8 +1234,8 @@ function buildSections() {
 }
 
 /* ------------------------------------------------------------- site lists -- */
-function showSites(list, label, sites, open) {
-  list.sum.textContent = label + "  \u00b7  " + num(sites.length)
+function showSites(list, label, sites) {
+  list.ttl.textContent = label + "  \u00b7  " + num(sites.length)
     + (sites.length === 1 ? " site" : " sites");
   list.sub.textContent = sites.length > 300
     ? "Showing the first 300 by rank. Narrow it with the filters above." : "";
@@ -1245,10 +1252,7 @@ function showSites(list, label, sites, open) {
       b.addEventListener("click", function () { showDetail(s); });
       list.grid.appendChild(b);
     });
-  if (open) {
-    list.det.open = true;
-    list.det.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }
+  list.peek.hidden = false;
 }
 
 function showDetail(s) {
@@ -1318,8 +1322,9 @@ function renderAll() {
       freshSvg(90).appendChild(S("text", { x:10, y:48, "class":"vlab" },
         "Not enough data in this filter to draw this lens."));
     }
-    var sub = l.subset(f);
-    showSites(E, sub[0], sub[1], false);
+    // No standing list. One appears only when a mark is clicked, and is
+    // dismissed on a filter change rather than left showing a stale set.
+    E.peek.hidden = true;
   });
   target = targetLens = targetList = null;
 }
@@ -1354,15 +1359,21 @@ function watchScroll() {
   Array.prototype.forEach.call(document.querySelectorAll(".jump-btn"), function (a) {
     links[a.dataset["for"]] = a;
   });
+  var inner = document.getElementById("jump-inner");
   var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       var id = en.target.id.replace("lens-", "");
-      if (en.isIntersecting) {
-        Object.keys(links).forEach(function (k) {
-          links[k].setAttribute("aria-current", k === id ? "true" : "false"); });
-        var a = links[id];
-        if (a) { a.scrollIntoView({ block:"nearest", inline:"nearest" }); }
-      }
+      if (!en.isIntersecting) { return; }
+      Object.keys(links).forEach(function (k) {
+        links[k].setAttribute("aria-current", k === id ? "true" : "false"); });
+      var a = links[id];
+      if (!a) { return; }
+      // Scroll the nav strip itself, never the element. scrollIntoView on a
+      // child of a sticky bar moves the *document* as well, which fights the
+      // reader's own scrolling and pins the page to the first section.
+      var want = a.offsetLeft - inner.clientWidth / 2 + a.offsetWidth / 2;
+      want = Math.max(0, Math.min(want, inner.scrollWidth - inner.clientWidth));
+      if (Math.abs(inner.scrollLeft - want) > 2) { inner.scrollLeft = want; }
     });
   }, { rootMargin: "-45% 0px -45% 0px" });
   LENSES.forEach(function (l) { obs.observe(l._el.sec); });
