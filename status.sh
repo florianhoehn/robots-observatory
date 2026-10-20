@@ -17,26 +17,35 @@ else
   RUN="data/runs/$PANEL/$RUN/"
 fi
 [ -z "$RUN" ] && { echo "no run found for $PANEL"; exit 1; }
-REC="${RUN}records.jsonl"
-[ -s "$REC" ] || { echo "no records yet at $REC"; exit 1; }
+# Records are sharded by rank band; older runs have a single records.jsonl.
+REC_GLOB="${RUN}records/*.jsonl"
+# shellcheck disable=SC2086
+if ! compgen -G "$REC_GLOB" > /dev/null; then
+  REC_GLOB="${RUN}records.jsonl"
+  [ -s "$REC_GLOB" ] || { echo "no records yet in ${RUN}"; exit 1; }
+fi
 
 PANEL_N=$(( $(wc -l < "panel/$PANEL.csv") - 1 ))
 
-python3 - "$REC" "$PANEL_N" "$RUN" "$BRIEF" "${PREV:-0}" <<'PY'
+python3 - "$REC_GLOB" "$PANEL_N" "$RUN" "$BRIEF" "${PREV:-0}" <<'PY'
 import collections, json, sys, os, time
 
-rec_path, panel_n, run_dir = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+import glob
+
+rec_glob, panel_n, run_dir = sys.argv[1], int(sys.argv[2]), sys.argv[3]
 brief = len(sys.argv) > 4 and sys.argv[4] == "1"
 prev = int(sys.argv[5]) if len(sys.argv) > 5 else 0
+paths = sorted(glob.glob(rec_glob))
 recs = []
-for ln in open(rec_path, encoding="utf-8"):
-    ln = ln.strip()
-    if not ln:
-        continue
-    try:
-        recs.append(json.loads(ln))
-    except ValueError:
-        pass  # a torn final line while the run is mid-write
+for rec_path in paths:
+    for ln in open(rec_path, encoding="utf-8"):
+        ln = ln.strip()
+        if not ln:
+            continue
+        try:
+            recs.append(json.loads(ln))
+        except ValueError:
+            pass  # a torn final line while the run is mid-write
 
 n = len(recs)
 pct = 100 * n / panel_n if panel_n else 0
@@ -73,7 +82,7 @@ if brief:
         bits.append(f"{rate:.2f}/s ETA {eta:%H:%M}")
     print(" | ".join(bits))
     raise SystemExit(0)
-age = time.time() - os.path.getmtime(rec_path)
+age = time.time() - max(os.path.getmtime(p) for p in paths)
 print(f"{n:,} / {panel_n:,} hosts  ({pct:.1f}%)   last write {age:.0f}s ago")
 
 if n:

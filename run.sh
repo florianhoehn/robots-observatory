@@ -29,6 +29,16 @@ BACKOFF=60
 
 log() { echo "=== $(date -Is)  $*"; }
 
+# Records are one file per rank band under records/; runs collected before
+# sharding have a single records.jsonl. Prints nothing when a run has neither.
+record_files() {
+  local d="$1"
+  local f
+  f=$(ls "${d}records"/*.jsonl 2>/dev/null)
+  [ -z "$f" ] && [ -s "${d}records.jsonl" ] && f="${d}records.jsonl"
+  echo "$f"
+}
+
 log "panel=$PANEL vantage=$OBSERVATORY_VANTAGE attempts<=$MAX_ATTEMPTS"
 
 attempt=1
@@ -53,8 +63,9 @@ while [ "$attempt" -le "$MAX_ATTEMPTS" ]; do
   # runs appending to one file: 452 hosts recorded twice and double the
   # requests promised in CONDUCT.md.
   latest=$(ls -dt data/runs/"$PANEL"/*/ 2>/dev/null | head -1)
-  if [ -n "$latest" ] && [ -s "${latest}records.jsonl" ]; then
-    done_n=$(awk 'END{print NR}' "${latest}records.jsonl")
+  if [ -n "$latest" ] && [ -n "$(record_files "$latest")" ]; then
+    # shellcheck disable=SC2046
+    done_n=$(cat $(record_files "$latest") | awk 'END{print NR}')
     panel_n=$(( $(awk 'END{print NR}' "panel/$PANEL.csv") - 1 ))
     if [ "$done_n" -ge "$panel_n" ]; then
       log "all $panel_n hosts recorded"
@@ -68,7 +79,7 @@ while [ "$attempt" -le "$MAX_ATTEMPTS" ]; do
 done
 
 latest=$(ls -dt data/runs/"$PANEL"/*/ 2>/dev/null | head -1)
-if [ -z "$latest" ] || [ ! -s "${latest}records.jsonl" ]; then
+if [ -z "$latest" ] || [ -z "$(record_files "$latest")" ]; then
   log "no records produced; stopping before retry"
   exit 1
 fi

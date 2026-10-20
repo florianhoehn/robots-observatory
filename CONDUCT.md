@@ -75,6 +75,19 @@ second time.
 anonymous session id and do not belong in a public archive. No page is ever
 requested, so no page body exists to retain.
 
+### Stored and published are not the same thing
+
+The published dataset is the per-response record: status, timings, every
+header, and a `sha256` of the body. **The bodies themselves are currently held
+locally and are not published.** They are what makes `reparse` possible -- a
+parser fix applied backwards across the archive instead of a second crawl --
+but at roughly a gigabyte per wide run they are more than this repository
+should carry.
+
+This is less exposure for a site, not more, and the hash in each record still
+pins exactly what was served. If the bodies are published later it will be as
+a separate, clearly described artefact, and this section will say so first.
+
 ## Identification
 
 Every request, in both identities, carries a `User-Agent` and an

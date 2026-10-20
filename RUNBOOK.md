@@ -45,6 +45,7 @@ The archive holds every response body and every header, so a new question is
 answered from stored responses rather than by crawling again:
 
     observatory.py reparse --panel panel-02     # re-derive policy from blobs
+    observatory.py reshard --panel panel-02     # split legacy records.jsonl by band
     observatory.py derive  --panel panel-02
     observatory.py corpus  --file llms_txt      # every stored llms.txt
     observatory.py diff HOST RUN_A RUN_B        # one host, between runs
@@ -82,3 +83,36 @@ panel-01's 32.8% still sitting above panel-02's 17.2%, and Method, the download
 links and the conduct pages all described the previous probe set. Numbers
 written into sentences do not get recomputed. Grep the page for digits after
 every panel change.
+
+## Where a run's records live
+
+One file per rank band, under `data/runs/<panel>/<run-id>/records/`:
+
+    rank-00001-01000.jsonl   rank-05001-10000.jsonl
+    rank-01001-02500.jsonl   rank-10001-20000.jsonl
+    rank-02501-05000.jsonl   rank-beyond.jsonl / rank-unknown.jsonl (if any)
+
+The bands are `RANK_BANDS`, the same ones the published rank facets use, so the
+file you download is exactly the band whose figure you are checking. A single
+83 MB `records.jsonl` was the previous layout; it is still read if present, so
+nothing needs migrating to stay readable. `reshard` performs the split and
+verifies the round trip before unlinking the original.
+
+**Bodies are not in these files, and not in git.** A record carries status,
+timings, headers and a `sha256`; `data/blobs/` holds the bodies and is
+local-only. `reparse` therefore works only on a machine that has them -- and
+losing that directory means a question about body content can no longer be
+answered without re-crawling, which is exactly what the archive exists to
+avoid. Back it up separately.
+
+### After any change to the records layout
+
+Prove the aggregates did not move. Resharding only relocates rows, so the
+records compared as a sorted set must be identical before and after:
+
+    git show HEAD:data/runs/<panel>/<date>/records.jsonl | sort | sha256sum
+    cat data/runs/<panel>/<date>/records/*.jsonl | sort | sha256sum
+
+Equal hashes mean any derivation is unchanged. If `derive` then reports
+different findings, the cause is a change in the derivation code, not the
+split -- which is how the panel-01 catch-all discount surfaced.

@@ -283,6 +283,133 @@ def read_blob(sha: str) -> str | None:
     return p.read_text(encoding="utf-8") if p.exists() else None
 
 
+# ---------------------------------------------------------------- records ----
+# A run's records are split across one file per rank band rather than written
+# to a single records.jsonl. At panel-02 size that file reached 83 MB, which
+# GitHub warns about and which forces anyone asking a narrow question ("what do
+# the top 1000 publish?") to download the whole web's worth of rows to answer
+# it. The bands are RANK_BANDS, the same ones the published rank facets use, so
+# a shard is exactly one band: the file you download matches the figure you are
+# checking.
+#
+# Bodies are NOT in these files -- a record carries status, headers, timings and
+# a sha256 into the blob store, and the blob store is local-only.
+
+RANK_BANDS = ((1, 1000), (1001, 2500), (2501, 5000), (5001, 10000), (10001, 20000))
+RECORDS_DIR = "records"
+
+
+def shard_name(rank: object) -> str:
+    """The shard a record belongs in, chosen by its rank at panel freeze."""
+    # bool is a subclass of int, and True would otherwise route to band 1.
+    if isinstance(rank, int) and not isinstance(rank, bool) and rank > 0:
+        for lo, hi in RANK_BANDS:
+            if lo <= rank <= hi:
+                return f"rank-{lo:05d}-{hi:05d}.jsonl"
+        return "rank-beyond.jsonl"
+    # A host whose probe raised before its rank was attached still has to land
+    # somewhere; losing it silently would be worse than an odd filename.
+    return "rank-unknown.jsonl"
+
+
+def shard_paths(run_dir: Path) -> list[Path]:
+    """Every records file for a run, in band order.
+
+    Runs collected before sharding hold a single records.jsonl. It is still
+    read, so published runs stay readable and no migration is load-bearing.
+    """
+    d = run_dir / RECORDS_DIR
+    if d.is_dir():
+        return sorted(d.glob("*.jsonl"))
+    legacy = run_dir / "records.jsonl"
+    return [legacy] if legacy.exists() else []
+
+
+def has_records(run_dir: Path) -> bool:
+    return bool(shard_paths(run_dir))
+
+
+def load_records(run_dir: Path, tolerant: bool = False) -> list[dict]:
+    """Read every record for a run.
+
+    Strict by default: a line that will not parse is data loss, and derive
+    should fail loudly rather than quietly report a share of fewer hosts than
+    were probed. `tolerant` is for the two callers that legitimately meet a
+    torn final line -- resume, and status on a run still being written.
+    """
+    recs: list[dict] = []
+    for path in shard_paths(run_dir):
+        for i, ln in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if not ln.strip():
+                continue
+            try:
+                recs.append(json.loads(ln))
+            except ValueError:
+                if not tolerant:
+                    sys.exit(f"{path}:{i}: unparseable record; refusing to "
+                             f"derive from a truncated file")
+    return recs
+
+
+def write_records(run_dir: Path, recs: list[dict]) -> None:
+    """Replace a run's records wholesale, re-sharding by rank.
+
+    Used by retry and reparse, which rewrite records in place. Shards are
+    cleared first so a record that changes band cannot survive in both.
+    """
+    d = run_dir / RECORDS_DIR
+    d.mkdir(parents=True, exist_ok=True)
+    for stale in d.glob("*.jsonl"):
+        stale.unlink()
+    by_shard: dict[str, list[dict]] = {}
+    for r in recs:
+        by_shard.setdefault(shard_name(r.get("rank_at_freeze")), []).append(r)
+    for name, rows in by_shard.items():
+        with (d / name).open("w", encoding="utf-8") as fh:
+            for r in sorted(rows, key=lambda r: r["host"]):
+                fh.write(json.dumps(r, sort_keys=True) + "\n")
+
+    # Read back before dropping the single-file original. The shards are the
+    # only copy the moment it is unlinked, so the check has to happen while
+    # there is still something to fall back to.
+    back = load_records(run_dir)
+    if len(back) != len(recs) or {r["host"] for r in back} != {r["host"] for r in recs}:
+        sys.exit(f"{run_dir}: re-reading the shards did not return what was "
+                 f"written ({len(back)} of {len(recs)}); left the original in place")
+    legacy = run_dir / "records.jsonl"
+    if legacy.exists():
+        legacy.unlink()
+
+
+class ShardWriter:
+    """Appends each record to the shard for its band, during a run.
+
+    One handle per shard, held open: a run writes 16,314 records and opening
+    the file per record would be 16,314 opens. Every write is flushed, because
+    a run that dies halfway must leave usable partial data for --resume.
+    """
+
+    def __init__(self, run_dir: Path):
+        self.dir = run_dir / RECORDS_DIR
+        self.dir.mkdir(parents=True, exist_ok=True)
+        self.fhs: dict[str, object] = {}
+
+    def write(self, rec: dict) -> None:
+        name = shard_name(rec.get("rank_at_freeze"))
+        fh = self.fhs.get(name)
+        if fh is None:
+            fh = self.fhs[name] = (self.dir / name).open("a", encoding="utf-8")
+        fh.write(json.dumps(rec, sort_keys=True) + "\n")
+        fh.flush()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        for fh in self.fhs.values():
+            fh.close()
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -658,9 +785,7 @@ def retry_failed(run_dir: Path, panel: list[dict], watchlist: list[str],
     itself a finding -- a TLS handshake refused from a UK residential IP is a
     fact about reachability, not a measurement error.
     """
-    recs_path = run_dir / "records.jsonl"
-    recs = [json.loads(ln) for ln in
-            recs_path.read_text(encoding="utf-8").splitlines() if ln]
+    recs = load_records(run_dir)
     by_host = {r["host"]: r for r in recs}
     failed = sorted(h for h, r in by_host.items() if r["errors"])
     if not failed:
@@ -681,9 +806,7 @@ def retry_failed(run_dir: Path, panel: list[dict], watchlist: list[str],
                 recovered.append(rec["host"])
             by_host[rec["host"]] = rec
 
-    with recs_path.open("w", encoding="utf-8") as fh:
-        for h in sorted(by_host):
-            fh.write(json.dumps(by_host[h], sort_keys=True) + "\n")
+    write_records(run_dir, [by_host[h] for h in sorted(by_host)])
     still = sorted(h for h, r in by_host.items() if r["errors"])
     print(f"  recovered {len(recovered)} of {len(failed)}; "
           f"{len(still)} still failing", file=sys.stderr)
@@ -706,8 +829,7 @@ def cmd_retry(args) -> None:
     res = retry_failed(run_dir, panel, load_watchlist(), meta["run_id"],
                        meta["vantage"], True, pause_s=args.pause)
 
-    recs = [json.loads(ln) for ln in
-            (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines() if ln]
+    recs = load_records(run_dir)
     ok = sum(1 for r in recs if not r["errors"])
     err_rate = (len(recs) - ok) / len(recs) if recs else 0.0
     reasons = [f"error_rate_{err_rate:.3f}"] if err_rate > ERROR_BUDGET else []
@@ -781,7 +903,6 @@ def cmd_run(args) -> None:
             "--force to overwrite deliberately."
         )
     run_dir.mkdir(parents=True, exist_ok=True)
-    records_path = run_dir / "records.jsonl"
 
     # Two runs writing one records file produce duplicate hosts and double the
     # requests this project promises. An advisory lock makes that impossible
@@ -793,24 +914,24 @@ def cmd_run(args) -> None:
     try:
         fcntl.flock(lock_fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except OSError:
-        sys.exit(f"another run is already writing {records_path}\n"
+        sys.exit(f"another run is already writing {run_dir}\n"
                  "  (lock held on .lock in that directory)")
 
     done_hosts: set[str] = set()
-    mode = "w"
-    if args.resume and records_path.exists():
-        for ln in records_path.read_text(encoding="utf-8").splitlines():
-            if ln.strip():
-                try:
-                    done_hosts.add(json.loads(ln)["host"])
-                except (ValueError, KeyError):
-                    pass  # a torn final line from a killed run
+    if args.resume and has_records(run_dir):
+        done_hosts = {r["host"] for r in load_records(run_dir, tolerant=True)
+                      if r.get("host")}
         panel = [r for r in panel if r["host"].strip().lower() not in done_hosts]
-        mode = "a"
         print(f"resuming: {len(done_hosts)} host(s) already recorded, "
               f"{len(panel)} to go", file=sys.stderr)
         if not panel:
             sys.exit("nothing left to do; run derive")
+    else:
+        # Not a resume, so any shard already here belongs to a previous attempt
+        # at this run id. Appending to it would duplicate hosts; the writer only
+        # ever appends, so they are cleared once, here.
+        for stale in shard_paths(run_dir):
+            stale.unlink()
 
     print(f"run {run_id} | {len(panel)} hosts | {len(panel) * (len(IDENTITIES) + len(WELLKNOWN)):,} requests | "
           f"vantage {vantage}", file=sys.stderr)
@@ -821,7 +942,12 @@ def cmd_run(args) -> None:
     # Append as each host completes: less code than accumulating, and a run that
     # dies halfway leaves usable partial data. A failed run is 14 minutes to
     # redo, so there is no resume machinery.
-    with records_path.open(mode, encoding="utf-8") as fh:
+    # Keyed the same way probe_host reads it, so a record built on the error
+    # path still lands in its real band rather than rank-unknown.
+    ranks = {r["host"].strip().lower():
+             (int(r["rank_at_freeze"]) if r.get("rank_at_freeze") else None)
+             for r in panel}
+    with ShardWriter(run_dir) as fh:
         with ThreadPoolExecutor(CONCURRENT_HOSTS) as pool:
             futures = {
                 pool.submit(probe_host, r, watchlist, run_id, vantage,
@@ -838,19 +964,18 @@ def cmd_run(args) -> None:
                     # appears to hang with threads busy and nothing written.
                     rec = {"run_id": run_id, "panel_id": PANEL_ID,
                            "schema": SCHEMA, "host": futures[fut],
+                           "rank_at_freeze": ranks.get(futures[fut]),
                            "vantage": vantage, "robots": [], "wellknown": {},
                            "policy": {"file_state": "error"},
                            "errors": [f"probe raised {type(exc).__name__}: {exc}"[:200]]}
                 with lock:
-                    fh.write(json.dumps(rec, sort_keys=True) + "\n")
-                    fh.flush()
+                    fh.write(rec)
                     if not rec["errors"]:
                         ok += 1
                     if i % 25 == 0 or i == len(futures):
                         print(f"  {i}/{len(futures)}  ok={ok}", file=sys.stderr)
 
-    all_recs = [json.loads(ln) for ln in
-                records_path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    all_recs = load_records(run_dir)
     attempted = len(all_recs)
     ok = sum(1 for r in all_recs if not r["errors"])
     err_rate = 0.0 if not attempted else (attempted - ok) / attempted
@@ -890,7 +1015,7 @@ def cmd_run(args) -> None:
         json.dumps(meta, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     print(f"\n{meta['status']}: {ok}/{attempted} clean, "
-          f"{meta['duration_s']}s -> {records_path}", file=sys.stderr)
+          f"{meta['duration_s']}s -> {run_dir / RECORDS_DIR}", file=sys.stderr)
     if meta["status"] == "degraded":
         sys.exit(f"degraded ({', '.join(reasons)}) -- investigate before deriving")
 
@@ -962,17 +1087,14 @@ def _access_varies(r: dict) -> bool:
 def _load_run(run_id: str | None = None) -> tuple[Path, list[dict]]:
     base = RUNS / PANEL_ID
     runs = sorted((d for d in base.iterdir()
-                   if d.is_dir() and (d / "records.jsonl").exists()
-                   and d.name != "dry-run"),
+                   if d.is_dir() and has_records(d) and d.name != "dry-run"),
                   key=lambda d: d.stat().st_mtime) if base.exists() else []
     if not runs:
         sys.exit(f"no runs for {PANEL_ID}")
     run_dir = (base / run_id) if run_id else runs[-1]
-    if not (run_dir / "records.jsonl").exists():
+    if not has_records(run_dir):
         sys.exit(f"no such run: {run_dir}")
-    recs = [json.loads(ln) for ln in
-            (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines() if ln]
-    return run_dir, recs
+    return run_dir, load_records(run_dir)
 
 
 def _file_sha(rec: dict, which: str) -> str | None:
@@ -1041,14 +1163,12 @@ def cmd_reparse(args) -> None:
     """
     base = RUNS / PANEL_ID
     runs = sorted(d for d in base.iterdir()
-                  if d.is_dir() and (d / "records.jsonl").exists()) if base.exists() else []
+                  if d.is_dir() and has_records(d)) if base.exists() else []
     if not runs:
         sys.exit(f"no runs for {PANEL_ID}")
     watchlist = load_watchlist()
     for run_dir in runs:
-        path = run_dir / "records.jsonl"
-        recs = [json.loads(ln) for ln in
-                path.read_text(encoding="utf-8").splitlines() if ln]
+        recs = load_records(run_dir)
         changed = missing = 0
         for r in recs:
             sha = _file_sha(r, "robots")
@@ -1065,19 +1185,21 @@ def cmd_reparse(args) -> None:
             r["policy"] = fresh
             r["parser_version"] = robots_parse.PARSER_VERSION
         if not args.dry_run:
-            with path.open("w", encoding="utf-8") as fh:
-                for r in recs:
-                    fh.write(json.dumps(r, sort_keys=True) + "\n")
+            write_records(run_dir, recs)
         print(f"  {run_dir.name}: {changed} record(s) changed"
               + (f", {missing} body missing" if missing else "")
               + (" (dry run)" if args.dry_run else ""), file=sys.stderr)
     print(f"reparsed at parser_version={robots_parse.PARSER_VERSION}", file=sys.stderr)
 
 
-RANK_BANDS = ((1, 1000), (1001, 2500), (2501, 5000), (5001, 10000), (10001, 20000))
 
 
 def _rank_bands(recs: list[dict]) -> list[dict]:
+    # Only paths this run actually requested, matching the top-level wellknown
+    # summary. A run predating a path would otherwise report it at 0.0%, which
+    # reads as "nobody publishes this" when it means "never asked".
+    probed = [k for k in WELLKNOWN
+              if any(k in r.get("wellknown", {}) for r in recs)]
     out = []
     for lo, hi in RANK_BANDS:
         sub = [r for r in recs if lo <= int(r.get("rank_at_freeze") or 0) <= hi]
@@ -1085,7 +1207,7 @@ def _rank_bands(recs: list[dict]) -> list[dict]:
             continue
         pres = [r for r in sub if r.get("policy", {}).get("file_state") == "present"]
         row = {"lo": lo, "hi": hi, "hosts": len(sub), "readable": len(pres)}
-        for k in WELLKNOWN:
+        for k in probed:
             row[k] = round(100 * sum(1 for r in sub if wk_present(r, k)) / len(sub), 2)
         row["names_ai"] = round(
             100 * sum(1 for r in pres if r["policy"].get("ai_tokens_named")) / len(pres), 2
@@ -1094,17 +1216,48 @@ def _rank_bands(recs: list[dict]) -> list[dict]:
     return out
 
 
+def cmd_reshard(args) -> None:
+    """Split a run's records.jsonl into one file per rank band, in place.
+
+    The migration for runs collected before sharding. It only moves rows
+    between files: `derive` must produce byte-identical findings afterwards,
+    and that is the check worth running, not this command's own output.
+    """
+    base = RUNS / PANEL_ID
+    runs = sorted(d for d in base.iterdir()
+                  if d.is_dir() and has_records(d)) if base.exists() else []
+    if not runs:
+        sys.exit(f"no runs for {PANEL_ID}")
+    for run_dir in runs:
+        if (run_dir / RECORDS_DIR).is_dir():
+            print(f"  {run_dir.name}: already sharded", file=sys.stderr)
+            continue
+        recs = load_records(run_dir)
+        hosts = len({r["host"] for r in recs})
+        if args.dry_run:
+            counts: dict[str, int] = {}
+            for r in recs:
+                nm = shard_name(r.get("rank_at_freeze"))
+                counts[nm] = counts.get(nm, 0) + 1
+            print(f"  {run_dir.name}: {len(recs)} record(s), {hosts} host(s) ->",
+                  file=sys.stderr)
+            for nm in sorted(counts):
+                print(f"      {nm:26} {counts[nm]:6,}", file=sys.stderr)
+            continue
+        write_records(run_dir, recs)  # verifies the round trip before unlinking
+        print(f"  {run_dir.name}: {len(recs)} record(s) -> "
+              f"{len(shard_paths(run_dir))} shard(s)", file=sys.stderr)
+
+
 def cmd_derive(args) -> None:
     base = RUNS / PANEL_ID
     runs = sorted((d for d in base.iterdir()
-                   if d.is_dir() and (d / "records.jsonl").exists()
-                   and d.name != "dry-run"),
+                   if d.is_dir() and has_records(d) and d.name != "dry-run"),
                   key=lambda d: d.stat().st_mtime) if base.exists() else []
     if not runs:
         sys.exit("no runs to derive from")
     run_dir = runs[-1]
-    recs = [json.loads(ln) for ln in
-            (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines() if ln]
+    recs = load_records(run_dir)
     n = len(recs)
 
     def share(pred) -> dict:
@@ -1294,6 +1447,12 @@ def main() -> None:
     t.add_argument("--panel", default="panel-01")
     t.add_argument("--pause", type=float, default=30.0)
     t.set_defaults(func=cmd_retry)
+
+    rs = sub.add_parser("reshard", help="split a run's records into per-band files")
+    rs.add_argument("--panel", default="panel-01")
+    rs.add_argument("--dry-run", action="store_true",
+                    help="report the split without writing")
+    rs.set_defaults(func=cmd_reshard)
 
     d = sub.add_parser("derive", help="compute findings from the latest run")
     d.add_argument("--panel", default="panel-01")

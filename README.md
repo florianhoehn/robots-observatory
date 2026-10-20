@@ -64,7 +64,13 @@ any real run.
 | `panel/excluded.csv` | what was screened out and why — the other half of the record |
 | `data/robots/<host>.txt` | current robots.txt per host; `git log -p` is the change history |
 | `docs/` | the published site; GitHub Pages serves this folder directly |
-| `data/runs/<date>/` | `records.jsonl` + `run-meta.json` |
+| `data/runs/<panel>/<date>/records/` | one `rank-LO-HI.jsonl` per rank band — fetch the band you care about |
+| `data/runs/<panel>/<date>/run-meta.json` | provenance: panel hash, parser version, git SHA, degraded reasons |
+| `data/blobs/` | archived response bodies, content-addressed — **local only, not committed** |
+
+Records hold status, timings, every header and a `sha256` of each body; the
+bodies live in `data/blobs/` and are not published. `reparse` reads them, so it
+only works where the blob store is present.
 
 ## Reproducibility
 
