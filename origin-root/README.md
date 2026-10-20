@@ -177,8 +177,9 @@ Expected: `wildcard_root_disallowed` False, one `content_signal` value,
   already retired (`anthropic-ai`, `cohere-ai`, `omgili`).
 - **`Expires: 2027-10-20T00:00:00Z`** in `security.txt` is a real deadline.
   RFC 9116 wants it under a year out, so it cannot simply be set further.
-  Put a reminder in a calendar; we count stale ones in other people's
-  files.
+  Put a reminder in a calendar. Nothing in this project checks anyone's
+  expiry date, which is a good reason not to assume someone will notice
+  ours going stale.
 - **`robots.txt` at the origin root governs the whole origin**, including
   any other project page you publish under `florianhoehn.github.io`. Allowing
   everything here allows everything there too. That is the intent today;

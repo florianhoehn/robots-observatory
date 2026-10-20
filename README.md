@@ -3,7 +3,7 @@
 How does the web *declare* its policy toward AI agents, and does that
 declaration change depending on who asks?
 
-A frozen panel of 480 real websites, drawn from the Tranco top 1000 and
+A frozen panel of 463 real websites, drawn from the Tranco top 1000 and
 screened down to hosts that are actually websites. Every week we read each
 host's policy surface (`robots.txt` plus ten well-known paths) under two
 requester identities, and publish the result.
@@ -67,6 +67,7 @@ any real run.
 | `data/runs/<panel>/<date>/records/` | one `rank-LO-HI.jsonl` per rank band; fetch the band you care about |
 | `data/runs/<panel>/<date>/run-meta.json` | provenance: panel hash, parser version, git SHA, degraded reasons |
 | `data/blobs/` | archived response bodies, content-addressed. **Local only, not committed** |
+| `origin-root/` | the machine-readable policy files this project publishes about itself, staged for the origin root |
 
 Records hold status, timings, every header and a `sha256` of each body; the
 bodies live in `data/blobs/` and are not published. `reparse` reads them, so it

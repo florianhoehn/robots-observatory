@@ -2,7 +2,7 @@
 
 ## What this project requests
 
-Per host, per run, exactly eleven requests:
+Per host, per run, exactly twelve requests:
 
 | Path | Count | Why |
 |---|---|---|
@@ -50,7 +50,7 @@ We never fetch a page, never touch anything behind authentication, never solve
 a CAPTCHA, never circumvent a paywall, and never submit a form.
 
 This claim is falsifiable from two readable source files: `observatory.py`
-builds exactly the five URLs listed above and no others. The politeness limits
+builds exactly the twelve URLs listed above and no others. The politeness limits
 are constants at the top of that file, recorded in every run's metadata, and
 verified by `tests/test_fetch.py` against a local server.
 
