@@ -19,6 +19,7 @@
     --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:6.4rem}
   html{-webkit-text-size-adjust:100%}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
        font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -37,36 +38,48 @@
   .stand{font-size:1.1rem;color:var(--muted);margin:0}
   .stand b{color:var(--ink);font-weight:600}
 
-  .rail{display:flex;gap:6px;overflow-x:auto;padding:.9rem 0 1rem;
-        border-bottom:1px solid var(--line)}
-  .lens-btn{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:7px;
-            padding:.45rem .75rem;cursor:pointer;font-family:var(--sans);font-size:.82rem;
-            color:var(--muted);display:flex;gap:.5rem;align-items:center;white-space:nowrap;
-            transition:border-color .15s,color .15s,background .15s}
-  .lens-btn:hover{border-color:#b9c6c4;color:var(--ink)}
-  .lens-btn[aria-pressed=true]{background:var(--support);border-color:var(--support);color:#fff}
-  .lens-btn .ix{font-family:var(--mono);font-size:.7rem;opacity:.6;
-                font-variant-numeric:tabular-nums}
+  /* ---------- visual index ---------- */
+  .jump{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.93);
+        backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .jump-inner{display:flex;gap:4px;overflow-x:auto;padding:.5rem 16px;
+              scrollbar-width:none}
+  .jump-inner::-webkit-scrollbar{display:none}
+  .jump-btn{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:.1rem;
+            width:5.1rem;padding:.4rem .2rem .35rem;border-radius:8px;text-decoration:none;
+            color:var(--faint);border:1px solid transparent;transition:all .15s}
+  .jump-btn:hover{background:#f4f7f6;color:var(--support)}
+  .jump-btn[aria-current=true]{background:#eef4f3;border-color:#cfe0de;color:var(--support)}
+  .glyph{width:40px;height:27px;display:block}
+  .jump-btn .jl{font-size:.7rem;line-height:1.1;text-align:center;white-space:nowrap;
+                overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .jump-btn .jn{display:none}
 
-  .stage{display:grid;grid-template-columns:minmax(0,1fr) 19.5rem;gap:2.2rem;
-         padding:1.8rem 0 .6rem;align-items:start}
+  /* ---------- a lens ---------- */
+  .lens{padding:3.4rem 0 1rem;border-top:1px solid var(--line)}
+  .lens:first-child{border-top:0;padding-top:2rem}
+  .lens-head{display:flex;gap:1rem;align-items:baseline;margin-bottom:1.3rem}
+  .lens-no{font-family:var(--mono);font-size:1.5rem;color:#d4dedc;font-weight:500;
+           line-height:1;flex:0 0 auto}
+  .lens-head h2{font-size:clamp(1.4rem,2.6vw,1.95rem);line-height:1.1;
+                letter-spacing:-.025em;margin:.1rem 0 0;font-weight:700;max-width:26ch}
+  .lens-body{display:grid;grid-template-columns:minmax(0,1fr) 19.5rem;gap:2.2rem;
+             align-items:start}
   .viz{position:relative;min-height:320px}
   svg{display:block;width:100%;height:auto;overflow:visible}
   .vz-cap{font-size:.84rem;color:var(--faint);margin:.9rem 0 0;max-width:46rem}
 
-  .readout .kicker{font-family:var(--mono);font-size:.67rem;letter-spacing:.13em;
-                   text-transform:uppercase;color:var(--faint);margin:0 0 .5rem}
-  .readout h2{font-size:1.4rem;line-height:1.14;letter-spacing:-.02em;margin:0 0 .7rem;
-              font-weight:700}
+  .kicker{font-family:var(--mono);font-size:.67rem;letter-spacing:.13em;
+          text-transform:uppercase;color:var(--faint);margin:0 0 .25rem}
   .big{font-size:2.7rem;font-weight:700;letter-spacing:-.03em;color:var(--support);
        line-height:1;margin:.1rem 0 .15rem;font-variant-numeric:tabular-nums}
   .bigsub{font-size:.88rem;color:var(--muted);margin:0 0 1rem}
-  .readout p{font-size:.92rem;color:var(--muted);margin:0 0 .8rem}
+  .readout p,.blurb p{font-size:.92rem;color:var(--muted);margin:0 0 .8rem}
+  .blurb p:last-child{margin-bottom:0}
   .readout code{font-family:var(--mono);font-size:.85em;background:var(--track);
                 padding:.08em .3em;border-radius:3px}
 
   .controls{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;padding:.9rem 0;
-            border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:1rem}
+            border-bottom:1px solid var(--line)}
   .lbl{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
        color:var(--faint);margin-right:.1rem}
   .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:.28rem .68rem;
@@ -78,10 +91,14 @@
   .count{font-family:var(--mono);font-size:.76rem;color:var(--faint);margin-left:auto;
          font-variant-numeric:tabular-nums}
 
-  /* site drawer */
-  .drawer{padding:1.3rem 0 0}
-  .drawer h3{font-size:.95rem;margin:0 0 .2rem;font-weight:600}
-  .drawer .sub{font-size:.84rem;color:var(--faint);margin:0 0 .9rem}
+  /* per-lens site list */
+  .peek{margin:1.6rem 0 0;border-top:1px dashed var(--line);padding-top:.7rem}
+  .peek summary{cursor:pointer;font-size:.86rem;color:var(--support);font-weight:500;
+                list-style:none;padding:.15rem 0}
+  .peek summary::-webkit-details-marker{display:none}
+  .peek summary::before{content:"\25B8  ";color:var(--faint)}
+  .peek[open] summary::before{content:"\25BE  "}
+  .peek .sub{font-size:.8rem;color:var(--faint);margin:.35rem 0 .7rem}
   .sitegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:4px}
   .site{border:1px solid var(--line);border-radius:6px;padding:.45rem .6rem;cursor:pointer;
         background:#fff;text-align:left;font-family:var(--sans);font-size:.82rem;
@@ -131,9 +148,14 @@
   .hit:hover{opacity:.78}
 
   @media(max-width:880px){
-    .stage{grid-template-columns:1fr;gap:1.3rem}
+    .lens-body{grid-template-columns:1fr;gap:1.2rem}
+    .lens{padding-top:2.4rem}
     .detail{left:16px;right:16px;width:auto}
+    .jump-btn{width:3.6rem}
+    .jump-btn .jl{display:none}
+    .jump-btn .jn{display:block;font-family:var(--mono);font-size:.68rem}
   }
+  @media(prefers-reduced-motion:reduce){ *{scroll-behavior:auto !important} }
 </style>
 </head>
 <body>
@@ -152,24 +174,14 @@
     mark on every chart is live. Hover it, click it, and read the list of real sites
     underneath.</p>
   </div>
+</div>
 
-  <div class="rail" id="rail" role="tablist" aria-label="Lenses"></div>
+<nav class="jump" id="jump" aria-label="Jump to a lens">
+  <div class="wrap jump-inner" id="jump-inner"></div>
+</nav>
 
-  <div class="stage">
-    <div class="viz">
-      <svg id="viz" role="img" aria-labelledby="viztitle"><title id="viztitle"></title></svg>
-      <p class="vz-cap" id="vcap"></p>
-    </div>
-    <div class="readout">
-      <p class="kicker" id="r-kicker">&hellip;</p>
-      <h2 id="r-title">&hellip;</h2>
-      <div class="big" id="r-big">&hellip;</div>
-      <div class="bigsub" id="r-bigsub"></div>
-      <div id="r-blurb"></div>
-    </div>
-  </div>
-
-  <div class="controls">
+<div class="wrap">
+  <div class="controls" id="controls">
     <span class="lbl">Rank</span>
     <button class="chip" data-band="all" aria-pressed="true">All</button>
     <button class="chip" data-band="0">1&ndash;1k</button>
@@ -184,12 +196,7 @@
     <span class="count" id="count"></span>
   </div>
 
-  <div class="drawer">
-    <h3 id="d-title">The sites behind this</h3>
-    <p class="sub" id="d-sub"></p>
-    <div class="sitegrid" id="sitegrid"></div>
-    <p class="more" id="more"></p>
-  </div>
+  <main id="sections"></main>
 
   <footer id="data">
     <p><strong>Every chart here is drawn from one file you can download.</strong>
@@ -331,16 +338,18 @@ function tokStats(f) {
 }
 
 /* -------------------------------------------------------------- plumbing -- */
-var svg = document.getElementById("viz");
 var tip = document.getElementById("tip");
 var VW = 760, VH = 420;          // viewBox units; the SVG scales to fit
+// Every lens draws into its own <svg>; the render loop points this at the one
+// belonging to the section being drawn, so the draw functions stay unchanged.
+var target = null, targetLens = null, targetList = null;
 function freshSvg(h) {
   VH = h || 420;
+  var svg = target;
   while (svg.firstChild) { svg.removeChild(svg.firstChild); }
   svg.setAttribute("viewBox", "0 0 " + VW + " " + VH);
   svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-  var t = S("title", {}, cur.title);
-  svg.appendChild(t);
+  svg.appendChild(S("title", {}, targetLens ? targetLens.title : ""));
   return svg;
 }
 function hover(node, html) {
@@ -354,9 +363,10 @@ function hover(node, html) {
   node.addEventListener("mouseleave", function () { tip.style.opacity = 0; });
 }
 function clickTo(node, label, sites) {
+  var list = targetList;   // captured at draw time, not click time
   node.addEventListener("click", function () {
     tip.style.opacity = 0;
-    showSites(label, sites);
+    showSites(list, label, sites, true);
   });
 }
 
@@ -1099,11 +1109,11 @@ var LENSES = [
 ];
 
 /* ----------------------------------------------------------------- state -- */
-var cur = LENSES[0], band = "all", readOnly = false, query = "";
-function active() { return DATA[cur.panel === 1 ? 1 : 2] || []; }
-function filtered() {
+var band = "all", readOnly = false, query = "";
+function sitesFor(lens) { return DATA[lens.panel === 1 ? 1 : 2] || []; }
+function filterOf(lens) {
   var q = query.trim().toLowerCase();
-  return active().filter(function (s) {
+  return sitesFor(lens).filter(function (s) {
     if (band !== "all" && s.band !== +band) { return false; }
     if (readOnly && !s.readable) { return false; }
     if (q && s.host.indexOf(q) < 0) { return false; }
@@ -1111,14 +1121,119 @@ function filtered() {
   });
 }
 
-function showSites(label, list) {
-  document.getElementById("d-title").textContent = label;
-  document.getElementById("d-sub").textContent =
-    num(list.length) + (list.length === 1 ? " site" : " sites")
-    + (list.length > 300 ? " — showing the first 300 by rank" : "");
-  var host = document.getElementById("sitegrid");
-  host.innerHTML = "";
-  list.slice().sort(function (a,b) { return a.rank - b.rank; }).slice(0,300)
+/* ------------------------------------------------- the ten section shells -- */
+// Miniature of each lens's own shape, so the index is a picture of what is
+// below rather than ten identical words.
+function glyph(id) {
+  var g = document.createElementNS(NS, "svg");
+  g.setAttribute("viewBox", "0 0 44 30");
+  g.setAttribute("class", "glyph");
+  var add = function (t, a) { g.appendChild(S(t, a)); };
+  var dot = function (x, y, r, c, o) {
+    add("circle", { cx:x, cy:y, r:r, fill:c || "currentColor", "fill-opacity":o || 1 }); };
+  var bar = function (x, y, w, h, c, o) {
+    add("rect", { x:x, y:y, width:w, height:h, rx:1, fill:c || "currentColor",
+                  "fill-opacity":o || 1 }); };
+  if (id === "purpose") {
+    [7, 15, 23].forEach(function (y, i) {
+      add("line", { x1:4, x2:40, y1:y, y2:y, stroke:"currentColor",
+                    "stroke-opacity":.25, "stroke-width":1 });
+      [32, 22, 18][i] && dot([32, 22, 18][i], y, 3, null, .9);
+      dot([26, 17, 13][i], y, 2.2, null, .5);
+    });
+  } else if (id === "operators") {
+    [8, 16, 24].forEach(function (y, i) {
+      var x1 = [10, 14, 20][i], x2 = [36, 30, 26][i];
+      add("line", { x1:x1, x2:x2, y1:y, y2:y, stroke:"currentColor",
+                    "stroke-opacity":.3, "stroke-width":3, "stroke-linecap":"round" });
+      dot(x1, y, 2.6); dot(x2, y, 2.6, null, .6);
+    });
+  } else if (id === "sector") {
+    [6, 13, 20, 26].forEach(function (y, i) {
+      var w = [14, 8, 5, 3][i];
+      bar(22 - w, y - 2, w, 4, null, .85);
+      bar(22, y - 2, [3, 6, 11, 4][i], 4, null, .4);
+    });
+    add("line", { x1:22, x2:22, y1:2, y2:28, stroke:"currentColor", "stroke-opacity":.4 });
+  } else if (id === "fork") {
+    dot(17, 15, 11, null, .5); dot(28, 15, 9, null, .35);
+  } else if (id === "signal") {
+    for (var r = 0; r < 5; r++) { for (var c = 0; c < 7; c++) {
+      bar(4 + c * 3, 4 + r * 3, 2, 2, null, .85); } }
+    for (var r2 = 0; r2 < 2; r2++) { for (var c2 = 0; c2 < 5; c2++) {
+      bar(28 + c2 * 3, 4 + r2 * 3, 2, 2, null, .4); } }
+    bar(28, 16, 2, 2, null, .3);
+  } else if (id === "tdm") {
+    [[9, 10], [15, 10], [9, 16], [15, 16], [12, 22]].forEach(function (p) { dot(p[0], p[1], 2.6, null, .9); });
+    [[28, 11], [34, 11], [28, 17]].forEach(function (p) { dot(p[0], p[1], 2.6, null, .45); });
+  } else if (id === "ghosts") {
+    [6, 13, 20, 27].forEach(function (y, i) {
+      add("rect", { x:5, y:y - 2.5, width:[32, 18, 12, 8][i], height:5, rx:1,
+        fill:"none", stroke:"currentColor", "stroke-width":1, "stroke-dasharray":"2.5 2" });
+    });
+  } else if (id === "legal") {
+    [0, 1, 2, 3, 4].forEach(function (i) {
+      var x = 5 + i * 8, hT = [4, 6, 8, 11, 13][i], hO = [10, 8, 6, 4, 3][i];
+      bar(x, 26 - hT, 6, hT, null, .3);
+      bar(x, 26 - hT - hO, 6, hO, null, .9);
+    });
+  } else if (id === "strain") {
+    [[8, 24], [13, 21], [17, 18], [21, 16], [25, 13], [29, 11], [33, 8], [12, 24], [20, 20], [28, 15]]
+      .forEach(function (p, i) { dot(p[0], p[1], 2.4, null, i % 3 ? .4 : .85); });
+  } else if (id === "silence") {
+    for (var r3 = 0; r3 < 5; r3++) { for (var c3 = 0; c3 < 8; c3++) {
+      bar(5 + c3 * 4.4, 4 + r3 * 4.4, 3.2, 3.2, null, r3 < 3 ? .22 : .85); } }
+  }
+  return g;
+}
+
+function buildSections() {
+  var host = document.getElementById("sections");
+  var nav = document.getElementById("jump-inner");
+  LENSES.forEach(function (l, i) {
+    var sec = el("section", "lens");
+    sec.id = "lens-" + l.id;
+    sec.innerHTML =
+      '<div class="lens-head">' +
+        '<span class="lens-no">' + String(i + 1).padStart(2, "0") + '</span>' +
+        '<div><p class="kicker">' + l.kicker + '</p>' +
+        '<h2>' + l.title + '</h2></div>' +
+      '</div>' +
+      '<div class="lens-body">' +
+        '<div class="viz"><svg role="img"></svg><p class="vz-cap"></p></div>' +
+        '<div class="readout"><div class="big"></div><div class="bigsub"></div>' +
+        '<div class="blurb"></div></div>' +
+      '</div>' +
+      '<details class="peek"><summary></summary>' +
+        '<p class="sub"></p><div class="sitegrid"></div><p class="more"></p>' +
+      '</details>';
+    host.appendChild(sec);
+    l._el = {
+      sec: sec, svg: sec.querySelector("svg"), cap: sec.querySelector(".vz-cap"),
+      big: sec.querySelector(".big"), bigsub: sec.querySelector(".bigsub"),
+      blurb: sec.querySelector(".blurb"), det: sec.querySelector("details"),
+      sum: sec.querySelector("summary"), sub: sec.querySelector(".sub"),
+      grid: sec.querySelector(".sitegrid"), more: sec.querySelector(".more")
+    };
+
+    var a = el("a", "jump-btn");
+    a.href = "#lens-" + l.id;
+    a.appendChild(glyph(l.id));
+    a.appendChild(el("span", "jl", l.tab));
+    a.appendChild(el("span", "jn", String(i + 1).padStart(2, "0")));
+    a.dataset.for = l.id;
+    nav.appendChild(a);
+  });
+}
+
+/* ------------------------------------------------------------- site lists -- */
+function showSites(list, label, sites, open) {
+  list.sum.textContent = label + "  \u00b7  " + num(sites.length)
+    + (sites.length === 1 ? " site" : " sites");
+  list.sub.textContent = sites.length > 300
+    ? "Showing the first 300 by rank. Narrow it with the filters above." : "";
+  list.grid.innerHTML = "";
+  sites.slice().sort(function (a, b) { return a.rank - b.rank; }).slice(0, 300)
     .forEach(function (s) {
       var b = el("button", "site");
       var d = el("span", "dot");
@@ -1128,17 +1243,19 @@ function showSites(label, list) {
       b.appendChild(el("span", "h", s.host));
       b.appendChild(el("span", "r", num(s.rank)));
       b.addEventListener("click", function () { showDetail(s); });
-      host.appendChild(b);
+      list.grid.appendChild(b);
     });
-  document.getElementById("more").textContent = list.length > 300
-    ? "Narrow it with the rank filter or the search box above." : "";
+  if (open) {
+    list.det.open = true;
+    list.det.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 }
 
 function showDetail(s) {
   document.getElementById("x-host").textContent = s.host;
   document.getElementById("x-meta").textContent =
-    "rank " + num(s.rank) + "  ·  robots.txt: " + s.state
-    + (s.sector && s.sector !== "unlabelled" ? "  ·  " + s.sector : "");
+    "rank " + num(s.rank) + "  \u00b7  robots.txt: " + s.state
+    + (s.sector && s.sector !== "unlabelled" ? "  \u00b7  " + s.sector : "");
   var dl = document.getElementById("x-list");
   dl.innerHTML = "";
   var add = function (k, v) {
@@ -1147,9 +1264,9 @@ function showDetail(s) {
     if (typeof v === "string") { dd.textContent = v; } else { dd.appendChild(v); }
     dl.appendChild(dd);
   };
-  var pills = function (list, cls) {
+  var pills = function (lst, cls) {
     var w = el("div");
-    list.forEach(function (t) { w.appendChild(el("span", "pill " + cls, t)); });
+    lst.forEach(function (t) { w.appendChild(el("span", "pill " + cls, t)); });
     return w;
   };
   if (s.named.length) {
@@ -1159,23 +1276,25 @@ function showDetail(s) {
   } else {
     add("AI crawlers", s.readable ? "none named" : "rules not readable");
   }
-  if (s.wk.length) { add("Publishes", pills(s.wk.map(function (k) { return WKLABEL[k]||k; }), "yes")); }
+  if (s.wk.length) { add("Publishes", pills(s.wk.map(function (k) { return WKLABEL[k] || k; }), "yes")); }
   if (s.ghosts.length) { add("Matches nothing", pills(s.ghosts, "ghost")); }
   if (s.signal) { add("content-signal", s.signal); }
   if (s.crawlDelay) { add("Crawl-delay", s.crawlDelay + "s"); }
   add("Rulebook", num(s.lines) + " directives"
-    + (s.bytes ? ", " + (s.bytes > 2048 ? Math.round(s.bytes/1024)+" KB" : s.bytes+" bytes") : "")
+    + (s.bytes ? ", " + (s.bytes > 2048 ? Math.round(s.bytes / 1024) + " KB" : s.bytes + " bytes") : "")
     + (s.sitemaps ? ", " + num(s.sitemaps) + " sitemaps" : ""));
   var notes = [];
   if (s.has("blocks_all_crawlers")) { notes.push("blocks every crawler at the root"); }
   if (s.has("asks_for_money")) { notes.push("asks for money or a licence"); }
   if (s.has("reserves_tdm")) { notes.push("reserves TDM rights"); }
-  if (s.has("has_legal_text")) { notes.push("asserts legal terms"); }
+  if (s.has("has_legal_text")) {
+    notes.push(s.has("legal_boilerplate") ? "carries the shared legal template"
+                                          : "wrote its own terms"); }
   if (s.has("starts_with_bom")) { notes.push("begins with a byte-order mark"); }
   if (s.has("access_varies_by_identity")) { notes.push("answered our two identities differently"); }
-  if (s.has("budget_exceeded")) { notes.push("hit the time budget — later paths unmeasured"); }
+  if (s.has("budget_exceeded")) { notes.push("hit the time budget \u2014 later paths unmeasured"); }
   if (notes.length) { add("Also", notes.join("; ")); }
-  var a = el("a", null, "open robots.txt ↗");
+  var a = el("a", null, "open robots.txt \u2197");
   a.href = "https://" + s.host + "/robots.txt";
   a.target = "_blank"; a.rel = "noopener noreferrer";
   a.style.color = C.support;
@@ -1183,46 +1302,35 @@ function showDetail(s) {
   document.getElementById("detail").hidden = false;
 }
 
-function render() {
-  var f = filtered();
-  document.getElementById("count").textContent = num(f.length) + " sites in view";
-  document.getElementById("r-kicker").textContent = cur.kicker;
-  document.getElementById("r-title").textContent = cur.title;
-  document.getElementById("r-blurb").innerHTML = cur.blurb;
-  document.getElementById("vcap").textContent = cur.cap || "";
-  var b = cur.big(f);
-  document.getElementById("r-big").textContent = b[0];
-  document.getElementById("r-bigsub").textContent = b[1];
-  try { cur.draw(f); } catch (e) {
-    freshSvg(120).appendChild(S("text",{x:20,y:60,"class":"vlab"},
-      "This lens could not be drawn for the current filter."));
-  }
-  var sub = cur.subset(f);
-  showSites(sub[0], sub[1]);
+/* ---------------------------------------------------------------- render -- */
+function renderAll() {
+  var shown = filterOf(LENSES[0]);
+  document.getElementById("count").textContent = num(shown.length) + " sites in view";
+  LENSES.forEach(function (l) {
+    var f = filterOf(l), E = l._el;
+    target = E.svg; targetLens = l; targetList = E;
+    E.cap.textContent = l.cap || "";
+    E.blurb.innerHTML = l.blurb;
+    var b = l.big(f);
+    E.big.textContent = b[0];
+    E.bigsub.textContent = b[1];
+    try { l.draw(f); } catch (err) {
+      freshSvg(90).appendChild(S("text", { x:10, y:48, "class":"vlab" },
+        "Not enough data in this filter to draw this lens."));
+    }
+    var sub = l.subset(f);
+    showSites(E, sub[0], sub[1], false);
+  });
+  target = targetLens = targetList = null;
 }
 
-var rail = document.getElementById("rail");
-LENSES.forEach(function (l, i) {
-  var b = el("button", "lens-btn");
-  b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
-  b.appendChild(el("span", "ix", String(i+1).padStart(2,"0")));
-  b.appendChild(el("span", null, l.tab));
-  b.addEventListener("click", function () {
-    cur = l;
-    Array.prototype.forEach.call(rail.children, function (c, j) {
-      c.setAttribute("aria-pressed", j === i ? "true" : "false");
-    });
-    document.getElementById("detail").hidden = true;
-    ensure(l.panel === 1 ? 1 : 2).then(render);
-  });
-  rail.appendChild(b);
-});
+/* ------------------------------------------------------------------ wire -- */
 Array.prototype.forEach.call(document.querySelectorAll("[data-band]"), function (b) {
   b.addEventListener("click", function () {
     band = b.dataset.band;
     Array.prototype.forEach.call(document.querySelectorAll("[data-band]"), function (o) {
       o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
-    render();
+    renderAll();
   });
 });
 Array.prototype.forEach.call(document.querySelectorAll("[data-read]"), function (b) {
@@ -1230,16 +1338,35 @@ Array.prototype.forEach.call(document.querySelectorAll("[data-read]"), function 
     readOnly = b.dataset.read === "yes";
     Array.prototype.forEach.call(document.querySelectorAll("[data-read]"), function (o) {
       o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
-    render();
+    renderAll();
   });
 });
 var qt = null;
 document.getElementById("q").addEventListener("input", function (e) {
-  query = e.target.value; clearTimeout(qt); qt = setTimeout(render, 180);
+  query = e.target.value; clearTimeout(qt); qt = setTimeout(renderAll, 220);
 });
 document.getElementById("dclose").addEventListener("click", function () {
   document.getElementById("detail").hidden = true;
 });
+
+function watchScroll() {
+  var links = {};
+  Array.prototype.forEach.call(document.querySelectorAll(".jump-btn"), function (a) {
+    links[a.dataset["for"]] = a;
+  });
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      var id = en.target.id.replace("lens-", "");
+      if (en.isIntersecting) {
+        Object.keys(links).forEach(function (k) {
+          links[k].setAttribute("aria-current", k === id ? "true" : "false"); });
+        var a = links[id];
+        if (a) { a.scrollIntoView({ block:"nearest", inline:"nearest" }); }
+      }
+    });
+  }, { rootMargin: "-45% 0px -45% 0px" });
+  LENSES.forEach(function (l) { obs.observe(l._el.sec); });
+}
 
 function ensure(which) {
   if (DATA[which]) { return Promise.resolve(); }
@@ -1249,15 +1376,17 @@ function ensure(which) {
     .then(function (j) { DATA[which] = decorate(j); });
 }
 
-ensure(2).then(function () {
+buildSections();
+Promise.all([ensure(2), ensure(1)]).then(function () {
   var n = DATA[2].length;
   document.getElementById("m-n").textContent = num(n);
   document.getElementById("s-n").textContent = num(n);
-  render();
+  renderAll();
+  watchScroll();
 }).catch(function (err) {
-  document.getElementById("r-title").textContent = "Could not load the data.";
-  document.getElementById("r-blurb").textContent =
-    "The per-site file did not load (" + err.message + ").";
+  document.getElementById("sections").innerHTML =
+    '<p style="padding:2rem 0;color:#a8453a">Could not load the per-site data ('
+    + err.message + ').</p>';
 });
 </script>
 </body>
