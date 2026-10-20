@@ -298,18 +298,24 @@ def store_blob(sha: str | None, text: str | None, present: bool = True) -> bool:
 
     The one thing no archive can recover is a request never made. Adding a
     path to WELLKNOWN only ever applies going forward.
+
+    The returned flag says whether what was written is a *prefix* of the body
+    rather than the body. That distinction has to be recorded: the blob is
+    named for the sha256 of the whole response, so a truncated one does not
+    hash to its own filename and an integrity check would call it corrupt.
+    39% of the archive is in that state, and nothing said so until now.
     """
     if not sha or text is None:
         return False
     cap = ARCHIVE_CAP_PRESENT if present else ARCHIVE_CAP_OTHER
-    if len(text) > cap:
+    truncated = len(text) > cap
+    if truncated:
         text = text[:cap]
     p = blob_path(sha)
-    if p.exists():
-        return False
-    p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(text, encoding="utf-8")
-    return True
+    if not p.exists():
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(text, encoding="utf-8")
+    return truncated
 
 
 def read_blob(sha: str) -> str | None:
@@ -607,8 +613,10 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
         state = robots_parse.classify(got["status"], body,
                                       got["error"] is not None,
                                       got["path_mismatch"], got["dns_error"])
-        store_blob(got["sha256"], body, present=(state == "present"))
+        clipped = store_blob(got["sha256"], body, present=(state == "present"))
         entry = {"identity": ident, **got, "file_state": state}
+        if clipped:
+            entry["archive_truncated"] = True
         if got["error"]:
             rec["errors"].append(f"robots/{ident}: {got['error']}")
         rec["robots"].append(entry)
@@ -677,12 +685,14 @@ def probe_host(row: dict, watchlist: list[str], run_id: str, vantage: str,
                                       got["path_mismatch"], got["dns_error"],
                                       expect_json=key in JSON_WELLKNOWN,
                                       empty_is_absent=True)
-        store_blob(got["sha256"], body, present=(state == "present"))
+        clipped = store_blob(got["sha256"], body, present=(state == "present"))
         rec["wellknown"][key] = {
             "status": got["status"], "file_state": state,
             "bytes": got["bytes"], "sha256": got["sha256"],
             "redirects": got["redirects"], "final_path": got["final_path"],
         }
+        if clipped:
+            rec["wellknown"][key]["archive_truncated"] = True
         if got["error"]:
             rec["errors"].append(f"{key}: {got['error']}")
 
@@ -1262,7 +1272,7 @@ def cmd_reparse(args) -> None:
     watchlist = load_watchlist()
     for run_dir in runs:
         recs = load_records(run_dir)
-        changed = missing = demoted = 0
+        changed = missing = demoted = clipped_marked = 0
         for r in recs:
             # A JSON convention whose archived body is not JSON was never that
             # file. Only ever demotes a 'present', so a reclassification can
@@ -1291,6 +1301,21 @@ def cmd_reparse(args) -> None:
                     wk["reclassified"] = "zero-length body"
                     demoted += 1
 
+            # A body stored before truncation was recorded cannot hash to its
+            # own filename. Detect that here and say so on the record, so the
+            # archive describes itself instead of looking corrupt.
+            for entry in list(r.get("robots") or []) + \
+                    [v for v in (r.get("wellknown") or {}).values() if v]:
+                sha = entry.get("sha256")
+                if not sha or entry.get("archive_truncated"):
+                    continue
+                bp = blob_path(sha)
+                if not bp.exists():
+                    continue
+                if hashlib.sha256(bp.read_bytes()).hexdigest() != sha:
+                    entry["archive_truncated"] = True
+                    clipped_marked += 1
+
             # Stance that can only be read from the body, stamped onto the
             # record so derive stays a pure function of the records and works
             # without the blob store.
@@ -1318,7 +1343,8 @@ def cmd_reparse(args) -> None:
         if not args.dry_run:
             write_records(run_dir, recs)
         print(f"  {run_dir.name}: {changed} policy record(s) changed, "
-              f"{demoted} non-JSON well-known file(s) demoted"
+              f"{demoted} non-JSON well-known file(s) demoted, "
+              f"{clipped_marked} truncated blob(s) marked"
               + (f", {missing} body missing" if missing else "")
               + (" (dry run)" if args.dry_run else ""), file=sys.stderr)
     print(f"reparsed at parser_version={robots_parse.PARSER_VERSION}", file=sys.stderr)
@@ -1516,6 +1542,74 @@ def _rank_bands(recs: list[dict]) -> list[dict]:
         ) if pres else 0.0
         out.append(row)
     return out
+
+
+def cmd_verify(args) -> None:
+    """Check that every archived body still is what the record says it is.
+
+    A blob is named for the sha256 of the whole response. Bodies over the
+    archive cap are stored as a prefix, so they cannot hash to their own name
+    and an integrity check must be told which ones those are. Without that
+    distinction the only available answer was "39% of this archive looks
+    corrupt", which is useless.
+    """
+    base = RUNS / PANEL_ID
+    runs = sorted(d for d in base.iterdir()
+                  if d.is_dir() and has_records(d)) if base.exists() else []
+    if not runs:
+        sys.exit(f"no runs for {PANEL_ID}")
+    intact = clipped = missing = missing_present = bad = 0
+    examples: list[str] = []
+    gaps: list[str] = []
+    for run_dir in runs:
+        for r in load_records(run_dir):
+            entries = [(e, e.get("sha256")) for e in (r.get("robots") or [])]
+            entries += [(v, (v or {}).get("sha256"))
+                        for v in (r.get("wellknown") or {}).values()]
+            for entry, sha in entries:
+                if not sha:
+                    continue
+                path = blob_path(sha)
+                if not path.exists():
+                    # A body we never stored is a gap, but only a real loss
+                    # where the response was a file. Runs collected before
+                    # archiving covered every response are missing their 404s
+                    # and 403s by design, and saying so separately keeps the
+                    # number meaningful.
+                    if entry.get("file_state") == "present":
+                        missing_present += 1
+                        if len(gaps) < 5:
+                            gaps.append(f"{r['host']} {sha[:12]}")
+                    else:
+                        missing += 1
+                    continue
+                digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                if digest == sha:
+                    intact += 1
+                elif entry.get("archive_truncated"):
+                    clipped += 1
+                else:
+                    bad += 1
+                    if len(examples) < 5:
+                        examples.append(f"{r['host']} {sha[:12]} "
+                                        f"({path.stat().st_size:,} bytes on disk)")
+    total = intact + clipped + bad
+    print(f"{PANEL_ID}: {total:,} archived bodies", file=sys.stderr)
+    print(f"  {intact:,} hash to their own name", file=sys.stderr)
+    print(f"  {clipped:,} are declared truncated prefixes", file=sys.stderr)
+    print(f"  {missing:,} absent, but were not files (404, 403, a redirect)",
+          file=sys.stderr)
+    if missing_present:
+        print(f"  {missing_present:,} absent and WERE files: the body was never stored",
+              file=sys.stderr)
+        for g in gaps:
+            print(f"      {g}", file=sys.stderr)
+    if bad:
+        print(f"  {bad:,} DO NOT MATCH and are not declared truncated:", file=sys.stderr)
+        for e in examples:
+            print(f"      {e}", file=sys.stderr)
+        sys.exit("archive integrity check failed")
+    print("  archive verifies", file=sys.stderr)
 
 
 def cmd_reshard(args) -> None:
@@ -1864,6 +1958,10 @@ def main() -> None:
     t.add_argument("--panel", default="panel-01")
     t.add_argument("--pause", type=float, default=30.0)
     t.set_defaults(func=cmd_retry)
+
+    vf = sub.add_parser("verify", help="check archived bodies against their hashes")
+    vf.add_argument("--panel", default="panel-01")
+    vf.set_defaults(func=cmd_verify)
 
     rs = sub.add_parser("reshard", help="split a run's records into per-band files")
     rs.add_argument("--panel", default="panel-01")

@@ -155,3 +155,36 @@ remove. It now counts every response that returned a body. The reported
 statistic is separate: `catch_all_responses` counts hosts where a repeat
 actually suppressed something, because most hosts serve one 404 page for every
 missing path and that is ordinary, not pathological.
+
+## Verifying the archive
+
+    observatory.py verify --panel panel-02
+
+Every blob is named for the sha256 of the **whole** response, but a body over
+the archive cap is stored as a prefix, so it cannot hash to its own filename.
+Until that was recorded, 51,454 of panel-02's 168,862 archived bodies looked
+corrupt to any integrity check, with no way to tell a clipped body from a
+damaged one. `store_blob` now returns whether it clipped, the record carries
+`archive_truncated`, and `verify` sorts bodies into four buckets:
+
+- **hash to their own name**: whole, verified
+- **declared truncated prefixes**: clipped at the cap, and the record says so
+- **absent, but were not files**: 404s, 403s and redirects from runs collected
+  before archiving covered every response. Expected, not loss.
+- **absent and WERE files**: a real gap. Five on panel-01 (beget.ru,
+  conviva.com, etsy.com). `verify` names them.
+
+Anything that fails to hash and is *not* declared truncated exits non-zero.
+Run it after any change to `store_blob`, the caps, or the record schema.
+
+`reparse` marks the existing archive retroactively, by detecting the mismatch
+and stamping `archive_truncated`. That is safe to re-run: it only ever adds
+the flag where the hash already disagrees.
+
+### The caps
+
+`ARCHIVE_CAP_PRESENT` is 256 KB, `ARCHIVE_CAP_OTHER` 32 KB. The second is why
+39% of the archive is clipped: error pages and consent walls are large and
+numerous, and keeping them whole is not worth the gigabytes. Raising a cap
+does not recover anything already clipped; only a re-crawl does, and the
+archive exists so that is not necessary. Decide a cap once.

@@ -140,6 +140,39 @@ with tempfile.TemporaryDirectory() as td:
     check("appending preserves earlier records", len(back), 21)
     check("including the new one", "late.com" in {r["host"] for r in back}, True)
 
+# ------------------------------------------------------ archived bodies --
+# A blob is named for the sha256 of the whole response, but anything over the
+# cap is stored as a prefix, so it cannot hash to its own filename. If that is
+# not recorded, an integrity check calls 39% of the archive corrupt and there
+# is no way to tell a clipped body from a damaged one.
+print("\nblob truncation is recorded")
+import hashlib, tempfile as _tf
+with _tf.TemporaryDirectory() as td:
+    obs.BLOBS = Path(td)
+    small = "User-agent: *\nDisallow:\n"
+    sha_s = hashlib.sha256(small.encode()).hexdigest()
+    check("a small body is not reported truncated", obs.store_blob(sha_s, small), False)
+    check("and it hashes to its own name",
+          hashlib.sha256(obs.blob_path(sha_s).read_bytes()).hexdigest(), sha_s)
+
+    big = "x" * (obs.ARCHIVE_CAP_PRESENT + 500)
+    sha_b = hashlib.sha256(big.encode()).hexdigest()
+    check("an oversized body is reported truncated", obs.store_blob(sha_b, big), True)
+    check("only the cap is written",
+          obs.blob_path(sha_b).stat().st_size, obs.ARCHIVE_CAP_PRESENT)
+    check("so it does NOT hash to its own name, which is why it must be flagged",
+          hashlib.sha256(obs.blob_path(sha_b).read_bytes()).hexdigest() == sha_b, False)
+    check("what is stored is a true prefix of the body",
+          big.startswith(obs.blob_path(sha_b).read_text(encoding="utf-8")), True)
+
+    # the lower cap applies to bodies that were not files
+    other = "y" * (obs.ARCHIVE_CAP_OTHER + 10)
+    sha_o = hashlib.sha256(other.encode()).hexdigest()
+    check("a non-file body uses the smaller cap",
+          obs.store_blob(sha_o, other, present=False), True)
+    check("and is clipped to it",
+          obs.blob_path(sha_o).stat().st_size, obs.ARCHIVE_CAP_OTHER)
+
 print()
 if failures:
     print(f"{len(failures)} FAILED\n")
